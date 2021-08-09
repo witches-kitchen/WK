@@ -1,10 +1,10 @@
-package net.fabricmc.example;
+package cf.witcheskitchen;
 
 import net.fabricmc.api.ModInitializer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class ExampleMod implements ModInitializer {
+public class WK implements ModInitializer {
 	public static final String MODID = "witcheskitchen";
 	public static final Logger logger = LogManager.getLogger(MODID);
 
@@ -24,6 +24,5 @@ public class ExampleMod implements ModInitializer {
 
 		logger.info("I hear her in the wind, the bane of our town");
 		logger.info("Come with me, father, I'm to expose a heathen");
-
 	}
 }
