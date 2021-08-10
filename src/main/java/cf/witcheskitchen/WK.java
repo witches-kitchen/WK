@@ -1,5 +1,6 @@
 package cf.witcheskitchen;
 
+import cf.witcheskitchen.registry.WKBlocks;
 import net.fabricmc.api.ModInitializer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,7 +14,6 @@ public class WK implements ModInitializer {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
-
 		logger.info("Remember when I told you how my");
 		logger.info("Kin is different in some ways?");
 
@@ -24,5 +24,6 @@ public class WK implements ModInitializer {
 
 		logger.info("I hear her in the wind, the bane of our town");
 		logger.info("Come with me, father, I'm to expose a heathen");
+		WKBlocks.register();
 	}
 }
