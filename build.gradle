@@ -11,11 +11,27 @@ version = project.mod_version
 group = project.maven_group
 
 repositories {
-	// Add repositories to retrieve artifacts from in here.
-	// You should only use this when depending on other mods because
-	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
-	// for more information about repositories.
+    maven {
+        name = "patchouli"
+        url = "https://maven.blamejared.com"
+    }
+    maven { 
+		url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' 
+	}	
+	maven {
+		name = "TerraformersMC"
+		url = "https://maven.terraformersmc.com/"
+	}
+	maven {
+		name = "Ladysnake Libs"
+		url = "https://ladysnake.jfrog.io/artifactory/mods"
+	}	
+    maven {
+        url "https://www.cursemaven.com"
+    }	
+    maven { 
+		url "https://maven.shedaniel.me/" 
+	}	
 }
 
 dependencies {
@@ -26,6 +42,14 @@ dependencies {
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+	modImplementation "vazkii.patchouli:Patchouli:${project.patchouli_version}"
+	modImplementation 'software.bernie.geckolib:geckolib-fabric-1.17:3.0.11:dev'
+	modImplementation "dev.emi:trinkets:${trinkets_version}"
+	modImplementation "curse.maven:gourmet-fabric-450475:3216448"
+	modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
+	modApi("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}") {
+        exclude(group: "net.fabricmc.fabric-api")
+    }
 
 	// PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
 	// You may need to force-disable transitiveness on them.
