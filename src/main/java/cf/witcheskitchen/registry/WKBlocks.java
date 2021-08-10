@@ -28,9 +28,9 @@ public class WKBlocks {
     static Block FROSTED_BEVELED_GINGERBREAD_GREEN = new Block(FabricBlockSettings.of(Material.CAKE));
     static Block FROSTED_TILED_GINGERBREAD_BLOCK_YELLOW = new Block(FabricBlockSettings.of(Material.CAKE));
     static Block FROSTED_TILED_GINGERBREAD_BLOCK_RED = new Block(FabricBlockSettings.of(Material.CAKE));
-    static Block FROSTED_TILED_GINGERBREAD_PURPLE = new Block(FabricBlockSettings.of(Material.CAKE));
-    static Block FROSTED_TILED_GINGERBREAD_GREEN = new Block(FabricBlockSettings.of(Material.CAKE));
-    static Block FROSTED_TILED_GINGERBREAD_VARIANT = new Block(FabricBlockSettings.of(Material.CAKE));
+    static Block FROSTED_TILED_GINGERBREAD_BLOCK_PURPLE = new Block(FabricBlockSettings.of(Material.CAKE));
+    static Block FROSTED_TILED_GINGERBREAD_BLOCK_GREEN = new Block(FabricBlockSettings.of(Material.CAKE));
+    static Block FROSTED_TILED_GINGERBREAD_BLOCK_VARIANT = new Block(FabricBlockSettings.of(Material.CAKE));
 
     static Block ELDER_PLANKS = new Block(FabricBlockSettings.of(Material.WOOD));
     static Block SUMAC_PLANKS = new Block(FabricBlockSettings.of(Material.WOOD));
@@ -64,9 +64,9 @@ public class WKBlocks {
         registerBlock("frosted_beveled_gingerbread_block_purple", FROSTED_BEVELED_GINGERBREAD_PURPLE, ItemGroup.BUILDING_BLOCKS);
         registerBlock("frosted_tiled_gingerbread_block_yellow", FROSTED_TILED_GINGERBREAD_BLOCK_YELLOW, ItemGroup.BUILDING_BLOCKS);
         registerBlock("frosted_tiled_gingerbread_block_red", FROSTED_TILED_GINGERBREAD_BLOCK_RED, ItemGroup.BUILDING_BLOCKS);
-        registerBlock("frosted_tiled_gingerbread_block_green", FROSTED_TILED_GINGERBREAD_GREEN, ItemGroup.BUILDING_BLOCKS);
-        registerBlock("frosted_tiled_gingerbread_block_purple", FROSTED_TILED_GINGERBREAD_PURPLE, ItemGroup.BUILDING_BLOCKS);
-        registerBlock("frosted_tiled_gingerbread_block_variant", FROSTED_TILED_GINGERBREAD_VARIANT, ItemGroup.BUILDING_BLOCKS);
+        registerBlock("frosted_tiled_gingerbread_block_green", FROSTED_TILED_GINGERBREAD_BLOCK_GREEN, ItemGroup.BUILDING_BLOCKS);
+        registerBlock("frosted_tiled_gingerbread_block_purple", FROSTED_TILED_GINGERBREAD_BLOCK_PURPLE, ItemGroup.BUILDING_BLOCKS);
+        registerBlock("frosted_tiled_gingerbread_block_variant", FROSTED_TILED_GINGERBREAD_BLOCK_VARIANT, ItemGroup.BUILDING_BLOCKS);
 
         //Wood planks
         registerBlock("elder_planks", ELDER_PLANKS, ItemGroup.BUILDING_BLOCKS);
