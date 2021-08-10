@@ -16,6 +16,9 @@ public class WKBlocks {
     static Block GINGERBREAD_BEVELED_BLOCK = new Block(FabricBlockSettings.of(Material.CAKE));
     static Block GINGERBREAD_BLOCK = new Block(FabricBlockSettings.of(Material.CAKE));
     static Block RAW_GINGERBREAD_BEVELED_BLOCK = new Block(FabricBlockSettings.of(Material.CAKE));
+    static Block FROSTED_GINGERBREAD_BLOCK = new Block(FabricBlockSettings.of(Material.CAKE));
+    static Block FROSTED_BEVELED_GINGERBREAD_BLOCK = new Block(FabricBlockSettings.of(Material.CAKE));
+    static Block CHISELED_GINGERBREAD_BLOCK = new Block(FabricBlockSettings.of(Material.CAKE));
 
     static Block ELDER_PLANKS = new Block(FabricBlockSettings.of(Material.WOOD));
     static Block SUMAC_PLANKS = new Block(FabricBlockSettings.of(Material.WOOD));
@@ -37,6 +40,9 @@ public class WKBlocks {
         registerBlock("raw_gingerbread_beveled_block", RAW_GINGERBREAD_BEVELED_BLOCK, ItemGroup.BUILDING_BLOCKS);
         registerBlock("gingerbread_beveled_block", GINGERBREAD_BEVELED_BLOCK, ItemGroup.BUILDING_BLOCKS);
         registerBlock("gingerbread_block", GINGERBREAD_BLOCK, ItemGroup.BUILDING_BLOCKS);
+        registerBlock("frosted_gingerbread_block", FROSTED_GINGERBREAD_BLOCK, ItemGroup.BUILDING_BLOCKS);
+        registerBlock("frosted_beveled_gingerbread_block", FROSTED_BEVELED_GINGERBREAD_BLOCK, ItemGroup.BUILDING_BLOCKS);
+        registerBlock("chiseled_gingerbread_block", CHISELED_GINGERBREAD_BLOCK, ItemGroup.BUILDING_BLOCKS);
 
         //Wood planks
         registerBlock("elder_planks", ELDER_PLANKS, ItemGroup.BUILDING_BLOCKS);
