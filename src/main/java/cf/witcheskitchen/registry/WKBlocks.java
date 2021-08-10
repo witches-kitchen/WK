@@ -12,11 +12,17 @@ import net.minecraft.util.registry.Registry;
 
 public class WKBlocks {
     static Block RAW_GINGERBREAD_BLOCK = new Block(FabricBlockSettings.of(Material.CAKE));
+    static Block RAW_CHISELED_GINGERBREAD_BLOCK = new Block(FabricBlockSettings.of(Material.CAKE));
+    static Block GINGERBREAD_BEVELED_BLOCK = new Block(FabricBlockSettings.of(Material.CAKE));
+    static Block GINGERBREAD_BLOCK = new Block(FabricBlockSettings.of(Material.CAKE));
+    static Block RAW_GINGERBREAD_BEVELED_BLOCK = new Block(FabricBlockSettings.of(Material.CAKE));
+
     static Block ELDER_PLANKS = new Block(FabricBlockSettings.of(Material.WOOD));
     static Block SUMAC_PLANKS = new Block(FabricBlockSettings.of(Material.WOOD));
     static Block HAWTHORN_PLANKS = new Block(FabricBlockSettings.of(Material.WOOD));
     static Block BLACKTHORN_PLANKS = new Block(FabricBlockSettings.of(Material.WOOD));
     static Block JUNIPER_PLANKS = new Block(FabricBlockSettings.of(Material.WOOD));
+
     static Block ELDER_LOG = new Block(FabricBlockSettings.of(Material.WOOD));
     static Block SUMAC_LOG = new Block(FabricBlockSettings.of(Material.WOOD));
     static Block HAWTHORN_LOG = new Block(FabricBlockSettings.of(Material.WOOD));
@@ -27,6 +33,10 @@ public class WKBlocks {
         //Food blocks
         //Registry.register(Registry.BLOCK, new Identifier(WK.MODID, "raw_gingerbread_block"), RAW_GINGERBREAD_BLOCK);
         registerBlock("raw_gingerbread_block", RAW_GINGERBREAD_BLOCK, ItemGroup.BUILDING_BLOCKS);
+        registerBlock("raw_chiseled_gingerbread_block", RAW_CHISELED_GINGERBREAD_BLOCK, ItemGroup.BUILDING_BLOCKS);
+        registerBlock("raw_gingerbread_beveled_block", RAW_GINGERBREAD_BEVELED_BLOCK, ItemGroup.BUILDING_BLOCKS);
+        registerBlock("gingerbread_beveled_block", GINGERBREAD_BEVELED_BLOCK, ItemGroup.BUILDING_BLOCKS);
+        registerBlock("gingerbread_block", GINGERBREAD_BLOCK, ItemGroup.BUILDING_BLOCKS);
 
         //Wood planks
         registerBlock("elder_planks", ELDER_PLANKS, ItemGroup.BUILDING_BLOCKS);
