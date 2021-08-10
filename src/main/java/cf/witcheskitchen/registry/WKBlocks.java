@@ -1,6 +1,5 @@
 package cf.witcheskitchen.registry;
 
-import cf.witcheskitchen.WK;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
@@ -19,6 +18,9 @@ public class WKBlocks {
     static Block FROSTED_GINGERBREAD_BLOCK = new Block(FabricBlockSettings.of(Material.CAKE));
     static Block FROSTED_BEVELED_GINGERBREAD_BLOCK = new Block(FabricBlockSettings.of(Material.CAKE));
     static Block CHISELED_GINGERBREAD_BLOCK = new Block(FabricBlockSettings.of(Material.CAKE));
+    static Block RAW_GINGERBREAD_TILED_BLOCK = new Block(FabricBlockSettings.of(Material.CAKE));
+    static Block GINGERBREAD_TILED_BLOCK = new Block(FabricBlockSettings.of(Material.CAKE));
+    static Block FROSTED_GINGERBREAD_TILED_BLOCK = new Block(FabricBlockSettings.of(Material.CAKE));
 
     static Block ELDER_PLANKS = new Block(FabricBlockSettings.of(Material.WOOD));
     static Block SUMAC_PLANKS = new Block(FabricBlockSettings.of(Material.WOOD));
@@ -43,6 +45,9 @@ public class WKBlocks {
         registerBlock("frosted_gingerbread_block", FROSTED_GINGERBREAD_BLOCK, ItemGroup.BUILDING_BLOCKS);
         registerBlock("frosted_beveled_gingerbread_block", FROSTED_BEVELED_GINGERBREAD_BLOCK, ItemGroup.BUILDING_BLOCKS);
         registerBlock("chiseled_gingerbread_block", CHISELED_GINGERBREAD_BLOCK, ItemGroup.BUILDING_BLOCKS);
+        registerBlock("raw_gingerbread_tiled_block", RAW_GINGERBREAD_TILED_BLOCK, ItemGroup.BUILDING_BLOCKS);
+        registerBlock("gingerbread_tiled_block", GINGERBREAD_TILED_BLOCK, ItemGroup.BUILDING_BLOCKS);
+        registerBlock("frosted_gingerbread_tiled_block", FROSTED_GINGERBREAD_TILED_BLOCK, ItemGroup.BUILDING_BLOCKS);
 
         //Wood planks
         registerBlock("elder_planks", ELDER_PLANKS, ItemGroup.BUILDING_BLOCKS);
