@@ -2,7 +2,6 @@
   "schemaVersion": 1,
   "id": "witcheskitchen",
   "version": "${version}",
-
   "name": "Witches' Kitchen",
   "description": "This is an example description! Tell everyone what your mod is about!",
   "authors": [
@@ -15,10 +14,8 @@
     "homepage": "https://fabricmc.net/",
     "sources": "https://github.com/FabricMC/fabric-example-mod"
   },
-
   "license": "MIT",
   "icon": "assets/witcheskitchen/icon.png",
-
   "environment": "*",
   "entrypoints": {
     "main": [
@@ -28,7 +25,6 @@
   "mixins": [
     "wk.mixins.json"
   ],
-
   "depends": {
     "fabricloader": ">=0.11.3",
     "fabric": "*",
