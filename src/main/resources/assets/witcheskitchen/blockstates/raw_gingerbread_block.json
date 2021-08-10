@@ -1,5 +1,7 @@
 {
   "variants": {
-    "": { "model": "witcheskitchen:block/raw_gingerbread_block" }
+    "": {
+      "model": "witcheskitchen:block/raw_gingerbread_block"
+    }
   }
 }
