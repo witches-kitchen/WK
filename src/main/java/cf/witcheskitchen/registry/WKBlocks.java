@@ -62,7 +62,6 @@ public class WKBlocks {
         registerBlock("frosted_beveled_gingerbread_block_red", FROSTED_BEVELED_GINGERBREAD_BLOCK_RED, ItemGroup.BUILDING_BLOCKS);
         registerBlock("frosted_beveled_gingerbread_block_green", FROSTED_BEVELED_GINGERBREAD_GREEN, ItemGroup.BUILDING_BLOCKS);
         registerBlock("frosted_beveled_gingerbread_block_purple", FROSTED_BEVELED_GINGERBREAD_PURPLE, ItemGroup.BUILDING_BLOCKS);
-        registerBlock("frosted_gingerbread_tiled_block", FROSTED_GINGERBREAD_TILED_BLOCK, ItemGroup.BUILDING_BLOCKS);
         registerBlock("frosted_tiled_gingerbread_block_yellow", FROSTED_TILED_GINGERBREAD_BLOCK_YELLOW, ItemGroup.BUILDING_BLOCKS);
         registerBlock("frosted_tiled_gingerbread_block_red", FROSTED_TILED_GINGERBREAD_BLOCK_RED, ItemGroup.BUILDING_BLOCKS);
         registerBlock("frosted_tiled_gingerbread_block_green", FROSTED_TILED_GINGERBREAD_GREEN, ItemGroup.BUILDING_BLOCKS);
