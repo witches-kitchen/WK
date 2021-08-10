@@ -13,10 +13,23 @@ import net.minecraft.util.registry.Registry;
 public class WKBlocks
 {
     static Block RAW_GINGERBREAD_BLOCK = new Block(FabricBlockSettings.of(Material.CAKE));
+    static Block ELDER_PLANKS = new Block(FabricBlockSettings.of(Material.WOOD));
+    static Block SUMAC_PLANKS = new Block(FabricBlockSettings.of(Material.WOOD));
+    static Block HAWTHORN_PLANKS = new Block(FabricBlockSettings.of(Material.WOOD));
+    static Block BLACKTHORN_PLANKS = new Block(FabricBlockSettings.of(Material.WOOD));
+    static Block JUNIPER_PLANKS = new Block(FabricBlockSettings.of(Material.WOOD));
     public static void register()
     {
+        //Food blocks
         //Registry.register(Registry.BLOCK, new Identifier(WK.MODID, "raw_gingerbread_block"), RAW_GINGERBREAD_BLOCK);
         registerBlock("raw_gingerbread_block", RAW_GINGERBREAD_BLOCK, ItemGroup.BUILDING_BLOCKS);
+
+        //Wood planks
+        registerBlock("elder_planks", ELDER_PLANKS, ItemGroup.BUILDING_BLOCKS);
+        registerBlock("sumac_planks", SUMAC_PLANKS, ItemGroup.BUILDING_BLOCKS);
+        registerBlock("hawthorn_planks", HAWTHORN_PLANKS, ItemGroup.BUILDING_BLOCKS);
+        registerBlock("blackthorn_planks", BLACKTHORN_PLANKS, ItemGroup.BUILDING_BLOCKS);
+        registerBlock("juniper_planks", JUNIPER_PLANKS, ItemGroup.BUILDING_BLOCKS);
     }
     public static void registerBlock(String id, Block block, ItemGroup tab)
     {
