@@ -2,12 +2,26 @@ package cf.witcheskitchen;
 
 import cf.witcheskitchen.registry.WKBlocks;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+import net.minecraft.block.Blocks;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class WK implements ModInitializer {
     public static final String MODID = "witcheskitchen";
     public static final Logger logger = LogManager.getLogger(MODID);
+
+    public static final ItemGroup OTHER_GROUP = FabricItemGroupBuilder.create(
+                    new Identifier("witcheskitchen", "general"))
+            .icon(() -> new ItemStack(Items.POTION))
+            .appendItems(stacks -> {
+                stacks.add(new ItemStack(Blocks.BONE_BLOCK));
+            })
+            .build();
 
     @Override
     public void onInitialize() {
