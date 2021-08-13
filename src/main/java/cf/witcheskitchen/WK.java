@@ -15,7 +15,7 @@ public class WK implements ModInitializer {
     public static final String MODID = "witcheskitchen";
     public static final Logger logger = LogManager.getLogger(MODID);
 
-    public static final ItemGroup OTHER_GROUP = FabricItemGroupBuilder.create(
+    public static final ItemGroup WK_GROUP = FabricItemGroupBuilder.create(
                     new Identifier("witcheskitchen", "general"))
             .icon(() -> new ItemStack(Items.POTION))
             .appendItems(stacks -> {

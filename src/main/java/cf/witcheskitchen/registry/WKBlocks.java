@@ -37,12 +37,14 @@ public class WKBlocks {
     static Block HAWTHORN_PLANKS = new Block(FabricBlockSettings.of(Material.WOOD));
     static Block BLACKTHORN_PLANKS = new Block(FabricBlockSettings.of(Material.WOOD));
     static Block JUNIPER_PLANKS = new Block(FabricBlockSettings.of(Material.WOOD));
+    static Block ROWAN_PLANKS = new Block(FabricBlockSettings.of(Material.WOOD));
 
     static Block ELDER_LOG = new Block(FabricBlockSettings.of(Material.WOOD));
     static Block SUMAC_LOG = new Block(FabricBlockSettings.of(Material.WOOD));
     static Block HAWTHORN_LOG = new Block(FabricBlockSettings.of(Material.WOOD));
     static Block BLACKTHORN_LOG = new Block(FabricBlockSettings.of(Material.WOOD));
     static Block JUNIPER_LOG = new Block(FabricBlockSettings.of(Material.WOOD));
+    static Block ROWAN_LOG = new Block(FabricBlockSettings.of(Material.WOOD));
 
     public static void register() {
         //Food blocks
@@ -74,6 +76,7 @@ public class WKBlocks {
         registerBlock("hawthorn_planks", HAWTHORN_PLANKS, ItemGroup.BUILDING_BLOCKS);
         registerBlock("blackthorn_planks", BLACKTHORN_PLANKS, ItemGroup.BUILDING_BLOCKS);
         registerBlock("juniper_planks", JUNIPER_PLANKS, ItemGroup.BUILDING_BLOCKS);
+        registerBlock("rowan_planks", ROWAN_PLANKS, ItemGroup.BUILDING_BLOCKS);
 
         //Wood logs
         registerBlock("elder_log", ELDER_LOG, ItemGroup.BUILDING_BLOCKS);
@@ -81,6 +84,7 @@ public class WKBlocks {
         registerBlock("hawthorn_log", HAWTHORN_LOG, ItemGroup.BUILDING_BLOCKS);
         registerBlock("blackthorn_log", BLACKTHORN_LOG, ItemGroup.BUILDING_BLOCKS);
         registerBlock("juniper_log", JUNIPER_LOG, ItemGroup.BUILDING_BLOCKS);
+        registerBlock("rowan_log", ROWAN_LOG, ItemGroup.BUILDING_BLOCKS);
     }
 
     public static void registerBlock(String id, Block block, ItemGroup tab) {
