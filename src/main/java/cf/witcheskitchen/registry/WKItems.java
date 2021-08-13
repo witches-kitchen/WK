@@ -8,7 +8,7 @@ import net.minecraft.util.registry.Registry;
 
 public class WKItems {
 
-    static Item BELLADONNA_SEEDS = new Item(new FabricItemSettings().group(WK.OTHER_GROUP));
+    static Item BELLADONNA_SEEDS = new Item(new FabricItemSettings().group(WK.WK_GROUP));
     public static void register()
     {
         registerItem("belladonna_seeds", BELLADONNA_SEEDS);
