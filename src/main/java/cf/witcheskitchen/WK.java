@@ -18,9 +18,6 @@ public class WK implements ModInitializer {
     public static final ItemGroup WK_GROUP = FabricItemGroupBuilder.create(
                     new Identifier("witcheskitchen", "general"))
             .icon(() -> new ItemStack(Items.POTION))
-            .appendItems(stacks -> {
-                stacks.add(new ItemStack(Blocks.BONE_BLOCK));
-            })
             .build();
 
     @Override

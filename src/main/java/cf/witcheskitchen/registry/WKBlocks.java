@@ -56,26 +56,26 @@ public class WKBlocks {
     public static void register() {
         //Food blocks
         //Registry.register(Registry.BLOCK, new Identifier(WK.MODID, "raw_gingerbread_block"), RAW_GINGERBREAD_BLOCK);
-        registerBlock("raw_gingerbread_block", RAW_GINGERBREAD_BLOCK, ItemGroup.BUILDING_BLOCKS);
-        registerBlock("raw_chiseled_gingerbread_block", RAW_CHISELED_GINGERBREAD_BLOCK, ItemGroup.BUILDING_BLOCKS);
-        registerBlock("raw_gingerbread_beveled_block", RAW_GINGERBREAD_BEVELED_BLOCK, ItemGroup.BUILDING_BLOCKS);
-        registerBlock("gingerbread_beveled_block", GINGERBREAD_BEVELED_BLOCK, ItemGroup.BUILDING_BLOCKS);
-        registerBlock("gingerbread_block", GINGERBREAD_BLOCK, ItemGroup.BUILDING_BLOCKS);
-        registerBlock("frosted_gingerbread_block", FROSTED_GINGERBREAD_BLOCK, ItemGroup.BUILDING_BLOCKS);
-        registerBlock("frosted_beveled_gingerbread_block", FROSTED_BEVELED_GINGERBREAD_BLOCK, ItemGroup.BUILDING_BLOCKS);
-        registerBlock("chiseled_gingerbread_block", CHISELED_GINGERBREAD_BLOCK, ItemGroup.BUILDING_BLOCKS);
-        registerBlock("raw_gingerbread_tiled_block", RAW_GINGERBREAD_TILED_BLOCK, ItemGroup.BUILDING_BLOCKS);
-        registerBlock("gingerbread_tiled_block", GINGERBREAD_TILED_BLOCK, ItemGroup.BUILDING_BLOCKS);
-        registerBlock("frosted_gingerbread_tiled_block", FROSTED_GINGERBREAD_TILED_BLOCK, ItemGroup.BUILDING_BLOCKS);
-        registerBlock("frosted_beveled_gingerbread_block_yellow", FROSTED_BEVELED_GINGERBREAD_BLOCK_YELLOW, ItemGroup.BUILDING_BLOCKS);
-        registerBlock("frosted_beveled_gingerbread_block_red", FROSTED_BEVELED_GINGERBREAD_BLOCK_RED, ItemGroup.BUILDING_BLOCKS);
-        registerBlock("frosted_beveled_gingerbread_block_green", FROSTED_BEVELED_GINGERBREAD_BLOCK_GREEN, ItemGroup.BUILDING_BLOCKS);
-        registerBlock("frosted_beveled_gingerbread_block_purple", FROSTED_BEVELED_GINGERBREAD_BLOCK_PURPLE, ItemGroup.BUILDING_BLOCKS);
-        registerBlock("frosted_tiled_gingerbread_block_yellow", FROSTED_TILED_GINGERBREAD_BLOCK_YELLOW, ItemGroup.BUILDING_BLOCKS);
-        registerBlock("frosted_tiled_gingerbread_block_red", FROSTED_TILED_GINGERBREAD_BLOCK_RED, ItemGroup.BUILDING_BLOCKS);
-        registerBlock("frosted_tiled_gingerbread_block_green", FROSTED_TILED_GINGERBREAD_BLOCK_GREEN, ItemGroup.BUILDING_BLOCKS);
-        registerBlock("frosted_tiled_gingerbread_block_purple", FROSTED_TILED_GINGERBREAD_BLOCK_PURPLE, ItemGroup.BUILDING_BLOCKS);
-        registerBlock("frosted_tiled_gingerbread_block_variant", FROSTED_TILED_GINGERBREAD_BLOCK_VARIANT, ItemGroup.BUILDING_BLOCKS);
+        registerBlock("raw_gingerbread_block", RAW_GINGERBREAD_BLOCK, WK.WK_GROUP);
+        registerBlock("raw_chiseled_gingerbread_block", RAW_CHISELED_GINGERBREAD_BLOCK, WK.WK_GROUP);
+        registerBlock("raw_gingerbread_beveled_block", RAW_GINGERBREAD_BEVELED_BLOCK, WK.WK_GROUP);
+        registerBlock("gingerbread_beveled_block", GINGERBREAD_BEVELED_BLOCK, WK.WK_GROUP);
+        registerBlock("gingerbread_block", GINGERBREAD_BLOCK, WK.WK_GROUP);
+        registerBlock("frosted_gingerbread_block", FROSTED_GINGERBREAD_BLOCK, WK.WK_GROUP);
+        registerBlock("frosted_beveled_gingerbread_block", FROSTED_BEVELED_GINGERBREAD_BLOCK, WK.WK_GROUP);
+        registerBlock("chiseled_gingerbread_block", CHISELED_GINGERBREAD_BLOCK, WK.WK_GROUP);
+        registerBlock("raw_gingerbread_tiled_block", RAW_GINGERBREAD_TILED_BLOCK, WK.WK_GROUP);
+        registerBlock("gingerbread_tiled_block", GINGERBREAD_TILED_BLOCK, WK.WK_GROUP);
+        registerBlock("frosted_gingerbread_tiled_block", FROSTED_GINGERBREAD_TILED_BLOCK, WK.WK_GROUP);
+        registerBlock("frosted_beveled_gingerbread_block_yellow", FROSTED_BEVELED_GINGERBREAD_BLOCK_YELLOW, WK.WK_GROUP);
+        registerBlock("frosted_beveled_gingerbread_block_red", FROSTED_BEVELED_GINGERBREAD_BLOCK_RED, WK.WK_GROUP);
+        registerBlock("frosted_beveled_gingerbread_block_green", FROSTED_BEVELED_GINGERBREAD_BLOCK_GREEN, WK.WK_GROUP);
+        registerBlock("frosted_beveled_gingerbread_block_purple", FROSTED_BEVELED_GINGERBREAD_BLOCK_PURPLE, WK.WK_GROUP);
+        registerBlock("frosted_tiled_gingerbread_block_yellow", FROSTED_TILED_GINGERBREAD_BLOCK_YELLOW, WK.WK_GROUP);
+        registerBlock("frosted_tiled_gingerbread_block_red", FROSTED_TILED_GINGERBREAD_BLOCK_RED, WK.WK_GROUP);
+        registerBlock("frosted_tiled_gingerbread_block_green", FROSTED_TILED_GINGERBREAD_BLOCK_GREEN, WK.WK_GROUP);
+        registerBlock("frosted_tiled_gingerbread_block_purple", FROSTED_TILED_GINGERBREAD_BLOCK_PURPLE, WK.WK_GROUP);
+        registerBlock("frosted_tiled_gingerbread_block_variant", FROSTED_TILED_GINGERBREAD_BLOCK_VARIANT, WK.WK_GROUP);
 
         //Wood planks
         registerBlock("elder_planks", ELDER_PLANKS, ItemGroup.BUILDING_BLOCKS);
