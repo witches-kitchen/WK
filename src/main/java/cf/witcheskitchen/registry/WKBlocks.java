@@ -21,6 +21,7 @@ public class WKBlocks {
     static Block CHISELED_GINGERBREAD_BLOCK = new Block(FabricBlockSettings.of(Material.CAKE));
     static Block RAW_GINGERBREAD_TILED_BLOCK = new Block(FabricBlockSettings.of(Material.CAKE));
     static Block GINGERBREAD_TILED_BLOCK = new Block(FabricBlockSettings.of(Material.CAKE));
+    static Block FROSTING_BLOCK = new Block(FabricBlockSettings.of(Material.CAKE));
     static Block FROSTED_GINGERBREAD_TILED_BLOCK = new Block(FabricBlockSettings.of(Material.CAKE));
     static Block FROSTED_BEVELED_GINGERBREAD_BLOCK_YELLOW = new Block(FabricBlockSettings.of(Material.CAKE));
     static Block FROSTED_BEVELED_GINGERBREAD_BLOCK_RED = new Block(FabricBlockSettings.of(Material.CAKE));
@@ -61,6 +62,7 @@ public class WKBlocks {
         registerBlock("raw_gingerbread_beveled_block", RAW_GINGERBREAD_BEVELED_BLOCK, WK.WK_GROUP);
         registerBlock("gingerbread_beveled_block", GINGERBREAD_BEVELED_BLOCK, WK.WK_GROUP);
         registerBlock("gingerbread_block", GINGERBREAD_BLOCK, WK.WK_GROUP);
+        registerBlock("frosting_block", FROSTING_BLOCK, WK.WK_GROUP);
         registerBlock("frosted_gingerbread_block", FROSTED_GINGERBREAD_BLOCK, WK.WK_GROUP);
         registerBlock("frosted_beveled_gingerbread_block", FROSTED_BEVELED_GINGERBREAD_BLOCK, WK.WK_GROUP);
         registerBlock("chiseled_gingerbread_block", CHISELED_GINGERBREAD_BLOCK, WK.WK_GROUP);
