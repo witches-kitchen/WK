@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "witcheskitchen:block/frosted_beveled_gingerbread_block"
+  }
+}
