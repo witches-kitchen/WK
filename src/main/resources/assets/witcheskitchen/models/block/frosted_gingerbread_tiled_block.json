@@ -1,6 +1,12 @@
 {
-  "parent": "block/cube_all",
+  "parent": "minecraft:block/cube",
   "textures": {
-    "all": "witcheskitchen:block/frosted_gingerbread_tiled_block"
+    "particle": "witcheskitchen:block/frosted_gingerbread_tiled_block",
+    "north": "witcheskitchen:block/frosted_gingerbread_tiled_block",
+    "south": "witcheskitchen:block/frosted_gingerbread_tiled_block",
+    "east": "witcheskitchen:block/frosted_gingerbread_tiled_block",
+    "west": "witcheskitchen:block/frosted_gingerbread_tiled_block",
+    "up": "witcheskitchen:block/frosting_block",
+    "down": "witcheskitchen:block/gingerbread_tiled_block"
   }
 }
