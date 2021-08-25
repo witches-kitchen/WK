@@ -1,6 +1,7 @@
 package cf.witcheskitchen;
 
 import cf.witcheskitchen.registry.WKBlocks;
+import cf.witcheskitchen.registry.WKItems;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.block.Blocks;
@@ -36,5 +37,6 @@ public class WK implements ModInitializer {
         logger.info("I hear her in the wind, the bane of our town");
         logger.info("Come with me, father, I'm to expose a heathen");
         WKBlocks.register();
+        WKItems.register();
     }
 }
