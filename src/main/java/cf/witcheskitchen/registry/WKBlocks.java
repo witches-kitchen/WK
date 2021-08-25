@@ -80,28 +80,28 @@ public class WKBlocks {
         registerBlock("frosted_tiled_gingerbread_block_variant", FROSTED_TILED_GINGERBREAD_BLOCK_VARIANT, WK.WK_GROUP);
 
         //Wood planks
-        registerBlock("elder_planks", ELDER_PLANKS, ItemGroup.BUILDING_BLOCKS);
-        registerBlock("sumac_planks", SUMAC_PLANKS, ItemGroup.BUILDING_BLOCKS);
-        registerBlock("hawthorn_planks", HAWTHORN_PLANKS, ItemGroup.BUILDING_BLOCKS);
-        registerBlock("blackthorn_planks", BLACKTHORN_PLANKS, ItemGroup.BUILDING_BLOCKS);
-        registerBlock("juniper_planks", JUNIPER_PLANKS, ItemGroup.BUILDING_BLOCKS);
-        registerBlock("rowan_planks", ROWAN_PLANKS, ItemGroup.BUILDING_BLOCKS);
+        registerBlock("elder_planks", ELDER_PLANKS, WK.WK_GROUP);
+        registerBlock("sumac_planks", SUMAC_PLANKS, WK.WK_GROUP);
+        registerBlock("hawthorn_planks", HAWTHORN_PLANKS, WK.WK_GROUP);
+        registerBlock("blackthorn_planks", BLACKTHORN_PLANKS, WK.WK_GROUP);
+        registerBlock("juniper_planks", JUNIPER_PLANKS, WK.WK_GROUP);
+        registerBlock("rowan_planks", ROWAN_PLANKS, WK.WK_GROUP);
 
         //Leaves
-        registerBlock("elder_leaves", ELDER_LEAVES, ItemGroup.BUILDING_BLOCKS);
-        registerBlock("sumac_leaves", SUMAC_LEAVES, ItemGroup.BUILDING_BLOCKS);
-        registerBlock("hawthorn_leaves", HAWTHORN_LEAVES, ItemGroup.BUILDING_BLOCKS);
-        registerBlock("blackthorn_leaves", BLACKTHORN_LEAVES, ItemGroup.BUILDING_BLOCKS);
-        registerBlock("juniper_leaves", JUNIPER_LEAVES, ItemGroup.BUILDING_BLOCKS);
-        registerBlock("rowan_leaves", ROWAN_LEAVES, ItemGroup.BUILDING_BLOCKS);
+        registerBlock("elder_leaves", ELDER_LEAVES, WK.WK_GROUP);
+        registerBlock("sumac_leaves", SUMAC_LEAVES, WK.WK_GROUP);
+        registerBlock("hawthorn_leaves", HAWTHORN_LEAVES, WK.WK_GROUP);
+        registerBlock("blackthorn_leaves", BLACKTHORN_LEAVES, WK.WK_GROUP);
+        registerBlock("juniper_leaves", JUNIPER_LEAVES, WK.WK_GROUP);
+        registerBlock("rowan_leaves", ROWAN_LEAVES, WK.WK_GROUP);
 
         //Wood logs
-        registerBlock("elder_log", ELDER_LOG, ItemGroup.BUILDING_BLOCKS);
-        registerBlock("sumac_log", SUMAC_LOG, ItemGroup.BUILDING_BLOCKS);
-        registerBlock("hawthorn_log", HAWTHORN_LOG, ItemGroup.BUILDING_BLOCKS);
-        registerBlock("blackthorn_log", BLACKTHORN_LOG, ItemGroup.BUILDING_BLOCKS);
-        registerBlock("juniper_log", JUNIPER_LOG, ItemGroup.BUILDING_BLOCKS);
-        registerBlock("rowan_log", ROWAN_LOG, ItemGroup.BUILDING_BLOCKS);
+        registerBlock("elder_log", ELDER_LOG, WK.WK_GROUP);
+        registerBlock("sumac_log", SUMAC_LOG, WK.WK_GROUP);
+        registerBlock("hawthorn_log", HAWTHORN_LOG, WK.WK_GROUP);
+        registerBlock("blackthorn_log", BLACKTHORN_LOG, WK.WK_GROUP);
+        registerBlock("juniper_log", JUNIPER_LOG, WK.WK_GROUP);
+        registerBlock("rowan_log", ROWAN_LOG, WK.WK_GROUP);
     }
 
     public static void registerBlock(String id, Block block, ItemGroup tab) {
