@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
+import net.minecraft.block.SlabBlock;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
@@ -32,6 +33,19 @@ public class WKBlocks {
     static Block FROSTED_TILED_GINGERBREAD_BLOCK_PURPLE = new Block(FabricBlockSettings.of(Material.CAKE));
     static Block FROSTED_TILED_GINGERBREAD_BLOCK_GREEN = new Block(FabricBlockSettings.of(Material.CAKE));
     static Block FROSTED_TILED_GINGERBREAD_BLOCK_VARIANT = new Block(FabricBlockSettings.of(Material.CAKE));
+
+    static Block RAW_GINGERBREAD_BLOCK_SLAB = new SlabBlock(FabricBlockSettings.of(Material.CAKE));
+    static Block RAW_CHISELED_GINGERBREAD_BLOCK_SLAB = new SlabBlock(FabricBlockSettings.of(Material.CAKE));
+    static Block GINGERBREAD_BEVELED_BLOCK_SLAB = new SlabBlock(FabricBlockSettings.of(Material.CAKE));
+    static Block GINGERBREAD_BLOCK_SLAB = new SlabBlock(FabricBlockSettings.of(Material.CAKE));
+    static Block RAW_GINGERBREAD_BEVELED_BLOCK_SLAB = new SlabBlock(FabricBlockSettings.of(Material.CAKE));
+    static Block FROSTED_GINGERBREAD_BLOCK_SLAB = new SlabBlock(FabricBlockSettings.of(Material.CAKE));
+    static Block FROSTED_BEVELED_GINGERBREAD_BLOCK_SLAB = new SlabBlock(FabricBlockSettings.of(Material.CAKE));
+    static Block CHISELED_GINGERBREAD_BLOCK_SLAB = new SlabBlock(FabricBlockSettings.of(Material.CAKE));
+    static Block RAW_GINGERBREAD_TILED_BLOCK_SLAB = new SlabBlock(FabricBlockSettings.of(Material.CAKE));
+    static Block GINGERBREAD_TILED_BLOCK_SLAB = new SlabBlock(FabricBlockSettings.of(Material.CAKE));
+    static Block FROSTING_BLOCK_SLAB = new SlabBlock(FabricBlockSettings.of(Material.CAKE));
+    static Block FROSTED_GINGERBREAD_TILED_BLOCK_SLAB = new SlabBlock(FabricBlockSettings.of(Material.CAKE));
 
     static Block ELDER_PLANKS = new Block(FabricBlockSettings.of(Material.WOOD));
     static Block SUMAC_PLANKS = new Block(FabricBlockSettings.of(Material.WOOD));
@@ -78,6 +92,10 @@ public class WKBlocks {
         registerBlock("frosted_tiled_gingerbread_block_green", FROSTED_TILED_GINGERBREAD_BLOCK_GREEN, WK.WK_GROUP);
         registerBlock("frosted_tiled_gingerbread_block_purple", FROSTED_TILED_GINGERBREAD_BLOCK_PURPLE, WK.WK_GROUP);
         registerBlock("frosted_tiled_gingerbread_block_variant", FROSTED_TILED_GINGERBREAD_BLOCK_VARIANT, WK.WK_GROUP);
+
+        //Gingerbread slabs
+        registerBlock("raw_gingerbread_block_slab", RAW_GINGERBREAD_BLOCK_SLAB, WK.WK_GROUP);
+
 
         //Wood planks
         registerBlock("elder_planks", ELDER_PLANKS, WK.WK_GROUP);
