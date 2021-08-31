@@ -125,6 +125,8 @@ public class WKBlocks {
         registerBlock("frosted_tiled_gingerbread_block_purple", FROSTED_TILED_GINGERBREAD_BLOCK_PURPLE_SLAB, WK.WK_GROUP);
         registerBlock("frosted_tiled_gingerbread_block_variant", FROSTED_TILED_GINGERBREAD_BLOCK_VARIANT_SLAB, WK.WK_GROUP);
 
+        //Gingerbread Stairs
+
 
         //Wood planks
         registerBlock("elder_planks", ELDER_PLANKS, WK.WK_GROUP);
