@@ -115,15 +115,15 @@ public class WKBlocks {
         registerBlock("raw_gingerbread_tiled_block_slab", RAW_GINGERBREAD_TILED_BLOCK_SLAB, WK.WK_GROUP);
         registerBlock("gingerbread_tiled_block_slab", GINGERBREAD_TILED_BLOCK_SLAB, WK.WK_GROUP);
         registerBlock("frosted_gingerbread_tiled_block_slab", FROSTED_GINGERBREAD_TILED_BLOCK_SLAB, WK.WK_GROUP);
-        registerBlock("frosted_beveled_gingerbread_block_yellow", FROSTED_BEVELED_GINGERBREAD_BLOCK_YELLOW_SLAB, WK.WK_GROUP);
-        registerBlock("frosted_beveled_gingerbread_block_red", FROSTED_BEVELED_GINGERBREAD_BLOCK_RED_SLAB, WK.WK_GROUP);
-        registerBlock("frosted_beveled_gingerbread_block_green", FROSTED_BEVELED_GINGERBREAD_BLOCK_GREEN_SLAB, WK.WK_GROUP);
-        registerBlock("frosted_beveled_gingerbread_block_purple", FROSTED_BEVELED_GINGERBREAD_BLOCK_PURPLE_SLAB, WK.WK_GROUP);
-        registerBlock("frosted_tiled_gingerbread_block_yellow", FROSTED_TILED_GINGERBREAD_BLOCK_YELLOW_SLAB, WK.WK_GROUP);
-        registerBlock("frosted_tiled_gingerbread_block_red", FROSTED_TILED_GINGERBREAD_BLOCK_RED_SLAB, WK.WK_GROUP);
-        registerBlock("frosted_tiled_gingerbread_block_green", FROSTED_TILED_GINGERBREAD_BLOCK_GREEN_SLAB, WK.WK_GROUP);
-        registerBlock("frosted_tiled_gingerbread_block_purple", FROSTED_TILED_GINGERBREAD_BLOCK_PURPLE_SLAB, WK.WK_GROUP);
-        registerBlock("frosted_tiled_gingerbread_block_variant", FROSTED_TILED_GINGERBREAD_BLOCK_VARIANT_SLAB, WK.WK_GROUP);
+        registerBlock("frosted_beveled_gingerbread_block_yellow_slab", FROSTED_BEVELED_GINGERBREAD_BLOCK_YELLOW_SLAB, WK.WK_GROUP);
+        registerBlock("frosted_beveled_gingerbread_block_red_slab", FROSTED_BEVELED_GINGERBREAD_BLOCK_RED_SLAB, WK.WK_GROUP);
+        registerBlock("frosted_beveled_gingerbread_block_green_slab", FROSTED_BEVELED_GINGERBREAD_BLOCK_GREEN_SLAB, WK.WK_GROUP);
+        registerBlock("frosted_beveled_gingerbread_block_purple_slab", FROSTED_BEVELED_GINGERBREAD_BLOCK_PURPLE_SLAB, WK.WK_GROUP);
+        registerBlock("frosted_tiled_gingerbread_block_yellow_slab", FROSTED_TILED_GINGERBREAD_BLOCK_YELLOW_SLAB, WK.WK_GROUP);
+        registerBlock("frosted_tiled_gingerbread_block_red_slab", FROSTED_TILED_GINGERBREAD_BLOCK_RED_SLAB, WK.WK_GROUP);
+        registerBlock("frosted_tiled_gingerbread_block_green_slab", FROSTED_TILED_GINGERBREAD_BLOCK_GREEN_SLAB, WK.WK_GROUP);
+        registerBlock("frosted_tiled_gingerbread_block_purple_slab", FROSTED_TILED_GINGERBREAD_BLOCK_PURPLE_SLAB, WK.WK_GROUP);
+        registerBlock("frosted_tiled_gingerbread_block_variant_slab", FROSTED_TILED_GINGERBREAD_BLOCK_VARIANT_SLAB, WK.WK_GROUP);
 
         //Gingerbread Stairs
 
