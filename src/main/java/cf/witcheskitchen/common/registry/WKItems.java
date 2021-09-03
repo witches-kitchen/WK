@@ -1,4 +1,4 @@
-package cf.witcheskitchen.registry;
+package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WK;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;

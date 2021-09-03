@@ -4,7 +4,6 @@ import cf.witcheskitchen.registry.WKBlocks;
 import cf.witcheskitchen.registry.WKItems;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
-import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
