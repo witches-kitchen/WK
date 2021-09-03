@@ -70,6 +70,13 @@ public class WKBlocks {
     static Block JUNIPER_LOG = new Block(FabricBlockSettings.of(Material.WOOD));
     static Block ROWAN_LOG = new Block(FabricBlockSettings.of(Material.WOOD));
 
+    static Block ELDER_SLAB = new SlabBlock(FabricBlockSettings.of(Material.WOOD));
+    static Block SUMAC_SLAB = new SlabBlock(FabricBlockSettings.of(Material.WOOD));
+    static Block HAWTHORN_SLAB = new SlabBlock(FabricBlockSettings.of(Material.WOOD));
+    static Block BLACKTHORN_SLAB = new SlabBlock(FabricBlockSettings.of(Material.WOOD));
+    static Block JUNIPER_SLAB = new SlabBlock(FabricBlockSettings.of(Material.WOOD));
+    static Block ROWAN_SLAB = new SlabBlock(FabricBlockSettings.of(Material.WOOD));
+
     static Block ELDER_LEAVES = new Block(FabricBlockSettings.of(Material.LEAVES));
     static Block SUMAC_LEAVES = new Block(FabricBlockSettings.of(Material.LEAVES));
     static Block HAWTHORN_LEAVES = new Block(FabricBlockSettings.of(Material.LEAVES));
@@ -135,6 +142,14 @@ public class WKBlocks {
         registerBlock("blackthorn_planks", BLACKTHORN_PLANKS, WK.WK_GROUP);
         registerBlock("juniper_planks", JUNIPER_PLANKS, WK.WK_GROUP);
         registerBlock("rowan_planks", ROWAN_PLANKS, WK.WK_GROUP);
+
+        //Wood Slabs
+        registerBlock("elder_slab", ELDER_SLAB, WK.WK_GROUP);
+        registerBlock("sumac_slab", SUMAC_SLAB, WK.WK_GROUP);
+        registerBlock("hawthorn_slab", HAWTHORN_SLAB, WK.WK_GROUP);
+        registerBlock("blackthorn_slab", BLACKTHORN_SLAB, WK.WK_GROUP);
+        registerBlock("juniper_slab", JUNIPER_SLAB, WK.WK_GROUP);
+        registerBlock("rowan_slab", ROWAN_SLAB, WK.WK_GROUP);
 
         //Leaves
         registerBlock("elder_leaves", ELDER_LEAVES, WK.WK_GROUP);
