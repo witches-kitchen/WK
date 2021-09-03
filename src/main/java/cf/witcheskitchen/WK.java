@@ -1,7 +1,7 @@
 package cf.witcheskitchen;
 
-import cf.witcheskitchen.registry.WKBlocks;
-import cf.witcheskitchen.registry.WKItems;
+import cf.witcheskitchen.common.registry.WKBlocks;
+import cf.witcheskitchen.common.registry.WKItems;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.item.ItemGroup;
