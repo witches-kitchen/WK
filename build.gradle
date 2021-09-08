@@ -53,11 +53,11 @@ repositories {
         modImplementation 'software.bernie.geckolib:geckolib-fabric-1.17:3.0.11:dev'
         modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
         modImplementation("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}")
-        modImplementation "curse.maven:trinkets-fabric-341284:3390660"
+        modImplementation "curse.maven:trinkets-fabric-341284:3446940"
         modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${cardinal_components_version}"
         modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${cardinal_components_version}"
-        modImplementation "curse.maven:roughly-enough-items-310111:3411641"
-        modImplementation "curse.maven:architectury-fabric-419697:3415032"
+        modImplementation "curse.maven:roughly-enough-items-310111:3441625"
+        modImplementation "curse.maven:architectury-fabric-419697:3443079"
         modImplementation "com.redgrapefruit.itemnbt:itemnbt:${project.itemnbt_version}"
         include "com.redgrapefruit.itemnbt:itemnbt:${project.itemnbt_version}"
         modImplementation "de.siphalor:nbtcrafting-1.17:2+"
