@@ -1,11 +1,10 @@
 package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WK;
+import cf.witcheskitchen.common.blocks.WKStairsBlock;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.Block;
-import net.minecraft.block.Material;
-import net.minecraft.block.SlabBlock;
+import net.minecraft.block.*;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
@@ -62,6 +61,8 @@ public class WKBlocks {
     static Block BLACKTHORN_PLANKS = new Block(FabricBlockSettings.of(Material.WOOD));
     static Block JUNIPER_PLANKS = new Block(FabricBlockSettings.of(Material.WOOD));
     static Block ROWAN_PLANKS = new Block(FabricBlockSettings.of(Material.WOOD));
+
+    static Block ROWAN_STAIRS = new WKStairsBlock(ROWAN_PLANKS.getDefaultState(), FabricBlockSettings.copyOf(ROWAN_PLANKS));
 
     static Block ELDER_LOG = new Block(FabricBlockSettings.of(Material.WOOD));
     static Block SUMAC_LOG = new Block(FabricBlockSettings.of(Material.WOOD));
@@ -142,6 +143,9 @@ public class WKBlocks {
         registerBlock("blackthorn_planks", BLACKTHORN_PLANKS, WK.WK_GROUP);
         registerBlock("juniper_planks", JUNIPER_PLANKS, WK.WK_GROUP);
         registerBlock("rowan_planks", ROWAN_PLANKS, WK.WK_GROUP);
+
+        //Wood stairs
+        registerBlock("rowan_stairs", ROWAN_STAIRS, WK.WK_GROUP);
 
         //Wood Slabs
         registerBlock("elder_slab", ELDER_SLAB, WK.WK_GROUP);
