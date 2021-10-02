@@ -1,8 +1,6 @@
-# WK
+# Witches' Kitchen
 
-## Setup
-
-For setup instructions please see the [fabric wiki page](https://fabricmc.net/wiki/tutorial:setup) that relates to the IDE that you are using.
+Witches' Kitchen is a cottagecore style magic mod that tries to bring a rather homey spin to the well-tried magic mod genre
 
 ## License
 
