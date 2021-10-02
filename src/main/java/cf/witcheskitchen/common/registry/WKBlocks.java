@@ -63,6 +63,11 @@ public class WKBlocks {
     static Block ROWAN_PLANKS = new Block(FabricBlockSettings.of(Material.WOOD));
 
     static Block ROWAN_STAIRS = new WKStairsBlock(ROWAN_PLANKS.getDefaultState(), FabricBlockSettings.copyOf(ROWAN_PLANKS));
+    static Block ELDER_STAIRS = new WKStairsBlock(ELDER_PLANKS.getDefaultState(), FabricBlockSettings.copyOf(ELDER_PLANKS));
+    static Block SUMAC_STAIRS = new WKStairsBlock(SUMAC_PLANKS.getDefaultState(), FabricBlockSettings.copyOf(SUMAC_PLANKS));
+    static Block BLACKTHORN_STAIRS = new WKStairsBlock(BLACKTHORN_PLANKS.getDefaultState(), FabricBlockSettings.copyOf(BLACKTHORN_PLANKS));
+    static Block HAWTHORN_STAIRS = new WKStairsBlock(HAWTHORN_PLANKS.getDefaultState(), FabricBlockSettings.copyOf(HAWTHORN_PLANKS));
+    static Block JUNIPER_STAIRS = new WKStairsBlock(JUNIPER_PLANKS.getDefaultState(), FabricBlockSettings.copyOf(JUNIPER_PLANKS));
 
     static Block ELDER_LOG = new Block(FabricBlockSettings.of(Material.WOOD));
     static Block SUMAC_LOG = new Block(FabricBlockSettings.of(Material.WOOD));
@@ -146,6 +151,11 @@ public class WKBlocks {
 
         //Wood stairs
         registerBlock("rowan_stairs", ROWAN_STAIRS, WK.WK_GROUP);
+        registerBlock("elder_stairs", ELDER_STAIRS, WK.WK_GROUP);
+        registerBlock("hawthorn_stairs", HAWTHORN_STAIRS, WK.WK_GROUP);
+        registerBlock("blackthorn_stairs", BLACKTHORN_STAIRS, WK.WK_GROUP);
+        registerBlock("juniper_stairs", JUNIPER_STAIRS, WK.WK_GROUP);
+        registerBlock("sumac_stairs", SUMAC_STAIRS, WK.WK_GROUP);
 
         //Wood Slabs
         registerBlock("elder_slab", ELDER_SLAB, WK.WK_GROUP);
