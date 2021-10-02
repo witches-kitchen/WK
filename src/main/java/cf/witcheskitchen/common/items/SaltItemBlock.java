@@ -19,6 +19,7 @@ public class SaltItemBlock extends RedstoneWireBlock {
         return false;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         if (context instanceof EntityShapeContext entityContext && entityContext.getEntity().isPresent()) {
