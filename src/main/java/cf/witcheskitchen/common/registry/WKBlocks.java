@@ -2,6 +2,7 @@ package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WK;
 import cf.witcheskitchen.common.blocks.WKStairsBlock;
+import cf.witcheskitchen.common.items.SaltItemBlock;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
@@ -68,6 +69,9 @@ public class WKBlocks {
     static Block BLACKTHORN_STAIRS = new WKStairsBlock(BLACKTHORN_PLANKS.getDefaultState(), FabricBlockSettings.copyOf(BLACKTHORN_PLANKS));
     static Block HAWTHORN_STAIRS = new WKStairsBlock(HAWTHORN_PLANKS.getDefaultState(), FabricBlockSettings.copyOf(HAWTHORN_PLANKS));
     static Block JUNIPER_STAIRS = new WKStairsBlock(JUNIPER_PLANKS.getDefaultState(), FabricBlockSettings.copyOf(JUNIPER_PLANKS));
+
+    static Block SALT_BLOCK = new Block(FabricBlockSettings.of(Material.SOIL));
+    static Block SALT_LINE = new SaltItemBlock(SALT_BLOCK.getDefaultState(), FabricBlockSettings.copyOf(SALT_BLOCK));
 
     static Block ELDER_LOG = new Block(FabricBlockSettings.of(Material.WOOD));
     static Block SUMAC_LOG = new Block(FabricBlockSettings.of(Material.WOOD));
@@ -180,6 +184,10 @@ public class WKBlocks {
         registerBlock("blackthorn_log", BLACKTHORN_LOG, WK.WK_GROUP);
         registerBlock("juniper_log", JUNIPER_LOG, WK.WK_GROUP);
         registerBlock("rowan_log", ROWAN_LOG, WK.WK_GROUP);
+
+        //Minerals
+        registerBlock("salt_line", SALT_LINE, WK.WK_GROUP);
+        registerBlock("salt_block", SALT_BLOCK, WK.WK_GROUP);
     }
 
     public static void registerBlock(String id, Block block, ItemGroup tab) {
