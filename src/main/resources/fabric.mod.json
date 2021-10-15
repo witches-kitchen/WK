@@ -8,7 +8,8 @@
     "Sunconure11",
     "Athene Noctua",
     "Exo",
-    "Tir-far-thóinn"
+    "Tir-far-thóinn",
+    "AmyMialee"
   ],
   "contact": {
     "homepage": "https://fabricmc.net/",
@@ -18,6 +19,9 @@
   "icon": "assets/witcheskitchen/icon.png",
   "environment": "*",
   "entrypoints": {
+    "client": [
+      "cf.witcheskitchen.client.WKClient"
+    ],
     "main": [
       "cf.witcheskitchen.WK"
     ]
