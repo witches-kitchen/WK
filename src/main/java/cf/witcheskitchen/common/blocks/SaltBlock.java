@@ -47,6 +47,19 @@ public class SaltBlock extends Block {
     private static final Map<Direction, VoxelShape> field_24415;
     private static final Map<BlockState, VoxelShape> SHAPES;
     private static final Vec3f COLOR = new Vec3f(2147483647, 2147483647, 2147483647);
+
+    static {
+        WIRE_CONNECTION_NORTH = Properties.NORTH_WIRE_CONNECTION;
+        WIRE_CONNECTION_EAST = Properties.EAST_WIRE_CONNECTION;
+        WIRE_CONNECTION_SOUTH = Properties.SOUTH_WIRE_CONNECTION;
+        WIRE_CONNECTION_WEST = Properties.WEST_WIRE_CONNECTION;
+        DIRECTION_TO_WIRE_CONNECTION_PROPERTY = Maps.newEnumMap(ImmutableMap.of(Direction.NORTH, WIRE_CONNECTION_NORTH, Direction.EAST, WIRE_CONNECTION_EAST, Direction.SOUTH, WIRE_CONNECTION_SOUTH, Direction.WEST, WIRE_CONNECTION_WEST));
+        DOT_SHAPE = Block.createCuboidShape(3.0D, 0.0D, 3.0D, 13.0D, 1.0D, 13.0D);
+        field_24414 = Maps.newEnumMap(ImmutableMap.of(Direction.NORTH, Block.createCuboidShape(3.0D, 0.0D, 0.0D, 13.0D, 1.0D, 13.0D), Direction.SOUTH, Block.createCuboidShape(3.0D, 0.0D, 3.0D, 13.0D, 1.0D, 16.0D), Direction.EAST, Block.createCuboidShape(3.0D, 0.0D, 3.0D, 16.0D, 1.0D, 13.0D), Direction.WEST, Block.createCuboidShape(0.0D, 0.0D, 3.0D, 13.0D, 1.0D, 13.0D)));
+        field_24415 = Maps.newEnumMap(ImmutableMap.of(Direction.NORTH, VoxelShapes.union(field_24414.get(Direction.NORTH), Block.createCuboidShape(3.0D, 0.0D, 0.0D, 13.0D, 16.0D, 1.0D)), Direction.SOUTH, VoxelShapes.union(field_24414.get(Direction.SOUTH), Block.createCuboidShape(3.0D, 0.0D, 15.0D, 13.0D, 16.0D, 16.0D)), Direction.EAST, VoxelShapes.union(field_24414.get(Direction.EAST), Block.createCuboidShape(15.0D, 0.0D, 3.0D, 16.0D, 16.0D, 13.0D)), Direction.WEST, VoxelShapes.union(field_24414.get(Direction.WEST), Block.createCuboidShape(0.0D, 0.0D, 3.0D, 1.0D, 16.0D, 13.0D))));
+        SHAPES = Maps.newHashMap();
+    }
+
     private final BlockState dotState;
 
     public SaltBlock(FabricBlockSettings settings) {
@@ -56,6 +69,31 @@ public class SaltBlock extends Block {
 
         for (BlockState blockState : this.getStateManager().getStates()) {
             SHAPES.put(blockState, this.getShapeForState(blockState));
+        }
+    }
+
+    private static boolean isFullyConnected(BlockState state) {
+        return state.get(WIRE_CONNECTION_NORTH).isConnected() && state.get(WIRE_CONNECTION_SOUTH).isConnected() && state.get(WIRE_CONNECTION_EAST).isConnected() && state.get(WIRE_CONNECTION_WEST).isConnected();
+    }
+
+    private static boolean isNotConnected(BlockState state) {
+        return !state.get(WIRE_CONNECTION_NORTH).isConnected() && !state.get(WIRE_CONNECTION_SOUTH).isConnected() && !state.get(WIRE_CONNECTION_EAST).isConnected() && !state.get(WIRE_CONNECTION_WEST).isConnected();
+    }
+
+    protected static boolean connectsTo(BlockState state) {
+        return connectsTo(state, null);
+    }
+
+    protected static boolean connectsTo(BlockState state, @Nullable Direction dir) {
+        if (state.isOf(WKBlocks.SALT_BLOCK)) {
+            return true;
+        } else if (state.isOf(Blocks.REPEATER)) {
+            Direction direction = state.get(RepeaterBlock.FACING);
+            return direction == dir || direction.getOpposite() == dir;
+        } else if (state.isOf(Blocks.OBSERVER)) {
+            return dir == state.get(ObserverBlock.FACING);
+        } else {
+            return state.emitsRedstonePower() && dir != null;
         }
     }
 
@@ -144,14 +182,6 @@ public class SaltBlock extends Block {
             WireConnection wireConnection = this.getRenderConnectionType(world, pos, direction);
             return wireConnection.isConnected() == state.get(DIRECTION_TO_WIRE_CONNECTION_PROPERTY.get(direction)).isConnected() && !isFullyConnected(state) ? state.with(DIRECTION_TO_WIRE_CONNECTION_PROPERTY.get(direction), wireConnection) : this.getPlacementState(world, this.dotState.with(DIRECTION_TO_WIRE_CONNECTION_PROPERTY.get(direction), wireConnection), pos);
         }
-    }
-
-    private static boolean isFullyConnected(BlockState state) {
-        return state.get(WIRE_CONNECTION_NORTH).isConnected() && state.get(WIRE_CONNECTION_SOUTH).isConnected() && state.get(WIRE_CONNECTION_EAST).isConnected() && state.get(WIRE_CONNECTION_WEST).isConnected();
-    }
-
-    private static boolean isNotConnected(BlockState state) {
-        return !state.get(WIRE_CONNECTION_NORTH).isConnected() && !state.get(WIRE_CONNECTION_SOUTH).isConnected() && !state.get(WIRE_CONNECTION_EAST).isConnected() && !state.get(WIRE_CONNECTION_WEST).isConnected();
     }
 
     public void prepare(BlockState state, WorldAccess world, BlockPos pos, int flags, int maxUpdateDepth) {
@@ -251,14 +281,14 @@ public class SaltBlock extends Block {
         Iterator<Direction> var3 = Direction.Type.HORIZONTAL.iterator();
 
         Direction direction2;
-        while(var3.hasNext()) {
+        while (var3.hasNext()) {
             direction2 = var3.next();
             this.updateNeighbors(world, pos.offset(direction2));
         }
 
         var3 = Direction.Type.HORIZONTAL.iterator();
 
-        while(var3.hasNext()) {
+        while (var3.hasNext()) {
             direction2 = var3.next();
             BlockPos blockPos = pos.offset(direction2);
             if (world.getBlockState(blockPos).isSolidBlock(world, blockPos)) {
@@ -280,23 +310,6 @@ public class SaltBlock extends Block {
         }
     }
 
-    protected static boolean connectsTo(BlockState state) {
-        return connectsTo(state, null);
-    }
-
-    protected static boolean connectsTo(BlockState state, @Nullable Direction dir) {
-        if (state.isOf(WKBlocks.SALT_BLOCK)) {
-            return true;
-        } else if (state.isOf(Blocks.REPEATER)) {
-            Direction direction = state.get(RepeaterBlock.FACING);
-            return direction == dir || direction.getOpposite() == dir;
-        } else if (state.isOf(Blocks.OBSERVER)) {
-            return dir == state.get(ObserverBlock.FACING);
-        } else {
-            return state.emitsRedstonePower() && dir != null;
-        }
-    }
-
     public boolean emitsRedstonePower(BlockState state) {
         return false;
     }
@@ -305,10 +318,10 @@ public class SaltBlock extends Block {
         float h = g - f;
         if (!(random.nextFloat() >= 0.2F * h)) {
             float j = f + h * random.nextFloat();
-            double d = 0.5D + (double)(0.4375F * (float)direction.getOffsetX()) + (double)(j * (float)direction2.getOffsetX());
-            double e = 0.5D + (double)(0.4375F * (float)direction.getOffsetY()) + (double)(j * (float)direction2.getOffsetY());
-            double k = 0.5D + (double)(0.4375F * (float)direction.getOffsetZ()) + (double)(j * (float)direction2.getOffsetZ());
-            world.addParticle(new DustParticleEffect(SaltBlock.COLOR, 1.0F), (double)pos.getX() + d, (double)pos.getY() + e, (double)pos.getZ() + k, 0.0D, 0.0D, 0.0D);
+            double d = 0.5D + (double) (0.4375F * (float) direction.getOffsetX()) + (double) (j * (float) direction2.getOffsetX());
+            double e = 0.5D + (double) (0.4375F * (float) direction.getOffsetY()) + (double) (j * (float) direction2.getOffsetY());
+            double k = 0.5D + (double) (0.4375F * (float) direction.getOffsetZ()) + (double) (j * (float) direction2.getOffsetZ());
+            world.addParticle(new DustParticleEffect(SaltBlock.COLOR, 1.0F), (double) pos.getX() + d, (double) pos.getY() + e, (double) pos.getZ() + k, 0.0D, 0.0D, 0.0D);
         }
     }
 
@@ -376,17 +389,5 @@ public class SaltBlock extends Block {
             }
         }
 
-    }
-
-    static {
-        WIRE_CONNECTION_NORTH = Properties.NORTH_WIRE_CONNECTION;
-        WIRE_CONNECTION_EAST = Properties.EAST_WIRE_CONNECTION;
-        WIRE_CONNECTION_SOUTH = Properties.SOUTH_WIRE_CONNECTION;
-        WIRE_CONNECTION_WEST = Properties.WEST_WIRE_CONNECTION;
-        DIRECTION_TO_WIRE_CONNECTION_PROPERTY = Maps.newEnumMap(ImmutableMap.of(Direction.NORTH, WIRE_CONNECTION_NORTH, Direction.EAST, WIRE_CONNECTION_EAST, Direction.SOUTH, WIRE_CONNECTION_SOUTH, Direction.WEST, WIRE_CONNECTION_WEST));
-        DOT_SHAPE = Block.createCuboidShape(3.0D, 0.0D, 3.0D, 13.0D, 1.0D, 13.0D);
-        field_24414 = Maps.newEnumMap(ImmutableMap.of(Direction.NORTH, Block.createCuboidShape(3.0D, 0.0D, 0.0D, 13.0D, 1.0D, 13.0D), Direction.SOUTH, Block.createCuboidShape(3.0D, 0.0D, 3.0D, 13.0D, 1.0D, 16.0D), Direction.EAST, Block.createCuboidShape(3.0D, 0.0D, 3.0D, 16.0D, 1.0D, 13.0D), Direction.WEST, Block.createCuboidShape(0.0D, 0.0D, 3.0D, 13.0D, 1.0D, 13.0D)));
-        field_24415 = Maps.newEnumMap(ImmutableMap.of(Direction.NORTH, VoxelShapes.union(field_24414.get(Direction.NORTH), Block.createCuboidShape(3.0D, 0.0D, 0.0D, 13.0D, 16.0D, 1.0D)), Direction.SOUTH, VoxelShapes.union(field_24414.get(Direction.SOUTH), Block.createCuboidShape(3.0D, 0.0D, 15.0D, 13.0D, 16.0D, 16.0D)), Direction.EAST, VoxelShapes.union(field_24414.get(Direction.EAST), Block.createCuboidShape(15.0D, 0.0D, 3.0D, 16.0D, 16.0D, 13.0D)), Direction.WEST, VoxelShapes.union(field_24414.get(Direction.WEST), Block.createCuboidShape(0.0D, 0.0D, 3.0D, 1.0D, 16.0D, 13.0D))));
-        SHAPES = Maps.newHashMap();
     }
 }
