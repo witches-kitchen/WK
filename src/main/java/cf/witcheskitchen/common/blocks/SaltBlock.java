@@ -4,6 +4,7 @@ import cf.witcheskitchen.api.WKApi;
 import cf.witcheskitchen.common.registry.WKBlocks;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import it.unimi.dsi.fastutil.floats.Float2ObjectArrayMap;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.WireConnection;
@@ -48,6 +49,7 @@ public class SaltBlock extends Block {
     private static final Map<BlockState, VoxelShape> SHAPES;
     private static final Vec3f COLOR = new Vec3f(2147483647, 2147483647, 2147483647);
     private final BlockState dotState;
+    private static final Float2ObjectArrayMap<VoxelShape> SALT_SHAPE_CACHE = new Float2ObjectArrayMap<>();
 
     public SaltBlock(FabricBlockSettings settings) {
         super(settings);
@@ -115,11 +117,27 @@ public class SaltBlock extends Block {
     public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         if (context instanceof EntityShapeContext entityContext && entityContext.getEntity().isPresent()) {
             Entity entity = entityContext.getEntity().get();
-            if (entity instanceof LivingEntity livingEntity && WKApi.isSpiritualEntity(livingEntity)) {
-                return VoxelShapes.fullCube();
+            if (entity instanceof LivingEntity livingEntity) {
+                boolean spiritual = WKApi.isSpiritualEntity(livingEntity);
+                if (spiritual) {
+                    boolean onSalt = world.getBlockState(livingEntity.getBlockPos().add(0, 0, 0)).getBlock() instanceof SaltBlock;
+                    if (!onSalt) {
+                        return getSaltShape(livingEntity.stepHeight);
+                    } else {
+                        livingEntity.setOnFireFor(1);
+                    }
+                }
             }
         }
         return super.getCollisionShape(state, world, pos, context);
+    }
+
+    private static VoxelShape getSaltShape(float stepHeight) {
+        return SALT_SHAPE_CACHE.computeIfAbsent(stepHeight, SaltBlock::createSaltShape);
+    }
+
+    private static VoxelShape createSaltShape(double stepHeight) {
+        return Block.createCuboidShape(0, 0, 0, 16, 17 + 16 * stepHeight, 16);
     }
 
     private BlockState method_27843(BlockView world, BlockState state, BlockPos pos) {
