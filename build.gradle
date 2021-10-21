@@ -33,9 +33,6 @@ repositories {
         url "https://maven.shedaniel.me/"
     }
     maven {
-        url = "https://raw.githubusercontent.com/RedGrapefruit09/Maven/master"
-    }
-    maven {
         name "Siphalor's Maven"
         url "https://maven.siphalor.de"
     }
@@ -50,16 +47,14 @@ repositories {
         // Fabric API. This is technically optional, but you probably want it anyway.
         modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
         modImplementation "vazkii.patchouli:Patchouli:${project.patchouli_version}"
-        modImplementation 'software.bernie.geckolib:geckolib-fabric-1.17:3.0.11:dev'
+        modImplementation 'software.bernie.geckolib:geckolib-fabric-1.17:3.0.50:dev'
         modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
         modImplementation("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}")
         modImplementation "curse.maven:trinkets-fabric-341284:3446940"
         modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${cardinal_components_version}"
         modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${cardinal_components_version}"
-        modImplementation "curse.maven:roughly-enough-items-310111:3441625"
-        modImplementation "curse.maven:architectury-fabric-419697:3443079"
-        modImplementation "com.redgrapefruit.itemnbt:itemnbt:${project.itemnbt_version}"
-        include "com.redgrapefruit.itemnbt:itemnbt:${project.itemnbt_version}"
+        modImplementation "curse.maven:roughly-enough-items-310111:3498362"
+        modImplementation "curse.maven:architectury-fabric-419697:3489954"
         modImplementation "de.siphalor:nbtcrafting-1.17:2+"
 
         // PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
