@@ -48,6 +48,7 @@ public class SaltBlock extends Block {
     private static final Map<Direction, VoxelShape> field_24415;
     private static final Map<BlockState, VoxelShape> SHAPES;
     private static final Vec3f COLOR = new Vec3f(2147483647, 2147483647, 2147483647);
+    private static final Float2ObjectArrayMap<VoxelShape> SALT_SHAPE_CACHE = new Float2ObjectArrayMap<>();
 
     static {
         WIRE_CONNECTION_NORTH = Properties.NORTH_WIRE_CONNECTION;
@@ -62,7 +63,6 @@ public class SaltBlock extends Block {
     }
 
     private final BlockState dotState;
-    private static final Float2ObjectArrayMap<VoxelShape> SALT_SHAPE_CACHE = new Float2ObjectArrayMap<>();
 
     public SaltBlock(FabricBlockSettings settings) {
         super(settings);
@@ -97,6 +97,14 @@ public class SaltBlock extends Block {
         } else {
             return state.emitsRedstonePower() && dir != null;
         }
+    }
+
+    private static VoxelShape getSaltShape(float stepHeight) {
+        return SALT_SHAPE_CACHE.computeIfAbsent(stepHeight, SaltBlock::createSaltShape);
+    }
+
+    private static VoxelShape createSaltShape(double stepHeight) {
+        return Block.createCuboidShape(0, 0, 0, 16, 17 + 16 * stepHeight, 16);
     }
 
     private VoxelShape getShapeForState(BlockState state) {
@@ -168,14 +176,6 @@ public class SaltBlock extends Block {
             }
         }
         return super.getCollisionShape(state, world, pos, context);
-    }
-
-    private static VoxelShape getSaltShape(float stepHeight) {
-        return SALT_SHAPE_CACHE.computeIfAbsent(stepHeight, SaltBlock::createSaltShape);
-    }
-
-    private static VoxelShape createSaltShape(double stepHeight) {
-        return Block.createCuboidShape(0, 0, 0, 16, 17 + 16 * stepHeight, 16);
     }
 
     private BlockState method_27843(BlockView world, BlockState state, BlockPos pos) {
