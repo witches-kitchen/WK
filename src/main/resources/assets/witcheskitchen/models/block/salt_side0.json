@@ -1,6 +1,6 @@
 {
-    "parent": "witcheskitchen:block/salt_side",
-    "textures": {
-        "line": "witcheskitchen:block/salt_side0"
-    }
+  "parent": "witcheskitchen:block/salt_side",
+  "textures": {
+    "line": "witcheskitchen:block/salt_side0"
+  }
 }
