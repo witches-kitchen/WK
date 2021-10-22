@@ -28,7 +28,7 @@
         ]
       },
       "apply": {
-        "model": "minecraft:block/redstone_dust_dot"
+        "model": "witcheskitchen:block/salt_dot"
       }
     },
     {
@@ -36,7 +36,7 @@
         "north": "side|up"
       },
       "apply": {
-        "model": "minecraft:block/redstone_dust_side0"
+        "model": "witcheskitchen:block/salt_side0"
       }
     },
     {
@@ -44,7 +44,7 @@
         "south": "side|up"
       },
       "apply": {
-        "model": "minecraft:block/redstone_dust_side_alt0"
+        "model": "witcheskitchen:block/salt_side_alt0"
       }
     },
     {
@@ -52,7 +52,7 @@
         "east": "side|up"
       },
       "apply": {
-        "model": "minecraft:block/redstone_dust_side_alt1",
+        "model": "witcheskitchen:block/salt_side_alt1",
         "y": 270
       }
     },
@@ -61,7 +61,7 @@
         "west": "side|up"
       },
       "apply": {
-        "model": "minecraft:block/redstone_dust_side1",
+        "model": "witcheskitchen:block/salt_side1",
         "y": 270
       }
     },
@@ -70,7 +70,7 @@
         "north": "up"
       },
       "apply": {
-        "model": "minecraft:block/redstone_dust_up"
+        "model": "witcheskitchen:block/salt_up"
       }
     },
     {
@@ -78,7 +78,7 @@
         "east": "up"
       },
       "apply": {
-        "model": "minecraft:block/redstone_dust_up",
+        "model": "witcheskitchen:block/salt_up",
         "y": 90
       }
     },
@@ -87,7 +87,7 @@
         "south": "up"
       },
       "apply": {
-        "model": "minecraft:block/redstone_dust_up",
+        "model": "witcheskitchen:block/salt_up",
         "y": 180
       }
     },
@@ -96,7 +96,7 @@
         "west": "up"
       },
       "apply": {
-        "model": "minecraft:block/redstone_dust_up",
+        "model": "witcheskitchen:block/salt_up",
         "y": 270
       }
     }
