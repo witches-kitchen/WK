@@ -2,8 +2,8 @@
   "ambientocclusion": false,
   "textures": {
     "particle": "witcheskitchen:block/salt_dot",
-    "line": "witcheskitchen:block/salt",
-    "overlay": "witcheskitchen:block/salt"
+    "line": "witcheskitchen:block/salt_side0",
+    "overlay": "witcheskitchen:block/salt_overlay"
   },
   "elements": [
     {

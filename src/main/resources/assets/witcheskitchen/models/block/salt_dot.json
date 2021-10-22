@@ -3,7 +3,7 @@
   "textures": {
     "particle": "witcheskitchen:block/salt_dot",
     "line": "witcheskitchen:block/salt_dot",
-    "overlay": "witcheskitchen:block/salt_dot_overlay"
+    "overlay": "witcheskitchen:block/salt_overlay"
   },
   "elements": [
     {

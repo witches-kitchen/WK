@@ -44,7 +44,7 @@
         "south": "side|up"
       },
       "apply": {
-        "model": "witcheskitchen:block/salt_side_alt0"
+        "model": "witcheskitchen:block/salt_alt0"
       }
     },
     {
@@ -52,7 +52,7 @@
         "east": "side|up"
       },
       "apply": {
-        "model": "witcheskitchen:block/salt_side_alt1",
+        "model": "witcheskitchen:block/salt_alt1",
         "y": 270
       }
     },
