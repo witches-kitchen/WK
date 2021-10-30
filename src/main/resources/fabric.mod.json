@@ -12,8 +12,9 @@
     "AmyMialee"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://github.com/witches-kitchen/WK",
+    "sources": "https://github.com/witches-kitchen/WK",
+    "issues": "https://github.com/witches-kitchen/WK/issues"
   },
   "license": "MIT",
   "icon": "assets/witcheskitchen/icon.png",
@@ -37,5 +38,12 @@
   },
   "suggests": {
     "another-mod": "*"
+  },
+  "custom": {
+    "sunconure11": "https://www.patreon.com/Sunconure11",
+    "amy": "???",
+    "exo": "???",
+    "tir": "???",
+    "athene": "???"
   }
 }
