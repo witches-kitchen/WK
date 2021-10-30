@@ -34,7 +34,8 @@ public class HorrorStatusEffect extends StatusEffect {
 
     @Override
     public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
-        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 4000, 3));
+        if (!entity.hasStatusEffect(StatusEffects.BLINDNESS))
+        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 500, 3));
     }
 
     @Override
