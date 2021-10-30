@@ -14,10 +14,10 @@ import net.minecraft.world.World;
 import java.util.Random;
 
 //Todo: Work on this
-public class ParanoiaStatusEffect extends StatusEffect {
+public class HorrorStatusEffect extends StatusEffect {
     public int timer = 650;
 
-    public ParanoiaStatusEffect(StatusEffectType type, int color) {
+    public HorrorStatusEffect(StatusEffectType type, int color) {
         super(type, color);
     }
 
