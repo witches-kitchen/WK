@@ -2,6 +2,7 @@ package cf.witcheskitchen;
 
 import cf.witcheskitchen.common.registry.WKBlocks;
 import cf.witcheskitchen.common.registry.WKItems;
+import cf.witcheskitchen.common.registry.WKStatusEffects;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.item.ItemGroup;
@@ -37,5 +38,6 @@ public class WK implements ModInitializer {
         logger.info("Come with me, father, I'm to expose a heathen");
         WKBlocks.register();
         WKItems.register();
+        WKStatusEffects.register();
     }
 }

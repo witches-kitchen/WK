@@ -2,6 +2,7 @@ package cf.witcheskitchen.common.statuseffect;
 
 
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffectType;
@@ -27,8 +28,17 @@ public class HorrorStatusEffect extends StatusEffect {
     }
 
     @Override
+    public boolean canApplyUpdateEffect(int duration, int amplifier) {
+        return true;
+    }
+
+    @Override
+    public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
+        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 4000, 3));
+    }
+
+    @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 200, 4));
         Random rand = entity.getRandom();
         World world = entity.getEntityWorld();
         BlockPos pos = entity.getBlockPos();
