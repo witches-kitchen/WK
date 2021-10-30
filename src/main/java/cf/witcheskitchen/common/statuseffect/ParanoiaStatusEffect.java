@@ -35,7 +35,7 @@ public class ParanoiaStatusEffect extends StatusEffect {
         int i = rand.nextInt(100);
         if (timer > 0) timer--;
         if (i < 5 && timer == 0) {
-            switch (rand.nextInt(4)) {
+            switch (rand.nextInt(8)) {
                 case 0:
                     world.playSound(null, pos, SoundEvents.BLOCK_WOODEN_BUTTON_CLICK_ON, SoundCategory.HOSTILE, 1, 1);
                     world.playSound(null, pos, SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.HOSTILE, 1, 1);
@@ -44,6 +44,31 @@ public class ParanoiaStatusEffect extends StatusEffect {
                 case 1:
                     world.playSound(null, pos, SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.HOSTILE, 1, 1);
                     world.playSound(null, pos, SoundEvents.ENTITY_ENDERMAN_AMBIENT, SoundCategory.HOSTILE, 1, 1);
+                    timer = 650;
+                    break;
+                case 2:
+                    world.playSound(null, pos, SoundEvents.ENTITY_POLAR_BEAR_WARNING, SoundCategory.HOSTILE, 1, 1);
+                    timer = 650;
+                    break;
+                case 3:
+                    world.playSound(null, pos, SoundEvents.ENTITY_SKELETON_AMBIENT, SoundCategory.HOSTILE, 1, 1);
+                    world.playSound(null, pos, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.HOSTILE, 1, 1);
+                    timer = 650;
+                    break;
+                case 4:
+                    world.playSound(null, pos, SoundEvents.ENTITY_CREEPER_PRIMED, SoundCategory.HOSTILE, 1, 1);
+                    timer = 650;
+                    break;
+                case 5:
+                    world.playSound(null, pos, SoundEvents.ENTITY_PHANTOM_SWOOP, SoundCategory.HOSTILE, 1, 1);
+                    timer = 650;
+                    break;
+                case 6:
+                    world.playSound(null, pos, SoundEvents.ENTITY_ENDER_DRAGON_GROWL, SoundCategory.HOSTILE, 1, 1);
+                    timer = 650;
+                    break;
+                case 7:
+                    world.playSound(null, pos, SoundEvents.ENTITY_LIGHTNING_BOLT_THUNDER, SoundCategory.HOSTILE, 1, 1);
                     timer = 650;
                     break;
             }
