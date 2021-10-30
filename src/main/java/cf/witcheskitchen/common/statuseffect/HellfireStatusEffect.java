@@ -21,7 +21,7 @@ public class HellfireStatusEffect extends StatusEffect {
 
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-        if (!entity.isOnFire()) {
+        if (!entity.isOnFire() && !entity.isFireImmune()) {
             entity.setOnFireFor(10);
         }
     }
