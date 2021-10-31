@@ -1,14 +1,11 @@
 package cf.witcheskitchen.common.statuseffect;
 
-import cf.witcheskitchen.common.registry.WKStatusEffects;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffectType;
 import net.minecraft.entity.effect.StatusEffects;
-
-import java.util.Random;
 
 //Todo: Learn shaders
 public class DrunkStatusEffect extends StatusEffect {
@@ -35,6 +32,9 @@ public class DrunkStatusEffect extends StatusEffect {
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
         if (drunkTimer > 0) drunkTimer--;
+        if (amplifier == 1) {
+            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 2000, 1));
+        }
         if (amplifier == 2) {
             entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 4000, 2));
             entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 4000, 2));
