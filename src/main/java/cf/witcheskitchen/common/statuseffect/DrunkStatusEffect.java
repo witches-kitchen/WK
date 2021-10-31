@@ -9,7 +9,6 @@ import net.minecraft.entity.effect.StatusEffects;
 
 //Todo: Learn shaders
 public class DrunkStatusEffect extends StatusEffect {
-    public int drunkTimer = 1500;
 
     public DrunkStatusEffect(StatusEffectType type, int color) {
         super(type, color);
@@ -31,7 +30,6 @@ public class DrunkStatusEffect extends StatusEffect {
 
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-        if (drunkTimer > 0) drunkTimer--;
         if (amplifier == 1) {
             entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 2000, 1));
         }
@@ -43,6 +41,15 @@ public class DrunkStatusEffect extends StatusEffect {
             entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 6000, 3));
             entity.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 6000, 3));
             entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 6000, 3));
+        }
+    }
+
+    @Override
+    public void onRemoved(LivingEntity entity, AttributeContainer attributes, int amplifier) {
+        int i = 1;
+        if (amplifier >= 1) {
+            int sum = amplifier - i;
+            applyUpdateEffect(entity, sum);
         }
     }
 }
