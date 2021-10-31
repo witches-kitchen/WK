@@ -46,10 +46,6 @@ public class DrunkStatusEffect extends StatusEffect {
 
     @Override
     public void onRemoved(LivingEntity entity, AttributeContainer attributes, int amplifier) {
-        int i = 1;
-        if (amplifier >= 1) {
-            int sum = amplifier - i;
-            applyUpdateEffect(entity, sum);
         }
     }
 }
