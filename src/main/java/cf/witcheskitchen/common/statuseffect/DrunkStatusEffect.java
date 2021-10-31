@@ -45,6 +45,7 @@ public class DrunkStatusEffect extends StatusEffect {
         }
     }
 
+    //NOTICE: Values are not final! These will change once the alcohol system is fully functional
     @Override
     public void onRemoved(LivingEntity entity, AttributeContainer attributes, int amplifier) {
         if (amplifier >= 3) {
