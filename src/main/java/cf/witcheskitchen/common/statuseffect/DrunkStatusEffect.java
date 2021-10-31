@@ -24,6 +24,11 @@ public class DrunkStatusEffect extends StatusEffect {
     }
 
     @Override
+    public boolean isBeneficial() {
+        return false;
+    }
+
+    @Override
     public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
         Random rand = entity.getRandom();
         int i = rand.nextInt(500);
