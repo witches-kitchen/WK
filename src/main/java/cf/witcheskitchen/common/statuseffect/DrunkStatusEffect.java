@@ -1,5 +1,6 @@
 package cf.witcheskitchen.common.statuseffect;
 
+import cf.witcheskitchen.common.registry.WKStatusEffects;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.StatusEffect;
@@ -46,5 +47,14 @@ public class DrunkStatusEffect extends StatusEffect {
 
     @Override
     public void onRemoved(LivingEntity entity, AttributeContainer attributes, int amplifier) {
+        if (amplifier >= 3) {
+            entity.addStatusEffect(new StatusEffectInstance(WKStatusEffects.DRUNK, 3000, 2));
+        }
+        if (amplifier == 2) {
+            entity.addStatusEffect(new StatusEffectInstance(WKStatusEffects.DRUNK, 2000, 1));
+        }
+        if (amplifier == 1) {
+            entity.addStatusEffect(new StatusEffectInstance(WKStatusEffects.DRUNK, 1000, 0));
+        }
     }
 }
