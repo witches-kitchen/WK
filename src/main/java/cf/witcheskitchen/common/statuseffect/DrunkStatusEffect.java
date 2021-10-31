@@ -32,7 +32,7 @@ public class DrunkStatusEffect extends StatusEffect {
 
         entity.hasStatusEffect(WKStatusEffects.DRUNK);
         {
-            if (i < 50 && drunkTimer >= 1499) {
+            if (i < 50 && drunkTimer < 1499) {
                 drunkTimer = 1500;
                 applyUpdateEffect(entity, sum);
             }
