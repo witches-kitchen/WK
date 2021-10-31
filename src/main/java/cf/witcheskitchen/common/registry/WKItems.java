@@ -23,11 +23,13 @@ public class WKItems {
 
     static Item DOLLOP_OF_FROSTING = new Item(new FabricItemSettings().food(WKFoodComponents.FROSTING).group(WK.WK_GROUP));
     static Item CHOCOLATE_RUM_BALLS = new Item(new FabricItemSettings().food(WKFoodComponents.RUM_BALLS).group(WK.WK_GROUP));
+    static Item SUPER_BOOZE = new Item(new FabricItemSettings().food(WKFoodComponents.SUPER_BOOZE).group(WK.WK_GROUP));
 
     public static void register() {
         registerItem("belladonna_seeds", BELLADONNA_SEEDS);
         registerItem("dollop_of_frosting", DOLLOP_OF_FROSTING);
         registerItem("chocolate_rum_balls", CHOCOLATE_RUM_BALLS);
+        registerItem("super_booze", SUPER_BOOZE);
     }
 
     public static void registerItem(String id, Item item) {
