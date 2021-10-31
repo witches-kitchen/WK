@@ -46,6 +46,5 @@ public class DrunkStatusEffect extends StatusEffect {
 
     @Override
     public void onRemoved(LivingEntity entity, AttributeContainer attributes, int amplifier) {
-        }
     }
 }
