@@ -25,10 +25,6 @@ public class DrunkStatusEffect extends StatusEffect {
         return false;
     }
 
-    @Override
-    public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
-    }
-
     //Todo: Increment to a max of level 4 if one drinks too much
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
