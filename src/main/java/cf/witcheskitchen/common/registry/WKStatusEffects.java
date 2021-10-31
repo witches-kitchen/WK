@@ -1,6 +1,7 @@
 package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WK;
+import cf.witcheskitchen.common.statuseffect.FrostbiteStatusEffect;
 import cf.witcheskitchen.common.statuseffect.HellfireStatusEffect;
 import cf.witcheskitchen.common.statuseffect.HorrorStatusEffect;
 import net.minecraft.entity.effect.StatusEffect;
@@ -16,6 +17,7 @@ public class WKStatusEffects {
 
     public static final StatusEffect HORROR = create("horror", new HorrorStatusEffect(StatusEffectType.HARMFUL, 0x555D50));
     public static final StatusEffect HELLFIRE = create("hellfire", new HellfireStatusEffect(StatusEffectType.HARMFUL, 0xA91101));
+    public static final StatusEffect FROSTBITE = create("frostbite", new FrostbiteStatusEffect(StatusEffectType.HARMFUL, 0xAFDBF5));
 
     private static <T extends StatusEffect> T create(String name, T effect) {
         STATUS_EFFECTS.put(effect, new Identifier(WK.MODID, name));
