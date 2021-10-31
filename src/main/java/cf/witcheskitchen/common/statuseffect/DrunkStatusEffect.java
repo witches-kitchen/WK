@@ -30,23 +30,15 @@ public class DrunkStatusEffect extends StatusEffect {
 
     @Override
     public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
-        Random rand = entity.getRandom();
-        int i = rand.nextInt(500);
-        int j = 1;
-        int sum = j + amplifier;
-
-        entity.hasStatusEffect(WKStatusEffects.DRUNK);
-        {
-            if (i < 50 && drunkTimer < 1499) {
-                drunkTimer = 1500;
-                applyUpdateEffect(entity, sum);
-            }
-        }
     }
 
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
         if (drunkTimer > 0) drunkTimer--;
+        if (amplifier == 2) {
+            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 4000, 2));
+            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 4000, 2));
+        }
         if (amplifier >= 3) {
             entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 6000, 3));
             entity.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 6000, 3));
