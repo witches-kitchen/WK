@@ -1,10 +1,7 @@
 package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WK;
-import cf.witcheskitchen.common.statuseffect.DrunkStatusEffect;
-import cf.witcheskitchen.common.statuseffect.FrostbiteStatusEffect;
-import cf.witcheskitchen.common.statuseffect.HellfireStatusEffect;
-import cf.witcheskitchen.common.statuseffect.HorrorStatusEffect;
+import cf.witcheskitchen.common.statuseffect.*;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectType;
 import net.minecraft.util.Identifier;
@@ -20,6 +17,7 @@ public class WKStatusEffects {
     public static final StatusEffect HELLFIRE = create("hellfire", new HellfireStatusEffect(StatusEffectType.HARMFUL, 0xA91101));
     public static final StatusEffect FROSTBITE = create("frostbite", new FrostbiteStatusEffect(StatusEffectType.HARMFUL, 0xAFDBF5));
     public static final StatusEffect DRUNK = create("drunk", new DrunkStatusEffect(StatusEffectType.NEUTRAL, 0x7B3F00));
+    public static final StatusEffect FIRE_SHIELD = create("fire_shield", new FireShieldStatusEffect(StatusEffectType.BENEFICIAL, 0xAF28500));
 
     private static <T extends StatusEffect> T create(String name, T effect) {
         STATUS_EFFECTS.put(effect, new Identifier(WK.MODID, name));
