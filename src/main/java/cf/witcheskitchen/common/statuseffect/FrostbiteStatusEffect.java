@@ -33,5 +33,8 @@ public class FrostbiteStatusEffect extends StatusEffect {
         if (entity.hasStatusEffect(WKStatusEffects.HELLFIRE)) {
             entity.removeStatusEffect(WKStatusEffects.HELLFIRE);
         }
+        if (entity.hasStatusEffect(WKStatusEffects.FIRE_SHIELD)) {
+            entity.removeStatusEffect(WKStatusEffects.FIRE_SHIELD);
+        }
     }
 }
