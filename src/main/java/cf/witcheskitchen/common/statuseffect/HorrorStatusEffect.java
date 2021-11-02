@@ -42,7 +42,7 @@ public class HorrorStatusEffect extends StatusEffect {
         int i = rand.nextInt(100);
         if (timer > 0) timer--;
         if (i < 5 && timer == 0) {
-            switch (rand.nextInt(15)) {
+            switch (rand.nextInt(17)) {
                 case 0 -> {
                     world.playSound(null, pos, SoundEvents.BLOCK_WOODEN_BUTTON_CLICK_ON, SoundCategory.HOSTILE, 1, 1);
                     world.playSound(null, pos, SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.HOSTILE, 1, 1);
@@ -166,6 +166,24 @@ public class HorrorStatusEffect extends StatusEffect {
                 }
                 case 13 -> {
                     world.playSound(null, pos, SoundEvents.ENTITY_STRAY_AMBIENT, SoundCategory.HOSTILE, 1, 1);
+                    if (amplifier == 0) {
+                        timer = 650;
+                    }
+                    if (amplifier >= 1) {
+                        timer = 350;
+                    }
+                }
+                case 14 -> {
+                    world.playSound(null, pos, SoundEvents.ITEM_HONEY_BOTTLE_DRINK, SoundCategory.HOSTILE, 1, 1);
+                    if (amplifier == 0) {
+                        timer = 650;
+                    }
+                    if (amplifier >= 1) {
+                        timer = 350;
+                    }
+                }
+                case 15 -> {
+                    world.playSound(null, pos, SoundEvents.BLOCK_STONE_BREAK, SoundCategory.HOSTILE, 1, 1);
                     if (amplifier == 0) {
                         timer = 650;
                     }
