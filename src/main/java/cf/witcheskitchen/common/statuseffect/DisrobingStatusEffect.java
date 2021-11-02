@@ -30,11 +30,12 @@ public class DisrobingStatusEffect extends StatusEffect {
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
         Random rand = entity.getRandom();
-        List<ItemStack> list = new ArrayList<>();
-        entity.getEquippedStack(EquipmentSlot.FEET).decrement(1);
-        entity.getEquippedStack(EquipmentSlot.LEGS).decrement(1);
-        entity.getEquippedStack(EquipmentSlot.CHEST).decrement(1);
-        entity.getEquippedStack(EquipmentSlot.HEAD).decrement(1);
+        List<ItemStack> list = new ArrayList<>(); {
+            entity.getEquippedStack(EquipmentSlot.FEET).decrement(1);
+            entity.getEquippedStack(EquipmentSlot.LEGS).decrement(1);
+            entity.getEquippedStack(EquipmentSlot.CHEST).decrement(1);
+            entity.getEquippedStack(EquipmentSlot.HEAD).decrement(1);
+        }
 
     }
 }
