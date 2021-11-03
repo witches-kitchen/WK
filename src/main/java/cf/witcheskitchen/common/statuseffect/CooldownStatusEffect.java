@@ -15,5 +15,8 @@ public class CooldownStatusEffect extends StatusEffect {
         if (entity.hasStatusEffect(WKStatusEffects.DISROBING)) {
             entity.removeStatusEffect(WKStatusEffects.DISROBING);
         }
+        if (entity.hasStatusEffect(WKStatusEffects.GROWTH)) {
+            entity.removeStatusEffect(WKStatusEffects.GROWTH);
+        }
     }
 }
