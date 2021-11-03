@@ -4,10 +4,7 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectType;
-import net.minecraft.item.ItemStack;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class DisrobingStatusEffect extends StatusEffect {
@@ -30,11 +27,12 @@ public class DisrobingStatusEffect extends StatusEffect {
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
         Random rand = entity.getRandom();
-        List<ItemStack> list = new ArrayList<>(); {
-            entity.getEquippedStack(EquipmentSlot.FEET).decrement(1);
-            entity.getEquippedStack(EquipmentSlot.LEGS).decrement(1);
-            entity.getEquippedStack(EquipmentSlot.CHEST).decrement(1);
-            entity.getEquippedStack(EquipmentSlot.HEAD).decrement(1);
+        int i = rand.nextInt(100);
+        if (i < 25 && percentage <= 25) {
+            switch (rand.nextInt(5)) {
+                entity.dropItem(entity.getEquippedStack(EquipmentSlot.HEAD), 1);
+                percentage = 26;
+            }
         }
 
     }
