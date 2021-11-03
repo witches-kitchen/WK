@@ -19,7 +19,7 @@ public class WKStatusEffects {
     public static final StatusEffect DRUNK = create("drunk", new DrunkStatusEffect(StatusEffectType.NEUTRAL, 0x7B3F00));
     public static final StatusEffect FIRE_SHIELD = create("fire_shield", new FireShieldStatusEffect(StatusEffectType.BENEFICIAL, 0xAF28500));
     public static final StatusEffect DISROBING = create("disrobing", new DisrobingStatusEffect(StatusEffectType.HARMFUL, 0xFDF5E6));
-    public static final StatusEffect COOLDOWN = create("cooldown", new CooldownStatusEffect(StatusEffectType.NEUTRAL, 0xFDF5E6));
+    public static final StatusEffect COOLDOWN = create("cooldown", new CooldownStatusEffect(StatusEffectType.NEUTRAL, 0x1F75FE));
 
     private static <T extends StatusEffect> T create(String name, T effect) {
         STATUS_EFFECTS.put(effect, new Identifier(WK.MODID, name));
