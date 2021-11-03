@@ -8,7 +8,7 @@ import net.minecraft.entity.effect.StatusEffectType;
 import java.util.Random;
 
 public class DisrobingStatusEffect extends StatusEffect {
-    int percentage = 25;
+    public int percentage = 25;
 
     public DisrobingStatusEffect(StatusEffectType type, int color) {
         super(type, color);
@@ -29,9 +29,11 @@ public class DisrobingStatusEffect extends StatusEffect {
         Random rand = entity.getRandom();
         int i = rand.nextInt(100);
         if (i < 25 && percentage <= 25) {
-            switch (rand.nextInt(5)) {
-                entity.dropItem(entity.getEquippedStack(EquipmentSlot.HEAD), 1);
-                percentage = 26;
+            switch (rand.nextInt(4)) {
+                case 0 -> {
+                    entity.dropItem(entity.getEquippedStack(EquipmentSlot.HEAD), 1);
+                    percentage = 26;
+                }
             }
         }
 
