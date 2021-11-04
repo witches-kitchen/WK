@@ -1,18 +1,17 @@
 package cf.witcheskitchen.common.statuseffect;
 
-import cf.witcheskitchen.common.registry.WKStatusEffects;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectType;
 
-public class CorrosionStatusEffect extends StatusEffect {
-    public CorrosionStatusEffect(StatusEffectType type, int color) {
+public class ReinforcementStatusEffect extends StatusEffect {
+    public ReinforcementStatusEffect(StatusEffectType type, int color) {
         super(type, color);
     }
 
     @Override
     public boolean isBeneficial() {
-        return false;
+        return true;
     }
 
     @Override
@@ -22,8 +21,6 @@ public class CorrosionStatusEffect extends StatusEffect {
 
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-        if (entity.hasStatusEffect(WKStatusEffects.REINFORCEMENT)) {
-            entity.removeStatusEffect(WKStatusEffects.REINFORCEMENT);
-        }
+        super.applyUpdateEffect(entity, amplifier);
     }
 }
