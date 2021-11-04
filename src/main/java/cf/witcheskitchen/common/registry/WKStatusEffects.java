@@ -21,6 +21,7 @@ public class WKStatusEffects {
     public static final StatusEffect DISROBING = create("disrobing", new DisrobingStatusEffect(StatusEffectType.HARMFUL, 0xFDF5E6));
     public static final StatusEffect COOLDOWN = create("cooldown", new CooldownStatusEffect(StatusEffectType.NEUTRAL, 0x1F75FE));
     public static final StatusEffect GROWTH = create("growth", new GrowthStatusEffect(StatusEffectType.BENEFICIAL, 0x4F7942));
+    public static final StatusEffect LOVE = create("love", new LoveStatusEffect(StatusEffectType.BENEFICIAL, 0xFFB7C5));
 
     private static <T extends StatusEffect> T create(String name, T effect) {
         STATUS_EFFECTS.put(effect, new Identifier(WK.MODID, name));
