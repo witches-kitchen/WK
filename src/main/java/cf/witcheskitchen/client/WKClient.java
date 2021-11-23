@@ -12,9 +12,6 @@ public class WKClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         BlockRenderLayerMap.INSTANCE.putBlock(WKBlocks.SALT_BLOCK, RenderLayer.getCutoutMipped());
-        EntityRendererRegistry.register(WKEntities.CUSITH, (context) ->
-        {
-            return new CuSithRender(context);
-        });
+        EntityRendererRegistry.register(WKEntities.CUSITH, CuSithRender::new);
     }
 }
