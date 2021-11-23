@@ -37,7 +37,6 @@ public class WK implements ModInitializer {
         logger.info("I hear her in the wind, the bane of our town");
         logger.info("Come with me, father, I'm to expose a heathen");
         WKBlocks.register();
-        WKEntities.register();
         WKItems.register();
         WKStatusEffects.register();
     }
