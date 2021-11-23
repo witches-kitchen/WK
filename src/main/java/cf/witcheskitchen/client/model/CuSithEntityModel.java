@@ -11,17 +11,17 @@ import net.minecraft.entity.Entity;
 
 public class CuSithEntityModel<T extends Entity> extends EntityModel<T> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-    private final ModelPart cu_sith;
+    private final ModelPart root;
 
     public CuSithEntityModel(ModelPart root) {
-        this.cu_sith = root.getChild("cu_sith");
+        this.root = root.getChild("root");
     }
 
     public static TexturedModelData getTexturedModelData() {
         ModelData data = new ModelData();
-        ModelPartData cu_sith = data.getRoot();
+        ModelPartData root = data.getRoot();
 
-        ModelPartData upperBody = cu_sith.addChild("upperBody", ModelPartBuilder.create().uv(0, 0).cuboid(-4.0F, 2.0F, -4.0F, 8.0F, 6.0F, 7.0F, new Dilation(0.0F))
+        ModelPartData upperBody = root.addChild("upperBody", ModelPartBuilder.create().uv(0, 0).cuboid(-4.0F, 2.0F, -4.0F, 8.0F, 6.0F, 7.0F, new Dilation(0.0F))
                 .uv(34, 55).cuboid(-4.0F, 0.0F, -4.0F, 8.0F, 2.0F, 7.0F, new Dilation(0.0F))
                 .uv(24, 13).cuboid(-4.0F, 2.0F, 3.0F, 8.0F, 6.0F, 2.0F, new Dilation(0.0F)), ModelTransform.of(-1.0F, -9.0F, 2.0F, -1.5708F, 0.0F, 0.0F));
 
@@ -36,7 +36,7 @@ public class CuSithEntityModel<T extends Entity> extends EntityModel<T> {
         ModelPartData ear0 = head.addChild("ear0", ModelPartBuilder.create().uv(41, 5).cuboid(-1.0F, 0.0F, -1.5F, 1.0F, 5.0F, 3.0F, new Dilation(0.0F))
                 .uv(56, 0).cuboid(-1.0F, 5.0F, -1.5F, 1.0F, 2.0F, 3.0F, new Dilation(0.0F)), ModelTransform.rotation(-3.0F, -2.0F, -2.0F));
 
-        ModelPartData body = cu_sith.addChild("body", ModelPartBuilder.create().uv(0, 13).cuboid(-4.0F, -2.0F, -3.0F, 6.0F, 9.0F, 6.0F, new Dilation(0.0F))
+        ModelPartData body = root.addChild("body", ModelPartBuilder.create().uv(0, 13).cuboid(-4.0F, -2.0F, -3.0F, 6.0F, 9.0F, 6.0F, new Dilation(0.0F))
                 .uv(0, 28).cuboid(-4.0F, -2.0F, -5.0F, 6.0F, 9.0F, 2.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, -9.0F, 2.0F, 1.5708F, 0.0F, 0.0F));
 
         ModelPartData tail = body.addChild("tail", ModelPartBuilder.create().uv(0, 39).cuboid(-1.0F, 0.0F, -2.0F, 2.0F, 8.0F, 2.0F, new Dilation(0.0F))
@@ -55,7 +55,7 @@ public class CuSithEntityModel<T extends Entity> extends EntityModel<T> {
 
     @Override
     public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
-        cu_sith.render(matrices, vertices, light, overlay, red, green, blue, alpha);
+        root.render(matrices, vertices, light, overlay, red, green, blue, alpha);
     }
 
     @Override
