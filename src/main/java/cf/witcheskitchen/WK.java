@@ -1,6 +1,7 @@
 package cf.witcheskitchen;
 
 import cf.witcheskitchen.common.registry.WKBlocks;
+import cf.witcheskitchen.common.registry.WKEntities;
 import cf.witcheskitchen.common.registry.WKItems;
 import cf.witcheskitchen.common.registry.WKStatusEffects;
 import net.fabricmc.api.ModInitializer;
@@ -11,9 +12,11 @@ import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import software.bernie.geckolib3.GeckoLib;
 
 public class WK implements ModInitializer {
     public static final String MODID = "witcheskitchen";
+    public static WKEntities MOBS;
     public static final Logger logger = LogManager.getLogger(MODID);
 
     public static final ItemGroup WK_GROUP = FabricItemGroupBuilder.create(
@@ -39,5 +42,7 @@ public class WK implements ModInitializer {
         WKBlocks.register();
         WKItems.register();
         WKStatusEffects.register();
+        GeckoLib.initialize();
+        MOBS = new WKEntities();
     }
 }
