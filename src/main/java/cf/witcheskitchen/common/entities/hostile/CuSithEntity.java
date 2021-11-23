@@ -1,6 +1,5 @@
 package cf.witcheskitchen.common.entities.hostile;
 
-import cf.witcheskitchen.api.WKCreatureTypeEnum;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
@@ -62,7 +61,7 @@ public class CuSithEntity extends WKHostileEntity implements Monster, IAnimatabl
     }
 
     public int getVariant() {
-        return MathHelper.clamp((Integer) this.dataTracker.get(VARIANT), 1, 2);
+        return MathHelper.clamp(this.dataTracker.get(VARIANT), 1, 6);
     }
 
     public void setVariant(int variant) {
