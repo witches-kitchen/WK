@@ -10,7 +10,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 
 public class CuSithEntityModel<T extends Entity> extends EntityModel<T> {
-    // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
+    // This was done for nothing. God fucking damnit.
     private final ModelPart root;
 
     public CuSithEntityModel(ModelPart root) {

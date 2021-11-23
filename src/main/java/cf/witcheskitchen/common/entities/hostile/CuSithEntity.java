@@ -15,7 +15,7 @@ public class CuSithEntity extends WKHostileEntity implements Monster, IAnimatabl
 
     @Override
     public void registerControllers(AnimationData animationData) {
-        
+
     }
 
     @Override
