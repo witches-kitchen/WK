@@ -18,7 +18,6 @@ public class WK implements ModInitializer {
                     new Identifier("witcheskitchen", "general"))
             .icon(() -> new ItemStack(Items.POTION))
             .build();
-    public static WKEntities MOBS;
 
     @Override
     public void onInitialize() {
@@ -40,6 +39,6 @@ public class WK implements ModInitializer {
         WKStatusEffects.register();
         WKMobAttributes.register();
         GeckoLib.initialize();
-        MOBS = new WKEntities();
+        WKEntities.register();
     }
 }

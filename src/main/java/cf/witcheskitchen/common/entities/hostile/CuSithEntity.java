@@ -15,12 +15,17 @@ import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import java.util.SplittableRandom;
 
 public class CuSithEntity extends WKHostileEntity implements Monster, IAnimatable {
+    private final AnimationFactory factory = new AnimationFactory(this);
 
     public CuSithEntity(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
@@ -31,13 +36,18 @@ public class CuSithEntity extends WKHostileEntity implements Monster, IAnimatabl
     }
 
     @Override
-    public void registerControllers(AnimationData animationData) {
+    public void registerControllers(AnimationData data) {
+        data.addAnimationController(new AnimationController(this, "controller", 0, this::predicate));
+    }
 
+    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+        event.getController().setAnimation(new AnimationBuilder().addAnimation("run", true));
+        return PlayState.CONTINUE;
     }
 
     @Override
     public AnimationFactory getFactory() {
-        return null;
+        return this.factory;
     }
 
     @Nullable
