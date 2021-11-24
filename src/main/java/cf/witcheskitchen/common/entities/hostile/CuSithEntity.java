@@ -77,7 +77,7 @@ public class CuSithEntity extends WKHostileEntity implements Monster, IAnimatabl
 
     @Override
     public int getVariants() {
-        return 2;
+        return 6;
     }
 
     @Override
