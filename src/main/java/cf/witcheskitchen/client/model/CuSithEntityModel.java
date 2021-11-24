@@ -18,6 +18,6 @@ public class CuSithEntityModel extends AnimatedGeoModel<CuSithEntity> {
 
     @Override
     public Identifier getAnimationFileLocation(CuSithEntity animatable) {
-        return null;
+        return new Identifier(WK.MODID, "animations/cusith.json");
     }
 }
