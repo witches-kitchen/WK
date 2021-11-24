@@ -10,6 +10,7 @@ import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.Monster;
 import net.minecraft.world.World;
 
+//Credit to AzureDoom for variant code
 public abstract class WKHostileEntity extends HostileEntity implements Monster {
     public static final TrackedData<Integer> VARIANT = DataTracker.registerData(WKHostileEntity.class,
             TrackedDataHandlerRegistry.INTEGER);
