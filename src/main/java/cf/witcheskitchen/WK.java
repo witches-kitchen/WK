@@ -1,8 +1,6 @@
 package cf.witcheskitchen;
 
-import cf.witcheskitchen.common.registry.WKBlocks;
-import cf.witcheskitchen.common.registry.WKItems;
-import cf.witcheskitchen.common.registry.WKStatusEffects;
+import cf.witcheskitchen.common.registry.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.item.ItemGroup;
@@ -11,11 +9,11 @@ import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import software.bernie.geckolib3.GeckoLib;
 
 public class WK implements ModInitializer {
     public static final String MODID = "witcheskitchen";
     public static final Logger logger = LogManager.getLogger(MODID);
-
     public static final ItemGroup WK_GROUP = FabricItemGroupBuilder.create(
                     new Identifier("witcheskitchen", "general"))
             .icon(() -> new ItemStack(Items.POTION))
@@ -37,8 +35,10 @@ public class WK implements ModInitializer {
         logger.info("I hear her in the wind, the bane of our town");
         logger.info("Come with me, father, I'm to expose a heathen");
         WKBlocks.register();
-        WKEntities.register();
         WKItems.register();
         WKStatusEffects.register();
+        WKMobAttributes.register();
+        GeckoLib.initialize();
+        WKEntities.register();
     }
 }
