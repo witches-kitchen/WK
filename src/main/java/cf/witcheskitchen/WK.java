@@ -38,6 +38,7 @@ public class WK implements ModInitializer {
         WKItems.register();
         WKStatusEffects.register();
         WKMobAttributes.register();
+        WKSounds.register();
         GeckoLib.initialize();
         WKEntities.register();
     }

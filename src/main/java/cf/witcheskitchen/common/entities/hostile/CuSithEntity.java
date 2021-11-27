@@ -1,6 +1,7 @@
 package cf.witcheskitchen.common.entities.hostile;
 
 import net.minecraft.entity.EntityData;
+import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -9,11 +10,14 @@ import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.Monster;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+
+import cf.witcheskitchen.common.registry.WKSounds;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -24,9 +28,11 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import java.util.SplittableRandom;
 
-public class CuSithEntity extends WKHostileEntity implements Monster, IAnimatable {
+public class CuSithEntity extends WKHostileEntity implements IAnimatable {
+    
     private final AnimationFactory factory = new AnimationFactory(this);
 
+    
     public CuSithEntity(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -40,6 +46,7 @@ public class CuSithEntity extends WKHostileEntity implements Monster, IAnimatabl
         data.addAnimationController(new AnimationController(this, "controller", 0, this::predicate));
     }
 
+    
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         event.getController().setAnimation(new AnimationBuilder().addAnimation("run", true));
         return PlayState.CONTINUE;
@@ -58,7 +65,8 @@ public class CuSithEntity extends WKHostileEntity implements Monster, IAnimatabl
         this.setVariant(var);
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
-
+    
+    
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
@@ -81,6 +89,7 @@ public class CuSithEntity extends WKHostileEntity implements Monster, IAnimatabl
         return MathHelper.clamp(this.dataTracker.get(VARIANT), 1, 6);
     }
 
+
     public void setVariant(int variant) {
         this.dataTracker.set(VARIANT, variant);
     }
@@ -88,6 +97,20 @@ public class CuSithEntity extends WKHostileEntity implements Monster, IAnimatabl
     @Override
     public int getVariants() {
         return 6;
+    }
+
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return WKSounds.CUSITH_IDLE_EVENT;
+    }
+
+    @Override
+    protected SoundEvent getDeathSound(){
+        return WKSounds.CUSITH_DEATH_EVENT;
+    }
+
+    protected int getInterval(PathAwareEntity mob) {
+        return 1;
     }
 
     @Override
