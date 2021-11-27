@@ -1,12 +1,14 @@
 {
-    "cusith_idle":{
+    "cusith_ambient":{
         "sounds":[
-            "witcheskitchen:cusith_idle1"
+            "witcheskitchen:cusith_amb1",
+            "witcheskitchen:cusith_amb2"
         ]
     },
     "cusith_death":{
         "sounds":[
-            "witcheskitchen:cusith_death1"
+            "witcheskitchen:cusith_death1",
+            "witcheskitchen:cusith_death2"
         ]
     }
 
