@@ -7,7 +7,7 @@ import net.minecraft.util.registry.Registry;
 public class WKSounds {
     
     // Cu-Sith 
-    public static SoundEvent CUSITH_IDLE_EVENT = register("witcheskitchen:cusith_idle"); 
+    public static SoundEvent CUSITH_IDLE_EVENT = register("witcheskitchen:cusith_ambient"); 
     public static SoundEvent CUSITH_DEATH_EVENT = register("witcheskitchen:cusith_death");
 
     
