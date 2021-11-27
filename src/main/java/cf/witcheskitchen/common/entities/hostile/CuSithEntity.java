@@ -1,19 +1,25 @@
 package cf.witcheskitchen.common.entities.hostile;
 
 import net.minecraft.entity.EntityData;
+import net.minecraft.entity.mob.PathAwareEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.mob.Monster;
+//import net.minecraft.entity.mob.Monster;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+
+import cf.witcheskitchen.common.registry.WKSounds;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -24,9 +30,11 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import java.util.SplittableRandom;
 
-public class CuSithEntity extends WKHostileEntity implements Monster, IAnimatable {
+public class CuSithEntity extends WKHostileEntity implements IAnimatable {
+    
     private final AnimationFactory factory = new AnimationFactory(this);
 
+    
     public CuSithEntity(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -35,11 +43,27 @@ public class CuSithEntity extends WKHostileEntity implements Monster, IAnimatabl
         return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 20).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 3).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.65);
     }
 
+    //code for the below two groups inspired by or modified from grizzly bear mod, capybara mod, and adventurez mod
+   /* public static DefaultAttributeContainer.Builder createCuSithAttributes() {
+        return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 55.0D).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.85D)
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 6.0D).add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 2.2D).add(EntityAttributes.GENERIC_FOLLOW_RANGE, 46.0D);
+    }*/
+
+    protected void initGoals() {
+        super.initGoals();
+        this.goalSelector.add(0, new EscapeDangerGoal(this, 2.0d));
+        this.goalSelector.add(1, new WanderAroundGoal(this, 0.85D));
+        this.goalSelector.add(2, new LookAtEntityGoal(this, PlayerEntity.class, 6.0f));
+        this.goalSelector.add(3, new FollowTargetGoal<>(this, PlayerEntity.class, true));
+        this.targetSelector.add(1, (new FollowTargetGoal<>(this, PlayerEntity.class, true)).setMaxTimeWithoutVisibility(300));//from grizzly bear mod
+    }
+
     @Override
     public void registerControllers(AnimationData data) {
         data.addAnimationController(new AnimationController(this, "controller", 0, this::predicate));
     }
 
+    
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         event.getController().setAnimation(new AnimationBuilder().addAnimation("run", true));
         return PlayState.CONTINUE;
@@ -58,7 +82,8 @@ public class CuSithEntity extends WKHostileEntity implements Monster, IAnimatabl
         this.setVariant(var);
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
-
+    
+    
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
@@ -81,6 +106,7 @@ public class CuSithEntity extends WKHostileEntity implements Monster, IAnimatabl
         return MathHelper.clamp(this.dataTracker.get(VARIANT), 1, 6);
     }
 
+
     public void setVariant(int variant) {
         this.dataTracker.set(VARIANT, variant);
     }
@@ -88,6 +114,20 @@ public class CuSithEntity extends WKHostileEntity implements Monster, IAnimatabl
     @Override
     public int getVariants() {
         return 6;
+    }
+
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return WKSounds.CUSITH_IDLE_EVENT;
+    }
+
+    @Override
+    protected SoundEvent getDeathSound(){
+        return WKSounds.CUSITH_DEATH_EVENT;
+    }
+
+    protected int getInterval(PathAwareEntity mob) {
+        return 1;
     }
 
     @Override
