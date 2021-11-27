@@ -1,16 +1,19 @@
 package cf.witcheskitchen.common.entities.hostile;
 
+import cf.witcheskitchen.common.registry.WKSounds;
 import net.minecraft.entity.EntityData;
-import net.minecraft.entity.mob.PathAwareEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.ai.goal.EscapeDangerGoal;
+import net.minecraft.entity.ai.goal.FollowTargetGoal;
+import net.minecraft.entity.ai.goal.LookAtEntityGoal;
+import net.minecraft.entity.ai.goal.WanderAroundGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
-//import net.minecraft.entity.mob.Monster;
+import net.minecraft.entity.mob.PathAwareEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.MathHelper;
@@ -18,8 +21,6 @@ import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-
-import cf.witcheskitchen.common.registry.WKSounds;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -31,10 +32,10 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import java.util.SplittableRandom;
 
 public class CuSithEntity extends WKHostileEntity implements IAnimatable {
-    
+
     private final AnimationFactory factory = new AnimationFactory(this);
 
-    
+
     public CuSithEntity(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -63,7 +64,7 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
         data.addAnimationController(new AnimationController(this, "controller", 0, this::predicate));
     }
 
-    
+
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         event.getController().setAnimation(new AnimationBuilder().addAnimation("run", true));
         return PlayState.CONTINUE;
@@ -82,8 +83,8 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
         this.setVariant(var);
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
-    
-    
+
+
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
@@ -122,7 +123,7 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
     }
 
     @Override
-    protected SoundEvent getDeathSound(){
+    protected SoundEvent getDeathSound() {
         return WKSounds.CUSITH_DEATH_EVENT;
     }
 
