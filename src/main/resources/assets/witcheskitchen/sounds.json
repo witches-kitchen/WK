@@ -1,0 +1,13 @@
+{
+    "cusith_idle":{
+        "sounds":[
+            "witcheskitchen:cusith_idle1"
+        ]
+    },
+    "cusith_death":{
+        "sounds":[
+            "witcheskitchen:cusith_death1"
+        ]
+    }
+
+}
