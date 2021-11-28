@@ -46,12 +46,6 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
         return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 20).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 3).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.45);
     }
 
-    //code for the below two groups inspired by or modified from grizzly bear mod, capybara mod, and adventurez mod
-   /* public static DefaultAttributeContainer.Builder createCuSithAttributes() {
-        return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 55.0D).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.85D)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 6.0D).add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 2.2D).add(EntityAttributes.GENERIC_FOLLOW_RANGE, 46.0D);
-    }*/
-
     protected void initGoals() {
         super.initGoals();
         this.goalSelector.add(0, new EscapeDangerGoal(this, 2.0d));
