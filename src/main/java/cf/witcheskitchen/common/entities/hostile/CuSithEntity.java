@@ -43,16 +43,21 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
     }
 
     public static DefaultAttributeContainer.Builder createAttributes() {
-        return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 20).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 3).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.45);
+        return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 20.0D).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 3.0d).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.45d);
     }
 
+    @Override //this adds basic ai
     protected void initGoals() {
         super.initGoals();
-        this.goalSelector.add(0, new EscapeDangerGoal(this, 2.0d));
-        this.goalSelector.add(1, new WanderAroundGoal(this, 0.85D));
+        this.goalSelector.add(0, new SwimGoal(this)); //need to make this the ability to walk on the body of water's floor. 
+        this.goalSelector.add(1, new WanderNearTargetGoal(this, 0.85d, 400));
         this.goalSelector.add(2, new LookAtEntityGoal(this, PlayerEntity.class, 6.0f));
-        this.goalSelector.add(3, new FollowTargetGoal<>(this, PlayerEntity.class, true));
-        this.targetSelector.add(1, (new FollowTargetGoal<>(this, PlayerEntity.class, true)).setMaxTimeWithoutVisibility(300));//from grizzly bear mod
+        this.goalSelector.add(3, new WanderAroundGoal(this, 0.85D));
+        this.goalSelector.add(4, new StopAndLookAtEntityGoal(this, MobEntity.class, 2.0f, 0.8f));
+        //this.goalSelector.add(5, new MeleeAttackGoal(this, 1.25D, true)); //will implement basic attack goal, but still breaks game
+        this.targetSelector.add(1, (new RevengeGoal(this, new Class[] { WolfEntity.class })));
+        this.targetSelector.add(2, (new RevengeGoal(this, new Class[] { CuSithEntity.class })));
+        this.targetSelector.add(3, (new FollowTargetGoal<>(this, PlayerEntity.class, true)).setMaxTimeWithoutVisibility(400));//from grizzly bear mod
     }
 
     @Override
@@ -64,6 +69,10 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         if (event.isMoving() && !this.isSwimming()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("run", true));
+            return PlayState.CONTINUE;
+        }
+        if (!event.isMoving() && !this.isSwimming()){
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
             return PlayState.CONTINUE;
         }
         return PlayState.STOP;
@@ -121,6 +130,7 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
         return 6;
     }
 
+    //to-do: add subtitle info
     @Override
     protected SoundEvent getAmbientSound() {
         return WKSounds.CUSITH_IDLE_EVENT;
@@ -129,6 +139,11 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
     @Override
     protected SoundEvent getDeathSound() {
         return WKSounds.CUSITH_DEATH_EVENT;
+    }
+    
+    @Override
+    protected void playStepSound(BlockPos pos, BlockState state) {
+        this.playSound(SoundEvents.ENTITY_WOLF_STEP, 0.5F, 0.7F);
     }
 
     protected int getInterval(PathAwareEntity mob) {
