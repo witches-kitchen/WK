@@ -3,21 +3,17 @@ package cf.witcheskitchen.common.entities.hostile;
 import cf.witcheskitchen.common.registry.WKSounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityData;
-import net.minecraft.entity.mob.PathAwareEntity;
-import net.minecraft.entity.passive.WolfEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.Fluid;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.*;
-//import net.minecraft.entity.ai.*;
-//import net.minecraft.entity.ai.brain.task.*;
-//import net.minecraft.entity.ai.pathing.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
-//import net.minecraft.entity.mob.Monster;
+import net.minecraft.entity.mob.PathAwareEntity;
+import net.minecraft.entity.passive.WolfEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
@@ -60,8 +56,8 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
         this.goalSelector.add(3, new WanderAroundGoal(this, 0.85D));
         this.goalSelector.add(4, new StopAndLookAtEntityGoal(this, MobEntity.class, 2.0f, 0.8f));
         //this.goalSelector.add(5, new MeleeAttackGoal(this, 1.25D, true)); //will implement basic attack goal, but still breaks game
-        this.targetSelector.add(1, (new RevengeGoal(this, new Class[] { WolfEntity.class })));
-        this.targetSelector.add(2, (new RevengeGoal(this, new Class[] { CuSithEntity.class })));
+        this.targetSelector.add(1, (new RevengeGoal(this, WolfEntity.class)));
+        this.targetSelector.add(2, (new RevengeGoal(this, CuSithEntity.class)));
         this.targetSelector.add(3, (new FollowTargetGoal<>(this, PlayerEntity.class, true)).setMaxTimeWithoutVisibility(400));//from grizzly bear mod
     }
 
@@ -76,7 +72,7 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("run", true));
             return PlayState.CONTINUE;
         }
-        if (!event.isMoving() && !this.isSwimming()){
+        if (!event.isMoving() && !this.isSwimming()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
             return PlayState.CONTINUE;
         }
@@ -145,7 +141,7 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
     protected SoundEvent getDeathSound() {
         return WKSounds.CUSITH_DEATH_EVENT;
     }
-    
+
     @Override
     protected void playStepSound(BlockPos pos, BlockState state) {
         this.playSound(SoundEvents.ENTITY_WOLF_STEP, 0.5F, 0.7F);
