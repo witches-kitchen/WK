@@ -4,6 +4,7 @@ import cf.witcheskitchen.common.registry.WKSounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -45,7 +46,10 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
     }
 
     public static DefaultAttributeContainer.Builder createAttributes() {
-        return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 20.0D).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 3.0d).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.45d);
+        return LivingEntity.createLivingAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 25.0D)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.45D)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 20).add(EntityAttributes.GENERIC_ARMOR, 2.0D)
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0D).add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 0.35D);
     }
 
     @Override //this adds basic ai
@@ -55,10 +59,13 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
         this.goalSelector.add(1, new WanderNearTargetGoal(this, 0.85d, 400));
         this.goalSelector.add(2, new LookAtEntityGoal(this, PlayerEntity.class, 6.0f));
         this.goalSelector.add(3, new WanderAroundGoal(this, 0.85D));
+        this.goalSelector.add(1, new PounceAtTargetGoal(this, 0.4f));
+        this.goalSelector.add(2, new MeleeAttackGoal(this, 1, true));
         this.goalSelector.add(4, new StopAndLookAtEntityGoal(this, MobEntity.class, 2.0f, 0.8f));
         this.targetSelector.add(2, new FollowTargetGoal(this, PlayerEntity.class, true));
         this.targetSelector.add(3, new FollowTargetGoal(this, MerchantEntity.class, false));
         this.targetSelector.add(3, new FollowTargetGoal(this, IronGolemEntity.class, true));
+        this.targetSelector.add(0, new RevengeGoal(this).setGroupRevenge());
     }
 
     @Override
