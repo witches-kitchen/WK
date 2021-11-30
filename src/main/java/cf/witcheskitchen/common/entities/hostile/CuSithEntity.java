@@ -11,7 +11,8 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.PathAwareEntity;
-import net.minecraft.entity.passive.WolfEntity;
+import net.minecraft.entity.passive.IronGolemEntity;
+import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.nbt.NbtCompound;
@@ -55,10 +56,9 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
         this.goalSelector.add(2, new LookAtEntityGoal(this, PlayerEntity.class, 6.0f));
         this.goalSelector.add(3, new WanderAroundGoal(this, 0.85D));
         this.goalSelector.add(4, new StopAndLookAtEntityGoal(this, MobEntity.class, 2.0f, 0.8f));
-        //this.goalSelector.add(5, new MeleeAttackGoal(this, 1.25D, true)); //will implement basic attack goal, but still breaks game
-        this.targetSelector.add(1, (new RevengeGoal(this, WolfEntity.class)));
-        this.targetSelector.add(2, (new RevengeGoal(this, CuSithEntity.class)));
-        this.targetSelector.add(3, (new FollowTargetGoal<>(this, PlayerEntity.class, true)).setMaxTimeWithoutVisibility(400));//from grizzly bear mod
+        this.targetSelector.add(2, new FollowTargetGoal(this, PlayerEntity.class, true));
+        this.targetSelector.add(3, new FollowTargetGoal(this, MerchantEntity.class, false));
+        this.targetSelector.add(3, new FollowTargetGoal(this, IronGolemEntity.class, true));
     }
 
     @Override
