@@ -47,7 +47,7 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
 
     public static DefaultAttributeContainer.Builder createAttributes() {
         return LivingEntity.createLivingAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 25.0D)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.45D)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.35D)
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 20).add(EntityAttributes.GENERIC_ARMOR, 2.0D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0D).add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 0.35D);
     }
@@ -56,9 +56,9 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
     protected void initGoals() {
         super.initGoals();
         this.goalSelector.add(0, new SwimGoal(this)); //need to make this the ability to walk on the body of water's floor. 
-        this.goalSelector.add(1, new WanderNearTargetGoal(this, 0.85d, 400));
+        this.goalSelector.add(1, new WanderNearTargetGoal(this, 0.45d, 64));
         this.goalSelector.add(2, new LookAtEntityGoal(this, PlayerEntity.class, 6.0f));
-        this.goalSelector.add(3, new WanderAroundGoal(this, 0.85D));
+        this.goalSelector.add(3, new WanderAroundGoal(this, 0.35D));
         this.goalSelector.add(1, new PounceAtTargetGoal(this, 0.4f));
         this.goalSelector.add(2, new MeleeAttackGoal(this, 1, true));
         this.goalSelector.add(4, new StopAndLookAtEntityGoal(this, MobEntity.class, 2.0f, 0.8f));
