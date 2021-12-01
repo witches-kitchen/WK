@@ -1,7 +1,7 @@
 {
-  "variants": {
-    "": {
-      "model": "witcheskitchen:block/sumac_planks"
+    "variants": {
+      "": {
+        "model": "witcheskitchen:block/sumac_planks"
+      }
     }
   }
-}
