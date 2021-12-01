@@ -1,0 +1,8 @@
+{
+	"parent": "block/slab",
+	"textures": {
+		"bottom": "witcheskitchen:block/trees/sumac_planks",
+		"top": "witcheskitchen:block/trees/sumac_planks",
+		"side": "witcheskitchen:block/trees/sumac_planks"
+	}
+}
