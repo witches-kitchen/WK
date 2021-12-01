@@ -55,7 +55,6 @@ repositories {
         modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${cardinal_components_version}"
         modImplementation "curse.maven:roughly-enough-items-310111:3537857"
         modImplementation "curse.maven:architectury-fabric-419697:3543975"
-        modImplementation "de.siphalor:nbtcrafting-1.18:2+"
 
         // PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
         // You may need to force-disable transitiveness on them.
