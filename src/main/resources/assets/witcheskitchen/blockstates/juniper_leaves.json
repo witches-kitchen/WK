@@ -1,7 +1,7 @@
 {
-  "variants": {
-    "": {
-      "model": "witcheskitchen:block/juniper_leaves"
+    "variants": {
+      "": {
+        "model": "witcheskitchen:block/juniper_leaves"
+      }
     }
   }
-}

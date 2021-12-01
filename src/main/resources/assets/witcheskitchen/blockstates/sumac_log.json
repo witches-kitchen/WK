@@ -1,7 +1,7 @@
 {
-  "variants": {
-    "": {
-      "model": "witcheskitchen:block/sumac_log"
-    }
+	"variants": {
+	  "": {
+		"model": "witcheskitchen:block/sumac_log"
+	}
   }
 }

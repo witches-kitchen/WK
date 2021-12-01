@@ -1,13 +1,13 @@
 {
-  "variants": {
-    "type=bottom": {
-      "model": "witcheskitchen:block/hawthorn_slab_bottom"
-    },
-    "type=top": {
-      "model": "witcheskitchen:block/hawthorn_slab_top"
-    },
-    "type=double": {
-      "model": "witcheskitchen:block/hawthorn_planks"
-    }
-  }
+	"variants": {
+		"type=bottom": {
+			"model": "witcheskitchen:block/hawthorn_slab_bottom"
+		},
+		"type=top": {
+			"model": "witcheskitchen:block/hawthorn_slab_top"
+		},
+		"type=double": {
+			"model": "witcheskitchen:block/hawthorn_planks"
+		}
+	}
 }

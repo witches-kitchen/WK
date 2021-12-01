@@ -1,8 +1,8 @@
 {
-  "parent": "block/inner_stairs",
-  "textures": {
-    "bottom": "witcheskitchen:block/trees/blackthorn_planks",
-    "top": "witcheskitchen:block/trees/blackthorn_planks",
-    "side": "witcheskitchen:block/trees/blackthorn_planks"
+ "parent": "block/inner_stairs",
+ "textures": {
+   "bottom": "witcheskitchen:block/trees/blackthorn_planks",
+   "top": "witcheskitchen:block/trees/blackthorn_planks",
+   "side": "witcheskitchen:block/trees/blackthorn_planks"
   }
 }

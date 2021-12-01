@@ -1,7 +1,7 @@
 {
-  "variants": {
-    "": {
-      "model": "witcheskitchen:block/rowan_log"
-    }
+	"variants": {
+	  "": {
+		"model": "witcheskitchen:block/rowan_log"
+	}
   }
 }
