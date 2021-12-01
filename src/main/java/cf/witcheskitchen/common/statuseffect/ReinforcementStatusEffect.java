@@ -2,10 +2,10 @@ package cf.witcheskitchen.common.statuseffect;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectType;
+import net.minecraft.entity.effect.StatusEffectCategory;
 
 public class ReinforcementStatusEffect extends StatusEffect {
-    public ReinforcementStatusEffect(StatusEffectType type, int color) {
+    public ReinforcementStatusEffect(StatusEffectCategory type, int color) {
         super(type, color);
     }
 

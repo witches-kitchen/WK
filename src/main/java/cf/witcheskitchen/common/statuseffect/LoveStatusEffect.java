@@ -2,12 +2,12 @@ package cf.witcheskitchen.common.statuseffect;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectType;
+import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.passive.AnimalEntity;
 
 public class LoveStatusEffect extends StatusEffect {
 
-    public LoveStatusEffect(StatusEffectType type, int color) {
+    public LoveStatusEffect(StatusEffectCategory type, int color) {
         super(type, color);
     }
 

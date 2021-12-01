@@ -4,8 +4,8 @@ package cf.witcheskitchen.common.statuseffect;
 import cf.witcheskitchen.common.registry.WKSounds;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffectType;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -18,7 +18,7 @@ import java.util.Random;
 public class HorrorStatusEffect extends StatusEffect {
     public int timer = 650;
 
-    public HorrorStatusEffect(StatusEffectType type, int color) {
+    public HorrorStatusEffect(StatusEffectCategory type, int color) {
         super(type, color);
     }
 

@@ -5,14 +5,14 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffectType;
 
 import java.util.Random;
 
 public class DisrobingStatusEffect extends StatusEffect {
 
-    public DisrobingStatusEffect(StatusEffectType type, int color) {
+    public DisrobingStatusEffect(StatusEffectCategory type, int color) {
         super(type, color);
     }
 
