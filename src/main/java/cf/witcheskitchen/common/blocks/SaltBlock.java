@@ -8,7 +8,6 @@ import it.unimi.dsi.fastutil.floats.Float2ObjectArrayMap;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.WireConnection;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
@@ -160,20 +159,10 @@ public class SaltBlock extends Block {
         return state;
     }
 
+    @Override
     public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        if (context instanceof EntityShapeContext entityContext && entityContext.getEntity().isPresent()) {
-            Entity entity = entityContext.getEntity().get();
-            if (entity instanceof LivingEntity livingEntity) {
-                boolean spiritual = WKApi.isSpiritualEntity(livingEntity);
-                if (spiritual) {
-                    boolean onSalt = world.getBlockState(livingEntity.getBlockPos().add(0, 0, 0)).getBlock() instanceof SaltBlock;
-                    if (!onSalt) {
-                        return getSaltShape(livingEntity.stepHeight);
-                    } else {
-                        livingEntity.setOnFireFor(1);
-                    }
-                }
-            }
+        if (context instanceof EntityShapeContext entityShapeContext && entityShapeContext.getEntity() instanceof LivingEntity living && WKApi.isSpiritualEntity(living)) {
+            return VoxelShapes.fullCube();
         }
         return super.getCollisionShape(state, world, pos, context);
     }
