@@ -69,12 +69,12 @@ public class WKBlocks {
     static Block BLACKTHORN_STAIRS = new WKStairsBlock(BLACKTHORN_PLANKS.getDefaultState(), FabricBlockSettings.copyOf(BLACKTHORN_PLANKS));
     static Block HAWTHORN_STAIRS = new WKStairsBlock(HAWTHORN_PLANKS.getDefaultState(), FabricBlockSettings.copyOf(HAWTHORN_PLANKS));
     static Block JUNIPER_STAIRS = new WKStairsBlock(JUNIPER_PLANKS.getDefaultState(), FabricBlockSettings.copyOf(JUNIPER_PLANKS));
-    static Block ELDER_LOG = new Block(FabricBlockSettings.of(Material.WOOD));
-    static Block SUMAC_LOG = new Block(FabricBlockSettings.of(Material.WOOD));
-    static Block HAWTHORN_LOG = new Block(FabricBlockSettings.of(Material.WOOD));
-    static Block BLACKTHORN_LOG = new Block(FabricBlockSettings.of(Material.WOOD));
-    static Block JUNIPER_LOG = new Block(FabricBlockSettings.of(Material.WOOD));
-    static Block ROWAN_LOG = new Block(FabricBlockSettings.of(Material.WOOD));
+    static Block ELDER_LOG = new PillarBlock(FabricBlockSettings.of(Material.WOOD));
+    static Block SUMAC_LOG = new PillarBlock(FabricBlockSettings.of(Material.WOOD));
+    static Block HAWTHORN_LOG = new PillarBlock(FabricBlockSettings.of(Material.WOOD));
+    static Block BLACKTHORN_LOG = new PillarBlock(FabricBlockSettings.of(Material.WOOD));
+    static Block JUNIPER_LOG = new PillarBlock(FabricBlockSettings.of(Material.WOOD));
+    static Block ROWAN_LOG = new PillarBlock(FabricBlockSettings.of(Material.WOOD));
 
     static Block ELDER_SLAB = new SlabBlock(FabricBlockSettings.of(Material.WOOD));
     static Block SUMAC_SLAB = new SlabBlock(FabricBlockSettings.of(Material.WOOD));
@@ -83,12 +83,12 @@ public class WKBlocks {
     static Block JUNIPER_SLAB = new SlabBlock(FabricBlockSettings.of(Material.WOOD));
     static Block ROWAN_SLAB = new SlabBlock(FabricBlockSettings.of(Material.WOOD));
 
-    static Block ELDER_LEAVES = new Block(FabricBlockSettings.of(Material.LEAVES));
-    static Block SUMAC_LEAVES = new Block(FabricBlockSettings.of(Material.LEAVES));
-    static Block HAWTHORN_LEAVES = new Block(FabricBlockSettings.of(Material.LEAVES));
-    static Block BLACKTHORN_LEAVES = new Block(FabricBlockSettings.of(Material.LEAVES));
-    static Block JUNIPER_LEAVES = new Block(FabricBlockSettings.of(Material.LEAVES));
-    static Block ROWAN_LEAVES = new Block(FabricBlockSettings.of(Material.LEAVES));
+    static Block ELDER_LEAVES = new LeavesBlock(FabricBlockSettings.of(Material.LEAVES));
+    static Block SUMAC_LEAVES = new LeavesBlock(FabricBlockSettings.of(Material.LEAVES));
+    static Block HAWTHORN_LEAVES = new LeavesBlock(FabricBlockSettings.of(Material.LEAVES));
+    static Block BLACKTHORN_LEAVES = new LeavesBlock(FabricBlockSettings.of(Material.LEAVES));
+    static Block JUNIPER_LEAVES = new LeavesBlock(FabricBlockSettings.of(Material.LEAVES));
+    static Block ROWAN_LEAVES = new LeavesBlock(FabricBlockSettings.of(Material.LEAVES));
 
     public static void register() {
         //Food blocks
