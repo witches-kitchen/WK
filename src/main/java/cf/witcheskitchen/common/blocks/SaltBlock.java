@@ -161,8 +161,8 @@ public class SaltBlock extends Block {
     }
 
     public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        if (context instanceof EntityShapeContext entityContext && entityContext.getEntity().isPresent()) {
-            Entity entity = entityContext.getEntity().get();
+        if (context instanceof EntityShapeContext entityShapeContext && entityShapeContext.getEntity() instanceof LivingEntity living && WKApi.isSpiritualEntity(living)) {
+            Entity entity = ((EntityShapeContext) context).getEntity();
             if (entity instanceof LivingEntity livingEntity) {
                 boolean spiritual = WKApi.isSpiritualEntity(livingEntity);
                 if (spiritual) {
