@@ -9,12 +9,21 @@ import software.bernie.geckolib3.renderers.geo.GeoLayerRenderer;
 import software.bernie.geckolib3.renderers.geo.IGeoRenderer;
 
 public class CuSithEyeLayer extends GeoLayerRenderer<CuSithEntity> {
+    private static Identifier[] TEXTURES;
+
     public CuSithEyeLayer(IGeoRenderer<CuSithEntity> entityRendererIn) {
         super(entityRendererIn);
     }
 
     @Override
     public void render(MatrixStack matrixStackIn, VertexConsumerProvider bufferIn, int packedLightIn, CuSithEntity entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        new Identifier(WK.MODID, "textures/entity/cusitheyes_" + entitylivingbaseIn.getVariant() + ".png");
+        if (TEXTURES == null) {
+            int variants = entitylivingbaseIn.getOverlayVariants();
+            TEXTURES = new Identifier[variants];
+            for (int i = 0; i < variants; i++) {
+                TEXTURES[i] = new Identifier(WK.MODID, "textures/entity/cusitheyes_" + i + ".png");
+            }
+        }
+        renderModel(getEntityModel(), TEXTURES[entitylivingbaseIn.getDataTracker().get(CuSithEntity.VARIANT)], matrixStackIn, bufferIn, 0xF000F0, entitylivingbaseIn, partialTicks, 1, 1, 1);
     }
 }

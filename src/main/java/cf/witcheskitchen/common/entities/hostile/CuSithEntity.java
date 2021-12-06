@@ -37,6 +37,7 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import java.util.SplittableRandom;
 
 public class CuSithEntity extends WKHostileEntity implements IAnimatable {
+    public static final int EYE_VARIANTS = 7;
 
     private final AnimationFactory factory = new AnimationFactory(this);
 
@@ -100,8 +101,9 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
         SplittableRandom random = new SplittableRandom();
-        int var = random.nextInt(0, 7);
+        int var = random.nextInt(0, 8);
         this.setVariant(var);
+        this.setOverlayVariant(var);
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
 
@@ -110,32 +112,47 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
     protected void initDataTracker() {
         super.initDataTracker();
         this.dataTracker.startTracking(VARIANT, 0);
+        this.dataTracker.startTracking(OVERLAY_VARIANTS, 0);
     }
 
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
         nbt.putInt("Variant", this.getVariant());
+        nbt.putInt("Overlay_variant", this.getVariant());
     }
 
     @Override
     public void readCustomDataFromNbt(NbtCompound tag) {
         super.readCustomDataFromNbt(tag);
         this.setVariant(tag.getInt("Variant"));
+        this.setVariant(tag.getInt("Overlay_variant"));
     }
 
     public int getVariant() {
-        return MathHelper.clamp(this.dataTracker.get(VARIANT), 1, 6);
+        return MathHelper.clamp(this.dataTracker.get(VARIANT), 1, 8);
     }
-
 
     public void setVariant(int variant) {
         this.dataTracker.set(VARIANT, variant);
     }
 
+    public int getOverlayVariant() {
+        return MathHelper.clamp(this.dataTracker.get(OVERLAY_VARIANTS), 1, 8);
+    }
+
+    public void setOverlayVariant(int variant) {
+        this.dataTracker.set(OVERLAY_VARIANTS, variant);
+    }
+
     @Override
     public int getVariants() {
-        return 6;
+        return 7;
+    }
+
+    @Override
+    public int getOverlayVariants() {
+        return 7;
     }
 
     //to-do: add subtitle info
