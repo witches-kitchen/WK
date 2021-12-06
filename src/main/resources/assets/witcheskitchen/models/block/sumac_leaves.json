@@ -1,6 +1,6 @@
-{ 
- "parent": "block/cube_all",
- "textures": {
+{
+  "parent": "block/cube_all",
+  "textures": {
     "particle": "witcheskitchen:block/trees/sumac_leaves",
     "all": "witcheskitchen:block/trees/sumac_leaves"
   }

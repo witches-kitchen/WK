@@ -1,7 +1,16 @@
 {
-    "variants": {
-        "y":  { "model": "witcheskitchen:block/blackthorn_log" },
-        "z":   { "model": "witcheskitchen:block/blackthorn_log", "x": 90 },
-        "x":   { "model": "witcheskitchen:block/blackthorn_log", "x": 90, "y": 90 }
+  "variants": {
+    "y": {
+      "model": "witcheskitchen:block/blackthorn_log"
+    },
+    "z": {
+      "model": "witcheskitchen:block/blackthorn_log",
+      "x": 90
+    },
+    "x": {
+      "model": "witcheskitchen:block/blackthorn_log",
+      "x": 90,
+      "y": 90
     }
+  }
 }
