@@ -1,5 +1,6 @@
 package cf.witcheskitchen.common.entities.hostile;
 
+import cf.witcheskitchen.api.WKHostileEntity;
 import cf.witcheskitchen.common.registry.WKSounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityData;

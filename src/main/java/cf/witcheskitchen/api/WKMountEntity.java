@@ -1,4 +1,4 @@
-package cf.witcheskitchen.common.entities.tameable;
+package cf.witcheskitchen.api;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

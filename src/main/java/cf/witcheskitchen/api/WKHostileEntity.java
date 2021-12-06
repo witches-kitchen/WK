@@ -1,23 +1,23 @@
-package cf.witcheskitchen.common.entities.tameable;
+package cf.witcheskitchen.api;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Tameable;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.passive.TameableEntity;
+import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.entity.mob.Monster;
 import net.minecraft.world.World;
 
-public abstract class WKTameableEntity extends AnimalEntity implements Tameable {
-    public static final TrackedData<Integer> VARIANT = DataTracker.registerData(WKTameableEntity.class,
+//Credit to AzureDoom for variant code
+public abstract class WKHostileEntity extends HostileEntity implements Monster {
+    public static final TrackedData<Integer> VARIANT = DataTracker.registerData(WKHostileEntity.class,
             TrackedDataHandlerRegistry.INTEGER);
-    public static final TrackedData<Integer> OVERLAY_VARIANTS = DataTracker.registerData(WKTameableEntity.class,
+    public static final TrackedData<Integer> OVERLAY_VARIANTS = DataTracker.registerData(WKHostileEntity.class,
             TrackedDataHandlerRegistry.INTEGER);
 
-    public WKTameableEntity(EntityType<? extends TameableEntity> entityType, World world) {
+    public WKHostileEntity(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
     }
 
