@@ -1,6 +1,5 @@
 package cf.witcheskitchen.common.entities.passive;
 
-import cf.witcheskitchen.common.entities.tameable.WKTameableEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.EntityType;

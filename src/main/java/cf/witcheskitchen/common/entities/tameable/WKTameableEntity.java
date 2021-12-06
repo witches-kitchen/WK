@@ -1,6 +1,5 @@
 package cf.witcheskitchen.common.entities.tameable;
 
-import cf.witcheskitchen.common.entities.hostile.WKHostileEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.EntityType;
@@ -15,6 +14,7 @@ public abstract class WKTameableEntity extends TameableEntity {
             TrackedDataHandlerRegistry.INTEGER);
     public static final TrackedData<Integer> OVERLAY_VARIANTS = DataTracker.registerData(WKTameableEntity.class,
             TrackedDataHandlerRegistry.INTEGER);
+
     public WKTameableEntity(EntityType<? extends TameableEntity> entityType, World world) {
         super(entityType, world);
     }
