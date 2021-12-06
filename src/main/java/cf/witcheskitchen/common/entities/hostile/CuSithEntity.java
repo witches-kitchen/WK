@@ -37,7 +37,6 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import java.util.SplittableRandom;
 
 public class CuSithEntity extends WKHostileEntity implements IAnimatable {
-    public static final int EYE_VARIANTS = 7;
 
     private final AnimationFactory factory = new AnimationFactory(this);
 
