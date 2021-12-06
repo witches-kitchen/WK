@@ -15,6 +15,6 @@ public class CuSithEyeLayer extends GeoLayerRenderer<CuSithEntity> {
 
     @Override
     public void render(MatrixStack matrixStackIn, VertexConsumerProvider bufferIn, int packedLightIn, CuSithEntity entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        new Identifier(WK.MODID, "textures/entity/cusitheyes" + CuSithEntity.VARIANT + ".png");
+        new Identifier(WK.MODID, "textures/entity/cusitheyes" + entitylivingbaseIn.getVariant() + ".png");
     }
 }
