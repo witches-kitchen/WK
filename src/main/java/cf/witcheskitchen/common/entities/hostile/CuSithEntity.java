@@ -10,6 +10,9 @@ import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.PathAwareEntity;
@@ -38,6 +41,11 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import java.util.SplittableRandom;
 
 public class CuSithEntity extends WKHostileEntity implements IAnimatable {
+    public static final TrackedData<Integer> VARIANT = DataTracker.registerData(WKHostileEntity.class,
+            TrackedDataHandlerRegistry.INTEGER);
+    public static final TrackedData<Integer> OVERLAY_VARIANTS = DataTracker.registerData(WKHostileEntity.class,
+            TrackedDataHandlerRegistry.INTEGER);
+    public static final int EYE_VARIANTS = 7;
 
     private final AnimationFactory factory = new AnimationFactory(this);
 
@@ -104,6 +112,7 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
         int var = random.nextInt(0, 8);
         this.setVariant(var);
         this.setOverlayVariant(var);
+        this.dataTracker.set(OVERLAY_VARIANTS, random.nextInt(EYE_VARIANTS));
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
 
@@ -119,7 +128,7 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
         nbt.putInt("Variant", this.getVariant());
-        nbt.putInt("Overlay_variant", this.getVariant());
+        nbt.putInt("Overlay_variant", this.getOverlayVariant());
     }
 
     @Override

@@ -18,9 +18,8 @@ public class CuSithEyeLayer extends GeoLayerRenderer<CuSithEntity> {
     @Override
     public void render(MatrixStack matrixStackIn, VertexConsumerProvider bufferIn, int packedLightIn, CuSithEntity entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         if (TEXTURES == null) {
-            int variants = entitylivingbaseIn.getOverlayVariants();
-            TEXTURES = new Identifier[variants];
-            for (int i = 0; i < variants; i++) {
+            TEXTURES = new Identifier[CuSithEntity.EYE_VARIANTS];
+            for (int i = 0; i < CuSithEntity.EYE_VARIANTS; i++) {
                 TEXTURES[i] = new Identifier(WK.MODID, "textures/entity/cusitheyes_" + i + ".png");
             }
         }
