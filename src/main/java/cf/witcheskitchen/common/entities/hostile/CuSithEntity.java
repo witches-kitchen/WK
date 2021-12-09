@@ -43,8 +43,6 @@ import java.util.SplittableRandom;
 public class CuSithEntity extends WKHostileEntity implements IAnimatable {
     public static final TrackedData<Integer> VARIANT = DataTracker.registerData(WKHostileEntity.class,
             TrackedDataHandlerRegistry.INTEGER);
-    public static final TrackedData<Integer> OVERLAY_VARIANTS = DataTracker.registerData(WKHostileEntity.class,
-            TrackedDataHandlerRegistry.INTEGER);
     public static final int EYE_VARIANTS = 7;
 
     private final AnimationFactory factory = new AnimationFactory(this);
@@ -111,7 +109,7 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
         SplittableRandom random = new SplittableRandom();
         int var = random.nextInt(0, 8);
         this.setVariant(var);
-        this.dataTracker.set(OVERLAY_VARIANTS, random.nextInt(EYE_VARIANTS));
+        this.dataTracker.set(VARIANT, random.nextInt(EYE_VARIANTS));
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
 
