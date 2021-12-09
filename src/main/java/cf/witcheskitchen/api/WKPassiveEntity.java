@@ -34,6 +34,4 @@ public abstract class WKPassiveEntity extends PassiveEntity {
     }
 
     public abstract int getVariants();
-
-    public abstract int getOverlayVariants();
 }

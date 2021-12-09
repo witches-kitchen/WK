@@ -28,6 +28,4 @@ public abstract class WKHostileEntity extends HostileEntity implements Monster {
     }
 
     public abstract int getVariants();
-
-    public abstract int getOverlayVariants();
 }

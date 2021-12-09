@@ -28,6 +28,4 @@ public abstract class WKTameableEntity extends AnimalEntity implements Tameable 
     }
 
     public abstract int getVariants();
-
-    public abstract int getOverlayVariants();
 }

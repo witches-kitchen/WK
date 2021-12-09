@@ -80,6 +80,4 @@ public abstract class WKMountEntity extends AnimalEntity implements InventoryCha
     }
 
     public abstract int getVariants();
-
-    public abstract int getOverlayVariants();
 }

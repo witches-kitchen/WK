@@ -111,7 +111,6 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
         SplittableRandom random = new SplittableRandom();
         int var = random.nextInt(0, 8);
         this.setVariant(var);
-        this.setOverlayVariant(var);
         this.dataTracker.set(OVERLAY_VARIANTS, random.nextInt(EYE_VARIANTS));
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
@@ -121,21 +120,18 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
     protected void initDataTracker() {
         super.initDataTracker();
         this.dataTracker.startTracking(VARIANT, 0);
-        this.dataTracker.startTracking(OVERLAY_VARIANTS, 0);
     }
 
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
         nbt.putInt("Variant", this.getVariant());
-        nbt.putInt("Overlay_variant", this.getOverlayVariant());
     }
 
     @Override
     public void readCustomDataFromNbt(NbtCompound tag) {
         super.readCustomDataFromNbt(tag);
         this.setVariant(tag.getInt("Variant"));
-        this.setVariant(tag.getInt("Overlay_variant"));
     }
 
     public int getVariant() {
@@ -146,21 +142,8 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
         this.dataTracker.set(VARIANT, variant);
     }
 
-    public int getOverlayVariant() {
-        return MathHelper.clamp(this.dataTracker.get(OVERLAY_VARIANTS), 1, 8);
-    }
-
-    public void setOverlayVariant(int variant) {
-        this.dataTracker.set(OVERLAY_VARIANTS, variant);
-    }
-
     @Override
     public int getVariants() {
-        return 7;
-    }
-
-    @Override
-    public int getOverlayVariants() {
         return 7;
     }
 
