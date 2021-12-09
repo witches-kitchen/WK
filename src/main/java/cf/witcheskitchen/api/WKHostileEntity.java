@@ -14,8 +14,6 @@ import net.minecraft.world.World;
 public abstract class WKHostileEntity extends HostileEntity implements Monster {
     public static final TrackedData<Integer> VARIANT = DataTracker.registerData(WKHostileEntity.class,
             TrackedDataHandlerRegistry.INTEGER);
-    public static final TrackedData<Integer> OVERLAY_VARIANTS = DataTracker.registerData(WKHostileEntity.class,
-            TrackedDataHandlerRegistry.INTEGER);
 
     public WKHostileEntity(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);

@@ -20,8 +20,6 @@ import org.jetbrains.annotations.Nullable;
 public abstract class WKMountEntity extends AnimalEntity implements InventoryChangedListener, JumpingMount, Saddleable {
     public static final TrackedData<Integer> VARIANT = DataTracker.registerData(WKMountEntity.class,
             TrackedDataHandlerRegistry.INTEGER);
-    public static final TrackedData<Integer> OVERLAY_VARIANTS = DataTracker.registerData(WKMountEntity.class,
-            TrackedDataHandlerRegistry.INTEGER);
 
     public WKMountEntity(EntityType<? extends AnimalEntity> entityType, World world) {
         super(entityType, world);

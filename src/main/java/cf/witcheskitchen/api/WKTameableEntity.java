@@ -14,8 +14,6 @@ import net.minecraft.world.World;
 public abstract class WKTameableEntity extends AnimalEntity implements Tameable {
     public static final TrackedData<Integer> VARIANT = DataTracker.registerData(WKTameableEntity.class,
             TrackedDataHandlerRegistry.INTEGER);
-    public static final TrackedData<Integer> OVERLAY_VARIANTS = DataTracker.registerData(WKTameableEntity.class,
-            TrackedDataHandlerRegistry.INTEGER);
 
     public WKTameableEntity(EntityType<? extends TameableEntity> entityType, World world) {
         super(entityType, world);

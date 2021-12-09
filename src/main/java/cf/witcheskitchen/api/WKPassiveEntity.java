@@ -14,8 +14,6 @@ import org.jetbrains.annotations.Nullable;
 public abstract class WKPassiveEntity extends PassiveEntity {
     public static final TrackedData<Integer> VARIANT = DataTracker.registerData(WKPassiveEntity.class,
             TrackedDataHandlerRegistry.INTEGER);
-    public static final TrackedData<Integer> OVERLAY_VARIANTS = DataTracker.registerData(WKPassiveEntity.class,
-            TrackedDataHandlerRegistry.INTEGER);
 
     public WKPassiveEntity(EntityType<? extends PassiveEntity> entityType, World world) {
         super(entityType, world);
