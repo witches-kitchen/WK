@@ -86,11 +86,8 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("run", true));
             return PlayState.CONTINUE;
         }
-        if (!event.isMoving() && !this.isSwimming()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
-            return PlayState.CONTINUE;
-        }
-        return PlayState.STOP;
+        event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
+        return PlayState.CONTINUE;
     }
 
     @Override
