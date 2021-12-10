@@ -2,6 +2,7 @@ package cf.witcheskitchen.client.render;
 
 import cf.witcheskitchen.WK;
 import cf.witcheskitchen.common.entities.hostile.CuSithEntity;
+import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
@@ -23,6 +24,6 @@ public class CuSithEyeLayer extends GeoLayerRenderer<CuSithEntity> {
                 TEXTURES[i] = new Identifier(WK.MODID, "textures/entity/cusitheyes_" + i + ".png");
             }
         }
-        renderModel(getEntityModel(), TEXTURES[entitylivingbaseIn.getDataTracker().get(CuSithEntity.VARIANT)], matrixStackIn, bufferIn, 0xF000F0, entitylivingbaseIn, partialTicks, 1, 1, 1);
+        renderModel(getEntityModel(), TEXTURES[entitylivingbaseIn.getDataTracker().get(CuSithEntity.VARIANT)], matrixStackIn, bufferIn, 15728640, entitylivingbaseIn, 1.0F, 1.0F, 1.0F, 1.0F);
     }
 }
