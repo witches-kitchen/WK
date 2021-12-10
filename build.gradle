@@ -60,25 +60,26 @@ repositories {
         // You may need to force-disable transitiveness on them.
     }
 
-    processResources {
-        inputs.property "version", project.version
+processResources {
+	inputs.property "version", project.version
 
-        filesMatching("fabric.mod.json") {
-            expand "version": project.version
-        }
-    }
-
-	tasks.withType(JavaCompile).configureEach {
-		// Minecraft 1.18 (1.18-pre2) upwards uses Java 17.
-		it.options.release = 17
+	filesMatching("fabric.mod.json") {
+		expand "version": project.version
 	}
+}
 
-    java {
-        // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
-        // if it is present.
-        // If you remove this line, sources will not be generated.
-        withSourcesJar()
-    }
+
+tasks.withType(JavaCompile).configureEach {
+	// Minecraft 1.18 (1.18-pre2) upwards uses Java 17.
+	it.options.release = 17
+}
+
+java {
+	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
+	// if it is present.
+	// If you remove this line, sources will not be generated.
+	withSourcesJar()
+}
 
     jar {
         from("LICENSE") {
