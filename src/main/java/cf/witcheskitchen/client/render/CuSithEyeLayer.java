@@ -2,7 +2,6 @@ package cf.witcheskitchen.client.render;
 
 import cf.witcheskitchen.WK;
 import cf.witcheskitchen.common.entities.hostile.CuSithEntity;
-import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
