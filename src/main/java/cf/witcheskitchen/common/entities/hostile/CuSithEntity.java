@@ -3,24 +3,23 @@ package cf.witcheskitchen.common.entities.hostile;
 import cf.witcheskitchen.api.WKHostileEntity;
 import cf.witcheskitchen.common.registry.WKSounds;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.EntityData;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.tag.Tag;
@@ -62,20 +61,23 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
     @Override //this adds basic ai
     protected void initGoals() {
         super.initGoals();
-        this.goalSelector.add(0, new SwimGoal(this)); //need to make this the ability to walk on the body of water's floor. 
-        this.goalSelector.add(1, new WanderNearTargetGoal(this, 0.45d, 64));
+        this.goalSelector.add(0, new SwimGoal(this)); //need to make this the ability to walk on the body of water's floor.
         this.goalSelector.add(2, new LookAtEntityGoal(this, PlayerEntity.class, 6.0f));
         this.goalSelector.add(2, new LookAtEntityGoal(this, MerchantEntity.class, 6.0f));
         this.goalSelector.add(2, new LookAtEntityGoal(this, IronGolemEntity.class, 6.0f));
-        this.goalSelector.add(3, new WanderAroundGoal(this, 0.35D));
         this.goalSelector.add(1, new PounceAtTargetGoal(this, 0.4f));
         this.goalSelector.add(2, new MeleeAttackGoal(this, 1, true));
         this.goalSelector.add(4, new StopAndLookAtEntityGoal(this, MobEntity.class, 2.0f, 0.8f));
-        this.goalSelector.add(6, new WanderAroundFarGoal(this, 0.6D));
-        this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
+        this.goalSelector.add(6, new WanderAroundFarGoal(this, 0.8D, 1));
+        this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, false));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, MerchantEntity.class, false));
-        this.targetSelector.add(3, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, IronGolemEntity.class, false));
         this.targetSelector.add(0, new RevengeGoal(this).setGroupRevenge());
+    }
+
+    @Override
+    public float getEyeHeight(EntityPose pose) {
+        return super.getEyeHeight(pose);
     }
 
     @Override
@@ -83,6 +85,10 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
         data.addAnimationController(new AnimationController(this, "controller", 0, this::predicate));
     }
 
+    @Override
+    public void onStruckByLightning(ServerWorld world, LightningEntity lightning) {
+        this.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 4000, 1), this);
+    }
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         if (event.isMoving()) {
@@ -159,10 +165,6 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
     @Override
     protected void playStepSound(BlockPos pos, BlockState state) {
         this.playSound(SoundEvents.ENTITY_WOLF_STEP, 0.5F, 0.7F);
-    }
-
-    protected int getInterval(PathAwareEntity mob) {
-        return 1;
     }
 
     @Override
