@@ -65,10 +65,14 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
         this.goalSelector.add(0, new SwimGoal(this)); //need to make this the ability to walk on the body of water's floor. 
         this.goalSelector.add(1, new WanderNearTargetGoal(this, 0.45d, 64));
         this.goalSelector.add(2, new LookAtEntityGoal(this, PlayerEntity.class, 6.0f));
+        this.goalSelector.add(2, new LookAtEntityGoal(this, MerchantEntity.class, 6.0f));
+        this.goalSelector.add(2, new LookAtEntityGoal(this, IronGolemEntity.class, 6.0f));
         this.goalSelector.add(3, new WanderAroundGoal(this, 0.35D));
         this.goalSelector.add(1, new PounceAtTargetGoal(this, 0.4f));
         this.goalSelector.add(2, new MeleeAttackGoal(this, 1, true));
         this.goalSelector.add(4, new StopAndLookAtEntityGoal(this, MobEntity.class, 2.0f, 0.8f));
+        this.goalSelector.add(0, new EscapeDangerGoal(this, 1.25D));
+        this.goalSelector.add(6, new WanderAroundFarGoal(this, 0.6D));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, MerchantEntity.class, false));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
@@ -82,7 +86,7 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
 
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (event.isMoving() && !this.isSwimming()) {
+        if (event.isMoving()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("run", true));
             return PlayState.CONTINUE;
         }
