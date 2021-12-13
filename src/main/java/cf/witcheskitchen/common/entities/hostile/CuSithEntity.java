@@ -71,7 +71,6 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
         this.goalSelector.add(1, new PounceAtTargetGoal(this, 0.4f));
         this.goalSelector.add(2, new MeleeAttackGoal(this, 1, true));
         this.goalSelector.add(4, new StopAndLookAtEntityGoal(this, MobEntity.class, 2.0f, 0.8f));
-        this.goalSelector.add(0, new EscapeDangerGoal(this, 1.25D));
         this.goalSelector.add(6, new WanderAroundFarGoal(this, 0.6D));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, MerchantEntity.class, false));
