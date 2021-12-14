@@ -28,6 +28,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -53,7 +54,7 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
 
     public static DefaultAttributeContainer.Builder createAttributes() {
         return LivingEntity.createLivingAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 25.0D)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.35D)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.45D)
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 20).add(EntityAttributes.GENERIC_ARMOR, 2.0D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0D).add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 0.35D);
     }
@@ -86,8 +87,18 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
     }
 
     @Override
+    public void tick() {
+        super.tick();
+        if (!world.isClient && !hasCustomName() && world.isDay() && !world.isRaining() && !world.isThundering() && world.isSkyVisibleAllowingSea(getBlockPos())) {
+            remove(Entity.RemovalReason.KILLED);
+        }
+    }
+
+    @Override
     public void onStruckByLightning(ServerWorld world, LightningEntity lightning) {
-        this.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 4000, 1), this);
+        this.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 4000, 1, true, true), this);
+        this.addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 4000, 1, true, true), this);
+        this.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 4000, 1, true, true), this);
     }
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
