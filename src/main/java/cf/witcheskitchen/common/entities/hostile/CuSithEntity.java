@@ -15,7 +15,7 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.GolemEntity;
-import net.minecraft.entity.passive.MerchantEntity;
+import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.nbt.NbtCompound;
@@ -63,14 +63,14 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
         super.initGoals();
         this.goalSelector.add(0, new SwimGoal(this)); //need to make this the ability to walk on the body of water's floor.
         this.goalSelector.add(2, new LookAtEntityGoal(this, PlayerEntity.class, 6.0f));
-        this.goalSelector.add(2, new LookAtEntityGoal(this, MerchantEntity.class, 6.0f));
+        this.goalSelector.add(2, new LookAtEntityGoal(this, VillagerEntity.class, 6.0f));
         this.goalSelector.add(2, new LookAtEntityGoal(this, GolemEntity.class, 6.0f));
         this.goalSelector.add(1, new PounceAtTargetGoal(this, 0.4f));
         this.goalSelector.add(2, new MeleeAttackGoal(this, 1, true));
         this.goalSelector.add(4, new StopAndLookAtEntityGoal(this, MobEntity.class, 2.0f, 0.8f));
         this.goalSelector.add(6, new WanderAroundFarGoal(this, 0.8D, 1));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, false));
-        this.targetSelector.add(3, new ActiveTargetGoal<>(this, MerchantEntity.class, false));
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, VillagerEntity.class, false));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, GolemEntity.class, false));
         this.targetSelector.add(0, new RevengeGoal(this).setGroupRevenge());
     }
