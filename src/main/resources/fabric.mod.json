@@ -26,6 +26,9 @@
     ],
     "main": [
       "cf.witcheskitchen.WK"
+    ],
+    "modmenu": [
+      "cf.witcheskitchen.client.compat.WKModMenu"
     ]
   },
   "mixins": [
