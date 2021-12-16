@@ -6,5 +6,5 @@ import me.shedaniel.autoconfig.annotation.Config;
 
 @Config(name = WK.MODID)
 public class WKConfig implements ConfigData {
-    
+
 }
