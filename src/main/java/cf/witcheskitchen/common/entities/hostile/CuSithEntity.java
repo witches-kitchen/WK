@@ -12,10 +12,7 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.entity.mob.IllagerEntity;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.mob.WitchEntity;
+import net.minecraft.entity.mob.*;
 import net.minecraft.entity.passive.CowEntity;
 import net.minecraft.entity.passive.GolemEntity;
 import net.minecraft.entity.passive.VillagerEntity;
@@ -71,6 +68,8 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
         this.goalSelector.add(2, new LookAtEntityGoal(this, IllagerEntity.class, 6.0f));
         this.goalSelector.add(2, new LookAtEntityGoal(this, WitchEntity.class, 6.0f));
         this.goalSelector.add(2, new LookAtEntityGoal(this, CowEntity.class, 6.0f));
+        this.goalSelector.add(2, new LookAtEntityGoal(this, PiglinEntity.class, 6.0f));
+        this.goalSelector.add(2, new LookAtEntityGoal(this, PiglinBruteEntity.class, 6.0f));
         this.goalSelector.add(1, new PounceAtTargetGoal(this, 0.4f));
         this.goalSelector.add(2, new MeleeAttackGoal(this, 1, true));
         this.goalSelector.add(4, new StopAndLookAtEntityGoal(this, MobEntity.class, 2.0f, 0.8f));
@@ -80,6 +79,8 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, GolemEntity.class, false));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, WitchEntity.class, false));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, CowEntity.class, false));
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, PiglinEntity.class, false));
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, PiglinBruteEntity.class, false));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, LivingEntity.class, 10, false, false, entity -> entity.getGroup() == EntityGroup.ILLAGER));
         this.targetSelector.add(0, new RevengeGoal(this).setGroupRevenge());
     }
