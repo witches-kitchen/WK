@@ -2,6 +2,7 @@ package cf.witcheskitchen.common.entities.hostile;
 
 import cf.witcheskitchen.api.WKHostileEntity;
 import cf.witcheskitchen.common.registry.WKSounds;
+import cf.witcheskitchen.common.registry.WKStatusEffects;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
@@ -37,14 +38,15 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
+import java.util.Random;
 import java.util.SplittableRandom;
 
 public class CuSithEntity extends WKHostileEntity implements IAnimatable {
     public static final TrackedData<Integer> VARIANT = DataTracker.registerData(WKHostileEntity.class,
             TrackedDataHandlerRegistry.INTEGER);
     public static final int EYE_VARIANTS = 7;
-
     private final AnimationFactory factory = new AnimationFactory(this);
+    public int howlTimer = 616;
 
 
     public CuSithEntity(EntityType<? extends HostileEntity> entityType, World world) {
@@ -104,6 +106,20 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
     }
 
     @Override
+    public boolean tryAttack(Entity target) {
+        boolean flag = super.tryAttack(target);
+        Random rand = new Random();
+        int i = rand.nextInt(100);
+        if (i <= 33) {
+            if (target instanceof LivingEntity) {
+                ((LivingEntity) target).addStatusEffect(new StatusEffectInstance(WKStatusEffects.HORROR, 1000));
+                this.playSound(WKSounds.CUSITH_IDLE_EVENT, 0.8F, 0.7F);
+            }
+        }
+        return flag;
+    }
+
+    @Override
     public void onStruckByLightning(ServerWorld world, LightningEntity lightning) {
         this.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 4000, 1, true, true), this);
         this.addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 4000, 1, true, true), this);
@@ -115,7 +131,27 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("run", true));
             return PlayState.CONTINUE;
         }
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
+        Random rand = new Random();
+        int i = rand.nextInt(100);
+        if (howlTimer > 0) howlTimer--;
+        if (i < 5 && howlTimer == 0) {
+            switch (rand.nextInt(2)) {
+                case 0 -> {
+                    if (!event.isMoving()) {
+                        event.getController().setAnimation(new AnimationBuilder().addAnimation("howl", false));
+                        howlTimer = 616;
+                        return PlayState.CONTINUE;
+                    }
+                }
+                case 1 -> {
+                    if (!event.isMoving()) {
+                        event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", false));
+                        howlTimer = 616;
+                        return PlayState.CONTINUE;
+                    }
+                }
+            }
+        }
         return PlayState.CONTINUE;
     }
 
