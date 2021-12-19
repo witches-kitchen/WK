@@ -137,14 +137,14 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
         if (i < 5 && howlTimer == 0) {
             switch (rand.nextInt(2)) {
                 case 0 -> {
-                    if (!event.isMoving()) {
+                    if (!event.isMoving() && !isAttacking()) {
                         event.getController().setAnimation(new AnimationBuilder().addAnimation("howl", false));
                         howlTimer = 1244;
                         return PlayState.CONTINUE;
                     }
                 }
                 case 1 -> {
-                    if (!event.isMoving()) {
+                    if (!event.isMoving() && !isAttacking()) {
                         event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", false));
                         howlTimer = 616;
                         return PlayState.CONTINUE;
