@@ -124,6 +124,7 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
         this.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 4000, 1, true, true), this);
         this.addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 4000, 1, true, true), this);
         this.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 4000, 1, true, true), this);
+        this.addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 250, 1, true, true), this);
     }
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
