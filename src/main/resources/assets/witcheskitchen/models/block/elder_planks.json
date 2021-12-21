@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "witcheskitchen:block/trees/elder_planks"
+  }
+}
