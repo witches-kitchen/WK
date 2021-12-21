@@ -1,7 +1,5 @@
 package cf.witcheskitchen.common.registry;
 
-import javax.swing.text.html.BlockView;
-
 import cf.witcheskitchen.WK;
 import cf.witcheskitchen.common.blocks.SaltBlock;
 import cf.witcheskitchen.common.blocks.WKSaplingBlock;
@@ -19,6 +17,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.BlockView;
 
 public class WKBlocks {
     public static Block SALT_BLOCK = new SaltBlock(FabricBlockSettings.of(Material.DECORATION).noCollision().breakInstantly());
