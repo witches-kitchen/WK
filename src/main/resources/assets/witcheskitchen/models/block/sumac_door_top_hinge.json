@@ -1,0 +1,7 @@
+{
+	"parent": "block/door_top_rh",
+	"textures": {
+		"bottom": "witcheskitchen:block/trees/sumac_door_bottom",
+		"top": "witcheskitchen:block/trees/sumac_door_top"
+	}
+}
