@@ -1,11 +1,9 @@
-
 {
-	"parent": "block/door_top",
-	"textures": {
-		"bottom": "witcheskitchen:block/trees/elder_door_bottom",
-		"top": "witcheskitchen:block/trees/elder_door_top"
-	}
-    
+  "parent": "block/door_top",
+  "textures": {
+    "bottom": "witcheskitchen:block/trees/elder_door_bottom",
+    "top": "witcheskitchen:block/trees/elder_door_top"
+  }
 }
 
 

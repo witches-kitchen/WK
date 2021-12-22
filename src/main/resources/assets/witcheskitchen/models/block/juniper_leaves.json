@@ -1,6 +1,6 @@
-{ 
- "parent": "block/leaves",
- "textures": {
+{
+  "parent": "block/leaves",
+  "textures": {
     "particle": "witcheskitchen:block/trees/juniper_leaves",
     "all": "witcheskitchen:block/trees/juniper_leaves"
   }

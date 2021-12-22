@@ -1,7 +1,7 @@
-{ 
- "parent": "minecraft:block/leaves",
- "textures": {
+{
+  "parent": "minecraft:block/leaves",
+  "textures": {
     "particle": "witcheskitchen:block/trees/elder_leaves",
     "all": "witcheskitchen:block/trees/elder_leaves"
-   }
+  }
 } 
