@@ -124,6 +124,7 @@ public static final ConfiguredFeature<TreeFeatureConfig, ?> SUMAC_TREE =
  public static final PlacedFeature ELDER_TREE_CONFIGURED =
          ELDER_TREE.withPlacement(SquarePlacementModifier.of(), PlacedFeatures.createCountExtraModifier(0, 0.1F, 1), VegetationPlacedFeatures.NOT_IN_SURFACE_WATER_MODIFIER, PlacedFeatures.OCEAN_FLOOR_HEIGHTMAP, BlockFilterPlacementModifier.of(BlockPredicate.wouldSurvive(WKBlocks.ELDER_SAPLING.getDefaultState(), BlockPos.ORIGIN)), BiomePlacementModifier.of());         
 
+//dont know if this method needs to be changed. didn't want to debug this atm. will do 
 /* public static final PlacedFeature ELDER_ELDER_TREE_CONFIGURED =
          ELDER_ELDER_TREE.withPlacement(SquarePlacementModifier.of(), PlacedFeatures.createCountExtraModifier(0, 0.1F, 1), VegetationPlacedFeatures.NOT_IN_SURFACE_WATER_MODIFIER, PlacedFeatures.OCEAN_FLOOR_HEIGHTMAP, BlockFilterPlacementModifier.of(BlockPredicate.wouldSurvive(WKBlocks.ELDER_SAPLING.getDefaultState(), BlockPos.ORIGIN)), BiomePlacementModifier.of());*/         
 
@@ -144,7 +145,7 @@ public static final ConfiguredFeature<TreeFeatureConfig, ?> SUMAC_TREE =
  public static void register() {
         RegistryKey<ConfiguredFeature<?, ?>> blackthornTree = RegistryKey.of(Registry.CONFIGURED_FEATURE_KEY, new Identifier("witcheskitchen", "tree_blackthorn"));
         RegistryKey<ConfiguredFeature<?, ?>> elderTree = RegistryKey.of(Registry.CONFIGURED_FEATURE_KEY, new Identifier("witcheskitchen", "tree_elder"));
-        //RegistryKey<ConfiguredFeature<?, ?>> elderElderTree = RegistryKey.of(Registry.CONFIGURED_FEATURE_KEY, new Identifier("witcheskitchen", "tree_elder_elder"));
+        RegistryKey<ConfiguredFeature<?, ?>> elderElderTree = RegistryKey.of(Registry.CONFIGURED_FEATURE_KEY, new Identifier("witcheskitchen", "tree_elder_elder"));
         RegistryKey<ConfiguredFeature<?, ?>> hawthornTree = RegistryKey.of(Registry.CONFIGURED_FEATURE_KEY, new Identifier("witcheskitchen", "tree_hawthorn"));
         RegistryKey<ConfiguredFeature<?, ?>> juniperTree = RegistryKey.of(Registry.CONFIGURED_FEATURE_KEY, new Identifier("witcheskitchen", "tree_juniper"));
         RegistryKey<ConfiguredFeature<?, ?>> rowanTree = RegistryKey.of(Registry.CONFIGURED_FEATURE_KEY, new Identifier("witcheskitchen", "tree_rowan"));
@@ -152,7 +153,7 @@ public static final ConfiguredFeature<TreeFeatureConfig, ?> SUMAC_TREE =
 
         Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, blackthornTree.getValue(), BLACKTHORN_TREE);
         Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, elderTree.getValue(), ELDER_TREE);
-        //Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, elderElderTree.getValue(), ELDER_ELDER_TREE);
+        Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, elderElderTree.getValue(), ELDER_ELDER_TREE);
         Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, hawthornTree.getValue(), HAWTHORN_TREE);
         Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, juniperTree.getValue(), JUNIPER_TREE);
         Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, rowanTree.getValue(), ROWAN_TREE);
