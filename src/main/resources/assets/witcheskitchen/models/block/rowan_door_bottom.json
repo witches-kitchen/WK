@@ -1,8 +1,7 @@
 {
-	"parent": "block/door_bottom",
-	"textures": {
-		"bottom": "witcheskitchen:block/trees/rowan_door_bottom",
-		"top": "witcheskitchen:block/trees/rowan_door_top"
-	}
-    
+  "parent": "block/door_bottom",
+  "textures": {
+    "bottom": "witcheskitchen:block/trees/rowan_door_bottom",
+    "top": "witcheskitchen:block/trees/rowan_door_top"
+  }
 }

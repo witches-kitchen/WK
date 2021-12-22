@@ -42,10 +42,8 @@
   "block.witcheskitchen.sumac_slab": "Sumac Slab",
   "block.witcheskitchen.rowan_leaves": "Rowan Leaves",
   "block.witcheskitchen.sumac_leaves": "Sumac Leaves",
-
-  "entity.witcheskitchen.cusith":"Cu-Sith",
-
-  "item.witcheskitchen.belladonna_seeds":"Belladonna Seeds",
+  "entity.witcheskitchen.cusith": "Cu-Sith",
+  "item.witcheskitchen.belladonna_seeds": "Belladonna Seeds",
   "item.witcheskitchen.dollop_of_frosting": "Dollop of Frosting",
   "item.witcheskitchen.cu_sith_spawn_egg": "Cu-Sith Spawn Egg"
 }

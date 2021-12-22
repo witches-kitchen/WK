@@ -1,10 +1,9 @@
 {
-	"parent": "block/door_top",
-	"textures": {
-		"bottom": "witcheskitchen:block/trees/sumac_door_bottom",
-		"top": "witcheskitchen:block/trees/sumac_door_top"
-	}
-    
+  "parent": "block/door_top",
+  "textures": {
+    "bottom": "witcheskitchen:block/trees/sumac_door_bottom",
+    "top": "witcheskitchen:block/trees/sumac_door_top"
+  }
 }
 
 

@@ -2,13 +2,10 @@ package cf.witcheskitchen.common.generator;
 
 
 //this will all need to be reworked to better suit our needs
-import java.util.Random;
-import java.util.function.BiConsumer;
-
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import cf.witcheskitchen.common.registry.WKGenerator;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.intprovider.IntProvider;
@@ -17,8 +14,11 @@ import net.minecraft.world.gen.feature.TreeFeatureConfig;
 import net.minecraft.world.gen.foliage.FoliagePlacer;
 import net.minecraft.world.gen.foliage.FoliagePlacerType;
 
+import java.util.Random;
+import java.util.function.BiConsumer;
+
 public class SumacFoliagePlacer
-extends FoliagePlacer {
+        extends FoliagePlacer {
     public static final Codec<SumacFoliagePlacer> CODEC = RecordCodecBuilder.create(instance -> SumacFoliagePlacer.fillFoliagePlacerFields(instance).apply(instance, SumacFoliagePlacer::new));
 
     public SumacFoliagePlacer(IntProvider intProvider, IntProvider intProvider2) {

@@ -1,6 +1,6 @@
 {
-    "parent": "item/generated",
-    "textures": {
-        "layer0": "witcheskitchen:item/agriculture/seeds_belladonna"
-       }
-   }
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "witcheskitchen:item/agriculture/seeds_belladonna"
+  }
+}

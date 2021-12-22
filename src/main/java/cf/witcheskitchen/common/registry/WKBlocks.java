@@ -1,7 +1,5 @@
 package cf.witcheskitchen.common.registry;
 
-import net.minecraft.world.BlockView;
-
 import cf.witcheskitchen.WK;
 import cf.witcheskitchen.common.blocks.SaltBlock;
 import cf.witcheskitchen.common.blocks.WKSaplingBlock;
@@ -10,7 +8,6 @@ import cf.witcheskitchen.common.generator.WKSaplingGenerator;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
-import net.minecraft.block.FlowerPotBlock;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemGroup;
@@ -19,6 +16,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.BlockView;
 
 public class WKBlocks {
     public static final Block SALT_BLOCK = new SaltBlock(FabricBlockSettings.of(Material.DECORATION).noCollision().breakInstantly());
@@ -77,7 +75,7 @@ public class WKBlocks {
     public static final Block HAWTHORN_STAIRS = new WKStairsBlock(HAWTHORN_PLANKS.getDefaultState(), FabricBlockSettings.copyOf(HAWTHORN_PLANKS));
     public static final Block JUNIPER_STAIRS = new WKStairsBlock(JUNIPER_PLANKS.getDefaultState(), FabricBlockSettings.copyOf(JUNIPER_PLANKS));
     public static final Block ELDER_LOG = WKBlocks.newLogBlock(MapColor.PALE_YELLOW, MapColor.OAK_TAN);
-    public static final Block SUMAC_LOG =WKBlocks.newLogBlock(MapColor.DEEPSLATE_GRAY, MapColor.DARK_DULL_PINK);
+    public static final Block SUMAC_LOG = WKBlocks.newLogBlock(MapColor.DEEPSLATE_GRAY, MapColor.DARK_DULL_PINK);
     public static final Block HAWTHORN_LOG = WKBlocks.newLogBlock(MapColor.PALE_YELLOW, MapColor.DIRT_BROWN);
     public static final Block BLACKTHORN_LOG = WKBlocks.newLogBlock(MapColor.TERRACOTTA_BROWN, MapColor.TERRACOTTA_BLACK);
     public static final Block JUNIPER_LOG = WKBlocks.newLogBlock(MapColor.DIRT_BROWN, MapColor.DEEPSLATE_GRAY);
@@ -112,7 +110,6 @@ public class WKBlocks {
     public static final Block POTTED_JUNIPER_SAPLING = new FlowerPotBlock(JUNIPER_SAPLING, FabricBlockSettings.of(Material.DECORATION).breakInstantly().nonOpaque());
     public static final Block POTTED_ROWAN_SAPLING = new FlowerPotBlock(ROWAN_SAPLING, FabricBlockSettings.of(Material.DECORATION).breakInstantly().nonOpaque());
     public static final Block POTTED_SUMAC_SAPLING = new FlowerPotBlock(SUMAC_SAPLING, FabricBlockSettings.of(Material.DECORATION).breakInstantly().nonOpaque());
-
 
 
     public static void register() {
@@ -172,11 +169,11 @@ public class WKBlocks {
         registerBlock("juniper_sapling", JUNIPER_SAPLING, WK.WK_GROUP);
         registerBlock("rowan_sapling", ROWAN_SAPLING, WK.WK_GROUP);
         registerBlock("sumac_sapling", SUMAC_SAPLING, WK.WK_GROUP);
-        registerBlock("potted_blackthorn_sapling",POTTED_BLACKTHORN_SAPLING, WK.WK_GROUP);
-        registerBlock("potted_elder_sapling",POTTED_ELDER_SAPLING, WK.WK_GROUP);
-        registerBlock("potted_hawthorn_sapling",POTTED_HAWTHORN_SAPLING, WK.WK_GROUP);
-        registerBlock("potted_juniper_sapling",POTTED_JUNIPER_SAPLING, WK.WK_GROUP);
-        registerBlock("potted_sumac_sapling",POTTED_SUMAC_SAPLING, WK.WK_GROUP);
+        registerBlock("potted_blackthorn_sapling", POTTED_BLACKTHORN_SAPLING, WK.WK_GROUP);
+        registerBlock("potted_elder_sapling", POTTED_ELDER_SAPLING, WK.WK_GROUP);
+        registerBlock("potted_hawthorn_sapling", POTTED_HAWTHORN_SAPLING, WK.WK_GROUP);
+        registerBlock("potted_juniper_sapling", POTTED_JUNIPER_SAPLING, WK.WK_GROUP);
+        registerBlock("potted_sumac_sapling", POTTED_SUMAC_SAPLING, WK.WK_GROUP);
 
         //Wood planks
         registerBlock("elder_planks", ELDER_PLANKS, WK.WK_GROUP);
@@ -227,11 +224,12 @@ public class WKBlocks {
     //needs to be reworked for better suiting our needs.. maybe? keeping the never and 2 always in case we end up needing to use them.
     private static Boolean never(BlockState state, BlockView world, BlockPos pos, EntityType<?> type) {
         return false;
-    } 
+    }
 
     private static Boolean always(BlockState state, BlockView world, BlockPos pos, EntityType<?> type) {
         return true;
     }
+
     private static Boolean willSpawnOnLeaves(BlockState state, BlockView world, BlockPos pos, EntityType<?> type) {
         return type == EntityType.OCELOT || type == EntityType.PARROT;
     }
@@ -258,5 +256,5 @@ public class WKBlocks {
         Registry.register(Registry.ITEM, new Identifier(WK.MODID, id), new BlockItem(block, new FabricItemSettings().group(tab)));
     }
 
-     
+
 }

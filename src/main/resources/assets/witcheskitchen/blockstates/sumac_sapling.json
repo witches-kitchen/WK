@@ -1,7 +1,7 @@
 {
-    "variants": {
-      "": {
-        "model": "witcheskitchen:block/sumac_sapling"
-       }
-     }
-   }
+  "variants": {
+    "": {
+      "model": "witcheskitchen:block/sumac_sapling"
+    }
+  }
+}

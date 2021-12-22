@@ -1,7 +1,7 @@
 {
-    "variants": {
-      "": {
-        "model": "witcheskitchen:block/juniper_sapling"
-       }
-     }
-   }
+  "variants": {
+    "": {
+      "model": "witcheskitchen:block/juniper_sapling"
+    }
+  }
+}
