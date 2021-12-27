@@ -174,6 +174,7 @@ public class WKBlocks {
         registerBlock("potted_hawthorn_sapling", POTTED_HAWTHORN_SAPLING, WK.WK_GROUP);
         registerBlock("potted_juniper_sapling", POTTED_JUNIPER_SAPLING, WK.WK_GROUP);
         registerBlock("potted_sumac_sapling", POTTED_SUMAC_SAPLING, WK.WK_GROUP);
+        registerBlock("potted_rowan_sapling", POTTED_ROWAN_SAPLING, WK.WK_GROUP);
 
         //Wood planks
         registerBlock("elder_planks", ELDER_PLANKS, WK.WK_GROUP);
