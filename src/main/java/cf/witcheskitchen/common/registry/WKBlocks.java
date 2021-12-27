@@ -97,6 +97,9 @@ public class WKBlocks {
     public static final Block JUNIPER_LEAVES = WKBlocks.newLeavesBlock(BlockSoundGroup.GRASS);
     public static final Block ROWAN_LEAVES = WKBlocks.newLeavesBlock(BlockSoundGroup.GRASS);
 
+    //Tile Entities
+    public static final Block TEAPOT = new Block(FabricBlockSettings.of(Material.AMETHYST));
+
     public static final Block BLACKTHORN_SAPLING = new WKSaplingBlock(new WKSaplingGenerator(() -> WKGenerator.BLACKTHORN_TREE), FabricBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
     public static final Block ELDER_SAPLING = new WKSaplingBlock(new WKSaplingGenerator(() -> WKGenerator.ELDER_TREE), FabricBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
     public static final Block HAWTHORN_SAPLING = new WKSaplingBlock(new WKSaplingGenerator(() -> WKGenerator.HAWTHORN_TREE), FabricBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
