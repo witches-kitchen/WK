@@ -4,7 +4,8 @@ import cf.witcheskitchen.WK;
 import cf.witcheskitchen.common.blocks.SaltBlock;
 import cf.witcheskitchen.common.blocks.WKSaplingBlock;
 import cf.witcheskitchen.common.blocks.WKStairsBlock;
-import cf.witcheskitchen.common.blocks.technical.OvenBlock;
+import cf.witcheskitchen.common.blocks.technical.CopperOvenBlock;
+import cf.witcheskitchen.common.blocks.technical.IronOvenBlock;
 import cf.witcheskitchen.common.blocks.technical.TeapotBlock;
 import cf.witcheskitchen.common.generator.WKSaplingGenerator;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
@@ -101,8 +102,8 @@ public class WKBlocks {
 
     //Tile Entities
     public static final Block TEAPOT = new TeapotBlock(FabricBlockSettings.copyOf(Blocks.AMETHYST_BLOCK));
-    public static final Block IRON_OVEN = new OvenBlock(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK));
-    public static final Block COPPER_OVEN = new OvenBlock(FabricBlockSettings.copyOf(Blocks.COPPER_BLOCK));
+    public static final Block IRON_OVEN = new IronOvenBlock(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK));
+    public static final Block COPPER_OVEN = new CopperOvenBlock(FabricBlockSettings.copyOf(Blocks.COPPER_BLOCK));
 
     public static final Block BLACKTHORN_SAPLING = new WKSaplingBlock(new WKSaplingGenerator(() -> WKGenerator.BLACKTHORN_TREE), FabricBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
     public static final Block ELDER_SAPLING = new WKSaplingBlock(new WKSaplingGenerator(() -> WKGenerator.ELDER_TREE), FabricBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
