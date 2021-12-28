@@ -1,8 +1,6 @@
 package cf.witcheskitchen.common.statuseffect;
 
 import cf.witcheskitchen.common.registry.WKStatusEffects;
-import com.mojang.datafixers.kinds.Const;
-import dev.emi.trinkets.TrinketSlot;
 import dev.emi.trinkets.api.TrinketsApi;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -10,8 +8,6 @@ import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.item.ItemConvertible;
-import net.minecraft.item.ItemStack;
 
 import java.util.Random;
 
@@ -58,10 +54,11 @@ public class DisrobingStatusEffect extends StatusEffect {
                     entity.removeStatusEffect(WKStatusEffects.DISROBING);
 
                 }
-                //Todo: Trinket dropping
-                //case 4 -> {
-               //     entity.removeStatusEffect(WKStatusEffects.DISROBING);
-               // }
+                //Todo: Fix trinket dupe bug when dropping items. Also make it target only one slot at a time.
+                case 4 -> {
+                    TrinketsApi.getTrinketComponent(entity).get().forEach((slotReference, itemStack) -> entity.dropItem(itemStack.getItem()));
+                    entity.removeStatusEffect(WKStatusEffects.DISROBING);
+                }
                 case 5 -> entity.removeStatusEffect(WKStatusEffects.DISROBING);
 
             }
