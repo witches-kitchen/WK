@@ -141,6 +141,7 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
                     if (!event.isMoving() && !isAttacking()) {
                         event.getController().setAnimation(new AnimationBuilder().addAnimation("howl", false));
                         howlTimer = 1244;
+                        this.playSound(WKSounds.CUSITH_HOWL_EVENT, 0.8F, 0.7F);
                         return PlayState.CONTINUE;
                     }
                 }
@@ -217,11 +218,6 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
     @Override
     protected SoundEvent getDeathSound() {
         return WKSounds.CUSITH_DEATH_EVENT;
-    }
-    
-    @Override
-    protected SoundEvent getHowlSound() {
-        return WKSounds.CUSITH_HOWL_EVENT;
     }
 
     @Override
