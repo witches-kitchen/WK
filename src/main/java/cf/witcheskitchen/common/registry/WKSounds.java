@@ -9,6 +9,7 @@ public class WKSounds {
     // Cu-Sith 
     public static SoundEvent CUSITH_IDLE_EVENT = register("witcheskitchen:cusith_ambient");
     public static SoundEvent CUSITH_DEATH_EVENT = register("witcheskitchen:cusith_death");
+    public static SoundEvent CUSITH_HOWL_EVENT = register("witcheskitchen:cusith_howl");
 
 
     private static SoundEvent register(String id) {
