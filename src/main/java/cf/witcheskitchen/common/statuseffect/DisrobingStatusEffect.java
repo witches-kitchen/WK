@@ -31,7 +31,7 @@ public class DisrobingStatusEffect extends StatusEffect {
         Random rand = entity.getRandom();
         int i = rand.nextInt(100);
         if (i < 75) {
-            switch (rand.nextInt(4)) {
+            switch (rand.nextInt(5)) {
                 case 0 -> {
                     entity.dropItem(entity.getEquippedStack(EquipmentSlot.HEAD).getItem(), 1);
                     entity.getEquippedStack(EquipmentSlot.HEAD).decrement(1);
@@ -53,6 +53,7 @@ public class DisrobingStatusEffect extends StatusEffect {
                     entity.removeStatusEffect(WKStatusEffects.DISROBING);
 
                 }
+                case 4 -> entity.removeStatusEffect(WKStatusEffects.DISROBING);
 
             }
         }
