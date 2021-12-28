@@ -113,7 +113,7 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
         if (i <= 33) {
             if (target instanceof LivingEntity) {
                 ((LivingEntity) target).addStatusEffect(new StatusEffectInstance(WKStatusEffects.HORROR, 1000));
-                this.playSound(WKSounds.CUSITH_IDLE_EVENT, 0.8F, 0.7F);
+                this.playSound(WKSounds.CUSITH_HOWL_EVENT, 0.8F, 0.7F);
             }
         }
         return flag;
@@ -217,6 +217,11 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
     @Override
     protected SoundEvent getDeathSound() {
         return WKSounds.CUSITH_DEATH_EVENT;
+    }
+    
+    @Override
+    protected SoundEvent getHowlSound() {
+        return WKSounds.CUSITH_HOWL_EVENT;
     }
 
     @Override
