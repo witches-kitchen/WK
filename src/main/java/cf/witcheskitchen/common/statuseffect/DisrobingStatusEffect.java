@@ -1,12 +1,17 @@
 package cf.witcheskitchen.common.statuseffect;
 
 import cf.witcheskitchen.common.registry.WKStatusEffects;
+import com.mojang.datafixers.kinds.Const;
+import dev.emi.trinkets.TrinketSlot;
+import dev.emi.trinkets.api.TrinketsApi;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.item.ItemConvertible;
+import net.minecraft.item.ItemStack;
 
 import java.util.Random;
 
@@ -31,7 +36,7 @@ public class DisrobingStatusEffect extends StatusEffect {
         Random rand = entity.getRandom();
         int i = rand.nextInt(100);
         if (i < 75) {
-            switch (rand.nextInt(5)) {
+            switch (rand.nextInt(6)) {
                 case 0 -> {
                     entity.dropItem(entity.getEquippedStack(EquipmentSlot.HEAD).getItem(), 1);
                     entity.getEquippedStack(EquipmentSlot.HEAD).decrement(1);
@@ -53,11 +58,11 @@ public class DisrobingStatusEffect extends StatusEffect {
                     entity.removeStatusEffect(WKStatusEffects.DISROBING);
 
                 }
-                //case 3 -> {
-                //    TrinketsApi.getTrinketComponent(entity).;
-                //    entity.removeStatusEffect(WKStatusEffects.DISROBING);
-                //}
-                case 4 -> entity.removeStatusEffect(WKStatusEffects.DISROBING);
+                //Todo: Trinket dropping
+                //case 4 -> {
+               //     entity.removeStatusEffect(WKStatusEffects.DISROBING);
+               // }
+                case 5 -> entity.removeStatusEffect(WKStatusEffects.DISROBING);
 
             }
         }
