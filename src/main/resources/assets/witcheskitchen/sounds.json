@@ -10,5 +10,10 @@
       "witcheskitchen:cusith_death1",
       "witcheskitchen:cusith_death2"
     ]
+  },
+  "cusith_howl":{
+    "sounds": [
+      "witcheskitchen:cusith_howl"
+    ]
   }
 }
