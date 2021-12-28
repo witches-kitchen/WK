@@ -56,7 +56,7 @@ public class DisrobingStatusEffect extends StatusEffect {
                 }
                 //Todo: Fix trinket dupe bug when dropping items. Also make it target only one slot at a time.
                 case 4 -> {
-                    TrinketsApi.getTrinketComponent(entity).get().forEach((slotReference, itemStack) -> entity.dropItem(itemStack.getItem()));
+                    TrinketsApi.getTrinketComponent(entity).get().forEach((slotReference, itemStack) -> entity.dropItem(itemStack.getItem(), 1));
                     entity.removeStatusEffect(WKStatusEffects.DISROBING);
                 }
                 case 5 -> entity.removeStatusEffect(WKStatusEffects.DISROBING);
