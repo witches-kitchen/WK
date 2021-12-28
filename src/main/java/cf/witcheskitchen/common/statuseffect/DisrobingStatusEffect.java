@@ -53,9 +53,7 @@ public class DisrobingStatusEffect extends StatusEffect {
                     entity.removeStatusEffect(WKStatusEffects.DISROBING);
 
                 }
-                case 4 -> {
-                    entity.removeStatusEffect(WKStatusEffects.DISROBING);
-                }
+                case 4 -> entity.removeStatusEffect(WKStatusEffects.DISROBING);
 
             }
         }
