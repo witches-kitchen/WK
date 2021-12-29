@@ -57,7 +57,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable {
 
     @Override
     public int getVariants() {
-        return 0;
+        return 12;
     }
 
     @Nullable
