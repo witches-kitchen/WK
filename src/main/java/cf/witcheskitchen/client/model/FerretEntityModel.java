@@ -5,7 +5,7 @@ import cf.witcheskitchen.common.entities.tameable.FerretEntity;
 import net.minecraft.util.Identifier;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 
-public class FerretModel extends AnimatedGeoModel<FerretEntity> {
+public class FerretEntityModel extends AnimatedGeoModel<FerretEntity> {
     @Override
     public Identifier getModelLocation(FerretEntity object) {
         return new Identifier(WK.MODID, "geo/ferret.geo.json");
