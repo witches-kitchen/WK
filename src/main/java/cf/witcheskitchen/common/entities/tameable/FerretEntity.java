@@ -15,6 +15,10 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
@@ -23,11 +27,12 @@ import java.util.Set;
 public class FerretEntity extends WKTameableEntity implements IAnimatable {
 
     public static final Set<Item> TAMING_INGREDIENTS;
-    private final AnimationFactory factory = new AnimationFactory(this);
 
     static {
         TAMING_INGREDIENTS = Sets.newHashSet(Items.RABBIT, Items.COOKED_RABBIT, Items.CHICKEN, Items.COOKED_CHICKEN, Items.EGG, Items.RABBIT_FOOT);
     }
+
+    private final AnimationFactory factory = new AnimationFactory(this);
 
     public FerretEntity(EntityType<? extends TameableEntity> entityType, World world) {
         super(entityType, world);
@@ -59,12 +64,21 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable {
     }
 
     @Override
-    public void registerControllers(AnimationData animationData) {
+    public void registerControllers(AnimationData data) {
+        data.addAnimationController(new AnimationController(this, "controller", 0, this::predicate));
+    }
 
+    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+        if (isSitting()) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("run", true));
+            return PlayState.CONTINUE;
+        }
+        return PlayState.CONTINUE;
     }
 
     @Override
     public AnimationFactory getFactory() {
-        return null;
+        return this.factory;
     }
+
 }

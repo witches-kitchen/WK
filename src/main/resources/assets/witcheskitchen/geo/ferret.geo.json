@@ -1,0 +1,299 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.weasel",
+        "texture_width": 32,
+        "texture_height": 32,
+        "visible_bounds_width": 3,
+        "visible_bounds_height": 1.5,
+        "visible_bounds_offset": [
+          0,
+          0.25,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "weasel",
+          "pivot": [
+            0,
+            0,
+            -4
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -2,
+                2,
+                -5
+              ],
+              "size": [
+                4,
+                3,
+                6
+              ],
+              "uv": [
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "name": "leg2",
+          "parent": "weasel",
+          "pivot": [
+            1,
+            4,
+            -3
+          ],
+          "cubes": [
+            {
+              "origin": [
+                0.1,
+                0,
+                -4
+              ],
+              "size": [
+                2,
+                4,
+                2
+              ],
+              "uv": [
+                16,
+                19
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "leg",
+          "parent": "weasel",
+          "pivot": [
+            -1,
+            4,
+            -3
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -2.1,
+                0,
+                -4
+              ],
+              "size": [
+                2,
+                4,
+                2
+              ],
+              "uv": [
+                16,
+                19
+              ]
+            }
+          ]
+        },
+        {
+          "name": "head",
+          "parent": "weasel",
+          "pivot": [
+            0,
+            4,
+            -5
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -1.5,
+                3,
+                -10
+              ],
+              "size": [
+                3,
+                2,
+                1
+              ],
+              "uv": [
+                22,
+                0
+              ]
+            },
+            {
+              "origin": [
+                -2,
+                3,
+                -9
+              ],
+              "size": [
+                4,
+                3,
+                4
+              ],
+              "uv": [
+                0,
+                17
+              ]
+            }
+          ]
+        },
+        {
+          "name": "ears",
+          "parent": "head",
+          "pivot": [
+            -1,
+            6,
+            -6
+          ],
+          "cubes": [
+            {
+              "origin": [
+                0,
+                5.5,
+                -7
+              ],
+              "size": [
+                2,
+                2,
+                2
+              ],
+              "inflate": -0.2,
+              "uv": [
+                18,
+                7
+              ]
+            },
+            {
+              "origin": [
+                -2,
+                5.5,
+                -7
+              ],
+              "size": [
+                2,
+                2,
+                2
+              ],
+              "inflate": -0.2,
+              "uv": [
+                18,
+                7
+              ]
+            }
+          ]
+        },
+        {
+          "name": "hindbody",
+          "parent": "weasel",
+          "pivot": [
+            0,
+            5,
+            1
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -2,
+                2,
+                1
+              ],
+              "size": [
+                4,
+                3,
+                5
+              ],
+              "uv": [
+                0,
+                9
+              ]
+            }
+          ]
+        },
+        {
+          "name": "leg3",
+          "parent": "hindbody",
+          "pivot": [
+            -1,
+            4,
+            5
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -2.1,
+                0,
+                3.5
+              ],
+              "size": [
+                2,
+                4,
+                2
+              ],
+              "uv": [
+                14,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "name": "leg4",
+          "parent": "hindbody",
+          "pivot": [
+            1,
+            4,
+            5
+          ],
+          "cubes": [
+            {
+              "origin": [
+                0.1,
+                0,
+                3.5
+              ],
+              "size": [
+                2,
+                4,
+                2
+              ],
+              "uv": [
+                14,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "tail",
+          "parent": "hindbody",
+          "pivot": [
+            0,
+            5,
+            6
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -1,
+                3,
+                6
+              ],
+              "size": [
+                2,
+                2,
+                6
+              ],
+              "uv": [
+                12,
+                11
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
