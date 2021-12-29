@@ -2,17 +2,22 @@ package cf.witcheskitchen.common.entities.tameable;
 
 import cf.witcheskitchen.api.WKTameableEntity;
 import com.google.common.collect.Sets;
+import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.*;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -24,6 +29,7 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import java.util.Set;
+import java.util.SplittableRandom;
 import java.util.function.Predicate;
 
 public class FerretEntity extends WKTameableEntity implements IAnimatable {
@@ -82,9 +88,30 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable {
         this.dataTracker.set(VARIANT, variant);
     }
 
+    @Nullable
+    @Override
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
+        SplittableRandom random = new SplittableRandom();
+        int var = random.nextInt(0, 13);
+        this.setVariant(var);
+        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+    }
+
     @Override
     public void registerControllers(AnimationData data) {
         data.addAnimationController(new AnimationController(this, "controller", 0, this::predicate));
+    }
+
+    @Override
+    public void writeCustomDataToNbt(NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
+        nbt.putInt("Variant", this.getVariant());
+    }
+
+    @Override
+    public void readCustomDataFromNbt(NbtCompound tag) {
+        super.readCustomDataFromNbt(tag);
+        this.setVariant(tag.getInt("Variant"));
     }
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
