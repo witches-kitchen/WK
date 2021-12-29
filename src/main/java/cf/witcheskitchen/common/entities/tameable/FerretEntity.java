@@ -7,9 +7,11 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.*;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.tag.Tag;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -64,6 +66,11 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable {
     @Override
     public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
         return null;
+    }
+
+    @Override
+    protected void swimUpward(Tag<Fluid> fluid) {
+        super.swimUpward(fluid);
     }
 
     @Override
