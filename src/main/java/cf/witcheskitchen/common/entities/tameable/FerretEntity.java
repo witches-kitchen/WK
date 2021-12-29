@@ -70,7 +70,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable {
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         if (isSitting()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("run", true));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("sit", true));
             return PlayState.CONTINUE;
         }
         return PlayState.CONTINUE;
