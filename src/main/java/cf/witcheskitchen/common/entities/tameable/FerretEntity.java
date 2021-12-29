@@ -13,7 +13,6 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Set;
-import java.util.UUID;
 
 public class FerretEntity extends WKTameableEntity {
 
@@ -30,18 +29,6 @@ public class FerretEntity extends WKTameableEntity {
     @Override
     public int getVariants() {
         return 0;
-    }
-
-    @Nullable
-    @Override
-    public UUID getOwnerUuid() {
-        return null;
-    }
-
-    @Nullable
-    @Override
-    public Entity getOwner() {
-        return null;
     }
 
     @Nullable
