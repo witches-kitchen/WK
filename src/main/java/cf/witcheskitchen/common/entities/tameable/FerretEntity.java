@@ -23,6 +23,7 @@ import java.util.Set;
 public class FerretEntity extends WKTameableEntity implements IAnimatable {
 
     public static final Set<Item> TAMING_INGREDIENTS;
+    private final AnimationFactory factory = new AnimationFactory(this);
 
     static {
         TAMING_INGREDIENTS = Sets.newHashSet(Items.RABBIT, Items.COOKED_RABBIT, Items.CHICKEN, Items.COOKED_CHICKEN, Items.EGG, Items.RABBIT_FOOT);
@@ -59,7 +60,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable {
 
     @Override
     public void registerControllers(AnimationData animationData) {
-        
+
     }
 
     @Override
