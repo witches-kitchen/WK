@@ -12,6 +12,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.tag.Tag;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -71,6 +72,14 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable {
     @Override
     protected void swimUpward(Tag<Fluid> fluid) {
         super.swimUpward(fluid);
+    }
+
+    public int getVariant() {
+        return MathHelper.clamp(this.dataTracker.get(VARIANT), 1, 13);
+    }
+
+    public void setVariant(int variant) {
+        this.dataTracker.set(VARIANT, variant);
     }
 
     @Override
