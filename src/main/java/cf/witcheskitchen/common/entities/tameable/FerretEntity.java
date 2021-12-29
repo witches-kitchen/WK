@@ -14,10 +14,13 @@ import net.minecraft.item.Items;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import java.util.Set;
 
-public class FerretEntity extends WKTameableEntity {
+public class FerretEntity extends WKTameableEntity implements IAnimatable {
 
     public static final Set<Item> TAMING_INGREDIENTS;
 
@@ -51,6 +54,16 @@ public class FerretEntity extends WKTameableEntity {
     @Nullable
     @Override
     public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
+        return null;
+    }
+
+    @Override
+    public void registerControllers(AnimationData animationData) {
+        
+    }
+
+    @Override
+    public AnimationFactory getFactory() {
         return null;
     }
 }
