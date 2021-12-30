@@ -139,7 +139,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable {
 
     @Override
     public boolean canBeLeashedBy(PlayerEntity player) {
-        return false;
+        return true;
     }
 
     @Override
