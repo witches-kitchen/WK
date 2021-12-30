@@ -169,6 +169,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable {
         }
     }
 
+    @Override
     public boolean damage(DamageSource source, float amount) {
         if (this.isInvulnerableTo(source)) {
             return false;
@@ -194,6 +195,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable {
         this.dataTracker.startTracking(VARIANT, 0);
     }
 
+    @Override
     public ActionResult interactMob(PlayerEntity player, Hand hand) {
         ItemStack itemStack = player.getStackInHand(hand);
         Item item = itemStack.getItem();
@@ -226,7 +228,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable {
                     return ActionResult.SUCCESS;
                 }
 
-                if (!(item instanceof DyeItem)) {
+                if ((item != null)) {
                     ActionResult bl = super.interactMob(player, hand);
                     if ((!bl.isAccepted() || this.isBaby()) && this.isOwner(player)) {
                         this.setSitting(!this.isSitting());
