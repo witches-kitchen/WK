@@ -188,7 +188,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable {
                     } else {
                         this.world.sendEntityStatus(this, (byte) 6);
                     }
-                    
+
                     this.setPersistent();
                     return ActionResult.CONSUME;
                 }
