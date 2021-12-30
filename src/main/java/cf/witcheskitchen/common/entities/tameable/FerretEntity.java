@@ -276,7 +276,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable {
 
     @Override
     public boolean isBreedingItem(ItemStack stack) {
-        return stack.getItem() == Items.EGG;
+        return BREEDING_INGREDIENTS.test(stack);
     }
 
     @Override
