@@ -7,14 +7,19 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.mob.CreeperEntity;
+import net.minecraft.entity.mob.GhastEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.*;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.tag.Tag;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
@@ -112,6 +117,56 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable {
     public void readCustomDataFromNbt(NbtCompound tag) {
         super.readCustomDataFromNbt(tag);
         this.setVariant(tag.getInt("Variant"));
+    }
+
+    public boolean canBreedWith(AnimalEntity other) {
+        if (other == this) {
+            return false;
+        } else if (!this.isTamed()) {
+            return false;
+        } else if (!(other instanceof FerretEntity ferretEntity)) {
+            return false;
+        } else {
+            if (!ferretEntity.isTamed()) {
+                return false;
+            } else if (ferretEntity.isInSittingPose()) {
+                return false;
+            } else {
+                return this.isInLove() && ferretEntity.isInLove();
+            }
+        }
+    }
+
+    @Override
+    public boolean canBeLeashedBy(PlayerEntity player) {
+        return false;
+    }
+
+    @Override
+    public ActionResult interactMob(PlayerEntity player, Hand hand) {
+        return super.interactMob(player, hand);
+    }
+
+    @Override
+    public boolean canAttackWithOwner(LivingEntity target, LivingEntity owner) {
+        if (!(target instanceof CreeperEntity) && !(target instanceof GhastEntity)) {
+            if (target instanceof FerretEntity ferretEntity) {
+                return !ferretEntity.isTamed() || ferretEntity.getOwner() != owner;
+            } else if (target instanceof PlayerEntity && owner instanceof PlayerEntity && !((PlayerEntity)owner).shouldDamagePlayer((PlayerEntity)target)) {
+                return false;
+            } else if (target instanceof HorseBaseEntity && ((HorseBaseEntity)target).isTame()) {
+                return false;
+            } else {
+                return !(target instanceof TameableEntity) || !((TameableEntity)target).isTamed();
+            }
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean canAvoidTraps() {
+        return true;
     }
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
