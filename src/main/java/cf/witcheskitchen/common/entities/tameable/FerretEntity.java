@@ -18,10 +18,7 @@ import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.fluid.Fluid;
-import net.minecraft.item.DyeItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.item.*;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.world.ServerWorld;
@@ -57,8 +54,8 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable {
             TrackedDataHandlerRegistry.INTEGER);
 
     static {
-        BREEDING_INGREDIENTS = Ingredient.ofItems(Items.RABBIT, Items.COOKED_RABBIT, Items.CHICKEN, Items.COOKED_CHICKEN, Items.EGG, Items.RABBIT_FOOT);
-        TAMING_INGREDIENTS = Sets.newHashSet(Items.RABBIT, Items.COOKED_RABBIT, Items.CHICKEN, Items.COOKED_CHICKEN, Items.EGG, Items.RABBIT_FOOT);
+        BREEDING_INGREDIENTS = Ingredient.ofItems(Items.RABBIT, Items.COOKED_RABBIT, Items.CHICKEN, Items.COOKED_CHICKEN, Items.EGG, Items.RABBIT_FOOT, Items.TURTLE_EGG);
+        TAMING_INGREDIENTS = Sets.newHashSet(Items.RABBIT, Items.COOKED_RABBIT, Items.CHICKEN, Items.COOKED_CHICKEN, Items.EGG, Items.RABBIT_FOOT, Items.TURTLE_EGG);
         FOLLOW_TAMED_PREDICATE = (entity) -> {
             EntityType<?> entityType = entity.getType();
             return entityType == EntityType.CHICKEN || entityType == EntityType.RABBIT;
@@ -69,6 +66,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable {
 
     public FerretEntity(EntityType<? extends TameableEntity> entityType, World world) {
         super(entityType, world);
+        this.setTamed(false);
     }
 
     public static DefaultAttributeContainer.Builder createAttributes() {
@@ -85,6 +83,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable {
         this.goalSelector.add(2, new LookAtEntityGoal(this, RabbitEntity.class, 12.0f));
         this.goalSelector.add(2, new LookAtEntityGoal(this, ChickenEntity.class, 12.0f));
         this.goalSelector.add(7, new AnimalMateGoal(this, 1.0D));
+        this.goalSelector.add(4, new FollowParentGoal(this, 1.25D));
         this.goalSelector.add(2, new SitGoal(this));
         this.goalSelector.add(6, new FollowOwnerGoal(this, 1.0D, 10.0F, 2.0F, false));
         this.goalSelector.add(2, new MeleeAttackGoal(this, 1, true));
@@ -111,6 +110,20 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable {
 
         return ferretEntity;
     }
+
+    @Override
+    public void setTamed(boolean tamed) {
+        super.setTamed(tamed);
+        if (tamed) {
+            this.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH).setBaseValue(15.0D);
+            this.setHealth(15.0F);
+        } else {
+            this.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH).setBaseValue(8.0D);
+        }
+
+        this.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE).setBaseValue(4.0D);
+    }
+
 
     @Override
     protected void swimUpward(Tag<Fluid> fluid) {
@@ -151,21 +164,20 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable {
         this.setVariant(tag.getInt("Variant"));
     }
 
+    @Override
+    public float getEyeHeight(EntityPose pose) {
+        return super.getEyeHeight(pose);
+    }
+
+    @Override
     public boolean canBreedWith(AnimalEntity other) {
-        if (other == this) {
+        if (!this.isTamed()) {
             return false;
-        } else if (!this.isTamed()) {
-            return false;
-        } else if (!(other instanceof FerretEntity ferretEntity)) {
+        } else if (!(other instanceof FerretEntity)) {
             return false;
         } else {
-            if (!ferretEntity.isTamed()) {
-                return false;
-            } else if (ferretEntity.isInSittingPose()) {
-                return false;
-            } else {
-                return this.isInLove() && ferretEntity.isInLove();
-            }
+            FerretEntity ferretEntity = (FerretEntity) other;
+            return ferretEntity.isTamed() && super.canBreedWith(other);
         }
     }
 
@@ -264,7 +276,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable {
 
     @Override
     public boolean isBreedingItem(ItemStack stack) {
-        return BREEDING_INGREDIENTS.test(stack);
+        return stack.getItem() == Items.EGG;
     }
 
     @Override
