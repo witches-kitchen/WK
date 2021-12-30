@@ -320,7 +320,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable {
             return PlayState.CONTINUE;
         }
         //Todo: When this gets in game, figure out how to set up the proper conditions for it to appear.
-        if (isAttacking()) {
+        if (isAttacking() && !isSitting()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("gore", true));
             return PlayState.CONTINUE;
         }
