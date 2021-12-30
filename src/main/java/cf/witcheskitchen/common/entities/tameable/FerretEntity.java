@@ -14,9 +14,12 @@ import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -39,10 +42,12 @@ import java.util.function.Predicate;
 
 public class FerretEntity extends WKTameableEntity implements IAnimatable {
 
+    public static final Ingredient BREEDING_INGREDIENTS;
     public static final Set<Item> TAMING_INGREDIENTS;
     public static final Predicate<LivingEntity> FOLLOW_TAMED_PREDICATE;
 
     static {
+        BREEDING_INGREDIENTS = Ingredient.ofItems(Items.RABBIT, Items.COOKED_RABBIT, Items.CHICKEN, Items.COOKED_CHICKEN, Items.EGG, Items.RABBIT_FOOT);
         TAMING_INGREDIENTS = Sets.newHashSet(Items.RABBIT, Items.COOKED_RABBIT, Items.CHICKEN, Items.COOKED_CHICKEN, Items.EGG, Items.RABBIT_FOOT);
         FOLLOW_TAMED_PREDICATE = (entity) -> {
             EntityType<?> entityType = entity.getType();
@@ -144,7 +149,57 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable {
 
     @Override
     public ActionResult interactMob(PlayerEntity player, Hand hand) {
-        return super.interactMob(player, hand);
+        ItemStack itemStack = player.getStackInHand(hand);
+        Item item = itemStack.getItem();
+        if (!this.isTamed() && TAMING_INGREDIENTS.contains(itemStack.getItem())) {
+            if (!player.getAbilities().creativeMode) {
+                itemStack.decrement(1);
+            }
+
+            if (!this.isSilent()) {
+                this.world.playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.ENTITY_FOX_EAT, this.getSoundCategory(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
+            }
+
+            if (!this.world.isClient) {
+                if (this.random.nextInt(10) == 0) {
+                    this.setOwner(player);
+                    this.world.sendEntityStatus(this, (byte) 7);
+                } else {
+                    this.world.sendEntityStatus(this, (byte) 6);
+                }
+            }
+
+            return ActionResult.success(this.world.isClient);
+
+        } else {
+            if (this.isTamed()) {
+                if (this.isOwner(player)) {
+                    if (item.isFood() && this.isBreedingItem(itemStack) && this.getHealth() < this.getMaxHealth()) {
+                        this.eat(player, hand, itemStack);
+                        this.heal((float) item.getFoodComponent().getHunger());
+                        return ActionResult.CONSUME;
+                    }
+                } else if (this.isBreedingItem(itemStack)) {
+                    this.eat(player, hand, itemStack);
+                    if (this.random.nextInt(3) == 0) {
+                        this.setOwner(player);
+                        this.setSitting(true);
+                        this.world.sendEntityStatus(this, (byte) 7);
+                    } else {
+                        this.world.sendEntityStatus(this, (byte) 6);
+                    }
+                    
+                    this.setPersistent();
+                    return ActionResult.CONSUME;
+                }
+            }
+            return super.interactMob(player, hand);
+        }
+    }
+
+    @Override
+    public boolean isBreedingItem(ItemStack stack) {
+        return BREEDING_INGREDIENTS.test(stack);
     }
 
     @Override
@@ -152,12 +207,12 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable {
         if (!(target instanceof CreeperEntity) && !(target instanceof GhastEntity)) {
             if (target instanceof FerretEntity ferretEntity) {
                 return !ferretEntity.isTamed() || ferretEntity.getOwner() != owner;
-            } else if (target instanceof PlayerEntity && owner instanceof PlayerEntity && !((PlayerEntity)owner).shouldDamagePlayer((PlayerEntity)target)) {
+            } else if (target instanceof PlayerEntity && owner instanceof PlayerEntity && !((PlayerEntity) owner).shouldDamagePlayer((PlayerEntity) target)) {
                 return false;
-            } else if (target instanceof HorseBaseEntity && ((HorseBaseEntity)target).isTame()) {
+            } else if (target instanceof HorseBaseEntity && ((HorseBaseEntity) target).isTame()) {
                 return false;
             } else {
-                return !(target instanceof TameableEntity) || !((TameableEntity)target).isTamed();
+                return !(target instanceof TameableEntity) || !((TameableEntity) target).isTamed();
             }
         } else {
             return false;
