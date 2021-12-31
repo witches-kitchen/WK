@@ -86,8 +86,8 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         return this.dataTracker.get(NIGHT);
     }
 
-    public void setSleeping(boolean sleeping) {
-        this.dataTracker.set(NIGHT, getEntityWorld().isNight());
+    public void setSleeping (boolean sleeping) {
+        this.dataTracker.set(NIGHT, sleeping);
     }
 
     @Override //this adds basic ai
@@ -217,7 +217,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
-        this.dataTracker.startTracking(NIGHT, getEntityWorld().isNight());
+        this.dataTracker.startTracking(NIGHT, false);
         this.dataTracker.startTracking(VARIANT, 0);
     }
 
@@ -266,11 +266,6 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
 
                     return bl;
                 }
-            } else if (itemStack.isOf(Items.BONE)) {
-                if (!player.getAbilities().creativeMode) {
-                    itemStack.decrement(1);
-                }
-
                 if (this.random.nextInt(3) == 0) {
                     this.setOwner(player);
                     this.navigation.stop();
@@ -352,11 +347,9 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
 
     @Override
     public void tickMovement() {
-        if (dataTracker.get(NIGHT).equals(true)) {
+        if (this.world.isNight()) {
             this.setSleeping(true);
-            this.dataTracker.set(NIGHT, true);
-        }
-        else if (!dataTracker.get(NIGHT)) {
+        } else {
             this.setSleeping(false);
         }
     }
