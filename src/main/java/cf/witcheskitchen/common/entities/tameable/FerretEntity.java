@@ -352,7 +352,13 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
 
     @Override
     public void tickMovement() {
-        this.setSleeping(this.getEntityWorld().isNight());
+        if (dataTracker.get(NIGHT).equals(true)) {
+            this.setSleeping(true);
+            this.dataTracker.set(NIGHT, true);
+        }
+        else if (!dataTracker.get(NIGHT)) {
+            this.setSleeping(false);
+        }
     }
 
     @Override
