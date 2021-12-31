@@ -18,7 +18,9 @@ import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.fluid.Fluid;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.world.ServerWorld;
@@ -41,7 +43,6 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-import java.util.Objects;
 import java.util.Set;
 import java.util.SplittableRandom;
 import java.util.UUID;
@@ -85,7 +86,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         return this.dataTracker.get(NIGHT);
     }
 
-    public void setSleeping (boolean sleeping) {
+    public void setSleeping(boolean sleeping) {
         this.dataTracker.set(NIGHT, getEntityWorld().isNight());
     }
 
@@ -350,12 +351,12 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
     }
 
     @Override
+    public void tickMovement() {
+        this.setSleeping(this.getEntityWorld().isNight());
+    }
+
+    @Override
     public int tickTimer() {
-        if (world.isNight()) {
-            this.setSleeping(true);
-        } else {
-            this.setSleeping(false);
-        }
-        return 0;
+        return age;
     }
 }

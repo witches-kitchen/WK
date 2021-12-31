@@ -34,6 +34,10 @@ public class FrostbiteStatusEffect extends StatusEffect {
             entity.damage(DamageSource.FREEZE, 4f);
             entity.setInPowderSnow(true);
         }
+        if (entity.isTouchingWaterOrRain()) {
+            entity.damage(DamageSource.FREEZE, 4f);
+            entity.setInPowderSnow(true);
+        }
         if (entity.hasStatusEffect(WKStatusEffects.HELLFIRE)) {
             entity.removeStatusEffect(WKStatusEffects.HELLFIRE);
         }
