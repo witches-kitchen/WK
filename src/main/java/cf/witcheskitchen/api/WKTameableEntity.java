@@ -10,6 +10,10 @@ import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.world.World;
 
 public abstract class WKTameableEntity extends TameableEntity {
+    /**
+     * This allows the mod to assign a number of textural variants for a mob.
+     * Please be sane with it.
+     */
     public static final TrackedData<Integer> VARIANT = DataTracker.registerData(WKTameableEntity.class,
             TrackedDataHandlerRegistry.INTEGER);
 
@@ -23,5 +27,9 @@ public abstract class WKTameableEntity extends TameableEntity {
         return true;
     }
 
+    /**
+     * This allows the mod to assign a number of textural variants for a mob.
+     * Please be sane with it.
+     */
     public abstract int getVariants();
 }

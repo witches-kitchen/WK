@@ -12,6 +12,10 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class WKPassiveEntity extends PassiveEntity {
+    /**
+     * This allows the mod to assign a number of textural variants for a mob.
+     * Please be sane with it.
+     */
     public static final TrackedData<Integer> VARIANT = DataTracker.registerData(WKPassiveEntity.class,
             TrackedDataHandlerRegistry.INTEGER);
 
@@ -31,5 +35,9 @@ public abstract class WKPassiveEntity extends PassiveEntity {
         return true;
     }
 
+    /**
+     * This allows the mod to assign a number of textural variants for a mob.
+     * Please be sane with it.
+     */
     public abstract int getVariants();
 }

@@ -12,6 +12,10 @@ import net.minecraft.world.World;
 
 //Credit to AzureDoom for variant code
 public abstract class WKHostileEntity extends HostileEntity implements Monster {
+    /**
+     * This allows the mod to assign a number of textural variants for a mob.
+     * Please be sane with it.
+     */
     public static final TrackedData<Integer> VARIANT = DataTracker.registerData(WKHostileEntity.class,
             TrackedDataHandlerRegistry.INTEGER);
 
@@ -25,5 +29,9 @@ public abstract class WKHostileEntity extends HostileEntity implements Monster {
         return true;
     }
 
+    /**
+     * This allows the mod to assign a number of textural variants for a mob.
+     * Please be sane with it.
+     */
     public abstract int getVariants();
 }
