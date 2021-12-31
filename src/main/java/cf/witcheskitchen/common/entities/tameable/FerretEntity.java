@@ -33,6 +33,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.IAnimationTickable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
 import software.bernie.geckolib3.core.controller.AnimationController;
@@ -46,7 +47,7 @@ import java.util.SplittableRandom;
 import java.util.UUID;
 import java.util.function.Predicate;
 
-public class FerretEntity extends WKTameableEntity implements IAnimatable {
+public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnimationTickable {
 
     //FIXME: Figure out why this won't breed!
     public static final Ingredient BREEDING_INGREDIENTS;
@@ -185,10 +186,9 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable {
     public boolean canBreedWith(AnimalEntity other) {
         if (!this.isTamed()) {
             return false;
-        } else if (!(other instanceof FerretEntity)) {
+        } else if (!(other instanceof FerretEntity ferretEntity)) {
             return false;
         } else {
-            FerretEntity ferretEntity = (FerretEntity) other;
             return ferretEntity.isTamed() && super.canBreedWith(other);
         }
     }
@@ -315,11 +315,11 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable {
     }
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (isSitting() && !Objects.deepEquals(NIGHT, getEntityWorld().isNight()) && !event.isMoving()) {
+        if (isSitting() && !this.dataTracker.get(NIGHT) && !event.isMoving()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("sit", true));
             return PlayState.CONTINUE;
         }
-        if (isSitting() && Objects.deepEquals(NIGHT, getEntityWorld().isNight()) && !event.isMoving()) {
+        if (isSitting() && this.dataTracker.get(NIGHT) && !event.isMoving()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("wait", true));
             return PlayState.CONTINUE;
         }
@@ -344,4 +344,8 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable {
         return this.factory;
     }
 
+    @Override
+    public int tickTimer() {
+        return 0;
+    }
 }
