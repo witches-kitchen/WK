@@ -349,7 +349,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
 
     @Override
     public void tickMovement() {
-        if (this.world.isNight()) {
+        if (this.world.isNight() && !isSleeping() && isSitting()) {
             this.setSleeping(true);
         } else {
             this.setSleeping(false);
