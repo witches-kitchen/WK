@@ -30,6 +30,10 @@ public class FrostbiteStatusEffect extends StatusEffect {
         if (entity.isOnFire()) {
             entity.extinguish();
         }
+        if (entity.isWet()) {
+            entity.damage(DamageSource.FREEZE, 4f);
+            entity.setInPowderSnow(true);
+        }
         if (entity.hasStatusEffect(WKStatusEffects.HELLFIRE)) {
             entity.removeStatusEffect(WKStatusEffects.HELLFIRE);
         }
