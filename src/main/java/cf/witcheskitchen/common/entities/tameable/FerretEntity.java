@@ -345,6 +345,11 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
     }
 
     @Override
+    public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
+        return false;
+    }
+
+    @Override
     public int tickTimer() {
         return 0;
     }
