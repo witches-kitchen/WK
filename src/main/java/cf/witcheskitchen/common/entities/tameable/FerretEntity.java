@@ -56,7 +56,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
     public static final Predicate<LivingEntity> FOLLOW_TAMED_PREDICATE;
     public static final TrackedData<Integer> VARIANT = DataTracker.registerData(WKTameableEntity.class,
             TrackedDataHandlerRegistry.INTEGER);
-    public static final TrackedData<Boolean> NIGHT = DataTracker.registerData(FerretEntity.class,
+    public static final TrackedData<Boolean> NIGHT = DataTracker.registerData(WKTameableEntity.class,
             TrackedDataHandlerRegistry.BOOLEAN);
 
     static {
