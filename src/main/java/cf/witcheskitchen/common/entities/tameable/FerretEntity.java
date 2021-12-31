@@ -40,6 +40,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
+import java.util.Objects;
 import java.util.Set;
 import java.util.SplittableRandom;
 import java.util.UUID;
@@ -83,8 +84,8 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable {
         return this.dataTracker.get(NIGHT);
     }
 
-    public void isSleeping (boolean sleeping) {
-        this.dataTracker.set(NIGHT, sleeping);
+    public void setSleeping (boolean sleeping) {
+        this.dataTracker.set(NIGHT, getEntityWorld().isNight());
     }
 
     @Override //this adds basic ai
@@ -215,7 +216,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable {
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
-        this.dataTracker.startTracking(NIGHT, false);
+        this.dataTracker.startTracking(NIGHT, getEntityWorld().isNight());
         this.dataTracker.startTracking(VARIANT, 0);
     }
 
@@ -314,11 +315,11 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable {
     }
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (isSitting() && world.isDay() && !event.isMoving()) {
+        if (isSitting() && !Objects.deepEquals(NIGHT, getEntityWorld().isNight()) && !event.isMoving()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("sit", true));
             return PlayState.CONTINUE;
         }
-        if (isSitting() && world.isNight() && !event.isMoving()) {
+        if (isSitting() && Objects.deepEquals(NIGHT, getEntityWorld().isNight()) && !event.isMoving()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("wait", true));
             return PlayState.CONTINUE;
         }
