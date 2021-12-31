@@ -53,6 +53,8 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable {
     public static final Predicate<LivingEntity> FOLLOW_TAMED_PREDICATE;
     public static final TrackedData<Integer> VARIANT = DataTracker.registerData(WKTameableEntity.class,
             TrackedDataHandlerRegistry.INTEGER);
+    public static final TrackedData<Boolean> NIGHT = DataTracker.registerData(WKTameableEntity.class,
+            TrackedDataHandlerRegistry.BOOLEAN);
 
     static {
         BREEDING_INGREDIENTS = Ingredient.ofItems(Items.RABBIT, Items.COOKED_RABBIT, Items.CHICKEN, Items.COOKED_CHICKEN, Items.EGG, Items.RABBIT_FOOT, Items.TURTLE_EGG);
