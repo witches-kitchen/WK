@@ -313,10 +313,12 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         if (isSitting() && this.dataTracker.get(NIGHT) && !event.isMoving()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("sit", true));
+            this.setSleeping(false);
             return PlayState.CONTINUE;
         }
         if (isSitting() && this.dataTracker.get(NIGHT) && !event.isMoving()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("wait", true));
+            this.setSleeping(true);
             return PlayState.CONTINUE;
         }
         if (event.isMoving() && !isSitting()) {
@@ -349,9 +351,8 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
     public void tickMovement() {
         if (this.world.isNight() && this.isSitting()) {
             this.setSleeping(true);
-        } else {
+        } else if (!this.world.isNight() && this.isSitting())
             this.setSleeping(false);
-        }
     }
 
     @Override
