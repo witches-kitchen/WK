@@ -79,6 +79,14 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable {
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 2.0D).add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 0.15D);
     }
 
+    public boolean isSleeping() {
+        return this.dataTracker.get(NIGHT);
+    }
+
+    public void isSleeping (boolean sleeping) {
+        this.dataTracker.set(NIGHT, sleeping);
+    }
+
     @Override //this adds basic ai
     protected void initGoals() {
         super.initGoals();
@@ -207,6 +215,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable {
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
+        this.dataTracker.startTracking(NIGHT, false);
         this.dataTracker.startTracking(VARIANT, 0);
     }
 
