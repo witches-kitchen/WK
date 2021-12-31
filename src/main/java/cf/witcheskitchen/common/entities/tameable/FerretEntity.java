@@ -311,7 +311,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
     }
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (isSitting() && !this.dataTracker.get(NIGHT) && !event.isMoving()) {
+        if (isSitting() && this.dataTracker.get(NIGHT) && !event.isMoving()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("sit", true));
             return PlayState.CONTINUE;
         }
