@@ -90,10 +90,10 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         this.dataTracker.set(NIGHT, sleeping);
     }
 
-    @Override //this adds basic ai
+    @Override
     protected void initGoals() {
         super.initGoals();
-        this.goalSelector.add(0, new SwimGoal(this)); //need to make this the ability to walk on the body of water's floor.
+        this.goalSelector.add(0, new SwimGoal(this));
         this.goalSelector.add(2, new LookAtEntityGoal(this, RabbitEntity.class, 12.0f));
         this.goalSelector.add(2, new LookAtEntityGoal(this, ChickenEntity.class, 12.0f));
         this.goalSelector.add(7, new AnimalMateGoal(this, 1.0D));
