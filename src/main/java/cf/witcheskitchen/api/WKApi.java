@@ -15,14 +15,14 @@ public class WKApi {
     }
 
     /**
-     * This allows one to tell if something is a lesser demon, i.e not a boss.
+     * This allows one to tell if something is a lesser demon, i.e. not a boss.
      */
     public static boolean isLesserDemon() {
         return false;
     }
 
     /**
-     * This allows one to tell if something is a greater demon, i.e something on the level of a boss.
+     * This allows one to tell if something is a greater demon, i.e. something on the level of a boss.
      */
     public static boolean isGreaterDemon() {
         return false;
