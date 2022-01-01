@@ -313,11 +313,11 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
     }
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (isSitting() && !this.dataTracker.get(NIGHT) && !event.isMoving()) {
+        if (isSitting() && this.dataTracker.get(NIGHT) == false && !event.isMoving()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("sit", true));
             return PlayState.CONTINUE;
         }
-        if (isSitting() && this.dataTracker.get(NIGHT) && !event.isMoving()) {
+        if (isSitting() && this.dataTracker.get(NIGHT) == true && !event.isMoving()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("wait", true));
             return PlayState.CONTINUE;
         }
@@ -329,7 +329,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
             event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
             return PlayState.CONTINUE;
         }
-        //Todo: When this gets in game, figure out how to set up the proper conditions for it to appear.
+        //Todo: When this gets in game, figure out how to set up the proper conditions for it to appear. (Around the ankles of other mobs)
         if (isAttacking() && !isSitting()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("gore", true));
             return PlayState.CONTINUE;
