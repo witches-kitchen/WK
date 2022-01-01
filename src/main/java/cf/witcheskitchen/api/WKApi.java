@@ -1,5 +1,6 @@
 package cf.witcheskitchen.api;
 
+import cf.witcheskitchen.common.registry.WKTags;
 import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.*;
@@ -17,14 +18,21 @@ public class WKApi {
     /**
      * This allows one to tell if something is a lesser demon, i.e. not a boss.
      */
-    public static boolean isLesserDemon() {
-        return false;
+    public static boolean isLesserDemon(LivingEntity livingEntity) {
+        return WKTags.LESSER_DEMON.contains(livingEntity.getType());
     }
 
     /**
      * This allows one to tell if something is a greater demon, i.e. something on the level of a boss.
      */
-    public static boolean isGreaterDemon() {
-        return false;
+    public static boolean isGreaterDemon(LivingEntity livingEntity) {
+        return WKTags.GREATER_DEMON.contains(livingEntity.getType());
+    }
+
+    /**
+     * This allows one to tell if something is a ghost, and is used to target only such mobs.
+     */
+    public static boolean isGhost(LivingEntity livingEntity) {
+        return WKTags.GHOST.contains(livingEntity.getType());
     }
 }

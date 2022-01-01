@@ -165,7 +165,7 @@ public class SaltBlock extends Block {
             Entity entity = ((EntityShapeContext) context).getEntity();
             if (entity instanceof LivingEntity livingEntity) {
                 boolean spiritual = WKApi.isSpiritualEntity(livingEntity);
-                if (spiritual && !WKApi.isGreaterDemon()) {
+                if (spiritual && !WKApi.isGreaterDemon(livingEntity)) {
                     boolean onSalt = world.getBlockState(livingEntity.getBlockPos().add(0, 0, 0)).getBlock() instanceof SaltBlock;
                     if (!onSalt) {
                         return getSaltShape(livingEntity.stepHeight);
