@@ -17,6 +17,7 @@ public class WKApi {
 
     /**
      * This allows one to tell if something is a lesser demon, i.e. not a boss.
+     * TODO: Make this work better with mobs
      */
     public static boolean isLesserDemon(LivingEntity livingEntity) {
         return WKTags.LESSER_DEMON.contains(livingEntity.getType());
@@ -24,6 +25,7 @@ public class WKApi {
 
     /**
      * This allows one to tell if something is a greater demon, i.e. something on the level of a boss.
+     * TODO: Make this work better with mobs
      */
     public static boolean isGreaterDemon(LivingEntity livingEntity) {
         return WKTags.GREATER_DEMON.contains(livingEntity.getType());
@@ -31,6 +33,7 @@ public class WKApi {
 
     /**
      * This allows one to tell if something is a ghost, and is used to target only such mobs.
+     * TODO: Make this work better with mobs
      */
     public static boolean isGhost(LivingEntity livingEntity) {
         return WKTags.GHOST.contains(livingEntity.getType());
