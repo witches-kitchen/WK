@@ -7,5 +7,6 @@ import net.minecraft.entity.mob.PathAwareEntity;
 public class FleeDemonGoal extends FleeEntityGoal {
     public FleeDemonGoal(PathAwareEntity mob, Class fleeFromType, float distance, double slowSpeed, double fastSpeed) {
         super(mob, fleeFromType, distance, slowSpeed, fastSpeed);
+        //WKTags.GREATER_DEMON.contains(mob.getType());
     }
 }
