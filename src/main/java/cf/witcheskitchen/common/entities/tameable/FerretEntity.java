@@ -58,6 +58,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
     public static final Ingredient BREEDING_INGREDIENTS;
     public static final Set<Item> TAMING_INGREDIENTS;
     public static final Predicate<LivingEntity> FOLLOW_TAMED_PREDICATE;
+    public static final Predicate<LivingEntity> FLEE_SUPERNATURAL;
     public static final TrackedData<Integer> VARIANT = DataTracker.registerData(WKTameableEntity.class,
             TrackedDataHandlerRegistry.INTEGER);
     public static final TrackedData<Boolean> NIGHT = DataTracker.registerData(WKTameableEntity.class,
@@ -69,6 +70,10 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         FOLLOW_TAMED_PREDICATE = (entity) -> {
             EntityType<?> entityType = entity.getType();
             return entityType == EntityType.CHICKEN || entityType == EntityType.RABBIT;
+        };
+        FLEE_SUPERNATURAL = (entity) -> {
+            EntityType<?> entityType = entity.getType();
+            return entityType == WKEntities.CUSITH || entity.getGroup() == WKCreatureTypeEnum.DEMONIC;
         };
     }
 
@@ -108,7 +113,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         this.goalSelector.add(2, new MeleeAttackGoal(this, 1, true));
         this.goalSelector.add(4, new StopAndLookAtEntityGoal(this, MobEntity.class, 2.0f, 0.8f));
         this.goalSelector.add(6, new WanderAroundFarGoal(this, 0.8D, 1));
-        this.goalSelector.add(1, new FleeEntityGoal(this, CuSithEntity.class, 16, 1, 3));
+        this.goalSelector.add(1, new FleeEntityGoal(this, LivingEntity.class, 16, 1, 3, FLEE_SUPERNATURAL));
         this.targetSelector.add(5, new UntamedActiveTargetGoal(this, AnimalEntity.class, true, FOLLOW_TAMED_PREDICATE));
         this.targetSelector.add(0, new RevengeGoal(this).setGroupRevenge());
     }
