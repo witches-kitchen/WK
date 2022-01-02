@@ -93,7 +93,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         this.dataTracker.set(NIGHT, sleeping);
     }
 
-    //Todo: Custom goal where ferrets and other tameables from this mod flee greater demons.
+    //Todo: Custom goal where ferrets and other tameables from this mod flee greater demons, which are defined by a tag.
     @Override
     protected void initGoals() {
         super.initGoals();
