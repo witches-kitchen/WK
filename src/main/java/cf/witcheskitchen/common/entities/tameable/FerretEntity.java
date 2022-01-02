@@ -1,7 +1,10 @@
 package cf.witcheskitchen.common.entities.tameable;
 
+import cf.witcheskitchen.api.WKApi;
+import cf.witcheskitchen.api.WKCreatureTypeEnum;
 import cf.witcheskitchen.api.WKTameableEntity;
 import cf.witcheskitchen.common.registry.WKEntities;
+import cf.witcheskitchen.common.registry.WKTags;
 import com.google.common.collect.Sets;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
@@ -104,6 +107,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         this.goalSelector.add(2, new MeleeAttackGoal(this, 1, true));
         this.goalSelector.add(4, new StopAndLookAtEntityGoal(this, MobEntity.class, 2.0f, 0.8f));
         this.goalSelector.add(6, new WanderAroundFarGoal(this, 0.8D, 1));
+        this.goalSelector.add(1, new FleeEntityGoal(this, WKApi.isGreaterDemon());
         this.targetSelector.add(5, new UntamedActiveTargetGoal(this, AnimalEntity.class, true, FOLLOW_TAMED_PREDICATE));
         this.targetSelector.add(0, new RevengeGoal(this).setGroupRevenge());
     }
