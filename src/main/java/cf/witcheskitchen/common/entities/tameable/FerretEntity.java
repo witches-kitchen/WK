@@ -73,7 +73,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         };
         FLEE_SUPERNATURAL = (entity) -> {
             EntityType<?> entityType = entity.getType();
-            return entityType == WKEntities.CUSITH || entity.getGroup() == WKCreatureTypeEnum.DEMONIC;
+            return entityType == WKEntities.CUSITH || WKApi.isGreaterDemon(entity);
         };
     }
 
