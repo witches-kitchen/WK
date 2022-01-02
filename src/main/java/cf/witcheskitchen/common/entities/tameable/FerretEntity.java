@@ -107,7 +107,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         this.goalSelector.add(2, new MeleeAttackGoal(this, 1, true));
         this.goalSelector.add(4, new StopAndLookAtEntityGoal(this, MobEntity.class, 2.0f, 0.8f));
         this.goalSelector.add(6, new WanderAroundFarGoal(this, 0.8D, 1));
-        this.goalSelector.add(1, new FleeEntityGoal(this, WKApi.isGreaterDemon());
+        this.goalSelector.add(1, new FleeEntityGoal(this, WKApi.isGreaterDemon(), 16, 1, 3);
         this.targetSelector.add(5, new UntamedActiveTargetGoal(this, AnimalEntity.class, true, FOLLOW_TAMED_PREDICATE));
         this.targetSelector.add(0, new RevengeGoal(this).setGroupRevenge());
     }
