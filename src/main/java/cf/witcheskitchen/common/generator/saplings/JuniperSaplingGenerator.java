@@ -13,6 +13,7 @@ public class JuniperSaplingGenerator extends WKLargeSaplingGenerator {
 
     @Override 
     protected ConfiguredFeature<?,?> getLargeTreeFeature (Random random){
-        return WKGenerator.MEGA_JUNIPER_TREE;
+       // return WKGenerator.MEGA_JUNIPER_TREE;
+        return null;
     }
 }

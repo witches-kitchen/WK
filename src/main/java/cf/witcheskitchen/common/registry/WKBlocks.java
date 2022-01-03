@@ -7,6 +7,7 @@ import cf.witcheskitchen.common.blocks.WKStairsBlock;
 import cf.witcheskitchen.common.blocks.technical.CopperOvenBlock;
 import cf.witcheskitchen.common.blocks.technical.IronOvenBlock;
 import cf.witcheskitchen.common.blocks.technical.TeapotBlock;
+import cf.witcheskitchen.common.blocks.technical.WitchesOvenBlock;
 import cf.witcheskitchen.common.generator.WKSaplingGenerator;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -104,6 +105,7 @@ public class WKBlocks {
     public static final Block TEAPOT = new TeapotBlock(FabricBlockSettings.copyOf(Blocks.AMETHYST_BLOCK));
     public static final Block IRON_OVEN = new IronOvenBlock(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK));
     public static final Block COPPER_OVEN = new CopperOvenBlock(FabricBlockSettings.copyOf(Blocks.COPPER_BLOCK));
+    public static final Block WITCHES_OVEN = new WitchesOvenBlock(FabricBlockSettings.copyOf(Blocks.SMOKER));
 
     public static final Block BLACKTHORN_SAPLING = new WKSaplingBlock(new WKSaplingGenerator(() -> WKGenerator.BLACKTHORN_TREE), FabricBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
     public static final Block ELDER_SAPLING = new WKSaplingBlock(new WKSaplingGenerator(() -> WKGenerator.ELDER_TREE), FabricBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
@@ -121,6 +123,8 @@ public class WKBlocks {
 
 
     public static void register() {
+        //devices
+        registerBlock("witches_oven", WITCHES_OVEN, WK.WK_GROUP);
         //Food blocks
         registerBlock("raw_gingerbread_block", RAW_GINGERBREAD_BLOCK, WK.WK_GROUP);
         registerBlock("raw_chiseled_gingerbread_block", RAW_CHISELED_GINGERBREAD_BLOCK, WK.WK_GROUP);
