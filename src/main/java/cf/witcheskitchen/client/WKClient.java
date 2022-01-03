@@ -15,6 +15,7 @@ import net.minecraft.client.render.RenderLayer;
 public class WKClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
+        BlockRenderLayerMap.INSTANCE.putBlock(WKBlocks.IRON_WITCHES_OVEN, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(WKBlocks.SALT_BLOCK, RenderLayer.getCutoutMipped());
         RenderRegistry.register();
         ScreenRegistry.register(WKScreenHandlerTypes.WITCHES_OVEN, WitchesOvenScreen::new);

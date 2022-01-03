@@ -105,7 +105,7 @@ public class WKBlocks {
     public static final Block TEAPOT = new TeapotBlock(FabricBlockSettings.copyOf(Blocks.AMETHYST_BLOCK));
     public static final Block IRON_OVEN = new IronOvenBlock(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK));
     public static final Block COPPER_OVEN = new CopperOvenBlock(FabricBlockSettings.copyOf(Blocks.COPPER_BLOCK));
-    public static final Block WITCHES_OVEN = new WitchesOvenBlock(FabricBlockSettings.copyOf(Blocks.SMOKER));
+    public static final Block IRON_WITCHES_OVEN = new WitchesOvenBlock(FabricBlockSettings.copyOf(Blocks.SMOKER).nonOpaque());
 
     public static final Block BLACKTHORN_SAPLING = new WKSaplingBlock(new WKSaplingGenerator(() -> WKGenerator.BLACKTHORN_TREE), FabricBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
     public static final Block ELDER_SAPLING = new WKSaplingBlock(new WKSaplingGenerator(() -> WKGenerator.ELDER_TREE), FabricBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
@@ -124,7 +124,7 @@ public class WKBlocks {
 
     public static void register() {
         //devices
-        registerBlock("witches_oven", WITCHES_OVEN, WK.WK_GROUP);
+        registerBlock("iron_witches_oven", IRON_WITCHES_OVEN, WK.WK_GROUP);
         //Food blocks
         registerBlock("raw_gingerbread_block", RAW_GINGERBREAD_BLOCK, WK.WK_GROUP);
         registerBlock("raw_chiseled_gingerbread_block", RAW_CHISELED_GINGERBREAD_BLOCK, WK.WK_GROUP);

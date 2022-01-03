@@ -5,7 +5,8 @@
     80
   ],
   "textures": {
-    "1": "block/oven"
+    "1": "witcheskitchen:block/stations/iron_witches_oven",
+    "particle": "#1"
   },
   "elements": [
     {

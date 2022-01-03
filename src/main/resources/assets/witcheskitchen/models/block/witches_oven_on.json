@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/orientable",
-  "textures": {
-    "top": "witcheskitchen:block/witches_oven_top",
-    "front": "witcheskitchen:block/witches_oven_front_on",
-    "side": "witcheskitchen:block/witches_oven_side"
-  }
-}
