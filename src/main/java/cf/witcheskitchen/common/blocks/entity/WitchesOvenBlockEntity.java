@@ -1,8 +1,8 @@
 package cf.witcheskitchen.common.blocks.entity;
 
+import cf.witcheskitchen.client.gui.screen.handler.WitchesOvenScreenHandler;
 import cf.witcheskitchen.common.registry.WKBlockEntityTypes;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.NamedScreenHandlerFactory;
@@ -25,6 +25,6 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
     @Nullable
     @Override
     public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
-        return null;
+        return new WitchesOvenScreenHandler(syncId, inv, this);
     }
 }

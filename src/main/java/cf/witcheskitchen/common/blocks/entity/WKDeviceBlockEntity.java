@@ -30,7 +30,7 @@ public abstract class WKDeviceBlockEntity extends BlockEntity implements BlockEn
 
     @Override
     public void tick(World world, BlockPos pos, BlockState state, WKDeviceBlockEntity blockEntity) {
-        System.out.println("Ticking device block");
+
     }
 
     @Override
