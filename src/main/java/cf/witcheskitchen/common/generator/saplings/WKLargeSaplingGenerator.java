@@ -1,9 +1,5 @@
 package cf.witcheskitchen.common.generator.saplings;
 
-import java.util.Random;
-
-import org.jetbrains.annotations.Nullable;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -12,9 +8,17 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Random;
 
 public abstract class WKLargeSaplingGenerator extends WKSaplingGenerator {
-    
+
+    public static boolean canGenerateLargeTree(BlockState state, BlockView world, BlockPos pos, int x, int z) {
+        Block block = state.getBlock();
+        return world.getBlockState(pos.add(x, 0, z)).isOf(block) && world.getBlockState(pos.add(x + 1, 0, z)).isOf(block) && world.getBlockState(pos.add(x, 0, z + 1)).isOf(block) && world.getBlockState(pos.add(x + 1, 0, z + 1)).isOf(block);
+    }
+
     @Override
     public boolean generate(ServerWorld world, ChunkGenerator chunkGenerator, BlockPos pos, BlockState state, Random random) {
         for (int i = 0; i >= -1; --i) {
@@ -47,10 +51,5 @@ public abstract class WKLargeSaplingGenerator extends WKSaplingGenerator {
         world.setBlockState(pos.add(x, 0, z + 1), state, Block.NO_REDRAW);
         world.setBlockState(pos.add(x + 1, 0, z + 1), state, Block.NO_REDRAW);
         return false;
-    }
-
-    public static boolean canGenerateLargeTree(BlockState state, BlockView world, BlockPos pos, int x, int z) {
-        Block block = state.getBlock();
-        return world.getBlockState(pos.add(x, 0, z)).isOf(block) && world.getBlockState(pos.add(x + 1, 0, z)).isOf(block) && world.getBlockState(pos.add(x, 0, z + 1)).isOf(block) && world.getBlockState(pos.add(x + 1, 0, z + 1)).isOf(block);
     }
 }

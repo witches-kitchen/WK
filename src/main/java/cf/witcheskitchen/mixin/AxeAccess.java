@@ -11,12 +11,12 @@ import java.util.Map;
 public interface AxeAccess {
 
     @Accessor("STRIPPED_BLOCKS")
-    public static Map<Block, Block> getStrippedBlocks() {
+    static Map<Block, Block> getStrippedBlocks() {
         throw new AssertionError();
     }
 
     @Accessor("STRIPPED_BLOCKS")
-    public static void setStrippedBlocks(Map<Block, Block> map) {
+    static void setStrippedBlocks(Map<Block, Block> map) {
         throw new AssertionError();
     }
 }

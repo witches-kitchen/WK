@@ -9,9 +9,9 @@ import net.minecraft.util.Identifier;
 
 public class WKScreenHandlerTypes {
 
-    public static final ScreenHandlerType<WitchesOvenScreenHandler> WITCHES_OVEN = register("witches_oven", WitchesOvenScreenHandler::new);
-
     public static <T extends ScreenHandler> ScreenHandlerType<T> register(final String name, final ScreenHandlerRegistry.SimpleClientHandlerFactory<T> factory) {
         return ScreenHandlerRegistry.registerSimple(new Identifier(WK.MODID, name), factory);
-    }
+    }    public static final ScreenHandlerType<WitchesOvenScreenHandler> WITCHES_OVEN = register("witches_oven", WitchesOvenScreenHandler::new);
+
+
 }

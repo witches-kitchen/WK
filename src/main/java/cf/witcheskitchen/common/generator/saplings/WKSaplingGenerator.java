@@ -1,10 +1,5 @@
 package cf.witcheskitchen.common.generator.saplings;
 
-import java.util.Random;
-
-import org.jetbrains.annotations.Nullable;
-
-import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -17,6 +12,7 @@ import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Random;
 
 
 public abstract class WKSaplingGenerator extends SaplingGenerator {

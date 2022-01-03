@@ -16,11 +16,12 @@ import java.util.List;
 
 public abstract class WKScreenHandler extends ScreenHandler {
 
-    private final PlayerInventory playerInventory;
-    private final Inventory inventory;
     protected final List<Range<Integer>> playerRanges;
     protected final List<Range<Integer>> blockEntityRanges;
+    private final PlayerInventory playerInventory;
+    private final Inventory inventory;
     private final ScreenHandlerBuilder builder;
+
     public WKScreenHandler(@Nullable ScreenHandlerType<?> type, int syncId, PlayerInventory playerInventory, Inventory inventory) {
         super(type, syncId);
         this.playerInventory = playerInventory;

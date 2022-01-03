@@ -9,16 +9,21 @@ import net.minecraft.util.Identifier;
 
 public final class ScreenBuilder {
 
-    private final ScreenBase<?> parent;
     private static final Identifier GUI_ELEMENTS = new Identifier(WK.MODID, "textures/gui/elements.png");
-
     private static final int SLOT_U = 237;
     private static final int SLOT_V = 1;
     private static final int OUTPUT_SLOT_U = 150;
     private static final int OUTPUT_SLOT_V = 16;
+    private final ScreenBase<?> parent;
 
     public ScreenBuilder(ScreenBase<?> parent) {
         this.parent = parent;
+    }
+
+    // We call this whenever we draw something on the screen
+    // Because maybe it doesn't already have the texture bound
+    private static void bindTexture() {
+        RenderSystem.setShaderTexture(0, ScreenBuilder.GUI_ELEMENTS);
     }
 
     public void drawContainer(final MatrixStack stack, final int left, final int top, final int width, final int height) {
@@ -32,9 +37,10 @@ public final class ScreenBuilder {
 
     /**
      * Draws the default player inventory slots
+     *
      * @param matrixStack MatrixStack
-     * @param posX originX
-     * @param posY originY
+     * @param posX        originX
+     * @param posY        originY
      */
     public void drawPlayerSlots(final MatrixStack matrixStack, int posX, int posY) {
         //fixed position in minecraft
@@ -54,23 +60,26 @@ public final class ScreenBuilder {
 
     /**
      * Draws a single slot at the given position
+     *
      * @param matrixStack MatrixStack
-     * @param posX background posX
-     * @param posY background posY
+     * @param posX        background posX
+     * @param posY        background posY
      */
     public void drawSlot(final MatrixStack matrixStack, final int posX, final int posY) {
         bindTexture();
         this.parent.drawTexture(matrixStack, posX, posY, SLOT_U, SLOT_V, 18, 18);
     }
+
     /**
      * Draws an output slot at the given position
+     *
      * @param matrixStack MatrixStack
-     * @param posX background posX
-     * @param posY background posY
+     * @param posX        background posX
+     * @param posY        background posY
      */
     public void drawOutputSlot(final MatrixStack matrixStack, final int posX, final int posY) {
         bindTexture();
-        this.parent.drawTexture(matrixStack, posX, posY, OUTPUT_SLOT_U, OUTPUT_SLOT_V, 26,26);
+        this.parent.drawTexture(matrixStack, posX, posY, OUTPUT_SLOT_U, OUTPUT_SLOT_V, 26, 26);
     }
 
     public void drawSmeltingProgress(MatrixStack matrixStack, int posX, int posY) {
@@ -83,11 +92,5 @@ public final class ScreenBuilder {
         bindTexture();
         //TODO: Implement burning logic
         this.parent.drawTexture(matrixStack, posX, posY, 239, 34, 13, 13);
-    }
-
-    // We call this whenever we draw something on the screen
-    // Because maybe it doesn't already have the texture bound
-    private static void bindTexture() {
-        RenderSystem.setShaderTexture(0, ScreenBuilder.GUI_ELEMENTS);
     }
 }

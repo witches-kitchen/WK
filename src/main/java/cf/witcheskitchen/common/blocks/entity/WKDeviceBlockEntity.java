@@ -19,8 +19,8 @@ import java.util.function.Predicate;
 
 public abstract class WKDeviceBlockEntity extends BlockEntity implements BlockEntityTicker<WKDeviceBlockEntity>, Inventory {
 
-    private DefaultedList<ItemStack> inventory;
     private final int size;
+    private DefaultedList<ItemStack> inventory;
 
     public WKDeviceBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int size) {
         super(type, pos, state);
@@ -39,6 +39,7 @@ public abstract class WKDeviceBlockEntity extends BlockEntity implements BlockEn
         this.inventory = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);//updates the inventory
         Inventories.readNbt(nbt, this.inventory);
     }
+
     @Override
     public void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);

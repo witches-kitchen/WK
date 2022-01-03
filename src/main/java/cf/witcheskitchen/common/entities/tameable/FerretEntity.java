@@ -1,11 +1,8 @@
 package cf.witcheskitchen.common.entities.tameable;
 
 import cf.witcheskitchen.api.WKApi;
-import cf.witcheskitchen.api.WKCreatureTypeEnum;
 import cf.witcheskitchen.api.WKTameableEntity;
-import cf.witcheskitchen.common.entities.hostile.CuSithEntity;
 import cf.witcheskitchen.common.registry.WKEntities;
-import cf.witcheskitchen.common.registry.WKTags;
 import com.google.common.collect.Sets;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;

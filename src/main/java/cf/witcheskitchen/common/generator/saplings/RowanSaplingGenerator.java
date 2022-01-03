@@ -1,14 +1,13 @@
 package cf.witcheskitchen.common.generator.saplings;
 
-import java.util.Random;
-
-import cf.witcheskitchen.WK;
 import cf.witcheskitchen.common.registry.WKGenerator;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.TreeConfiguredFeatures;
 
-public class RowanSaplingGenerator 
-extends WKSaplingGenerator{
+import java.util.Random;
+
+public class RowanSaplingGenerator
+        extends WKSaplingGenerator {
     @Override
     protected ConfiguredFeature<?, ?> getTreeFeature(Random random, boolean bees) {
 //        if (random.nextInt(30) == 5 || random.nextInt(30) == 10) {
