@@ -10,12 +10,12 @@ import net.minecraft.util.registry.Registry;
 
 public class WKBlockEntityTypes {
 
-    private static void register(String id, BlockEntityType<? extends BlockEntity> blockEntity) {
+    private static void registerBlockEntity(String id, BlockEntityType<? extends BlockEntity> blockEntity) {
         Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(WK.MODID, id), blockEntity);
     }    public static final BlockEntityType<WitchesOvenBlockEntity> WITCHES_OVEN = FabricBlockEntityTypeBuilder.create(WitchesOvenBlockEntity::new, WKBlocks.WITCHES_OVEN).build();
 
-    public static void init() {
-        register("witches_oven", WITCHES_OVEN);
+    public static void register() {
+        registerBlockEntity("witches_oven", WITCHES_OVEN);
     }
 
 

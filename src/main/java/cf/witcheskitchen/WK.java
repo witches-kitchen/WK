@@ -36,7 +36,7 @@ public class WK implements ModInitializer {
         logger.info("Come with me, father, I'm to expose a heathen");
         WKBlocks.register();
         WKItems.register();
-        WKBlockEntityTypes.init();
+        WKBlockEntityTypes.register();
         WKGenerator.register();
         WKStatusEffects.register();
         WKSounds.register();
