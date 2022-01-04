@@ -37,6 +37,7 @@ public class ParalysisStatusEffect extends StatusEffect {
         entity.setVelocity(0, 0, 0);
         if (entity.isSwimming()) {
             entity.damage(DamageSource.DROWN, 2f);
+            entity.setAir(0);
             world.playSound(null, pos, SoundEvents.ENTITY_PLAYER_HURT_DROWN, SoundCategory.HOSTILE, 1, 1);
         }
     }
