@@ -85,9 +85,9 @@ public final class ScreenBuilder {
     public void drawSmeltingProgress(MatrixStack matrixStack, int posX, int posY, int progress, int maxProgress) {
         bindTexture();
         this.parent.drawTexture(matrixStack, posX, posY, 150, 0, 22, 15);
-        int j = (int) ((double) progress / (double) maxProgress * 23);
-        j = Math.max(j, 0);
-        this.parent.drawTexture(matrixStack, posX, posY, 172, 0, j, 16);
+        int i = (int) ((double) progress / (double) maxProgress * 23);
+        i = Math.max(i, 0);
+        this.parent.drawTexture(matrixStack, posX, posY, 172, 0, i, 16);
 
     }
 

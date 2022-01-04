@@ -10,6 +10,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.recipe.Recipe;
+import net.minecraft.recipe.RecipeType;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
@@ -90,6 +92,23 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
         }
     }
 
+    //searches the furnace output for the given item
+    private ItemStack getFurnaceResultFor(ItemStack stack) {
+        if (this.world == null || stack.isEmpty()) {
+            return ItemStack.EMPTY;
+        }
+        final Recipe<?> matchingRecipe = world.getRecipeManager()
+                .listAllOfType(RecipeType.SMELTING)
+                .stream()
+                .filter(recipe -> recipe.getIngredients().size() == 1 && recipe.getIngredients().get(0).test(stack)).findFirst()
+                .orElse(null);
+
+        if (matchingRecipe != null) {
+            return matchingRecipe.getOutput().copy();
+        }
+        return ItemStack.EMPTY;
+    }
+
     public boolean isBurning() {
         return this.burnTime > 0;
     }
@@ -98,7 +117,7 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
     public void tick(World world, BlockPos pos, BlockState state, WKDeviceBlockEntity blockEntity) {
         super.tick(world, pos, state, blockEntity);
 
-        if (world != null && !world.isClient) {
+        if (this.world != null && !this.world.isClient) {
             if (this.isBurning()) {
                 this.burnTime--;
             } else {
@@ -112,13 +131,19 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
             final var recipe = this.world.getRecipeManager()
                     .listAllOfType(WKRecipeTypes.WITCHES_OVEN_COOKING_RECIPE_TYPE)
                     .stream()
-                    .filter(type -> {
-                        return type.getInput().test(this.getStack(this.input));
-                    }).findFirst()
+                    .filter(type -> type.getInput().test(this.getStack(this.input)))
+                    .findFirst()
                     .orElse(null);
-            if (recipe != null) {
-                this.maxProgress = recipe.getTime();
-                if (!this.isBurning()) {
+
+            final ItemStack output;
+            if (recipe == null) {
+                output = this.getFurnaceResultFor(this.getStack(this.input));
+            } else {
+                output = recipe.getOutput();//reference to output
+            }
+            if (output != null && !output.isEmpty()) {
+                this.maxProgress = 100;
+                if (!this.isBurning() && canCraft(output)) {
                     this.burnTime = this.getItemBurnTime(this.getStack(this.fuel));
                     this.maxBurnTime = this.burnTime;
                     if (this.isBurning()) {
@@ -133,17 +158,17 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
                         }
                     }
                 }
-                if (this.burnTime > 0) {
+                if (this.isBurning() && canCraft(output)) {
                     ++this.progress;
                     if (this.progress == this.maxProgress) {
                         this.progress = 0;
-                        this.maxProgress = recipe.getTime();
-                        if (this.craftRecipe(recipe)) {
+                        this.maxProgress = 100;
+                        if (this.craftRecipe(output.copy())) {
                             dirty = true;
                         }
                     }
                 }
-                //update blockstate
+                //TODO: update blockstate
                 if (dirty) {
                     this.markDirty();
                 }
@@ -153,37 +178,41 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
         }
     }
 
-    public boolean canCraft(final WitchesOvenCookingRecipe recipe) {
+    // Checks that input and output are valid
+    // And we have enough space to craft
+    public boolean canCraft(final ItemStack output) {
         if (this.world == null) {
             return false;
-        } else if (recipe == null) {
+        } else if (output.isEmpty()) {
             return false;
         } else {
-            final ItemStack output = this.getStack(this.output);
-            final ItemStack firstResult = recipe.getOutput();
-            if (output.isEmpty()) {
+            final ItemStack stackInOutput = this.getStack(this.output);
+            if (stackInOutput.isEmpty()) {
                 return true;
-            } else if (!output.isItemEqualIgnoreDamage(firstResult)) {
+            } else if (!stackInOutput.isItemEqualIgnoreDamage(output)) {
                 return false;
             } else {
-                int nextCount = output.getCount() + firstResult.getCount();
-                return (nextCount <= this.getMaxCountPerStack() && nextCount <= firstResult.getMaxCount());
+                final int nextCount = stackInOutput.getCount() + output.getCount();
+                return (nextCount <= this.getMaxCountPerStack() && nextCount <= output.getMaxCount());
             }
         }
     }
-
-    public boolean craftRecipe(final WitchesOvenCookingRecipe recipe) {
-        if (recipe == null) {
+    //More checks and crafts the recipe
+    public boolean craftRecipe(final ItemStack output) {
+        if (this.world == null) {
             return false;
-        } else if (!canCraft(recipe)) {
+        } else if (output == null) {
+            return false;
+        } else if (output.isEmpty()) {
+            return false;
+        } else if (!canCraft(output)) {
             return false;
         } else {
-            final ItemStack outputStack = recipe.getOutput().copy();
             final ItemStack stackInOutput = this.getStack(this.output);
             if (stackInOutput.isEmpty()) {
-                this.setStack(this.output, outputStack);
-            } else if (stackInOutput.isOf(outputStack.getItem())) {
-                stackInOutput.increment(outputStack.getCount());
+                this.setStack(this.output, output);
+            } else if (stackInOutput.isOf(output.getItem())) {
+                stackInOutput.increment(output.getCount());
             }
             this.getStack(this.input).decrement(1);
             return true;

@@ -40,7 +40,7 @@ public class WitchesOvenScreenHandler extends WKScreenHandler {
     }
 
     public int getProgressScaled(int scale) {
-        if (this.delegate.get(0) > 0) {
+        if (this.delegate.get(3) > 0) {
             return this.delegate.get(2) * scale / this.delegate.get(3);
         }
         return 0;
