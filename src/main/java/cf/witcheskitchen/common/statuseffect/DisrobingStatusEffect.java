@@ -37,6 +37,9 @@ public class DisrobingStatusEffect extends InstantStatusEffect {
 
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
+        if (entity.hasStatusEffect(WKStatusEffects.COOLDOWN)) {
+            return;
+        }
         final Random random = entity.getRandom();
         final int i = random.nextInt(100) + 1;
         if (i <= 50) {
@@ -97,5 +100,10 @@ public class DisrobingStatusEffect extends InstantStatusEffect {
                 return null;
             }
         }
+    }
+
+    @Override
+    public void onRemoved(LivingEntity entity, AttributeContainer attributes, int amplifier) {
+        entity.addStatusEffect(new StatusEffectInstance(WKStatusEffects.COOLDOWN, 6000, 0));
     }
 }
