@@ -22,6 +22,8 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.BlockView;
 
+import static cf.witcheskitchen.WK.*;
+
 public class WKBlocks {
     
     public static final Block SALT_BLOCK = new SaltBlock(FabricBlockSettings.of(Material.DECORATION).noCollision().breakInstantly());
