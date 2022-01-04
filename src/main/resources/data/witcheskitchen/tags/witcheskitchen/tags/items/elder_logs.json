@@ -1,0 +1,9 @@
+{
+ "replace": false,
+ "values": [
+    "witcheskitchen:elder_log",
+    "witcheskitchen:stripped_elder_log",
+    "witcheskitchen:elder_wood",
+    "witcheskitchen:stripped_elder_wood"
+  ]
+}
