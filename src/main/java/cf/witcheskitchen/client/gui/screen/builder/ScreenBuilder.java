@@ -82,15 +82,22 @@ public final class ScreenBuilder {
         this.parent.drawTexture(matrixStack, posX, posY, OUTPUT_SLOT_U, OUTPUT_SLOT_V, 26, 26);
     }
 
-    public void drawSmeltingProgress(MatrixStack matrixStack, int posX, int posY) {
+    public void drawSmeltingProgress(MatrixStack matrixStack, int posX, int posY, int progress, int maxProgress) {
         bindTexture();
-        //TODO: Implement smelting logic
         this.parent.drawTexture(matrixStack, posX, posY, 150, 0, 22, 15);
+        int i = (progress / (maxProgress * 22));
+        i = Math.max(i, 0);
+        this.parent.drawTexture(matrixStack, posX, posY, 172, 0,  i, 16);
+
     }
 
-    public void drawBurningProgress(MatrixStack matrixStack, int posX, int posY) {
+    public void drawBurningProgress(MatrixStack matrixStack, int posX, int posY, boolean burning, int progress, int maxProgress) {
         bindTexture();
-        //TODO: Implement burning logic
         this.parent.drawTexture(matrixStack, posX, posY, 239, 34, 13, 13);
+        int i = 12 - (int) ((double) progress / (double) maxProgress * 13);
+        i = Math.max(i, 0);
+        if (burning) {
+            this.parent.drawTexture(matrixStack, posX, posY + i,  239, 19 + i, 14, 14);
+        }
     }
 }

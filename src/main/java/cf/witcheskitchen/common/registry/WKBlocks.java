@@ -261,14 +261,6 @@ public class WKBlocks {
         registerBlock("juniper_leaves", JUNIPER_LEAVES, WK.WK_GROUP);
         registerBlock("rowan_leaves", ROWAN_LEAVES, WK.WK_GROUP);
 
-        //Wood logs
-        registerBlock("elder_log", ELDER_LOG, WK.WK_GROUP);
-        registerBlock("sumac_log", SUMAC_LOG, WK.WK_GROUP);
-        registerBlock("hawthorn_log", HAWTHORN_LOG, WK.WK_GROUP);
-        registerBlock("blackthorn_log", BLACKTHORN_LOG, WK.WK_GROUP);
-        registerBlock("juniper_log", JUNIPER_LOG, WK.WK_GROUP);
-        registerBlock("rowan_log", ROWAN_LOG, WK.WK_GROUP);
-
         //Minerals
         registerBlock("salt", SALT_BLOCK, WK.WK_GROUP);
     }

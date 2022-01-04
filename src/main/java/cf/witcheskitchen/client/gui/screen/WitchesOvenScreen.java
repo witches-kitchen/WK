@@ -23,9 +23,10 @@ public class WitchesOvenScreen extends ScreenBase<WitchesOvenScreenHandler> {
         this.builder().drawSlot(matrices, this.getX() + 43, this.getY() + 18);
         this.builder().drawOutputSlot(matrices, this.getX() + 111, this.getY() + 14);
         this.builder().drawSlot(matrices, this.getX() + 115, this.getY() + 54);
-        this.builder().drawBurningProgress(matrices, this.getX() + 45, this.getY() + 38);
-        this.builder().drawSmeltingProgress(matrices, this.getX() + 76, this.getY() + 19);
+        this.builder().drawBurningProgress(matrices, this.getX() + 45, this.getY() + 38, handler.isBurning(), handler.getBurnTimeScaled(100), 100);
+        this.builder().drawSmeltingProgress(matrices, this.getX() + 76, this.getY() + 19, handler.getProgressScaled(100), 100);
     }
+
 
     @Override
     protected void init() {

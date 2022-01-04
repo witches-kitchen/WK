@@ -61,7 +61,7 @@ public class WK implements ModInitializer {
         GeckoLib.initialize();
         WKEntities.register();
         
-        modifyAxeBlockStripping();
+        //modifyAxeBlockStripping();
     }
     
      private void modifyAxeBlockStripping() {

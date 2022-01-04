@@ -1,5 +1,6 @@
 package cf.witcheskitchen.client;
 
+import cf.witcheskitchen.client.gui.screen.WitchesOvenScreen;
 import cf.witcheskitchen.common.blocks.WKLeafCropBlock;
 import cf.witcheskitchen.common.registry.RenderRegistry;
 import cf.witcheskitchen.common.registry.WKBlocks;
@@ -9,6 +10,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
+import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.color.world.BiomeColors;
