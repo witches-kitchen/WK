@@ -1,7 +1,6 @@
 package cf.witcheskitchen.common.blocks.entity;
 
 import cf.witcheskitchen.client.gui.screen.handler.WitchesOvenScreenHandler;
-import cf.witcheskitchen.common.recipe.WitchesOvenCookingRecipe;
 import cf.witcheskitchen.common.registry.WKBlockEntityTypes;
 import cf.witcheskitchen.common.registry.WKRecipeTypes;
 import net.minecraft.block.BlockState;
@@ -103,7 +102,8 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
                 .filter(recipe -> {
                     if (recipe.getIngredients().size() == 1 && recipe.getIngredients().get(0).test(stack)) {
                         return recipe.getOutput().isFood();
-                    } return false;
+                    }
+                    return false;
                 }).findFirst()
                 .orElse(null);
 
@@ -201,6 +201,7 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
             }
         }
     }
+
     //More checks and crafts the recipe
     public boolean craftRecipe(final ItemStack output) {
         if (this.world == null) {

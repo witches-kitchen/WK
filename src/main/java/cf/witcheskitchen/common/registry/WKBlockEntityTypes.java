@@ -16,9 +16,9 @@ public class WKBlockEntityTypes {
 
     public static void register() {
         registerBlockEntity("witches_oven", WITCHES_OVEN);
-    }    public static final BlockEntityType<WitchesOvenBlockEntity> WITCHES_OVEN = FabricBlockEntityTypeBuilder.create(WitchesOvenBlockEntity::new, WKBlocks.IRON_WITCHES_OVEN).build();
+    }
 
-
+    public static final BlockEntityType<WitchesOvenBlockEntity> WITCHES_OVEN = FabricBlockEntityTypeBuilder.create(WitchesOvenBlockEntity::new, WKBlocks.IRON_WITCHES_OVEN).build();
 
 
 }
