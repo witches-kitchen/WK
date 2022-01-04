@@ -1,0 +1,11 @@
+{
+  "type": "witcheskitchen:witches_oven_cooking",
+  "input": {
+    "item": "iron_ingot"
+  },
+  "output": {
+    "item": "diamond"
+  },
+  "time": 100,
+  "experience": 0.2
+}
