@@ -1,0 +1,9 @@
+{
+ "replace": false,
+ "values": [
+    "witcheskitchen:blackthorn_log",
+    "witcheskitchen:stripped_blackthorn_log",
+    "witcheskitchen:blackthorn_wood",
+    "witcheskitchen:stripped_blackthorn_wood"
+  ]
+}
