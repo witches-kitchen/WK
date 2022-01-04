@@ -226,7 +226,7 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
 
     @Override
     public Text getDisplayName() {
-        return new TranslatableText(this.getCachedState().getBlock().getTranslationKey());
+        return new TranslatableText("screen.title.witcheskitchen.witches_oven");
     }
 
     @Nullable
