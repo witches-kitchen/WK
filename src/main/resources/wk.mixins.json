@@ -4,6 +4,7 @@
   "package": "cf.witcheskitchen.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "AxeAccess",
     "FoliagePlacerInvoker",
     "FoliagePlacerTypeInvoker",
     "SaplingBlockInvoker",
