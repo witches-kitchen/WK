@@ -58,7 +58,6 @@ public class DisrobingStatusEffect extends InstantStatusEffect {
                 //non empty slots
                 final List<Pair<SlotReference, ItemStack>> trinketInventory = component.get().getAllEquipped();
                 final int size = trinketInventory.size();
-                System.out.println(size);
                 if (trinketInventory.isEmpty()) {
                     return;//all slots are empty
                     //plus, we can get an exception from random
