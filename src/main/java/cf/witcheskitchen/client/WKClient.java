@@ -30,8 +30,6 @@ public class WKClient implements ClientModInitializer {
     }
    
     //modified from croptopia
-   
-
     public void registerModBlockLayer(Block block) {
         if (block instanceof WKLeafCropBlock) {
             BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutoutMipped());
