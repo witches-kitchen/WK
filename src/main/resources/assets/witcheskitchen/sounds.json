@@ -15,5 +15,15 @@
     "sounds": [
       "witcheskitchen:cusith_howl"
     ]
+  },
+  "broom_loop": {
+    "sounds":[
+      "witcheskitchen:broom_loop"
+    ]
+  },
+  "broom_mount": {
+    "sounds":[
+      "witcheskitchen:broom_mount1"
+    ]
   }
 }
