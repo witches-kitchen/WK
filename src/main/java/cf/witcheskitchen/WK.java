@@ -1,7 +1,7 @@
 package cf.witcheskitchen;
 
 import cf.witcheskitchen.common.registry.*;
-import cf.witcheskitchen.config.ConfigurableSeed;
+//import cf.witcheskitchen.config.ConfigurableSeed;
 import cf.witcheskitchen.mixin.AxeAccess;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
@@ -17,15 +17,15 @@ import java.util.Map;
 
 import com.google.common.collect.ImmutableMap;
 
-import org.apache.logging.log4j.LogManager; //lol 
+import org.apache.logging.log4j.LogManager; 
 import org.apache.logging.log4j.Logger;
 import software.bernie.geckolib3.GeckoLib;
 
 public class WK implements ModInitializer {
     
-    public static ArrayList<Block> modBlocks = new ArrayList<>();
+    public static ArrayList<Block> modBlocks = new ArrayList<>(); 
     public static ArrayList<Block> leafBlocks = new ArrayList<>();
-    public static List<ConfigurableSeed> seeds = new ArrayList<>();
+    //public static List<ConfigurableSeed> seeds = new ArrayList<>(); //used for placed feature seeds, allowing world gen to use them and for users to configure how seeds are spawned in
     
     public static final String MODID = "witcheskitchen";
     public static final Logger logger = LogManager.getLogger(MODID);
