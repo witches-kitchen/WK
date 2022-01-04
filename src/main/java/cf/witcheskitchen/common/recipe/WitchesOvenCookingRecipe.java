@@ -77,7 +77,7 @@ public class WitchesOvenCookingRecipe implements Recipe<Inventory> {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return null;
+        return WKRecipeTypes.WITCHES_OVEN_COOKING_RECIPE_SERIALIZER;
     }
 
     @Override
