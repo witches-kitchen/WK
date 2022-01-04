@@ -137,8 +137,9 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
                     if (this.progress == this.maxProgress) {
                         this.progress = 0;
                         this.maxProgress = recipe.getTime();
-                        this.craftRecipe(recipe);
-                        dirty = true;
+                        if (this.craftRecipe(recipe)) {
+                            dirty = true;
+                        }
                     }
                 }
                 //update blockstate
@@ -151,8 +152,41 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
         }
     }
 
-    public void craftRecipe(final WitchesOvenCookingRecipe recipe) {
+    public boolean canCraft(final WitchesOvenCookingRecipe recipe) {
+        if (this.world == null) {
+            return false;
+        } else if (recipe == null) {
+            return false;
+        } else {
+            final ItemStack output = this.getStack(this.output);
+            final ItemStack firstResult = recipe.getOutput();
+            if (output.isEmpty()) {
+                return true;
+            } else if (!output.isItemEqualIgnoreDamage(firstResult)) {
+                return false;
+            } else {
+                int nextCount = output.getCount() + firstResult.getCount();
+                return (nextCount <= this.getMaxCountPerStack() && nextCount <= firstResult.getMaxCount());
+            }
+        }
+    }
 
+    public boolean craftRecipe(final WitchesOvenCookingRecipe recipe) {
+        if (recipe == null) {
+            return false;
+        } else if (!canCraft(recipe)) {
+            return false;
+        } else  {
+            final ItemStack outputStack = recipe.getOutput().copy();
+            final ItemStack stackInOutput = this.getStack(this.output);
+            if (stackInOutput.isEmpty()) {
+                this.setStack(this.output, outputStack);
+            } else if (stackInOutput.isOf(outputStack.getItem())) {
+                stackInOutput.increment(outputStack.getCount());
+            }
+            this.getStack(this.input).decrement(1);
+            return true;
+        }
     }
 
     @Override
