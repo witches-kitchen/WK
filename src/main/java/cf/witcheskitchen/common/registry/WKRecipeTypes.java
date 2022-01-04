@@ -14,9 +14,8 @@ import java.util.Map;
 public class WKRecipeTypes {
 
     private static final Map<RecipeSerializer<?>, Identifier> RECIPE_SERIALIZERS = new HashMap<>();
-    private static final Map<RecipeType<?>, Identifier> RECIPE_TYPES = new HashMap<>();
-
     public static final RecipeSerializer<WitchesOvenCookingRecipe> WITCHES_OVEN_COOKING_RECIPE_SERIALIZER = register("witches_oven_cooking", new WitchesOvenCookingRecipe.Serializer());
+    private static final Map<RecipeType<?>, Identifier> RECIPE_TYPES = new HashMap<>();
     public static final RecipeType<WitchesOvenCookingRecipe> WITCHES_OVEN_COOKING_RECIPE_TYPE = register("witches_oven_cooking");
 
     private static <T extends Recipe<?>> RecipeSerializer<T> register(String name, RecipeSerializer<T> serializer) {

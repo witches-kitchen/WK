@@ -14,13 +14,13 @@ public class WitchesOvenCookingRecipe implements Recipe<Inventory> {
 
     private final Identifier id;
     private final Ingredient input;
- //   private final Ingredient jar;
+    //   private final Ingredient jar;
     private final ItemStack output;
-  //  private final ItemStack fume;
+    //  private final ItemStack fume;
     private final int time;
     private final float xp;
 
-    public WitchesOvenCookingRecipe(Identifier id, Ingredient input,  ItemStack output,  int time, float xp) {
+    public WitchesOvenCookingRecipe(Identifier id, Ingredient input, ItemStack output, int time, float xp) {
         this.id = id;
         this.input = input;
         this.output = output;
@@ -88,9 +88,9 @@ public class WitchesOvenCookingRecipe implements Recipe<Inventory> {
         @Override
         public WitchesOvenCookingRecipe read(Identifier id, JsonObject json) {
             final Ingredient input = Ingredient.fromJson(JsonHelper.getObject(json, "input"));
-          //  final Ingredient jar  = Ingredient.fromJson(JsonHelper.getObject(json, "jar"));
+            //  final Ingredient jar  = Ingredient.fromJson(JsonHelper.getObject(json, "jar"));
             final ItemStack output = ShapedRecipe.outputFromJson(JsonHelper.getObject(json, "output"));
-          //  final ItemStack fume = ShapedRecipe.outputFromJson(JsonHelper.getObject(json, "fume"));
+            //  final ItemStack fume = ShapedRecipe.outputFromJson(JsonHelper.getObject(json, "fume"));
             final int time = JsonHelper.getInt(json, "time");
             final float xp = JsonHelper.getFloat(json, "experience");
             return new WitchesOvenCookingRecipe(id, input, output, time, xp);
@@ -110,9 +110,9 @@ public class WitchesOvenCookingRecipe implements Recipe<Inventory> {
         @Override
         public void write(PacketByteBuf buf, WitchesOvenCookingRecipe recipe) {
             recipe.getInput().write(buf);
-         //   recipe.getJar().write(buf);
+            //   recipe.getJar().write(buf);
             buf.writeItemStack(recipe.getOutput());
-           // buf.writeItemStack(recipe.getFume());
+            // buf.writeItemStack(recipe.getFume());
             buf.writeInt(recipe.getTime());
             buf.writeFloat(recipe.getXp());
         }

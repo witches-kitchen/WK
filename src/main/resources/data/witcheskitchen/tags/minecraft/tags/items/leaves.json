@@ -1,6 +1,6 @@
 {
- "replace": false,
- "values": [
+  "replace": false,
+  "values": [
     "witcheskitchen:blackthorn_leaves",
     "witcheskitchen:elder_leaves",
     "witcheskitchen:elder_leaves_colored",
@@ -10,5 +10,5 @@
     "witcheskitchen:rowan_leaves",
     "witcheskitchen:rowan_leaves",
     "witcheskitchen:sumac_leaves"
-   ]
+  ]
 }

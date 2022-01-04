@@ -1,27 +1,18 @@
 package cf.witcheskitchen.common.items;
 
-import java.util.List;
-import java.util.Locale;
-
-import org.jetbrains.annotations.Nullable;
-
 import cf.witcheskitchen.common.blocks.WKCropBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FarmlandBlock;
-import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.AliasedBlockItem;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
-import net.minecraft.text.Style;
-import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome.Category;
+
+import java.util.List;
 
 public class WKSeedItem extends AliasedBlockItem {
 
@@ -55,12 +46,12 @@ public class WKSeedItem extends AliasedBlockItem {
     }*/
 
     @Deprecated(forRemoval = true)
-    public void setCategory(List<Category> category) {
-        this.category = category;
+    public List<Category> getCategory() {
+        return category;
     }
 
     @Deprecated(forRemoval = true)
-    public List<Category> getCategory() {
-        return category;
+    public void setCategory(List<Category> category) {
+        this.category = category;
     }
 }

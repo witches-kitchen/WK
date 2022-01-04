@@ -1,10 +1,8 @@
 package cf.witcheskitchen.common.blocks;
 
-import net.minecraft.block.CropBlock;
 import cf.witcheskitchen.common.items.WKSeedItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.CropBlock;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.Entity;
@@ -42,10 +40,6 @@ public class WKCropBlock extends CropBlock {
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return AGE_TO_SHAPE[state.get(this.getAgeProperty())];
-    }
-
-    public void setSeedsItem(WKSeedItem seed) {
-        this.seed = seed;
     }
 
     @Override // JANK
@@ -86,5 +80,9 @@ public class WKCropBlock extends CropBlock {
     protected ItemConvertible getSeedsItem() {
 
         return seed;
+    }
+
+    public void setSeedsItem(WKSeedItem seed) {
+        this.seed = seed;
     }
 }

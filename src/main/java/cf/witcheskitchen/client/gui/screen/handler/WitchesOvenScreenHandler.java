@@ -10,6 +10,7 @@ import net.minecraft.screen.PropertyDelegate;
 public class WitchesOvenScreenHandler extends WKScreenHandler {
 
     private final PropertyDelegate delegate;
+
     public WitchesOvenScreenHandler(int syncId, PlayerInventory playerInventory) {
         this(syncId, playerInventory, new SimpleInventory(5), new ArrayPropertyDelegate(4));
     }

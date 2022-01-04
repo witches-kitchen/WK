@@ -1,8 +1,8 @@
 package cf.witcheskitchen;
 
 import cf.witcheskitchen.common.registry.*;
-//import cf.witcheskitchen.config.ConfigurableSeed;
 import cf.witcheskitchen.mixin.AxeAccess;
+import com.google.common.collect.ImmutableMap;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.block.Block;
@@ -10,29 +10,24 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import com.google.common.collect.ImmutableMap;
-
-import org.apache.logging.log4j.LogManager; 
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import software.bernie.geckolib3.GeckoLib;
 
+import java.util.ArrayList;
+import java.util.Map;
+
 public class WK implements ModInitializer {
-    
-    public static ArrayList<Block> modBlocks = new ArrayList<>(); 
-    public static ArrayList<Block> leafBlocks = new ArrayList<>();
-    //public static List<ConfigurableSeed> seeds = new ArrayList<>(); //used for placed feature seeds, allowing world gen to use them and for users to configure how seeds are spawned in
-    
+
     public static final String MODID = "witcheskitchen";
     public static final Logger logger = LogManager.getLogger(MODID);
+    //public static List<ConfigurableSeed> seeds = new ArrayList<>(); //used for placed feature seeds, allowing world gen to use them and for users to configure how seeds are spawned in
     public static final ItemGroup WK_GROUP = FabricItemGroupBuilder.create(
                     new Identifier("witcheskitchen", "general"))
             .icon(() -> new ItemStack(Items.POTION))
             .build();
+    public static ArrayList<Block> modBlocks = new ArrayList<>();
+    public static ArrayList<Block> leafBlocks = new ArrayList<>();
 
     @Override
     public void onInitialize() {
@@ -60,11 +55,11 @@ public class WK implements ModInitializer {
         WKSounds.register();
         GeckoLib.initialize();
         WKEntities.register();
-        
+
         //modifyAxeBlockStripping();
     }
-    
-     private void modifyAxeBlockStripping() {
+
+    private void modifyAxeBlockStripping() {
         Map<Block, Block> immutableBlocks = AxeAccess.getStrippedBlocks();
         AxeAccess.setStrippedBlocks(new ImmutableMap.Builder<Block, Block>()
                 .putAll(immutableBlocks)

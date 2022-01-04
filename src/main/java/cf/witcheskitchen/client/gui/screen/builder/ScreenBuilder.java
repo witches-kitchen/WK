@@ -87,17 +87,17 @@ public final class ScreenBuilder {
         this.parent.drawTexture(matrixStack, posX, posY, 150, 0, 22, 15);
         int j = (int) ((double) progress / (double) maxProgress * 23);
         j = Math.max(j, 0);
-        this.parent.drawTexture(matrixStack, posX, posY, 172, 0,  j, 16);
+        this.parent.drawTexture(matrixStack, posX, posY, 172, 0, j, 16);
 
     }
 
     public void drawBurningProgress(MatrixStack matrixStack, int posX, int posY, boolean burning, int progress, int maxProgress) {
         bindTexture();
         this.parent.drawTexture(matrixStack, posX, posY, 239, 34, 13, 13);
-        int i =  12 - (int) ((double) progress / (double) maxProgress * 13);
+        int i = 12 - (int) ((double) progress / (double) maxProgress * 13);
         i = Math.max(i, 0);
         if (burning) {
-            this.parent.drawTexture(matrixStack, posX, posY + i,  239, 19 + i, 14, 14 - i);
+            this.parent.drawTexture(matrixStack, posX, posY + i, 239, 19 + i, 14, 14 - i);
         }
     }
 }

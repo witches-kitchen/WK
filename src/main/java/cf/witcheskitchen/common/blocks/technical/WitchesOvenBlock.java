@@ -1,7 +1,10 @@
 package cf.witcheskitchen.common.blocks.technical;
 
 import cf.witcheskitchen.common.blocks.entity.WitchesOvenBlockEntity;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.HorizontalFacingBlock;
+import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
@@ -21,14 +24,14 @@ public class WitchesOvenBlock extends WKDeviceBlock {
     public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
 
     public static final VoxelShape SHAPE = VoxelShapes.union(
-            createCuboidShape(0, 14, 0, 16, 16,16),
+            createCuboidShape(0, 14, 0, 16, 16, 16),
             createCuboidShape(0, 2, 1, 16, 13, 16),
             createCuboidShape(0, 11, 0, 16, 13, 1),
             createCuboidShape(13, 2, 0, 16, 4, 1),
             createCuboidShape(0, 2, 0, 3, 4, 1),
-            createCuboidShape(3, 2, 0,13, 8, 1),
+            createCuboidShape(3, 2, 0, 13, 8, 1),
             createCuboidShape(5, 8, 0, 11, 9, 1),
-            createCuboidShape(1, 13, 2, 15, 14,15),
+            createCuboidShape(1, 13, 2, 15, 14, 15),
             createCuboidShape(13, 0, 1, 15, 2, 3),
             createCuboidShape(13, 0, 13, 15, 2, 15),
             createCuboidShape(1, 0, 13, 3, 2, 15),

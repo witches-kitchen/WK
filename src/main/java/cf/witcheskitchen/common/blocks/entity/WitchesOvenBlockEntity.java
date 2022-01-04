@@ -22,17 +22,16 @@ import org.jetbrains.annotations.Nullable;
 
 public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements NamedScreenHandlerFactory {
 
-    private int burnTime;
-    private int maxBurnTime;
-    private int progress;
-    private int maxProgress;
-
     private final PropertyDelegate delegate;
     private final int fuel = 0;
     private final int input = 1;
     private final int jar = 2;
     private final int output = 3;
     private final int fume = 4;//fume output
+    private int burnTime;
+    private int maxBurnTime;
+    private int progress;
+    private int maxProgress;
 
     public WitchesOvenBlockEntity(BlockPos pos, BlockState state) {
         super(WKBlockEntityTypes.WITCHES_OVEN, pos, state, 5);
@@ -48,6 +47,7 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
                     default -> 0;
                 };
             }
+
             @Override
             public void set(int index, int value) {
                 switch (index) {
@@ -57,6 +57,7 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
                     case 3 -> WitchesOvenBlockEntity.this.maxProgress = value;
                 }
             }
+
             @Override
             public int size() {
                 return 4;
@@ -76,9 +77,9 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
     @Override
     public void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
-        nbt.putShort("BurnTime", (short)this.burnTime);
-        nbt.putShort("Progress", (short)this.progress);
-        nbt.putShort("MaxProgress", (short)this.maxProgress);
+        nbt.putShort("BurnTime", (short) this.burnTime);
+        nbt.putShort("Progress", (short) this.progress);
+        nbt.putShort("MaxProgress", (short) this.maxProgress);
     }
 
     public int getItemBurnTime(ItemStack stack) {
@@ -118,12 +119,12 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
             if (recipe != null) {
                 this.maxProgress = recipe.getTime();
                 if (!this.isBurning()) {
-                    this.burnTime =  this.getItemBurnTime(this.getStack(this.fuel));
+                    this.burnTime = this.getItemBurnTime(this.getStack(this.fuel));
                     this.maxBurnTime = this.burnTime;
                     if (this.isBurning()) {
                         dirty = true;
                         final ItemStack fuelStack = this.getStack(this.fuel);
-                        if(fuelStack.getItem().hasRecipeRemainder()) {
+                        if (fuelStack.getItem().hasRecipeRemainder()) {
                             this.setStack(this.fuel, new ItemStack(fuelStack.getItem().getRecipeRemainder()));
                         } else if (fuelStack.getCount() > 1) {
                             fuelStack.decrement(1);
@@ -176,7 +177,7 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
             return false;
         } else if (!canCraft(recipe)) {
             return false;
-        } else  {
+        } else {
             final ItemStack outputStack = recipe.getOutput().copy();
             final ItemStack stackInOutput = this.getStack(this.output);
             if (stackInOutput.isEmpty()) {

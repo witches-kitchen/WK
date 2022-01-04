@@ -1,5 +1,5 @@
 {
- "variants": {
+  "variants": {
     "axis=x": {
       "model": "witcheskitchen:block/stripped_rowan_log_horizontal",
       "x": 90,

@@ -22,10 +22,11 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.BlockView;
 
-import static cf.witcheskitchen.WK.*;
+import static cf.witcheskitchen.WK.leafBlocks;
+import static cf.witcheskitchen.WK.modBlocks;
 
 public class WKBlocks {
-    
+
     public static final Block SALT_BLOCK = new SaltBlock(FabricBlockSettings.of(Material.DECORATION).noCollision().breakInstantly());
     public static final Block RAW_GINGERBREAD_BLOCK = new Block(FabricBlockSettings.of(Material.CAKE));
     public static final Block RAW_CHISELED_GINGERBREAD_BLOCK = new Block(FabricBlockSettings.of(Material.CAKE));
@@ -105,7 +106,7 @@ public class WKBlocks {
     public static final Block STRIPPED_ROWAN_WOOD = new PillarBlock(FabricBlockSettings.of(Material.WOOD, MapColor.TERRACOTTA_BLACK).strength(2.0f).sounds(BlockSoundGroup.WOOD));
     public static final Block SUMAC_WOOD = new PillarBlock(FabricBlockSettings.of(Material.WOOD, MapColor.OAK_TAN).strength(2.0f).sounds(BlockSoundGroup.WOOD));
     public static final Block STRIPPED_SUMAC_WOOD = new PillarBlock(FabricBlockSettings.of(Material.WOOD, MapColor.OAK_TAN).strength(2.0f).sounds(BlockSoundGroup.WOOD));
-    
+
     public static final Block ELDER_SLAB = new SlabBlock(FabricBlockSettings.of(Material.WOOD));
     public static final Block SUMAC_SLAB = new SlabBlock(FabricBlockSettings.of(Material.WOOD));
     public static final Block HAWTHORN_SLAB = new SlabBlock(FabricBlockSettings.of(Material.WOOD));
@@ -301,7 +302,7 @@ public class WKBlocks {
         if (block instanceof LeavesBlock && id != "blackthorn_leaves") { //this logic needs work to not label blackthorn leaves as those able to be color mapped differently
             leafBlocks.add(block);
         } else {
-        
+
         }
 
         Registry.register(Registry.BLOCK, new Identifier(WK.MODID, id), block);

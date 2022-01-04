@@ -34,6 +34,30 @@ public class WKLeafCropBlock extends WKCropBlock {
         super(settings);
     }
 
+    private static BlockState updateDistanceFromLogs(BlockState state, WorldAccess world, BlockPos pos) {
+        int distance = 7;
+        BlockPos.Mutable mutablePos = new BlockPos.Mutable();
+        Direction[] directions = Direction.values();
+
+        for (Direction direction : directions) {
+            mutablePos.set(pos, direction);
+            distance = Math.min(distance, getDistanceFromLog(world.getBlockState(mutablePos)) + 1);
+            if (distance == 1) {
+                break;
+            }
+        }
+
+        return state.with(DISTANCE, distance);
+    }
+
+    private static int getDistanceFromLog(BlockState state) {
+        if (state.isIn(BlockTags.LOGS)) {
+            return 0;
+        } else {
+            return state.getBlock() instanceof WKLeafCropBlock || state.getBlock() instanceof LeavesBlock ? state.get(DISTANCE) : 7;
+        }
+    }
+
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return VoxelShapes.fullCube();
@@ -124,29 +148,5 @@ public class WKLeafCropBlock extends WKCropBlock {
     @Override
     public int getOpacity(BlockState state, BlockView world, BlockPos pos) {
         return 1;
-    }
-
-    private static BlockState updateDistanceFromLogs(BlockState state, WorldAccess world, BlockPos pos) {
-        int distance = 7;
-        BlockPos.Mutable mutablePos = new BlockPos.Mutable();
-        Direction[] directions = Direction.values();
-
-        for (Direction direction : directions) {
-            mutablePos.set(pos, direction);
-            distance = Math.min(distance, getDistanceFromLog(world.getBlockState(mutablePos)) + 1);
-            if (distance == 1) {
-                break;
-            }
-        }
-
-        return state.with(DISTANCE, distance);
-    }
-
-    private static int getDistanceFromLog(BlockState state) {
-        if (state.isIn(BlockTags.LOGS)) {
-            return 0;
-        } else {
-            return state.getBlock() instanceof WKLeafCropBlock || state.getBlock() instanceof LeavesBlock ? state.get(DISTANCE) : 7;
-        }
     }
 }
