@@ -100,7 +100,11 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
         final Recipe<?> matchingRecipe = world.getRecipeManager()
                 .listAllOfType(RecipeType.SMELTING)
                 .stream()
-                .filter(recipe -> recipe.getIngredients().size() == 1 && recipe.getIngredients().get(0).test(stack)).findFirst()
+                .filter(recipe -> {
+                    if (recipe.getIngredients().size() == 1 && recipe.getIngredients().get(0).test(stack)) {
+                        return recipe.getOutput().isFood();
+                    } return false;
+                }).findFirst()
                 .orElse(null);
 
         if (matchingRecipe != null) {
