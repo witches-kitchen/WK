@@ -23,6 +23,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.BlockView;
 
 public class WKBlocks {
+    
     public static final Block SALT_BLOCK = new SaltBlock(FabricBlockSettings.of(Material.DECORATION).noCollision().breakInstantly());
     public static final Block RAW_GINGERBREAD_BLOCK = new Block(FabricBlockSettings.of(Material.CAKE));
     public static final Block RAW_CHISELED_GINGERBREAD_BLOCK = new Block(FabricBlockSettings.of(Material.CAKE));
@@ -84,7 +85,25 @@ public class WKBlocks {
     public static final Block BLACKTHORN_LOG = WKBlocks.newLogBlock(MapColor.TERRACOTTA_BROWN, MapColor.TERRACOTTA_BLACK);
     public static final Block JUNIPER_LOG = WKBlocks.newLogBlock(MapColor.DIRT_BROWN, MapColor.DEEPSLATE_GRAY);
     public static final Block ROWAN_LOG = WKBlocks.newLogBlock(MapColor.TERRACOTTA_BLACK, MapColor.BROWN);
-
+    public static final Block STRIPPED_BLACKTHORN_LOG = WKBlocks.newLogBlock(MapColor.TERRACOTTA_BROWN, MapColor.TERRACOTTA_BLACK);
+    public static final Block STRIPPED_ELDER_LOG = WKBlocks.newLogBlock(MapColor.PALE_YELLOW, MapColor.OAK_TAN);
+    public static final Block STRIPPED_HAWTHORN_LOG = WKBlocks.newLogBlock(MapColor.PALE_YELLOW, MapColor.DIRT_BROWN);
+    public static final Block STRIPPED_JUNIPER_LOG = WKBlocks.newLogBlock(MapColor.DIRT_BROWN, MapColor.DEEPSLATE_GRAY);
+    public static final Block STRIPPED_ROWAN_LOG = WKBlocks.newLogBlock(MapColor.TERRACOTTA_BLACK, MapColor.BROWN);
+    public static final Block STRIPPED_SUMAC_LOG = WKBlocks.newLogBlock(MapColor.DEEPSLATE_GRAY, MapColor.DARK_DULL_PINK);
+    public static final Block BLACKTHORN_WOOD = new PillarBlock(FabricBlockSettings.of(Material.WOOD, MapColor.TERRACOTTA_BLACK).strength(2.0f).sounds(BlockSoundGroup.WOOD));
+    public static final Block STRIPPED_BLACKTHORN_WOOD = new PillarBlock(FabricBlockSettings.of(Material.WOOD, MapColor.TERRACOTTA_BLACK).strength(2.0f).sounds(BlockSoundGroup.WOOD));
+    public static final Block ELDER_WOOD = new PillarBlock(FabricBlockSettings.of(Material.WOOD, MapColor.OAK_TAN).strength(2.0f).sounds(BlockSoundGroup.WOOD));
+    public static final Block STRIPPED_ELDER_WOOD = new PillarBlock(FabricBlockSettings.of(Material.WOOD, MapColor.OAK_TAN).strength(2.0f).sounds(BlockSoundGroup.WOOD));
+    public static final Block HAWTHORN_WOOD = new PillarBlock(FabricBlockSettings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f).sounds(BlockSoundGroup.WOOD));
+    public static final Block STRIPPED_HAWTHORN_WOOD = new PillarBlock(FabricBlockSettings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(2.0f).sounds(BlockSoundGroup.WOOD));
+    public static final Block JUNIPER_WOOD = new PillarBlock(FabricBlockSettings.of(Material.WOOD, MapColor.DEEPSLATE_GRAY).strength(2.0f).sounds(BlockSoundGroup.WOOD));
+    public static final Block STRIPPED_JUNIPER_WOOD = new PillarBlock(FabricBlockSettings.of(Material.WOOD, MapColor.DEEPSLATE_GRAY).strength(2.0f).sounds(BlockSoundGroup.WOOD));
+    public static final Block ROWAN_WOOD = new PillarBlock(FabricBlockSettings.of(Material.WOOD, MapColor.TERRACOTTA_BLACK).strength(2.0f).sounds(BlockSoundGroup.WOOD));
+    public static final Block STRIPPED_ROWAN_WOOD = new PillarBlock(FabricBlockSettings.of(Material.WOOD, MapColor.TERRACOTTA_BLACK).strength(2.0f).sounds(BlockSoundGroup.WOOD));
+    public static final Block SUMAC_WOOD = new PillarBlock(FabricBlockSettings.of(Material.WOOD, MapColor.OAK_TAN).strength(2.0f).sounds(BlockSoundGroup.WOOD));
+    public static final Block STRIPPED_SUMAC_WOOD = new PillarBlock(FabricBlockSettings.of(Material.WOOD, MapColor.OAK_TAN).strength(2.0f).sounds(BlockSoundGroup.WOOD));
+    
     public static final Block ELDER_SLAB = new SlabBlock(FabricBlockSettings.of(Material.WOOD));
     public static final Block SUMAC_SLAB = new SlabBlock(FabricBlockSettings.of(Material.WOOD));
     public static final Block HAWTHORN_SLAB = new SlabBlock(FabricBlockSettings.of(Material.WOOD));
@@ -113,7 +132,6 @@ public class WKBlocks {
     public static final Block JUNIPER_SAPLING = new WKSaplingBlock(new WKSaplingGenerator(() -> WKGenerator.JUNIPER_TREE), FabricBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
     public static final Block ROWAN_SAPLING = new WKSaplingBlock(new WKSaplingGenerator(() -> WKGenerator.ROWAN_TREE), FabricBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
     public static final Block SUMAC_SAPLING = new WKSaplingBlock(new WKSaplingGenerator(() -> WKGenerator.SUMAC_TREE), FabricBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
-
     public static final Block POTTED_BLACKTHORN_SAPLING = new FlowerPotBlock(BLACKTHORN_SAPLING, FabricBlockSettings.of(Material.DECORATION).breakInstantly().nonOpaque());
     public static final Block POTTED_ELDER_SAPLING = new FlowerPotBlock(ELDER_SAPLING, FabricBlockSettings.of(Material.DECORATION).breakInstantly().nonOpaque());
     public static final Block POTTED_HAWTHORN_SAPLING = new FlowerPotBlock(HAWTHORN_SAPLING, FabricBlockSettings.of(Material.DECORATION).breakInstantly().nonOpaque());
@@ -188,13 +206,32 @@ public class WKBlocks {
         registerBlock("potted_sumac_sapling", POTTED_SUMAC_SAPLING, WK.WK_GROUP);
         registerBlock("potted_rowan_sapling", POTTED_ROWAN_SAPLING, WK.WK_GROUP);
 
-        //Wood planks
-        registerBlock("elder_planks", ELDER_PLANKS, WK.WK_GROUP);
-        registerBlock("sumac_planks", SUMAC_PLANKS, WK.WK_GROUP);
-        registerBlock("hawthorn_planks", HAWTHORN_PLANKS, WK.WK_GROUP);
-        registerBlock("blackthorn_planks", BLACKTHORN_PLANKS, WK.WK_GROUP);
-        registerBlock("juniper_planks", JUNIPER_PLANKS, WK.WK_GROUP);
-        registerBlock("rowan_planks", ROWAN_PLANKS, WK.WK_GROUP);
+        //Wood logs
+        registerBlock("blackthorn_log", BLACKTHORN_LOG, WK.WK_GROUP);
+        registerBlock("elder_log", ELDER_LOG, WK.WK_GROUP);
+        registerBlock("hawthorn_log", HAWTHORN_LOG, WK.WK_GROUP);
+        registerBlock("juniper_log", JUNIPER_LOG, WK.WK_GROUP);
+        registerBlock("rowan_log", ROWAN_LOG, WK.WK_GROUP);
+        registerBlock("sumac_log", SUMAC_LOG, WK.WK_GROUP);
+        registerBlock("blackthorn_wood", BLACKTHORN_WOOD, WK.WK_GROUP);
+        registerBlock("elder_wood", ELDER_WOOD, WK.WK_GROUP);
+        registerBlock("hawthorn_wood", HAWTHORN_WOOD, WK.WK_GROUP);
+        registerBlock("juniper_wood", JUNIPER_WOOD, WK.WK_GROUP);
+        registerBlock("rowan_wood", ROWAN_WOOD, WK.WK_GROUP);
+        registerBlock("sumac_wood", SUMAC_WOOD, WK.WK_GROUP);
+        registerBlock("stripped_blackthorn_log", STRIPPED_BLACKTHORN_LOG, WK.WK_GROUP);
+        registerBlock("stripped_elder_log", STRIPPED_ELDER_LOG, WK.WK_GROUP);
+        registerBlock("stripped_hawthorn_log", STRIPPED_HAWTHORN_LOG, WK.WK_GROUP);
+        registerBlock("stripped_juniper_log", STRIPPED_JUNIPER_LOG, WK.WK_GROUP);
+        registerBlock("stripped_rowan_log", STRIPPED_ROWAN_LOG, WK.WK_GROUP);
+        registerBlock("stripped_sumac_log", STRIPPED_SUMAC_LOG, WK.WK_GROUP);
+        registerBlock("stripped_blackthorn_wood", STRIPPED_BLACKTHORN_WOOD, WK.WK_GROUP);
+        registerBlock("stripped_elder_wood", STRIPPED_ELDER_WOOD, WK.WK_GROUP);
+        registerBlock("stripped_hawthorn_wood", STRIPPED_HAWTHORN_WOOD, WK.WK_GROUP);
+        registerBlock("stripped_juniper_wood", STRIPPED_JUNIPER_WOOD, WK.WK_GROUP);
+        registerBlock("stripped_rowan_wood", STRIPPED_ROWAN_WOOD, WK.WK_GROUP);
+        registerBlock("stripped_sumac_wood", STRIPPED_SUMAC_WOOD, WK.WK_GROUP);
+
 
         //Wood stairs
         registerBlock("rowan_stairs", ROWAN_STAIRS, WK.WK_GROUP);
@@ -263,8 +300,16 @@ public class WKBlocks {
         return new LeavesBlock(FabricBlockSettings.of(Material.LEAVES).strength(0.2f).ticksRandomly().sounds(soundGroup).nonOpaque().allowsSpawning(WKBlocks::willSpawnOnLeaves).suffocates(WKBlocks::never).blockVision(WKBlocks::never));
     }
 
-    //mod code
+    //this is used to register all blocks as a modBlock and to also register all but blackthorn leaves as leaves blocks. this is used to tell the client how to render these blocks. 
     public static void registerBlock(String id, Block block, ItemGroup tab) {
+        modBlocks.add(block);
+
+        if (block instanceof LeavesBlock && id != "blackthorn_leaves") { //this logic needs work to not label blackthorn leaves as those able to be color mapped differently
+            leafBlocks.add(block);
+        } else {
+        
+        }
+
         Registry.register(Registry.BLOCK, new Identifier(WK.MODID, id), block);
         Registry.register(Registry.ITEM, new Identifier(WK.MODID, id), new BlockItem(block, new FabricItemSettings().group(tab)));
     }
