@@ -1,12 +1,15 @@
 package cf.witcheskitchen.common.blocks.technical;
 
 import cf.witcheskitchen.common.blocks.entity.WitchesOvenBlockEntity;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.HorizontalFacingBlock;
-import net.minecraft.block.ShapeContext;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.particle.ParticleTypes;
+import net.minecraft.screen.ScreenHandler;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
@@ -16,7 +19,10 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Random;
 
 public class WitchesOvenBlock extends WKDeviceBlock {
 
@@ -59,10 +65,26 @@ public class WitchesOvenBlock extends WKDeviceBlock {
         builder.add(LIT, FACING);
     }
 
-
     @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new WitchesOvenBlockEntity(pos, state);
+    }
+
+    @Override
+    @Environment(EnvType.CLIENT)
+    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+        if (state.get(LIT)) {
+            Blocks.SMOKER.randomDisplayTick(state, world, pos, random);
+            Blocks.FURNACE.randomDisplayTick(state, world, pos, random);
+        }
+    }
+
+    public boolean hasComparatorOutput(BlockState state) {
+        return true;
+    }
+
+    public int getComparatorOutput(BlockState state, World world, BlockPos pos) {
+        return ScreenHandler.calculateComparatorOutput(world.getBlockEntity(pos));
     }
 }

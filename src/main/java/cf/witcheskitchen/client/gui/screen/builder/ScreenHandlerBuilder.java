@@ -3,6 +3,7 @@ package cf.witcheskitchen.client.gui.screen.builder;
 import cf.witcheskitchen.client.gui.screen.handler.WKScreenHandler;
 import cf.witcheskitchen.client.gui.screen.handler.slot.WKOutputSlot;
 import cf.witcheskitchen.client.gui.screen.handler.slot.WKSlot;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
@@ -34,8 +35,8 @@ public final class ScreenHandlerBuilder {
         return this;
     }
 
-    public ScreenHandlerBuilder output(final int index, final int posX, final int posY) {
-        this.parent.addSlot(new WKOutputSlot(this.inventory, index, posX, posY));
+    public ScreenHandlerBuilder output(final int index, final int posX, final int posY, PlayerEntity player) {
+        this.parent.addSlot(new WKOutputSlot(this.inventory, index, posX, posY, player));
         return this;
     }
 

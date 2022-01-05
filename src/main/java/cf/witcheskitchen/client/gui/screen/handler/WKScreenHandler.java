@@ -76,7 +76,7 @@ public abstract class WKScreenHandler extends ScreenHandler {
             return false;
         }
         for (final Range<Integer> range : this.blockEntityRanges) {
-            if (this.transferItem(stackToShift, range.getMinimum(), range.getMaximum() + 1)) {
+            if (this.transferStack(stackToShift, range.getMinimum(), range.getMaximum() + 1)) {
                 return true;
             }
         }
@@ -85,59 +85,81 @@ public abstract class WKScreenHandler extends ScreenHandler {
 
     protected boolean transferToPlayer(final ItemStack stackToShift) {
         for (final Range<Integer> range : this.playerRanges) {
-            if (this.transferItem(stackToShift, range.getMinimum(), range.getMaximum() + 1)) {
+            if (this.transferStack(stackToShift, range.getMinimum(), range.getMaximum() + 1)) {
                 return true;
             }
         }
         return false;
     }
 
-    protected boolean transferItem(final ItemStack stack, final int start, final int end) {
-
-        if (stack.isEmpty()) {
+    protected boolean transferStack(final ItemStack stackToShift, final int start, final int end) {
+        if (stackToShift.isEmpty()) {
             return false;
         }
-        final int stackCount = stack.getCount();
+        int inCount = stackToShift.getCount();
 
-        if (stackCount <= 0) {
-            return false;
-        }
-        //case where the container is empty
-        for (int i = start; i < end; i++) {
-            final Slot slotAt = this.getSlot(i);//container slots
-            final ItemStack stackInSlot = slotAt.getStack();
-            if (stackInSlot.isEmpty() && slotAt.canInsert(stack)) {
-                final int maxCount = Math.min(stack.getMaxCount(), slotAt.getMaxItemCount());
-                final int insertCount = Math.min(maxCount, stack.getCount());
-                final ItemStack moveStack = stack.copy();
-                moveStack.setCount(insertCount);
-                slotAt.setStack(moveStack);
-                stack.decrement(insertCount);
-            }
-        }
+        // First lets see if we have the same item in a slot to merge with
+        for (int slotIndex = start; stackToShift.getCount() > 0 && slotIndex < end; slotIndex++) {
+            final Slot slot = this.slots.get(slotIndex);
+            final ItemStack stackInSlot = slot.getStack();
+            int maxCount = Math.min(stackToShift.getMaxCount(), slot.getMaxItemCount());
 
-        //case where there container is not empty
-        for (int i = start; i < end; i++) {
-            final Slot slotAt = this.getSlot(i);//container slots
-            final ItemStack stackInSlot = slotAt.getStack();
-            if (slotAt.canInsert(stack) && ItemStack.areItemsEqual(stackInSlot, stack)) {
-                //what is the max count for the stack
-                final int maxCount = Math.min(stack.getMaxCount(), slotAt.getMaxItemCount());
-                final int remainingSpace = (maxCount - stackInSlot.getCount());
-                if (remainingSpace > 0) {
-                    final int insertCount = Math.min(remainingSpace, stackInSlot.getCount());
-                    stackInSlot.increment(insertCount);
-                    stack.decrement(insertCount);
+            if (!stackToShift.isEmpty() && slot.canInsert(stackToShift)) {
+                if (WKScreenHandler.areItemsEqual(stackInSlot, stackToShift, true)) {
+                    // Got 2 stacks that need merging
+                    final int space = maxCount - stackInSlot.getCount();
+                    if (space > 0) {
+                        int transferAmount = Math.min(space, stackToShift.getCount());
+                        stackInSlot.increment(transferAmount);
+                        stackToShift.decrement(transferAmount);
+                    }
                 }
             }
         }
 
-        //If we moved some, but still have more left over lets try again
-        if (!stack.isEmpty() && stack.getCount() != stackCount) {
-            transferItem(stack, start, end);
+        // If not lets go find the next free slot to insert our remaining stack
+        for (int slotIndex = start; stackToShift.getCount() > 0 && slotIndex < end; slotIndex++) {
+            final Slot slot = this.slots.get(slotIndex);
+            final ItemStack stackInSlot = slot.getStack();
+
+            if (stackInSlot.isEmpty() && slot.canInsert(stackToShift)) {
+                int maxCount = Math.min(stackToShift.getMaxCount(), slot.getMaxItemCount());
+
+                int moveCount = Math.min(maxCount, stackToShift.getCount());
+                ItemStack moveStack = stackToShift.copy();
+                moveStack.setCount(moveCount);
+                slot.setStack(moveStack);
+                stackToShift.decrement(moveCount);
+            }
         }
-        return stack.getCount() != stackCount;//means we successfully inserted the stack
+
+        //If we moved some, but still have more left over lets try again
+        if (!stackToShift.isEmpty() && stackToShift.getCount() != inCount) {
+            transferStack(stackToShift, start, end);
+        }
+
+        return stackToShift.getCount() != inCount;
     }
+
+    //Checks that stackA and stackB are equal
+    //This is as check to merge items on shift-click
+    private static boolean areItemsEqual(final ItemStack stackA, final ItemStack stackB, final boolean matchNBT) {
+        if (stackA.isEmpty() && stackB.isEmpty()) {
+            return true;//they are both air, fast return
+        }  else if (stackA.isEmpty() || stackB.isEmpty()) {
+            return false;//one of them is air
+        } else if (stackA.getItem() != stackB.getItem()) {
+            return false; //They are different items
+        } else {
+            //Otherwise, they are the same items
+            if (!matchNBT) { //return if we don't want to match nbt
+                return true;
+            }
+            //Match nbt
+            return ItemStack.areNbtEqual(stackA, stackB);
+        }
+    }
+
 
     @Override
     protected boolean insertItem(ItemStack stack, int startIndex, int endIndex, boolean fromLast) {

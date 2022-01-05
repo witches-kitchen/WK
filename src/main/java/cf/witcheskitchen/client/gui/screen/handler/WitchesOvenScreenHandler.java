@@ -12,7 +12,7 @@ public class WitchesOvenScreenHandler extends WKScreenHandler {
     private final PropertyDelegate delegate;
 
     public WitchesOvenScreenHandler(int syncId, PlayerInventory playerInventory) {
-        this(syncId, playerInventory, new SimpleInventory(5), new ArrayPropertyDelegate(4));
+        this(syncId, playerInventory, new SimpleInventory(4), new ArrayPropertyDelegate(4));
     }
 
     public WitchesOvenScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, PropertyDelegate delegate) {
@@ -22,9 +22,8 @@ public class WitchesOvenScreenHandler extends WKScreenHandler {
         this.builder().playerSetup()
                 .input(0, 44, 55)//fuel
                 .input(1, 44, 19)//input
-                .input(2, 80, 55)//jars
-                .output(3, 116, 19)//output
-                .input(4, 116, 55)//fume output
+                .output(2, 116, 19, playerInventory.player)//output
+                .output(3, 116, 55, playerInventory.player)//extra output
                 .build();
     }
 

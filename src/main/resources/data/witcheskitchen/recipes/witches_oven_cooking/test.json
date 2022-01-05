@@ -6,6 +6,8 @@
   "output": {
     "item": "diamond"
   },
-  "time": 100,
+  "extra": {
+    "item": "witcheskitchen:salt"
+  },
   "experience": 0.2
 }

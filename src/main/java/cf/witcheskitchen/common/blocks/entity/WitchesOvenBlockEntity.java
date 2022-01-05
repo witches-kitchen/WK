@@ -1,41 +1,52 @@
 package cf.witcheskitchen.common.blocks.entity;
 
+import cf.witcheskitchen.api.IDeviceExperienceHandler;
 import cf.witcheskitchen.client.gui.screen.handler.WitchesOvenScreenHandler;
+import cf.witcheskitchen.common.blocks.technical.WitchesOvenBlock;
+import cf.witcheskitchen.common.recipe.WitchesOvenCookingRecipe;
 import cf.witcheskitchen.common.registry.WKBlockEntityTypes;
 import cf.witcheskitchen.common.registry.WKRecipeTypes;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
+import net.minecraft.entity.ExperienceOrbEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeType;
+import net.minecraft.recipe.SmeltingRecipe;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.state.property.Properties;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements NamedScreenHandlerFactory {
+public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements NamedScreenHandlerFactory, IDeviceExperienceHandler {
 
     private final PropertyDelegate delegate;
     private final int fuel = 0;
     private final int input = 1;
-    private final int jar = 2;
-    private final int output = 3;
-    private final int fume = 4;//fume output
+    private final int output = 2;
+    private final int extra = 3;//extra output
     private int burnTime;
     private int maxBurnTime;
     private int progress;
     private int maxProgress;
+    private float experience;
 
     public WitchesOvenBlockEntity(BlockPos pos, BlockState state) {
-        super(WKBlockEntityTypes.WITCHES_OVEN, pos, state, 5);
+        super(WKBlockEntityTypes.WITCHES_OVEN, pos, state, 4);
+        //Default values for witches oven smelting recipes is 100
+        this.maxProgress = 100;
         //will sync values between client and server
         this.delegate = new PropertyDelegate() {
             @Override
@@ -48,7 +59,6 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
                     default -> 0;
                 };
             }
-
             @Override
             public void set(int index, int value) {
                 switch (index) {
@@ -58,7 +68,6 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
                     case 3 -> WitchesOvenBlockEntity.this.maxProgress = value;
                 }
             }
-
             @Override
             public int size() {
                 return 4;
@@ -73,6 +82,7 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
         this.progress = nbt.getShort("Progress");
         this.maxProgress = nbt.getShort("MaxProgress");
         this.maxBurnTime = this.getItemBurnTime(this.getStack(this.fuel));
+        this.experience = nbt.getFloat("Experience");
     }
 
     @Override
@@ -81,6 +91,7 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
         nbt.putShort("BurnTime", (short) this.burnTime);
         nbt.putShort("Progress", (short) this.progress);
         nbt.putShort("MaxProgress", (short) this.maxProgress);
+        nbt.putFloat("Experience", this.experience);
     }
 
     public int getItemBurnTime(ItemStack stack) {
@@ -91,36 +102,65 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
         }
     }
 
-    //searches the furnace output for the given item
-    private ItemStack getFurnaceResultFor(ItemStack stack) {
-        if (this.world == null || stack.isEmpty()) {
-            return ItemStack.EMPTY;
-        }
-        final Recipe<?> matchingRecipe = world.getRecipeManager()
-                .listAllOfType(RecipeType.SMELTING)
-                .stream()
-                .filter(recipe -> {
-                    if (recipe.getIngredients().size() == 1 && recipe.getIngredients().get(0).test(stack)) {
-                        return recipe.getOutput().isFood();
-                    }
-                    return false;
-                }).findFirst()
-                .orElse(null);
-
-        if (matchingRecipe != null) {
-            return matchingRecipe.getOutput().copy();
-        }
-        return ItemStack.EMPTY;
-    }
-
     public boolean isBurning() {
         return this.burnTime > 0;
     }
 
+    /**
+     * Finds the matching recipe for the given input
+     *
+     * @param world World
+     * @param input ItemStack
+     * @return possible return types are SmeltingRecipe (furnace) and WitchesOvenCookingRecipe (witches oven) or null if none
+     */
+    private Recipe<?> findMatchingRecipeFor(World world, final ItemStack input) {
+        if (input.isEmpty()) {
+            return null;
+        } else if (input.isFood()) {
+            return world.getRecipeManager().listAllOfType(RecipeType.SMELTING)
+                    .stream()
+                    .filter(recipe -> {
+                        if (recipe.getIngredients().size() == 1 && recipe.getIngredients().get(0).test(input)) {
+                            return recipe.getOutput().isFood();
+                        } return false;
+                    }).findFirst()
+                    .orElse(null);
+        } else {
+            return world.getRecipeManager().listAllOfType(WKRecipeTypes.WITCHES_OVEN_COOKING_RECIPE_TYPE)
+                    .stream()
+                    .filter(type -> type.getInput().test(input))
+                    .findFirst()
+                    .orElse(null);
+        }
+    }
+
+    private float getExperience(Recipe<?> recipe) {
+        if (recipe instanceof SmeltingRecipe smelting) {
+            return smelting.getExperience();
+        } else {
+            if (recipe instanceof WitchesOvenCookingRecipe cooking) {
+                return cooking.getXp();
+            }
+        }
+        return 0.0F;
+    }
+    //Returns the extra output of the given recipe
+    private ItemStack getExtraOutput(final Recipe<?> recipe) {
+        //no extra outputs for food
+        //since that would be a furnace recipe
+        if (recipe.getOutput().isFood()) {
+            return ItemStack.EMPTY;
+        } else if (recipe instanceof WitchesOvenCookingRecipe ovenRecipe) {
+            return ovenRecipe.getExtra();
+        } else {
+            return ItemStack.EMPTY;
+        }
+    }
+
+
     @Override
     public void tick(World world, BlockPos pos, BlockState state, WKDeviceBlockEntity blockEntity) {
         super.tick(world, pos, state, blockEntity);
-
         if (this.world != null && !this.world.isClient) {
             if (this.isBurning()) {
                 this.burnTime--;
@@ -132,49 +172,48 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
                 }
             }
             boolean dirty = false;
-            final var recipe = this.world.getRecipeManager()
-                    .listAllOfType(WKRecipeTypes.WITCHES_OVEN_COOKING_RECIPE_TYPE)
-                    .stream()
-                    .filter(type -> type.getInput().test(this.getStack(this.input)))
-                    .findFirst()
-                    .orElse(null);
-
-            final ItemStack output;
-            if (recipe == null) {
-                output = this.getFurnaceResultFor(this.getStack(this.input));
-            } else {
-                output = recipe.getOutput();//reference to output
-            }
-            if (output != null && !output.isEmpty()) {
-                this.maxProgress = 100;
-                if (!this.isBurning() && canCraft(output)) {
-                    this.burnTime = this.getItemBurnTime(this.getStack(this.fuel));
-                    this.maxBurnTime = this.burnTime;
-                    if (this.isBurning()) {
-                        dirty = true;
-                        final ItemStack fuelStack = this.getStack(this.fuel);
-                        if (fuelStack.getItem().hasRecipeRemainder()) {
-                            this.setStack(this.fuel, new ItemStack(fuelStack.getItem().getRecipeRemainder()));
-                        } else if (fuelStack.getCount() > 1) {
-                            fuelStack.decrement(1);
-                        } else if (fuelStack.getCount() == 1) {
-                            this.setStack(this.fuel, ItemStack.EMPTY);
-                        }
-                    }
-                }
-                if (this.isBurning() && canCraft(output)) {
-                    ++this.progress;
-                    if (this.progress == this.maxProgress) {
-                        this.progress = 0;
-                        this.maxProgress = 100;
-                        if (this.craftRecipe(output.copy())) {
+            final var recipe = this.findMatchingRecipeFor(world, this.getStack(this.input));
+            if (recipe != null) {
+                final ItemStack output = recipe.getOutput();
+                final float experience = this.getExperience(recipe);
+                final ItemStack extraOutput = getExtraOutput(recipe);
+                if (output != null && !output.isEmpty()) {
+                    if (!this.isBurning() && canCraft(output, extraOutput)) {
+                        this.burnTime = this.getItemBurnTime(this.getStack(this.fuel));
+                        this.maxBurnTime = this.burnTime;
+                        if (this.isBurning()) {
                             dirty = true;
+                            final ItemStack fuelStack = this.getStack(this.fuel);
+                            if (fuelStack.getItem().hasRecipeRemainder()) {
+                                this.setStack(this.fuel, new ItemStack(fuelStack.getItem().getRecipeRemainder()));
+                            } else if (fuelStack.getCount() > 1) {
+                                fuelStack.decrement(1);
+                            } else if (fuelStack.getCount() == 1) {
+                                this.setStack(this.fuel, ItemStack.EMPTY);
+                            }
                         }
                     }
-                }
-                //TODO: update blockstate
-                if (dirty) {
-                    this.markDirty();
+                    if (this.isBurning() && canCraft(output, extraOutput)) {
+                        ++this.progress;
+                        if (this.progress == this.maxProgress) {
+                            this.progress = 0;
+                            this.maxProgress = 100;
+
+                            if (this.craftRecipe(output.copy(), extraOutput.copy(), experience)) {
+                                dirty = true;
+                            }
+                        }
+                    }
+                    if (state.get(Properties.LIT) != this.isBurning()) {
+                        final BlockState nextState = state.with(WitchesOvenBlock.LIT, this.burnTime > 0);
+                        world.setBlockState(this.pos, nextState, Block.NOTIFY_ALL);
+                        dirty = true;
+                    }
+                    if (dirty) {
+                        this.markDirty();
+                    }
+                } else {
+                    this.progress = 0;
                 }
             } else {
                 this.progress = 0;
@@ -184,41 +223,98 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
 
     // Checks that input and output are valid
     // And we have enough space to craft
-    public boolean canCraft(final ItemStack output) {
+    public boolean canCraft(final ItemStack output, ItemStack extra) {
         if (this.world == null) {
             return false;
         } else if (output.isEmpty()) {
             return false;
         } else {
             final ItemStack stackInOutput = this.getStack(this.output);
-            if (stackInOutput.isEmpty()) {
-                return true;
-            } else if (!stackInOutput.isItemEqualIgnoreDamage(output)) {
-                return false;
+            final ItemStack stackInExtraOutput = this.getStack(this.extra);
+            final int nextSlotCount = stackInExtraOutput.getCount() + output.getCount();
+            if (!extra.isEmpty()) {//means recipe has an extra
+                if (stackInOutput.isEmpty() && stackInExtraOutput.isEmpty()) {
+                    return true;
+                } else if (stackInOutput.isEmpty() || stackInExtraOutput.isEmpty()) {
+                    if (stackInOutput.isEmpty()) {
+                        //if first output is empty
+                        //we know extra is not empty
+                        if (!stackInExtraOutput.isItemEqualIgnoreDamage(extra)) {
+                            return false;
+                        }
+                    }
+                    if (stackInExtraOutput.isEmpty()) {
+                        //if extra output is empty
+                        //we know first output is not empty
+                        if (!stackInOutput.isItemEqualIgnoreDamage(output)) {
+                            return false;
+                        }
+                    }
+                }
+                //At this point both slots are not empty
+                //let's check if we have enough space to keep cooking
+                if (nextSlotCount <= this.getMaxCountPerStack() && nextSlotCount <= output.getMaxCount()) {
+                    final int nextExtraSlotCount = stackInExtraOutput.getCount() + extra.getCount();
+                    return nextExtraSlotCount <= this.getMaxCountPerStack() && nextExtraSlotCount <= extra.getMaxCount();
+                }
             } else {
-                final int nextCount = stackInOutput.getCount() + output.getCount();
-                return (nextCount <= this.getMaxCountPerStack() && nextCount <= output.getMaxCount());
+                //Otherwise, this is a normal recipe without extra output
+                if (stackInOutput.isEmpty()) {
+                    return true;
+                } else if (!stackInOutput.isItemEqualIgnoreDamage(output)) {
+                    return false;
+                } else {
+                    return nextSlotCount <= this.getMaxCountPerStack() && nextSlotCount <= output.getMaxCount();
+                }
             }
         }
+        return false;
     }
 
-    //More checks and crafts the recipe
-    public boolean craftRecipe(final ItemStack output) {
+    //More checks to craft the recipe and update experience
+    public boolean craftRecipe(final ItemStack output, final ItemStack extra, final float experience) {
         if (this.world == null) {
             return false;
         } else if (output == null) {
             return false;
         } else if (output.isEmpty()) {
             return false;
-        } else if (!canCraft(output)) {
+        } else if (!canCraft(output, extra)) {
             return false;
         } else {
             final ItemStack stackInOutput = this.getStack(this.output);
-            if (stackInOutput.isEmpty()) {
-                this.setStack(this.output, output);
-            } else if (stackInOutput.isOf(output.getItem())) {
-                stackInOutput.increment(output.getCount());
+            final ItemStack stackInExtra = this.getStack(this.extra);
+            if (!extra.isEmpty()) {
+                //means this recipe has an extra
+                if (stackInOutput.isEmpty() && stackInExtra.isEmpty()) {
+                    this.setStack(this.output, output);
+                    this.setStack(this.extra, extra);
+                } else if (stackInOutput.isOf(output.getItem()) && stackInExtra.isOf(extra.getItem())) {
+                    stackInOutput.increment(output.getCount());
+                    stackInExtra.increment(extra.getCount());
+                } else {
+                    if (!stackInExtra.isEmpty()) {
+                        //If extra output stack is not empty
+                        //we can assume the first output is empty
+                        stackInExtra.increment(extra.getCount());
+                        this.setStack(this.output, output);
+                    }
+                    if (!stackInOutput.isEmpty()) {
+                        //If first output stack is not empty
+                        //we can assume the extra is empty
+                        stackInOutput.increment(output.getCount());
+                        this.setStack(this.extra, extra);
+                    }
+                }
+            } else {
+                //Otherwise, this is a normal recipe
+                if (stackInOutput.isEmpty()) {
+                    this.setStack(this.output, output);
+                } else if (stackInOutput.isOf(output.getItem())) {
+                    stackInOutput.increment(output.getCount());
+                }
             }
+            this.experience += experience;
             this.getStack(this.input).decrement(1);
             return true;
         }
@@ -233,5 +329,21 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
     @Override
     public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
         return new WitchesOvenScreenHandler(syncId, inv, this, this.delegate);
+    }
+
+    //from IDeviceExperienceHandler
+    @Override
+    public void dropExperience(ServerWorld world, Vec3d playerPos) {
+        dropExperience(world, playerPos, this.experience);
+        this.experience = 0;
+    }
+
+    private static void dropExperience(ServerWorld world, Vec3d pos, float experience) {
+        int i = MathHelper.floor(experience);
+        final float f = MathHelper.fractionalPart(experience);
+        if (f != 0.0F && Math.random() < (double) f) {
+            ++i;
+        }
+        ExperienceOrbEntity.spawn(world, pos, i);
     }
 }
