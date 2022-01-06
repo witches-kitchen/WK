@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:waxed_exposed_copper"
+    },
+    {
+      "item": "witcheskitchen:copper_witches_oven"
+    }
+  ],
+  "result": {
+    "item": "witcheskitchen:exposed_copper_witches_oven"
+  }
+}

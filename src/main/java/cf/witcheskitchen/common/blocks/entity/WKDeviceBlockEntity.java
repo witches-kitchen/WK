@@ -1,6 +1,7 @@
 package cf.witcheskitchen.common.blocks.entity;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Waterloggable;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
@@ -9,6 +10,7 @@ import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -21,6 +23,7 @@ public abstract class WKDeviceBlockEntity extends BlockEntity implements BlockEn
 
     private final int size;
     private DefaultedList<ItemStack> inventory;
+    private boolean isUsable;
 
     public WKDeviceBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int size) {
         super(type, pos, state);
@@ -30,7 +33,9 @@ public abstract class WKDeviceBlockEntity extends BlockEntity implements BlockEn
 
     @Override
     public void tick(World world, BlockPos pos, BlockState state, WKDeviceBlockEntity blockEntity) {
-
+        if (state.getBlock() instanceof Waterloggable) {
+            this.isUsable = state.getFluidState().isEmpty();
+        }
     }
 
     @Override
@@ -94,4 +99,7 @@ public abstract class WKDeviceBlockEntity extends BlockEntity implements BlockEn
         this.inventory.clear();
     }
 
+    public boolean isUsable() {
+        return isUsable;
+    }
 }

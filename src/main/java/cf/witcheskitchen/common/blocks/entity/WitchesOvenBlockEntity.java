@@ -172,7 +172,7 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
     @Override
     public void tick(World world, BlockPos pos, BlockState state, WKDeviceBlockEntity blockEntity) {
         super.tick(world, pos, state, blockEntity);
-        if (this.world != null && !this.world.isClient) {
+        if (this.world != null && !this.world.isClient && this.isUsable()) {
             if (this.isBurning()) {
                 this.burnTime--;
             } else {
