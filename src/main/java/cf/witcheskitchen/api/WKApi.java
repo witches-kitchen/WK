@@ -126,7 +126,6 @@ public class WKApi {
      */
     public static boolean isWearingFullWitchRobes(LivingEntity entity) {
         return false;
-
     }
 
     /**
@@ -135,6 +134,5 @@ public class WKApi {
      */
     public static boolean isWearingFullWitchHunterRobes(LivingEntity entity) {
         return false;
-
     }
 }
