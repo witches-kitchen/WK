@@ -38,4 +38,44 @@ public class WKApi {
     public static boolean isGhost(LivingEntity livingEntity) {
         return WKTags.GHOST.contains(livingEntity.getType());
     }
+
+    /**
+     * This allows one to tell if something is immune to cold iron, and is used to target only such mobs.
+     * TODO: Make this work better with mobs
+     */
+    public static boolean isColdIronImmune(LivingEntity livingEntity) {
+        return WKTags.COLD_IRON_IMMUNE.contains(livingEntity.getType());
+    }
+
+    /**
+     * This allows one to tell if something is weak to cold iron, and is used to target only such mobs.
+     * TODO: Make this work better with mobs
+     */
+    public static boolean isColdIronWeak(LivingEntity livingEntity) {
+        return WKTags.COLD_IRON_WEAK.contains(livingEntity.getType());
+    }
+
+    /**
+     * This allows one to tell if something is immune to silver, and is used to target only such mobs.
+     * TODO: Make this work better with mobs
+     */
+    public static boolean isSilverImmune(LivingEntity livingEntity) {
+        return WKTags.SILVER_IMMUNE.contains(livingEntity.getType());
+    }
+
+    /**
+     * This allows one to tell if something is weak to cold iron, and is used to target only such mobs.
+     * TODO: Make this work better with mobs
+     */
+    public static boolean isSilverWeak(LivingEntity livingEntity) {
+        return WKTags.SILVER_WEAK.contains(livingEntity.getType());
+    }
+
+    /**
+     * This allows one to blacklist a mob from being taglocked
+     * TODO: Make this work better with mobs
+     */
+    public static boolean isTaglockBlacklisted(LivingEntity livingEntity) {
+        return WKTags.TAGLOCK_BLACKLIST.contains(livingEntity.getType());
+    }
 }
