@@ -31,6 +31,9 @@ public class GrowthStatusEffect extends StatusEffect {
 
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
+        if (entity.hasStatusEffect(WKStatusEffects.COOLDOWN)) {
+            return;
+        }
         int radius = amplifier + 1;
         World world = entity.world;
         BlockPos initialPosition = entity.getBlockPos();
