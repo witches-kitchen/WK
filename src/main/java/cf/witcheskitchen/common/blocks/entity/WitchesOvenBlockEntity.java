@@ -60,6 +60,7 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
                     default -> 0;
                 };
             }
+
             @Override
             public void set(int index, int value) {
                 switch (index) {
@@ -69,11 +70,21 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
                     case 3 -> WitchesOvenBlockEntity.this.maxProgress = value;
                 }
             }
+
             @Override
             public int size() {
                 return 4;
             }
         };
+    }
+
+    private static void dropExperience(ServerWorld world, Vec3d pos, float experience) {
+        int i = MathHelper.floor(experience);
+        final float f = MathHelper.fractionalPart(experience);
+        if (f != 0.0F && Math.random() < (double) f) {
+            ++i;
+        }
+        ExperienceOrbEntity.spawn(world, pos, i);
     }
 
     @Override
@@ -123,7 +134,8 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
                     .filter(recipe -> {
                         if (recipe.getIngredients().size() == 1 && recipe.getIngredients().get(0).test(input)) {
                             return recipe.getOutput().isFood();
-                        } return false;
+                        }
+                        return false;
                     }).findFirst()
                     .orElse(null);
         } else {
@@ -147,7 +159,7 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
     }
 
     //Returns the outputs of the given recipe
-    private DefaultedList<ItemStack> getOutputsFrom(final Recipe<?> recipe)  {
+    private DefaultedList<ItemStack> getOutputsFrom(final Recipe<?> recipe) {
         if (recipe instanceof SmeltingRecipe) {
             return DefaultedList.ofSize(1, recipe.getOutput());
         } else if (recipe instanceof WitchesOvenCookingRecipe ovenRecipe) {
@@ -340,14 +352,5 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
     public void dropExperience(ServerWorld world, Vec3d playerPos) {
         dropExperience(world, playerPos, this.experience);
         this.experience = 0;
-    }
-
-    private static void dropExperience(ServerWorld world, Vec3d pos, float experience) {
-        int i = MathHelper.floor(experience);
-        final float f = MathHelper.fractionalPart(experience);
-        if (f != 0.0F && Math.random() < (double) f) {
-            ++i;
-        }
-        ExperienceOrbEntity.spawn(world, pos, i);
     }
 }

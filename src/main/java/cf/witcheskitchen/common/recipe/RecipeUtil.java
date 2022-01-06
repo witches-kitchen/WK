@@ -14,7 +14,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.registry.Registry;
-import vazkii.patchouli.common.util.SerializationUtil;
 
 import java.util.Collections;
 import java.util.EnumSet;
@@ -31,6 +30,7 @@ public class RecipeUtil {
 
     /**
      * Deserializes an array of items from a JsonArray.
+     *
      * @param array JsonArray
      * @return DefaultedList of ItemStack
      */
@@ -49,6 +49,7 @@ public class RecipeUtil {
     /**
      * Deserializes an item from Json.
      * Supports "count" and "nbt" fields.
+     *
      * @param object JsonObject
      * @return brand-new Item deserialized
      */
@@ -73,6 +74,7 @@ public class RecipeUtil {
     /**
      * We need this collector to "collect" into a "DefaultedList"
      * A Collector is specified by four functions that work together to accumulate entries into a mutable result container.
+     *
      * @param <T>
      */
     public static class DefaultedListCollector<T> implements Collector<T, DefaultedList<T>, DefaultedList<T>> {

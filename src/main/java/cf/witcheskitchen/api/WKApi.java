@@ -111,4 +111,30 @@ public class WKApi {
     public static boolean isBarrelBlacklisted(Item item) {
         return WKTags.BARREL_BLACKLIST.contains(item);
     }
+
+    /**
+     * This allows one to check if one is wearing full cold iron armor
+     * Currently vacant at the moment.
+     */
+    public static boolean isWearingFullColdIron(LivingEntity entity) {
+        return false;
+    }
+
+    /**
+     * This allows one to check if one is wearing full witch robes
+     * Currently vacant at the moment.
+     */
+    public static boolean isWearingFullWitchRobes(LivingEntity entity) {
+        return false;
+
+    }
+
+    /**
+     * This allows one to check if one is wearing full witch hunter robes
+     * Currently vacant at the moment.
+     */
+    public static boolean isWearingFullWitchHunterRobes(LivingEntity entity) {
+        return false;
+
+    }
 }

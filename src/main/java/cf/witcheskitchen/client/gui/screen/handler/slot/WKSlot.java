@@ -9,10 +9,12 @@ import java.util.function.Predicate;
 public class WKSlot extends Slot {
 
     private final Predicate<ItemStack> canInsert;
+
     public WKSlot(Inventory inventory, int index, int x, int y, Predicate<ItemStack> canInsert) {
         super(inventory, index, x, y);
         this.canInsert = canInsert;
     }
+
     @Override
     public boolean canInsert(ItemStack stack) {
         return this.canInsert.test(stack);
