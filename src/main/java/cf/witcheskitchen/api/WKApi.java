@@ -4,6 +4,7 @@ import cf.witcheskitchen.common.registry.WKTags;
 import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.*;
+import net.minecraft.item.Item;
 
 public class WKApi {
 
@@ -77,5 +78,33 @@ public class WKApi {
      */
     public static boolean isTaglockBlacklisted(LivingEntity livingEntity) {
         return WKTags.TAGLOCK_BLACKLIST.contains(livingEntity.getType());
+    }
+
+    /**
+     * This allows one to blacklist an item from being used in ovens
+     */
+    public static boolean isOvenBlacklisted(Item item) {
+        return WKTags.OVEN_BLACKLIST.contains(item);
+    }
+
+    /**
+     * This allows one to blacklist an item from being used in cauldrons
+     */
+    public static boolean isCauldronBlacklisted(Item item) {
+        return WKTags.CAULDRON_BLACKLIST.contains(item);
+    }
+
+    /**
+     * This allows one to blacklist an item from being used in tea pots
+     */
+    public static boolean isTeaBlacklisted(Item item) {
+        return WKTags.TEA_BLACKLIST.contains(item);
+    }
+
+    /**
+     * This allows one to blacklist an item from being used in fermenting barrels
+     */
+    public static boolean isBarrelBlacklisted(Item item) {
+        return WKTags.BARREL_BLACKLIST.contains(item);
     }
 }
