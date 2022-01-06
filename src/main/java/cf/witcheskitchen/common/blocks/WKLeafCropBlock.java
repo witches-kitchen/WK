@@ -141,11 +141,13 @@ public class WKLeafCropBlock extends WKCropBlock {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         world.setBlockState(pos, updateDistanceFromLogs(state, world, pos), Block.NOTIFY_ALL);
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public int getOpacity(BlockState state, BlockView world, BlockPos pos) {
         return 1;
     }

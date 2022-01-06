@@ -8,6 +8,8 @@ import net.minecraft.item.Item;
 
 public class WKApi {
 
+    //Todo: This could go with some improvements, but it is pretty early at the moment.
+
     /**
      * This allows the mod to track various beings of spiritual origin, as well as undead origin.
      * Use this if you wish to blanket-target such entities.
@@ -57,7 +59,8 @@ public class WKApi {
     }
 
     /**
-     * This allows one to tell if something is immune to silver, and is used to target only such mobs.
+     * This allows one to tell if something is immune to silver, and is used to target only such mobs. This is mainly for cross-mod compat,
+     * as this mod won't have silver and thus, some players might want to see the two materials behave similar.
      * TODO: Make this work better with mobs
      */
     public static boolean isSilverImmune(LivingEntity livingEntity) {
@@ -65,7 +68,8 @@ public class WKApi {
     }
 
     /**
-     * This allows one to tell if something is weak to cold iron, and is used to target only such mobs.
+     * This allows one to tell if something is weak to silver, and is used to target only such mobs. This is mainly for cross-mod compat,
+     * as this mod won't have silver and thus, some players might want to see the two materials behave similar.
      * TODO: Make this work better with mobs
      */
     public static boolean isSilverWeak(LivingEntity livingEntity) {
@@ -106,5 +110,31 @@ public class WKApi {
      */
     public static boolean isBarrelBlacklisted(Item item) {
         return WKTags.BARREL_BLACKLIST.contains(item);
+    }
+
+    /**
+     * This allows one to check if one is wearing full cold iron armor
+     * Currently vacant at the moment.
+     */
+    public static boolean isWearingFullColdIron(LivingEntity entity) {
+        return false;
+    }
+
+    /**
+     * This allows one to check if one is wearing full witch robes
+     * Currently vacant at the moment.
+     */
+    public static boolean isWearingFullWitchRobes(LivingEntity entity) {
+        return false;
+
+    }
+
+    /**
+     * This allows one to check if one is wearing full witch hunter robes
+     * Currently vacant at the moment.
+     */
+    public static boolean isWearingFullWitchHunterRobes(LivingEntity entity) {
+        return false;
+
     }
 }
