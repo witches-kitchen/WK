@@ -53,8 +53,8 @@ dependencies {
     modImplementation "curse.maven:trinkets-fabric-341284:3542826"
     modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${cardinal_components_version}"
     modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${cardinal_components_version}"
-    modImplementation "curse.maven:roughly-enough-items-310111:3562581"
-    modImplementation "curse.maven:architectury-fabric-419697:3562469"
+    modImplementation "curse.maven:roughly-enough-items-310111:3580798"
+    modImplementation "curse.maven:architectury-fabric-419697:3587337"
 
     // PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
     // You may need to force-disable transitiveness on them.
