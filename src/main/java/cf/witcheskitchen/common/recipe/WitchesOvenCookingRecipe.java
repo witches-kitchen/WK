@@ -88,7 +88,11 @@ public class WitchesOvenCookingRecipe implements Recipe<Inventory> {
                 throw new JsonParseException("Too many outputs for Witches' Oven recipe");
             }
             final float xp = JsonHelper.getFloat(json, "experience");
+<<<<<<< HEAD
             return new WitchesOvenCookingRecipe(id, input, outputs, xp);
+=======
+            return new WitchesOvenCookingRecipe(id, input, output, extra, xp);
+>>>>>>> 983fb2aad6911dbc3969a1855fd38d7e229f4339
         }
 
         @Override

@@ -11,4 +11,6 @@ public class WKTags {
     public static final Tag<EntityType<?>> LESSER_DEMON = TagFactory.ENTITY_TYPE.create(new Identifier(WK.MODID, "lesser_demon"));
     public static final Tag<EntityType<?>> GHOST = TagFactory.ENTITY_TYPE.create(new Identifier(WK.MODID, "ghost"));
     public static final Tag<EntityType<?>> TAGLOCK_BLACKLIST = TagFactory.ENTITY_TYPE.create(new Identifier(WK.MODID, "taglock_blacklist"));
+    public static final Tag<EntityType<?>> COLD_IRON_WEAK = TagFactory.ENTITY_TYPE.create(new Identifier(WK.MODID, "cold_iron_weak"));
+    public static final Tag<EntityType<?>> COLD_IRON_IMMUNE = TagFactory.ENTITY_TYPE.create(new Identifier(WK.MODID, "cold_iron_immune"));
 }

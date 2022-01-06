@@ -8,10 +8,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.screen.ScreenHandler;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
@@ -26,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
-public class WitchesOvenBlock extends WKDeviceBlock implements Waterloggable{
+public class WitchesOvenBlock extends WKDeviceBlock implements Waterloggable {
 
     public static final BooleanProperty LIT = Properties.LIT;
     public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
