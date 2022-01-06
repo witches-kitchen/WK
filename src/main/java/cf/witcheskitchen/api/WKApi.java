@@ -8,6 +8,8 @@ import net.minecraft.item.Item;
 
 public class WKApi {
 
+    //Todo: This could go with some improvements, but it is pretty early at the moment.
+
     /**
      * This allows the mod to track various beings of spiritual origin, as well as undead origin.
      * Use this if you wish to blanket-target such entities.

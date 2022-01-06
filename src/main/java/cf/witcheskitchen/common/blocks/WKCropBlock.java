@@ -62,6 +62,7 @@ public class WKCropBlock extends CropBlock {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (getAge(state) == getMaxAge()) {
             world.setBlockState(pos, this.withAge(0), 2);
