@@ -46,7 +46,7 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
 
     public WitchesOvenBlockEntity(BlockPos pos, BlockState state) {
         super(WKBlockEntityTypes.WITCHES_OVEN, pos, state, 4);
-        //Default values for witches oven smelting recipes is 100
+        //Default value for witches oven smelting recipes is 100
         this.maxProgress = 100;
         //will sync values between client and server
         this.delegate = new PropertyDelegate() {
