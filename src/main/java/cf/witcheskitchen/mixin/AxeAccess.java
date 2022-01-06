@@ -4,8 +4,6 @@ import net.minecraft.block.Block;
 import net.minecraft.item.AxeItem;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
 
 import java.util.Map;
 
