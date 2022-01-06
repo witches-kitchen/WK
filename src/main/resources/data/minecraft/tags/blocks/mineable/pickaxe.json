@@ -1,6 +1,10 @@
 {
   "replace": false,
   "values": [
-    "witcheskitchen:iron_witches_oven"
+    "witcheskitchen:iron_witches_oven",
+    "witcheskitchen:copper_witches_oven",
+    "witcheskitchen:exposed_copper_witches_oven",
+    "witcheskitchen:weathered_copper_witches_oven",
+    "witcheskitchen:oxidized_copper_witches_oven"
   ]
 }

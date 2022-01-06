@@ -4,7 +4,7 @@ import cf.witcheskitchen.WK;
 import cf.witcheskitchen.common.blocks.SaltBlock;
 import cf.witcheskitchen.common.blocks.WKSaplingBlock;
 import cf.witcheskitchen.common.blocks.WKStairsBlock;
-import cf.witcheskitchen.common.blocks.technical.CopperOvenBlock;
+import cf.witcheskitchen.common.blocks.technical.OxidizableWitchesOvenBlock;
 import cf.witcheskitchen.common.blocks.technical.IronOvenBlock;
 import cf.witcheskitchen.common.blocks.technical.TeapotBlock;
 import cf.witcheskitchen.common.blocks.technical.WitchesOvenBlock;
@@ -14,7 +14,6 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
@@ -22,8 +21,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.BlockView;
-
-import java.util.Properties;
 
 import static cf.witcheskitchen.WK.leafBlocks;
 import static cf.witcheskitchen.WK.modBlocks;
@@ -129,9 +126,11 @@ public class WKBlocks {
     //Tile Entities
     public static final Block TEAPOT = new TeapotBlock(FabricBlockSettings.copyOf(Blocks.AMETHYST_BLOCK));
     public static final Block IRON_OVEN = new IronOvenBlock(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK));
-    public static final Block COPPER_OVEN = new CopperOvenBlock(FabricBlockSettings.copyOf(Blocks.COPPER_BLOCK));
     public static final Block IRON_WITCHES_OVEN = new WitchesOvenBlock(AbstractBlock.Settings.of(Material.METAL).strength(4.0F, 5.0F).requiresTool().nonOpaque().luminance(state -> state.get(WitchesOvenBlock.LIT) ?  13 : 0));
-    public static final Block COPPER_WITCHES_OVEN = new WitchesOvenBlock(FabricBlockSettings.copy(IRON_WITCHES_OVEN));
+    public static final Block COPPER_WITCHES_OVEN = new OxidizableWitchesOvenBlock(Oxidizable.OxidationLevel.UNAFFECTED, FabricBlockSettings.copyOf(Blocks.COPPER_BLOCK));
+    public static final Block EXPOSED_COPPER_WITCHES_OVEN = new OxidizableWitchesOvenBlock(Oxidizable.OxidationLevel.EXPOSED, FabricBlockSettings.copy(Blocks.EXPOSED_COPPER));
+    public static final Block WEATHERED_COPPER_WITCHES_OVEN = new OxidizableWitchesOvenBlock(Oxidizable.OxidationLevel.WEATHERED, FabricBlockSettings.copy(Blocks.WEATHERED_COPPER));
+    public static final Block OXIDIZED_COPPER_WITCHES_OVEN = new OxidizableWitchesOvenBlock(Oxidizable.OxidationLevel.OXIDIZED, FabricBlockSettings.copy(Blocks.OXIDIZED_COPPER));
     public static final Block BLACKTHORN_SAPLING = new WKSaplingBlock(new WKSaplingGenerator(() -> WKGenerator.BLACKTHORN_TREE), FabricBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
     public static final Block ELDER_SAPLING = new WKSaplingBlock(new WKSaplingGenerator(() -> WKGenerator.ELDER_TREE), FabricBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
     public static final Block HAWTHORN_SAPLING = new WKSaplingBlock(new WKSaplingGenerator(() -> WKGenerator.HAWTHORN_TREE), FabricBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
@@ -149,6 +148,10 @@ public class WKBlocks {
     public static void register() {
         //devices
         registerBlock("iron_witches_oven", IRON_WITCHES_OVEN, WK.WK_GROUP);
+        registerBlock("copper_witches_oven", COPPER_WITCHES_OVEN, WK.WK_GROUP);
+        registerBlock("exposed_copper_witches_oven", EXPOSED_COPPER_WITCHES_OVEN, WK.WK_GROUP);
+        registerBlock("weathered_copper_witches_oven", WEATHERED_COPPER_WITCHES_OVEN, WK.WK_GROUP);
+        registerBlock("oxidized_copper_witches_oven", OXIDIZED_COPPER_WITCHES_OVEN, WK.WK_GROUP);
         //Food blocks
         registerBlock("raw_gingerbread_block", RAW_GINGERBREAD_BLOCK, WK.WK_GROUP);
         registerBlock("raw_chiseled_gingerbread_block", RAW_CHISELED_GINGERBREAD_BLOCK, WK.WK_GROUP);

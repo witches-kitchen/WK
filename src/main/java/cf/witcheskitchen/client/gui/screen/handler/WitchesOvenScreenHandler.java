@@ -32,10 +32,13 @@ public class WitchesOvenScreenHandler extends WKScreenHandler {
     }
 
     public int getBurnTimeScaled(int scale) {
-        if (this.delegate.get(0) == 0) {
+        if (!isBurning()) {
             return 0;
+        } else if (delegate.get(1) == 0) {
+            return 0;
+        } else {
+            return this.delegate.get(0) * scale / delegate.get(1);
         }
-        return this.delegate.get(0) * scale / delegate.get(1);
     }
 
     public int getProgressScaled(int scale) {

@@ -82,7 +82,7 @@ public class WitchesOvenBlock extends WKDeviceBlock implements Waterloggable{
     @Environment(EnvType.CLIENT)
     public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
         if (state.get(LIT)) {
-            Blocks.SMOKER.randomDisplayTick(state, world, pos, random);
+            CampfireBlock.spawnSmokeParticle(world, pos, false, false);
             Blocks.FURNACE.randomDisplayTick(state, world, pos, random);
         }
     }
