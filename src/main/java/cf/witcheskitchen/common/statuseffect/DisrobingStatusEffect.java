@@ -13,7 +13,11 @@ import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Pair;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 import java.util.List;
 import java.util.Optional;
@@ -53,6 +57,8 @@ public class DisrobingStatusEffect extends InstantStatusEffect {
 
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
+        BlockPos pos = entity.getBlockPos();
+        World world = entity.getEntityWorld();
         if (entity.hasStatusEffect(WKStatusEffects.COOLDOWN)) {
             return;
         }
@@ -90,6 +96,7 @@ public class DisrobingStatusEffect extends InstantStatusEffect {
                         final Item itemInSlot = slotData.getRight().getItem();
                         entity.dropItem(itemInSlot, 1);
                         slotData.getLeft().inventory().getStack(index).decrement(1);
+                        world.playSound(null, pos, SoundEvents.ITEM_ARMOR_EQUIP_GOLD, SoundCategory.HOSTILE, 1, 1);
                         break;
                     }
                 }
