@@ -29,6 +29,10 @@ public class WK implements ModInitializer {
     public static ArrayList<Block> modBlocks = new ArrayList<>();
     public static ArrayList<Block> leafBlocks = new ArrayList<>();
 
+    public static Identifier id(String name) {
+        return new Identifier(MODID, name);
+    }
+
     @Override
     public void onInitialize() {
         // This code runs as soon as Minecraft is in a mod-load-ready state.
