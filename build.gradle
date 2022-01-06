@@ -45,6 +45,10 @@ repositories {
         url "https://maven.ryanliptak.com/"
     }	
     maven {
+        name "jitpack"
+        url "https://jitpack.io"
+    }	
+    maven {
         name "reach entity attributes"
         url "https://maven.jamieswhiteshirt.com/libs-release"
         content {
