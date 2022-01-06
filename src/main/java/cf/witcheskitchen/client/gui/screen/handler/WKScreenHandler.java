@@ -31,6 +31,25 @@ public abstract class WKScreenHandler extends ScreenHandler {
         this.builder = new ScreenHandlerBuilder(this);
     }
 
+    //Checks that stackA and stackB are equal
+    //This is as check to merge items on shift-click
+    private static boolean areItemsEqual(final ItemStack stackA, final ItemStack stackB, final boolean matchNBT) {
+        if (stackA.isEmpty() && stackB.isEmpty()) {
+            return true;//they are both air, fast return
+        } else if (stackA.isEmpty() || stackB.isEmpty()) {
+            return false;//one of them is air
+        } else if (stackA.getItem() != stackB.getItem()) {
+            return false; //They are different items
+        } else {
+            //Otherwise, they are the same items
+            if (!matchNBT) { //return if we don't want to match nbt
+                return true;
+            }
+            //Match nbt
+            return ItemStack.areNbtEqual(stackA, stackB);
+        }
+    }
+
     @Override
     public ItemStack transferSlot(final PlayerEntity player, final int index) {
         ItemStack originalStack = ItemStack.EMPTY;
@@ -140,26 +159,6 @@ public abstract class WKScreenHandler extends ScreenHandler {
 
         return stackToShift.getCount() != inCount;
     }
-
-    //Checks that stackA and stackB are equal
-    //This is as check to merge items on shift-click
-    private static boolean areItemsEqual(final ItemStack stackA, final ItemStack stackB, final boolean matchNBT) {
-        if (stackA.isEmpty() && stackB.isEmpty()) {
-            return true;//they are both air, fast return
-        }  else if (stackA.isEmpty() || stackB.isEmpty()) {
-            return false;//one of them is air
-        } else if (stackA.getItem() != stackB.getItem()) {
-            return false; //They are different items
-        } else {
-            //Otherwise, they are the same items
-            if (!matchNBT) { //return if we don't want to match nbt
-                return true;
-            }
-            //Match nbt
-            return ItemStack.areNbtEqual(stackA, stackB);
-        }
-    }
-
 
     @Override
     protected boolean insertItem(ItemStack stack, int startIndex, int endIndex, boolean fromLast) {

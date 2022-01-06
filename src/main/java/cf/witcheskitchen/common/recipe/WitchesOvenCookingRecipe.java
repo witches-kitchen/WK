@@ -81,7 +81,7 @@ public class WitchesOvenCookingRecipe implements Recipe<Inventory> {
             final ItemStack output = ShapedRecipe.outputFromJson(JsonHelper.getObject(json, "output"));
             final ItemStack extra = ShapedRecipe.outputFromJson(JsonHelper.getObject(json, "extra"));
             final float xp = JsonHelper.getFloat(json, "experience");
-            return new WitchesOvenCookingRecipe(id, input, output,  extra, xp);
+            return new WitchesOvenCookingRecipe(id, input, output, extra, xp);
         }
 
         @Override
