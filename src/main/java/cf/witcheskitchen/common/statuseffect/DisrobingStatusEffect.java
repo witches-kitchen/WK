@@ -5,19 +5,20 @@ import dev.emi.trinkets.api.SlotReference;
 import dev.emi.trinkets.api.TrinketComponent;
 import dev.emi.trinkets.api.TrinketsApi;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.InstantStatusEffect;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Pair;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,27 +30,6 @@ public class DisrobingStatusEffect extends InstantStatusEffect {
         super(type, color);
     }
 
-    private static EquipmentSlot getRandomArmor(final Random random) {
-        final int i = random.nextInt(4);
-        switch (i) {
-            case 0 -> {
-                return EquipmentSlot.HEAD;
-            }
-            case 1 -> {
-                return EquipmentSlot.CHEST;
-            }
-            case 2 -> {
-                return EquipmentSlot.LEGS;
-            }
-            case 3 -> {
-                return EquipmentSlot.FEET;
-            }
-            default -> {
-                return null;
-            }
-        }
-    }
-
     @Override
     public boolean isBeneficial() {
         return false;
@@ -57,8 +37,6 @@ public class DisrobingStatusEffect extends InstantStatusEffect {
 
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-        BlockPos pos = entity.getBlockPos();
-        World world = entity.getEntityWorld();
         if (entity.hasStatusEffect(WKStatusEffects.COOLDOWN)) {
             return;
         }
@@ -96,10 +74,30 @@ public class DisrobingStatusEffect extends InstantStatusEffect {
                         final Item itemInSlot = slotData.getRight().getItem();
                         entity.dropItem(itemInSlot, 1);
                         slotData.getLeft().inventory().getStack(index).decrement(1);
-                        world.playSound(null, pos, SoundEvents.ITEM_ARMOR_EQUIP_GOLD, SoundCategory.HOSTILE, 1, 1);
                         break;
                     }
                 }
+            }
+        }
+    }
+
+    private static EquipmentSlot getRandomArmor(final Random random) {
+        final int i = random.nextInt(4);
+        switch (i) {
+            case 0 -> {
+                return EquipmentSlot.HEAD;
+            }
+            case 1 -> {
+                return EquipmentSlot.CHEST;
+            }
+            case 2 -> {
+                return EquipmentSlot.LEGS;
+            }
+            case 3 -> {
+                return EquipmentSlot.FEET;
+            }
+            default -> {
+                return null;
             }
         }
     }

@@ -36,25 +36,6 @@ repositories {
         name "Siphalor's Maven"
         url "https://maven.siphalor.de"
     }
-    maven {
-        name "impersonate"
-        url "https://oss.sonatype.org/content/repositories/snapshots"
-    }
-    maven {
-        name "appleskin"
-        url "https://maven.ryanliptak.com/"
-    }	
-    maven {
-        name "jitpack"
-        url "https://jitpack.io"
-    }	
-    maven {
-        name "reach entity attributes"
-        url "https://maven.jamieswhiteshirt.com/libs-release"
-        content {
-            includeGroup "com.jamieswhiteshirt"
-        }
-    }	
 }
 
 dependencies {
@@ -74,21 +55,7 @@ dependencies {
     modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${cardinal_components_version}"
     modImplementation "curse.maven:roughly-enough-items-310111:3580798"
     modImplementation "curse.maven:architectury-fabric-419697:3587337"
-    modImplementation "io.github.ladysnake:impersonate:${impersonate_version}"
-    include "io.github.ladysnake:impersonate:${impersonate_version}"
-    modImplementation "io.github.ladysnake:PlayerAbilityLib:${playerabilitylib_version}"
-    include "io.github.ladysnake:PlayerAbilityLib:${playerabilitylib_version}"
-    modImplementation "com.jamieswhiteshirt:reach-entity-attributes:${reach_entity_attributes_version}"
-    include "com.jamieswhiteshirt:reach-entity-attributes:${reach_entity_attributes_version}"
-    modImplementation "com.github.emilyploszaj:step-height-entity-attribute:${step_height_version}"
-    include "com.github.emilyploszaj:step-height-entity-attribute:${step_height_version}"
-    modImplementation("com.github.virtuoel:pehkui:${pehkui_version}") {
-        exclude(group: "net.fabricmc.fabric-api")
-    }
-    modCompileOnly("squeek.appleskin:appleskin-fabric:${appleskin_version}:api") {
-        transitive = false
-    }	
-	
+
     // PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
     // You may need to force-disable transitiveness on them.
 }
