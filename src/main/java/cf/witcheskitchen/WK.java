@@ -38,7 +38,7 @@ public class WK implements ModInitializer {
         // This code runs as soon as Minecraft is in a mod-load-ready state.
         // However, some things (like resources) may still be uninitialized.
         // Proceed with mild caution.
-        /* 
+
         logger.info("Remember when I told you how my");
         logger.info("Kin is different in some ways?");
 
@@ -49,7 +49,6 @@ public class WK implements ModInitializer {
 
         logger.info("I hear her in the wind, the bane of our town");
         logger.info("Come with me, father, I'm to expose a heathen");
-        */ //removing this until we create a game mechanic for it
         WKBlocks.register();
         WKItems.register();
         WKBlockEntityTypes.register();
