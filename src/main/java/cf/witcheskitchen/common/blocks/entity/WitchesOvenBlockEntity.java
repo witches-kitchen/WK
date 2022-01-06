@@ -24,6 +24,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.property.Properties;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -144,19 +145,17 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
         }
         return 0.0F;
     }
-    //Returns the extra output of the given recipe
-    private ItemStack getExtraOutput(final Recipe<?> recipe) {
-        //no extra outputs for food
-        //since that would be a furnace recipe
-        if (recipe.getOutput().isFood()) {
-            return ItemStack.EMPTY;
+
+    //Returns the outputs of the given recipe
+    private DefaultedList<ItemStack> getOutputsFrom(final Recipe<?> recipe)  {
+        if (recipe instanceof SmeltingRecipe) {
+            return DefaultedList.ofSize(1, recipe.getOutput());
         } else if (recipe instanceof WitchesOvenCookingRecipe ovenRecipe) {
-            return ovenRecipe.getExtra();
+            return ovenRecipe.getOutputs();
         } else {
-            return ItemStack.EMPTY;
+            return DefaultedList.of();
         }
     }
-
 
     @Override
     public void tick(World world, BlockPos pos, BlockState state, WKDeviceBlockEntity blockEntity) {
@@ -174,11 +173,9 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
             boolean dirty = false;
             final var recipe = this.findMatchingRecipeFor(world, this.getStack(this.input));
             if (recipe != null) {
-                final ItemStack output = recipe.getOutput();
-                final float experience = this.getExperience(recipe);
-                final ItemStack extraOutput = getExtraOutput(recipe);
-                if (output != null && !output.isEmpty()) {
-                    if (!this.isBurning() && canCraft(output, extraOutput)) {
+                final DefaultedList<ItemStack> outputs = this.getOutputsFrom(recipe);
+                if (outputs != null && !outputs.isEmpty()) {
+                    if (!this.isBurning() && canCraft(outputs)) {
                         this.burnTime = this.getItemBurnTime(this.getStack(this.fuel));
                         this.maxBurnTime = this.burnTime;
                         if (this.isBurning()) {
@@ -193,13 +190,13 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
                             }
                         }
                     }
-                    if (this.isBurning() && canCraft(output, extraOutput)) {
+                    if (this.isBurning() && canCraft(outputs)) {
                         ++this.progress;
                         if (this.progress == this.maxProgress) {
                             this.progress = 0;
                             this.maxProgress = 100;
 
-                            if (this.craftRecipe(output.copy(), extraOutput.copy(), experience)) {
+                            if (this.craftRecipe(outputs, this.getExperience(recipe))) {
                                 dirty = true;
                             }
                         }
@@ -223,48 +220,49 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
 
     // Checks that input and output are valid
     // And we have enough space to craft
-    public boolean canCraft(final ItemStack output, ItemStack extra) {
+    public boolean canCraft(final DefaultedList<ItemStack> outputs) {
         if (this.world == null) {
             return false;
-        } else if (output.isEmpty()) {
+        } else if (outputs.isEmpty()) {
             return false;
         } else {
             final ItemStack stackInOutput = this.getStack(this.output);
-            final ItemStack stackInExtraOutput = this.getStack(this.extra);
-            final int nextSlotCount = stackInExtraOutput.getCount() + output.getCount();
-            if (!extra.isEmpty()) {//means recipe has an extra
-                if (stackInOutput.isEmpty() && stackInExtraOutput.isEmpty()) {
+            final ItemStack recipeOutput = outputs.get(0);
+            final int nextOutputCount = stackInOutput.getCount() + recipeOutput.getCount();
+
+            if (outputs.size() > 1) {//Means recipe has an extra output
+                final ItemStack recipeExtra = outputs.get(1);
+                final ItemStack stackInExtra = this.getStack(this.extra);
+                final int nextExtraCount = stackInExtra.getCount() + recipeExtra.getCount();
+                if (stackInOutput.isEmpty() && stackInExtra.isEmpty()) {
                     return true;
-                } else if (stackInOutput.isEmpty() || stackInExtraOutput.isEmpty()) {
+                } else if (stackInOutput.isEmpty() || stackInExtra.isEmpty()) {
                     if (stackInOutput.isEmpty()) {
                         //if first output is empty
-                        //we know extra is not empty
-                        if (!stackInExtraOutput.isItemEqualIgnoreDamage(extra)) {
+                        //extra output is not
+                        if (!stackInExtra.isItemEqualIgnoreDamage(recipeExtra)) {
                             return false;
                         }
                     }
-                    if (stackInExtraOutput.isEmpty()) {
+                    if (stackInExtra.isEmpty()) {
                         //if extra output is empty
                         //we know first output is not empty
-                        if (!stackInOutput.isItemEqualIgnoreDamage(output)) {
+                        if (!stackInOutput.isItemEqualIgnoreDamage(recipeOutput)) {
                             return false;
                         }
                     }
                 }
-                //At this point both slots are not empty
-                //let's check if we have enough space to keep cooking
-                if (nextSlotCount <= this.getMaxCountPerStack() && nextSlotCount <= output.getMaxCount()) {
-                    final int nextExtraSlotCount = stackInExtraOutput.getCount() + extra.getCount();
-                    return nextExtraSlotCount <= this.getMaxCountPerStack() && nextExtraSlotCount <= extra.getMaxCount();
+                if (nextOutputCount <= this.getMaxCountPerStack() && nextOutputCount <= recipeOutput.getMaxCount()) {
+                    return nextExtraCount <= this.getMaxCountPerStack() && nextExtraCount <= recipeExtra.getMaxCount();
                 }
             } else {
-                //Otherwise, this is a normal recipe without extra output
+                // Otherwise, there is only 1 output
                 if (stackInOutput.isEmpty()) {
                     return true;
-                } else if (!stackInOutput.isItemEqualIgnoreDamage(output)) {
+                } else if (!stackInOutput.isItemEqualIgnoreDamage(recipeOutput)) {
                     return false;
                 } else {
-                    return nextSlotCount <= this.getMaxCountPerStack() && nextSlotCount <= output.getMaxCount();
+                    return nextOutputCount <= this.getMaxCountPerStack() && nextOutputCount <= recipeOutput.getMaxCount();
                 }
             }
         }
@@ -272,46 +270,52 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
     }
 
     //More checks to craft the recipe and update experience
-    public boolean craftRecipe(final ItemStack output, final ItemStack extra, final float experience) {
+    public boolean craftRecipe(final DefaultedList<ItemStack> outputs, final float experience) {
         if (this.world == null) {
             return false;
-        } else if (output == null) {
+        } else if (outputs == null) {
             return false;
-        } else if (output.isEmpty()) {
+        } else if (outputs.isEmpty()) {
             return false;
-        } else if (!canCraft(output, extra)) {
+        } else if (!canCraft(outputs)) {
             return false;
         } else {
             final ItemStack stackInOutput = this.getStack(this.output);
             final ItemStack stackInExtra = this.getStack(this.extra);
-            if (!extra.isEmpty()) {
+            final ItemStack recipeOutput = outputs.get(0);
+            if (outputs.size() > 1) {
                 //means this recipe has an extra
+                final ItemStack recipeExtra = outputs.get(1);
                 if (stackInOutput.isEmpty() && stackInExtra.isEmpty()) {
-                    this.setStack(this.output, output);
-                    this.setStack(this.extra, extra);
-                } else if (stackInOutput.isOf(output.getItem()) && stackInExtra.isOf(extra.getItem())) {
-                    stackInOutput.increment(output.getCount());
-                    stackInExtra.increment(extra.getCount());
+                    this.setStack(this.output, recipeOutput.copy());
+                    this.setStack(this.extra, recipeExtra.copy());
+                } else if (stackInOutput.isOf(recipeOutput.getItem()) && stackInExtra.isOf(recipeExtra.getItem())) {
+                    stackInOutput.increment(recipeOutput.getCount());
+                    stackInExtra.increment(recipeExtra.getCount());
                 } else {
                     if (!stackInExtra.isEmpty()) {
                         //If extra output stack is not empty
-                        //we can assume the first output is empty
-                        stackInExtra.increment(extra.getCount());
-                        this.setStack(this.output, output);
+                        //We can assume the first output is empty
+                        //So we just increment extra
+                        //And set the first output
+                        stackInExtra.increment(recipeExtra.getCount());
+                        this.setStack(this.output, recipeOutput.copy());
                     }
                     if (!stackInOutput.isEmpty()) {
                         //If first output stack is not empty
-                        //we can assume the extra is empty
-                        stackInOutput.increment(output.getCount());
-                        this.setStack(this.extra, extra);
+                        //We can assume the extra is empty
+                        //So we just increment the first output
+                        //And set the extra output
+                        stackInOutput.increment(recipeOutput.getCount());
+                        this.setStack(this.extra, recipeExtra.copy());
                     }
                 }
             } else {
                 //Otherwise, this is a normal recipe
                 if (stackInOutput.isEmpty()) {
-                    this.setStack(this.output, output);
-                } else if (stackInOutput.isOf(output.getItem())) {
-                    stackInOutput.increment(output.getCount());
+                    this.setStack(this.output, recipeOutput.copy());
+                } else if (stackInOutput.isOf(recipeOutput.getItem())) {
+                    stackInOutput.increment(recipeOutput.getCount());
                 }
             }
             this.experience += experience;

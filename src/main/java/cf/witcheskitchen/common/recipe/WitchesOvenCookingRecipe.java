@@ -2,27 +2,30 @@ package cf.witcheskitchen.common.recipe;
 
 import cf.witcheskitchen.common.registry.WKRecipeTypes;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.recipe.*;
+import net.minecraft.recipe.Ingredient;
+import net.minecraft.recipe.Recipe;
+import net.minecraft.recipe.RecipeSerializer;
+import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 
 public class WitchesOvenCookingRecipe implements Recipe<Inventory> {
 
     private final Identifier id;
     private final Ingredient input;
-    private final ItemStack output;
-    private final ItemStack extra;
+    private final DefaultedList<ItemStack> outputs;
     private final float xp;
 
-    public WitchesOvenCookingRecipe(Identifier id, Ingredient input, ItemStack output, ItemStack extra, float xp) {
+    public WitchesOvenCookingRecipe(Identifier id, Ingredient input, DefaultedList<ItemStack> outputs, float xp) {
         this.id = id;
         this.input = input;
-        this.output = output;
-        this.extra = extra;
+        this.outputs = outputs;
         this.xp = xp;
     }
 
@@ -33,7 +36,7 @@ public class WitchesOvenCookingRecipe implements Recipe<Inventory> {
 
     @Override
     public ItemStack craft(Inventory inventory) {
-        return this.output.copy();
+        return ItemStack.EMPTY;
     }
 
     @Override
@@ -43,7 +46,7 @@ public class WitchesOvenCookingRecipe implements Recipe<Inventory> {
 
     @Override
     public ItemStack getOutput() {
-        return this.output;
+        return ItemStack.EMPTY;
     }
 
     @Override
@@ -51,16 +54,16 @@ public class WitchesOvenCookingRecipe implements Recipe<Inventory> {
         return this.id;
     }
 
-    public float getXp() {
-        return xp;
-    }
-
     public Ingredient getInput() {
         return input;
     }
 
-    public ItemStack getExtra() {
-        return extra;
+    public DefaultedList<ItemStack> getOutputs() {
+        return outputs;
+    }
+
+    public float getXp() {
+        return xp;
     }
 
     @Override
@@ -77,27 +80,36 @@ public class WitchesOvenCookingRecipe implements Recipe<Inventory> {
 
         @Override
         public WitchesOvenCookingRecipe read(Identifier id, JsonObject json) {
-            final Ingredient input = Ingredient.fromJson(JsonHelper.getObject(json, "input"));
-            final ItemStack output = ShapedRecipe.outputFromJson(JsonHelper.getObject(json, "output"));
-            final ItemStack extra = ShapedRecipe.outputFromJson(JsonHelper.getObject(json, "extra"));
+            final Ingredient input = Ingredient.fromJson(JsonHelper.getObject(json, "ingredient"));
+            var array = JsonHelper.getArray(json, "results");
+            final DefaultedList<ItemStack> outputs = RecipeUtil.deserializeItems(array);
+            if (outputs.isEmpty()) {
+                throw new JsonParseException("No output for Witches' Oven recipe");
+            } else if (outputs.size() > 2) {
+                throw new JsonParseException("Too many outputs for Witches' Oven recipe");
+            }
             final float xp = JsonHelper.getFloat(json, "experience");
-            return new WitchesOvenCookingRecipe(id, input, output,  extra, xp);
+            return new WitchesOvenCookingRecipe(id, input, outputs, xp);
         }
 
         @Override
         public WitchesOvenCookingRecipe read(Identifier id, PacketByteBuf buf) {
             final Ingredient input = Ingredient.fromPacket(buf);
-            final ItemStack output = buf.readItemStack();
-            final ItemStack extra = buf.readItemStack();
+            final DefaultedList<ItemStack> outputs = DefaultedList.ofSize(buf.readVarInt(), ItemStack.EMPTY);
+            for (int i = 0; i < outputs.size(); i++) {
+                outputs.set(i, buf.readItemStack());
+            }
             final float xp = buf.readFloat();
-            return new WitchesOvenCookingRecipe(id, input, output, extra, xp);
+            return new WitchesOvenCookingRecipe(id, input, outputs, xp);
         }
 
         @Override
         public void write(PacketByteBuf buf, WitchesOvenCookingRecipe recipe) {
             recipe.getInput().write(buf);
-            buf.writeItemStack(recipe.getOutput());
-            buf.writeItemStack(recipe.getExtra());
+            buf.writeVarInt(recipe.outputs.size());
+            for (var stack : recipe.outputs) {
+                buf.writeItemStack(stack);
+            }
             buf.writeFloat(recipe.getXp());
         }
     }
