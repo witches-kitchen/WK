@@ -57,7 +57,8 @@ public class WKApi {
     }
 
     /**
-     * This allows one to tell if something is immune to silver, and is used to target only such mobs.
+     * This allows one to tell if something is immune to silver, and is used to target only such mobs. This is mainly for cross-mod compat,
+     * as this mod won't have silver and thus, some players might want to see the two materials behave similar.
      * TODO: Make this work better with mobs
      */
     public static boolean isSilverImmune(LivingEntity livingEntity) {
@@ -65,7 +66,8 @@ public class WKApi {
     }
 
     /**
-     * This allows one to tell if something is weak to cold iron, and is used to target only such mobs.
+     * This allows one to tell if something is weak to silver, and is used to target only such mobs. This is mainly for cross-mod compat,
+     * as this mod won't have silver and thus, some players might want to see the two materials behave similar.
      * TODO: Make this work better with mobs
      */
     public static boolean isSilverWeak(LivingEntity livingEntity) {
