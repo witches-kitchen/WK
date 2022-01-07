@@ -5,14 +5,28 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
+import net.minecraft.recipe.CampfireCookingRecipe;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.ItemScatterer;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
@@ -26,6 +40,7 @@ import java.util.Random;
 public class WitchesOvenBlock extends WKDeviceBlock implements Waterloggable {
 
     public static final BooleanProperty LIT = Properties.LIT;
+    public static final BooleanProperty PASSIVE_LIT = BooleanProperty.of("passive_lit");
     public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
 
     public static final VoxelShape SHAPE = VoxelShapes.union(
@@ -45,7 +60,7 @@ public class WitchesOvenBlock extends WKDeviceBlock implements Waterloggable {
 
     public WitchesOvenBlock(Settings settings) {
         super(settings);
-        this.setDefaultState(this.getStateManager().getDefaultState().with(FACING, Direction.NORTH).with(Properties.WATERLOGGED, false).with(LIT, false));
+        this.setDefaultState(this.getStateManager().getDefaultState().with(FACING, Direction.NORTH).with(Properties.WATERLOGGED, false).with(LIT, false).with(PASSIVE_LIT, false));
     }
 
     @Override
@@ -61,7 +76,7 @@ public class WitchesOvenBlock extends WKDeviceBlock implements Waterloggable {
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         super.appendProperties(builder);
-        builder.add(LIT, FACING, Properties.WATERLOGGED);
+        builder.add(FACING, LIT, PASSIVE_LIT , Properties.WATERLOGGED);
     }
 
     @Override
@@ -73,6 +88,33 @@ public class WitchesOvenBlock extends WKDeviceBlock implements Waterloggable {
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new WitchesOvenBlockEntity(pos, state);
+    }
+
+    @Override
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+        final var entity = world.getBlockEntity(pos);
+        if (entity == null) {
+            return ActionResult.PASS;
+        } else if (entity instanceof WitchesOvenBlockEntity oven) {
+            // Try to insert item on top
+            if (hit.getType() == HitResult.Type.BLOCK) {
+                final Direction side = hit.getSide();
+                if (side == Direction.UP) {
+                    final ItemStack stackInHand = player.getStackInHand(hand);
+                    final CampfireCookingRecipe passiveRecipe = oven.getCampfireRecipeFor(world, stackInHand);
+                    if (world.isClient && passiveRecipe != null) {
+                        if (oven.putItemOnTop(player.isCreative() ? stackInHand.copy() : stackInHand)) {
+                            return ActionResult.SUCCESS;
+                        }
+                        return ActionResult.CONSUME;
+                    }
+                } else {
+                    // Open GUI
+                    return super.onUse(state, world, pos, player, hand, hit);
+                }
+            }
+        }
+        return ActionResult.PASS;
     }
 
     @Override
@@ -90,5 +132,52 @@ public class WitchesOvenBlock extends WKDeviceBlock implements Waterloggable {
 
     public int getComparatorOutput(BlockState state, World world, BlockPos pos) {
         return ScreenHandler.calculateComparatorOutput(world.getBlockEntity(pos));
+    }
+
+    @Override
+    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        return (tickerWorld, pos, tickerState, blockEntity) -> {
+            if (blockEntity instanceof WitchesOvenBlockEntity ovenEntity) {
+                if (world.isClient) {
+                    WitchesOvenBlockEntity.clientTick(tickerWorld, pos, tickerState, ovenEntity);
+                } else {
+                    //server ticks
+                    ovenEntity.tick(tickerWorld, pos, tickerState, ovenEntity);
+                    if (state.get(PASSIVE_LIT)) {
+                        ovenEntity.passiveCookingServerTick(tickerWorld, pos, tickerState);
+                    } else {
+                        WitchesOvenBlockEntity.unlitServerTick(tickerWorld, pos, tickerState, (WitchesOvenBlockEntity) blockEntity);
+                    }
+                }
+            }
+        };
+    }
+
+    @Override
+    public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+        if (entity.isFireImmune()) {
+            return;
+        }
+        if (!state.get(LIT)) {
+            return;
+        }
+        if (entity instanceof LivingEntity) {
+            if (EnchantmentHelper.hasFrostWalker((LivingEntity) entity)) {
+                return;
+            }
+            entity.damage(DamageSource.IN_FIRE, 1);
+        }
+        super.onEntityCollision(state, world, pos, entity);
+    }
+
+    @Override
+    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+        if (!state.isOf(newState.getBlock())) {
+            final BlockEntity entity = world.getBlockEntity(pos);
+            if (entity instanceof WitchesOvenBlockEntity ovenEntity) {
+                ItemScatterer.spawn(world, pos, ovenEntity.getPassiveInventory());
+            }
+        }
+        super.onStateReplaced(state, world, pos, newState, moved);
     }
 }

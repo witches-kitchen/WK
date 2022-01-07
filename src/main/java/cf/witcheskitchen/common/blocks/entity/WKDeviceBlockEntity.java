@@ -1,17 +1,15 @@
 package cf.witcheskitchen.common.blocks.entity;
 
+import cf.witcheskitchen.api.InventoryManager;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Waterloggable;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -21,14 +19,12 @@ import java.util.function.Predicate;
 
 public abstract class WKDeviceBlockEntity extends BlockEntity implements BlockEntityTicker<WKDeviceBlockEntity>, Inventory {
 
-    private final int size;
-    private DefaultedList<ItemStack> inventory;
+    private final InventoryManager<WKDeviceBlockEntity> manager;
     private boolean isUsable;
 
     public WKDeviceBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int size) {
         super(type, pos, state);
-        this.size = size;
-        this.inventory = DefaultedList.ofSize(this.size, ItemStack.EMPTY);
+        this.manager = new InventoryManager<>(this, size);
     }
 
     @Override
@@ -41,53 +37,52 @@ public abstract class WKDeviceBlockEntity extends BlockEntity implements BlockEn
     @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
-        this.inventory = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);//updates the inventory
-        Inventories.readNbt(nbt, this.inventory);
+        this.manager.read(nbt);
     }
 
     @Override
     public void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
-        Inventories.writeNbt(nbt, this.inventory);
+        this.manager.write(nbt);
     }
 
     @Override
     public int size() {
-        return this.size;
+        return this.manager.size();
     }
 
     @Override
     public boolean isEmpty() {
-        return this.inventory.stream().allMatch(ItemStack::isEmpty);
+        return this.manager.isEmpty();
     }
 
     @Override
     public ItemStack getStack(int slot) {
-        return this.inventory.get(slot);
+        return this.manager.getStack(slot);
     }
 
     @Override
     public ItemStack removeStack(int slot, int amount) {
-        return Inventories.splitStack(this.inventory, slot, amount);
+        return this.manager.removeStack(slot, amount);
     }
 
     @Override
     public ItemStack removeStack(int slot) {
-        return Inventories.removeStack(this.inventory, slot);
+        return this.manager.removeStack(slot);
     }
 
     @Override
     public void setStack(int slot, ItemStack stack) {
-        this.inventory.set(slot, stack);
-        if (stack.getCount() > this.getMaxCountPerStack()) {
-            stack.setCount(this.getMaxCountPerStack());
-        }
-        this.markDirty();
+        this.manager.setStack(slot, stack);
     }
 
     @Override
     public boolean canPlayerUse(PlayerEntity player) {
-        return this.canUse().test(player);
+        if (this.manager.canPlayerUse(player)) {
+            return this.canUse().test(player);
+        } else {
+            return false;
+        }
     }
 
     protected Predicate<PlayerEntity> canUse() {
@@ -96,7 +91,7 @@ public abstract class WKDeviceBlockEntity extends BlockEntity implements BlockEn
 
     @Override
     public void clear() {
-        this.inventory.clear();
+        this.manager.clear();
     }
 
     public boolean isUsable() {
