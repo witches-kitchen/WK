@@ -175,7 +175,7 @@ public class WitchesOvenBlock extends WKDeviceBlock implements Waterloggable {
         if (!state.isOf(newState.getBlock())) {
             final BlockEntity entity = world.getBlockEntity(pos);
             if (entity instanceof WitchesOvenBlockEntity ovenEntity) {
-                ItemScatterer.spawn(world, pos, ovenEntity.getPassiveInventory());
+                ItemScatterer.spawn(world, pos, ovenEntity.getPassiveInvManager());
             }
         }
         super.onStateReplaced(state, world, pos, newState, moved);

@@ -97,4 +97,8 @@ public abstract class WKDeviceBlockEntity extends BlockEntity implements BlockEn
     public boolean isUsable() {
         return isUsable;
     }
+
+    public InventoryManager<WKDeviceBlockEntity> getMainManager() {
+        return manager;
+    }
 }

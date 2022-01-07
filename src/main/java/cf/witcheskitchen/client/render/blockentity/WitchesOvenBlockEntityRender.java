@@ -20,7 +20,7 @@ public class WitchesOvenBlockEntityRender implements BlockEntityRenderer<Witches
     @Override
     public void render(WitchesOvenBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
         final Direction facing = entity.getCachedState().get(WitchesOvenBlock.FACING);
-        final DefaultedList<ItemStack> extraInventory = entity.getPassiveInventory();
+        final DefaultedList<ItemStack> extraInventory = entity.getPassiveInvManager();
         final int pos = (int) entity.getPos().asLong();
         for (int i = 0; i < extraInventory.size(); i++) {
             final ItemStack foodAt = extraInventory.get(i);

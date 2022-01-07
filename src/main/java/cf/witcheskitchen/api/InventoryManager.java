@@ -31,10 +31,6 @@ public class InventoryManager <T extends BlockEntity> implements Inventory {
      */
     private DefaultedList<ItemStack> inventory;
 
-    /**
-     * Represents whether a state should be marked as "dirty"
-     */
-    private boolean dirty;
 
     /**
      * Parent BlockEntity, which is going to create the inventory
@@ -57,7 +53,6 @@ public class InventoryManager <T extends BlockEntity> implements Inventory {
      */
     public InventoryManager(T blockEntity, DefaultedList<ItemStack> inventory) {
         this.inventory = inventory;
-        this.dirty = false;
         this.blockEntity = blockEntity;
     }
 
@@ -68,7 +63,7 @@ public class InventoryManager <T extends BlockEntity> implements Inventory {
 
     public void read(NbtCompound data, String tag) {
         deserializeNBT(data.getCompound(tag));
-        this.setDirty();
+        markDirty();
     }
 
     public void write(NbtCompound data) {
@@ -134,7 +129,7 @@ public class InventoryManager <T extends BlockEntity> implements Inventory {
     public ItemStack removeStack(int index, int amount) {
         final ItemStack stack = Inventories.splitStack(this.inventory, index, amount);
         if (!stack.isEmpty()) {
-            this.setDirty();
+            markDirty();
         }
         return stack;
     }
@@ -163,7 +158,7 @@ public class InventoryManager <T extends BlockEntity> implements Inventory {
         if (stack.getCount() > this.getMaxCountPerStack()) {
             stack.setCount(this.getMaxCountPerStack());
         }
-        this.setDirty();
+        markDirty();
     }
     /**
      * Marks the state as dirty.
@@ -196,14 +191,6 @@ public class InventoryManager <T extends BlockEntity> implements Inventory {
      */
     public T getContainer() {
         return this.blockEntity;
-    }
-
-    public boolean isDirty() {
-        return this.dirty;
-    }
-
-    public void setDirty() {
-        this.dirty = true;
     }
 
     public DefaultedList<ItemStack> getStacks() {

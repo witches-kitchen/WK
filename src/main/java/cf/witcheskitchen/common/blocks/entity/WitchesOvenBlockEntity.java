@@ -110,7 +110,8 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt); // Reads Main Inventory
         // We need to put read from a sub-nbt to read another inventory
-        this.passiveInvManager.read(nbt);
+        this.passiveInvManager.clear();
+        Inventories.readNbt(nbt.getCompound("PassiveInventory"), this.passiveInvManager.getStacks());
         this.burnTime = nbt.getShort("BurnTime");
         this.progress = nbt.getShort("Progress");
         this.maxProgress = nbt.getShort("MaxProgress");
@@ -120,8 +121,10 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
 
     @Override
     public void writeNbt(NbtCompound nbt) {
-        super.writeNbt(nbt); // Writes Main Inventory
-        this.passiveInvManager.write(nbt);
+        super.writeNbt(nbt);
+        var passiveInvNbt = new NbtCompound();
+        Inventories.writeNbt(passiveInvNbt, this.passiveInvManager.getStacks());
+        nbt.put("PassiveInventory", passiveInvNbt);
         nbt.putShort("BurnTime", (short) this.burnTime);
         nbt.putShort("Progress", (short) this.progress);
         nbt.putShort("MaxProgress", (short) this.maxProgress);
@@ -242,7 +245,7 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
                         world.setBlockState(this.pos, nextState, Block.NOTIFY_ALL);
                     }
                     if (dirty) {
-                        this.markDirty();
+                        this.getMainManager().markDirty();
                     }
                 } else {
                     this.progress = 0;
@@ -398,7 +401,7 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
 
 
     private void updateListeners() {
-        this.markDirty();
+        this.passiveInvManager.markDirty();
         this.getWorld().updateListeners(this.getPos(), this.getCachedState(), this.getCachedState(), Block.NOTIFY_ALL);
     }
 
@@ -444,7 +447,7 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
             }
         }
         if (dirty) {
-            markDirty(world, pos, state);
+            this.passiveInvManager.markDirty();
         }
     }
 
@@ -452,14 +455,14 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
         boolean dirty = false;
         //if no fuel remaining
         //decrement progress
-        for(int i = 0; i < ovenEntity.getPassiveInventory().size(); ++i) {
+        for(int i = 0; i < ovenEntity.getPassiveInvManager().size(); ++i) {
             if (ovenEntity.passiveProgress[i] > 0) {
                 dirty = true;
                 ovenEntity.passiveProgress[i] = MathHelper.clamp(ovenEntity.passiveProgress[i] - 2, 0, ovenEntity.maxPassiveProgress);
             }
         }
         if (dirty) {
-            markDirty(world, pos, state);
+            ovenEntity.passiveInvManager.markDirty();
         }
     }
 
@@ -469,8 +472,8 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
     public static void clientTick(World world, BlockPos pos, BlockState state, WitchesOvenBlockEntity entity) {
         final Random random = world.getRandom();
         final int i = state.get(WitchesOvenBlock.FACING).getHorizontal();
-        for(int j = 0; j < entity.getPassiveInventory().size(); ++j) {
-            if (!entity.getPassiveInventory().get(j).isEmpty() && random.nextFloat() < 0.2F) {
+        for(int j = 0; j < entity.getPassiveInvManager().size(); ++j) {
+            if (!entity.getPassiveInvManager().get(j).isEmpty() && random.nextFloat() < 0.2F) {
                 final Direction direction = Direction.fromHorizontal(Math.floorMod(j + i, 4));
                 double d = (double)pos.getX() + 0.5D - ((float)direction.getOffsetX() * 0.23D) + (double)((float)direction.rotateYClockwise().getOffsetX() * 0.23D);
                 double e = (double)pos.getY() + 1.0D;
@@ -487,7 +490,7 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements Named
         super.setStack(slot, stack);
     }
 
-    public DefaultedList<ItemStack> getPassiveInventory() {
+    public DefaultedList<ItemStack> getPassiveInvManager() {
         return this.passiveInvManager.getStacks();
     }
 
