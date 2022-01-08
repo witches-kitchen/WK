@@ -1,6 +1,7 @@
 package cf.witcheskitchen.client.gui.screen.handler;
 
 import cf.witcheskitchen.common.registry.WKScreenHandlerTypes;
+import cf.witcheskitchen.common.registry.WKTags;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
@@ -20,8 +21,8 @@ public class WitchesOvenScreenHandler extends WKScreenHandler {
         this.delegate = delegate;
         super.addProperties(this.delegate);
         this.builder().playerSetup()
-                .input(0, 44, 55)//fuel
-                .input(1, 44, 19)//input
+                .input(0, 44, 55, stack -> !stack.isIn(WKTags.OVEN_BLACKLIST))//fuel
+                .input(1, 44, 19, stack -> !stack.isIn(WKTags.OVEN_BLACKLIST))//input
                 .output(2, 116, 19, playerInventory.player)//output
                 .output(3, 116, 55, playerInventory.player)//extra output
                 .build();
