@@ -126,10 +126,10 @@ public class WKBlocks {
     public static final Block TEAPOT = new TeapotBlock(FabricBlockSettings.copyOf(Blocks.AMETHYST_BLOCK));
     public static final Block IRON_OVEN = new IronOvenBlock(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK));
     public static final Block IRON_WITCHES_OVEN = new WitchesOvenBlock(AbstractBlock.Settings.of(Material.METAL).strength(4.0F, 5.0F).requiresTool().nonOpaque().luminance(state -> state.get(WitchesOvenBlock.LIT) ?  13 : 0));
-    public static final Block COPPER_WITCHES_OVEN = new WitchesOvenBlock(FabricBlockSettings.copyOf(Blocks.COPPER_BLOCK));
-    public static final Block EXPOSED_COPPER_WITCHES_OVEN = new WitchesOvenBlock(FabricBlockSettings.copy(Blocks.EXPOSED_COPPER));
-    public static final Block WEATHERED_COPPER_WITCHES_OVEN = new WitchesOvenBlock(FabricBlockSettings.copy(Blocks.WEATHERED_COPPER));
-    public static final Block OXIDIZED_COPPER_WITCHES_OVEN = new WitchesOvenBlock(FabricBlockSettings.copy(Blocks.OXIDIZED_COPPER));
+    public static final Block COPPER_WITCHES_OVEN = new WitchesOvenBlock(FabricBlockSettings.copyOf(Blocks.COPPER_BLOCK).luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0));
+    public static final Block EXPOSED_COPPER_WITCHES_OVEN = new WitchesOvenBlock(FabricBlockSettings.copy(Blocks.EXPOSED_COPPER).luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0));
+    public static final Block WEATHERED_COPPER_WITCHES_OVEN = new WitchesOvenBlock(FabricBlockSettings.copy(Blocks.WEATHERED_COPPER).luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0));
+    public static final Block OXIDIZED_COPPER_WITCHES_OVEN = new WitchesOvenBlock(FabricBlockSettings.copy(Blocks.OXIDIZED_COPPER).luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0));
     public static final Block BLACKTHORN_SAPLING = new WKSaplingBlock(new WKSaplingGenerator(() -> WKGenerator.BLACKTHORN_TREE), FabricBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
     public static final Block ELDER_SAPLING = new WKSaplingBlock(new WKSaplingGenerator(() -> WKGenerator.ELDER_TREE), FabricBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
     public static final Block HAWTHORN_SAPLING = new WKSaplingBlock(new WKSaplingGenerator(() -> WKGenerator.HAWTHORN_TREE), FabricBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
@@ -142,7 +142,6 @@ public class WKBlocks {
     public static final Block POTTED_JUNIPER_SAPLING = new FlowerPotBlock(JUNIPER_SAPLING, FabricBlockSettings.of(Material.DECORATION).breakInstantly().nonOpaque());
     public static final Block POTTED_ROWAN_SAPLING = new FlowerPotBlock(ROWAN_SAPLING, FabricBlockSettings.of(Material.DECORATION).breakInstantly().nonOpaque());
     public static final Block POTTED_SUMAC_SAPLING = new FlowerPotBlock(SUMAC_SAPLING, FabricBlockSettings.of(Material.DECORATION).breakInstantly().nonOpaque());
-
 
     public static void register() {
         //devices

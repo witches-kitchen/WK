@@ -6,8 +6,11 @@ import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
 import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.math.Vec3d;
+
+import java.util.Objects;
+import java.util.function.Predicate;
 
 /**
  *  Inventory Manager.
@@ -56,33 +59,13 @@ public class InventoryManager <T extends BlockEntity> implements Inventory {
         this.blockEntity = blockEntity;
     }
 
+    public void write(NbtCompound data) {
+        Inventories.writeNbt(data, this.inventory);
+    }
 
     public void read(NbtCompound data) {
-        read(data, "Items");
-    }
-
-    public void read(NbtCompound data, String tag) {
-        deserializeNBT(data.getCompound(tag));
-        markDirty();
-    }
-
-    public void write(NbtCompound data) {
-        write(data, "Items");
-    }
-
-    public void write(NbtCompound data, String tag) {
-        data.put(tag, serializeNBT());
-    }
-
-    public NbtElement serializeNBT() {
-        final NbtCompound data = new NbtCompound();
-        Inventories.writeNbt(data, this.inventory);
-        return data;
-    }
-
-    public void deserializeNBT(NbtCompound tag) {
-        this.inventory = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
-        Inventories.readNbt(tag, this.inventory);
+        this.clear();
+        Inventories.readNbt(data, this.inventory);
     }
 
     /**
@@ -174,7 +157,7 @@ public class InventoryManager <T extends BlockEntity> implements Inventory {
      */
     @Override
     public boolean canPlayerUse(PlayerEntity player) {
-        return true;
+        return canUse().test(player);
     }
 
     /**
@@ -192,6 +175,11 @@ public class InventoryManager <T extends BlockEntity> implements Inventory {
     public T getContainer() {
         return this.blockEntity;
     }
+
+    protected Predicate<PlayerEntity> canUse() {
+        return player -> player.getEntityWorld().getBlockEntity(this.getContainer().getPos()) == this.getContainer() && player.getPos().distanceTo(Vec3d.of(this.getContainer().getPos())) < 16;
+    }
+
 
     public DefaultedList<ItemStack> getStacks() {
         return this.inventory;

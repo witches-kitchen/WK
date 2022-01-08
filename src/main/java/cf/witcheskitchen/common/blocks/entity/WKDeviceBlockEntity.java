@@ -1,6 +1,8 @@
 package cf.witcheskitchen.common.blocks.entity;
 
 import cf.witcheskitchen.api.InventoryManager;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Waterloggable;
 import net.minecraft.block.entity.BlockEntity;
@@ -11,27 +13,34 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-import java.util.Objects;
-import java.util.function.Predicate;
+import java.util.Random;
 
-public abstract class WKDeviceBlockEntity extends BlockEntity implements BlockEntityTicker<WKDeviceBlockEntity>, Inventory {
+public class WKDeviceBlockEntity extends BlockEntity implements BlockEntityTicker<WKDeviceBlockEntity>, Inventory {
 
     private final InventoryManager<WKDeviceBlockEntity> manager;
-    private boolean isUsable;
+    private boolean isUnderWater;
 
-    public WKDeviceBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int size) {
+    public WKDeviceBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
-        this.manager = new InventoryManager<>(this, size);
+        this.manager = new InventoryManager<>(this, 4);
     }
 
+    // Server-side Tick
     @Override
     public void tick(World world, BlockPos pos, BlockState state, WKDeviceBlockEntity blockEntity) {
-        if (state.getBlock() instanceof Waterloggable) {
-            this.isUsable = state.getFluidState().isEmpty();
+        if (this.world != null && !this.world.isClient) {
+            if (state.getBlock() instanceof Waterloggable) {
+                this.isUnderWater = !state.getFluidState().isEmpty();
+            }
         }
+    }
+
+    // Client-side Tick
+    @Environment(EnvType.CLIENT)
+    public void onClientTick(World world, BlockPos pos, BlockState state, Random random) {
+
     }
 
     @Override
@@ -41,7 +50,7 @@ public abstract class WKDeviceBlockEntity extends BlockEntity implements BlockEn
     }
 
     @Override
-    public void writeNbt(NbtCompound nbt) {
+    protected void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
         this.manager.write(nbt);
     }
@@ -78,15 +87,7 @@ public abstract class WKDeviceBlockEntity extends BlockEntity implements BlockEn
 
     @Override
     public boolean canPlayerUse(PlayerEntity player) {
-        if (this.manager.canPlayerUse(player)) {
-            return this.canUse().test(player);
-        } else {
-            return false;
-        }
-    }
-
-    protected Predicate<PlayerEntity> canUse() {
-        return player -> (Objects.requireNonNull(this.getWorld()).getBlockEntity(this.getPos()) == this && player.getPos().distanceTo(Vec3d.of(this.getPos())) < 16);
+        return this.manager.canPlayerUse(player);
     }
 
     @Override
@@ -94,8 +95,8 @@ public abstract class WKDeviceBlockEntity extends BlockEntity implements BlockEn
         this.manager.clear();
     }
 
-    public boolean isUsable() {
-        return isUsable;
+    public boolean isUnderWater() {
+        return isUnderWater;
     }
 
     public InventoryManager<WKDeviceBlockEntity> getMainManager() {

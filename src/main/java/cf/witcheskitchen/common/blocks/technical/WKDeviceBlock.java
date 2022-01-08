@@ -42,16 +42,16 @@ public abstract class WKDeviceBlock extends WKBlockEntityProvider {
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         if (!state.isOf(newState.getBlock())) {
             final BlockEntity entity = world.getBlockEntity(pos);
-            if (entity instanceof Inventory inventory) {
-                if (world instanceof ServerWorld serverWorld) {
+            if (world instanceof ServerWorld serverWorld) {
+                if (entity instanceof Inventory inventory) {
                     ItemScatterer.spawn(world, pos, inventory);
-                    if (entity instanceof IDeviceExperienceHandler handler) {
-                        handler.dropExperience(serverWorld, Vec3d.of(pos));
-                    }
                 }
-                world.updateComparators(pos, this);
+                if (entity instanceof IDeviceExperienceHandler handler) {
+                    handler.dropExperience(serverWorld, Vec3d.of(pos));
+                }
             }
-            super.onStateReplaced(state, world, pos, newState, moved);
+            world.updateComparators(pos, this);
         }
+        super.onStateReplaced(state, world, pos, newState, moved);
     }
 }
