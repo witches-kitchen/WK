@@ -28,7 +28,7 @@ public class ShadowsStatusEffect extends StatusEffect {
         BlockPos pos = entity.getBlockPos();
         if (entity.getEntityWorld().isNight() || !entity.getEntityWorld().isSkyVisible(pos)) {
             entity.setInvisible(true);
-        } else if (entity.getEntityWorld().isDay() && entity.getEntityWorld().isSkyVisible(pos) && MovementType.PLAYER.equals(false)) {
+        } else if (entity.getEntityWorld().isDay() && entity.getEntityWorld().isSkyVisible(pos) && MovementType.PLAYER.equals(false) && MovementType.PISTON.equals(false) && MovementType.SELF.equals(false) && MovementType.SHULKER.equals(false) && MovementType.SHULKER_BOX.equals(false)) {
             entity.setInvisible(true);
         }
     }
