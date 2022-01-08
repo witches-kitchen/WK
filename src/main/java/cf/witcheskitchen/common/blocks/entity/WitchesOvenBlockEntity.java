@@ -7,11 +7,8 @@ import cf.witcheskitchen.common.blocks.technical.WitchesOvenBlock;
 import cf.witcheskitchen.common.recipe.WitchesOvenCookingRecipe;
 import cf.witcheskitchen.common.registry.WKBlockEntityTypes;
 import cf.witcheskitchen.common.registry.WKRecipeTypes;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.CampfireBlock;
 import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.entity.ExperienceOrbEntity;
@@ -483,10 +480,6 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements IDevi
     @Override
     public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
         return new WitchesOvenScreenHandler(syncId, inv,  this, this.propertyDelegate);
-    }
-
-    public DefaultedList<ItemStack> getStacksInOven() {
-        return this.getMainManager().getStacks();
     }
 
     public DefaultedList<ItemStack> getStacksOnTop() {

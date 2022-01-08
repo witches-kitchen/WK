@@ -1,6 +1,7 @@
 package cf.witcheskitchen.common.blocks.technical;
 
 import cf.witcheskitchen.common.blocks.entity.WitchesOvenBlockEntity;
+import cf.witcheskitchen.common.registry.WKDamageSources;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.*;
@@ -146,27 +147,10 @@ public class WitchesOvenBlock extends WKDeviceBlock implements Waterloggable {
         if (state.get(LIT) && !entity.isFireImmune()) {
             if (entity instanceof LivingEntity) {
                 if (!EnchantmentHelper.hasFrostWalker((LivingEntity) entity)) {
-                    entity.damage(DamageSource.IN_FIRE, 1);
+                    entity.damage(WKDamageSources.ON_OVEN, 1);
                 }
             }
         }
-    }
-
-    @Override
-    public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-        if (entity.isFireImmune()) {
-            return;
-        }
-        if (!state.get(LIT)) {
-            return;
-        }
-        if (entity instanceof LivingEntity) {
-            if (EnchantmentHelper.hasFrostWalker((LivingEntity) entity)) {
-                return;
-            }
-            entity.damage(DamageSource.IN_FIRE, 1);
-        }
-        super.onEntityCollision(state, world, pos, entity);
     }
 
     @Override
@@ -174,7 +158,6 @@ public class WitchesOvenBlock extends WKDeviceBlock implements Waterloggable {
         if (!state.isOf(newState.getBlock())) {
             final BlockEntity entity = world.getBlockEntity(pos);
             if (entity instanceof WitchesOvenBlockEntity ovenEntity) {
-                ItemScatterer.spawn(world, pos, ovenEntity.getStacksInOven());
                 ItemScatterer.spawn(world, pos, ovenEntity.getStacksOnTop());
             }
         }
