@@ -1,24 +1,43 @@
 package cf.witcheskitchen.common.blocks.technical;
 
 import cf.witcheskitchen.common.blocks.entity.WitchesOvenBlockEntity;
+import cf.witcheskitchen.common.registry.WKDamageSources;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
+import net.minecraft.recipe.CampfireCookingRecipe;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.ItemScatterer;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
+import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
@@ -26,6 +45,7 @@ import java.util.Random;
 public class WitchesOvenBlock extends WKDeviceBlock implements Waterloggable {
 
     public static final BooleanProperty LIT = Properties.LIT;
+    public static final BooleanProperty PASSIVE_LIT = BooleanProperty.of("passive_lit");
     public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
 
     public static final VoxelShape SHAPE = VoxelShapes.union(
@@ -45,7 +65,7 @@ public class WitchesOvenBlock extends WKDeviceBlock implements Waterloggable {
 
     public WitchesOvenBlock(Settings settings) {
         super(settings);
-        this.setDefaultState(this.getStateManager().getDefaultState().with(FACING, Direction.NORTH).with(Properties.WATERLOGGED, false).with(LIT, false));
+        this.setDefaultState(this.getStateManager().getDefaultState().with(FACING, Direction.NORTH).with(Properties.WATERLOGGED, false).with(LIT, false).with(PASSIVE_LIT, false));
     }
 
     @Override
@@ -61,7 +81,7 @@ public class WitchesOvenBlock extends WKDeviceBlock implements Waterloggable {
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         super.appendProperties(builder);
-        builder.add(LIT, FACING, Properties.WATERLOGGED);
+        builder.add(FACING, LIT, PASSIVE_LIT , Properties.WATERLOGGED);
     }
 
     @Override
@@ -76,6 +96,33 @@ public class WitchesOvenBlock extends WKDeviceBlock implements Waterloggable {
     }
 
     @Override
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+        final var entity = world.getBlockEntity(pos);
+        if (entity instanceof WitchesOvenBlockEntity oven) {
+            // Try to insert item on top
+            if (hit.getType() == HitResult.Type.BLOCK) {
+                final Direction side = hit.getSide();
+                if (side == Direction.UP) {
+                    final ItemStack stackInHand = player.getStackInHand(hand);
+                    final CampfireCookingRecipe passiveRecipe = oven.getCampfireRecipeFor(world, stackInHand);
+                    if (!world.isClient) {
+                        if (passiveRecipe != null) {
+                            if (oven.putItemOnTop(player.isCreative() ? stackInHand.copy() : stackInHand)) {
+                                return ActionResult.SUCCESS;
+                            }
+                            return ActionResult.CONSUME;
+                        }
+                    }
+                } else {
+                    // Open GUI
+                    return super.onUse(state, world, pos, player, hand, hit);
+                }
+            }
+        }
+        return ActionResult.PASS;
+    }
+
+    @Override
     @Environment(EnvType.CLIENT)
     public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
         if (state.get(LIT)) {
@@ -84,11 +131,37 @@ public class WitchesOvenBlock extends WKDeviceBlock implements Waterloggable {
         }
     }
 
+    @Override
     public boolean hasComparatorOutput(BlockState state) {
         return true;
     }
 
+    @Override
     public int getComparatorOutput(BlockState state, World world, BlockPos pos) {
         return ScreenHandler.calculateComparatorOutput(world.getBlockEntity(pos));
     }
+
+    @Override
+    public void onSteppedOn(World world, BlockPos pos, BlockState state, Entity entity) {
+        super.onSteppedOn(world, pos, state, entity);
+        if (state.get(LIT) && !entity.isFireImmune()) {
+            if (entity instanceof LivingEntity) {
+                if (!EnchantmentHelper.hasFrostWalker((LivingEntity) entity)) {
+                    entity.damage(WKDamageSources.ON_OVEN, 1);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+        if (!state.isOf(newState.getBlock())) {
+            final BlockEntity entity = world.getBlockEntity(pos);
+            if (entity instanceof WitchesOvenBlockEntity ovenEntity) {
+                ItemScatterer.spawn(world, pos, ovenEntity.getStacksOnTop());
+            }
+        }
+        super.onStateReplaced(state, world, pos, newState, moved);
+    }
+
 }

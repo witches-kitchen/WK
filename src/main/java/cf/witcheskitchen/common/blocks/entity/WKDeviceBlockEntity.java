@@ -1,104 +1,105 @@
 package cf.witcheskitchen.common.blocks.entity;
 
+import cf.witcheskitchen.api.InventoryManager;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Waterloggable;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-import java.util.Objects;
-import java.util.function.Predicate;
+import java.util.Random;
 
-public abstract class WKDeviceBlockEntity extends BlockEntity implements BlockEntityTicker<WKDeviceBlockEntity>, Inventory {
+public class WKDeviceBlockEntity extends BlockEntity implements BlockEntityTicker<WKDeviceBlockEntity>, Inventory {
 
-    private final int size;
-    private DefaultedList<ItemStack> inventory;
-    private boolean isUsable;
+    private final InventoryManager<WKDeviceBlockEntity> manager;
+    private boolean isUnderWater;
 
-    public WKDeviceBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int size) {
+    public WKDeviceBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
-        this.size = size;
-        this.inventory = DefaultedList.ofSize(this.size, ItemStack.EMPTY);
+        this.manager = new InventoryManager<>(this, 4);
     }
 
+    // Server-side Tick
     @Override
     public void tick(World world, BlockPos pos, BlockState state, WKDeviceBlockEntity blockEntity) {
-        if (state.getBlock() instanceof Waterloggable) {
-            this.isUsable = state.getFluidState().isEmpty();
+        if (this.world != null && !this.world.isClient) {
+            if (state.getBlock() instanceof Waterloggable) {
+                this.isUnderWater = !state.getFluidState().isEmpty();
+            }
         }
+    }
+
+    // Client-side Tick
+    @Environment(EnvType.CLIENT)
+    public void onClientTick(World world, BlockPos pos, BlockState state, Random random) {
+
     }
 
     @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
-        this.inventory = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);//updates the inventory
-        Inventories.readNbt(nbt, this.inventory);
+        this.manager.read(nbt);
     }
 
     @Override
-    public void writeNbt(NbtCompound nbt) {
+    protected void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
-        Inventories.writeNbt(nbt, this.inventory);
+        this.manager.write(nbt);
     }
 
     @Override
     public int size() {
-        return this.size;
+        return this.manager.size();
     }
 
     @Override
     public boolean isEmpty() {
-        return this.inventory.stream().allMatch(ItemStack::isEmpty);
+        return this.manager.isEmpty();
     }
 
     @Override
     public ItemStack getStack(int slot) {
-        return this.inventory.get(slot);
+        return this.manager.getStack(slot);
     }
 
     @Override
     public ItemStack removeStack(int slot, int amount) {
-        return Inventories.splitStack(this.inventory, slot, amount);
+        return this.manager.removeStack(slot, amount);
     }
 
     @Override
     public ItemStack removeStack(int slot) {
-        return Inventories.removeStack(this.inventory, slot);
+        return this.manager.removeStack(slot);
     }
 
     @Override
     public void setStack(int slot, ItemStack stack) {
-        this.inventory.set(slot, stack);
-        if (stack.getCount() > this.getMaxCountPerStack()) {
-            stack.setCount(this.getMaxCountPerStack());
-        }
-        this.markDirty();
+        this.manager.setStack(slot, stack);
     }
 
     @Override
     public boolean canPlayerUse(PlayerEntity player) {
-        return this.canUse().test(player);
-    }
-
-    protected Predicate<PlayerEntity> canUse() {
-        return player -> (Objects.requireNonNull(this.getWorld()).getBlockEntity(this.getPos()) == this && player.getPos().distanceTo(Vec3d.of(this.getPos())) < 16);
+        return this.manager.canPlayerUse(player);
     }
 
     @Override
     public void clear() {
-        this.inventory.clear();
+        this.manager.clear();
     }
 
-    public boolean isUsable() {
-        return isUsable;
+    public boolean isUnderWater() {
+        return isUnderWater;
+    }
+
+    public InventoryManager<WKDeviceBlockEntity> getMainManager() {
+        return manager;
     }
 }

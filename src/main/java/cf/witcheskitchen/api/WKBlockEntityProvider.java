@@ -1,5 +1,6 @@
 package cf.witcheskitchen.api;
 
+import cf.witcheskitchen.common.blocks.entity.WKDeviceBlockEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -19,8 +20,14 @@ public abstract class WKBlockEntityProvider extends Block implements BlockEntity
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
         return (tickerWorld, pos, tickerState, blockEntity) -> {
-            if (blockEntity instanceof BlockEntityTicker ticker) {
-                ticker.tick(tickerWorld, pos, tickerState, blockEntity);
+            if (!world.isClient) {
+                if (blockEntity instanceof BlockEntityTicker ticker) {
+                    ticker.tick(tickerWorld, pos, tickerState, blockEntity);
+                }
+            } else {
+                if (blockEntity instanceof WKDeviceBlockEntity deviceEntity) {
+                    deviceEntity.onClientTick(tickerWorld, pos, tickerState, tickerWorld.getRandom());
+                }
             }
         };
     }
