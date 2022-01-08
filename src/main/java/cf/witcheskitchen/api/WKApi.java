@@ -77,6 +77,22 @@ public class WKApi {
     }
 
     /**
+     * This allows one to tell if something is a summon for a right-hand (good/light/cunning man) witch mob
+     * TODO: Make this work better with mobs
+     */
+    public static boolean isRightHandSummon(LivingEntity livingEntity) {
+        return WKTags.RIGHT_HAND_WITCH_SUMMON.contains(livingEntity.getType());
+    }
+
+    /**
+     * This allows one to tell if something is a summon for a left-hand (evil/dark) witch mob
+     * TODO: Make this work better with mobs
+     */
+    public static boolean isLeftHandSummon(LivingEntity livingEntity) {
+        return WKTags.LEFT_HAND_WITCH_SUMMON.contains(livingEntity.getType());
+    }
+
+    /**
      * This allows one to blacklist a mob from being taglocked
      * TODO: Make this work better with mobs
      */
