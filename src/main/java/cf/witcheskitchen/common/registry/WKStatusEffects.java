@@ -17,6 +17,7 @@ public class WKStatusEffects {
 
     public static final StatusEffect HORROR = create("horror", new HorrorStatusEffect(StatusEffectCategory.HARMFUL, 0x555D50));
     public static final StatusEffect HELLFIRE = create("hellfire", new HellfireStatusEffect(StatusEffectCategory.HARMFUL, 0xA91101));
+    public static final StatusEffect FROST_SHIELD = create("frost_shield", new FrostShieldStatusEffect(StatusEffectCategory.BENEFICIAL, 0xAFDBF5));
     public static final StatusEffect FROSTBITE = create("frostbite", new FrostbiteStatusEffect(StatusEffectCategory.HARMFUL, 0xAFDBF5));
     public static final StatusEffect DRUNK = create("drunk", new DrunkStatusEffect(StatusEffectCategory.NEUTRAL, 0x7B3F00));
     public static final StatusEffect FIRE_SHIELD = create("fire_shield", new FireShieldStatusEffect(StatusEffectCategory.BENEFICIAL, 0xAF28500));
