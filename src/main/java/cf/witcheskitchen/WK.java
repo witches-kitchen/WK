@@ -3,6 +3,8 @@ package cf.witcheskitchen;
 import cf.witcheskitchen.common.registry.*;
 import cf.witcheskitchen.mixin.AxeAccess;
 import com.google.common.collect.ImmutableMap;
+import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.block.Block;
@@ -21,6 +23,7 @@ public class WK implements ModInitializer {
 
     public static final String MODID = "witcheskitchen";
     public static final Logger logger = LogManager.getLogger(MODID);
+    public static WKConfig config;
     //public static List<ConfigurableSeed> seeds = new ArrayList<>(); //used for placed feature seeds, allowing world gen to use them and for users to configure how seeds are spawned in
     public static final ItemGroup WK_GROUP = FabricItemGroupBuilder.create(
                     new Identifier("witcheskitchen", "general"))
@@ -38,6 +41,8 @@ public class WK implements ModInitializer {
         // This code runs as soon as Minecraft is in a mod-load-ready state.
         // However, some things (like resources) may still be uninitialized.
         // Proceed with mild caution.
+        AutoConfig.register(WKConfig.class, GsonConfigSerializer::new);
+        config = AutoConfig.getConfigHolder(WKConfig.class).getConfig();
 
         logger.info("Remember when I told you how my");
         logger.info("Kin is different in some ways?");
