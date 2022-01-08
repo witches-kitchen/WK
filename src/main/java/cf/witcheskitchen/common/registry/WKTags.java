@@ -16,6 +16,8 @@ public class WKTags {
     public static final Tag<EntityType<?>> COLD_IRON_IMMUNE = TagFactory.ENTITY_TYPE.create(new Identifier(WK.MODID, "cold_iron_immune"));
     public static final Tag<EntityType<?>> SILVER_WEAK = TagFactory.ENTITY_TYPE.create(new Identifier(WK.MODID, "silver_iron_weak"));
     public static final Tag<EntityType<?>> SILVER_IMMUNE = TagFactory.ENTITY_TYPE.create(new Identifier(WK.MODID, "silver_iron_immune"));
+    public static final Tag<EntityType<?>> RIGHT_HAND_WITCH_SUMMON = TagFactory.ENTITY_TYPE.create(new Identifier(WK.MODID, "right_hand_witch_summon"));
+    public static final Tag<EntityType<?>> LEFT_HAND_WITCH_SUMMON = TagFactory.ENTITY_TYPE.create(new Identifier(WK.MODID, "left_hand_witch_summon"));
 
     public static final Tag<Item> CAULDRON_BLACKLIST = TagFactory.ITEM.create(new Identifier(WK.MODID, "cauldron_blacklist"));
     public static final Tag<Item> OVEN_BLACKLIST = TagFactory.ITEM.create(new Identifier(WK.MODID, "oven_blacklist"));
