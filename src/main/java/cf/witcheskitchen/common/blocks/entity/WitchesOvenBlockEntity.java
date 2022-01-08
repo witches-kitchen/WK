@@ -46,16 +46,16 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements IDevi
 
     private final InventoryManager<WitchesOvenBlockEntity> passiveInventory;
     private final PropertyDelegate propertyDelegate;
-    private int burnTime;
-    private int maxBurnTime;
-    private int activeProgress;
     private final int[] passiveProgress;
-    private int maxProgress;
-    private float experience;
     private final int fuel = 0;
     private final int input = 1;
     private final int output = 2;
     private final int extra = 3;
+    private int burnTime;
+    private int maxBurnTime;
+    private int activeProgress;
+    private int maxProgress;
+    private float experience;
 
     public WitchesOvenBlockEntity(BlockPos pos, BlockState state) {
         super(WKBlockEntityTypes.WITCHES_OVEN, pos, state);
@@ -93,6 +93,14 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements IDevi
         this.passiveProgress = new int[4];
     }
 
+    private static void dropExperience(ServerWorld world, Vec3d pos, float experience) {
+        int i = MathHelper.floor(experience);
+        final float f = MathHelper.fractionalPart(experience);
+        if (f != 0.0F && Math.random() < (double) f) {
+            ++i;
+        }
+        ExperienceOrbEntity.spawn(world, pos, i);
+    }
 
     @Override
     public void readNbt(NbtCompound nbt) {
@@ -233,7 +241,7 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements IDevi
     public void onClientTick(World world, BlockPos pos, BlockState state, Random random) {
         super.onClientTick(world, pos, state, random);
         int facing = state.get(CampfireBlock.FACING).getHorizontal();
-        for(int j = 0; j < this.passiveInventory.size(); ++j) {
+        for (int j = 0; j < this.passiveInventory.size(); ++j) {
             if (state.get(WitchesOvenBlock.PASSIVE_LIT)) {
                 if (!this.passiveInventory.getStack(j).isEmpty() && random.nextFloat() < 0.2F) {
                     final Direction direction = Direction.fromHorizontal(Math.floorMod(j + facing, 4));
@@ -252,6 +260,7 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements IDevi
     /**
      * Looks for the matching campfire recipe
      * for the given stack
+     *
      * @param world World
      * @param stack ItemStack (Ingredient)
      * @return CampfireCookingRecipe
@@ -260,15 +269,16 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements IDevi
         return world.getRecipeManager().listAllOfType(RecipeType.CAMPFIRE_COOKING)
                 .stream()
                 .filter(recipe -> {
-            if (recipe.getIngredients().size() == 1 && recipe.getIngredients().get(0).test(stack)) {
-                return recipe.getOutput().isFood();
-            }
-            return false;
-        }).findFirst().orElse(null);
+                    if (recipe.getIngredients().size() == 1 && recipe.getIngredients().get(0).test(stack)) {
+                        return recipe.getOutput().isFood();
+                    }
+                    return false;
+                }).findFirst().orElse(null);
     }
 
     /**
      * Finds the matching recipe for the given input
+     *
      * @param world World
      * @param input ItemStack
      * @return possible return types are SmeltingRecipe (furnace) and WitchesOvenCookingRecipe (witches oven) or null if none
@@ -297,6 +307,7 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements IDevi
 
     /**
      * Returns the experience of the recipe
+     *
      * @param recipe RecipeType
      * @return Float (amount of experience)
      */
@@ -442,12 +453,12 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements IDevi
             return true;
         }
     }
+
     // Client Sync
     private void updateListeners() {
         this.markDirty();
         this.getWorld().updateListeners(this.getPos(), this.getCachedState(), this.getCachedState(), 3);
     }
-
 
     public void onFinishCooking() {
         if (this.world != null) {
@@ -479,26 +490,18 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements IDevi
     @Nullable
     @Override
     public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
-        return new WitchesOvenScreenHandler(syncId, inv,  this, this.propertyDelegate);
+        return new WitchesOvenScreenHandler(syncId, inv, this, this.propertyDelegate);
     }
 
     public DefaultedList<ItemStack> getStacksOnTop() {
         return this.passiveInventory.getStacks();
     }
+
     // From IDeviceExperienceHandler
     @Override
     public void dropExperience(ServerWorld world, Vec3d playerPos) {
         dropExperience(world, playerPos, this.experience);
         this.experience = 0;
-    }
-
-    private static void dropExperience(ServerWorld world, Vec3d pos, float experience) {
-        int i = MathHelper.floor(experience);
-        final float f = MathHelper.fractionalPart(experience);
-        if (f != 0.0F && Math.random() < (double) f) {
-            ++i;
-        }
-        ExperienceOrbEntity.spawn(world, pos, i);
     }
 
 }

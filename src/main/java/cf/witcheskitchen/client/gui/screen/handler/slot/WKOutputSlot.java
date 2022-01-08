@@ -1,7 +1,6 @@
 package cf.witcheskitchen.client.gui.screen.handler.slot;
 
 import cf.witcheskitchen.api.IDeviceExperienceHandler;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;

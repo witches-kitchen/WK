@@ -9,40 +9,36 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.Vec3d;
 
-import java.util.Objects;
 import java.util.function.Predicate;
 
 /**
- *  Inventory Manager.
- *
- *  The standard way to store items in a BlockEntity is to make it an Inventory.
- *  Implementing Inventory is fairly simple, but is tedious and prone to error,
- *  so here is an Inventory Manager of it which only requires giving it an initial size
- *  or an already existing DefaultedList of ItemStacks.
- *
+ * Inventory Manager.
+ * <p>
+ * The standard way to store items in a BlockEntity is to make it an Inventory.
+ * Implementing Inventory is fairly simple, but is tedious and prone to error,
+ * so here is an Inventory Manager of it which only requires giving it an initial size
+ * or an already existing DefaultedList of ItemStacks.
  */
-public class InventoryManager <T extends BlockEntity> implements Inventory {
-
-    /**
-     * A DefaultedList keeps a list of objects that can't be null,
-     * instead some "default value" is defined.
-     *
-     * A DefaultedList of ItemStack can be used as an easy way to store
-     * stacks of items as it can be set for default as an EMPTY stack,
-     * which is the proper way of saying that there is no item in the slot.
-     *
-     */
-    private DefaultedList<ItemStack> inventory;
-
+public class InventoryManager<T extends BlockEntity> implements Inventory {
 
     /**
      * Parent BlockEntity, which is going to create the inventory
      * and keep track of all our items.
      */
     private final T blockEntity;
+    /**
+     * A DefaultedList keeps a list of objects that can't be null,
+     * instead some "default value" is defined.
+     * <p>
+     * A DefaultedList of ItemStack can be used as an easy way to store
+     * stacks of items as it can be set for default as an EMPTY stack,
+     * which is the proper way of saying that there is no item in the slot.
+     */
+    private final DefaultedList<ItemStack> inventory;
 
     /**
      * Creates a new Inventory Manager and DefaultedList of ItemStack with the specified size
+     *
      * @param size Integer (Inventory size)
      */
     public InventoryManager(T blockEntity, int size) {
@@ -52,6 +48,7 @@ public class InventoryManager <T extends BlockEntity> implements Inventory {
     /**
      * Creates a new Inventory Manager and DefaultedList of ItemStack
      * from an already existing one.
+     *
      * @param inventory DefaultedList of ItemStack
      */
     public InventoryManager(T blockEntity, DefaultedList<ItemStack> inventory) {
@@ -79,6 +76,7 @@ public class InventoryManager <T extends BlockEntity> implements Inventory {
 
     /**
      * Checks if the inventory is empty by iterating over all the elements.
+     *
      * @return whether this Inventory has only EMPTY stacks.
      */
     @Override
@@ -93,6 +91,7 @@ public class InventoryManager <T extends BlockEntity> implements Inventory {
 
     /**
      * Retrieves an element from our DefaultedList.
+     *
      * @param index Index of the stack you want to get.
      * @return The stack (ItemStack) in that specific index.
      */
@@ -100,12 +99,14 @@ public class InventoryManager <T extends BlockEntity> implements Inventory {
     public ItemStack getStack(int index) {
         return this.inventory.get(index);
     }
+
     /**
      * Removes an element from our DefaultedList of Stacks.
-     * @param index Position of the stack you want to remove.
+     *
+     * @param index  Position of the stack you want to remove.
      * @param amount How many stacks you would like to remove.
-     * If there are fewer stacks in the slot than what are requested,
-     * then it takes all items in that slot.
+     *               If there are fewer stacks in the slot than what are requested,
+     *               then it takes all items in that slot.
      */
 
     @Override
@@ -116,9 +117,11 @@ public class InventoryManager <T extends BlockEntity> implements Inventory {
         }
         return stack;
     }
+
     /**
      * Removes all stacks of the DefaultedList
      * at the given position.
+     *
      * @param index The slot to remove from.
      */
     @Override
@@ -129,6 +132,7 @@ public class InventoryManager <T extends BlockEntity> implements Inventory {
     /**
      * Replaces from the DefaultedList the stack at the given position
      * with the provided stack.
+     *
      * @param index Position of the stack
      * @param stack The replacing ItemStack. If the stack is too big for
      *              this inventory ({@link Inventory#getMaxCountPerStack()},
@@ -143,6 +147,7 @@ public class InventoryManager <T extends BlockEntity> implements Inventory {
         }
         markDirty();
     }
+
     /**
      * Marks the state as dirty.
      * Must be called after changes in the inventory, so that the game can properly save
@@ -152,6 +157,7 @@ public class InventoryManager <T extends BlockEntity> implements Inventory {
     public void markDirty() {
         this.blockEntity.markDirty();
     }
+
     /**
      * @return Whether the player can access the inventory
      */
@@ -170,6 +176,7 @@ public class InventoryManager <T extends BlockEntity> implements Inventory {
 
     /**
      * Parent BlockEntity
+     *
      * @return BlockEntity
      */
     public T getContainer() {
