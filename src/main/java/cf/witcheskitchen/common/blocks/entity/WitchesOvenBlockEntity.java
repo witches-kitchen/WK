@@ -4,7 +4,7 @@ import cf.witcheskitchen.api.IDeviceExperienceHandler;
 import cf.witcheskitchen.api.InventoryManager;
 import cf.witcheskitchen.client.gui.screen.handler.WitchesOvenScreenHandler;
 import cf.witcheskitchen.common.blocks.technical.WitchesOvenBlock;
-import cf.witcheskitchen.common.recipe.WitchesOvenCookingRecipe;
+import cf.witcheskitchen.common.recipe.OvenCookingRecipe;
 import cf.witcheskitchen.common.registry.WKBlockEntityTypes;
 import cf.witcheskitchen.common.registry.WKRecipeTypes;
 import net.minecraft.block.Block;
@@ -315,7 +315,7 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements IDevi
         if (recipe instanceof SmeltingRecipe smelting) {
             return smelting.getExperience();
         } else {
-            if (recipe instanceof WitchesOvenCookingRecipe cooking) {
+            if (recipe instanceof OvenCookingRecipe cooking) {
                 return cooking.getXp();
             }
         }
@@ -341,7 +341,7 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements IDevi
     private DefaultedList<ItemStack> getOutputsFrom(final Recipe<?> recipe) {
         if (recipe instanceof SmeltingRecipe) {
             return DefaultedList.ofSize(1, recipe.getOutput());
-        } else if (recipe instanceof WitchesOvenCookingRecipe ovenRecipe) {
+        } else if (recipe instanceof OvenCookingRecipe ovenRecipe) {
             return ovenRecipe.getOutputs();
         } else {
             return DefaultedList.of();

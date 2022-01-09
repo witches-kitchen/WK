@@ -20,6 +20,6 @@ public abstract class CreeperEntityMixin extends HostileEntity {
 
     @Inject(method = "initGoals", at = @At("HEAD"))
     private void initFleeGoal(CallbackInfo ci) {
-        this.goalSelector.add(3, new FleeEntityGoal<>(((CreeperEntity) (Object) this), PlayerEntity.class, 12.0F, 1.0D, 1.2D));
+        this.goalSelector.add(3, new FleeEntityGoal<>(((CreeperEntity) (Object) this), PlayerEntity.class, 12.0F, 1.0D, 1.6D));
     }
 }

@@ -30,6 +30,9 @@
     ],
     "modmenu": [
       "cf.witcheskitchen.client.compat.WKModMenu"
+    ],
+    "rei_plugins": [
+      "cf.witcheskitchen.client.compat.rei.WKREIPlugin"
     ]
   },
   "mixins": [

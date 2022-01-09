@@ -15,14 +15,14 @@ import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 
-public class WitchesOvenCookingRecipe implements Recipe<Inventory> {
+public class OvenCookingRecipe implements Recipe<Inventory> {
 
     private final Identifier id;
     private final Ingredient input;
     private final DefaultedList<ItemStack> outputs;
     private final float xp;
 
-    public WitchesOvenCookingRecipe(Identifier id, Ingredient input, DefaultedList<ItemStack> outputs, float xp) {
+    public OvenCookingRecipe(Identifier id, Ingredient input, DefaultedList<ItemStack> outputs, float xp) {
         this.id = id;
         this.input = input;
         this.outputs = outputs;
@@ -76,10 +76,10 @@ public class WitchesOvenCookingRecipe implements Recipe<Inventory> {
         return WKRecipeTypes.WITCHES_OVEN_COOKING_RECIPE_TYPE;
     }
 
-    public static class Serializer implements RecipeSerializer<WitchesOvenCookingRecipe> {
+    public static class Serializer implements RecipeSerializer<OvenCookingRecipe> {
 
         @Override
-        public WitchesOvenCookingRecipe read(Identifier id, JsonObject json) {
+        public OvenCookingRecipe read(Identifier id, JsonObject json) {
             final Ingredient input = Ingredient.fromJson(JsonHelper.getObject(json, "ingredient"));
             var array = JsonHelper.getArray(json, "results");
             final DefaultedList<ItemStack> outputs = RecipeUtil.deserializeItems(array);
@@ -89,22 +89,22 @@ public class WitchesOvenCookingRecipe implements Recipe<Inventory> {
                 throw new JsonParseException("Too many outputs for Witches' Oven recipe");
             }
             final float xp = JsonHelper.getFloat(json, "experience");
-            return new WitchesOvenCookingRecipe(id, input, outputs, xp);
+            return new OvenCookingRecipe(id, input, outputs, xp);
         }
 
         @Override
-        public WitchesOvenCookingRecipe read(Identifier id, PacketByteBuf buf) {
+        public OvenCookingRecipe read(Identifier id, PacketByteBuf buf) {
             final Ingredient input = Ingredient.fromPacket(buf);
             final DefaultedList<ItemStack> outputs = DefaultedList.ofSize(buf.readVarInt(), ItemStack.EMPTY);
             for (int i = 0; i < outputs.size(); i++) {
                 outputs.set(i, buf.readItemStack());
             }
             final float xp = buf.readFloat();
-            return new WitchesOvenCookingRecipe(id, input, outputs, xp);
+            return new OvenCookingRecipe(id, input, outputs, xp);
         }
 
         @Override
-        public void write(PacketByteBuf buf, WitchesOvenCookingRecipe recipe) {
+        public void write(PacketByteBuf buf, OvenCookingRecipe recipe) {
             recipe.getInput().write(buf);
             buf.writeVarInt(recipe.outputs.size());
             for (var stack : recipe.outputs) {

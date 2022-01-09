@@ -1,7 +1,7 @@
 package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WK;
-import cf.witcheskitchen.common.recipe.WitchesOvenCookingRecipe;
+import cf.witcheskitchen.common.recipe.OvenCookingRecipe;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
@@ -14,9 +14,9 @@ import java.util.Map;
 public class WKRecipeTypes {
 
     private static final Map<RecipeSerializer<?>, Identifier> RECIPE_SERIALIZERS = new HashMap<>();
-    public static final RecipeSerializer<WitchesOvenCookingRecipe> WITCHES_OVEN_COOKING_RECIPE_SERIALIZER = register("witches_oven_cooking", new WitchesOvenCookingRecipe.Serializer());
+    public static final RecipeSerializer<OvenCookingRecipe> WITCHES_OVEN_COOKING_RECIPE_SERIALIZER = register("oven_cooking", new OvenCookingRecipe.Serializer());
     private static final Map<RecipeType<?>, Identifier> RECIPE_TYPES = new HashMap<>();
-    public static final RecipeType<WitchesOvenCookingRecipe> WITCHES_OVEN_COOKING_RECIPE_TYPE = register("witches_oven_cooking");
+    public static final RecipeType<OvenCookingRecipe> WITCHES_OVEN_COOKING_RECIPE_TYPE = register("oven_cooking");
 
     private static <T extends Recipe<?>> RecipeSerializer<T> register(String name, RecipeSerializer<T> serializer) {
         RECIPE_SERIALIZERS.put(serializer, new Identifier(WK.MODID, name));

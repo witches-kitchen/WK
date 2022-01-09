@@ -1,5 +1,5 @@
 {
-  "type": "witcheskitchen:witches_oven_cooking",
+  "type": "witcheskitchen:oven_cooking",
   "ingredient": {
     "item": "minecraft:iron_ingot"
   },
