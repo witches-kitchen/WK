@@ -1,6 +1,5 @@
 package cf.witcheskitchen.common.items;
 
-import cf.witcheskitchen.common.blocks.WKCropBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FarmlandBlock;
@@ -20,7 +19,7 @@ public class WKSeedItem extends AliasedBlockItem {
 
     public WKSeedItem(Block block, Settings settings, List<Category> category) {
         super(block, settings);
-        ((WKCropBlock) block).setSeedsItem(this);
+     //   ((WKCropBlock) block).setSeedsItem(this);
         this.category = category;
     }
 

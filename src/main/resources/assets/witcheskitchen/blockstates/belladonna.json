@@ -1,0 +1,37 @@
+{
+  "variants": {
+    "half=lower,age=0": {
+      "model": "witcheskitchen:block/belladonna_bottom_stage0"
+    },
+    "half=upper,age=0": {
+      "model": "minecraft:block/air"
+    },
+    "half=lower,age=1": {
+      "model": "witcheskitchen:block/belladonna_bottom_stage1"
+    },
+    "half=lower,age=2": {
+      "model": "witcheskitchen:block/belladonna_bottom_stage2"
+    },
+    "half=lower,age=3": {
+      "model": "witcheskitchen:block/belladonna_bottom_stage3"
+    },
+    "half=lower,age=4": {
+      "model": "witcheskitchen:block/belladonna_bottom_stage4"
+    },
+    "half=upper,age=4": {
+      "model": "witcheskitchen:block/belladonna_top_stage4"
+    },
+    "half=lower,age=5": {
+      "model": "witcheskitchen:block/belladonna_bottom_stage5"
+    },
+    "half=upper,age=5": {
+      "model": "witcheskitchen:block/belladonna_top_stage5"
+    },
+    "half=lower,age=6": {
+      "model": "witcheskitchen:block/belladonna_bottom_stage6"
+    },
+    "half=upper,age=6": {
+      "model": "witcheskitchen:block/belladonna_top_stage6"
+    }
+  }
+}

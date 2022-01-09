@@ -7,6 +7,7 @@ import cf.witcheskitchen.common.blocks.WKStairsBlock;
 import cf.witcheskitchen.common.blocks.technical.IronOvenBlock;
 import cf.witcheskitchen.common.blocks.technical.TeapotBlock;
 import cf.witcheskitchen.common.blocks.technical.WitchesOvenBlock;
+import cf.witcheskitchen.common.crop.WKTallCropBlock;
 import cf.witcheskitchen.common.generator.WKSaplingGenerator;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -143,6 +144,9 @@ public class WKBlocks {
     public static final Block POTTED_ROWAN_SAPLING = new FlowerPotBlock(ROWAN_SAPLING, FabricBlockSettings.of(Material.DECORATION).breakInstantly().nonOpaque());
     public static final Block POTTED_SUMAC_SAPLING = new FlowerPotBlock(SUMAC_SAPLING, FabricBlockSettings.of(Material.DECORATION).breakInstantly().nonOpaque());
 
+    //Crops
+    public static final Block BELLADONNA = new WKTallCropBlock(FabricBlockSettings.copyOf(Blocks.WHEAT));
+
     public static void register() {
         //devices
         registerBlock("iron_witches_oven", IRON_WITCHES_OVEN, WK.WK_GROUP);
@@ -150,6 +154,7 @@ public class WKBlocks {
         registerBlock("exposed_copper_witches_oven", EXPOSED_COPPER_WITCHES_OVEN, WK.WK_GROUP);
         registerBlock("weathered_copper_witches_oven", WEATHERED_COPPER_WITCHES_OVEN, WK.WK_GROUP);
         registerBlock("oxidized_copper_witches_oven", OXIDIZED_COPPER_WITCHES_OVEN, WK.WK_GROUP);
+
         //Food blocks
         registerBlock("raw_gingerbread_block", RAW_GINGERBREAD_BLOCK, WK.WK_GROUP);
         registerBlock("raw_chiseled_gingerbread_block", RAW_CHISELED_GINGERBREAD_BLOCK, WK.WK_GROUP);
@@ -268,6 +273,9 @@ public class WKBlocks {
 
         //Minerals
         registerBlock("salt", SALT_BLOCK, WK.WK_GROUP);
+
+        // Crops
+        registerBlockOnly("belladonna", BELLADONNA);
     }
 
     //needs to be reworked for better suiting our needs.. maybe? keeping the never and 2 always in case we end up needing to use them.
@@ -313,5 +321,9 @@ public class WKBlocks {
         Registry.register(Registry.ITEM, new Identifier(WK.MODID, id), new BlockItem(block, new FabricItemSettings().group(tab)));
     }
 
+    private static <T extends Block> void registerBlockOnly(final String id, final T block) {
+        modBlocks.add(block);
+        Registry.register(Registry.BLOCK, new Identifier(WK.MODID, id), block);
+    }
 
 }

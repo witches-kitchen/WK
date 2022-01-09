@@ -1,6 +1,7 @@
 package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WK;
+import cf.witcheskitchen.common.items.WKSeedItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.Item;
 import net.minecraft.item.SpawnEggItem;
@@ -9,7 +10,7 @@ import net.minecraft.util.registry.Registry;
 
 public class WKItems {
 
-    public static Item BELLADONNA_SEEDS = new Item(new FabricItemSettings().group(WK.WK_GROUP));
+    public static final Item BELLADONNA_SEEDS = new WKSeedItem(WKBlocks.BELLADONNA, new FabricItemSettings().group(WK.WK_GROUP));
     public static Item ST_JOHNS_WORT_SEEDS = new Item(new FabricItemSettings().group(WK.WK_GROUP));
     public static Item AMARANTH_SEEDS = new Item(new FabricItemSettings().group(WK.WK_GROUP));
     public static Item BRIAR_SEEDS = new Item(new FabricItemSettings().group(WK.WK_GROUP));
