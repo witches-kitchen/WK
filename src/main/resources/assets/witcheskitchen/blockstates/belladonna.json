@@ -4,7 +4,7 @@
       "model": "witcheskitchen:block/belladonna_bottom_stage0"
     },
     "half=upper,age=0": {
-      "model": "minecraft:block/air"
+      "model": "witcheskitchen:block/belladonna_bottom_stage0"
     },
     "half=lower,age=1": {
       "model": "witcheskitchen:block/belladonna_bottom_stage1"

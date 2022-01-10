@@ -10,6 +10,7 @@
     "SaplingBlockInvoker",
     "SimpleBlockStateProviderInvoker",
     "StructurePoolsMixin",
+    "event.CropGrowCallback",
     "statuseffect.ActiveTargetGoalMixin",
     "statuseffect.CreeperEntityMixin",
     "statuseffect.FleeEntityGoalMixin"

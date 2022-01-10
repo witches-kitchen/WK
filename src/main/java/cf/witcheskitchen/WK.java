@@ -63,7 +63,6 @@ public class WK implements ModInitializer {
         WKSounds.register();
         GeckoLib.initialize();
         WKEntities.register();
-
         modifyAxeBlockStripping();
     }
 
