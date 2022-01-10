@@ -10,6 +10,9 @@ import net.minecraft.util.registry.Registry;
 
 public class WKItems {
 
+    // Flowers
+    public static final Item BELLADONNA_BLOSSOM = new Item(new FabricItemSettings().group(WK.WK_GROUP));
+
     public static final Item BELLADONNA_SEEDS = new WKSeedItem(WKBlocks.BELLADONNA, new FabricItemSettings().group(WK.WK_GROUP));
     public static Item ST_JOHNS_WORT_SEEDS = new Item(new FabricItemSettings().group(WK.WK_GROUP));
     public static Item AMARANTH_SEEDS = new Item(new FabricItemSettings().group(WK.WK_GROUP));
@@ -30,6 +33,7 @@ public class WKItems {
     public static Item FERRET_SPAWN_EGG = new SpawnEggItem(WKEntities.FERRET, 9985082, 2631205, new Item.Settings().group(WK.WK_GROUP));
 
     public static void register() {
+        registerItem("belladonna_blossom", BELLADONNA_BLOSSOM);
         registerItem("belladonna_seeds", BELLADONNA_SEEDS);
         registerItem("dollop_of_frosting", DOLLOP_OF_FROSTING);
         registerItem("chocolate_rum_balls", CHOCOLATE_RUM_BALLS);

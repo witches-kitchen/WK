@@ -7,7 +7,7 @@ import cf.witcheskitchen.common.blocks.WKStairsBlock;
 import cf.witcheskitchen.common.blocks.technical.IronOvenBlock;
 import cf.witcheskitchen.common.blocks.technical.TeapotBlock;
 import cf.witcheskitchen.common.blocks.technical.WitchesOvenBlock;
-import cf.witcheskitchen.common.crop.WKCropBlock;
+import cf.witcheskitchen.common.crop.BelladonnaCropBlock;
 import cf.witcheskitchen.common.generator.WKSaplingGenerator;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -145,7 +145,7 @@ public class WKBlocks {
     public static final Block POTTED_SUMAC_SAPLING = new FlowerPotBlock(SUMAC_SAPLING, FabricBlockSettings.of(Material.DECORATION).breakInstantly().nonOpaque());
 
     //Crops
-    public static final Block BELLADONNA = new WKCropBlock(FabricBlockSettings.copyOf(Blocks.WHEAT));
+    public static final Block BELLADONNA = new BelladonnaCropBlock(AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP));
 
     public static void register() {
         //devices

@@ -17,6 +17,10 @@ public class WKSeedItem extends AliasedBlockItem {
 
     private List<Category> category;
 
+    public WKSeedItem(Block block, Settings settings) {
+        super(block, settings);
+    }
+
     public WKSeedItem(Block block, Settings settings, List<Category> category) {
         super(block, settings);
      //   ((WKCropBlock) block).setSeedsItem(this);
