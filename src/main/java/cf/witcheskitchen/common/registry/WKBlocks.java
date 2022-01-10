@@ -146,6 +146,8 @@ public class WKBlocks {
 
     //Crops
     public static final Block BELLADONNA = new BelladonnaCropBlock(AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP));
+    public static final Block BELLADONNA_GLOW = new BelladonnaCropBlock(FabricBlockSettings.copyOf(BELLADONNA), BelladonnaCropBlock.Type.GLOW);
+    public static final Block BELLADONNA_NOCTURNAL = new BelladonnaCropBlock(FabricBlockSettings.copyOf(BELLADONNA), BelladonnaCropBlock.Type.NOCTURNAL);
 
     public static void register() {
         //devices
@@ -276,6 +278,8 @@ public class WKBlocks {
 
         // Crops
         registerBlockOnly("belladonna", BELLADONNA);
+        registerBlockOnly("belladonna_glow", BELLADONNA_GLOW);
+        registerBlockOnly("belladonna_nocturnal", BELLADONNA_NOCTURNAL);
     }
 
     //needs to be reworked for better suiting our needs.. maybe? keeping the never and 2 always in case we end up needing to use them.

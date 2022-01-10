@@ -51,7 +51,7 @@ public abstract class WKTallCropBlock extends WKCropBlock {
     @Override
     public void applyGrowth(World world, BlockPos pos, BlockState state) {
         // Stop if this is the second layer
-        if (world.getBlockState(pos.down()).getBlock() == this) {
+        if (isUpperState(world, pos)) {
             return;
         }
         int i = this.getAge(state) + 1;
@@ -60,6 +60,10 @@ public abstract class WKTallCropBlock extends WKCropBlock {
         if (i >= 4) {
             world.setBlockState(pos.up(), nextState.with(TALL_PLANT, DoubleBlockHalf.UPPER), Block.NOTIFY_ALL);
         }
+    }
+
+    protected boolean isUpperState(World world, BlockPos pos) {
+        return world.getBlockState(pos.down()).getBlock() == this;
     }
 
     @Override
