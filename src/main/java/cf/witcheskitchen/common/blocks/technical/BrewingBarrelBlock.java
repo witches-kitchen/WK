@@ -27,7 +27,7 @@ public class BrewingBarrelBlock extends WKDeviceBlock {
             createCuboidShape(5, 1, 1, 11, 3, 15),
             createCuboidShape(3, 3, 2, 13, 13, 14),
             createCuboidShape(7, 4, 1, 9, 6, 2),
-           // createCuboidShape(7.5, 4, 0, 8.5, 8, 1),
+            // createCuboidShape(7.5, 4, 0, 8.5, 8, 1),
             createCuboidShape(2, 12, 1, 5, 14, 15),
             createCuboidShape(2, 2, 1, 5, 4, 15),
             createCuboidShape(2, 11, 1, 4, 12, 15),

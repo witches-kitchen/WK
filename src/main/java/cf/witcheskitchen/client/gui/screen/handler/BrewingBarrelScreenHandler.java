@@ -10,6 +10,7 @@ public class BrewingBarrelScreenHandler extends WKScreenHandler {
     public BrewingBarrelScreenHandler(int syncId, PlayerInventory playerInventory) {
         this(syncId, playerInventory, new SimpleInventory(6));
     }
+
     public BrewingBarrelScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory) {
         super(WKScreenHandlerTypes.BREWING_BARREL, syncId, playerInventory, inventory);
         this.builder()

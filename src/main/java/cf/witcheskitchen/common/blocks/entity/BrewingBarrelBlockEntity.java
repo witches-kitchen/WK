@@ -25,7 +25,6 @@ public class BrewingBarrelBlockEntity extends WKDeviceBlockEntity implements Nam
     }
 
 
-
     @Override
     public Text getDisplayName() {
         return new TranslatableText("screen.title.witcheskitchen.brewing_barrel");

@@ -14,13 +14,6 @@ import net.minecraft.world.World;
 public class BelladonnaCropBlock extends WKTallCropBlock {
 
     public static final int MAX_AGE = 6;
-
-    public enum Type {
-        COMMON,
-        GLOW,
-        NOCTURNAL
-    }
-
     private final Type type;
 
     public BelladonnaCropBlock(Settings settings) {
@@ -65,5 +58,11 @@ public class BelladonnaCropBlock extends WKTallCropBlock {
     @Override
     public int getMaxAge() {
         return MAX_AGE;
+    }
+
+    public enum Type {
+        COMMON,
+        GLOW,
+        NOCTURNAL
     }
 }

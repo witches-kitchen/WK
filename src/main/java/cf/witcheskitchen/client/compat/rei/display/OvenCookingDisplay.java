@@ -26,6 +26,10 @@ public class OvenCookingDisplay implements Display {
         this.experience = recipe.getXp();
     }
 
+    public static void register(DisplayRegistry registry) {
+        registry.registerFiller(OvenCookingRecipe.class, OvenCookingDisplay::new);
+    }
+
     @Override
     public List<EntryIngredient> getInputEntries() {
         return List.of(input);
@@ -43,9 +47,5 @@ public class OvenCookingDisplay implements Display {
 
     public float getExperience() {
         return experience;
-    }
-
-    public static void register(DisplayRegistry registry) {
-        registry.registerFiller(OvenCookingRecipe.class, OvenCookingDisplay::new);
     }
 }
