@@ -100,4 +100,15 @@ public final class ScreenBuilder {
             this.parent.drawTexture(matrixStack, posX, posY + i, 239, 19 + i, 14, 14 - i);
         }
     }
+
+    public void drawBrewingProgress(MatrixStack matrixStack, int posX, int posY) {
+        bindTexture();
+        this.parent.drawTexture(matrixStack, posX, posY, 151, 43, 10, 27);
+        // this.parent.drawTexture(matrixStack, posX, posY, 163, 43, 11, 28);
+    }
+
+    public void drawBrewingInputLine(MatrixStack matrixStack, int posX, int posY) {
+        bindTexture();
+        this.parent.drawTexture(matrixStack, posX, posY, 1,151, 26, 20);
+    }
 }

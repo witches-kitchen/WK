@@ -58,8 +58,10 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements IDevi
     private float experience;
 
     public WitchesOvenBlockEntity(BlockPos pos, BlockState state) {
-        super(WKBlockEntityTypes.WITCHES_OVEN, pos, state);
+        super(WKBlockEntityTypes.WITCHES_OVEN, pos, state, 4);
+        // Passive cooking inventory manager
         this.passiveInventory = new InventoryManager<>(this, 4);
+        // Sync the values between client and server
         this.propertyDelegate = new PropertyDelegate() {
             @Override
             public int get(int index) {

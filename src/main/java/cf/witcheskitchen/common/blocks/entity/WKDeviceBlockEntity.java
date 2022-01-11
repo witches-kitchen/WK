@@ -22,9 +22,9 @@ public class WKDeviceBlockEntity extends BlockEntity implements BlockEntityTicke
     private final InventoryManager<WKDeviceBlockEntity> manager;
     private boolean isUnderWater;
 
-    public WKDeviceBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+    public WKDeviceBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int size) {
         super(type, pos, state);
-        this.manager = new InventoryManager<>(this, 4);
+        this.manager = new InventoryManager<>(this, size);
     }
 
     // Server-side Tick

@@ -4,6 +4,7 @@ import cf.witcheskitchen.WK;
 import cf.witcheskitchen.common.blocks.SaltBlock;
 import cf.witcheskitchen.common.blocks.WKSaplingBlock;
 import cf.witcheskitchen.common.blocks.WKStairsBlock;
+import cf.witcheskitchen.common.blocks.technical.BrewingBarrelBlock;
 import cf.witcheskitchen.common.blocks.technical.IronOvenBlock;
 import cf.witcheskitchen.common.blocks.technical.TeapotBlock;
 import cf.witcheskitchen.common.blocks.technical.WitchesOvenBlock;
@@ -143,6 +144,7 @@ public class WKBlocks {
     public static final Block POTTED_JUNIPER_SAPLING = new FlowerPotBlock(JUNIPER_SAPLING, FabricBlockSettings.of(Material.DECORATION).breakInstantly().nonOpaque());
     public static final Block POTTED_ROWAN_SAPLING = new FlowerPotBlock(ROWAN_SAPLING, FabricBlockSettings.of(Material.DECORATION).breakInstantly().nonOpaque());
     public static final Block POTTED_SUMAC_SAPLING = new FlowerPotBlock(SUMAC_SAPLING, FabricBlockSettings.of(Material.DECORATION).breakInstantly().nonOpaque());
+    public static final Block OAK_BREWING_BARREL = new BrewingBarrelBlock(FabricBlockSettings.copyOf(Blocks.BARREL).nonOpaque());
 
     //Crops
     public static final Block BELLADONNA = new BelladonnaCropBlock(AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP));
@@ -156,6 +158,7 @@ public class WKBlocks {
         registerBlock("exposed_copper_witches_oven", EXPOSED_COPPER_WITCHES_OVEN, WK.WK_GROUP);
         registerBlock("weathered_copper_witches_oven", WEATHERED_COPPER_WITCHES_OVEN, WK.WK_GROUP);
         registerBlock("oxidized_copper_witches_oven", OXIDIZED_COPPER_WITCHES_OVEN, WK.WK_GROUP);
+        registerBlock("oak_brewing_barrel", OAK_BREWING_BARREL, WK.WK_GROUP);
 
         //Food blocks
         registerBlock("raw_gingerbread_block", RAW_GINGERBREAD_BLOCK, WK.WK_GROUP);
