@@ -29,6 +29,12 @@ public class OvenCookingCategory implements DisplayCategory<OvenCookingDisplay> 
     public static final EntryStack<ItemStack> ICON = EntryStacks.of(WKBlocks.IRON_WITCHES_OVEN);
     public static final Text TITLE = new TranslatableText("rei.witcheskitchen.oven_cooking");
 
+    public static void register(CategoryRegistry registry) {
+        registry.add(new OvenCookingCategory());
+        registry.addWorkstations(WKREIPlugin.OVEN_COOKING, ICON);
+        registry.removePlusButton(WKREIPlugin.OVEN_COOKING);
+    }
+
     @Override
     public Renderer getIcon() {
         return ICON;
@@ -44,7 +50,6 @@ public class OvenCookingCategory implements DisplayCategory<OvenCookingDisplay> 
         return WKREIPlugin.OVEN_COOKING;
     }
 
-
     @Override
     public List<Widget> setupDisplay(OvenCookingDisplay display, Rectangle bounds) {
         final Point startPoint = new Point(bounds.getCenterX() - 41, bounds.y + 16);
@@ -59,11 +64,5 @@ public class OvenCookingCategory implements DisplayCategory<OvenCookingDisplay> 
         widgets.add(Widgets.createSlot(new Point(startPoint.x + 1, startPoint.y + 1)).entries(display.getInputEntries().get(0)).markInput());
         widgets.add(Widgets.createSlot(new Point(startPoint.x + 61, startPoint.y + 9)).entries(display.getOutputEntries().get(0)).disableBackground().markOutput());
         return widgets;
-    }
-
-    public static void register(CategoryRegistry registry) {
-        registry.add(new OvenCookingCategory());
-        registry.addWorkstations(WKREIPlugin.OVEN_COOKING, ICON);
-        registry.removePlusButton(WKREIPlugin.OVEN_COOKING);
     }
 }

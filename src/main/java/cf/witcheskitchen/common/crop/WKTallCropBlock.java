@@ -41,12 +41,29 @@ public abstract class WKTallCropBlock extends WKCropBlock {
     }
 
     /**
+     * Destroys a bottom half of a tall double block (such as a plant or a door)
+     * without dropping an item when broken in creative.
+     *
+     * @see Block#onBreak(World, BlockPos, BlockState, PlayerEntity)
+     */
+    public static void onBreakInCreative(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+        BlockPos blockPos;
+        BlockState blockState;
+        DoubleBlockHalf half = state.get(TALL_PLANT);
+        if (half == DoubleBlockHalf.UPPER && (blockState = world.getBlockState(blockPos = pos.down())).isOf(state.getBlock()) && blockState.get(TALL_PLANT) == DoubleBlockHalf.LOWER) {
+            final BlockState blockState2 = blockState.contains(Properties.WATERLOGGED) && blockState.get(Properties.WATERLOGGED) ? Blocks.WATER.getDefaultState() : Blocks.AIR.getDefaultState();
+            world.setBlockState(blockPos, blockState2, Block.NOTIFY_ALL | Block.SKIP_DROPS);
+            world.syncWorldEvent(player, WorldEvents.BLOCK_BROKEN, blockPos, Block.getRawIdFromState(blockState));
+        }
+    }
+
+    /**
      * Age where the plant is going to start
      * using a second texture (upper plant part)
+     *
      * @return Integer (age)
      */
     public abstract int topLayerAge();
-
 
     @Override
     public void applyGrowth(World world, BlockPos pos, BlockState state) {
@@ -79,22 +96,6 @@ public abstract class WKTallCropBlock extends WKCropBlock {
             }
         }
         super.onBreak(world, pos, state, player);
-    }
-    /**
-     * Destroys a bottom half of a tall double block (such as a plant or a door)
-     * without dropping an item when broken in creative.
-     *
-     * @see Block#onBreak(World, BlockPos, BlockState, PlayerEntity)
-     */
-    public static void onBreakInCreative(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-        BlockPos blockPos;
-        BlockState blockState;
-        DoubleBlockHalf half = state.get(TALL_PLANT);
-        if (half == DoubleBlockHalf.UPPER && (blockState = world.getBlockState(blockPos = pos.down())).isOf(state.getBlock()) && blockState.get(TALL_PLANT) == DoubleBlockHalf.LOWER) {
-            final BlockState blockState2 = blockState.contains(Properties.WATERLOGGED) && blockState.get(Properties.WATERLOGGED) ? Blocks.WATER.getDefaultState() : Blocks.AIR.getDefaultState();
-            world.setBlockState(blockPos, blockState2, Block.NOTIFY_ALL | Block.SKIP_DROPS);
-            world.syncWorldEvent(player, WorldEvents.BLOCK_BROKEN, blockPos, Block.getRawIdFromState(blockState));
-        }
     }
 
     @Override

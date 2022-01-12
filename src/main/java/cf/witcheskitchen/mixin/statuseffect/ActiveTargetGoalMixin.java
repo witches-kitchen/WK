@@ -15,9 +15,11 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ActiveTargetGoal.class)
-public abstract class ActiveTargetGoalMixin <T extends LivingEntity> extends TrackTargetGoal{
+public abstract class ActiveTargetGoalMixin<T extends LivingEntity> extends TrackTargetGoal {
 
-    @Shadow @Nullable protected LivingEntity targetEntity;
+    @Shadow
+    @Nullable
+    protected LivingEntity targetEntity;
 
     public ActiveTargetGoalMixin(MobEntity mob, boolean checkVisibility) {
         super(mob, checkVisibility);
