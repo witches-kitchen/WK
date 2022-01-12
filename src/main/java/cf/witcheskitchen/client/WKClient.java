@@ -2,6 +2,7 @@ package cf.witcheskitchen.client;
 
 import cf.witcheskitchen.client.gui.screen.BrewingBarrelScreen;
 import cf.witcheskitchen.client.gui.screen.WitchesOvenScreen;
+import cf.witcheskitchen.client.render.blockentity.BrewingBarrelBlockEntityRender;
 import cf.witcheskitchen.client.render.blockentity.WitchesOvenBlockEntityRender;
 import cf.witcheskitchen.common.blocks.WKLeafCropBlock;
 import cf.witcheskitchen.common.registry.RenderRegistry;
@@ -28,6 +29,7 @@ public class WKClient implements ClientModInitializer {
     public void onInitializeClient() {
         modBlocks.forEach(this::registerModBlockLayer);
         BlockEntityRendererRegistry.register(WKBlockEntityTypes.WITCHES_OVEN, (ctx) -> new WitchesOvenBlockEntityRender());
+        BlockEntityRendererRegistry.register(WKBlockEntityTypes.BREWING_BARREL, (ctx) -> new BrewingBarrelBlockEntityRender());
         ScreenRegistry.register(WKScreenHandlerTypes.WITCHES_OVEN, WitchesOvenScreen::new);
         ScreenRegistry.register(WKScreenHandlerTypes.BREWING_BARREL, BrewingBarrelScreen::new);
         registerColorProvider();

@@ -29,6 +29,7 @@ public abstract class WKScreenHandler extends ScreenHandler {
         this.playerRanges = new ArrayList<>();
         this.blockEntityRanges = new ArrayList<>();
         this.builder = new ScreenHandlerBuilder(this);
+        this.inventory.onOpen(playerInventory.player);
     }
 
     //Checks that stackA and stackB are equal
@@ -163,6 +164,12 @@ public abstract class WKScreenHandler extends ScreenHandler {
     @Override
     protected boolean insertItem(ItemStack stack, int startIndex, int endIndex, boolean fromLast) {
         throw new UnsupportedOperationException("Don't use this shit");
+    }
+
+    @Override
+    public void close(PlayerEntity player) {
+        super.close(player);
+        this.inventory.onClose(player);
     }
 
     public ScreenHandlerBuilder builder() {

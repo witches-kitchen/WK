@@ -1,23 +1,23 @@
-package cf.witcheskitchen.common.recipe;
+package cf.witcheskitchen.common.util;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mojang.serialization.Dynamic;
 import com.mojang.serialization.JsonOps;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtOps;
+import net.minecraft.recipe.Ingredient;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.registry.Registry;
 
-import java.util.Collections;
-import java.util.EnumSet;
-import java.util.Set;
+import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
@@ -29,17 +29,70 @@ import java.util.stream.Stream;
 public class RecipeUtil {
 
     /**
-     * Deserializes an array of items from a JsonArray.
+     * Checks that a list of Ingredients match the contents inside an {@link Inventory}.
+     * @return Whether they match.
+     */
+    public static boolean matches(Inventory inventory, DefaultedList<Ingredient> ingredients) {
+        if (inventory.isEmpty()) {
+            return false;
+        } else if (ingredients.isEmpty()) {
+            return false;
+        } else  {
+            final List<ItemStack> nonEmptyStacks = new ArrayList<>();
+            for (int i = 0; i < inventory.size(); i++) {
+                final ItemStack stack = inventory.getStack(i);
+                if (!stack.isEmpty()) {
+                    nonEmptyStacks.add(stack);
+                }
+            }
+            if (nonEmptyStacks.size() != ingredients.size()) {
+                return false;
+            }
+            for (Ingredient ingredient : ingredients) {
+                boolean matchesIngredient = false;
+                for (int j = 0; j < nonEmptyStacks.size(); j++) {
+                    if (ingredient.test(nonEmptyStacks.get(j))) {
+                        matchesIngredient = true;
+                        nonEmptyStacks.remove(j);
+                        break;
+                    }
+                }
+                if (!matchesIngredient) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+
+    /**
+     * Deserializes an array of {@link ItemStack} from a JsonArray.
      *
      * @param array JsonArray
      * @return DefaultedList of ItemStack
      */
-    public static DefaultedList<ItemStack> deserializeItems(JsonArray array) {
+    public static DefaultedList<ItemStack> deserializeStacks(JsonArray array) {
         if (array.isJsonArray()) {
-            return arrayStream(array.getAsJsonArray()).map(entry -> deserializeItem(entry.getAsJsonObject())).collect(DefaultedListCollector.toList());
+            return arrayStream(array.getAsJsonArray()).map(entry -> deserializeStack(entry.getAsJsonObject())).collect(DefaultedListCollector.toList());
         } else {
-            return DefaultedList.copyOf(deserializeItem(array.getAsJsonObject()));
+            return DefaultedList.copyOf(deserializeStack(array.getAsJsonObject()));
         }
+    }
+
+    /**
+     * Deserializes an array of {@link Ingredient} from a JsonArray.
+     * @param array JsonArray
+     * @return DefaultedList of Ingredient
+     */
+    public static DefaultedList<Ingredient> deserializeIngredients(JsonArray array) {
+        final DefaultedList<Ingredient> ingredients = DefaultedList.of();
+        for (int i = 0; i < array.size(); i++) {
+            final Ingredient input = Ingredient.fromJson(array.get(i));
+            if (!input.isEmpty()) {
+                ingredients.add(input);
+            }
+        }
+        return ingredients;
     }
 
     public static Stream<JsonElement> arrayStream(JsonArray array) {
@@ -47,13 +100,13 @@ public class RecipeUtil {
     }
 
     /**
-     * Deserializes an item from Json.
+     * Deserializes a {@link ItemStack} from Json.
      * Supports "count" and "nbt" fields.
      *
      * @param object JsonObject
      * @return brand-new Item deserialized
      */
-    public static ItemStack deserializeItem(JsonObject object) {
+    public static ItemStack deserializeStack(JsonObject object) {
         final Identifier id = new Identifier(JsonHelper.getString(object, "item"));
         final Item item = Registry.ITEM.get(id);
         if (Items.AIR == item) {

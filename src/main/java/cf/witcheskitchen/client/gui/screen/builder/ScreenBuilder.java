@@ -5,6 +5,8 @@ import cf.witcheskitchen.WK;
 import cf.witcheskitchen.client.gui.screen.ScreenBase;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.LiteralText;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 
 public final class ScreenBuilder {
@@ -94,21 +96,57 @@ public final class ScreenBuilder {
     public void drawBurningProgress(MatrixStack matrixStack, int posX, int posY, boolean burning, int progress, int maxProgress) {
         bindTexture();
         this.parent.drawTexture(matrixStack, posX, posY, 239, 34, 13, 13);
-        int i = 12 - (int) ((double) progress / (double) maxProgress * 13);
+        int i = 12 - (int) ((double) progress / (double) maxProgress * 13); // 12 down to zero
         i = Math.max(i, 0);
         if (burning) {
             this.parent.drawTexture(matrixStack, posX, posY + i, 239, 19 + i, 14, 14 - i);
         }
     }
 
-    public void drawBrewingProgress(MatrixStack matrixStack, int posX, int posY) {
+    public void drawBrewingProgress(MatrixStack matrixStack, int posX, int posY,int mouseX, int mouseY, int progress, int maxProgress, boolean brewing) {
         bindTexture();
         this.parent.drawTexture(matrixStack, posX, posY, 151, 43, 10, 27);
-        // this.parent.drawTexture(matrixStack, posX, posY, 163, 43, 11, 28);
+        int i = 26 - (int) ((double) progress / (double) maxProgress * 27); // 26 down to zero
+        if (brewing) {
+             this.parent.drawTexture(matrixStack, posX, posY + i, 163, 43 + i, 11, 28 - i);
+            ScreenBuilder.drawPercentageTooltip(this.parent, matrixStack, posX, posY, 11, 28, mouseX, mouseY, progress, maxProgress);
+        }
     }
 
     public void drawBrewingInputLine(MatrixStack matrixStack, int posX, int posY) {
         bindTexture();
         this.parent.drawTexture(matrixStack, posX, posY, 1,151, 26, 20);
+    }
+
+
+    public static void drawPercentageTooltip(ScreenBase<?> base, MatrixStack stack, int x, int y, int width, int height, int xMouse, int yMouse, int value, int max) {
+        x -= base.getX();
+        y -= base.getY();
+        if (base.isPointWithinBounds(x, y, width, height, xMouse, yMouse)) {
+            int percentage = scaledPercentageOf(value, max);
+            base.renderTooltip(stack, new LiteralText(String.valueOf(percentage))
+                    .formatted(percentageColor(percentage))
+                    .append("%"), xMouse, yMouse);
+        }
+    }
+
+    public static int scaledPercentageOf(long value, long max) {
+        if (value == 0) {
+            return 0;
+        } else {
+            return (int) ((value * 100.0f) / max);
+        }
+    }
+
+    public static Formatting percentageColor(int percentage) {
+        if (percentage < 20) {
+            return Formatting.RED;
+        } else if (percentage < 50) {
+            return Formatting.YELLOW;
+        } else if (percentage < 75) {
+            return Formatting.GREEN;
+        } else {
+            return Formatting.AQUA;
+        }
     }
 }

@@ -3,6 +3,7 @@ package cf.witcheskitchen.common.blocks.entity;
 import cf.witcheskitchen.api.InventoryManager;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Waterloggable;
 import net.minecraft.block.entity.BlockEntity;
@@ -15,6 +16,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.util.Objects;
 import java.util.Random;
 
 public class WKDeviceBlockEntity extends BlockEntity implements BlockEntityTicker<WKDeviceBlockEntity>, Inventory {
@@ -53,6 +55,11 @@ public class WKDeviceBlockEntity extends BlockEntity implements BlockEntityTicke
     protected void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
         this.manager.write(nbt);
+    }
+
+    protected void updateListeners() {
+        this.markDirty();
+        Objects.requireNonNull(this.getWorld()).updateListeners(this.getPos(), this.getCachedState(), this.getCachedState(), Block.NOTIFY_ALL);
     }
 
     @Override

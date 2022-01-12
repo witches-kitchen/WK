@@ -456,17 +456,6 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements IDevi
         }
     }
 
-    // Client Sync
-    private void updateListeners() {
-        this.markDirty();
-        this.getWorld().updateListeners(this.getPos(), this.getCachedState(), this.getCachedState(), 3);
-    }
-
-    public void onFinishCooking() {
-        if (this.world != null) {
-            this.updateListeners();
-        }
-    }
 
     //Client Sync
     @Override

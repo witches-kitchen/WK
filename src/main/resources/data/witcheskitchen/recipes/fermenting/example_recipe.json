@@ -1,0 +1,30 @@
+{
+  "type": "witcheskitchen:fermenting",
+  "ingredients": [
+    {
+      "item": "witcheskitchen:salt"
+    },
+    {
+      "item": "diamond"
+    },
+    {
+      "item": "ender_pearl"
+    }
+  ],
+  "result": {
+    "item": "minecraft:diamond_sword",
+    "nbt": {
+      "Damage": 300,
+      "Enchantments": [
+        {
+          "id": "minecraft:sharpness",
+          "lvl": 15
+        },
+        {
+          "id": "minecraft:knockback",
+          "lvl": 5
+        }
+      ]
+    }
+  }
+}
