@@ -19,8 +19,7 @@ public class WKBlockEntityTypes {
         registerBlockEntity("witches_oven", WITCHES_OVEN);
         registerBlockEntity("brewing_barrel", BREWING_BARREL);
     }
-
     public static final BlockEntityType<WitchesOvenBlockEntity> WITCHES_OVEN = FabricBlockEntityTypeBuilder.create(WitchesOvenBlockEntity::new, WKBlocks.IRON_WITCHES_OVEN, WKBlocks.COPPER_WITCHES_OVEN, WKBlocks.EXPOSED_COPPER_WITCHES_OVEN, WKBlocks.WEATHERED_COPPER_WITCHES_OVEN, WKBlocks.OXIDIZED_COPPER_WITCHES_OVEN).build();
-    public static final BlockEntityType<BrewingBarrelBlockEntity> BREWING_BARREL = FabricBlockEntityTypeBuilder.create(BrewingBarrelBlockEntity::new, WKBlocks.OAK_BREWING_BARREL).build();
+    public static final BlockEntityType<BrewingBarrelBlockEntity> BREWING_BARREL = FabricBlockEntityTypeBuilder.create(BrewingBarrelBlockEntity::new, WKBlocks.OAK_BREWING_BARREL, WKBlocks.SPRUCE_BREWING_BARREL, WKBlocks.BIRCH_BREWING_BARREL, WKBlocks.JUNGLE_BREWING_BARREL, WKBlocks.ACACIA_BREWING_BARREL, WKBlocks.DARK_OAK_BREWING_BARREL, WKBlocks.CRIMSON_BREWING_BARREL, WKBlocks.WARPED_BREWING_BARREL).build();
 
 }

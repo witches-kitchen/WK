@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "witcheskitchen:block/warped_brewing_barrel",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "witcheskitchen:block/warped_brewing_barrel"
+    },
+    "facing=south": {
+      "model": "witcheskitchen:block/warped_brewing_barrel",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "witcheskitchen:block/warped_brewing_barrel",
+      "y": 270
+    }
+  }
+}

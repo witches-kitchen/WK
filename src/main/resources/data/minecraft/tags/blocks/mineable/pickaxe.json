@@ -6,6 +6,13 @@
     "witcheskitchen:exposed_copper_witches_oven",
     "witcheskitchen:weathered_copper_witches_oven",
     "witcheskitchen:oxidized_copper_witches_oven",
-    "witcheskitchen:oak_brewing_barrel"
+    "witcheskitchen:oak_brewing_barrel",
+    "witcheskitchen:spruce_brewing_barrel",
+    "witcheskitchen:birch_brewing_barrel",
+    "witcheskitchen:jungle_brewing_barrel",
+    "witcheskitchen:acacia_brewing_barrel",
+    "witcheskitchen:dark_oak_brewing_barrel",
+    "witcheskitchen:crimson_brewing_barrel",
+    "witcheskitchen:warped_brewing_barrel"
   ]
 }

@@ -145,7 +145,13 @@ public class WKBlocks {
     public static final Block POTTED_ROWAN_SAPLING = new FlowerPotBlock(ROWAN_SAPLING, FabricBlockSettings.of(Material.DECORATION).breakInstantly().nonOpaque());
     public static final Block POTTED_SUMAC_SAPLING = new FlowerPotBlock(SUMAC_SAPLING, FabricBlockSettings.of(Material.DECORATION).breakInstantly().nonOpaque());
     public static final Block OAK_BREWING_BARREL = new BrewingBarrelBlock(FabricBlockSettings.copyOf(Blocks.BARREL).nonOpaque());
-
+    public static final Block SPRUCE_BREWING_BARREL = new BrewingBarrelBlock(FabricBlockSettings.copyOf(Blocks.BARREL).nonOpaque());
+    public static final Block BIRCH_BREWING_BARREL = new BrewingBarrelBlock(FabricBlockSettings.copyOf(Blocks.BARREL).nonOpaque());
+    public static final Block JUNGLE_BREWING_BARREL = new BrewingBarrelBlock(FabricBlockSettings.copyOf(Blocks.BARREL).nonOpaque());
+    public static final Block ACACIA_BREWING_BARREL = new BrewingBarrelBlock(FabricBlockSettings.copyOf(Blocks.BARREL).nonOpaque());
+    public static final Block DARK_OAK_BREWING_BARREL = new BrewingBarrelBlock(FabricBlockSettings.copyOf(Blocks.BARREL).nonOpaque());
+    public static final Block CRIMSON_BREWING_BARREL = new BrewingBarrelBlock(FabricBlockSettings.copyOf(Blocks.BARREL).nonOpaque());
+    public static final Block WARPED_BREWING_BARREL = new BrewingBarrelBlock(FabricBlockSettings.copyOf(Blocks.BARREL).nonOpaque());
     //Crops
     public static final Block BELLADONNA = new BelladonnaCropBlock(AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP));
     public static final Block BELLADONNA_GLOW = new BelladonnaCropBlock(FabricBlockSettings.copyOf(BELLADONNA), BelladonnaCropBlock.Type.GLOW);
@@ -159,7 +165,13 @@ public class WKBlocks {
         registerBlock("weathered_copper_witches_oven", WEATHERED_COPPER_WITCHES_OVEN, WK.WK_GROUP);
         registerBlock("oxidized_copper_witches_oven", OXIDIZED_COPPER_WITCHES_OVEN, WK.WK_GROUP);
         registerBlock("oak_brewing_barrel", OAK_BREWING_BARREL, WK.WK_GROUP);
-
+        registerBlock("spruce_brewing_barrel", SPRUCE_BREWING_BARREL, WK.WK_GROUP);
+        registerBlock("birch_brewing_barrel", BIRCH_BREWING_BARREL, WK.WK_GROUP);
+        registerBlock("jungle_brewing_barrel", JUNGLE_BREWING_BARREL, WK.WK_GROUP);
+        registerBlock("acacia_brewing_barrel", ACACIA_BREWING_BARREL, WK.WK_GROUP);
+        registerBlock("dark_oak_brewing_barrel", DARK_OAK_BREWING_BARREL, WK.WK_GROUP);
+        registerBlock("crimson_brewing_barrel", CRIMSON_BREWING_BARREL, WK.WK_GROUP);
+        registerBlock("warped_brewing_barrel", WARPED_BREWING_BARREL, WK.WK_GROUP);
         //Food blocks
         registerBlock("raw_gingerbread_block", RAW_GINGERBREAD_BLOCK, WK.WK_GROUP);
         registerBlock("raw_chiseled_gingerbread_block", RAW_CHISELED_GINGERBREAD_BLOCK, WK.WK_GROUP);
