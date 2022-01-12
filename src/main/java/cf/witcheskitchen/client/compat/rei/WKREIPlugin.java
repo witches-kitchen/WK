@@ -1,7 +1,9 @@
 package cf.witcheskitchen.client.compat.rei;
 
 import cf.witcheskitchen.WK;
+import cf.witcheskitchen.client.compat.rei.category.FermentingCategory;
 import cf.witcheskitchen.client.compat.rei.category.OvenCookingCategory;
+import cf.witcheskitchen.client.compat.rei.display.FermentingDisplay;
 import cf.witcheskitchen.client.compat.rei.display.OvenCookingDisplay;
 import cf.witcheskitchen.client.gui.screen.WitchesOvenScreen;
 import me.shedaniel.math.Rectangle;
@@ -17,16 +19,18 @@ import net.fabricmc.api.Environment;
 public class WKREIPlugin implements REIClientPlugin {
 
     public static final CategoryIdentifier<OvenCookingDisplay> OVEN_COOKING = CategoryIdentifier.of(WK.id("oven_cooking"));
+    public static final CategoryIdentifier<FermentingDisplay> FERMENTING = CategoryIdentifier.of(WK.id("fermenting"));
 
     @Override
     public void registerCategories(CategoryRegistry registry) {
         OvenCookingCategory.register(registry);
+        FermentingCategory.register(registry);
     }
 
     @Override
     public void registerDisplays(DisplayRegistry registry) {
         OvenCookingDisplay.register(registry);
-
+        FermentingDisplay.register(registry);
     }
 
     @Override

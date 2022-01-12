@@ -31,7 +31,7 @@ public class OvenCookingCategory implements DisplayCategory<OvenCookingDisplay> 
 
     public static void register(CategoryRegistry registry) {
         registry.add(new OvenCookingCategory());
-        registry.addWorkstations(WKREIPlugin.OVEN_COOKING, ICON);
+        registry.addWorkstations(WKREIPlugin.OVEN_COOKING, ICON, EntryStacks.of(WKBlocks.COPPER_WITCHES_OVEN), EntryStacks.of(WKBlocks.EXPOSED_COPPER_WITCHES_OVEN), EntryStacks.of(WKBlocks.WEATHERED_COPPER_WITCHES_OVEN), EntryStacks.of(WKBlocks.OXIDIZED_COPPER_WITCHES_OVEN));
         registry.removePlusButton(WKREIPlugin.OVEN_COOKING);
     }
 
