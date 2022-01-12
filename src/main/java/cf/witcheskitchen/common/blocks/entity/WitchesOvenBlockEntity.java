@@ -61,6 +61,10 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements IDevi
         super(WKBlockEntityTypes.WITCHES_OVEN, pos, state, 4);
         // Passive cooking inventory manager
         this.passiveInventory = new InventoryManager<>(this, 4);
+        // Default value for witches oven smelting recipes is 100
+        this.maxProgress = 100;
+        // Passive cooking times
+        this.passiveProgress = new int[4];
         // Sync the values between client and server
         this.propertyDelegate = new PropertyDelegate() {
             @Override
@@ -89,10 +93,6 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements IDevi
                 return 4;
             }
         };
-        // Default value for witches oven smelting recipes is 100
-        this.maxProgress = 100;
-        // Passive cooking times
-        this.passiveProgress = new int[4];
     }
 
     private static void dropExperience(ServerWorld world, Vec3d pos, float experience) {

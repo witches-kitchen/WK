@@ -26,7 +26,6 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
-import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
@@ -40,12 +39,14 @@ public class BrewingBarrelBlockEntity extends WKDeviceBlockEntity implements Nam
     public static final int MAX_TIME = 168_000; // 7 days
     private final PropertyDelegate delegate;
     private boolean hasWater;
+    private boolean hasFinished;
     private int timer;
-    private BarrelFermentingRecipe lastRecipe = null;
+    private BarrelFermentingRecipe previousRecipe = null;
 
     public BrewingBarrelBlockEntity(BlockPos pos, BlockState state) {
         super(WKBlockEntityTypes.BREWING_BARREL, pos, state, 6);
         this.clientInventoryManager = new InventoryManager<>(this, 1);
+        this.hasFinished = false;
         this.delegate = new PropertyDelegate() {
             @Override
             public int get(int index) {
@@ -75,14 +76,15 @@ public class BrewingBarrelBlockEntity extends WKDeviceBlockEntity implements Nam
         }
         if (this.timer >= MAX_TIME) {
             if (this.makeAlcohol(recipe)) {
-                this.hasWater = false;
                 this.timer = 0;
+                this.hasWater = false;
+                this.hasFinished = true;
                 dirty = true;
             }
         } else {
             if (this.canMakeAlcohol(recipe)) {
                 dirty = true;
-                this.timer+= 2000;
+                this.timer++;
             } else {
                 this.timer = 0;
             }
@@ -103,6 +105,9 @@ public class BrewingBarrelBlockEntity extends WKDeviceBlockEntity implements Nam
     }
 
     public boolean fillBarrel(ItemStack stack) {
+        if (!this.getRenderStack().isOf(Items.GLASS_BOTTLE)) {
+            return false;
+        }
         if (this.hasWater) {
             return false;
         }
@@ -150,8 +155,8 @@ public class BrewingBarrelBlockEntity extends WKDeviceBlockEntity implements Nam
             return null;
         } else if (inputs.isEmpty()) {
             return null;
-        } else if (this.lastRecipe != null && lastRecipe.matches(this, world)) {
-            return lastRecipe;
+        } else if (this.previousRecipe != null && previousRecipe.matches(this, world)) {
+            return previousRecipe;
         } else {
             final BarrelFermentingRecipe recipe = world.getRecipeManager()
                     .listAllOfType(WKRecipeTypes.BARREL_FERMENTING_RECIPE_TYPE)
@@ -160,7 +165,7 @@ public class BrewingBarrelBlockEntity extends WKDeviceBlockEntity implements Nam
                     .findFirst()
                     .orElse(null);
             if (recipe != null) {
-                this.lastRecipe = recipe;
+                this.previousRecipe = recipe;
                 return recipe;
             }
             return null;
@@ -190,9 +195,7 @@ public class BrewingBarrelBlockEntity extends WKDeviceBlockEntity implements Nam
                     }
                 }
             }
-            ItemStack output = recipe.craft(this.clientInventoryManager);
-            ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), output);
-            this.clientInventoryManager.setStack(0, ItemStack.EMPTY);
+            this.clientInventoryManager.setStack(0, recipe.craft(this.clientInventoryManager));
             world.updateListeners(pos, this.getCachedState(), this.getCachedState(), Block.NOTIFY_ALL);
             return true;
         }
@@ -205,6 +208,7 @@ public class BrewingBarrelBlockEntity extends WKDeviceBlockEntity implements Nam
         Inventories.readNbt(nbt.getCompound("ClientInventory"), this.clientInventoryManager.getStacks());
         this.timer = nbt.getInt("Timer");
         this.hasWater = nbt.getBoolean("HasWater");
+        this.hasFinished = nbt.getBoolean("HasFinished");
     }
 
     @Override
@@ -215,6 +219,7 @@ public class BrewingBarrelBlockEntity extends WKDeviceBlockEntity implements Nam
         nbt.put("ClientInventory", clientData);
         nbt.putInt("Timer", this.timer);
         nbt.putBoolean("HasWater", this.hasWater);
+        nbt.putBoolean("HasFinished", this.hasFinished);
     }
 
     @Override
@@ -232,6 +237,14 @@ public class BrewingBarrelBlockEntity extends WKDeviceBlockEntity implements Nam
     public void onClose(PlayerEntity player) {
         super.onClose(player);
         this.playSound(SoundEvents.BLOCK_BARREL_CLOSE);
+    }
+
+    public void reset() {
+        if (this.world != null) {
+            this.hasWater = false;
+            this.hasFinished = false;
+            this.updateListeners();
+        }
     }
 
     @Nullable
@@ -271,5 +284,9 @@ public class BrewingBarrelBlockEntity extends WKDeviceBlockEntity implements Nam
 
     public void setRenderStack(ItemStack stack) {
         this.clientInventoryManager.setStack(0, stack);
+    }
+
+    public boolean hasFinished() {
+        return this.hasFinished;
     }
 }
