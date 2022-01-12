@@ -48,13 +48,13 @@ public class WKDeviceBlockEntity extends BlockEntity implements BlockEntityTicke
     @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
-        this.manager.read(nbt);
+        this.manager.readNbt(nbt);
     }
 
     @Override
     protected void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
-        this.manager.write(nbt);
+        this.manager.writeNbt(nbt);
     }
 
     protected void updateListeners() {

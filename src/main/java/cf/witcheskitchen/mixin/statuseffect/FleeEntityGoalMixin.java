@@ -21,18 +21,10 @@ public abstract class FleeEntityGoalMixin<T extends LivingEntity> extends Goal {
     @Shadow
     @Nullable
     protected T targetEntity;
+
     @Shadow
     @Final
     protected PathAwareEntity mob;
-
-    @Shadow
-    public abstract void start();
-
-    @Shadow
-    public abstract void stop();
-
-    @Shadow
-    public abstract boolean canStart();
 
     @Inject(method = "canStart", at = @At("TAIL"), cancellable = true)
     private void canStart(CallbackInfoReturnable<Boolean> cir) {

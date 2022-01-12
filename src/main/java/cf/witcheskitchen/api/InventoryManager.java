@@ -56,13 +56,27 @@ public class InventoryManager<T extends BlockEntity> implements Inventory {
         this.blockEntity = blockEntity;
     }
 
-    public void write(NbtCompound data) {
-        Inventories.writeNbt(data, this.inventory);
-    }
 
-    public void read(NbtCompound data) {
+    /**
+     * Reads the inventory data from {@link NbtCompound}
+     * of your {@link BlockEntity}.This is typically invoked
+     * when you load a {@link net.minecraft.world.World}
+     * or you open the container.
+     * @param data {@link NbtCompound} from your {@link BlockEntity} readNbt().
+     */
+    public void readNbt(NbtCompound data) {
         this.clear();
         Inventories.readNbt(data, this.inventory);
+    }
+
+    /**
+     * Writes the inventory data to {@link NbtCompound}.
+     * This is typically invoked when you exit a {@link net.minecraft.world.World}
+     * or the {@link Inventory} changes.
+     * @param data {@link NbtCompound} from your {@link BlockEntity} writeNbt().
+     */
+    public void writeNbt(NbtCompound data) {
+        Inventories.writeNbt(data, this.inventory);
     }
 
     /**
@@ -176,18 +190,26 @@ public class InventoryManager<T extends BlockEntity> implements Inventory {
 
     /**
      * Parent BlockEntity
-     *
      * @return BlockEntity
      */
     public T getContainer() {
         return this.blockEntity;
     }
 
+    /**
+     * Checks that the {@link BlockEntity} is valid and corresponds to the given parent,
+     * and that the {@link PlayerEntity} is at the required distance to open the container.
+     * @return a {@link Predicate} of {@link PlayerEntity}.
+     */
     protected Predicate<PlayerEntity> canUse() {
         return player -> player.getEntityWorld().getBlockEntity(this.getContainer().getPos()) == this.getContainer() && player.getPos().distanceTo(Vec3d.of(this.getContainer().getPos())) < 16;
     }
 
-
+    /**
+     * Getter for the {@link DefaultedList} of {@link ItemStack}
+     * that this instance of the manager is currently using.
+     * @return a reference to the {@link DefaultedList}.
+     */
     public DefaultedList<ItemStack> getStacks() {
         return this.inventory;
     }
