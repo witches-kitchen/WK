@@ -26,7 +26,7 @@ public class BrewingBarrelScreen extends ScreenBase<BrewingBarrelScreenHandler> 
         this.builder().drawSlot(matrices, this.getX() + 74, this.getY() + 48);
         this.builder().drawSlot(matrices, this.getX() + 93, this.getY() + 48);
         // Progress
-        this.builder().drawBrewingProgress(matrices, this.getX() + 125, this.getY() + 35, mouseX, mouseY, handler.getProgressScaled(100), 100,  handler.isFermenting());
+        this.builder().drawBrewingProgress(matrices, this.getX() + 125, this.getY() + 35, mouseX, mouseY, handler.getProgressScaled(100), 100, handler.isFermenting());
     }
 
 }

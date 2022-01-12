@@ -37,7 +37,8 @@ public class BrewingBarrelBlockEntityRender implements BlockEntityRenderer<Brewi
                 offsetX -= 1.0;
                 matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(90));
             }
-            default -> {}
+            default -> {
+            }
         }
 
         matrices.translate(0.51 + offsetX, 0.2, -0.02 + offsetZ);
