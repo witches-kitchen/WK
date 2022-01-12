@@ -28,6 +28,37 @@ public final class ScreenBuilder {
         RenderSystem.setShaderTexture(0, ScreenBuilder.GUI_ELEMENTS);
     }
 
+    public static void drawPercentageTooltip(ScreenBase<?> base, MatrixStack stack, int x, int y, int width, int height, int xMouse, int yMouse, int value, int max) {
+        x -= base.getX();
+        y -= base.getY();
+        if (base.isPointWithinBounds(x, y, width, height, xMouse, yMouse)) {
+            int percentage = scaledPercentageOf(value, max);
+            base.renderTooltip(stack, new LiteralText(String.valueOf(percentage))
+                    .formatted(percentageColor(percentage))
+                    .append("%"), xMouse, yMouse);
+        }
+    }
+
+    public static int scaledPercentageOf(long value, long max) {
+        if (value == 0) {
+            return 0;
+        } else {
+            return (int) ((value * 100.0f) / max);
+        }
+    }
+
+    public static Formatting percentageColor(int percentage) {
+        if (percentage < 20) {
+            return Formatting.RED;
+        } else if (percentage < 50) {
+            return Formatting.YELLOW;
+        } else if (percentage < 75) {
+            return Formatting.GREEN;
+        } else {
+            return Formatting.AQUA;
+        }
+    }
+
     public void drawContainer(final MatrixStack stack, final int left, final int top, final int width, final int height) {
         bindTexture();
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
@@ -103,12 +134,12 @@ public final class ScreenBuilder {
         }
     }
 
-    public void drawBrewingProgress(MatrixStack matrixStack, int posX, int posY,int mouseX, int mouseY, int progress, int maxProgress, boolean brewing) {
+    public void drawBrewingProgress(MatrixStack matrixStack, int posX, int posY, int mouseX, int mouseY, int progress, int maxProgress, boolean brewing) {
         bindTexture();
         this.parent.drawTexture(matrixStack, posX, posY, 151, 43, 10, 27);
         int i = 26 - (int) ((double) progress / (double) maxProgress * 27); // 26 down to zero
         if (brewing) {
-             this.parent.drawTexture(matrixStack, posX, posY + i, 163, 43 + i, 11, 28 - i);
+            this.parent.drawTexture(matrixStack, posX, posY + i, 163, 43 + i, 11, 28 - i);
             ScreenBuilder.drawPercentageTooltip(this.parent, matrixStack, posX, posY, 11, 28, mouseX, mouseY, progress, maxProgress);
         }
     }
@@ -116,37 +147,5 @@ public final class ScreenBuilder {
     public void drawBrewingInputLine(MatrixStack matrixStack, int posX, int posY) {
         bindTexture();
         this.parent.drawTexture(matrixStack, posX, posY, 1, 151, 26, 20);
-    }
-
-
-    public static void drawPercentageTooltip(ScreenBase<?> base, MatrixStack stack, int x, int y, int width, int height, int xMouse, int yMouse, int value, int max) {
-        x -= base.getX();
-        y -= base.getY();
-        if (base.isPointWithinBounds(x, y, width, height, xMouse, yMouse)) {
-            int percentage = scaledPercentageOf(value, max);
-            base.renderTooltip(stack, new LiteralText(String.valueOf(percentage))
-                    .formatted(percentageColor(percentage))
-                    .append("%"), xMouse, yMouse);
-        }
-    }
-
-    public static int scaledPercentageOf(long value, long max) {
-        if (value == 0) {
-            return 0;
-        } else {
-            return (int) ((value * 100.0f) / max);
-        }
-    }
-
-    public static Formatting percentageColor(int percentage) {
-        if (percentage < 20) {
-            return Formatting.RED;
-        } else if (percentage < 50) {
-            return Formatting.YELLOW;
-        } else if (percentage < 75) {
-            return Formatting.GREEN;
-        } else {
-            return Formatting.AQUA;
-        }
     }
 }

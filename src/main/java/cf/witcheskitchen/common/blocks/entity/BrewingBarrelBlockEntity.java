@@ -34,9 +34,9 @@ import org.jetbrains.annotations.Nullable;
 
 public class BrewingBarrelBlockEntity extends WKDeviceBlockEntity implements NamedScreenHandlerFactory {
 
+    public static final int MAX_TIME = 168_000; // 7 days
     @Environment(EnvType.CLIENT)
     private final InventoryManager<BrewingBarrelBlockEntity> clientInventoryManager;
-    public static final int MAX_TIME = 168_000; // 7 days
     private final PropertyDelegate delegate;
     private boolean hasWater;
     private boolean hasFinished;
@@ -50,7 +50,7 @@ public class BrewingBarrelBlockEntity extends WKDeviceBlockEntity implements Nam
         this.delegate = new PropertyDelegate() {
             @Override
             public int get(int index) {
-               return BrewingBarrelBlockEntity.this.timer;
+                return BrewingBarrelBlockEntity.this.timer;
             }
 
             @Override
@@ -84,7 +84,11 @@ public class BrewingBarrelBlockEntity extends WKDeviceBlockEntity implements Nam
         } else {
             if (this.canMakeAlcohol(recipe)) {
                 dirty = true;
+<<<<<<< HEAD
                 this.timer++;
+=======
+                this.timer += 2000;
+>>>>>>> 0f10dff2621a5d1fc0a44b984b323bd1f5e2d371
             } else {
                 this.timer = 0;
             }
@@ -186,7 +190,7 @@ public class BrewingBarrelBlockEntity extends WKDeviceBlockEntity implements Nam
                     stack.decrement(1);
                 } else {
                     // Remove remaining items, if any.
-                    for (int j = 0; j < this.size()-1; j++) {
+                    for (int j = 0; j < this.size() - 1; j++) {
                         final ItemStack remainingStack = this.getStack(j);
                         if (ingredient.test(remainingStack)) {
                             remainingStack.decrement(1);
@@ -268,9 +272,9 @@ public class BrewingBarrelBlockEntity extends WKDeviceBlockEntity implements Nam
 
     private void playSound(SoundEvent soundEvent) {
         final Vec3i vec3i = this.getCachedState().get(HorizontalFacingBlock.FACING).getVector();
-        double d = (double)this.pos.getX() + 0.5 + (double)vec3i.getX() / 2.0;
-        double e = (double)this.pos.getY() + 0.5 + (double)vec3i.getY() / 2.0;
-        double f = (double)this.pos.getZ() + 0.5 + (double)vec3i.getZ() / 2.0;
+        double d = (double) this.pos.getX() + 0.5 + (double) vec3i.getX() / 2.0;
+        double e = (double) this.pos.getY() + 0.5 + (double) vec3i.getY() / 2.0;
+        double f = (double) this.pos.getZ() + 0.5 + (double) vec3i.getZ() / 2.0;
         this.world.playSound(null, d, e, f, soundEvent, SoundCategory.BLOCKS, 0.5f, this.world.random.nextFloat() * 0.1f + 0.9f);
     }
 

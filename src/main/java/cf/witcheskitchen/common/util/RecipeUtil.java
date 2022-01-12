@@ -30,6 +30,7 @@ public class RecipeUtil {
 
     /**
      * Checks that a list of Ingredients match the contents inside an {@link Inventory}.
+     *
      * @return Whether they match.
      */
     public static boolean matches(Inventory inventory, DefaultedList<Ingredient> ingredients) {
@@ -37,7 +38,7 @@ public class RecipeUtil {
             return false;
         } else if (ingredients.isEmpty()) {
             return false;
-        } else  {
+        } else {
             final List<ItemStack> nonEmptyStacks = new ArrayList<>();
             for (int i = 0; i < inventory.size(); i++) {
                 final ItemStack stack = inventory.getStack(i);
@@ -81,6 +82,7 @@ public class RecipeUtil {
 
     /**
      * Deserializes an array of {@link Ingredient} from a JsonArray.
+     *
      * @param array JsonArray
      * @return DefaultedList of Ingredient
      */

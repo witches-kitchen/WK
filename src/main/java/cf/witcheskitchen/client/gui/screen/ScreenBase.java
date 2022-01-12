@@ -39,6 +39,7 @@ public class ScreenBase<T extends ScreenHandler> extends HandledScreen<T> {
         this.titleX = (backgroundWidth - textRenderer.getWidth(title)) / 2;
         this.titleY = 14;
     }
+
     // Public access
     @Override
     public boolean isPointWithinBounds(int x, int y, int width, int height, double pointX, double pointY) {
