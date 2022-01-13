@@ -93,6 +93,7 @@ public class BrewingBarrelBlock extends WKDeviceBlock implements Waterloggable {
         super.onStateReplaced(state, world, pos, newState, moved);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         final Direction dir = state.get(FACING);
@@ -105,11 +106,13 @@ public class BrewingBarrelBlock extends WKDeviceBlock implements Waterloggable {
         return new BrewingBarrelBlockEntity(pos, state);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public boolean hasComparatorOutput(BlockState state) {
         return true;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public int getComparatorOutput(BlockState state, World world, BlockPos pos) {
         return ScreenHandler.calculateComparatorOutput(world.getBlockEntity(pos));
@@ -120,6 +123,7 @@ public class BrewingBarrelBlock extends WKDeviceBlock implements Waterloggable {
         builder.add(FACING, Properties.WATERLOGGED);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public FluidState getFluidState(BlockState state) {
         return state.get(Properties.WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);

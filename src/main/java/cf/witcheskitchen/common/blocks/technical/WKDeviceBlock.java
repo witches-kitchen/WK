@@ -22,6 +22,7 @@ public abstract class WKDeviceBlock extends WKBlockEntityProvider {
         super(settings);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         final BlockEntity entity = world.getBlockEntity(pos);
@@ -38,6 +39,7 @@ public abstract class WKDeviceBlock extends WKBlockEntityProvider {
         return ActionResult.PASS;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         if (!state.isOf(newState.getBlock())) {
