@@ -60,7 +60,7 @@ public abstract class WKTallCropBlock extends WKCropBlock {
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         // Minecraft check for random plant tick
-        if (world.getBaseLightLevel(pos, 0) >= 9 && this.getAge(state) < this.getMaxAge() && random.nextInt((int)(25.0f / CropBlock.getAvailableMoisture(this, world, pos)) + 1) == 0) {
+        if (world.getBaseLightLevel(pos, 0) >= 9 && this.getAge(state) < this.getMaxAge() && random.nextInt((int) (25.0f / CropBlock.getAvailableMoisture(this, world, pos)) + 1) == 0) {
             this.applyGrowth(world, pos, state);
         }
     }
