@@ -33,7 +33,11 @@ public class BelladonnaCropBlock extends WKTallCropBlock {
     @Environment(EnvType.CLIENT)
     @Override
     protected ItemConvertible getSeedsItem() {
-        return WKItems.BELLADONNA_SEEDS;
+        return switch (this.type) {
+            case COMMON -> WKItems.BELLADONNA_SEEDS;
+            case GLOW -> WKItems.BELLADONNA_GLOW_SEEDS;
+            case NOCTURNAL -> WKItems.BELLADONNA_NOCTURNAL_SEEDS;
+        };
     }
 
     @Override

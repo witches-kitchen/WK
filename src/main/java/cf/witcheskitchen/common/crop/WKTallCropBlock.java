@@ -34,7 +34,6 @@ public abstract class WKTallCropBlock extends WKCropBlock {
         this.setDefaultState(this.getDefaultState().with(this.getAgeRange(), 0).with(TALL_PLANT, DoubleBlockHalf.LOWER));
     }
 
-
     /**
      * Age where the plant is going to start
      * using a second texture (upper plant part)
@@ -69,7 +68,7 @@ public abstract class WKTallCropBlock extends WKCropBlock {
         return world.getBlockState(pos.down()).getBlock() == this;
     }
 
-    // Do not want to drop loot twice (upper plant and lower plant)
+    // We not want to drop loot twice (upper plant and lower plant)
     // Instead if the upper part exists, we skip the drop.
     @Override
     public void afterBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack stack) {
