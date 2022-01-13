@@ -43,6 +43,7 @@ public class WKCropBlock extends CropBlock {
     }
 
     @Override // JANK
+    @SuppressWarnings("deprecation")
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
         Biome.Category biomeCat = world.getBiome(pos).getCategory();
         if (world.getChunk(pos).getStatus().getIndex() < ChunkStatus.FULL.getIndex()) {
