@@ -13,7 +13,7 @@
               "conditions": [
                 {
                   "condition": "minecraft:block_state_property",
-                  "block": "witcheskitchen:belladonna",
+                  "block": "witcheskitchen:belladonna_nocturnal",
                   "properties": {
                     "age": "6"
                   }
@@ -52,7 +52,7 @@
       "conditions": [
         {
           "condition": "minecraft:block_state_property",
-          "block": "witcheskitchen:belladonna",
+          "block": "witcheskitchen:belladonna_nocturnal",
           "properties": {
             "age": "6"
           }
