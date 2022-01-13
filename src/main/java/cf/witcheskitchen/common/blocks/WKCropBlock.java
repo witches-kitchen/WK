@@ -20,6 +20,7 @@ import net.minecraft.world.WorldView;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.ChunkStatus;
 
+@SuppressWarnings("removal")
 public class WKCropBlock extends CropBlock {
     protected static final VoxelShape[] AGE_TO_SHAPE = new VoxelShape[]{
             Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D),
