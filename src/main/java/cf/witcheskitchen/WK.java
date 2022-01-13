@@ -28,6 +28,10 @@ public class WK implements ModInitializer {
                     new Identifier("witcheskitchen", "general"))
             .icon(() -> new ItemStack(Items.POTION))
             .build();
+    public static final ItemGroup WK_SEED_GROUP = FabricItemGroupBuilder.create(
+                    new Identifier("witcheskitchen", "seed"))
+            .icon(() -> new ItemStack(WKItems.AMARANTH_SEEDS))
+            .build();
     public static WKConfig config;
     public static ArrayList<Block> modBlocks = new ArrayList<>();
     public static ArrayList<Block> leafBlocks = new ArrayList<>();

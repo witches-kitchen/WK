@@ -93,6 +93,7 @@ public class BrewingBarrelBlockEntity extends WKDeviceBlockEntity implements Nam
             this.markDirty();
         }
     }
+
     public boolean insertBottle(ItemStack stack) {
         if (this.clientInventoryManager.isEmpty() && stack.isOf(Items.GLASS_BOTTLE)) {
             this.timer = 0;
