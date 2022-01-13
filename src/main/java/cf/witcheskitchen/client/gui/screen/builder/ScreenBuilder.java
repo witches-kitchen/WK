@@ -144,8 +144,4 @@ public final class ScreenBuilder {
         }
     }
 
-    public void drawBrewingInputLine(MatrixStack matrixStack, int posX, int posY) {
-        bindTexture();
-        this.parent.drawTexture(matrixStack, posX, posY, 1, 151, 26, 20);
-    }
 }

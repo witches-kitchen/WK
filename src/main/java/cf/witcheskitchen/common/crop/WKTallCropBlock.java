@@ -1,28 +1,22 @@
 package cf.witcheskitchen.common.crop;
 
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.TallPlantBlock;
+import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.loot.context.LootContext;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.EnumProperty;
-import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
-import net.minecraft.world.WorldEvents;
 import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
+import java.util.Random;
 
 /**
  * This object gives you all properties of a tall plant
@@ -40,22 +34,6 @@ public abstract class WKTallCropBlock extends WKCropBlock {
         this.setDefaultState(this.getDefaultState().with(this.getAgeRange(), 0).with(TALL_PLANT, DoubleBlockHalf.LOWER));
     }
 
-    /**
-     * Destroys a bottom half of a tall double block (such as a plant or a door)
-     * without dropping an item when broken in creative.
-     *
-     * @see Block#onBreak(World, BlockPos, BlockState, PlayerEntity)
-     */
-    public static void onBreakInCreative(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-        BlockPos blockPos;
-        BlockState blockState;
-        DoubleBlockHalf half = state.get(TALL_PLANT);
-        if (half == DoubleBlockHalf.UPPER && (blockState = world.getBlockState(blockPos = pos.down())).isOf(state.getBlock()) && blockState.get(TALL_PLANT) == DoubleBlockHalf.LOWER) {
-            final BlockState blockState2 = blockState.contains(Properties.WATERLOGGED) && blockState.get(Properties.WATERLOGGED) ? Blocks.WATER.getDefaultState() : Blocks.AIR.getDefaultState();
-            world.setBlockState(blockPos, blockState2, Block.NOTIFY_ALL | Block.SKIP_DROPS);
-            world.syncWorldEvent(player, WorldEvents.BLOCK_BROKEN, blockPos, Block.getRawIdFromState(blockState));
-        }
-    }
 
     /**
      * Age where the plant is going to start
@@ -74,8 +52,16 @@ public abstract class WKTallCropBlock extends WKCropBlock {
         int i = this.getAge(state) + 1;
         final BlockState nextState = this.withAge(i);
         world.setBlockState(pos, nextState, Block.NOTIFY_LISTENERS);
-        if (i >= 4) {
+        if (i >= topLayerAge()) {
             world.setBlockState(pos.up(), nextState.with(TALL_PLANT, DoubleBlockHalf.UPPER), Block.NOTIFY_ALL);
+        }
+    }
+
+    @Override
+    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+        // Minecraft check for random plant tick
+        if (world.getBaseLightLevel(pos, 0) >= 9 && this.getAge(state) < this.getMaxAge() && random.nextInt((int)(25.0f / CropBlock.getAvailableMoisture(this, world, pos)) + 1) == 0) {
+            this.applyGrowth(world, pos, state);
         }
     }
 
@@ -83,36 +69,13 @@ public abstract class WKTallCropBlock extends WKCropBlock {
         return world.getBlockState(pos.down()).getBlock() == this;
     }
 
-    @Override
-    public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-        if (!world.isClient) {
-            if (player.isCreative()) {
-                WKTallCropBlock.onBreakInCreative(world, pos, state, player);
-            } else {
-                // Meaning this block does not have an upper part
-                if (this.getAge(state) < 4) {
-                    Block.dropStacks(state, world, pos, null, player, player.getMainHandStack());
-                }
-            }
-        }
-        super.onBreak(world, pos, state, player);
-    }
 
-    @Override
-    public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
-        return super.getDroppedStacks(state, builder);
-    }
-
-    @Override
-    public void onStacksDropped(BlockState state, ServerWorld world, BlockPos pos, ItemStack stack) {
-        super.onStacksDropped(state, world, pos, stack);
-    }
-
-    // Do not drop seed from here
-    // We handle this onBreak()
+    // Do not want to drop loot twice (upper plant and lower plant)
+    // Instead if the upper part exists, we skip the drop.
     @Override
     public void afterBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack stack) {
-        super.afterBreak(world, player, pos, Blocks.AIR.getDefaultState(), blockEntity, stack);
+        final BlockState drop = this.getAge(state) >= this.topLayerAge() ? Blocks.AIR.getDefaultState() : state;
+        super.afterBreak(world, player, pos, drop, blockEntity, stack);
     }
 
     @Override

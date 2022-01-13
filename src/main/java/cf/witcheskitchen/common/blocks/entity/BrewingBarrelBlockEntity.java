@@ -93,7 +93,6 @@ public class BrewingBarrelBlockEntity extends WKDeviceBlockEntity implements Nam
             this.markDirty();
         }
     }
-
     public boolean insertBottle(ItemStack stack) {
         if (this.clientInventoryManager.isEmpty() && stack.isOf(Items.GLASS_BOTTLE)) {
             this.timer = 0;
@@ -113,7 +112,6 @@ public class BrewingBarrelBlockEntity extends WKDeviceBlockEntity implements Nam
         }
         if (stack.isOf(Items.WATER_BUCKET)) {
             this.hasWater = true;
-            this.setRenderStack(Items.POTION.getDefaultStack());
             this.playSound(SoundEvents.ITEM_BOTTLE_FILL);
             return true;
         }
