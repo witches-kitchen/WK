@@ -99,11 +99,13 @@ public abstract class WKTallCropBlock extends WKCropBlock {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
         return super.getDroppedStacks(state, builder);
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void onStacksDropped(BlockState state, ServerWorld world, BlockPos pos, ItemStack stack) {
         super.onStacksDropped(state, world, pos, stack);
     }
