@@ -44,6 +44,11 @@ public class ChurchGrimEntity extends WKHostileEntity implements IAnimatable, An
 
     }
 
+    @Override
+    public boolean isUndead() {
+        return true;
+    }
+
     @Nullable
     @Override
     public UUID getAngryAt() {
