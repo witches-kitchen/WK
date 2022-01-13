@@ -14,6 +14,8 @@ public class WKItems {
     public static final Item BELLADONNA_BLOSSOM = new Item(new FabricItemSettings().group(WK.WK_GROUP));
 
     public static final Item BELLADONNA_SEEDS = new WKSeedItem(WKBlocks.BELLADONNA, new FabricItemSettings().group(WK.WK_GROUP));
+    public static final Item BELLADONNA_GLOW_SEEDS = new WKSeedItem(WKBlocks.BELLADONNA_GLOW, new FabricItemSettings().group(WK.WK_GROUP));
+    public static final Item BELLADONNA_NOCTURNAL_SEEDS = new WKSeedItem(WKBlocks.BELLADONNA_NOCTURNAL, new FabricItemSettings().group(WK.WK_GROUP));
     public static Item ST_JOHNS_WORT_SEEDS = new Item(new FabricItemSettings().group(WK.WK_GROUP));
     public static Item AMARANTH_SEEDS = new Item(new FabricItemSettings().group(WK.WK_GROUP));
     public static Item BRIAR_SEEDS = new Item(new FabricItemSettings().group(WK.WK_GROUP));
@@ -35,6 +37,8 @@ public class WKItems {
     public static void register() {
         registerItem("belladonna_blossom", BELLADONNA_BLOSSOM);
         registerItem("belladonna_seeds", BELLADONNA_SEEDS);
+        registerItem("belladonna_glow_seeds", BELLADONNA_GLOW_SEEDS);
+        registerItem("belladonna_nocturnal_seeds", BELLADONNA_NOCTURNAL_SEEDS);
         registerItem("dollop_of_frosting", DOLLOP_OF_FROSTING);
         registerItem("chocolate_rum_balls", CHOCOLATE_RUM_BALLS);
         registerItem("super_booze", SUPER_BOOZE);
