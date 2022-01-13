@@ -62,6 +62,7 @@ public class InventoryManager<T extends BlockEntity> implements Inventory {
      * of your {@link BlockEntity}.This is typically invoked
      * when you load a {@link net.minecraft.world.World}
      * or you open the container.
+     *
      * @param data {@link NbtCompound} from your {@link BlockEntity} readNbt().
      */
     public void readNbt(NbtCompound data) {
@@ -73,6 +74,7 @@ public class InventoryManager<T extends BlockEntity> implements Inventory {
      * Writes the inventory data to {@link NbtCompound}.
      * This is typically invoked when you exit a {@link net.minecraft.world.World}
      * or the {@link Inventory} changes.
+     *
      * @param data {@link NbtCompound} from your {@link BlockEntity} writeNbt().
      */
     public void writeNbt(NbtCompound data) {
@@ -190,6 +192,7 @@ public class InventoryManager<T extends BlockEntity> implements Inventory {
 
     /**
      * Parent BlockEntity
+     *
      * @return BlockEntity
      */
     public T getContainer() {
@@ -199,6 +202,7 @@ public class InventoryManager<T extends BlockEntity> implements Inventory {
     /**
      * Checks that the {@link BlockEntity} is valid and corresponds to the given parent,
      * and that the {@link PlayerEntity} is at the required distance to open the container.
+     *
      * @return a {@link Predicate} of {@link PlayerEntity}.
      */
     protected Predicate<PlayerEntity> canUse() {
@@ -208,6 +212,7 @@ public class InventoryManager<T extends BlockEntity> implements Inventory {
     /**
      * Getter for the {@link DefaultedList} of {@link ItemStack}
      * that this instance of the manager is currently using.
+     *
      * @return a reference to the {@link DefaultedList}.
      */
     public DefaultedList<ItemStack> getStacks() {

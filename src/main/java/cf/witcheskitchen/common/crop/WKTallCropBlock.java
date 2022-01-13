@@ -69,7 +69,6 @@ public abstract class WKTallCropBlock extends WKCropBlock {
         return world.getBlockState(pos.down()).getBlock() == this;
     }
 
-
     // Do not want to drop loot twice (upper plant and lower plant)
     // Instead if the upper part exists, we skip the drop.
     @Override
