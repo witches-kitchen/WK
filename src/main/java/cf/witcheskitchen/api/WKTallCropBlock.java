@@ -44,23 +44,36 @@ public abstract class WKTallCropBlock extends WKCropBlock {
 
     @Override
     public void applyGrowth(World world, BlockPos pos, BlockState state) {
-        // Stop if this is the second layer
-        if (isUpperState(world, pos)) {
+        if (this.isUpperState(world, pos)) {
+            dropStacks(state, world, pos, null);
             return;
         }
-        int i = this.getAge(state) + 1;
+        int j;
+        int i = this.getAge(state) + this.getGrowthAmount(world);
+        if (i > (j = this.getMaxAge())) {
+            i = j;
+        }
         final BlockState nextState = this.withAge(i);
         world.setBlockState(pos, nextState, Block.NOTIFY_LISTENERS);
         if (i >= topLayerAge()) {
-            world.setBlockState(pos.up(), nextState.with(TALL_PLANT, DoubleBlockHalf.UPPER), Block.NOTIFY_ALL);
+            this.putSecondLayer(world, pos, nextState);
         }
+    }
+
+    protected void putSecondLayer(World world, BlockPos pos, BlockState state) {
+        world.setBlockState(pos.up(), state.with(TALL_PLANT, DoubleBlockHalf.UPPER), Block.NOTIFY_ALL);
     }
 
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         // Minecraft check for random plant tick
+        int i = this.getAge(state) + 1;
+        final BlockState nextState = this.withAge(i);
         if (world.getBaseLightLevel(pos, 0) >= 9 && this.getAge(state) < this.getMaxAge() && random.nextInt((int) (25.0f / CropBlock.getAvailableMoisture(this, world, pos)) + 1) == 0) {
-            this.applyGrowth(world, pos, state);
+            world.setBlockState(pos, this.withAge(i), Block.NOTIFY_LISTENERS);
+            if (i >= this.topLayerAge()) {
+                this.putSecondLayer(world, pos, nextState);
+            }
         }
     }
 

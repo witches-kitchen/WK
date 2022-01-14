@@ -46,7 +46,7 @@ public abstract class WKCropBlock extends CropBlock implements Fertilizable {
 
     @Override
     protected int getGrowthAmount(World world) {
-        return MathHelper.nextInt(world.random, 2, 5);
+        return MathHelper.nextInt(world.random, 2, this.getMaxAge() - 2);
     }
 
     @Override
