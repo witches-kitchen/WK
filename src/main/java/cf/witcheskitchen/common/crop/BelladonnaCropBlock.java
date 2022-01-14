@@ -1,5 +1,6 @@
 package cf.witcheskitchen.common.crop;
 
+import cf.witcheskitchen.api.WKTallCropBlock;
 import cf.witcheskitchen.common.registry.WKItems;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
