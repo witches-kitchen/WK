@@ -63,6 +63,7 @@ public class WK implements ModInitializer {
         WKBlockEntityTypes.register();
         WKRecipeTypes.register();
         WKGenerator.register();
+        WKEventsRegistry.register();
         WKStatusEffects.register();
         WKSounds.register();
         GeckoLib.initialize();
