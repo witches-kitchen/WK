@@ -12,8 +12,6 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.entity.mob.GhastEntity;
 import net.minecraft.entity.mob.MobEntity;
@@ -35,6 +33,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.IAnimationTickable;
@@ -245,22 +244,35 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
                 this.world.playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.ENTITY_PARROT_EAT, this.getSoundCategory(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
             }
 
-            if (!this.world.isClient) {
-                if (this.random.nextInt(10) == 0) {
-                    this.setOwner(player);
-                    this.world.sendEntityStatus(this, (byte) 7);
-                } else {
-                    this.world.sendEntityStatus(this, (byte) 6);
-                }
-            }
-        } else if (this.isTamed() && this.isOwner(player)) {
-            if (!this.world.isClient) {
-                this.setSitting(!this.isSitting());
-            }
-
-            return ActionResult.success(this.world.isClient);
         } else {
-            return super.interactMob(player, hand);
+            if (this.isTamed()) {
+                if (TAMING_INGREDIENTS.contains(itemStack.getItem()) && this.getHealth() < this.getMaxHealth()) {
+                    if (!player.getAbilities().creativeMode) {
+                        itemStack.decrement(1);
+                    }
+
+                    this.heal((2f));
+                    this.emitGameEvent(GameEvent.MOB_INTERACT, this.getCameraBlockPos());
+                    return ActionResult.SUCCESS;
+                }
+
+                if (!this.world.isClient) {
+                    if (this.random.nextInt(10) == 0) {
+                        this.setOwner(player);
+                        this.world.sendEntityStatus(this, (byte) 7);
+                    } else {
+                        this.world.sendEntityStatus(this, (byte) 6);
+                    }
+                }
+            } else if (this.isTamed() && this.isOwner(player)) {
+                if (!this.world.isClient) {
+                    this.setSitting(!this.isSitting());
+                }
+
+                return ActionResult.success(this.world.isClient);
+            } else {
+                return super.interactMob(player, hand);
+            }
         }
         return super.interactMob(player, hand);
     }
