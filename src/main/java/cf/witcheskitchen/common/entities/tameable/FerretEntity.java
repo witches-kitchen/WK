@@ -241,7 +241,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
             }
 
             if (!this.isSilent()) {
-                this.world.playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.ENTITY_PARROT_EAT, this.getSoundCategory(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
+                this.world.playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.ENTITY_FOX_EAT, this.getSoundCategory(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
             }
 
         } else {
@@ -251,7 +251,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
                         itemStack.decrement(1);
                     }
 
-                    this.heal((2f));
+                    this.heal(2f);
                     this.emitGameEvent(GameEvent.MOB_INTERACT, this.getCameraBlockPos());
                     return ActionResult.SUCCESS;
                 }
