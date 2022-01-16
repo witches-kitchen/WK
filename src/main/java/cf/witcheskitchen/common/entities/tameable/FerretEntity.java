@@ -56,7 +56,6 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
     //FIXME: Figure out why this won't breed!
     public static final Ingredient BREEDING_INGREDIENTS;
     public static final Set<Item> TAMING_INGREDIENTS;
-    public static final Predicate<LivingEntity> FOLLOW_TAMED_PREDICATE;
     public static final Predicate<LivingEntity> FLEE_SUPERNATURAL;
     public static final TrackedData<Integer> VARIANT = DataTracker.registerData(WKTameableEntity.class,
             TrackedDataHandlerRegistry.INTEGER);
@@ -66,10 +65,6 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
     static {
         BREEDING_INGREDIENTS = Ingredient.ofItems(Items.RABBIT, Items.COOKED_RABBIT, Items.CHICKEN, Items.COOKED_CHICKEN, Items.EGG, Items.RABBIT_FOOT, Items.TURTLE_EGG);
         TAMING_INGREDIENTS = Sets.newHashSet(Items.RABBIT, Items.COOKED_RABBIT, Items.CHICKEN, Items.COOKED_CHICKEN, Items.EGG, Items.RABBIT_FOOT, Items.TURTLE_EGG);
-        FOLLOW_TAMED_PREDICATE = (entity) -> {
-            EntityType<?> entityType = entity.getType();
-            return entityType == EntityType.CHICKEN || entityType == EntityType.RABBIT;
-        };
         FLEE_SUPERNATURAL = (entity) -> {
             EntityType<?> entityType = entity.getType();
             return entityType == WKEntities.CUSITH || WKApi.isGreaterDemon(entity);
@@ -107,6 +102,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         this.goalSelector.add(1, new LookAtEntityGoal(this, ChickenEntity.class, 12.0f));
         this.goalSelector.add(1, new AnimalMateGoal(this, 1.0D));
         this.goalSelector.add(1, new FollowParentGoal(this, 1.25D));
+        this.goalSelector.add(9, new AttackGoal(this));
         this.goalSelector.add(1, new SitGoal(this));
         this.goalSelector.add(1, new FollowMobGoal(this, 1.0D, 3.0F, 7.0F));
         this.goalSelector.add(1, new FollowOwnerGoal(this, 1.0D, 3.0F, 10.0F, false));
@@ -114,7 +110,8 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         this.goalSelector.add(1, new StopAndLookAtEntityGoal(this, MobEntity.class, 2.0f, 0.8f));
         this.goalSelector.add(1, new WanderAroundFarGoal(this, 0.8D, 1));
         this.goalSelector.add(1, new FleeEntityGoal(this, LivingEntity.class, 16, 1, 3, FLEE_SUPERNATURAL));
-        this.targetSelector.add(1, new UntamedActiveTargetGoal(this, AnimalEntity.class, true, FOLLOW_TAMED_PREDICATE));
+        this.targetSelector.add(1, new UntamedActiveTargetGoal(this, RabbitEntity.class, false, (Predicate)null));
+        this.targetSelector.add(1, new UntamedActiveTargetGoal(this, ChickenEntity.class, false, (Predicate)null));
         this.targetSelector.add(1, new RevengeGoal(this).setGroupRevenge());
     }
 
@@ -134,6 +131,16 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         }
 
         return ferretEntity;
+    }
+
+    @Override
+    public boolean tryAttack(Entity target) {
+        return target.damage(DamageSource.mob(this), 3.0F);
+    }
+
+    @Override
+    public boolean isPushable() {
+        return true;
     }
 
     @Override

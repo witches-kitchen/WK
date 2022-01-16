@@ -49,6 +49,11 @@ public class ChurchGrimEntity extends WKHostileEntity implements IAnimatable, An
         return true;
     }
 
+    @Override
+    public boolean isPushable() {
+        return false;
+    }
+
     @Nullable
     @Override
     public UUID getAngryAt() {

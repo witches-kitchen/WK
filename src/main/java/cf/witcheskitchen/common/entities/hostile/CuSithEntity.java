@@ -27,6 +27,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import org.intellij.lang.annotations.Identifier;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -92,6 +93,11 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
     @Override
     public float getEyeHeight(EntityPose pose) {
         return super.getEyeHeight(pose);
+    }
+
+    @Override
+    public boolean isPushable() {
+        return false;
     }
 
     @Override
