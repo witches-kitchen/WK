@@ -15,7 +15,7 @@ public class WKEventsHandler {
     /**
      * Loot tables are technical JSON files that are used to dictate what items should generate in various situations,
      * such as killing a mob or what items can be fished.
-     *
+     * <p>
      * The simplest solution to add an item to the loot tables without replacing vanilla loot table files, (which can break other mods)
      * is by listening to Loot Tables loading (an event provided by the Fabric API).
      */
