@@ -12,6 +12,8 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.entity.mob.GhastEntity;
 import net.minecraft.entity.mob.MobEntity;
@@ -100,20 +102,20 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
     @Override
     protected void initGoals() {
         super.initGoals();
-        this.goalSelector.add(0, new SwimGoal(this));
-        this.goalSelector.add(2, new LookAtEntityGoal(this, RabbitEntity.class, 12.0f));
-        this.goalSelector.add(2, new LookAtEntityGoal(this, ChickenEntity.class, 12.0f));
-        this.goalSelector.add(7, new AnimalMateGoal(this, 1.0D));
-        this.goalSelector.add(4, new FollowParentGoal(this, 1.25D));
-        this.goalSelector.add(2, new SitGoal(this));
-        this.goalSelector.add(3, new FollowMobGoal(this, 1.0D, 3.0F, 7.0F));
-        this.goalSelector.add(6, new FollowOwnerGoal(this, 1.0D, 3.0F, 10.0F, false));
-        this.goalSelector.add(2, new MeleeAttackGoal(this, 1, true));
-        this.goalSelector.add(4, new StopAndLookAtEntityGoal(this, MobEntity.class, 2.0f, 0.8f));
-        this.goalSelector.add(6, new WanderAroundFarGoal(this, 0.8D, 1));
+        this.goalSelector.add(1, new SwimGoal(this));
+        this.goalSelector.add(1, new LookAtEntityGoal(this, RabbitEntity.class, 12.0f));
+        this.goalSelector.add(1, new LookAtEntityGoal(this, ChickenEntity.class, 12.0f));
+        this.goalSelector.add(1, new AnimalMateGoal(this, 1.0D));
+        this.goalSelector.add(1, new FollowParentGoal(this, 1.25D));
+        this.goalSelector.add(1, new SitGoal(this));
+        this.goalSelector.add(1, new FollowMobGoal(this, 1.0D, 3.0F, 7.0F));
+        this.goalSelector.add(1, new FollowOwnerGoal(this, 1.0D, 3.0F, 10.0F, false));
+        this.goalSelector.add(1, new MeleeAttackGoal(this, 1, true));
+        this.goalSelector.add(1, new StopAndLookAtEntityGoal(this, MobEntity.class, 2.0f, 0.8f));
+        this.goalSelector.add(1, new WanderAroundFarGoal(this, 0.8D, 1));
         this.goalSelector.add(1, new FleeEntityGoal(this, LivingEntity.class, 16, 1, 3, FLEE_SUPERNATURAL));
-        this.targetSelector.add(5, new UntamedActiveTargetGoal(this, AnimalEntity.class, true, FOLLOW_TAMED_PREDICATE));
-        this.targetSelector.add(0, new RevengeGoal(this).setGroupRevenge());
+        this.targetSelector.add(1, new UntamedActiveTargetGoal(this, AnimalEntity.class, true, FOLLOW_TAMED_PREDICATE));
+        this.targetSelector.add(1, new RevengeGoal(this).setGroupRevenge());
     }
 
     @Override
@@ -241,41 +243,30 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
             }
 
             if (!this.isSilent()) {
-                this.world.playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.ENTITY_FOX_EAT, this.getSoundCategory(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
+                this.world.playSound((PlayerEntity)null, this.getX(), this.getY(), this.getZ(), SoundEvents.ENTITY_FOX_EAT, this.getSoundCategory(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
             }
 
+            if (!this.world.isClient) {
+                if (this.random.nextInt(10) == 0) {
+                    this.setOwner(player);
+                    this.world.sendEntityStatus(this, (byte)7);
+                } else {
+                    this.world.sendEntityStatus(this, (byte)6);
+                }
+            }
+
+            return ActionResult.success(this.world.isClient);
+        } else if (this.isTamed() && this.isOwner(player)) {
+            if (!this.world.isClient) {
+                this.setSitting(!this.isSitting());
+            }
+
+            return ActionResult.success(this.world.isClient);
         } else {
-            if (this.isTamed()) {
-                if (TAMING_INGREDIENTS.contains(itemStack.getItem()) && this.getHealth() < this.getMaxHealth()) {
-                    if (!player.getAbilities().creativeMode) {
-                        itemStack.decrement(1);
-                    }
-
-                    this.heal(2f);
-                    this.emitGameEvent(GameEvent.MOB_INTERACT, this.getCameraBlockPos());
-                    return ActionResult.SUCCESS;
-                }
-
-                if (!this.world.isClient) {
-                    if (this.random.nextInt(10) == 0) {
-                        this.setOwner(player);
-                        this.world.sendEntityStatus(this, (byte) 7);
-                    } else {
-                        this.world.sendEntityStatus(this, (byte) 6);
-                    }
-                }
-            } else if (this.isTamed() && this.isOwner(player)) {
-                if (!this.world.isClient) {
-                    this.setSitting(!this.isSitting());
-                }
-
-                return ActionResult.success(this.world.isClient);
-            } else {
-                return super.interactMob(player, hand);
-            }
+            return super.interactMob(player, hand);
         }
-        return super.interactMob(player, hand);
     }
+
 
     @Override
     public boolean isBreedingItem(ItemStack stack) {
