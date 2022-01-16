@@ -69,7 +69,7 @@ public class BrewingBarrelBlockEntity extends WKDeviceBlockEntity implements Nam
     public void tick(World world, BlockPos pos, BlockState state, WKDeviceBlockEntity blockEntity) {
         super.tick(world, pos, state, blockEntity);
         boolean dirty = false;
-        final var recipe = this.findRecipeFor(world, this.getMainManager().getStacks());
+        final var recipe = this.findRecipeFor(world, this.manager.getStacks());
         if (recipe == null) {
             this.timer = 0;
             return;
@@ -137,7 +137,7 @@ public class BrewingBarrelBlockEntity extends WKDeviceBlockEntity implements Nam
             return false;
         } else if (matchingRecipe == null) {
             return false;
-        } else if (this.getMainManager().isEmpty()) {
+        } else if (this.manager.isEmpty()) {
             return false;
         } else if (!this.hasWater) {
             return false;

@@ -6,6 +6,7 @@ import cf.witcheskitchen.common.blocks.WKSaplingBlock;
 import cf.witcheskitchen.common.blocks.WKStairsBlock;
 import cf.witcheskitchen.common.blocks.technical.BrewingBarrelBlock;
 import cf.witcheskitchen.common.blocks.technical.TeapotBlock;
+import cf.witcheskitchen.common.blocks.technical.WitchesCauldronBlock;
 import cf.witcheskitchen.common.blocks.technical.WitchesOvenBlock;
 import cf.witcheskitchen.common.crop.BelladonnaCropBlock;
 import cf.witcheskitchen.common.generator.WKSaplingGenerator;
@@ -130,6 +131,7 @@ public class WKBlocks {
     public static final Block EXPOSED_COPPER_WITCHES_OVEN = new WitchesOvenBlock(FabricBlockSettings.copy(Blocks.EXPOSED_COPPER).luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0));
     public static final Block WEATHERED_COPPER_WITCHES_OVEN = new WitchesOvenBlock(FabricBlockSettings.copy(Blocks.WEATHERED_COPPER).luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0));
     public static final Block OXIDIZED_COPPER_WITCHES_OVEN = new WitchesOvenBlock(FabricBlockSettings.copy(Blocks.OXIDIZED_COPPER).luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0));
+    public static final Block IRON_WITCHES_CAULDRON = new WitchesCauldronBlock(FabricBlockSettings.copy(Blocks.CAULDRON));
     public static final Block BLACKTHORN_SAPLING = new WKSaplingBlock(new WKSaplingGenerator(() -> WKGenerator.BLACKTHORN_TREE), FabricBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
     public static final Block ELDER_SAPLING = new WKSaplingBlock(new WKSaplingGenerator(() -> WKGenerator.ELDER_TREE), FabricBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
     public static final Block HAWTHORN_SAPLING = new WKSaplingBlock(new WKSaplingGenerator(() -> WKGenerator.HAWTHORN_TREE), FabricBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
@@ -162,6 +164,7 @@ public class WKBlocks {
         registerBlock("exposed_copper_witches_oven", EXPOSED_COPPER_WITCHES_OVEN, WK.WK_GROUP);
         registerBlock("weathered_copper_witches_oven", WEATHERED_COPPER_WITCHES_OVEN, WK.WK_GROUP);
         registerBlock("oxidized_copper_witches_oven", OXIDIZED_COPPER_WITCHES_OVEN, WK.WK_GROUP);
+        registerBlock("iron_witches_cauldron", IRON_WITCHES_CAULDRON, WK.WK_GROUP);
         registerBlock("oak_brewing_barrel", OAK_BREWING_BARREL, WK.WK_GROUP);
         registerBlock("spruce_brewing_barrel", SPRUCE_BREWING_BARREL, WK.WK_GROUP);
         registerBlock("birch_brewing_barrel", BIRCH_BREWING_BARREL, WK.WK_GROUP);

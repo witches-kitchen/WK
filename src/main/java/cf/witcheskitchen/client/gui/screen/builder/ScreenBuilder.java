@@ -115,15 +115,31 @@ public final class ScreenBuilder {
         this.parent.drawTexture(matrixStack, posX, posY, OUTPUT_SLOT_U, OUTPUT_SLOT_V, 26, 26);
     }
 
+    /**
+     * Draws the vanilla smelting progress (arrow) at the given position.
+     * @param matrixStack MatrixStack
+     * @param posX gui posX
+     * @param posY gui posY
+     * @param progress current progress
+     * @param maxProgress max progress
+     */
     public void drawSmeltingProgress(MatrixStack matrixStack, int posX, int posY, int progress, int maxProgress) {
         bindTexture();
         this.parent.drawTexture(matrixStack, posX, posY, 150, 0, 22, 15);
         int i = (int) ((double) progress / (double) maxProgress * 23);
         i = Math.max(i, 0);
         this.parent.drawTexture(matrixStack, posX, posY, 172, 0, i, 16);
-
     }
 
+    /**
+     * Draws the vanilla burning progress at the given position
+     * @param matrixStack MatrixStack
+     * @param posX gui posX
+     * @param posY gui posY
+     * @param burning whether the device is burning
+     * @param progress current burning progress
+     * @param maxProgress max burning progress (depends on the stack fuel)
+     */
     public void drawBurningProgress(MatrixStack matrixStack, int posX, int posY, boolean burning, int progress, int maxProgress) {
         bindTexture();
         this.parent.drawTexture(matrixStack, posX, posY, 239, 34, 13, 13);
@@ -134,6 +150,17 @@ public final class ScreenBuilder {
         }
     }
 
+    /**
+     * Draws the vanilla brewing progress at the given position and a tooltip with the percentage completed.
+     * @param matrixStack MatrixStack
+     * @param posX gui posX
+     * @param posY gui posY
+     * @param mouseX current mouseX position
+     * @param mouseY current mouseY position
+     * @param progress current progress
+     * @param maxProgress max progress
+     * @param brewing whether the device is brewing
+     */
     public void drawBrewingProgress(MatrixStack matrixStack, int posX, int posY, int mouseX, int mouseY, int progress, int maxProgress, boolean brewing) {
         bindTexture();
         this.parent.drawTexture(matrixStack, posX, posY, 151, 43, 10, 27);

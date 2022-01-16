@@ -32,7 +32,7 @@ public class ScreenBase<T extends ScreenHandler> extends HandledScreen<T> {
         super.drawMouseoverTooltip(matrices, mouseX, mouseY);
     }
 
-    //centers title
+    // Centers title
     @Override
     protected void init() {
         super.init();
@@ -46,7 +46,7 @@ public class ScreenBase<T extends ScreenHandler> extends HandledScreen<T> {
         return super.isPointWithinBounds(x, y, width, height, pointX, pointY);
     }
 
-    //getters for positions within our background
+    // Getters for positions within our background
     public int getX() {
         return this.x;
     }
@@ -55,7 +55,7 @@ public class ScreenBase<T extends ScreenHandler> extends HandledScreen<T> {
         return this.y;
     }
 
-    //background dimensions
+    // Background dimensions
     public int getWidth() {
         return this.backgroundWidth;
     }

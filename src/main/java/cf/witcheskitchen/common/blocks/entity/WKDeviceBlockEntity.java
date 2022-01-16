@@ -21,7 +21,7 @@ import java.util.Random;
 
 public class WKDeviceBlockEntity extends BlockEntity implements BlockEntityTicker<WKDeviceBlockEntity>, Inventory {
 
-    private final InventoryManager<WKDeviceBlockEntity> manager;
+    protected final InventoryManager<WKDeviceBlockEntity> manager;
     private boolean isUnderWater;
 
     public WKDeviceBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int size) {
@@ -106,7 +106,4 @@ public class WKDeviceBlockEntity extends BlockEntity implements BlockEntityTicke
         return isUnderWater;
     }
 
-    public InventoryManager<WKDeviceBlockEntity> getMainManager() {
-        return manager;
-    }
 }
