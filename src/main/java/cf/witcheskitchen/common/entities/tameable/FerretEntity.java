@@ -253,13 +253,6 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
                     this.world.sendEntityStatus(this, (byte) 6);
                 }
             }
-
-            this.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 900));
-            if (player.isCreative() || !this.isInvulnerable()) {
-                this.damage(DamageSource.player(player), 3.4028235E38F);
-            }
-
-            return ActionResult.success(this.world.isClient);
         } else if (this.isTamed() && this.isOwner(player)) {
             if (!this.world.isClient) {
                 this.setSitting(!this.isSitting());
@@ -269,6 +262,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         } else {
             return super.interactMob(player, hand);
         }
+        return super.interactMob(player, hand);
     }
 
     @Override
