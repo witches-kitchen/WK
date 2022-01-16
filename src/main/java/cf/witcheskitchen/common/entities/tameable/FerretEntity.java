@@ -12,6 +12,8 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.entity.mob.GhastEntity;
 import net.minecraft.entity.mob.MobEntity;
@@ -33,7 +35,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
-import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.IAnimationTickable;
@@ -106,6 +107,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         this.goalSelector.add(7, new AnimalMateGoal(this, 1.0D));
         this.goalSelector.add(4, new FollowParentGoal(this, 1.25D));
         this.goalSelector.add(2, new SitGoal(this));
+        this.goalSelector.add(3, new FollowMobGoal(this, 1.0D, 3.0F, 7.0F));
         this.goalSelector.add(6, new FollowOwnerGoal(this, 1.0D, 10.0F, 2.0F, false));
         this.goalSelector.add(2, new MeleeAttackGoal(this, 1, true));
         this.goalSelector.add(4, new StopAndLookAtEntityGoal(this, MobEntity.class, 2.0f, 0.8f));
@@ -234,14 +236,13 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
     @Override
     public ActionResult interactMob(PlayerEntity player, Hand hand) {
         ItemStack itemStack = player.getStackInHand(hand);
-        Item item = itemStack.getItem();
         if (!this.isTamed() && TAMING_INGREDIENTS.contains(itemStack.getItem())) {
             if (!player.getAbilities().creativeMode) {
                 itemStack.decrement(1);
             }
 
             if (!this.isSilent()) {
-                this.world.playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.ENTITY_FOX_EAT, this.getSoundCategory(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
+                this.world.playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.ENTITY_PARROT_EAT, this.getSoundCategory(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
             }
 
             if (!this.world.isClient) {
@@ -252,45 +253,22 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
                     this.world.sendEntityStatus(this, (byte) 6);
                 }
             }
-        } else {
-            if (this.isTamed()) {
-                if (this.isBreedingItem(itemStack) && this.getHealth() < this.getMaxHealth()) {
-                    if (!player.getAbilities().creativeMode) {
-                        itemStack.decrement(1);
-                    }
 
-                    this.heal(2);
-                    this.emitGameEvent(GameEvent.MOB_INTERACT, this.getCameraBlockPos());
-                    return ActionResult.SUCCESS;
-                }
-
-                if ((item != null)) {
-                    ActionResult bl = super.interactMob(player, hand);
-                    if ((!bl.isAccepted() || this.isBaby()) && this.isOwner(player)) {
-                        this.setSitting(!this.isSitting());
-                        this.jumping = false;
-                        this.navigation.stop();
-                        this.setTarget(null);
-                        return ActionResult.SUCCESS;
-                    }
-
-                    return bl;
-                }
-                if (this.random.nextInt(3) == 0) {
-                    this.setOwner(player);
-                    this.navigation.stop();
-                    this.setTarget(null);
-                    this.setSitting(true);
-                    this.world.sendEntityStatus(this, (byte) 7);
-                } else {
-                    this.world.sendEntityStatus(this, (byte) 6);
-                }
-
-                return ActionResult.SUCCESS;
+            this.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 900));
+            if (player.isCreative() || !this.isInvulnerable()) {
+                this.damage(DamageSource.player(player), 3.4028235E38F);
             }
 
+            return ActionResult.success(this.world.isClient);
+        } else if (this.isTamed() && this.isOwner(player)) {
+            if (!this.world.isClient) {
+                this.setSitting(!this.isSitting());
+            }
+
+            return ActionResult.success(this.world.isClient);
+        } else {
+            return super.interactMob(player, hand);
         }
-        return super.interactMob(player, hand);
     }
 
     @Override
