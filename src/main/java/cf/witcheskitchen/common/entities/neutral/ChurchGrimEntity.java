@@ -15,6 +15,7 @@ import java.util.UUID;
 public class ChurchGrimEntity extends WKHostileEntity implements IAnimatable, Angerable {
 
     //Add a string or something here for a variant that is a white, short-haired dog and can appear if named Max
+    private final AnimationFactory factory = new AnimationFactory(this);
     public ChurchGrimEntity(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -31,7 +32,7 @@ public class ChurchGrimEntity extends WKHostileEntity implements IAnimatable, An
 
     @Override
     public AnimationFactory getFactory() {
-        return null;
+        return this.factory;
     }
 
     @Override
