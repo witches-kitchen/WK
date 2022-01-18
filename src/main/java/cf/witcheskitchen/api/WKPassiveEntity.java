@@ -11,6 +11,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+//Todo: Revamp texture variants
 public abstract class WKPassiveEntity extends PassiveEntity {
     /**
      * This allows the mod to assign a number of textural variants for a mob.

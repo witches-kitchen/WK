@@ -17,6 +17,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+//Todo: Revamp texture variants
 public abstract class WKMountEntity extends AnimalEntity implements InventoryChangedListener, JumpingMount, Saddleable {
     public static final TrackedData<Integer> VARIANT = DataTracker.registerData(WKMountEntity.class,
             TrackedDataHandlerRegistry.INTEGER);

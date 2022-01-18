@@ -54,6 +54,7 @@ import java.util.function.Predicate;
 public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnimationTickable {
 
     //FIXME: Figure out why this won't breed!
+    //FIXME: This entire damn mob
     public static final Ingredient BREEDING_INGREDIENTS;
     public static final Set<Item> TAMING_INGREDIENTS;
     public static final Predicate<LivingEntity> FLEE_SUPERNATURAL;

@@ -29,6 +29,7 @@ public class ParalysisStatusEffect extends StatusEffect {
         return false;
     }
 
+    //Todo: Make paralysis potions cause the player to sink if they are in water
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
         BlockPos pos = entity.getBlockPos();
