@@ -1,12 +1,9 @@
 package cf.witcheskitchen.common.entities.neutral;
 
-import cf.witcheskitchen.api.WKHostileEntity;
 import cf.witcheskitchen.api.WKTameableEntity;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Tameable;
 import net.minecraft.entity.mob.Angerable;
-import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.server.world.ServerWorld;
