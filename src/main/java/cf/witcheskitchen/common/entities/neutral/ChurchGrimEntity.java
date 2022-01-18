@@ -1,7 +1,9 @@
 package cf.witcheskitchen.common.entities.neutral;
 
 import cf.witcheskitchen.api.WKHostileEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.Tameable;
 import net.minecraft.entity.mob.Angerable;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.world.World;
@@ -12,7 +14,7 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import java.util.UUID;
 
-public class ChurchGrimEntity extends WKHostileEntity implements IAnimatable, Angerable {
+public class ChurchGrimEntity extends WKHostileEntity implements IAnimatable, Angerable, Tameable {
 
     //Add a string or something here for a variant that is a white, short-haired dog and can appear if named Max
     private final AnimationFactory factory = new AnimationFactory(this);
@@ -69,5 +71,17 @@ public class ChurchGrimEntity extends WKHostileEntity implements IAnimatable, An
     @Override
     public void chooseRandomAngerTime() {
 
+    }
+
+    @Nullable
+    @Override
+    public UUID getOwnerUuid() {
+        return null;
+    }
+
+    @Nullable
+    @Override
+    public Entity getOwner() {
+        return null;
     }
 }
