@@ -6,6 +6,7 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.util.math.BlockPos;
 
+//Todo: This
 public class ShadowsStatusEffect extends StatusEffect {
     public ShadowsStatusEffect(StatusEffectCategory category, int color) {
         super(category, color);
