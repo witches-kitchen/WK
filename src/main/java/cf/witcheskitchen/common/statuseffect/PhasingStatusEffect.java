@@ -29,7 +29,6 @@ public class PhasingStatusEffect extends InstantStatusEffect {
 
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-        BlockPos pos = entity.getBlockPos();
         World world = entity.getEntityWorld();
         if (!world.isClient) {
             double d = entity.getX();
