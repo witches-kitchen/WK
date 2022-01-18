@@ -15,6 +15,7 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import java.util.UUID;
 
+//Todo: This once structures are in
 public class ChurchGrimEntity extends WKTameableEntity implements IAnimatable, Angerable, Tameable {
 
     //Add a string or something here for a variant that is a white, short-haired dog and can appear if named Max
