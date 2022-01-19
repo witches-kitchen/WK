@@ -30,7 +30,9 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.TimeHelper;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.intprovider.UniformIntProvider;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
@@ -60,8 +62,12 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
             TrackedDataHandlerRegistry.INTEGER);
     public static final TrackedData<Boolean> NIGHT = DataTracker.registerData(WKTameableEntity.class,
             TrackedDataHandlerRegistry.BOOLEAN);
+    private static final UniformIntProvider ANGER_TIME_RANGE;
+    private static final TrackedData<Integer> ANGER_TIME;
 
     static {
+        ANGER_TIME = DataTracker.registerData(WolfEntity.class, TrackedDataHandlerRegistry.INTEGER);
+        ANGER_TIME_RANGE = TimeHelper.betweenSeconds(20, 39);
         BREEDING_INGREDIENTS = Ingredient.ofItems(Items.RABBIT, Items.COOKED_RABBIT, Items.CHICKEN, Items.COOKED_CHICKEN, Items.EGG, Items.RABBIT_FOOT, Items.TURTLE_EGG);
         TAMING_INGREDIENTS = Sets.newHashSet(Items.RABBIT, Items.COOKED_RABBIT, Items.CHICKEN, Items.COOKED_CHICKEN, Items.EGG, Items.RABBIT_FOOT, Items.TURTLE_EGG);
         FLEE_SUPERNATURAL = (entity) -> {
@@ -71,6 +77,8 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
     }
 
     private final AnimationFactory factory = new AnimationFactory(this);
+    @Nullable
+    private UUID targetUuid;
 
     public FerretEntity(EntityType<? extends TameableEntity> entityType, World world) {
         super(entityType, world);
@@ -110,9 +118,13 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         this.goalSelector.add(1, new StopAndLookAtEntityGoal(this, MobEntity.class, 2.0f, 0.8f));
         this.goalSelector.add(1, new WanderAroundFarGoal(this, 0.8D, 1));
         this.goalSelector.add(1, new FleeEntityGoal(this, LivingEntity.class, 16, 1, 3, FLEE_SUPERNATURAL));
+        this.targetSelector.add(4, new ActiveTargetGoal<>(this, PlayerEntity.class, 10, true, false, this::shouldAngerAt));
         this.targetSelector.add(1, new UntamedActiveTargetGoal(this, RabbitEntity.class, false, null));
         this.targetSelector.add(1, new UntamedActiveTargetGoal(this, ChickenEntity.class, false, null));
         this.targetSelector.add(1, new RevengeGoal(this).setGroupRevenge());
+        this.targetSelector.add(8, new UniversalAngerGoal(this, true));
+        this.targetSelector.add(1, new TrackOwnerAttackerGoal(this));
+        this.targetSelector.add(2, new AttackWithOwnerGoal(this));
     }
 
     @Override
@@ -189,6 +201,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         super.writeCustomDataToNbt(nbt);
         nbt.putBoolean("Sleep", this.isSleeping());
         nbt.putInt("Variant", this.getVariant());
+        this.writeAngerToNbt(nbt);
     }
 
     @Override
@@ -196,6 +209,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         super.readCustomDataFromNbt(tag);
         this.setSleeping(tag.getBoolean("Sleep"));
         this.setVariant(tag.getInt("Variant"));
+        this.readAngerFromNbt(this.world, tag);
     }
 
     @Override
@@ -244,6 +258,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         super.initDataTracker();
         this.dataTracker.startTracking(NIGHT, false);
         this.dataTracker.startTracking(VARIANT, 0);
+        this.dataTracker.startTracking(ANGER_TIME, 0);
     }
 
     @Override
@@ -355,27 +370,27 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
 
     @Override
     public int getAngerTime() {
-        return 0;
+        return this.dataTracker.get(ANGER_TIME);
     }
 
     @Override
     public void setAngerTime(int ticks) {
-
+        this.dataTracker.set(ANGER_TIME, ticks);
     }
 
     @Nullable
     @Override
     public UUID getAngryAt() {
-        return null;
+        return this.targetUuid;
     }
 
     @Override
     public void setAngryAt(@Nullable UUID uuid) {
-
+        this.targetUuid = uuid;
     }
 
     @Override
     public void chooseRandomAngerTime() {
-
+        this.setAngerTime(ANGER_TIME_RANGE.get(this.random));
     }
 }
