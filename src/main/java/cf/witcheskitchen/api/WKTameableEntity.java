@@ -9,7 +9,7 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.world.World;
 
-//Todo: Revamp texture variants
+//Todo: Revamp texture variants and their code
 public abstract class WKTameableEntity extends TameableEntity {
     /**
      * This allows the mod to assign a number of textural variants for a mob.
