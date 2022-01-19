@@ -2,7 +2,6 @@ package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WK;
 import net.fabricmc.fabric.api.tag.TagFactory;
-import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.tag.Tag;
@@ -24,6 +23,4 @@ public class WKTags {
     public static final Tag<Item> OVEN_BLACKLIST = TagFactory.ITEM.create(new Identifier(WK.MODID, "oven_blacklist"));
     public static final Tag<Item> BARREL_BLACKLIST = TagFactory.ITEM.create(new Identifier(WK.MODID, "barrel_blacklist"));
     public static final Tag<Item> TEA_BLACKLIST = TagFactory.ITEM.create(new Identifier(WK.MODID, "tea_blacklist"));
-
-    public static final Tag<Block> CAULDRON_BLOCK_WHITELIST = TagFactory.BLOCK.create(new Identifier(WK.MODID, "cauldron_block_whitelist"));
 }

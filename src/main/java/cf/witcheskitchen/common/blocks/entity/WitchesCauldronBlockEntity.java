@@ -8,8 +8,15 @@ import net.minecraft.world.World;
 
 public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity {
 
+    // TODO: find hex colors
+    public static final int[] WATER_COLORS = {
+            0x3ab3da
+    };
+    private int waterColor;
+
     public WitchesCauldronBlockEntity(BlockPos pos, BlockState state) {
-        super(WKBlockEntityTypes.WITCHES_CAULDRON, pos, state, 4);
+        super(WKBlockEntityTypes.WITCHES_CAULDRON, pos, state, 3);
+        this.waterColor = WATER_COLORS[0]; // Default Water color
     }
 
     @Override
@@ -20,10 +27,16 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity {
     @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
+        this.waterColor = nbt.getInt("WaterColor");
     }
 
     @Override
     protected void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
+        nbt.putInt("WaterColor", this.waterColor);
+    }
+
+    public int getWaterColor() {
+        return this.waterColor;
     }
 }
