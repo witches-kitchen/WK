@@ -40,6 +40,11 @@ public class ChurchGrimEntity extends WKTameableEntity implements IAnimatable, A
 
     }
 
+    @Override
+    public boolean shouldRender(double distance) {
+        return true;
+    }
+
     @Nullable
     @Override
     public UUID getAngryAt() {
