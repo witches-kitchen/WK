@@ -14,6 +14,7 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.mob.Angerable;
 import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.entity.mob.GhastEntity;
 import net.minecraft.entity.mob.MobEntity;
@@ -51,7 +52,7 @@ import java.util.SplittableRandom;
 import java.util.UUID;
 import java.util.function.Predicate;
 
-public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnimationTickable {
+public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnimationTickable, Angerable {
 
     //FIXME: Figure out why this won't breed!
     //FIXME: This entire damn mob
@@ -347,5 +348,31 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
     @Override
     public int tickTimer() {
         return age;
+    }
+
+    @Override
+    public int getAngerTime() {
+        return 0;
+    }
+
+    @Override
+    public void setAngerTime(int ticks) {
+
+    }
+
+    @Nullable
+    @Override
+    public UUID getAngryAt() {
+        return null;
+    }
+
+    @Override
+    public void setAngryAt(@Nullable UUID uuid) {
+
+    }
+
+    @Override
+    public void chooseRandomAngerTime() {
+
     }
 }
