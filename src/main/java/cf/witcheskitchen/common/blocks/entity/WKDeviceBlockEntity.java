@@ -57,7 +57,7 @@ public class WKDeviceBlockEntity extends BlockEntity implements BlockEntityTicke
         this.manager.writeNbt(nbt);
     }
 
-    public void updateListeners() {
+    protected void updateListeners() {
         this.markDirty();
         Objects.requireNonNull(this.getWorld()).updateListeners(this.getPos(), this.getCachedState(), this.getCachedState(), Block.NOTIFY_ALL);
     }
