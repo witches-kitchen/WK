@@ -52,7 +52,7 @@ public abstract class WKTallCropBlock extends WKCropBlock {
     @Override
     public void applyGrowth(World world, BlockPos pos, BlockState state) {
         //TODO: handle a bug that destroys the plant if the player attempts to use a bone meal in the upper part and the stage requires an upper part
-        // For now i simply drop a seed and return the method as it is without growing the plat
+        // For now i simply drop a seed and return the method as it is without growing the plant
         // Because even if i return this method, the bone meal is going to be consumed
         if (this.isUpperState(world, pos)) {
             dropStacks(state, world, pos, null);
