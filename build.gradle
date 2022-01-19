@@ -1,6 +1,6 @@
 plugins {
-	id 'fabric-loom' version '0.10-SNAPSHOT'
-	id 'maven-publish'
+    id 'fabric-loom' version '0.10-SNAPSHOT'
+    id 'maven-publish'
 }
 
 sourceCompatibility = JavaVersion.VERSION_17
@@ -43,18 +43,18 @@ repositories {
     maven {
         name "appleskin"
         url "https://maven.ryanliptak.com/"
-    }	
+    }
     maven {
         name "jitpack"
         url "https://jitpack.io"
-    }	
+    }
     maven {
         name "reach entity attributes"
         url "https://maven.jamieswhiteshirt.com/libs-release"
         content {
             includeGroup "com.jamieswhiteshirt"
         }
-    }	
+    }
 }
 
 dependencies {
@@ -66,7 +66,7 @@ dependencies {
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
     modImplementation "vazkii.patchouli:Patchouli:${project.patchouli_version}"
-        modImplementation 'software.bernie.geckolib:geckolib-fabric-1.18:3.0.27'
+    modImplementation 'software.bernie.geckolib:geckolib-fabric-1.18:3.0.27'
     modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
     modImplementation("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}")
     modImplementation "curse.maven:trinkets-fabric-341284:3542826"
@@ -87,8 +87,8 @@ dependencies {
     }
     modCompileOnly("squeek.appleskin:appleskin-fabric:${appleskin_version}:api") {
         transitive = false
-    }	
-	
+    }
+
     // PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
     // You may need to force-disable transitiveness on them.
 }
