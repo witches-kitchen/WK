@@ -13,11 +13,20 @@ public class WKItems {
     // Flowers
     public static final Item BELLADONNA_BLOSSOM = new Item(new FabricItemSettings().group(WK.WK_SEED_GROUP));
 
+    public static final Item AMARANTH_SEEDS = new WKSeedItem(WKBlocks.BELLADONNA, new FabricItemSettings().group(WK.WK_SEED_GROUP));
+    public static final Item AMARANTH_SWEETBERRY_SEEDS = new WKSeedItem(WKBlocks.BELLADONNA_GLOW, new FabricItemSettings().group(WK.WK_SEED_GROUP));
+    public static final Item AMARANTH_TORCH_SEEDS = new WKSeedItem(WKBlocks.BELLADONNA_NOCTURNAL, new FabricItemSettings().group(WK.WK_SEED_GROUP));
+    public static final Item AMARANTH_SUNDEW_SEEDS = new WKSeedItem(WKBlocks.BELLADONNA_GLOW, new FabricItemSettings().group(WK.WK_SEED_GROUP));
+    public static final Item AMARANTH_CREEPER_SEEDS = new WKSeedItem(WKBlocks.BELLADONNA_NOCTURNAL, new FabricItemSettings().group(WK.WK_SEED_GROUP));
+    public static final Item AMARANTH_VIRIDIAN_SEEDS = new WKSeedItem(WKBlocks.BELLADONNA_GLOW, new FabricItemSettings().group(WK.WK_SEED_GROUP));
+    public static final Item AMARANTH_GRISELIN_SEEDS = new WKSeedItem(WKBlocks.BELLADONNA_NOCTURNAL, new FabricItemSettings().group(WK.WK_SEED_GROUP));
+    public static final Item AMARANTH_CERISE_SEEDS = new WKSeedItem(WKBlocks.BELLADONNA_GLOW, new FabricItemSettings().group(WK.WK_SEED_GROUP));
+    public static final Item AMARANTH_DARK_PASSION_SEEDS = new WKSeedItem(WKBlocks.BELLADONNA_NOCTURNAL, new FabricItemSettings().group(WK.WK_SEED_GROUP));
+    public static final Item AMARANTH_FIREBIRD_SEEDS = new WKSeedItem(WKBlocks.BELLADONNA_NOCTURNAL, new FabricItemSettings().group(WK.WK_SEED_GROUP));
     public static final Item BELLADONNA_SEEDS = new WKSeedItem(WKBlocks.BELLADONNA, new FabricItemSettings().group(WK.WK_SEED_GROUP));
     public static final Item BELLADONNA_GLOW_SEEDS = new WKSeedItem(WKBlocks.BELLADONNA_GLOW, new FabricItemSettings().group(WK.WK_SEED_GROUP));
     public static final Item BELLADONNA_NOCTURNAL_SEEDS = new WKSeedItem(WKBlocks.BELLADONNA_NOCTURNAL, new FabricItemSettings().group(WK.WK_SEED_GROUP));
     public static Item ST_JOHNS_WORT_SEEDS = new Item(new FabricItemSettings().group(WK.WK_GROUP));
-    public static Item AMARANTH_SEEDS = new Item(new FabricItemSettings().group(WK.WK_GROUP));
     public static Item BRIAR_SEEDS = new Item(new FabricItemSettings().group(WK.WK_GROUP));
     public static Item CAMELLIA_SEEDS = new Item(new FabricItemSettings().group(WK.WK_GROUP));
     public static Item CHAMOMILE_SEEDS = new Item(new FabricItemSettings().group(WK.WK_GROUP));
