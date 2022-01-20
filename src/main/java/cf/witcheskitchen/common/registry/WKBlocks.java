@@ -299,6 +299,8 @@ public class WKBlocks {
         registerBlockOnly("belladonna", BELLADONNA);
         registerBlockOnly("belladonna_glow", BELLADONNA_GLOW);
         registerBlockOnly("belladonna_nocturnal", BELLADONNA_NOCTURNAL);
+
+        registerBlockOnly("amaranth", AMARANTH);
     }
 
     //needs to be reworked for better suiting our needs.. maybe? keeping the never and 2 always in case we end up needing to use them.
