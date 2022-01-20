@@ -9,13 +9,13 @@ import net.minecraft.state.property.IntProperty;
 
 public class AmaranthCropBlock extends WKTallCropBlock {
     public static final int MAX_AGE = 6;
-    private final AmaranthCropBlock.Type type;
+    private final Type type;
 
     public AmaranthCropBlock(Settings settings) {
         this(settings, Type.COMMON);
     }
 
-    public AmaranthCropBlock(Settings settings, AmaranthCropBlock.Type rarity) {
+    public AmaranthCropBlock(Settings settings, Type rarity) {
         super(settings);
         this.type = rarity;
     }
