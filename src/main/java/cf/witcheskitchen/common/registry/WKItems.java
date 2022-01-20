@@ -44,6 +44,16 @@ public class WKItems {
     public static Item FERRET_SPAWN_EGG = new SpawnEggItem(WKEntities.FERRET, 9985082, 2631205, new Item.Settings().group(WK.WK_GROUP));
 
     public static void register() {
+        registerItem("amaranth_seeds", AMARANTH_SEEDS);
+        registerItem("amaranth_sweetberry_seeds", AMARANTH_SWEETBERRY_SEEDS);
+        registerItem("amaranth_torch_seeds", AMARANTH_TORCH_SEEDS);
+        registerItem("amaranth_sundew_seeds", AMARANTH_SUNDEW_SEEDS);
+        registerItem("amaranth_creeper_seeds", AMARANTH_CREEPER_SEEDS);
+        registerItem("amaranth_viridian_seeds", AMARANTH_VIRIDIAN_SEEDS);
+        registerItem("amaranth_griselin_seeds", AMARANTH_GRISELIN_SEEDS);
+        registerItem("amaranth_cerise_seeds", AMARANTH_CERISE_SEEDS);
+        registerItem("amaranth_dark_passion_seeds", AMARANTH_DARK_PASSION_SEEDS);
+        registerItem("amaranth_firebird_seeds", AMARANTH_FIREBIRD_SEEDS);
         registerItem("belladonna_blossom", BELLADONNA_BLOSSOM);
         registerItem("belladonna_seeds", BELLADONNA_SEEDS);
         registerItem("belladonna_glow_seeds", BELLADONNA_GLOW_SEEDS);
