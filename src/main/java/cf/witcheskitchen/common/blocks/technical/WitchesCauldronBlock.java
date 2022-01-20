@@ -36,8 +36,8 @@ public class WitchesCauldronBlock extends WKBlockEntityProvider implements Water
     public static final IntProperty WATER_LEVELS = IntProperty.of("water_levels", 0, TOP_LEVEL);
 
     public static final VoxelShape SHAPE = VoxelShapes.union(
-            createCuboidShape(2, 9,1, 14, 11, 2),
-            createCuboidShape(2,9,14, 14, 11, 15),
+            createCuboidShape(2, 9, 1, 14, 11, 2),
+            createCuboidShape(2, 9, 14, 14, 11, 15),
             createCuboidShape(14, 9, 2, 15, 11, 14),
             createCuboidShape(1, 9, 2, 2, 11, 14),
             createCuboidShape(2, 8, 13, 14, 9, 14),
@@ -48,12 +48,19 @@ public class WitchesCauldronBlock extends WKBlockEntityProvider implements Water
             createCuboidShape(13, 2, 2, 15, 8, 14),
             createCuboidShape(2, 2, 1, 14, 8, 3),
             createCuboidShape(2, 1, 2, 14, 2, 14),
-            createCuboidShape(3, 0, 3, 13, 1,13)
+            createCuboidShape(3, 0, 3, 13, 1, 13)
     );
 
     public WitchesCauldronBlock(Settings settings) {
         super(settings);
         this.setDefaultState(this.getStateManager().getDefaultState().with(FACING, Direction.NORTH).with(Properties.WATERLOGGED, false).with(HANGING, false));
+    }
+
+    public static int getWaterLevelFor(Item item) {
+        if (item instanceof BucketItem) {
+            return 3;
+        }
+        return item instanceof GlassBottleItem || item instanceof PotionItem ? 1 : 0;
     }
 
     @Nullable
@@ -107,7 +114,7 @@ public class WitchesCauldronBlock extends WKBlockEntityProvider implements Water
                     // Fill cauldron
                     this.setWaterLevel(world, state, pos, this.getWaterLevel(state) + i);
                     final ItemStack output = i == 3 ? new ItemStack(activeStack.getItem().getRecipeRemainder()) : Items.GLASS_BOTTLE.getDefaultStack();
-                    player.setStackInHand(hand, ItemUsage.exchangeStack(activeStack, player,  output));
+                    player.setStackInHand(hand, ItemUsage.exchangeStack(activeStack, player, output));
                     return ActionResult.SUCCESS;
                 }
             }
@@ -117,13 +124,6 @@ public class WitchesCauldronBlock extends WKBlockEntityProvider implements Water
 
     public int getWaterLevel(BlockState state) {
         return state.get(WATER_LEVELS);
-    }
-
-    public static int getWaterLevelFor(Item item) {
-        if (item instanceof BucketItem) {
-            return 3;
-        }
-        return item instanceof GlassBottleItem || item instanceof PotionItem ? 1 : 0;
     }
 
     public void setWaterLevel(World world, BlockState state, BlockPos pos, int level) {
@@ -136,7 +136,7 @@ public class WitchesCauldronBlock extends WKBlockEntityProvider implements Water
         final BlockEntity entity = world.getBlockEntity(pos);
         if (entity instanceof WKDeviceBlockEntity device) {
             world.setBlockState(pos, state.with(WATER_LEVELS, level), Block.NOTIFY_ALL);
-       //     device.updateListeners();
+            //     device.updateListeners();
         }
     }
 

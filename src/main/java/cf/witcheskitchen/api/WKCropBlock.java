@@ -29,6 +29,7 @@ public abstract class WKCropBlock extends CropBlock {
     /**
      * Used to get the seed item of the plant
      * which is used on a client context by minecraft
+     *
      * @return Item
      */
     @Environment(EnvType.CLIENT)
@@ -37,6 +38,7 @@ public abstract class WKCropBlock extends CropBlock {
 
     /**
      * The top stage this plant is going to have.
+     *
      * @return int
      */
     @Override
@@ -46,6 +48,7 @@ public abstract class WKCropBlock extends CropBlock {
     /**
      * We need to override this
      * Because we are going to use different age ranges
+     *
      * @return IntProperty
      */
     @Override
@@ -55,6 +58,7 @@ public abstract class WKCropBlock extends CropBlock {
 
     /**
      * Returns the integer value of the current age property
+     *
      * @param state BlockState
      * @return int
      */
@@ -66,6 +70,7 @@ public abstract class WKCropBlock extends CropBlock {
     /**
      * Returns a random amount of growth.
      * Mainly used by the {@link net.minecraft.item.BoneMealItem}
+     *
      * @param world World
      * @return int
      */

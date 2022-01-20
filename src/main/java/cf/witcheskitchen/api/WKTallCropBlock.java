@@ -45,8 +45,9 @@ public abstract class WKTallCropBlock extends WKCropBlock {
     /**
      * Called when the {@link net.minecraft.item.BoneMealItem} attempts to make grow this plant.
      * This makes it to put the second layer to the plant if the next stage requires it.
+     *
      * @param world World
-     * @param pos BlockPos
+     * @param pos   BlockPos
      * @param state BlockState
      */
     @Override
@@ -90,8 +91,9 @@ public abstract class WKTallCropBlock extends WKCropBlock {
     /**
      * Checks that the block below is the same as this
      * and therefore this is the upper part of the plant
+     *
      * @param world World
-     * @param pos BlockPos
+     * @param pos   BlockPos
      * @return whether this is the upper state
      */
     protected boolean isUpperState(World world, BlockPos pos) {

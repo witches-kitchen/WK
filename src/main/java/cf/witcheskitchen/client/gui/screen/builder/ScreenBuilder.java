@@ -117,10 +117,11 @@ public final class ScreenBuilder {
 
     /**
      * Draws the vanilla smelting progress (arrow) at the given position.
+     *
      * @param matrixStack MatrixStack
-     * @param posX gui posX
-     * @param posY gui posY
-     * @param progress current progress
+     * @param posX        gui posX
+     * @param posY        gui posY
+     * @param progress    current progress
      * @param maxProgress max progress
      */
     public void drawSmeltingProgress(MatrixStack matrixStack, int posX, int posY, int progress, int maxProgress) {
@@ -133,11 +134,12 @@ public final class ScreenBuilder {
 
     /**
      * Draws the vanilla burning progress at the given position
+     *
      * @param matrixStack MatrixStack
-     * @param posX gui posX
-     * @param posY gui posY
-     * @param burning whether the device is burning
-     * @param progress current burning progress
+     * @param posX        gui posX
+     * @param posY        gui posY
+     * @param burning     whether the device is burning
+     * @param progress    current burning progress
      * @param maxProgress max burning progress (depends on the stack fuel)
      */
     public void drawBurningProgress(MatrixStack matrixStack, int posX, int posY, boolean burning, int progress, int maxProgress) {
@@ -152,14 +154,15 @@ public final class ScreenBuilder {
 
     /**
      * Draws the vanilla brewing progress at the given position and a tooltip with the percentage completed.
+     *
      * @param matrixStack MatrixStack
-     * @param posX gui posX
-     * @param posY gui posY
-     * @param mouseX current mouseX position
-     * @param mouseY current mouseY position
-     * @param progress current progress
+     * @param posX        gui posX
+     * @param posY        gui posY
+     * @param mouseX      current mouseX position
+     * @param mouseY      current mouseY position
+     * @param progress    current progress
      * @param maxProgress max progress
-     * @param brewing whether the device is brewing
+     * @param brewing     whether the device is brewing
      */
     public void drawBrewingProgress(MatrixStack matrixStack, int posX, int posY, int mouseX, int mouseY, int progress, int maxProgress, boolean brewing) {
         bindTexture();

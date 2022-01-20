@@ -13,7 +13,7 @@ import net.minecraft.client.util.math.MatrixStack;
 @Environment(EnvType.CLIENT)
 public class WitchesCauldronBlockEntityRender implements BlockEntityRenderer<WitchesCauldronBlockEntity> {
 
-    public static final float[] WATER_LEVELS = new float[] { 0.35F, 0.60F };
+    public static final float[] WATER_LEVELS = new float[]{0.35F, 0.60F};
 
     @Override
     public void render(WitchesCauldronBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
