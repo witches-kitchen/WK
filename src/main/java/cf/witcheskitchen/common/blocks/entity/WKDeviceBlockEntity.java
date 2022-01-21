@@ -16,7 +16,6 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import java.util.Objects;
 import java.util.Random;
 
 public class WKDeviceBlockEntity extends BlockEntity implements BlockEntityTicker<WKDeviceBlockEntity>, Inventory {
@@ -57,9 +56,15 @@ public class WKDeviceBlockEntity extends BlockEntity implements BlockEntityTicke
         this.manager.writeNbt(nbt);
     }
 
-    protected void updateListeners() {
-        this.markDirty();
-        Objects.requireNonNull(this.getWorld()).updateListeners(this.getPos(), this.getCachedState(), this.getCachedState(), Block.NOTIFY_ALL);
+    public void markBlockForUpdate() {
+        this.markBlockForUpdate(false);
+    }
+
+    public void markBlockForUpdate(boolean notifyNeighbours) {
+        super.markDirty();
+        if (this.world != null && notifyNeighbours) {
+            super.world.updateListeners(this.getPos(), this.getCachedState(), this.getCachedState(), Block.NOTIFY_ALL);
+        }
     }
 
     @Override

@@ -146,7 +146,7 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements IDevi
             if (stackOnTop.isEmpty()) { //We don't want to replace an item being cooked
                 this.passiveProgress[i] = 0; // reset progress
                 this.passiveInventory.setStack(i, stack.split(1)); // we only want to cook 1 stack at the time
-                this.updateListeners();
+                this.markBlockForUpdate(true);
                 return true;
             }
         }

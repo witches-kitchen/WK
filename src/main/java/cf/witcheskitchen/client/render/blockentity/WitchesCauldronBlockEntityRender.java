@@ -14,6 +14,7 @@ import net.minecraft.client.util.math.MatrixStack;
 public class WitchesCauldronBlockEntityRender implements BlockEntityRenderer<WitchesCauldronBlockEntity> {
 
     public static final float[] WATER_LEVELS = new float[]{0.35F, 0.60F};
+    private static final int[] DEFAULT_COLOR = {0, 63, 255};
 
     @Override
     public void render(WitchesCauldronBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
@@ -21,7 +22,7 @@ public class WitchesCauldronBlockEntityRender implements BlockEntityRenderer<Wit
         if (i > 0) {
             matrices.push();
             matrices.translate(0, WATER_LEVELS[i - 1], 0);
-            RenderHelper.renderWaterSprite(matrices, vertexConsumers.getBuffer(RenderLayer.getTranslucent()), entity.getWaterColor(), 0.12F, light, overlay);
+            RenderHelper.renderWaterSprite(matrices, vertexConsumers.getBuffer(RenderLayer.getTranslucent()), DEFAULT_COLOR[0], 0.12F, light, overlay);
             matrices.pop();
         }
     }

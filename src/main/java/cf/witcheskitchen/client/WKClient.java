@@ -2,17 +2,20 @@ package cf.witcheskitchen.client;
 
 import cf.witcheskitchen.client.gui.screen.BrewingBarrelScreen;
 import cf.witcheskitchen.client.gui.screen.WitchesOvenScreen;
+import cf.witcheskitchen.client.particle.WKBubbleParticle;
 import cf.witcheskitchen.client.render.blockentity.BrewingBarrelBlockEntityRender;
 import cf.witcheskitchen.client.render.blockentity.WitchesCauldronBlockEntityRender;
 import cf.witcheskitchen.client.render.blockentity.WitchesOvenBlockEntityRender;
 import cf.witcheskitchen.common.blocks.WKLeafCropBlock;
 import cf.witcheskitchen.common.registry.RenderRegistry;
 import cf.witcheskitchen.common.registry.WKBlockEntityTypes;
+import cf.witcheskitchen.common.registry.WKParticleTypes;
 import cf.witcheskitchen.common.registry.WKScreenHandlerTypes;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
@@ -28,6 +31,7 @@ import static cf.witcheskitchen.WK.modBlocks;
 public class WKClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
+        ParticleFactoryRegistry.getInstance().register(WKParticleTypes.BUBBLE, WKBubbleParticle.Factory::new);
         modBlocks.forEach(this::registerModBlockLayer);
         BlockEntityRendererRegistry.register(WKBlockEntityTypes.WITCHES_OVEN, (ctx) -> new WitchesOvenBlockEntityRender());
         BlockEntityRendererRegistry.register(WKBlockEntityTypes.WITCHES_CAULDRON, (ctx) -> new WitchesCauldronBlockEntityRender());

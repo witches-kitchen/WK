@@ -1,14 +1,18 @@
 package cf.witcheskitchen.common.blocks.technical;
 
 import cf.witcheskitchen.api.WKBlockEntityProvider;
-import cf.witcheskitchen.common.blocks.entity.WKDeviceBlockEntity;
+import cf.witcheskitchen.client.render.blockentity.WitchesCauldronBlockEntityRender;
 import cf.witcheskitchen.common.blocks.entity.WitchesCauldronBlockEntity;
+import cf.witcheskitchen.common.registry.WKParticleTypes;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.*;
+import net.minecraft.particle.ParticleEffect;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
@@ -21,12 +25,15 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Random;
 
 public class WitchesCauldronBlock extends WKBlockEntityProvider implements Waterloggable {
 
@@ -83,10 +90,29 @@ public class WitchesCauldronBlock extends WKBlockEntityProvider implements Water
         return SHAPE;
     }
 
+    // Triggers Hanging state
     @Override
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
-        world.setBlockState(pos, state.with(HANGING, !world.getBlockState(pos.up()).isAir()), Block.NOTIFY_ALL); // Triggers Hanging state
+        world.setBlockState(pos, state.with(HANGING, !world.getBlockState(pos.up()).isAir()), Block.NOTIFY_ALL);
         return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
+    }
+
+    @Environment(EnvType.CLIENT)
+    @Override
+    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+        final BlockEntity entity = world.getBlockEntity(pos);
+        if (entity instanceof WitchesCauldronBlockEntity cauldron) {
+            if (cauldron.isBoiling()) {
+                int color = cauldron.getWaterColor();
+                double width = 0.3D;
+                double offsetX = 0.5D + MathHelper.nextDouble(random, -width, width);
+                double offsetZ = 0.5D + MathHelper.nextDouble(random, -width, width);
+                float height = WitchesCauldronBlockEntityRender.WATER_LEVELS[this.getWaterLevel(state) - 1];
+                for (int i = 0; i < 2; i++) {
+                    world.addParticle((ParticleEffect) WKParticleTypes.BUBBLE, pos.getX() + offsetX, pos.getY() + height, pos.getZ() + offsetZ, ((cauldron.getWaterColor() >> 16) & 0xff) / 255f, ((cauldron.getWaterColor() >> 8) & 0xff) / 255f, (cauldron.getWaterColor() & 0xff) / 255f);
+                }
+            }
+        }
     }
 
     @Override
@@ -134,9 +160,8 @@ public class WitchesCauldronBlock extends WKBlockEntityProvider implements Water
             level = TOP_LEVEL;
         }
         final BlockEntity entity = world.getBlockEntity(pos);
-        if (entity instanceof WKDeviceBlockEntity device) {
+        if (entity instanceof WitchesCauldronBlockEntity) {
             world.setBlockState(pos, state.with(WATER_LEVELS, level), Block.NOTIFY_ALL);
-            //     device.updateListeners();
         }
     }
 

@@ -98,7 +98,7 @@ public class BrewingBarrelBlockEntity extends WKDeviceBlockEntity implements Nam
         if (this.clientInventoryManager.isEmpty() && stack.isOf(Items.GLASS_BOTTLE)) {
             this.timer = 0;
             this.setRenderStack(stack.split(1));
-            this.updateListeners();
+            this.markBlockForUpdate(true);
             return true;
         }
         return false;
@@ -242,7 +242,7 @@ public class BrewingBarrelBlockEntity extends WKDeviceBlockEntity implements Nam
         if (this.world != null) {
             this.hasWater = false;
             this.hasFinished = false;
-            this.updateListeners();
+            this.markBlockForUpdate();
         }
     }
 
