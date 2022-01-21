@@ -1,5 +1,7 @@
 package cf.witcheskitchen.common.blocks.entity;
 
+import cf.witcheskitchen.api.fluid.FluidTank;
+import cf.witcheskitchen.api.fluid.WKFluidAPI;
 import cf.witcheskitchen.common.blocks.technical.WitchesCauldronBlock;
 import cf.witcheskitchen.common.registry.WKBlockEntityTypes;
 import cf.witcheskitchen.common.registry.WKTags;
@@ -20,6 +22,7 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity {
     private static final int TICKS_TO_BOIL = TimeHelper.toTicks(5);
     private int waterColor;
     private int ticksHeated;
+    private final FluidTank tank = new FluidTank(WKFluidAPI.BUCKET_VOLUME);
 
     public WitchesCauldronBlockEntity(BlockPos pos, BlockState state) {
         super(WKBlockEntityTypes.WITCHES_CAULDRON, pos, state, 3);
@@ -29,6 +32,8 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity {
     @Override
     public void tick(World world, BlockPos pos, BlockState state, WKDeviceBlockEntity blockEntity) {
         super.tick(world, pos, state, blockEntity);
+        this.tank.increase(1);
+        System.out.println(this.tank.getAmount());
         final BlockState belowState = world.getBlockState(pos.down());
         boolean sync = false;
         if (belowState.isIn(WKTags.HEATS_CAULDRON) && this.isFilled()) {
@@ -62,6 +67,7 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity {
         super.readNbt(nbt);
         this.waterColor = nbt.getInt("WaterColor");
         this.ticksHeated = nbt.getInt("TicksHeated");
+        this.tank.readNbt(nbt);
     }
 
     @Override
@@ -69,6 +75,7 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity {
         super.writeNbt(nbt);
         nbt.putInt("WaterColor", this.waterColor);
         nbt.putInt("TicksHeated", this.ticksHeated);
+        this.tank.writeNbt(nbt);
     }
 
     public boolean isBoiling() {
