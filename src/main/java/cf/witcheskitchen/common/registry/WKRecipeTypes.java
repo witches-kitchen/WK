@@ -1,6 +1,7 @@
 package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WK;
+import cf.witcheskitchen.WKConfig;
 import cf.witcheskitchen.common.recipe.BarrelFermentingRecipe;
 import cf.witcheskitchen.common.recipe.CauldronBrewingRecipe;
 import cf.witcheskitchen.common.recipe.OvenCookingRecipe;
@@ -43,5 +44,9 @@ public class WKRecipeTypes {
     public static void register() {
         RECIPE_SERIALIZERS.keySet().forEach(recipeSerializer -> Registry.register(Registry.RECIPE_SERIALIZER, RECIPE_SERIALIZERS.get(recipeSerializer), recipeSerializer));
         RECIPE_TYPES.keySet().forEach(recipeType -> Registry.register(Registry.RECIPE_TYPE, RECIPE_TYPES.get(recipeType), recipeType));
+
+        if (WKConfig.get().debugMode) {
+            WK.logger.info("Witches Kitchen Base Custom Recipes: Successfully Loaded");
+        }
     }
 }

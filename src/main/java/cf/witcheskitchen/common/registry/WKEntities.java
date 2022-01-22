@@ -1,6 +1,7 @@
 package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WK;
+import cf.witcheskitchen.WKConfig;
 import cf.witcheskitchen.common.entities.hostile.CuSithEntity;
 import cf.witcheskitchen.common.entities.tameable.FerretEntity;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
@@ -36,6 +37,10 @@ public class WKEntities {
 
     public static void register() {
         ENTITY_TYPES.keySet().forEach(entityType -> Registry.register(Registry.ENTITY_TYPE, ENTITY_TYPES.get(entityType), entityType));
+
+        if (WKConfig.get().debugMode) {
+            WK.logger.info("Witches Kitchen Base Entities: Successfully Loaded");
+        }
     }
 
 }

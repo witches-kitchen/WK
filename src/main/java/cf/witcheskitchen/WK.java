@@ -69,6 +69,10 @@ public class WK implements ModInitializer {
         GeckoLib.initialize();
         WKEntities.register();
         modifyAxeBlockStripping();
+
+        if (WKConfig.get().debugMode) {
+            logger.info("Witches Kitchen Base: Successfully Loaded");
+        }
     }
 
     private void modifyAxeBlockStripping() {

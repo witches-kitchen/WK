@@ -1,6 +1,7 @@
 package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WK;
+import cf.witcheskitchen.WKConfig;
 import cf.witcheskitchen.common.items.WKSeedItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.Item;
@@ -63,6 +64,10 @@ public class WKItems {
         registerItem("super_booze", SUPER_BOOZE);
         registerItem("cu_sith_spawn_egg", CU_SITH_SPAWN_EGG);
         registerItem("ferret_spawn_egg", FERRET_SPAWN_EGG);
+
+        if (WKConfig.get().debugMode) {
+            WK.logger.info("Witches Kitchen Base Items: Successfully Loaded");
+        }
     }
 
     public static void registerItem(String id, Item item) {

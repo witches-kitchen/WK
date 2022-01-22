@@ -1,6 +1,7 @@
 package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WK;
+import cf.witcheskitchen.WKConfig;
 import cf.witcheskitchen.common.blocks.SaltBlock;
 import cf.witcheskitchen.common.blocks.WKSaplingBlock;
 import cf.witcheskitchen.common.blocks.WKStairsBlock;
@@ -344,6 +345,10 @@ public class WKBlocks {
 
         Registry.register(Registry.BLOCK, new Identifier(WK.MODID, id), block);
         Registry.register(Registry.ITEM, new Identifier(WK.MODID, id), new BlockItem(block, new FabricItemSettings().group(tab)));
+
+        if (WKConfig.get().debugMode) {
+            WK.logger.info("Witches Kitchen Base Blocks: Successfully Loaded");
+        }
     }
 
     private static <T extends Block> void registerBlockOnly(final String id, final T block) {
