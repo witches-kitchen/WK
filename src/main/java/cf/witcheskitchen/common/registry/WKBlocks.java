@@ -160,6 +160,15 @@ public class WKBlocks {
     public static final Block BELLADONNA_NOCTURNAL = new BelladonnaCropBlock(FabricBlockSettings.copyOf(BELLADONNA), BelladonnaCropBlock.Type.NOCTURNAL);
 
     public static final Block AMARANTH = new AmaranthCropBlock(AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP));
+    public static final Block AMARANTH_SWEETBERRY = new AmaranthCropBlock(FabricBlockSettings.copyOf(AMARANTH), AmaranthCropBlock.Type.SWEETBERRY);
+    public static final Block AMARANTH_TORCH = new AmaranthCropBlock(FabricBlockSettings.copyOf(AMARANTH), AmaranthCropBlock.Type.TORCH);
+    public static final Block AMARANTH_SUNDEW = new AmaranthCropBlock(FabricBlockSettings.copyOf(AMARANTH), AmaranthCropBlock.Type.SUNDEW);
+    public static final Block AMARANTH_CREEPER = new AmaranthCropBlock(FabricBlockSettings.copyOf(AMARANTH), AmaranthCropBlock.Type.CREEPER);
+    public static final Block AMARANTH_VIRIDIAN = new AmaranthCropBlock(FabricBlockSettings.copyOf(AMARANTH), AmaranthCropBlock.Type.VIRIDIAN);
+    public static final Block AMARANTH_GRISELIN = new AmaranthCropBlock(FabricBlockSettings.copyOf(AMARANTH), AmaranthCropBlock.Type.GRISELIN);
+    public static final Block AMARANTH_CERISE = new AmaranthCropBlock(FabricBlockSettings.copyOf(AMARANTH), AmaranthCropBlock.Type.CERISE);
+    public static final Block AMARANTH_DARK_PASSION = new AmaranthCropBlock(FabricBlockSettings.copyOf(AMARANTH), AmaranthCropBlock.Type.DARK_PASSION);
+    public static final Block AMARANTH_FIREBIRD = new AmaranthCropBlock(FabricBlockSettings.copyOf(AMARANTH), AmaranthCropBlock.Type.FIREBIRD);
 
     public static void register() {
         //devices
