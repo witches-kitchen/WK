@@ -311,6 +311,15 @@ public class WKBlocks {
         registerBlockOnly("belladonna_nocturnal", BELLADONNA_NOCTURNAL);
 
         registerBlockOnly("amaranth", AMARANTH);
+        registerBlockOnly("amaranth_sweetberry", AMARANTH_SWEETBERRY);
+        registerBlockOnly("amaranth_torch", AMARANTH_TORCH);
+        registerBlockOnly("amaranth_sundew", AMARANTH_SUNDEW);
+        registerBlockOnly("amaranth_creeper", AMARANTH_CREEPER);
+        registerBlockOnly("amaranth_viridian", AMARANTH_VIRIDIAN);
+        registerBlockOnly("amaranth_griselin", AMARANTH_GRISELIN);
+        registerBlockOnly("amaranth_cerise", AMARANTH_CERISE);
+        registerBlockOnly("amaranth_dark_passion", AMARANTH_DARK_PASSION);
+        registerBlockOnly("amaranth_firebird", AMARANTH_FIREBIRD);
     }
 
     //needs to be reworked for better suiting our needs.. maybe? keeping the never and 2 always in case we end up needing to use them.
