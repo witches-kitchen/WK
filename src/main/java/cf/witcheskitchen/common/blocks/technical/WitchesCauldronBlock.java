@@ -33,6 +33,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 
+@SuppressWarnings("deprecation")
 public class WitchesCauldronBlock extends WKBlockEntityProvider implements Waterloggable {
 
     public static final BooleanProperty HANGING = BooleanProperty.of("hanging");

@@ -35,6 +35,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
+@SuppressWarnings("deprecation")
 public class WitchesOvenBlock extends WKDeviceBlock implements Waterloggable {
 
     public static final BooleanProperty LIT = Properties.LIT;
