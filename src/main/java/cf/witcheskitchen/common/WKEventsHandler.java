@@ -11,7 +11,6 @@ import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 
 public class WKEventsHandler {
-
     /**
      * Loot tables are technical JSON files that are used to dictate what items should generate in various situations,
      * such as killing a mob or what items can be fished.

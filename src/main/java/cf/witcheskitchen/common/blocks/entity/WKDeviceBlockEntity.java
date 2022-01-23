@@ -56,16 +56,19 @@ public class WKDeviceBlockEntity extends BlockEntity implements BlockEntityTicke
         this.manager.writeNbt(nbt);
     }
 
-    public void markBlockForUpdate() {
-        this.markBlockForUpdate(false);
-    }
 
-    public void markBlockForUpdate(boolean notifyNeighbours) {
-        super.markDirty();
+    public void markDirty(boolean notifyNeighbours) {
+        this.markDirty();
         if (this.world != null && notifyNeighbours) {
             super.world.updateListeners(this.getPos(), this.getCachedState(), this.getCachedState(), Block.NOTIFY_ALL);
         }
     }
+    @Override
+    public void markDirty() {
+        super.markDirty();
+    }
+
+
 
     @Override
     public int size() {

@@ -10,6 +10,8 @@
     "SaplingBlockInvoker",
     "SimpleBlockStateProviderInvoker",
     "StructurePoolsMixin",
+    "fluid.BottleItemMixin",
+    "fluid.BucketItemMixin",
     "statuseffect.ActiveTargetGoalMixin",
     "statuseffect.CreeperEntityMixin",
     "statuseffect.FleeEntityGoalMixin"

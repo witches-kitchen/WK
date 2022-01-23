@@ -92,6 +92,7 @@ public class WitchesOvenBlock extends WKDeviceBlock implements Waterloggable {
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         final var entity = world.getBlockEntity(pos);
         if (entity instanceof WitchesOvenBlockEntity oven) {
+
             // Try to insert item on top
             if (hit.getType() == HitResult.Type.BLOCK) {
                 final Direction side = hit.getSide();

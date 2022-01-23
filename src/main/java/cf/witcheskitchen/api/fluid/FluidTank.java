@@ -1,80 +1,220 @@
 package cf.witcheskitchen.api.fluid;
 
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.util.math.Direction;
 import org.jetbrains.annotations.NotNull;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.function.Predicate;
+
+/**
+ * WitchesKitchen FluidTank implementation of a {@link IFluidStorage}.
+ *
+ * <p>The FluidTank is used to make easier interactions with fluid containers.</p>
+ *
+ * <p>It is important to notice that each FluidTank instance can only hold
+ * one {@link FluidStack}, that can mutate the current data, very similar to
+ * {@link net.minecraft.item.ItemStack} <p>
+ */
 public class FluidTank implements IFluidStorage {
 
-    private final int capacity;
-    @NotNull
-    private FluidStack stack;
+    /**
+     *  The <b>Max</b> capacity of fluid this instance of Tank can hold (in MilliBuckets).
+     *  This value <b>CANNOT BE CHANGED</b> after the tank is created.
+     */
+    protected final int capacity;
+    /**
+     * Empty {@link FluidStack} for empty Tanks
+     * As annotated, an empty {@link FluidStack} is never null.
+     */
+    @Nonnull
+    protected FluidStack stack = FluidStack.EMPTY;
+    /**
+     * Gives you the flexibility of filter a condition
+     * for whether tank can be filled
+     */
+    protected final Predicate<FluidStack> filterValidator;
+
 
     public FluidTank(int capacity) {
+        this(capacity, filter -> true);
+    }
+
+    // Default Constructor
+    public FluidTank(int capacity, Predicate<FluidStack> filterValidator) {
         this.capacity = capacity;
-        this.stack = FluidStack.EMPTY;
+        this.filterValidator = filterValidator;
     }
 
-    public void increase(int i) {
-        this.stack.setAmount(this.getAmount() + i);
-    }
-    @NotNull
-    public FluidStack getStack() {
-        return this.stack;
-    }
-
+    /**
+     * Fills the current tank.
+     * Look at {@link IFluidStorage} for more info.
+     * @param stack {@link FluidStack} to insert
+     * @param side {@link Direction} where is coming from
+     * @return The amount of fluid inserted.
+     */
     @Override
-    public int fill(FluidStack stack) {
-        if (stack.isEmpty()) {
+    public int fill(FluidStack stack, Direction side) {
+        if (!canFill(stack)) {
             return 0;
         } else if (this.stack.isEmpty()) {
-            this.stack = new FluidStack(stack, Math.min(this.capacity, stack.getAmount()));
-            // markDirty();
+            this.stack = FluidStack.from(stack, Math.min(stack.getAmount(), this.capacity));
+            // TODO: markDirty
             return this.stack.getAmount();
-        } else if (!stack.isEqualTo(this.stack)) {
-
+        } else {
+            int filledAmount = 0;
+            if (stack.getAmount() < this.getFreeSpace()) {
+                this.growFluid(stack.getAmount());
+                filledAmount = stack.getAmount();
+            } else {
+                this.stack.setAmount(capacity);
+            }
+            if (filledAmount > 0) {
+                // TODO: markDirty
+            }
+            return filledAmount;
         }
-        return 0;
     }
 
+    /**
+     * Drains the current tank.
+     * Look at {@link IFluidStorage} for more info.
+     * @param amount Max amount of fluid it is requested to drain.
+     * @param side {@link Direction} where it is going to drain
+     * @return The {@link FluidStack} drained.
+     */
+    @Override
+    public @NotNull FluidStack drain(int amount, @Nullable  Direction side) {
+        int drained = 0;
+        if (this.stack.getAmount() <= amount) {
+            drained = this.stack.getAmount();
+        }
+        FluidStack newStack = FluidStack.from(this.stack, drained);
+        if (drained > 0) {
+            this.shrinkFluid(drained);
+            //TODO: markDirty();
+        }
+        return newStack;
+    }
+    /**
+     * Drains the current tank.
+     * Look at {@link IFluidStorage} for more info.
+     * @param stack {@link FluidStack} that it is requested to drain.
+     * @param side {@link Direction} where it is going to drain
+     * @return The {@link FluidStack} drained.
+     */
     @NotNull
     @Override
-    public FluidStack drain(int amount) {
-        return null;
+    public FluidStack drain(FluidStack stack, @Nullable Direction side) {
+        if (stack.isEmpty() || !stack.isEqualTo(this.stack)) {
+            return FluidStack.EMPTY;
+        }
+        return drain(stack.getAmount(), side);
+    }
+    /**
+     *  Returns true if the tank can be filled with a specific {@link FluidStack}.
+     *  Used as a filter for filling.
+     */
+    public boolean canFill(FluidStack stack) {
+        if (!stack.isEmpty()) {
+            return true;
+        } else if (this.stack.isEmpty()) {
+            return true;
+        } else {
+            // stack and tank are not empty
+            if (!this.filterValidator.test(stack)) {
+                return false;
+            } else if (!stack.isEqualTo(this.stack)) {
+                return false;
+            } else {
+                return stack.getAmount() <= this.getFreeSpace();
+            }
+        }
     }
 
-    @NotNull
+    /**
+     * Reads the content of this tank.
+     * Must be read from {@link net.minecraft.block.entity.BlockEntity#readNbt(NbtCompound)}
+     * @param data {@link NbtCompound}
+     */
     @Override
-    public FluidStack drain(FluidStack stack) {
-        return null;
+    public void readStorage(@NotNull NbtCompound data) {
+        this.stack = FluidStack.fromNbt(data);
     }
 
+    /**
+     * Writes the content of this tank.
+     * Must be written from {@link net.minecraft.block.entity.BlockEntity#writeNbt(NbtCompound)}
+     * @return {@link NbtCompound} that contains the data of the {@link FluidStack} of the tank
+     */
     @Override
-    public int getAmount() {
+    public NbtCompound writeStorage() {
+        final NbtCompound data = new NbtCompound();
+        this.stack.writeToNbt(data);
+        return data;
+    }
+
+    /**
+     * Increases the internal fluid of the {@link FluidStack} of the tank
+     * @param amount Amount of fluid (in MilliBuckets).
+     */
+    public void growFluid(int amount) {
+        this.stack.setAmount(this.stack.getAmount() + amount);
+    }
+    /**
+     * Decrements the internal fluid of the {@link FluidStack} of the tank
+     * @param amount Amount of fluid (in MilliBuckets).
+     */
+    public void shrinkFluid(int amount) {
+        this.growFluid(-amount);
+    }
+
+    /**
+     * @return The remaining space available to fill in the tank
+     */
+    public int getFreeSpace() {
+        return this.capacity - this.stack.getAmount();
+    }
+
+    /**
+     * @return The internal {@link NbtCompound} of the {@link FluidStack} in the tank
+     */
+    public NbtCompound getInternalNbt() {
+        return this.stack.getNbt();
+    }
+
+    /**
+     * @return The Amount of fluid the current {@link FluidStack} has.
+     */
+    @Override
+    public int getFluidAmount() {
         return this.stack.getAmount();
     }
 
+    /**
+     * @return The <b>MAX</b> capacity of fluid (in MilliBuckets)
+     * this current Tank can hold.
+     */
     @Override
     public int getCapacity() {
-        return this.capacity;
+        return capacity;
     }
 
+    /**
+     * @return Whether the internal storage (from {@link FluidStack}) is empty
+     * and therefore, this tank can also be considered as empty.
+     */
     @Override
     public boolean isEmpty() {
         return this.stack.isEmpty();
     }
 
-    public void readNbt(NbtCompound nbt) {
-        System.out.println("========================READING NBT=================================");
-        NbtCompound tankData = nbt.getCompound("Tank");
-        this.stack = FluidStack.fromNbt(tankData);
+    /**
+     * @return Current {@link FluidStack} in the tank
+     */
+    @Nonnull
+    public FluidStack getStack() {
+        return stack;
     }
-
-    public NbtCompound writeNbt(NbtCompound nbt) {
-        System.out.println("========================WRITING NBT=================================");
-        NbtCompound tankData = this.stack.writeNbt(nbt);
-        nbt.put("Tank", tankData);
-        return nbt;
-
-    }
-
 }

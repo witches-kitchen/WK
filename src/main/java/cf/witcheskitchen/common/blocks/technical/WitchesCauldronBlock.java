@@ -1,18 +1,19 @@
 package cf.witcheskitchen.common.blocks.technical;
 
 import cf.witcheskitchen.api.WKBlockEntityProvider;
-import cf.witcheskitchen.client.render.blockentity.WitchesCauldronBlockEntityRender;
+import cf.witcheskitchen.api.fluid.FluidStack;
+import cf.witcheskitchen.api.fluid.WKFluidAPI;
 import cf.witcheskitchen.common.blocks.entity.WitchesCauldronBlockEntity;
-import cf.witcheskitchen.common.registry.WKParticleTypes;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import cf.witcheskitchen.common.util.ItemUtil;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.*;
-import net.minecraft.particle.ParticleEffect;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
@@ -25,15 +26,12 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Random;
 
 public class WitchesCauldronBlock extends WKBlockEntityProvider implements Waterloggable {
 
@@ -97,55 +95,112 @@ public class WitchesCauldronBlock extends WKBlockEntityProvider implements Water
         return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
     }
 
-    @Environment(EnvType.CLIENT)
-    @Override
-    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
-        final BlockEntity entity = world.getBlockEntity(pos);
-        if (entity instanceof WitchesCauldronBlockEntity cauldron) {
-            if (cauldron.isBoiling()) {
-                int color = cauldron.getWaterColor();
-                double width = 0.3D;
-                double offsetX = 0.5D + MathHelper.nextDouble(random, -width, width);
-                double offsetZ = 0.5D + MathHelper.nextDouble(random, -width, width);
-                float height = WitchesCauldronBlockEntityRender.WATER_LEVELS[this.getWaterLevel(state) - 1];
-                for (int i = 0; i < 2; i++) {
-                    world.addParticle((ParticleEffect) WKParticleTypes.BUBBLE, pos.getX() + offsetX, pos.getY() + height, pos.getZ() + offsetZ, ((cauldron.getWaterColor() >> 16) & 0xff) / 255f, ((cauldron.getWaterColor() >> 8) & 0xff) / 255f, (cauldron.getWaterColor() & 0xff) / 255f);
-                }
-            }
-        }
-    }
+//    @Environment(EnvType.CLIENT)
+//    @Override
+//    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+//        final BlockEntity entity = world.getBlockEntity(pos);
+//        if (entity instanceof WitchesCauldronBlockEntity cauldron) {
+//            if (cauldron.isBoiling()) {
+//                int color = cauldron.getWaterColor();
+//                double width = 0.3D;
+//                double offsetX = 0.5D + MathHelper.nextDouble(random, -width, width);
+//                double offsetZ = 0.5D + MathHelper.nextDouble(random, -width, width);
+//                float height = WitchesCauldronBlockEntityRender.WATER_LEVELS[this.getWaterLevel(state) - 1];
+//                for (int i = 0; i < 2; i++) {
+//                    world.addParticle((ParticleEffect) WKParticleTypes.BUBBLE, pos.getX() + offsetX, pos.getY() + height, pos.getZ() + offsetZ, ((cauldron.getWaterColor() >> 16) & 0xff) / 255f, ((cauldron.getWaterColor() >> 8) & 0xff) / 255f, (cauldron.getWaterColor() & 0xff) / 255f);
+//                }
+//            }
+//        }
+//    }
+//
+//    public static boolean tryFillWith(World world, BlockPos pos, FluidStack stack, Direction side) {
+//        if (!world.isClient) {
+//            final BlockEntity entity = world.getBlockEntity(pos);
+//            if (entity instanceof WitchesCauldronBlockEntity cauldron) {
+//                if (cauldron.canFill(side, stack.getFluid())) {
+//                    int quantity = cauldron.fill(side, stack);
+//                    stack.setAmount(stack.getAmount() - quantity);
+//                    if (stack.getAmount() < 0) {
+//                        stack.setAmount(0);
+//                    }
+//                    if (quantity > 0) {
+//                        cauldron.markDirty();
+//                    }
+//                    return quantity > 0;
+//                }
+//            }
+//        }
+//        return false;
+//    }
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (hit.getSide() != Direction.DOWN) {
-            final ItemStack activeStack = player.getStackInHand(hand);
-            if (!activeStack.isEmpty()) {
-                final int i = getWaterLevelFor(activeStack.getItem());
-                // Only if the stack can fill the cauldron
-                // We want to interact with it.
-                if (i > 0) {
-                    // Let's try to get the water back
-                    if (activeStack.isOf(Items.BUCKET) || activeStack.isOf(Items.GLASS_BOTTLE)) {
-                        this.setWaterLevel(world, state, pos, this.getWaterLevel(state) - i);
-                        final ItemStack output = i == 3 ? new ItemStack(Items.WATER_BUCKET) : Items.POTION.getDefaultStack();
-                        player.setStackInHand(hand, ItemUsage.exchangeStack(activeStack, player, output));
-                        return ActionResult.SUCCESS;
+
+        final BlockEntity entity = world.getBlockEntity(pos);
+        final ItemStack heldStack = player.getStackInHand(hand);
+        final Direction side = hit.getSide();
+        if (entity instanceof WitchesCauldronBlockEntity cauldron && !heldStack.isEmpty()) {
+            /*
+             * Fill cauldron tank
+             */
+            final FluidStack fluidStackToFill = WKFluidAPI.getFluidStackFor(heldStack);
+            if (!fluidStackToFill.isEmpty()) {
+                if (cauldron.canFill(fluidStackToFill, side)) {
+                    int filled = cauldron.fill(fluidStackToFill, side);
+                    if (filled > 0) {
+                        if (!player.isCreative()) {
+                            player.getInventory().setStack(player.getInventory().selectedSlot, ItemUtil.consumeStack(heldStack));
+                        }
+                        world.playSound(player, pos, SoundEvents.ENTITY_PLAYER_SWIM, SoundCategory.BLOCKS, 0.5F, 0.4F / ((float) world.random.nextDouble() * 0.4F + 0.8F));
+                        cauldron.markDirty(true);
                     }
-                    // We couldn't get water back
-                    // That means we currently have a water bucket or bottle
-                    // But the cauldron is full of water, so the action is not going to be performed.
-                    if (this.getWaterLevel(state) >= TOP_LEVEL) {
-                        return ActionResult.PASS;
+                }
+                return ActionResult.SUCCESS;
+            }
+            /*
+             * Drain cauldron tank
+             */
+            final FluidStack fluidInCauldron = cauldron.getStackForTank(0);
+            if (!fluidInCauldron.isEmpty()) {
+                final ItemStack filledContainerFor = WKFluidAPI.getFilledContainerFor(fluidInCauldron.getFluid(), heldStack);
+                final FluidStack fluidToDrain = WKFluidAPI.getFluidStackFor(filledContainerFor);
+                if (!fluidToDrain.isEmpty()) {
+                    if (!player.isCreative()) {
+                        if (heldStack.getCount() > 1) {
+                            if (!player.getInventory().insertStack(filledContainerFor)) {
+                                return ActionResult.FAIL;
+                            }
+                            player.getInventory().setStack(player.getInventory().selectedSlot, ItemUtil.consumeStack(heldStack));
+                        } else {
+                            player.getInventory().setStack(player.getInventory().selectedSlot, filledContainerFor);
+                        }
                     }
-                    // Fill cauldron
-                    this.setWaterLevel(world, state, pos, this.getWaterLevel(state) + i);
-                    final ItemStack output = i == 3 ? new ItemStack(activeStack.getItem().getRecipeRemainder()) : Items.GLASS_BOTTLE.getDefaultStack();
-                    player.setStackInHand(hand, ItemUsage.exchangeStack(activeStack, player, output));
+                    cauldron.drain(fluidToDrain.getAmount(), side);
+                    world.playSound(player, pos, SoundEvents.ENTITY_PLAYER_SWIM, SoundCategory.BLOCKS, 0.5F, 0.4F / ((float) world.random.nextDouble() * 0.4F + 0.8F));
+                    world.markDirty(pos);
+                    cauldron.markDirty(true);
                     return ActionResult.SUCCESS;
                 }
             }
+            world.updateListeners(pos, world.getBlockState(pos), world.getBlockState(pos), 2);
+            cauldron.markDirty();
         }
         return super.onUse(state, world, pos, player, hand, hit);
+    }
+
+    @Override
+    public boolean tryFillWithFluid(WorldAccess world, BlockPos pos, BlockState state, FluidState fluidState) {
+        return false;
+    }
+
+    @Override
+    public ItemStack tryDrainFluid(WorldAccess world, BlockPos pos, BlockState state) {
+        return Waterloggable.super.tryDrainFluid(world, pos, state);
+    }
+
+    @Override
+    public boolean canFillWithFluid(BlockView world, BlockPos pos, BlockState state, Fluid fluid) {
+        return false;
     }
 
     public int getWaterLevel(BlockState state) {

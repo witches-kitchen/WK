@@ -2,7 +2,6 @@ package cf.witcheskitchen.client.render.blockentity;
 
 import cf.witcheskitchen.client.RenderHelper;
 import cf.witcheskitchen.common.blocks.entity.WitchesCauldronBlockEntity;
-import cf.witcheskitchen.common.blocks.technical.WitchesCauldronBlock;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.RenderLayer;
@@ -18,11 +17,16 @@ public class WitchesCauldronBlockEntityRender implements BlockEntityRenderer<Wit
 
     @Override
     public void render(WitchesCauldronBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
-        final int i = entity.getCachedState().get(WitchesCauldronBlock.WATER_LEVELS);
-        if (i > 0) {
+        if (entity.isFilled()) {
+            final double i = entity.getPercentFilled();
+
+            int color = entity.getColor();
+            if (entity.getColor() == -1) {
+                color = 4159204;
+            }
             matrices.push();
-            matrices.translate(0, WATER_LEVELS[i - 1], 0);
-            RenderHelper.renderWaterSprite(matrices, vertexConsumers.getBuffer(RenderLayer.getTranslucent()), DEFAULT_COLOR[0], 0.12F, light, overlay);
+            matrices.translate(0, WATER_LEVELS[1], 0);
+            RenderHelper.renderWaterSprite(matrices, vertexConsumers.getBuffer(RenderLayer.getTranslucent()), color, 0.12F, light, overlay);
             matrices.pop();
         }
     }
