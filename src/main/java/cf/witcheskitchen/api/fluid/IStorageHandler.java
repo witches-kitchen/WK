@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
  * Note: <b>DO NOT ASSUME</b> these methods are being call somewhere, and you must
  * provide a manual implementation of each of these.
  *
- * <p>You might also want to see {@link FluidTank} and {@link FluidStack} </p>.
+ * <p>You might also want to see {@link FluidTank} and {@link FluidStack}. </p>
  */
 
 public interface IStorageHandler {

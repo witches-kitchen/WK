@@ -112,7 +112,6 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
             fillAmount = this.tank.fill(stack, side);
             filledStack = this.tank.getStack();
             if (!filledStack.isEmpty()) {
-                System.out.println("setting nbt");
                 filledStack.setNbt(stack.getNbt() == null ? new NbtCompound() : stack.getNbt().copy());
                 this.markDirty(false);
             }
