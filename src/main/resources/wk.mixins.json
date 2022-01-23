@@ -12,6 +12,7 @@
     "StructurePoolsMixin",
     "fluid.BottleItemMixin",
     "fluid.BucketItemMixin",
+    "fluid.PotionItemMixin",
     "statuseffect.ActiveTargetGoalMixin",
     "statuseffect.CreeperEntityMixin",
     "statuseffect.FleeEntityGoalMixin"

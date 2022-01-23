@@ -57,9 +57,9 @@ public class WKDeviceBlockEntity extends BlockEntity implements BlockEntityTicke
     }
 
 
-    public void markDirty(boolean notifyNeighbours) {
+    public void markDirty(boolean syncToClient) {
         this.markDirty();
-        if (this.world != null && notifyNeighbours) {
+        if (this.world != null && syncToClient) {
             super.world.updateListeners(this.getPos(), this.getCachedState(), this.getCachedState(), Block.NOTIFY_ALL);
         }
     }

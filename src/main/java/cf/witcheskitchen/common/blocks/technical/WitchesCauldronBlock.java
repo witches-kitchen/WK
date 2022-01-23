@@ -1,17 +1,27 @@
 package cf.witcheskitchen.common.blocks.technical;
 
+import cf.witcheskitchen.WK;
 import cf.witcheskitchen.api.WKBlockEntityProvider;
 import cf.witcheskitchen.api.fluid.FluidStack;
 import cf.witcheskitchen.api.fluid.WKFluidAPI;
+import cf.witcheskitchen.client.particle.WKBubbleParticle;
+import cf.witcheskitchen.client.render.blockentity.WitchesCauldronBlockEntityRender;
 import cf.witcheskitchen.common.blocks.entity.WitchesCauldronBlockEntity;
+import cf.witcheskitchen.common.registry.WKParticleTypes;
 import cf.witcheskitchen.common.util.ItemUtil;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.*;
+import net.minecraft.particle.ParticleEffect;
+import net.minecraft.particle.ParticleType;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
@@ -26,12 +36,15 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Random;
 
 @SuppressWarnings("deprecation")
 public class WitchesCauldronBlock extends WKBlockEntityProvider implements Waterloggable {
@@ -96,24 +109,29 @@ public class WitchesCauldronBlock extends WKBlockEntityProvider implements Water
         return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
     }
 
-//    @Environment(EnvType.CLIENT)
-//    @Override
-//    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
-//        final BlockEntity entity = world.getBlockEntity(pos);
-//        if (entity instanceof WitchesCauldronBlockEntity cauldron) {
-//            if (cauldron.isBoiling()) {
-//                int color = cauldron.getWaterColor();
-//                double width = 0.3D;
-//                double offsetX = 0.5D + MathHelper.nextDouble(random, -width, width);
-//                double offsetZ = 0.5D + MathHelper.nextDouble(random, -width, width);
-//                float height = WitchesCauldronBlockEntityRender.WATER_LEVELS[this.getWaterLevel(state) - 1];
+    @Environment(EnvType.CLIENT)
+    @Override
+    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+        final BlockEntity entity = world.getBlockEntity(pos);
+        if (entity instanceof WitchesCauldronBlockEntity cauldron) {
+            if (cauldron.isBoiling()) {
+                final int color = cauldron.getColor();
+                final double width = 0.3D;
+                final float depth = (float) (((cauldron.getPercentFilled() - 1) * (0.4D)) + (0.6D));
+                final double offsetX = 0.5D + MathHelper.nextDouble(random, -width, width);
+                final double offsetZ = 0.5D + MathHelper.nextDouble(random, -width, width);
+                final double r = ((color >> 16) & 0xff) / 255F;
+                final double g = ((color >> 8) & 0xff) / 255F;
+                final double b = (color & 0xff) / 255F;
+//                world.addParticle(ParticleTypes.SMOKE);
+//                WKBubbleParticle particle = new WKBubbleParticle((ClientWorld) world, pos.getX() + offsetX, pos.getY() + depth, pos.getZ() + offsetZ, r, g, b)
 //                for (int i = 0; i < 2; i++) {
-//                    world.addParticle((ParticleEffect) WKParticleTypes.BUBBLE, pos.getX() + offsetX, pos.getY() + height, pos.getZ() + offsetZ, ((cauldron.getWaterColor() >> 16) & 0xff) / 255f, ((cauldron.getWaterColor() >> 8) & 0xff) / 255f, (cauldron.getWaterColor() & 0xff) / 255f);
+//                    world.addParticle(particle);
 //                }
-//            }
-//        }
-//    }
-//
+            }
+        }
+    }
+
 //    public static boolean tryFillWith(World world, BlockPos pos, FluidStack stack, Direction side) {
 //        if (!world.isClient) {
 //            final BlockEntity entity = world.getBlockEntity(pos);
@@ -145,7 +163,6 @@ public class WitchesCauldronBlock extends WKBlockEntityProvider implements Water
              * Fill cauldron tank
              */
             final FluidStack fluidStackToFill = WKFluidAPI.getFluidStackFor(heldStack);
-            System.out.println(fluidStackToFill);
             if (!fluidStackToFill.isEmpty()) {
                 if (cauldron.canFill(fluidStackToFill, side)) {
                     int filled = cauldron.fill(fluidStackToFill, side);

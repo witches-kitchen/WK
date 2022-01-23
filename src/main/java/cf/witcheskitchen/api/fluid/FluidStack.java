@@ -25,10 +25,10 @@ import javax.annotation.Nullable;
  *   <th>Key</th><th>Type</th><th>Purpose</th>
  * </tr>
  * <tr>
- *   <td>{@code id}</td><td>{@link net.minecraft.nbt.NbtString}</td><td>The identifier of the item.</td>
+ *   <td>{@code Fluid}</td><td>{@link net.minecraft.nbt.NbtString}</td><td>The identifier for the internal fluid.</td>
  * </tr>
  * <tr>
- *   <td>{@code Count}</td><td>{@link net.minecraft.nbt.NbtByte}</td><td>The amount of fluids (in MilliBuckets) in the stack.</td>
+ *   <td>{@code Amount}</td><td>{@link net.minecraft.nbt.NbtInt}</td><td>The amount of fluids (in MilliBuckets) in the stack.</td>
  * </tr>
  * <tr>
  *   <td>{@code tag}</td><td>{@link NbtCompound}</td><td>The fluid stack internal nbt data.</td>

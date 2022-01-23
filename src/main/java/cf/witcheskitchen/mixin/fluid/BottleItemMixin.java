@@ -7,6 +7,7 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.item.GlassBottleItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(GlassBottleItem.class)
@@ -18,12 +19,12 @@ public class BottleItemMixin implements IFluidContainer {
     }
 
     @Override
-    public ItemStack getEmpty() {
-        return new ItemStack((((GlassBottleItem) (Object) this).getRecipeRemainder()));
+    public @NotNull ItemStack getEmpty() {
+        return new ItemStack(((GlassBottleItem) (Object) this));
     }
 
     @Override
-    public ItemStack getFilled(Fluid fluid) {
+    public @NotNull ItemStack getFilled(Fluid fluid) {
         if (fluid == Fluids.WATER) {
             return Items.POTION.getDefaultStack();
         } else {
@@ -32,7 +33,7 @@ public class BottleItemMixin implements IFluidContainer {
     }
 
     @Override
-    public Fluid getFluid(ItemStack stack) {
-        return Fluids.WATER;
+    public @NotNull Fluid getFluid(ItemStack stack) {
+        return Fluids.EMPTY;
     }
 }

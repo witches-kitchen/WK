@@ -49,7 +49,6 @@ public class WKBubbleParticle extends SpriteBillboardParticle {
                 super.markDead();
             }
         }
-        System.out.println("Ticking");
     }
 
     // Immutable Factory

@@ -10,6 +10,7 @@ import cf.witcheskitchen.common.util.TimeHelper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.Packet;
 import net.minecraft.network.listener.ClientPlayPacketListener;
@@ -22,13 +23,14 @@ import org.jetbrains.annotations.Nullable;
 
 public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements IStorageHandler {
 
+    private int color;
     private static final int TICKS_TO_BOIL = TimeHelper.toTicks(5);
     private final FluidTank tank = new FluidTank(WKFluidAPI.BUCKET_VOLUME);
     private int ticksHeated;
 
     public WitchesCauldronBlockEntity(BlockPos pos, BlockState state) {
         super(WKBlockEntityTypes.WITCHES_CAULDRON, pos, state, 3);
-
+        this.color = 0x3f76e4;
     }
 
     @Override
@@ -36,7 +38,7 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
         super.tick(world, pos, state, blockEntity);
         final BlockState belowState = world.getBlockState(pos.down());
         boolean sync = false;
-        if (belowState.isIn(WKTags.HEATS_CAULDRON) && this.isFilled()) {
+        if (belowState.isIn(WKTags.HEATS_CAULDRON) && this.hasWater()) {
             if (this.ticksHeated < TICKS_TO_BOIL) {
                 this.ticksHeated++;
                 if (this.ticksHeated == TICKS_TO_BOIL) {
@@ -52,8 +54,9 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
         }
     }
 
-    public int getPercentFilled() {
-        return this.tank.getFluidAmount() / this.tank.getCapacity();
+    @Environment(EnvType.CLIENT)
+    public double getPercentFilled() {
+        return ((((double) tank.getFluidAmount() / this.tank.getCapacity())));
     }
 
 
@@ -74,20 +77,29 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
 
     @Environment(EnvType.CLIENT)
     public int getColor() {
-        NbtCompound tankNbt = this.tank.isEmpty() ? this.tank.getInternalNbt() : null;
-        if (tankNbt != null) {
-            return tankNbt.getInt("Color");
-        } else {
-            return -1;
-        }
+        return this.color;
+//        if (this.hasWater()) {
+//            return -1;//this.tank.getInternalNbt().getInt("Color";
+//        } else {
+//            return -1;
+//        }
     }
-
     public boolean isBoiling() {
-        return this.isFilled() && this.ticksHeated == TICKS_TO_BOIL;
+        return this.hasWater() && this.ticksHeated == TICKS_TO_BOIL;
     }
 
-    public boolean isFilled() {
+    public boolean hasWater() {
         return !this.tank.isEmpty();
+    }
+
+    public boolean addItem(World world) {
+        if (!world.isClient) {
+            NbtCompound data;
+            if (tank.getStack().isFluidEqualTo(Fluids.WATER)) {
+
+            }
+        }
+        return false;
     }
 
     @Nullable

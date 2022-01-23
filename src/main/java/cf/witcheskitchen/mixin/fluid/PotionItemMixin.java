@@ -4,39 +4,28 @@ import cf.witcheskitchen.api.fluid.IFluidContainer;
 import cf.witcheskitchen.api.fluid.WKFluidAPI;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.item.BucketItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.item.PotionItem;
 import org.jetbrains.annotations.NotNull;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 
-@Mixin(BucketItem.class)
-public class BucketItemMixin implements IFluidContainer {
-
-    @Shadow
-    @Final
-    private Fluid fluid;
-
+@Mixin(PotionItem.class)
+public class PotionItemMixin implements IFluidContainer {
     @Override
     public int getCapacity() {
-        return WKFluidAPI.BUCKET_VOLUME;
+        return WKFluidAPI.BUCKET_VOLUME / 3;
     }
 
     @Override
     public @NotNull ItemStack getEmpty() {
-        return new ItemStack((((BucketItem) (Object) this).getRecipeRemainder()));
+        return new ItemStack(Items.GLASS_BOTTLE);
     }
 
     @Override
     public @NotNull ItemStack getFilled(Fluid fluid) {
-        if (fluid == Fluids.EMPTY) {
-            return new ItemStack(Items.BUCKET);
-        } else if (fluid == Fluids.WATER) {
-            return new ItemStack(Items.WATER_BUCKET);
-        } else if (fluid == Fluids.LAVA) {
-            return new ItemStack(Items.LAVA_BUCKET);
+        if (fluid == Fluids.WATER) {
+            return Items.POTION.getDefaultStack();
         } else {
             return ItemStack.EMPTY;
         }
@@ -44,6 +33,6 @@ public class BucketItemMixin implements IFluidContainer {
 
     @Override
     public @NotNull Fluid getFluid(ItemStack stack) {
-        return this.fluid;
+        return Fluids.WATER;
     }
 }
