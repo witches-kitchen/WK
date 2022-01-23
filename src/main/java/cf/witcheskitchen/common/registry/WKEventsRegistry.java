@@ -9,4 +9,9 @@ public class WKEventsRegistry {
         LootTableLoadingCallback.EVENT.register(new WKEventsHandler.LootTablesListener());
     }
 
+    // used for client events
+    public static void registerClient() {
+
+    }
+
 }

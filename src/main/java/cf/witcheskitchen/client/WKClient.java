@@ -7,10 +7,7 @@ import cf.witcheskitchen.client.render.blockentity.BrewingBarrelBlockEntityRende
 import cf.witcheskitchen.client.render.blockentity.WitchesCauldronBlockEntityRender;
 import cf.witcheskitchen.client.render.blockentity.WitchesOvenBlockEntityRender;
 import cf.witcheskitchen.common.blocks.WKLeafCropBlock;
-import cf.witcheskitchen.common.registry.RenderRegistry;
-import cf.witcheskitchen.common.registry.WKBlockEntityTypes;
-import cf.witcheskitchen.common.registry.WKParticleTypes;
-import cf.witcheskitchen.common.registry.WKScreenHandlerTypes;
+import cf.witcheskitchen.common.registry.*;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -32,6 +29,7 @@ public class WKClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         ParticleFactoryRegistry.getInstance().register(WKParticleTypes.BUBBLE, WKBubbleParticle.Factory::new);
+        WKEventsRegistry.registerClient();
         modBlocks.forEach(this::registerModBlockLayer);
         BlockEntityRendererRegistry.register(WKBlockEntityTypes.WITCHES_OVEN, (ctx) -> new WitchesOvenBlockEntityRender());
         BlockEntityRendererRegistry.register(WKBlockEntityTypes.WITCHES_CAULDRON, (ctx) -> new WitchesCauldronBlockEntityRender());
