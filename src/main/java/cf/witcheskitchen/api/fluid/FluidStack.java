@@ -245,6 +245,7 @@ public final class FluidStack {
             return false;
         }
     }
+
     // Fluid Stack hashCode implementation
     @Override
     public int hashCode() {
