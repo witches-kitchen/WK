@@ -20,21 +20,21 @@ import java.util.function.Predicate;
 public class FluidTank implements IFluidStorage {
 
     /**
-     *  The <b>Max</b> capacity of fluid this instance of Tank can hold (in MilliBuckets).
-     *  This value <b>CANNOT BE CHANGED</b> after the tank is created.
+     * The <b>Max</b> capacity of fluid this instance of Tank can hold (in MilliBuckets).
+     * This value <b>CANNOT BE CHANGED</b> after the tank is created.
      */
     protected final int capacity;
+    /**
+     * Gives you the flexibility of filter a condition
+     * for whether tank can be filled
+     */
+    protected final Predicate<FluidStack> filterValidator;
     /**
      * Empty {@link FluidStack} for empty Tanks
      * As annotated, an empty {@link FluidStack} is never null.
      */
     @Nonnull
     protected FluidStack stack = FluidStack.EMPTY;
-    /**
-     * Gives you the flexibility of filter a condition
-     * for whether tank can be filled
-     */
-    protected final Predicate<FluidStack> filterValidator;
 
 
     public FluidTank(int capacity) {
@@ -50,8 +50,9 @@ public class FluidTank implements IFluidStorage {
     /**
      * Fills the current tank.
      * Look at {@link IFluidStorage} for more info.
+     *
      * @param stack {@link FluidStack} to insert
-     * @param side {@link Direction} where is coming from
+     * @param side  {@link Direction} where is coming from
      * @return The amount of fluid inserted.
      */
     @Override
@@ -80,12 +81,13 @@ public class FluidTank implements IFluidStorage {
     /**
      * Drains the current tank.
      * Look at {@link IFluidStorage} for more info.
+     *
      * @param amount Max amount of fluid it is requested to drain.
-     * @param side {@link Direction} where it is going to drain
+     * @param side   {@link Direction} where it is going to drain
      * @return The {@link FluidStack} drained.
      */
     @Override
-    public @NotNull FluidStack drain(int amount, @Nullable  Direction side) {
+    public @NotNull FluidStack drain(int amount, @Nullable Direction side) {
         int drained = 0;
         if (this.stack.getAmount() <= amount) {
             drained = this.stack.getAmount();
@@ -97,11 +99,13 @@ public class FluidTank implements IFluidStorage {
         }
         return newStack;
     }
+
     /**
      * Drains the current tank.
      * Look at {@link IFluidStorage} for more info.
+     *
      * @param stack {@link FluidStack} that it is requested to drain.
-     * @param side {@link Direction} where it is going to drain
+     * @param side  {@link Direction} where it is going to drain
      * @return The {@link FluidStack} drained.
      */
     @NotNull
@@ -112,9 +116,10 @@ public class FluidTank implements IFluidStorage {
         }
         return drain(stack.getAmount(), side);
     }
+
     /**
-     *  Returns true if the tank can be filled with a specific {@link FluidStack}.
-     *  Used as a filter for filling.
+     * Returns true if the tank can be filled with a specific {@link FluidStack}.
+     * Used as a filter for filling.
      */
     public boolean canFill(FluidStack stack) {
         if (!stack.isEmpty()) {
@@ -136,6 +141,7 @@ public class FluidTank implements IFluidStorage {
     /**
      * Reads the content of this tank.
      * Must be read from {@link net.minecraft.block.entity.BlockEntity#readNbt(NbtCompound)}
+     *
      * @param data {@link NbtCompound}
      */
     @Override
@@ -146,6 +152,7 @@ public class FluidTank implements IFluidStorage {
     /**
      * Writes the content of this tank.
      * Must be written from {@link net.minecraft.block.entity.BlockEntity#writeNbt(NbtCompound)}
+     *
      * @return {@link NbtCompound} that contains the data of the {@link FluidStack} of the tank
      */
     @Override
@@ -157,13 +164,16 @@ public class FluidTank implements IFluidStorage {
 
     /**
      * Increases the internal fluid of the {@link FluidStack} of the tank
+     *
      * @param amount Amount of fluid (in MilliBuckets).
      */
     public void growFluid(int amount) {
         this.stack.setAmount(this.stack.getAmount() + amount);
     }
+
     /**
      * Decrements the internal fluid of the {@link FluidStack} of the tank
+     *
      * @param amount Amount of fluid (in MilliBuckets).
      */
     public void shrinkFluid(int amount) {

@@ -9,7 +9,7 @@ public interface IFluidContainer {
 
     ItemStack getEmpty();
 
-     ItemStack getFilled(Fluid fluid);
+    ItemStack getFilled(Fluid fluid);
 
     Fluid getFluid(ItemStack stack);
 

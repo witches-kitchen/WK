@@ -34,6 +34,7 @@ public interface IFluidStorage {
      * A FluidStack represents the internal fluid of a Fluid Storage and some other data.
      * <br>
      * Check out {@link FluidStack}.
+     *
      * @return {@link FluidTank} that represents the <i>internal storage</i> of the tank.
      */
     @Nonnull
@@ -44,8 +45,9 @@ public interface IFluidStorage {
      * from an existing {@link FluidStack}.
      * <br>
      * Must be called when you want to <b>fill</b> or <b>increment</b> the current amount of fluid of the tank.
+     *
      * @param stack {@link FluidStack} attempting to fill the tank.
-     * @param side {@link Direction} from where the fluid is coming from.
+     * @param side  {@link Direction} from where the fluid is coming from.
      * @return the amount of fluid that was accepted (because the tank could have low free space) by the tank.
      */
     int fill(FluidStack stack, Direction side);
@@ -54,8 +56,9 @@ public interface IFluidStorage {
      * Drains the Storage (which ends up modifying the internal {@link FluidStack}) of this tank,
      * from an existing {@link FluidStack}.
      * Must be called when you want to <b>drain</b> or <b>decrease</b> the current amount of fluid of the tank.
+     *
      * @param amount The <b>maximum</b> amount of fluid that will be removed from the storage.
-     * @param side {@link Direction} from where the fluid is draining to.
+     * @param side   {@link Direction} from where the fluid is draining to.
      * @return {@link FluidStack} The FluidStack that represents the new storage of the tank.
      */
     @Nonnull
@@ -65,8 +68,9 @@ public interface IFluidStorage {
      * Drains the Storage (which ends up modifying the internal {@link FluidStack}) of this tank,
      * from an existing {@link FluidStack}.
      * Must be called when you want to <b>drain</b> or <b>decrease</b> the current amount of fluid of the tank.
+     *
      * @param stack FluidStack that has the data you want to drain of this tank
-     * @param side {@link Direction} from where the fluid is draining to.
+     * @param side  {@link Direction} from where the fluid is draining to.
      * @return {@link FluidStack} The FluidStack that represents the new storage of the tank.
      */
     @Nonnull
@@ -81,6 +85,7 @@ public interface IFluidStorage {
      * The <b>MAXIMUM</b> capacity (in MilliBuckets) this instance of Tank can store.
      * <br>
      * It is recommended to make this value immutable or final.
+     *
      * @return The capacity of this tank.
      */
     int getCapacity();
@@ -94,6 +99,7 @@ public interface IFluidStorage {
      * Writes the internal content of this tank {@link FluidStack} to a {@link NbtCompound}.
      * <br>
      * Must be written from {@link net.minecraft.block.entity.BlockEntity#writeNbt(NbtCompound)}.
+     *
      * @return {@link NbtCompound} that contains the data of the {@link FluidStack} of the tank
      */
     NbtCompound writeStorage();
@@ -102,6 +108,7 @@ public interface IFluidStorage {
      * Reads the internal content of this tank.
      * <br>
      * Must be read from {@link net.minecraft.block.entity.BlockEntity#readNbt(NbtCompound)}
+     *
      * @param data {@link NbtCompound}
      */
     void readStorage(@NotNull NbtCompound data);

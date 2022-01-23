@@ -7,7 +7,10 @@ import com.google.gson.JsonParseException;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.recipe.*;
+import net.minecraft.recipe.Ingredient;
+import net.minecraft.recipe.Recipe;
+import net.minecraft.recipe.RecipeSerializer;
+import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
@@ -79,10 +82,10 @@ public class CauldronBrewingRecipe implements Recipe<Inventory> {
             final DefaultedList<Ingredient> ingredients = RecipeUtil.deserializeIngredients(JsonHelper.getArray(json, "ingredients"));
             if (ingredients.isEmpty()) {
                 throw new JsonParseException("No ingredients for cauldron brewing recipe");
-            }  else if (ingredients.size() > 8) {
+            } else if (ingredients.size() > 8) {
                 throw new JsonParseException("Too many ingredients for cauldron recipe");
             } else {
-                return new CauldronBrewingRecipe(id, ingredients, RecipeUtil.deserializeStack(JsonHelper.getObject(json,"result")), JsonHelper.getInt(json, "color"));
+                return new CauldronBrewingRecipe(id, ingredients, RecipeUtil.deserializeStack(JsonHelper.getObject(json, "result")), JsonHelper.getInt(json, "color"));
             }
         }
 

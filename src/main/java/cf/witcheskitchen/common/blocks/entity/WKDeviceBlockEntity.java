@@ -63,11 +63,11 @@ public class WKDeviceBlockEntity extends BlockEntity implements BlockEntityTicke
             super.world.updateListeners(this.getPos(), this.getCachedState(), this.getCachedState(), Block.NOTIFY_ALL);
         }
     }
+
     @Override
     public void markDirty() {
         super.markDirty();
     }
-
 
 
     @Override

@@ -37,7 +37,6 @@ public interface IStorageHandler {
     FluidStack getStackForTank(int tank);
 
 
-
     @Nonnull
     FluidStack drain(FluidStack stack, Direction side);
 

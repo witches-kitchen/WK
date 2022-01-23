@@ -19,7 +19,7 @@ public class WKBubbleParticle extends SpriteBillboardParticle {
         this.velocityX *= 0.1;
         this.velocityY *= 0.1;
         this.velocityZ *= 0.1;
-        this.red  = (float) velocityX;
+        this.red = (float) velocityX;
         this.green = (float) velocityY;
         this.blue = (float) velocityZ;
         this.maxAge = (int) (4 / (Math.random() * 0.8 + 0.2));

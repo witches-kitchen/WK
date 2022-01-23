@@ -16,14 +16,14 @@ public class WKDamageSources {
         }
     }
 
-        private static class WKHolyDamageSource extends DamageSource {
+    private static class WKHolyDamageSource extends DamageSource {
 
-            protected WKHolyDamageSource(String name) {
-                super(name);
-                this.setBypassesArmor();
-                this.setFire();
-                this.isMagic();
-                this.setUnblockable();
-            }
+        protected WKHolyDamageSource(String name) {
+            super(name);
+            this.setBypassesArmor();
+            this.setFire();
+            this.isMagic();
+            this.setUnblockable();
         }
     }
+}

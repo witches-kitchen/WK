@@ -23,8 +23,8 @@ import org.jetbrains.annotations.Nullable;
 public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements IStorageHandler {
 
     private static final int TICKS_TO_BOIL = TimeHelper.toTicks(5);
-    private int ticksHeated;
     private final FluidTank tank = new FluidTank(WKFluidAPI.BUCKET_VOLUME);
+    private int ticksHeated;
 
     public WitchesCauldronBlockEntity(BlockPos pos, BlockState state) {
         super(WKBlockEntityTypes.WITCHES_CAULDRON, pos, state, 3);
@@ -75,7 +75,7 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
     @Environment(EnvType.CLIENT)
     public int getColor() {
         NbtCompound tankNbt = this.tank.isEmpty() ? this.tank.getInternalNbt() : null;
-        if(tankNbt != null) {
+        if (tankNbt != null) {
             return tankNbt.getInt("Color");
         } else {
             return -1;
