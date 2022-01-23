@@ -8,6 +8,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * <h3>Represents a stack of fluids.</h3>
@@ -79,6 +80,7 @@ public final class FluidStack {
      * <p>
      * Stored at the key {@code tag} in the serialized fluid stack NBT.
      */
+    @Nullable
     private NbtCompound data;
 
     // Default constructor
@@ -249,7 +251,7 @@ public final class FluidStack {
         int result = fluid.hashCode();
         result = 31 * result + amount;
         result = 31 * result + (empty ? 1 : 0);
-        result = 31 * result + data.hashCode();
+        result = 31 * result + (data != null ? data.hashCode() : 0);
         return result;
     }
 }

@@ -145,6 +145,7 @@ public class WitchesCauldronBlock extends WKBlockEntityProvider implements Water
              * Fill cauldron tank
              */
             final FluidStack fluidStackToFill = WKFluidAPI.getFluidStackFor(heldStack);
+            System.out.println(fluidStackToFill);
             if (!fluidStackToFill.isEmpty()) {
                 if (cauldron.canFill(fluidStackToFill, side)) {
                     int filled = cauldron.fill(fluidStackToFill, side);
