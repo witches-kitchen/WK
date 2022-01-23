@@ -23,12 +23,23 @@ public class FrostShieldStatusEffect extends StatusEffect {
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
         LivingEntity attacker = entity.getAttacker();
-        if (entity.getAttacker() == attacker) {
-            if (attacker != null) {
-                attacker.setFrozenTicks(10);
-                attacker.isFreezing();
-                attacker.damage(DamageSource.FREEZE, 2f);
-                attacker.setInPowderSnow(true);
+        if (amplifier == 0) {
+            if (entity.getAttacker() == attacker) {
+                if (attacker != null) {
+                    attacker.setFrozenTicks(10);
+                    attacker.isFreezing();
+                    attacker.damage(DamageSource.FREEZE, 2f);
+                    attacker.setInPowderSnow(true);
+                }
+            }
+        } else if (amplifier >= 1) {
+            if (entity.getAttacker() == attacker) {
+                if (attacker != null) {
+                    attacker.setFrozenTicks(10);
+                    attacker.isFreezing();
+                    attacker.damage(DamageSource.FREEZE, 4f);
+                    attacker.setInPowderSnow(true);
+                }
             }
         }
     }
