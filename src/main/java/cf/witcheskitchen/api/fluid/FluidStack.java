@@ -41,8 +41,6 @@ import javax.annotation.Nonnull;
  * <p>
  */
 public final class FluidStack {
-
-    //TODO: HASHCODE() IMPLEMENTATION
     /**
      * Empty FluidStack instance (similar to a {@link net.minecraft.item.ItemStack#EMPTY)}
      */
@@ -245,5 +243,13 @@ public final class FluidStack {
             return false;
         }
     }
-
+    // Fluid Stack hashCode implementation
+    @Override
+    public int hashCode() {
+        int result = fluid.hashCode();
+        result = 31 * result + amount;
+        result = 31 * result + (empty ? 1 : 0);
+        result = 31 * result + data.hashCode();
+        return result;
+    }
 }
