@@ -116,15 +116,15 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         this.goalSelector.add(8, new FollowOwnerGoal(this, 1.0D, 3.0F, 10.0F, false));
         this.goalSelector.add(9, new MeleeAttackGoal(this, 1, true));
         this.goalSelector.add(10, new StopAndLookAtEntityGoal(this, MobEntity.class, 2.0f, 0.8f));
-        this.goalSelector.add(11, new WanderAroundFarGoal(this, 0.8D, 1));
+        this.goalSelector.add(11, new WanderAroundFarGoal(this, 0.8D, 1.0000001E-5F));
         this.goalSelector.add(12, new FleeEntityGoal(this, LivingEntity.class, 16, 1, 3, FLEE_SUPERNATURAL));
-        this.targetSelector.add(13, new ActiveTargetGoal<>(this, PlayerEntity.class, 10, true, false, this::shouldAngerAt));
-        this.targetSelector.add(14, new UntamedActiveTargetGoal(this, RabbitEntity.class, false, null));
-        this.targetSelector.add(15, new UntamedActiveTargetGoal(this, ChickenEntity.class, false, null));
-        this.targetSelector.add(16, new RevengeGoal(this).setGroupRevenge());
-        this.targetSelector.add(17, new UniversalAngerGoal(this, true));
-        this.targetSelector.add(18, new TrackOwnerAttackerGoal(this));
-        this.targetSelector.add(19, new AttackWithOwnerGoal(this));
+        this.targetSelector.add(1, new ActiveTargetGoal<>(this, PlayerEntity.class, 10, true, false, this::shouldAngerAt));
+        this.targetSelector.add(2, new UntamedActiveTargetGoal(this, RabbitEntity.class, false, null));
+        this.targetSelector.add(3, new UntamedActiveTargetGoal(this, ChickenEntity.class, false, null));
+        this.targetSelector.add(4, new RevengeGoal(this).setGroupRevenge());
+        this.targetSelector.add(5, new UniversalAngerGoal(this, true));
+        this.targetSelector.add(6, new TrackOwnerAttackerGoal(this));
+        this.targetSelector.add(7, new AttackWithOwnerGoal(this));
     }
 
     @Override
