@@ -1,6 +1,7 @@
 package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WK;
+import cf.witcheskitchen.WKConfig;
 import cf.witcheskitchen.common.statuseffect.*;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -39,5 +40,9 @@ public class WKStatusEffects {
 
     public static void register() {
         STATUS_EFFECTS.keySet().forEach(effect -> Registry.register(Registry.STATUS_EFFECT, STATUS_EFFECTS.get(effect), effect));
+
+        if (WKConfig.get().debugMode) {
+            WK.logger.info("Witches Kitchen Base Potions: Successfully Loaded");
+        }
     }
 }

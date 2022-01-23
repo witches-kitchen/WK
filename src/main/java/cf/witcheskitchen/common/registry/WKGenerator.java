@@ -1,5 +1,7 @@
 package cf.witcheskitchen.common.registry;
 
+import cf.witcheskitchen.WK;
+import cf.witcheskitchen.WKConfig;
 import cf.witcheskitchen.common.generator.SumacFoliagePlacer;
 import cf.witcheskitchen.mixin.FoliagePlacerTypeInvoker;
 import com.google.common.collect.ImmutableList;
@@ -147,7 +149,10 @@ public class WKGenerator {
         Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, rowanTree.getValue(), ROWAN_TREE);
         Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, sumacTree.getValue(), SUMAC_TREE);
 
+        if (WKConfig.get().debugMode) {
+            WK.logger.info("Witches Kitchen Base Generation: Successfully Loaded");
 
+        }
     }
 }
 

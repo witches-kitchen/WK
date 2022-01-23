@@ -1,6 +1,7 @@
 package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WK;
+import cf.witcheskitchen.WKConfig;
 import cf.witcheskitchen.common.blocks.SaltBlock;
 import cf.witcheskitchen.common.blocks.WKSaplingBlock;
 import cf.witcheskitchen.common.blocks.WKStairsBlock;
@@ -159,6 +160,15 @@ public class WKBlocks {
     public static final Block BELLADONNA_NOCTURNAL = new BelladonnaCropBlock(FabricBlockSettings.copyOf(BELLADONNA), BelladonnaCropBlock.Type.NOCTURNAL);
 
     public static final Block AMARANTH = new AmaranthCropBlock(AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP));
+    public static final Block AMARANTH_SWEETBERRY = new AmaranthCropBlock(FabricBlockSettings.copyOf(AMARANTH), AmaranthCropBlock.Type.SWEETBERRY);
+    public static final Block AMARANTH_TORCH = new AmaranthCropBlock(FabricBlockSettings.copyOf(AMARANTH), AmaranthCropBlock.Type.TORCH);
+    public static final Block AMARANTH_SUNDEW = new AmaranthCropBlock(FabricBlockSettings.copyOf(AMARANTH), AmaranthCropBlock.Type.SUNDEW);
+    public static final Block AMARANTH_CREEPER = new AmaranthCropBlock(FabricBlockSettings.copyOf(AMARANTH), AmaranthCropBlock.Type.CREEPER);
+    public static final Block AMARANTH_VIRIDIAN = new AmaranthCropBlock(FabricBlockSettings.copyOf(AMARANTH), AmaranthCropBlock.Type.VIRIDIAN);
+    public static final Block AMARANTH_GRISELIN = new AmaranthCropBlock(FabricBlockSettings.copyOf(AMARANTH), AmaranthCropBlock.Type.GRISELIN);
+    public static final Block AMARANTH_CERISE = new AmaranthCropBlock(FabricBlockSettings.copyOf(AMARANTH), AmaranthCropBlock.Type.CERISE);
+    public static final Block AMARANTH_DARK_PASSION = new AmaranthCropBlock(FabricBlockSettings.copyOf(AMARANTH), AmaranthCropBlock.Type.DARK_PASSION);
+    public static final Block AMARANTH_FIREBIRD = new AmaranthCropBlock(FabricBlockSettings.copyOf(AMARANTH), AmaranthCropBlock.Type.FIREBIRD);
 
     public static void register() {
         //devices
@@ -301,6 +311,15 @@ public class WKBlocks {
         registerBlockOnly("belladonna_nocturnal", BELLADONNA_NOCTURNAL);
 
         registerBlockOnly("amaranth", AMARANTH);
+        registerBlockOnly("amaranth_sweetberry", AMARANTH_SWEETBERRY);
+        registerBlockOnly("amaranth_torch", AMARANTH_TORCH);
+        registerBlockOnly("amaranth_sundew", AMARANTH_SUNDEW);
+        registerBlockOnly("amaranth_creeper", AMARANTH_CREEPER);
+        registerBlockOnly("amaranth_viridian", AMARANTH_VIRIDIAN);
+        registerBlockOnly("amaranth_griselin", AMARANTH_GRISELIN);
+        registerBlockOnly("amaranth_cerise", AMARANTH_CERISE);
+        registerBlockOnly("amaranth_dark_passion", AMARANTH_DARK_PASSION);
+        registerBlockOnly("amaranth_firebird", AMARANTH_FIREBIRD);
     }
 
     //needs to be reworked for better suiting our needs.. maybe? keeping the never and 2 always in case we end up needing to use them.
@@ -344,6 +363,10 @@ public class WKBlocks {
 
         Registry.register(Registry.BLOCK, new Identifier(WK.MODID, id), block);
         Registry.register(Registry.ITEM, new Identifier(WK.MODID, id), new BlockItem(block, new FabricItemSettings().group(tab)));
+
+        if (WKConfig.get().debugMode) {
+            WK.logger.info("Witches Kitchen Base Blocks: Successfully Loaded");
+        }
     }
 
     private static <T extends Block> void registerBlockOnly(final String id, final T block) {

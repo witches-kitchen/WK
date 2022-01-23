@@ -1,6 +1,7 @@
 package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WK;
+import cf.witcheskitchen.WKConfig;
 import cf.witcheskitchen.common.blocks.entity.BrewingBarrelBlockEntity;
 import cf.witcheskitchen.common.blocks.entity.WitchesCauldronBlockEntity;
 import cf.witcheskitchen.common.blocks.entity.WitchesOvenBlockEntity;
@@ -20,6 +21,10 @@ public class WKBlockEntityTypes {
         registerBlockEntity("witches_oven", WITCHES_OVEN);
         registerBlockEntity("witches_cauldron", WITCHES_CAULDRON);
         registerBlockEntity("brewing_barrel", BREWING_BARREL);
+
+        if (WKConfig.get().debugMode) {
+            WK.logger.info("Witches Kitchen Base Block Entities: Successfully Loaded");
+        }
     }
 
     public static final BlockEntityType<WitchesOvenBlockEntity> WITCHES_OVEN = FabricBlockEntityTypeBuilder.create(WitchesOvenBlockEntity::new, WKBlocks.IRON_WITCHES_OVEN, WKBlocks.COPPER_WITCHES_OVEN, WKBlocks.EXPOSED_COPPER_WITCHES_OVEN, WKBlocks.WEATHERED_COPPER_WITCHES_OVEN, WKBlocks.OXIDIZED_COPPER_WITCHES_OVEN).build();

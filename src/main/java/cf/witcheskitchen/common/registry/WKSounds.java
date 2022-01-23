@@ -1,5 +1,7 @@
 package cf.witcheskitchen.common.registry;
 
+import cf.witcheskitchen.WK;
+import cf.witcheskitchen.WKConfig;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -18,6 +20,9 @@ public class WKSounds {
 
 
     public static void register() {
+        if (WKConfig.get().debugMode) {
+            WK.logger.info("Witches Kitchen Base Sounds: Successfully Loaded");
+        }
     }
 
 }
