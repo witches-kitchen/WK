@@ -24,18 +24,18 @@ public class FrostbiteStatusEffect extends StatusEffect {
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
         if (!entity.isFreezing()) {
-            entity.damage(DamageSource.FREEZE, 2f);
+            entity.damage(DamageSource.FREEZE, 1f);
             entity.setInPowderSnow(true);
         }
         if (entity.isOnFire()) {
             entity.extinguish();
         }
         if (entity.isWet()) {
-            entity.damage(DamageSource.FREEZE, 4f);
+            entity.damage(DamageSource.FREEZE, 2f);
             entity.setInPowderSnow(true);
         }
         if (entity.isTouchingWaterOrRain()) {
-            entity.damage(DamageSource.FREEZE, 4f);
+            entity.damage(DamageSource.FREEZE, 2f);
             entity.setInPowderSnow(true);
         }
         if (entity.hasStatusEffect(WKStatusEffects.HELLFIRE)) {
