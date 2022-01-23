@@ -368,6 +368,10 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         return age;
     }
 
+    public void tick() {
+        super.tick();
+    }
+
     @Override
     public int getAngerTime() {
         return this.dataTracker.get(ANGER_TIME);
