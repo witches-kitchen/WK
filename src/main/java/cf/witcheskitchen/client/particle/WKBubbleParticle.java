@@ -2,10 +2,8 @@ package cf.witcheskitchen.client.particle;
 
 import cf.witcheskitchen.api.event.ParticleEvents;
 import cf.witcheskitchen.common.blocks.technical.WKDeviceBlock;
-import dev.architectury.event.events.client.ClientPlayerEvent;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.block.Material;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.world.ClientWorld;
@@ -22,7 +20,7 @@ public class WKBubbleParticle extends SpriteBillboardParticle {
         // Minecraft bubble particle properties
         this.setBoundingBoxSpacing(0.02F, 0.02F);
         this.maxAge = (int) (8d / (Math.random() * 0.8 + 0.2));
-   //     this.scale *= random.nextFloat() * 0.3 + 0.3;
+        //     this.scale *= random.nextFloat() * 0.3 + 0.3;
         this.velocityX *= 0.1;
         this.velocityY *= 0.1;
         this.velocityZ *= 0.1;
@@ -52,7 +50,7 @@ public class WKBubbleParticle extends SpriteBillboardParticle {
         if (maxAge-- <= 0 || world.getBlockState(new BlockPos(this.x, this.y, this.z)).getMaterial() != Material.WATER) {
             this.markDead();
         }
-   //     ParticleEvents.END_BUBBLE_PARTICLE_TICK_EVENT.invoker().onEndTick(this, this.random);
+        //     ParticleEvents.END_BUBBLE_PARTICLE_TICK_EVENT.invoker().onEndTick(this, this.random);
     }
 
     protected boolean kill(BlockPos pos) {

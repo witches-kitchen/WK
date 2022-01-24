@@ -23,9 +23,9 @@ import org.jetbrains.annotations.Nullable;
 
 public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements IStorageHandler {
 
-    private int color;
     private static final int TICKS_TO_BOIL = TimeHelper.toTicks(5);
     private final FluidTank tank = new FluidTank(WKFluidAPI.BUCKET_VOLUME);
+    private final int color;
     private int ticksHeated;
 
     public WitchesCauldronBlockEntity(BlockPos pos, BlockState state) {
@@ -84,6 +84,7 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
 //            return -1;
 //        }
     }
+
     public boolean isBoiling() {
         return this.hasWater() && this.ticksHeated == TICKS_TO_BOIL;
     }
