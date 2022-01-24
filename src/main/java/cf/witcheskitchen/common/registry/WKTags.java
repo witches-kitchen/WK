@@ -1,6 +1,7 @@
 package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WK;
+import cf.witcheskitchen.WKConfig;
 import net.fabricmc.fabric.api.tag.TagFactory;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
@@ -26,4 +27,10 @@ public class WKTags {
     public static final Tag<Item> OVEN_BLACKLIST = TagFactory.ITEM.create(new Identifier(WK.MODID, "oven_blacklist"));
     public static final Tag<Item> BARREL_BLACKLIST = TagFactory.ITEM.create(new Identifier(WK.MODID, "barrel_blacklist"));
     public static final Tag<Item> TEA_BLACKLIST = TagFactory.ITEM.create(new Identifier(WK.MODID, "tea_blacklist"));
+
+    static {
+        if (WKConfig.get().debugMode) {
+            WK.logger.info("Witches Kitchen Base Custom Tags: Successfully Loaded");
+        }
+    }
 }

@@ -1,6 +1,7 @@
 package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WK;
+import cf.witcheskitchen.WKConfig;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.particle.ParticleEffect;
@@ -24,5 +25,9 @@ public class WKParticleTypes {
 
     public static void init() {
         PARTICLE_TYPES.keySet().forEach(id -> Registry.register(Registry.PARTICLE_TYPE, id, PARTICLE_TYPES.get(id)));
+
+        if (WKConfig.get().debugMode) {
+            WK.logger.info("Witches Kitchen Base Custom Particles: Successfully Loaded");
+        }
     }
 }

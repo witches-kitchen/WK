@@ -1,5 +1,7 @@
 package cf.witcheskitchen.common.registry;
 
+import cf.witcheskitchen.WK;
+import cf.witcheskitchen.WKConfig;
 import net.minecraft.entity.damage.DamageSource;
 
 public class WKDamageSources {
@@ -24,6 +26,12 @@ public class WKDamageSources {
             this.setFire();
             this.isMagic();
             this.setUnblockable();
+        }
+    }
+
+    static {
+        if (WKConfig.get().debugMode) {
+            WK.logger.info("Witches Kitchen Base Damage Sources: Successfully Loaded");
         }
     }
 }
