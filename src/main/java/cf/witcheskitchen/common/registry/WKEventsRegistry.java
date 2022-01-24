@@ -1,5 +1,7 @@
 package cf.witcheskitchen.common.registry;
 
+import cf.witcheskitchen.WK;
+import cf.witcheskitchen.WKConfig;
 import cf.witcheskitchen.common.WKEventsHandler;
 import net.fabricmc.fabric.api.loot.v1.event.LootTableLoadingCallback;
 
