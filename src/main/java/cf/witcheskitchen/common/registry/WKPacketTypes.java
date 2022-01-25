@@ -1,8 +1,10 @@
 package cf.witcheskitchen.common.registry;
 
+import cf.witcheskitchen.WK;
+import cf.witcheskitchen.WKConfig;
 import cf.witcheskitchen.api.event.network.C2SPacketRegistryListener;
-import cf.witcheskitchen.client.network.packet.CauldronSplashParticlePacketHandler;
 import cf.witcheskitchen.api.event.network.S2CPacketRegistryListener;
+import cf.witcheskitchen.client.network.packet.CauldronSplashParticlePacketHandler;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -20,10 +22,17 @@ public class WKPacketTypes {
 
     public static final S2CPacketRegistryListener CAULDRON_SPLASH_PARTICLE_HANDLER = registerClientPacket(new CauldronSplashParticlePacketHandler());
 
+    static {
+        if (WKConfig.get().debugMode) {
+            WK.logger.info("Witches Kitchen Base Packet Handlers: Successfully Loaded");
+        }
+    }
+
     private static <T extends C2SPacketRegistryListener> T registerServerPacket(T handler) {
         SERVER_PACKETS.put(handler.getChannelId(), handler);
         return handler;
     }
+
     private static <T extends S2CPacketRegistryListener> T registerClientPacket(T handler) {
         CLIENT_PACKETS.put(handler.getChannelId(), handler);
         return handler;
