@@ -13,6 +13,7 @@ public class WKItems {
 
     // Flowers
     public static final Item BELLADONNA_BLOSSOM = new Item(new FabricItemSettings().group(WK.WK_SEED_GROUP));
+    public static final Item AMARANTH_SPRIG = new Item(new FabricItemSettings().food(WKFoodComponents.AMARANTH_GRAIN).group(WK.WK_SEED_GROUP));
 
     public static final Item AMARANTH_SEEDS = new WKSeedItem(WKBlocks.AMARANTH, new FabricItemSettings().group(WK.WK_SEED_GROUP));
     public static final Item AMARANTH_SWEETBERRY_SEEDS = new WKSeedItem(WKBlocks.AMARANTH_SWEETBERRY, new FabricItemSettings().group(WK.WK_SEED_GROUP));
@@ -56,6 +57,7 @@ public class WKItems {
         registerItem("amaranth_dark_passion_seeds", AMARANTH_DARK_PASSION_SEEDS);
         registerItem("amaranth_firebird_seeds", AMARANTH_FIREBIRD_SEEDS);
         registerItem("belladonna_blossom", BELLADONNA_BLOSSOM);
+        registerItem("amaranth_sprig", AMARANTH_SPRIG);
         registerItem("belladonna_seeds", BELLADONNA_SEEDS);
         registerItem("belladonna_glow_seeds", BELLADONNA_GLOW_SEEDS);
         registerItem("belladonna_nocturnal_seeds", BELLADONNA_NOCTURNAL_SEEDS);

@@ -15,6 +15,7 @@ public class WKFoodComponents {
     public static final FoodComponent STRONG_ALCOHOL = new FoodComponent.Builder().hunger(1).saturationModifier(1f).snack().alwaysEdible().statusEffect(new StatusEffectInstance(WKStatusEffects.DRUNK, 3000, 2), 0.65F).build();
     public static final FoodComponent AVERAGE_ALCOHOL = new FoodComponent.Builder().hunger(1).saturationModifier(1f).snack().alwaysEdible().statusEffect(new StatusEffectInstance(WKStatusEffects.DRUNK, 2000, 1), 0.35F).build();
     public static final FoodComponent WEAK_ALCOHOL = new FoodComponent.Builder().hunger(1).saturationModifier(1f).snack().alwaysEdible().statusEffect(new StatusEffectInstance(WKStatusEffects.DRUNK, 1000), 0.15F).build();
+    public static final FoodComponent AMARANTH_GRAIN = new FoodComponent.Builder().hunger(2).saturationModifier(0.5f).snack().alwaysEdible().build();
 
     static {
         if (WKConfig.get().debugMode) {
