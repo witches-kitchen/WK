@@ -33,7 +33,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements IStorageHandler {
 
@@ -41,9 +40,10 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
     private final FluidTank tank = new FluidTank(WKFluidAPI.BUCKET_VOLUME);
     private int ticksHeated;
     private int color;
+    private int ticks;
 
     private static final int DEFAULT_COLOR = 0x3f76e4;
-    private final Box itemCollectionZone = new Box(this.pos).contract(0.65);
+    private final Box collectionBox = new Box(this.pos).contract(0.65);
 
     public WitchesCauldronBlockEntity(BlockPos pos, BlockState state) {
         super(WKBlockEntityTypes.WITCHES_CAULDRON, pos, state, 7);
@@ -51,27 +51,43 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
     }
 
     public void checkAndCollectIngredient(World world, final ItemEntity entity) {
-        int i = this.manager.findAnyEmptySlot();
-        world.getEntitiesByType(EntityType.ITEM, this.itemCollectionZone, possibleIngredient -> true).forEach(itemEntity -> {
+
+        if (this.isBoiling()) {
+            int i = this.manager.findAnyEmptySlot();
             if (i >= 0) {
-                this.setStack(i, entity.getStack());
-                PlayerLookup.tracking(entity).forEach(serverPlayer -> CauldronSplashParticlePacketHandler.send(serverPlayer, this.getPos()));
-                entity.kill();
+                world.getEntitiesByType(EntityType.ITEM, this.collectionBox, possibleIngredient -> true).forEach(itemEntity -> {
+                    this.setStack(i, entity.getStack());
+                    PlayerLookup.tracking(entity).forEach(serverPlayer -> CauldronSplashParticlePacketHandler.send(serverPlayer, this.getPos()));
+                    entity.kill();
+                });
             }
-        });
+        }
+        if (this.tank.getStack().hasFluid(Fluids.LAVA)) {
+            this.manager.clear();
+            final double offsetPos = 0.5D;
+            if (world.isClient) {
+                world.addParticle(ParticleTypes.ASH, pos.getX() + offsetPos, pos.getY() + offsetPos, pos.getZ() + offsetPos, 0, 0, 0);
+            }
+            world.playSound(null, getPos(), SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.BLOCKS, 1, (float) (0.2 * world.random.nextDouble()) + 1);
+            entity.kill();
+        }
+
     }
 
     @Override
     public void tick(World world, BlockPos pos, BlockState state, WKDeviceBlockEntity blockEntity) {
-        super.tick(world, pos, state, blockEntity);
+
         final BlockState belowState = world.getBlockState(pos.down());
         boolean sync = false;
         if (this.hasFluid()) {
-            if (this.tank.getStack().isFluidEqualTo(Fluids.LAVA)) {
-                WitchesCauldronBlockEntity.lavaTick(world, pos, EnvType.SERVER, this.manager);
-                return;
+            if (this.tank.getStack().hasFluid(Fluids.LAVA)) {
+                super.tick(world, pos, state, blockEntity);
+                if (world.getTime() % 10L == 8L) { // each 10 ticks
+                    WitchesCauldronBlockEntity.lavaTick(world, pos, EnvType.SERVER, this.manager);
+                    return;
+                }
             }
-            if (this.tank.getStack().isFluidEqualTo(Fluids.WATER)) {
+            if (this.tank.getStack().hasFluid(Fluids.WATER)) {
                 if (belowState.isIn(WKTags.HEATS_CAULDRON)) {
                     if (this.ticksHeated < TICKS_TO_BOIL) {
                         this.ticksHeated++;
@@ -103,9 +119,6 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
                 }
             }
             case SERVER -> {
-                if (!cauldron.isEmpty()) {
-                    //TODO: clear inventory
-                }
                 final float pitch = 0.15F;
                 if (i == 1) {
                     world.playSound(null, pos, SoundEvents.BLOCK_LAVA_POP, SoundCategory.BLOCKS, 0.2F + random.nextFloat() * 0.2F, 0.9F + random.nextFloat() * pitch);
@@ -122,7 +135,7 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
     public void onClientTick(World world, BlockPos pos, BlockState state, Random random) {
         super.onClientTick(world, pos, state, random);
 
-        if (this.tank.getStack().isFluidEqualTo(Fluids.LAVA)) {
+        if (this.tank.getStack().hasFluid(Fluids.LAVA)) {
             WitchesCauldronBlockEntity.lavaTick(world, pos, EnvType.CLIENT, this.manager);
             return;
         }

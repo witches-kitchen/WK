@@ -141,7 +141,7 @@ public final class FluidStack {
      * @param other {@link Fluid}
      * @return whether they are partially equivalent
      */
-    public boolean isFluidEqualTo(Fluid other) {
+    public boolean hasFluid(Fluid other) {
         return this.fluid.equals(other);
     }
 
@@ -153,7 +153,7 @@ public final class FluidStack {
      * @return Whether this stack is equal to the other
      */
     public boolean isEqualTo(@Nonnull FluidStack other) {
-        return this.isFluidEqualTo(other.getFluid()) && isTagEqualTo(other);
+        return this.hasFluid(other.getFluid()) && isTagEqualTo(other);
     }
 
     /**

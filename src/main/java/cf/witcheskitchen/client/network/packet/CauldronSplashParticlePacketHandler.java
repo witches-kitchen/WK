@@ -25,7 +25,6 @@ public class CauldronSplashParticlePacketHandler implements S2CPacketRegistryLis
 
     public static void send(PlayerEntity player, BlockPos pos) {
         final PacketByteBuf data = PacketByteBufs.create();
-        data.writeBlockPos(pos);
         ServerPlayNetworking.send((ServerPlayerEntity) player, CHANNEL, data);
     }
 
@@ -36,7 +35,9 @@ public class CauldronSplashParticlePacketHandler implements S2CPacketRegistryLis
         client.execute(() -> {
             final ClientWorld world = client.world;
             if (world != null) {
-                world.addParticle(ParticleTypes.SPLASH, pos.getX() + 0.5D, pos.getY() + 0.8D, pos.getZ() + 0.5D, 0.5D, 0.5D, 8);
+                for (int i = 0; i < 8; i++) {
+                    world.addParticle(ParticleTypes.SPLASH, pos.getX() + 0.5D, pos.getY() + 0.8D, pos.getZ() + 0.5D, 0.5D, 0.5D, 8);
+                }
                 world.playSound(pos, SoundEvents.ENTITY_PLAYER_SPLASH, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
             }
         });

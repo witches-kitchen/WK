@@ -182,15 +182,13 @@ public class WitchesCauldronBlock extends WKBlockEntityProvider implements Water
     @Override
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
         super.onEntityCollision(state, world, pos, entity);
-        if (!world.isClient && entity instanceof ItemEntity itemEntity) {
+        if (entity instanceof ItemEntity itemEntity) {
             final BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof WitchesCauldronBlockEntity cauldron) {
                 if (cauldron.hasFluid()) {
-                    if (cauldron.isBoiling()) {
-                        final Item item = itemEntity.getStack().getItem();;
-                        if (item != null && item != Items.AIR) {
-                            cauldron.checkAndCollectIngredient(world, itemEntity);
-                        }
+                    final Item item = itemEntity.getStack().getItem();;
+                    if (item != null && item != Items.AIR) {
+                        cauldron.checkAndCollectIngredient(world, itemEntity);
                     }
                 }
             }
