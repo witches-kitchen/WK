@@ -57,6 +57,15 @@ public class InventoryManager<T extends BlockEntity> implements Inventory {
         this.blockEntity = blockEntity;
     }
 
+    public static int findMatchingSlot(Inventory inventory, ItemStack search) {
+        for (int i = 0; i < inventory.size(); i++) {
+            // Can merge items
+            if (ItemUtil.areItemsEqual(inventory.getStack(i), search, true)) {
+                return i;
+            }
+        }
+        return -1;
+    }
 
     /**
      * Reads the inventory data from {@link NbtCompound}
@@ -222,15 +231,5 @@ public class InventoryManager<T extends BlockEntity> implements Inventory {
 
     public int findAnyEmptySlot() {
         return InventoryManager.findMatchingSlot(this, ItemStack.EMPTY);
-    }
-
-    public static int findMatchingSlot(Inventory inventory, ItemStack search) {
-        for (int i = 0; i < inventory.size(); i++) {
-            // Can merge items
-            if (ItemUtil.areItemsEqual(inventory.getStack(i), search, true)) {
-                return i;
-            }
-        }
-        return -1;
     }
 }

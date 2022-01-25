@@ -187,7 +187,7 @@ public class WitchesCauldronBlock extends WKBlockEntityProvider implements Water
             if (blockEntity instanceof WitchesCauldronBlockEntity cauldron) {
                 if (cauldron.hasFluid()) {
                     if (cauldron.isBoiling()) {
-                        final Item item = itemEntity.getStack().getItem();;
+                        final Item item = itemEntity.getStack().getItem();
                         if (item != null && item != Items.AIR) {
                             cauldron.checkAndCollectIngredient(world, itemEntity);
                         }

@@ -34,7 +34,6 @@ public abstract class WKScreenHandler extends ScreenHandler {
     }
 
 
-
     @Override
     public ItemStack transferSlot(final PlayerEntity player, final int index) {
         ItemStack originalStack = ItemStack.EMPTY;

@@ -255,6 +255,7 @@ public final class FluidStack {
         result = 31 * result + (data != null ? data.hashCode() : 0);
         return result;
     }
+
     // debugging
     @Override
     public String toString() {

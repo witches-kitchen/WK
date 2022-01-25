@@ -33,21 +33,45 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements IStorageHandler {
 
     private static final int TICKS_TO_BOIL = TimeHelper.toTicks(5);
-    private final FluidTank tank = new FluidTank(WKFluidAPI.BUCKET_VOLUME);
-    private int ticksHeated;
-    private int color;
-
     private static final int DEFAULT_COLOR = 0x3f76e4;
+    private final FluidTank tank = new FluidTank(WKFluidAPI.BUCKET_VOLUME);
     private final Box itemCollectionZone = new Box(this.pos).contract(0.65);
+    private int ticksHeated;
+    private final int color;
 
     public WitchesCauldronBlockEntity(BlockPos pos, BlockState state) {
         super(WKBlockEntityTypes.WITCHES_CAULDRON, pos, state, 7);
         this.color = DEFAULT_COLOR;
+    }
+
+    private static void lavaTick(World world, BlockPos pos, EnvType side, Inventory cauldron) {
+        final Random random = world.getRandom();
+        final int i = random.nextInt(100) + 1;
+        switch (side) {
+            case CLIENT -> {
+                final double offsetPos = 0.5D;
+                if (i == 1) {
+                    world.addParticle(ParticleTypes.LAVA, pos.getX() + offsetPos, pos.getY() + offsetPos, pos.getZ() + offsetPos, 0, 0, 0);
+                } else if (i == 50) {
+                    world.addParticle(ParticleTypes.ASH, pos.getX() + offsetPos, pos.getY() + offsetPos, pos.getZ() + offsetPos, 0, 0, 0);
+                }
+            }
+            case SERVER -> {
+                if (!cauldron.isEmpty()) {
+                    //TODO: clear inventory
+                }
+                final float pitch = 0.15F;
+                if (i == 1) {
+                    world.playSound(null, pos, SoundEvents.BLOCK_LAVA_POP, SoundCategory.BLOCKS, 0.2F + random.nextFloat() * 0.2F, 0.9F + random.nextFloat() * pitch);
+                } else if (i == 50) {
+                    world.playSound(null, pos, SoundEvents.BLOCK_LAVA_AMBIENT, SoundCategory.BLOCKS, 0.2F + random.nextFloat() * 0.2F, 0.9F + random.nextFloat() * pitch);
+                }
+            }
+        }
     }
 
     public void checkAndCollectIngredient(World world, final ItemEntity entity) {
@@ -85,32 +109,6 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
                 }
                 if (sync) {
                     this.markDirty(true);
-                }
-            }
-        }
-    }
-
-    private static void lavaTick(World world, BlockPos pos, EnvType side, Inventory cauldron) {
-        final Random random = world.getRandom();
-        final int i = random.nextInt(100) + 1;
-        switch (side) {
-            case CLIENT ->  {
-                final double offsetPos = 0.5D;
-                if (i == 1) {
-                    world.addParticle(ParticleTypes.LAVA, pos.getX() + offsetPos, pos.getY() + offsetPos, pos.getZ() + offsetPos, 0 ,0,  0);
-                } else if (i == 50) {
-                    world.addParticle(ParticleTypes.ASH, pos.getX() + offsetPos, pos.getY() + offsetPos, pos.getZ() + offsetPos, 0 ,0,  0);
-                }
-            }
-            case SERVER -> {
-                if (!cauldron.isEmpty()) {
-                    //TODO: clear inventory
-                }
-                final float pitch = 0.15F;
-                if (i == 1) {
-                    world.playSound(null, pos, SoundEvents.BLOCK_LAVA_POP, SoundCategory.BLOCKS, 0.2F + random.nextFloat() * 0.2F, 0.9F + random.nextFloat() * pitch);
-                } else if (i == 50) {
-                    world.playSound(null, pos, SoundEvents.BLOCK_LAVA_AMBIENT, SoundCategory.BLOCKS, 0.2F + random.nextFloat() * 0.2F, 0.9F + random.nextFloat() * pitch);
                 }
             }
         }
