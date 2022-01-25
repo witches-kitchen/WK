@@ -4,7 +4,7 @@ import cf.witcheskitchen.WK;
 import cf.witcheskitchen.WKConfig;
 import cf.witcheskitchen.api.event.network.C2SPacketRegistryListener;
 import cf.witcheskitchen.api.event.network.S2CPacketRegistryListener;
-import cf.witcheskitchen.client.network.packet.CauldronSplashParticlePacketHandler;
+import cf.witcheskitchen.client.network.packet.ParticleHandlerPacket;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -20,7 +20,7 @@ public class WKPacketTypes {
     // Packets that are sent by the server and received by the client
     private static final Map<Identifier, S2CPacketRegistryListener> CLIENT_PACKETS = new LinkedHashMap<>();
 
-    public static final S2CPacketRegistryListener CAULDRON_SPLASH_PARTICLE_HANDLER = registerClientPacket(new CauldronSplashParticlePacketHandler());
+    public static final S2CPacketRegistryListener PARTICLE_PACKET_HANDLER = registerClientPacket(new ParticleHandlerPacket());
 
     static {
         if (WKConfig.get().debugMode) {

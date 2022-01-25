@@ -5,21 +5,26 @@ import cf.witcheskitchen.api.fluid.FluidStack;
 import cf.witcheskitchen.api.fluid.WKFluidAPI;
 import cf.witcheskitchen.common.blocks.entity.WitchesCauldronBlockEntity;
 import cf.witcheskitchen.common.util.ItemUtil;
+import cf.witcheskitchen.common.util.TimeHelper;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
-import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.BlockMirror;
@@ -39,10 +44,8 @@ import org.jetbrains.annotations.Nullable;
 public class WitchesCauldronBlock extends WKBlockEntityProvider implements Waterloggable {
 
     public static final BooleanProperty HANGING = BooleanProperty.of("hanging");
+    public static final BooleanProperty LAVA = BooleanProperty.of("lava"); // Used for lighting when lava
     public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
-    public static final int TOP_LEVEL = 2;
-    public static final IntProperty WATER_LEVELS = IntProperty.of("water_levels", 0, TOP_LEVEL);
-
     public static final VoxelShape SHAPE = VoxelShapes.union(
             createCuboidShape(2, 9, 1, 14, 11, 2),
             createCuboidShape(2, 9, 14, 14, 11, 15),
@@ -61,14 +64,7 @@ public class WitchesCauldronBlock extends WKBlockEntityProvider implements Water
 
     public WitchesCauldronBlock(Settings settings) {
         super(settings);
-        this.setDefaultState(this.getStateManager().getDefaultState().with(FACING, Direction.NORTH).with(Properties.WATERLOGGED, false).with(HANGING, false));
-    }
-
-    public static int getWaterLevelFor(Item item) {
-        if (item instanceof BucketItem) {
-            return 3;
-        }
-        return item instanceof GlassBottleItem || item instanceof PotionItem ? 1 : 0;
+        this.setDefaultState(this.getStateManager().getDefaultState().with(FACING, Direction.NORTH).with(Properties.WATERLOGGED, false).with(HANGING, false).with(LAVA, false));
     }
 
     @Nullable
@@ -98,26 +94,6 @@ public class WitchesCauldronBlock extends WKBlockEntityProvider implements Water
         return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
     }
 
-
-//    public static boolean tryFillWith(World world, BlockPos pos, FluidStack stack, Direction side) {
-//        if (!world.isClient) {
-//            final BlockEntity entity = world.getBlockEntity(pos);
-//            if (entity instanceof WitchesCauldronBlockEntity cauldron) {
-//                if (cauldron.canFill(side, stack.getFluid())) {
-//                    int quantity = cauldron.fill(side, stack);
-//                    stack.setAmount(stack.getAmount() - quantity);
-//                    if (stack.getAmount() < 0) {
-//                        stack.setAmount(0);
-//                    }
-//                    if (quantity > 0) {
-//                        cauldron.markDirty();
-//                    }
-//                    return quantity > 0;
-//                }
-//            }
-//        }
-//        return false;
-//    }
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
@@ -175,25 +151,27 @@ public class WitchesCauldronBlock extends WKBlockEntityProvider implements Water
     }
 
     @Override
-    public void onLandedUpon(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
-        super.onLandedUpon(world, state, pos, entity, fallDistance);
-    }
-
-    @Override
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
         super.onEntityCollision(state, world, pos, entity);
-        if (entity instanceof ItemEntity itemEntity) {
-            final BlockEntity blockEntity = world.getBlockEntity(pos);
-            if (blockEntity instanceof WitchesCauldronBlockEntity cauldron) {
-                if (cauldron.hasFluid()) {
+        final BlockEntity blockEntity = world.getBlockEntity(pos);
+        if (!world.isClient && blockEntity instanceof WitchesCauldronBlockEntity cauldron) {
+            if (cauldron.hasFluid()) {
+                if (entity instanceof ItemEntity itemEntity) {
                     final Item item = itemEntity.getStack().getItem();;
                     if (item != null && item != Items.AIR) {
                         cauldron.checkAndCollectIngredient(world, itemEntity);
                     }
+                } else if (entity instanceof LivingEntity living) {
+                    if (cauldron.hasLava()) {
+                        living.damage(DamageSource.LAVA, 4);
+                        living.setFireTicks(TimeHelper.toTicks(15));
+                    }
                 }
+
             }
         }
     }
+
 
     @Override
     public boolean tryFillWithFluid(WorldAccess world, BlockPos pos, BlockState state, FluidState fluidState) {
@@ -210,7 +188,6 @@ public class WitchesCauldronBlock extends WKBlockEntityProvider implements Water
         return false;
     }
 
-
     @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
@@ -220,7 +197,7 @@ public class WitchesCauldronBlock extends WKBlockEntityProvider implements Water
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         super.appendProperties(builder);
-        builder.add(FACING, WATER_LEVELS, HANGING, Properties.WATERLOGGED);
+        builder.add(FACING, LAVA, HANGING, Properties.WATERLOGGED);
     }
 
     @Override
