@@ -4,33 +4,61 @@ import cf.witcheskitchen.api.fluid.FluidStack;
 import cf.witcheskitchen.api.fluid.FluidTank;
 import cf.witcheskitchen.api.fluid.IStorageHandler;
 import cf.witcheskitchen.api.fluid.WKFluidAPI;
+import cf.witcheskitchen.client.network.packet.CauldronSplashParticlePacketHandler;
 import cf.witcheskitchen.common.registry.WKBlockEntityTypes;
+import cf.witcheskitchen.common.registry.WKParticleTypes;
 import cf.witcheskitchen.common.registry.WKTags;
 import cf.witcheskitchen.common.util.TimeHelper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.fluid.Fluids;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.Packet;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.particle.ParticleEffect;
+import net.minecraft.particle.ParticleTypes;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Random;
+import java.util.concurrent.atomic.AtomicBoolean;
+
 public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements IStorageHandler {
 
-    private int color;
     private static final int TICKS_TO_BOIL = TimeHelper.toTicks(5);
     private final FluidTank tank = new FluidTank(WKFluidAPI.BUCKET_VOLUME);
     private int ticksHeated;
+    private int color;
+
+    private static final int DEFAULT_COLOR = 0x3f76e4;
+    private final Box itemCollectionZone = new Box(this.pos).contract(0.65);
 
     public WitchesCauldronBlockEntity(BlockPos pos, BlockState state) {
-        super(WKBlockEntityTypes.WITCHES_CAULDRON, pos, state, 3);
-        this.color = 0x3f76e4;
+        super(WKBlockEntityTypes.WITCHES_CAULDRON, pos, state, 7);
+        this.color = DEFAULT_COLOR;
+    }
+
+    public void checkAndCollectIngredient(World world, final ItemEntity entity) {
+        int i = this.manager.findAnyEmptySlot();
+        world.getEntitiesByType(EntityType.ITEM, this.itemCollectionZone, possibleIngredient -> true).forEach(itemEntity -> {
+            if (i >= 0) {
+                this.setStack(i, entity.getStack());
+                PlayerLookup.tracking(entity).forEach(serverPlayer -> CauldronSplashParticlePacketHandler.send(serverPlayer, this.getPos()));
+                entity.kill();
+            }
+        });
     }
 
     @Override
@@ -38,19 +66,76 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
         super.tick(world, pos, state, blockEntity);
         final BlockState belowState = world.getBlockState(pos.down());
         boolean sync = false;
-        if (belowState.isIn(WKTags.HEATS_CAULDRON) && this.hasWater()) {
-            if (this.ticksHeated < TICKS_TO_BOIL) {
-                this.ticksHeated++;
-                if (this.ticksHeated == TICKS_TO_BOIL) {
+        if (this.hasFluid()) {
+            if (this.tank.getStack().isFluidEqualTo(Fluids.LAVA)) {
+                WitchesCauldronBlockEntity.lavaTick(world, pos, EnvType.SERVER, this.manager);
+                return;
+            }
+            if (this.tank.getStack().isFluidEqualTo(Fluids.WATER)) {
+                if (belowState.isIn(WKTags.HEATS_CAULDRON)) {
+                    if (this.ticksHeated < TICKS_TO_BOIL) {
+                        this.ticksHeated++;
+                        if (this.ticksHeated == TICKS_TO_BOIL) {
+                            sync = true;
+                        }
+                    }
+                } else if (this.ticksHeated != 0) {
+                    this.ticksHeated = 0;
                     sync = true;
                 }
+                if (sync) {
+                    this.markDirty(true);
+                }
             }
-        } else if (this.ticksHeated != 0) {
-            this.ticksHeated = 0;
-            sync = true;
         }
-        if (sync) {
-            this.markDirty(true);
+    }
+
+    private static void lavaTick(World world, BlockPos pos, EnvType side, Inventory cauldron) {
+        final Random random = world.getRandom();
+        final int i = random.nextInt(100) + 1;
+        switch (side) {
+            case CLIENT ->  {
+                final double offsetPos = 0.5D;
+                if (i == 1) {
+                    world.addParticle(ParticleTypes.LAVA, pos.getX() + offsetPos, pos.getY() + offsetPos, pos.getZ() + offsetPos, 0 ,0,  0);
+                } else if (i == 50) {
+                    world.addParticle(ParticleTypes.ASH, pos.getX() + offsetPos, pos.getY() + offsetPos, pos.getZ() + offsetPos, 0 ,0,  0);
+                }
+            }
+            case SERVER -> {
+                if (!cauldron.isEmpty()) {
+                    //TODO: clear inventory
+                }
+                final float pitch = 0.15F;
+                if (i == 1) {
+                    world.playSound(null, pos, SoundEvents.BLOCK_LAVA_POP, SoundCategory.BLOCKS, 0.2F + random.nextFloat() * 0.2F, 0.9F + random.nextFloat() * pitch);
+                } else if (i == 50) {
+                    world.playSound(null, pos, SoundEvents.BLOCK_LAVA_AMBIENT, SoundCategory.BLOCKS, 0.2F + random.nextFloat() * 0.2F, 0.9F + random.nextFloat() * pitch);
+                }
+            }
+        }
+    }
+
+    // Render particles
+    @Environment(EnvType.CLIENT)
+    @Override
+    public void onClientTick(World world, BlockPos pos, BlockState state, Random random) {
+        super.onClientTick(world, pos, state, random);
+
+        if (this.tank.getStack().isFluidEqualTo(Fluids.LAVA)) {
+            WitchesCauldronBlockEntity.lavaTick(world, pos, EnvType.CLIENT, this.manager);
+            return;
+        }
+        if (Fluids.WATER == this.tank.getStack().getFluid() && this.isBoiling()) {
+            float depth = (float) (((this.getPercentFilled() - 1) * (0.4D)) + (0.6D));
+            final double r = ((this.color >> 16) & 0xff) / 255F;
+            final double g = ((this.color >> 8) & 0xff) / 255F;
+            final double b = (this.color & 0xff) / 255F;
+            double particleX = 0.2 + (random.nextDouble() * 0.6);
+            double particleZ = 0.2 + (random.nextDouble() * 0.6);
+            for (int i = 0; i < 6; i++) {
+                world.addParticle((ParticleEffect) WKParticleTypes.BUBBLE, pos.getX() + particleX, pos.getY() + depth, pos.getZ() + particleZ, r, g, b);
+            }
         }
     }
 
@@ -77,30 +162,17 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
 
     @Environment(EnvType.CLIENT)
     public int getColor() {
-        return this.color;
-//        if (this.hasWater()) {
-//            return -1;//this.tank.getInternalNbt().getInt("Color";
-//        } else {
-//            return -1;
-//        }
+        return DEFAULT_COLOR;
+
     }
     public boolean isBoiling() {
-        return this.hasWater() && this.ticksHeated == TICKS_TO_BOIL;
+        return this.hasFluid() && this.ticksHeated == TICKS_TO_BOIL;
     }
 
-    public boolean hasWater() {
+    public boolean hasFluid() {
         return !this.tank.isEmpty();
     }
 
-    public boolean addItem(World world) {
-        if (!world.isClient) {
-            NbtCompound data;
-            if (tank.getStack().isFluidEqualTo(Fluids.WATER)) {
-
-            }
-        }
-        return false;
-    }
 
     @Nullable
     @Override

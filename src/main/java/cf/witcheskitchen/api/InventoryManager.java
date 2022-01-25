@@ -1,5 +1,6 @@
 package cf.witcheskitchen.api;
 
+import cf.witcheskitchen.common.util.ItemUtil;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
@@ -217,5 +218,19 @@ public class InventoryManager<T extends BlockEntity> implements Inventory {
      */
     public DefaultedList<ItemStack> getStacks() {
         return this.inventory;
+    }
+
+    public int findAnyEmptySlot() {
+        return InventoryManager.findMatchingSlot(this, ItemStack.EMPTY);
+    }
+
+    public static int findMatchingSlot(Inventory inventory, ItemStack search) {
+        for (int i = 0; i < inventory.size(); i++) {
+            // Can merge items
+            if (ItemUtil.areItemsEqual(inventory.getStack(i), search, true)) {
+                return i;
+            }
+        }
+        return -1;
     }
 }

@@ -5,6 +5,7 @@ import cf.witcheskitchen.mixin.AxeAccess;
 import com.google.common.collect.ImmutableMap;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
+import net.fabricmc.api.EnvType;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.block.Block;
@@ -47,7 +48,7 @@ public class WK implements ModInitializer {
         // Proceed with mild caution.
         AutoConfig.register(WKConfig.class, GsonConfigSerializer::new);
         config = AutoConfig.getConfigHolder(WKConfig.class).getConfig();
-
+        WKPacketTypes.register(EnvType.SERVER);
         logger.info("Remember when I told you how my");
         logger.info("Kin is different in some ways?");
 
@@ -58,6 +59,7 @@ public class WK implements ModInitializer {
 
         logger.info("I hear her in the wind, the bane of our town");
         logger.info("Come with me, father, I'm to expose a heathen");
+
         WKBlocks.register();
         WKItems.register();
         WKBlockEntityTypes.register();

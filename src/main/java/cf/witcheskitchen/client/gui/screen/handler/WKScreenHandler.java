@@ -1,6 +1,7 @@
 package cf.witcheskitchen.client.gui.screen.handler;
 
 import cf.witcheskitchen.client.gui.screen.builder.ScreenHandlerBuilder;
+import cf.witcheskitchen.common.util.ItemUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
@@ -32,24 +33,7 @@ public abstract class WKScreenHandler extends ScreenHandler {
         this.inventory.onOpen(playerInventory.player);
     }
 
-    //Checks that stackA and stackB are equal
-    //This is as check to merge items on shift-click
-    private static boolean areItemsEqual(final ItemStack stackA, final ItemStack stackB, final boolean matchNBT) {
-        if (stackA.isEmpty() && stackB.isEmpty()) {
-            return true;//they are both air, fast return
-        } else if (stackA.isEmpty() || stackB.isEmpty()) {
-            return false;//one of them is air
-        } else if (stackA.getItem() != stackB.getItem()) {
-            return false; //They are different items
-        } else {
-            //Otherwise, they are the same items
-            if (!matchNBT) { //return if we don't want to match nbt
-                return true;
-            }
-            //Match nbt
-            return ItemStack.areNbtEqual(stackA, stackB);
-        }
-    }
+
 
     @Override
     public ItemStack transferSlot(final PlayerEntity player, final int index) {
@@ -125,7 +109,7 @@ public abstract class WKScreenHandler extends ScreenHandler {
             int maxCount = Math.min(stackToShift.getMaxCount(), slot.getMaxItemCount());
 
             if (!stackToShift.isEmpty() && slot.canInsert(stackToShift)) {
-                if (WKScreenHandler.areItemsEqual(stackInSlot, stackToShift, true)) {
+                if (ItemUtil.areItemsEqual(stackInSlot, stackToShift, true)) {
                     // Got 2 stacks that need merging
                     final int space = maxCount - stackInSlot.getCount();
                     if (space > 0) {

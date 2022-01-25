@@ -28,6 +28,7 @@ import static cf.witcheskitchen.WK.modBlocks;
 public class WKClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
+        WKPacketTypes.register(EnvType.CLIENT);
         ParticleFactoryRegistry.getInstance().register(WKParticleTypes.BUBBLE, WKBubbleParticle.Factory::new);
         WKEventsRegistry.registerClient();
         modBlocks.forEach(this::registerModBlockLayer);

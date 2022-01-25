@@ -7,6 +7,8 @@ import cf.witcheskitchen.common.blocks.entity.WitchesCauldronBlockEntity;
 import cf.witcheskitchen.common.util.ItemUtil;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
@@ -170,6 +172,29 @@ public class WitchesCauldronBlock extends WKBlockEntityProvider implements Water
             cauldron.markDirty();
         }
         return super.onUse(state, world, pos, player, hand, hit);
+    }
+
+    @Override
+    public void onLandedUpon(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
+        super.onLandedUpon(world, state, pos, entity, fallDistance);
+    }
+
+    @Override
+    public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+        super.onEntityCollision(state, world, pos, entity);
+        if (!world.isClient && entity instanceof ItemEntity itemEntity) {
+            final BlockEntity blockEntity = world.getBlockEntity(pos);
+            if (blockEntity instanceof WitchesCauldronBlockEntity cauldron) {
+                if (cauldron.hasFluid()) {
+                    if (cauldron.isBoiling()) {
+                        final Item item = itemEntity.getStack().getItem();;
+                        if (item != null && item != Items.AIR) {
+                            cauldron.checkAndCollectIngredient(world, itemEntity);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     @Override
