@@ -165,6 +165,7 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
         return DEFAULT_COLOR;
 
     }
+
     public boolean isBoiling() {
         return this.hasFluid() && this.ticksHeated == TICKS_TO_BOIL;
     }

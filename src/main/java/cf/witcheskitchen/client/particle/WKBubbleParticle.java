@@ -16,6 +16,7 @@ public class WKBubbleParticle extends SpriteBillboardParticle {
         super(clientWorld, posX, posY, posZ, r, g, b);
         this.setBoundingBoxSpacing(0.02F, 0.02F);
         this.maxAge = (int) (8d / (Math.random() * 0.8 + 0.2));
+
         this.velocityX *= 0.1;
         this.velocityY *= 0.1;
         this.velocityZ *= 0.1;
@@ -24,9 +25,6 @@ public class WKBubbleParticle extends SpriteBillboardParticle {
         this.red = (float) (((Math.random() * 0.2) + 0.8f) * r * f);
         this.green = (float) (((Math.random() * 0.2) + 0.8f) * g * f);
         this.blue = (float) (((Math.random() * 0.2) + 0.8f) * b * f);
-//        this.red = (float) velocityX;
-//        this.green = (float) velocityY;
-//        this.blue = (float) velocityZ;
 
 
     }
