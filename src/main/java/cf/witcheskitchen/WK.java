@@ -1,5 +1,6 @@
 package cf.witcheskitchen;
 
+import cf.witcheskitchen.api.fluid.FluidStack;
 import cf.witcheskitchen.common.registry.*;
 import cf.witcheskitchen.mixin.AxeAccess;
 import com.google.common.collect.ImmutableMap;
@@ -9,9 +10,11 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.block.Block;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

@@ -255,4 +255,9 @@ public final class FluidStack {
         result = 31 * result + (data != null ? data.hashCode() : 0);
         return result;
     }
+    // debugging
+    @Override
+    public String toString() {
+        return "FluidStack Properties: " + "[Fluid] = " + Registry.FLUID.getId(this.fluid) + " " + "[FluidAmount] = " + this.amount + " " + "[Is Empty] = " + this.empty + " " + "[NbtData] = " + this.data;
+    }
 }

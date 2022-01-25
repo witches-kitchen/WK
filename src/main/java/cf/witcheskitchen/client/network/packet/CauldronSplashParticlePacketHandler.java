@@ -36,9 +36,7 @@ public class CauldronSplashParticlePacketHandler implements S2CPacketRegistryLis
         client.execute(() -> {
             final ClientWorld world = client.world;
             if (world != null) {
-                for (int i = 0; i < 6; i++) {
-                    world.addParticle(ParticleTypes.SPLASH, pos.getX() + 0.5D, pos.getY() + 0.8D, pos.getZ() + 0.5D, 0.5D, 0.5D, 8);
-                }
+                world.addParticle(ParticleTypes.SPLASH, pos.getX() + 0.5D, pos.getY() + 0.8D, pos.getZ() + 0.5D, 0.5D, 0.5D, 8);
                 world.playSound(pos, SoundEvents.ENTITY_PLAYER_SPLASH, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
             }
         });
