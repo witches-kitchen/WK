@@ -47,7 +47,7 @@ public class ParticleHandlerPacket implements S2CPacketRegistryListener {
         final byte range = buf.readByte();
         client.execute(() -> {
             final ClientWorld world = client.world;
-            final ParticleType<?> particle =  Registry.PARTICLE_TYPE.get(particleId);
+            final ParticleType<?> particle = Registry.PARTICLE_TYPE.get(particleId);
             if (world != null) {
                 for (int i = 0; i < range; i++) {
                     world.addParticle((ParticleEffect) particle, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, 0.5D, 0.5D, 0.5D);

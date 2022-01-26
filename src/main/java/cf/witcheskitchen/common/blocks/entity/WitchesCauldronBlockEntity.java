@@ -40,14 +40,12 @@ import java.util.Random;
 public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements IStorageHandler {
 
     private static final int TICKS_TO_BOIL = TimeHelper.toTicks(5);
-
-    private final FluidTank tank = new FluidTank(WKFluidAPI.BUCKET_VOLUME);
-    private int ticksHeated;
-    private int color;
-    private int ticks;
-
     private static final int DEFAULT_COLOR = 0x3f76e4;
+    private final FluidTank tank = new FluidTank(WKFluidAPI.BUCKET_VOLUME);
     private final Box collectionBox = new Box(this.pos).contract(0.65);
+    private int ticksHeated;
+    private final int color;
+    private int ticks;
 
     public WitchesCauldronBlockEntity(BlockPos pos, BlockState state) {
         super(WKBlockEntityTypes.WITCHES_CAULDRON, pos, state, 7);

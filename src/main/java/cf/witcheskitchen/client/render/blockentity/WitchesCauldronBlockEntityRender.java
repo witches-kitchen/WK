@@ -1,7 +1,6 @@
 package cf.witcheskitchen.client.render.blockentity;
 
 import cf.witcheskitchen.api.fluid.FluidStack;
-import cf.witcheskitchen.api.fluid.FluidTank;
 import cf.witcheskitchen.client.RenderHelper;
 import cf.witcheskitchen.common.blocks.entity.WitchesCauldronBlockEntity;
 import net.fabricmc.api.EnvType;
