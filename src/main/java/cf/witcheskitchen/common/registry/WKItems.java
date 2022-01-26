@@ -4,6 +4,7 @@ import cf.witcheskitchen.WK;
 import cf.witcheskitchen.WKConfig;
 import cf.witcheskitchen.common.items.WKSeedItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.util.Identifier;
@@ -66,6 +67,23 @@ public class WKItems {
         registerItem("super_booze", SUPER_BOOZE);
         registerItem("cu_sith_spawn_egg", CU_SITH_SPAWN_EGG);
         registerItem("ferret_spawn_egg", FERRET_SPAWN_EGG);
+
+        CompostingChanceRegistry validItemCompost = CompostingChanceRegistry.INSTANCE;
+        validItemCompost.add(AMARANTH_SPRIG, 0.65f);
+        validItemCompost.add(AMARANTH_SEEDS, 0.3f);
+        validItemCompost.add(AMARANTH_CERISE_SEEDS, 0.3f);
+        validItemCompost.add(AMARANTH_SWEETBERRY_SEEDS, 0.3f);
+        validItemCompost.add(AMARANTH_TORCH_SEEDS, 0.3f);
+        validItemCompost.add(AMARANTH_SUNDEW_SEEDS, 0.3f);
+        validItemCompost.add(AMARANTH_CREEPER_SEEDS, 0.3f);
+        validItemCompost.add(AMARANTH_VIRIDIAN_SEEDS, 0.3f);
+        validItemCompost.add(AMARANTH_GRISELIN_SEEDS, 0.3f);
+        validItemCompost.add(AMARANTH_DARK_PASSION_SEEDS, 0.3f);
+        validItemCompost.add(AMARANTH_FIREBIRD_SEEDS, 0.3f);
+        validItemCompost.add(BELLADONNA_BLOSSOM, 0.65f);
+        validItemCompost.add(BELLADONNA_SEEDS, 0.3f);
+        validItemCompost.add(BELLADONNA_GLOW_SEEDS, 0.3f);
+        validItemCompost.add(BELLADONNA_NOCTURNAL_SEEDS, 0.3f);
 
         if (WKConfig.get().debugMode) {
             WK.logger.info("Witches Kitchen Base Items: Successfully Loaded");

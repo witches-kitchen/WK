@@ -14,6 +14,7 @@ import cf.witcheskitchen.common.crop.BelladonnaCropBlock;
 import cf.witcheskitchen.common.generator.WKSaplingGenerator;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
 import net.minecraft.block.*;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.BlockItem;
@@ -320,6 +321,22 @@ public class WKBlocks {
         registerBlockOnly("amaranth_cerise", AMARANTH_CERISE);
         registerBlockOnly("amaranth_dark_passion", AMARANTH_DARK_PASSION);
         registerBlockOnly("amaranth_firebird", AMARANTH_FIREBIRD);
+
+        CompostingChanceRegistry validBlockCompost = CompostingChanceRegistry.INSTANCE;
+        validBlockCompost.add(BLACKTHORN_LEAVES, 0.3f);
+        validBlockCompost.add(ELDER_LEAVES, 0.3f);
+        validBlockCompost.add(HAWTHORN_LEAVES, 0.3f);
+        validBlockCompost.add(JUNIPER_LEAVES, 0.3f);
+        validBlockCompost.add(ROWAN_LEAVES, 0.3f);
+        validBlockCompost.add(SUMAC_LEAVES, 0.3f);
+        validBlockCompost.add(ELDER_LEAVES_COLORED, 0.3f);
+        validBlockCompost.add(HAWTHORN_LEAVES_COLORED, 0.3f);
+        validBlockCompost.add(BLACKTHORN_SAPLING, 0.3f);
+        validBlockCompost.add(ELDER_SAPLING, 0.3f);
+        validBlockCompost.add(HAWTHORN_SAPLING, 0.3f);
+        validBlockCompost.add(JUNIPER_SAPLING, 0.3f);
+        validBlockCompost.add(ROWAN_SAPLING, 0.3f);
+        validBlockCompost.add(SUMAC_SAPLING, 0.3f);
     }
 
     //needs to be reworked for better suiting our needs.. maybe? keeping the never and 2 always in case we end up needing to use them.
