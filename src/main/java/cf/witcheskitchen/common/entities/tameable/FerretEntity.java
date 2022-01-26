@@ -351,10 +351,11 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         return false;
     }
 
-    @Override
-    public void tickMovement() {
-        this.setSleeping(this.world.isNight());
-    }
+    //FIXME: For some reason, this makes ferrets float
+    //@Override
+    //public void tickMovement() {
+    //    this.setSleeping(this.world.isNight());
+    //}
 
     @Override
     public int tickTimer() {
