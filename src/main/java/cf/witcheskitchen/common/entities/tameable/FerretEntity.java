@@ -333,6 +333,10 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
             event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
             return PlayState.CONTINUE;
         }
+        if (!event.isMoving() && isSitting()) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("sit", true));
+            return PlayState.CONTINUE;
+        }
         //Todo: When this gets in game, figure out how to set up the proper conditions for it to appear. (Around the ankles of other mobs)
         if (isAttacking() && !isSitting()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("gore", true));
