@@ -324,19 +324,11 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
 
     //FIXME: Make it sit during the day, wait during the night. Jesus fucking Christ this thing is cursed.
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (isSitting() && !this.dataTracker.get(NIGHT) && !event.isMoving()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("sit", true));
-            return PlayState.CONTINUE;
-        }
-        if (isSitting() && this.dataTracker.get(NIGHT) && !event.isMoving()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("wait", true));
-            return PlayState.CONTINUE;
-        }
         if (event.isMoving() && !isSitting()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("run", true));
             return PlayState.CONTINUE;
         }
-        if (!event.isMoving() && !isSitting() && !isAttacking()) {
+        if (!event.isMoving() && !isAttacking()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
             return PlayState.CONTINUE;
         }
