@@ -44,7 +44,6 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
             TrackedDataHandlerRegistry.INTEGER);
     public static final int EYE_VARIANTS = 7;
     private final AnimationFactory factory = new AnimationFactory(this);
-    public int howlTimer = 1244;
 
 
     public CuSithEntity(EntityType<? extends HostileEntity> entityType, World world) {
