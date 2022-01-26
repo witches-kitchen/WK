@@ -139,32 +139,15 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
         this.addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 250, 1, true, true), this);
     }
 
+    //Todo: Redo logic for howl animation
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         if (event.isMoving()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("run", true));
             return PlayState.CONTINUE;
         }
-        Random rand = new Random();
-        int i = rand.nextInt(100);
-        if (howlTimer > 0) howlTimer--;
-        if (i < 5 && howlTimer == 0) {
-            switch (rand.nextInt(2)) {
-                case 0 -> {
-                    if (!event.isMoving() && !isAttacking()) {
-                        event.getController().setAnimation(new AnimationBuilder().addAnimation("howl", false));
-                        howlTimer = 1244;
-                        this.playSound(WKSounds.CUSITH_HOWL_EVENT, 0.8F, 0.7F);
-                        return PlayState.CONTINUE;
-                    }
-                }
-                case 1 -> {
-                    if (!event.isMoving() && !isAttacking()) {
-                        event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", false));
-                        howlTimer = 616;
-                        return PlayState.CONTINUE;
-                    }
-                }
-            }
+        if (!event.isMoving()) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
+            return PlayState.CONTINUE;
         }
         return PlayState.CONTINUE;
     }
