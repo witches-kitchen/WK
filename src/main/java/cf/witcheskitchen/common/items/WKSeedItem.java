@@ -48,6 +48,7 @@ public class WKSeedItem extends AliasedBlockItem {
                 .append(" ").append(category.get(0).asString().toLowerCase(Locale.ROOT)));
     }*/
 
+    @SuppressWarnings("DeprecatedIsStillUsed")
     @Deprecated(forRemoval = true)
     public List<Category> getCategory() {
         return category;
