@@ -72,7 +72,7 @@ dependencies {
     modImplementation "curse.maven:trinkets-fabric-341284:3542826"
     modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cardinal_components_version}"
     modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}"
-    modImplementation "curse.maven:roughly-enough-items-310111:3625553"
+    modImplementation "curse.maven:roughly-enough-items-310111:3625853"
     modImplementation "curse.maven:architectury-fabric-419697:3587337"
     modImplementation "io.github.ladysnake:impersonate:${impersonate_version}"
     include "io.github.ladysnake:impersonate:${impersonate_version}"
