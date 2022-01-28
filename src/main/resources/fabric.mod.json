@@ -46,7 +46,8 @@
     "cloth-config2": ">=6.1.48",
     "patchouli": "*",
     "pehkui": ">=3.1.0",
-    "trinkets": ">=3.1.0"
+    "trinkets": ">=3.1.0",
+	"geckolib3": ">=3.0.30"
   },
   "suggests": {
     "another-mod": "*"
