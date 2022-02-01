@@ -4,6 +4,7 @@ import cf.witcheskitchen.api.WKApi;
 import cf.witcheskitchen.api.WKTameableEntity;
 import cf.witcheskitchen.common.registry.WKEntities;
 import com.google.common.collect.Sets;
+import dev.onyxstudios.cca.api.v3.component.ComponentContainer;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -394,5 +395,10 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
     @Override
     public void chooseRandomAngerTime() {
         this.setAngerTime(ANGER_TIME_RANGE.get(this.random));
+    }
+
+    @Override
+    public ComponentContainer getComponentContainer() {
+        return null;
     }
 }
