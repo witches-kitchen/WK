@@ -33,6 +33,10 @@ repositories {
         url "https://maven.shedaniel.me/"
     }
     maven {
+        name = "Nexus Repository Manager"
+        url = 'https://oss.sonatype.org/content/repositories/snapshots'
+    }	
+    maven {
         name "Siphalor's Maven"
         url "https://maven.siphalor.de"
     }
