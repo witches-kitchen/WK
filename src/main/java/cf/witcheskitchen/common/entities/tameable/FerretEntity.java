@@ -105,23 +105,22 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
     //Todo: Custom goal where ferrets and other tameables from this mod flee greater demons, which are defined by a tag.
     @Override
     protected void initGoals() {
-        super.initGoals();
         this.goalSelector.add(0, new SwimGoal(this));
         this.goalSelector.add(1, new LookAtEntityGoal(this, RabbitEntity.class, 12.0f));
-        this.goalSelector.add(2, new LookAtEntityGoal(this, ChickenEntity.class, 12.0f));
+        this.goalSelector.add(1, new LookAtEntityGoal(this, ChickenEntity.class, 12.0f));
         this.goalSelector.add(3, new AnimalMateGoal(this, 1.0D));
-        this.goalSelector.add(4, new FollowParentGoal(this, 1.25D));
+        this.goalSelector.add(3, new FollowParentGoal(this, 1.25D));
         this.goalSelector.add(5, new AttackGoal(this));
-        this.goalSelector.add(6, new SitGoal(this));
+        this.goalSelector.add(5, new SitGoal(this));
         this.goalSelector.add(7, new FollowMobGoal(this, 1.0D, 3.0F, 7.0F));
-        this.goalSelector.add(8, new FollowOwnerGoal(this, 1.0D, 3.0F, 10.0F, false));
+        this.goalSelector.add(7, new FollowOwnerGoal(this, 1.0D, 3.0F, 10.0F, false));
         this.goalSelector.add(9, new MeleeAttackGoal(this, 1, true));
         this.goalSelector.add(10, new StopAndLookAtEntityGoal(this, MobEntity.class, 2.0f, 0.8f));
-        this.goalSelector.add(11, new WanderAroundFarGoal(this, 0.8D, 1.0000001E-5F));
+        this.goalSelector.add(11, new WanderAroundFarGoal((PathAwareEntity)this, 0.8D, 1.0000001E-5F));
         this.goalSelector.add(12, new FleeEntityGoal(this, LivingEntity.class, 16, 1, 3, FLEE_SUPERNATURAL));
         this.targetSelector.add(1, new ActiveTargetGoal<>(this, PlayerEntity.class, 10, true, false, this::shouldAngerAt));
         this.targetSelector.add(2, new UntamedActiveTargetGoal(this, RabbitEntity.class, false, null));
-        this.targetSelector.add(3, new UntamedActiveTargetGoal(this, ChickenEntity.class, false, null));
+        this.targetSelector.add(2, new UntamedActiveTargetGoal(this, ChickenEntity.class, false, null));
         this.targetSelector.add(4, new RevengeGoal(this).setGroupRevenge());
         this.targetSelector.add(5, new UniversalAngerGoal(this, true));
         this.targetSelector.add(6, new TrackOwnerAttackerGoal(this));
@@ -401,4 +400,25 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
     public ComponentContainer getComponentContainer() {
         return null;
     }
+    
+    @Override
+    protected SoundEvent getAmbientSound() {
+        if (this.isTamed()) {
+            if (this.isInLove()) {
+                return WKSounds.FERRET_CHIRP_EVENT;
+            }
+        }
+        return WKSounds.FERRET_IDLE_EVENT;
+    }
+
+    /*@Override
+    protected SoundEvent getDeathSound() {
+        return WKSounds.;
+    }*/
+
+    @Override
+    protected void playStepSound(BlockPos pos, BlockState state) {
+        this.playSound(SoundEvents.ENTITY_WOLF_STEP, 0.35F, 0.57F);
+    }
+}
 }
