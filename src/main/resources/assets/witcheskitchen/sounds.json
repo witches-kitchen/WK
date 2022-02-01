@@ -25,5 +25,26 @@
     "sounds": [
       "witcheskitchen:broom_mount1"
     ]
+   },
+  "ferret_ambient":{
+    "sounds":[
+      "witcheskitchen:ferret_dooking1",
+      "witcheskitchen:ferret_dooking2"
+    ]
+  },
+  "ferret_chirp":{
+    "sounds":[
+      "witcheskitchen:ferret_chirp1"
+    ]
+  },
+  "ferret_attack":{
+    "sounds":[
+      "witcheskitchen:ferret_fight1"
+    ]
+  },
+  "cauldron_bubble":{
+    "sounds":[
+      "witcheskitchen:wk_cauldron"
+    ]
   }
 }
