@@ -2,6 +2,7 @@ package cf.witcheskitchen.common.entities.neutral;
 
 import cf.witcheskitchen.api.WKTameableEntity;
 import dev.onyxstudios.cca.api.v3.component.ComponentContainer;
+import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Tameable;
 import net.minecraft.entity.mob.Angerable;
@@ -71,6 +72,16 @@ public class ChurchGrimEntity extends WKTameableEntity implements IAnimatable, A
     @Override
     public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
         return null;
+    }
+
+    @Override
+    public boolean isUndead() {
+        return true;
+    }
+
+    @Override
+    public EntityGroup getGroup() {
+        return EntityGroup.UNDEAD;
     }
 
     @Override

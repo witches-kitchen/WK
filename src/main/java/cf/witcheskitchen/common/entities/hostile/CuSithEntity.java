@@ -100,6 +100,11 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
     }
 
     @Override
+    public EntityGroup getGroup() {
+        return EntityGroup.UNDEAD;
+    }
+
+    @Override
     public boolean isPushable() {
         return false;
     }
