@@ -26,14 +26,14 @@ repositories {
         name = "Ladysnake Libs"
         url = "https://ladysnake.jfrog.io/artifactory/mods"
     }
-	maven { 
+    maven {
         name = "Ladysnake Mods"
         url = "https://ladysnake.jfrog.io/artifactory/mods"
         content {
             includeGroup 'io.github.ladysnake'
             includeGroupByRegex '(dev|io\\.github)\\.onyxstudios\\..*'
         }
-    }	
+    }
     maven {
         url "https://www.cursemaven.com"
     }
@@ -43,7 +43,7 @@ repositories {
     maven {
         name = "Nexus Repository Manager"
         url = 'https://oss.sonatype.org/content/repositories/snapshots'
-    }	
+    }
     maven {
         name "Siphalor's Maven"
         url "https://maven.siphalor.de"
@@ -59,7 +59,7 @@ repositories {
     maven {
         name "ladysnake_mirror"
         url "https://ladysnake.jfrog.io/ui/native/mods"
-    }	
+    }
     maven {
         name "jitpack"
         url "https://jitpack.io"
@@ -94,7 +94,7 @@ dependencies {
     include "io.github.ladysnake:PlayerAbilityLib:${playerabilitylib_version}"
     include "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cca_version}"
     include "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cca_version}"
-	include "me.lucko:fabric-permissions-api:${fpa_version}"
+    include "me.lucko:fabric-permissions-api:${fpa_version}"
     modImplementation "com.jamieswhiteshirt:reach-entity-attributes:${reach_entity_attributes_version}"
     include "com.jamieswhiteshirt:reach-entity-attributes:${reach_entity_attributes_version}"
     modImplementation "com.github.emilyploszaj:step-height-entity-attribute:${step_height_version}"

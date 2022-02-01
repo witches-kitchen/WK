@@ -87,7 +87,8 @@ public class FluidTank implements IFluidStorage {
      * @return The {@link FluidStack} drained.
      */
     @Override
-    public @NotNull FluidStack drain(int amount, @Nullable Direction side) {
+    public @NotNull
+    FluidStack drain(int amount, @Nullable Direction side) {
         int drained = 0;
         if (this.stack.getAmount() <= amount) {
             drained = this.stack.getAmount();

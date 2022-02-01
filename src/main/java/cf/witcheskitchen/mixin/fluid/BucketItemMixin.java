@@ -25,12 +25,14 @@ public class BucketItemMixin implements IFluidContainer {
     }
 
     @Override
-    public @NotNull ItemStack getEmpty() {
+    public @NotNull
+    ItemStack getEmpty() {
         return new ItemStack((((BucketItem) (Object) this).getRecipeRemainder()));
     }
 
     @Override
-    public @NotNull ItemStack getFilled(Fluid fluid) {
+    public @NotNull
+    ItemStack getFilled(Fluid fluid) {
         if (fluid == Fluids.EMPTY) {
             return new ItemStack(Items.BUCKET);
         } else if (fluid == Fluids.WATER) {
@@ -43,7 +45,8 @@ public class BucketItemMixin implements IFluidContainer {
     }
 
     @Override
-    public @NotNull Fluid getFluid(ItemStack stack) {
+    public @NotNull
+    Fluid getFluid(ItemStack stack) {
         return this.fluid;
     }
 }

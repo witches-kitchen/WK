@@ -19,12 +19,14 @@ public class BottleItemMixin implements IFluidContainer {
     }
 
     @Override
-    public @NotNull ItemStack getEmpty() {
+    public @NotNull
+    ItemStack getEmpty() {
         return new ItemStack(((GlassBottleItem) (Object) this));
     }
 
     @Override
-    public @NotNull ItemStack getFilled(Fluid fluid) {
+    public @NotNull
+    ItemStack getFilled(Fluid fluid) {
         if (fluid == Fluids.WATER) {
             return Items.POTION.getDefaultStack();
         } else {
@@ -33,7 +35,8 @@ public class BottleItemMixin implements IFluidContainer {
     }
 
     @Override
-    public @NotNull Fluid getFluid(ItemStack stack) {
+    public @NotNull
+    Fluid getFluid(ItemStack stack) {
         return Fluids.EMPTY;
     }
 }
