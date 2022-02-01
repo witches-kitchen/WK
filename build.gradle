@@ -57,6 +57,10 @@ repositories {
         url "https://maven.ryanliptak.com/"
     }
     maven {
+        name "ladysnake_mirror"
+        url "https://ladysnake.jfrog.io/ui/native/mods"
+    }	
+    maven {
         name "jitpack"
         url "https://jitpack.io"
     }
