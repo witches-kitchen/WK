@@ -1,7 +1,6 @@
 package cf.witcheskitchen.common.entities.neutral;
 
 import cf.witcheskitchen.api.WKTameableEntity;
-import dev.onyxstudios.cca.api.v3.component.ComponentContainer;
 import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Tameable;
@@ -87,10 +86,5 @@ public class ChurchGrimEntity extends WKTameableEntity implements IAnimatable, A
     @Override
     public void registerControllers(AnimationData animationData) {
 
-    }
-
-    @Override
-    public ComponentContainer getComponentContainer() {
-        return null;
     }
 }
