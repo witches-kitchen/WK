@@ -44,8 +44,8 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
     private static final int DEFAULT_COLOR = 0x3f76e4;
     private final FluidTank tank = new FluidTank(WKFluidAPI.BUCKET_VOLUME);
     private final Box collectionBox = new Box(this.pos).contract(0.65);
-    private int ticksHeated;
     private final int color;
+    private int ticksHeated;
     private int ticks;
 
     public WitchesCauldronBlockEntity(BlockPos pos, BlockState state) {

@@ -15,11 +15,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.mob.Angerable;
-import net.minecraft.entity.mob.CreeperEntity;
-import net.minecraft.entity.mob.GhastEntity;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.mob.PathAwareEntity;
+import net.minecraft.entity.mob.*;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
@@ -121,7 +117,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         this.goalSelector.add(7, new FollowOwnerGoal(this, 1.0D, 3.0F, 10.0F, false));
         this.goalSelector.add(9, new MeleeAttackGoal(this, 1, true));
         this.goalSelector.add(10, new StopAndLookAtEntityGoal(this, MobEntity.class, 2.0f, 0.8f));
-        this.goalSelector.add(11, new WanderAroundFarGoal((PathAwareEntity)this, 0.8D, 1.0000001E-5F));
+        this.goalSelector.add(11, new WanderAroundFarGoal(this, 0.8D, 1.0000001E-5F));
         this.goalSelector.add(12, new FleeEntityGoal(this, LivingEntity.class, 16, 1, 3, FLEE_SUPERNATURAL));
         this.targetSelector.add(1, new ActiveTargetGoal<>(this, PlayerEntity.class, 10, true, false, this::shouldAngerAt));
         this.targetSelector.add(2, new UntamedActiveTargetGoal(this, RabbitEntity.class, false, null));
@@ -405,7 +401,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
     public ComponentContainer getComponentContainer() {
         return null;
     }
-    
+
     @Override
     protected SoundEvent getAmbientSound() {
         if (this.isTamed()) {
