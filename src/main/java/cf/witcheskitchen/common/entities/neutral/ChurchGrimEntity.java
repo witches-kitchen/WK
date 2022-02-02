@@ -88,9 +88,4 @@ public class ChurchGrimEntity extends WKTameableEntity implements IAnimatable, A
     public void registerControllers(AnimationData animationData) {
 
     }
-
-    @Override
-    public ComponentContainer getComponentContainer() {
-        return null;
-    }
 }

@@ -401,11 +401,6 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
     }
 
     @Override
-    public ComponentContainer getComponentContainer() {
-        return null;
-    }
-
-    @Override
     protected SoundEvent getAmbientSound() {
         if (this.isTamed()) {
             if (this.isInLove()) {
