@@ -419,4 +419,9 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
     protected void playStepSound(BlockPos pos, BlockState state) {
         this.playSound(SoundEvents.ENTITY_WOLF_STEP, 0.35F, 0.57F);
     }
+
+    @Override
+    public ComponentContainer getComponentContainer() {
+        return null;
+    }
 }

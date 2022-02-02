@@ -234,4 +234,9 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
     public boolean canBreatheInWater() {
         return true;
     }
+
+    @Override
+    public ComponentContainer getComponentContainer() {
+        return null;
+    }
 }
