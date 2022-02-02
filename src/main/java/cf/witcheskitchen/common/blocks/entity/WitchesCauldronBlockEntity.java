@@ -135,19 +135,6 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
         super.onClientTick(world, pos, state, random);
         if (this.hasLava()) {
             WitchesCauldronBlockEntity.lavaTick(world, pos, EnvType.CLIENT, this.manager);
-            return;
-        }
-        if (Fluids.WATER == this.tank.getStack().getFluid() && this.isBoiling()) {
-            float depth = (float) (((this.getPercentFilled() - 1) * (0.4D)) + (0.6D));
-            final double r = ((this.color >> 16) & 0xff) / 255F;
-            final double g = ((this.color >> 8) & 0xff) / 255F;
-            final double b = (this.color & 0xff) / 255F;
-            double particleX = 0.2 + (random.nextDouble() * 0.6);
-            double particleZ = 0.2 + (random.nextDouble() * 0.6);
-            for (int i = 0; i < 6; i++) {
-                world.addParticle((ParticleEffect) WKParticleTypes.BUBBLE, pos.getX() + particleX, pos.getY() + depth, pos.getZ() + particleZ, r, g, b);
-                world.playSound(null, pos, WKSounds.CAULDRON_BOIL_EVENT, SoundCategory.BLOCKS, 0.8f, 0.7f);
-            }
         }
     }
 
@@ -261,4 +248,8 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
         return this.hasFluid() && this.tank.getStack().hasFluid(Fluids.WATER);
     }
 
+    @Environment(EnvType.CLIENT)
+    public int getTicksHeated() {
+        return ticksHeated;
+    }
 }
