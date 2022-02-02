@@ -46,7 +46,6 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
     private final Box collectionBox = new Box(this.pos).contract(0.65);
     private final int color;
     private int ticksHeated;
-    private int ticks;
 
     public WitchesCauldronBlockEntity(BlockPos pos, BlockState state) {
         super(WKBlockEntityTypes.WITCHES_CAULDRON, pos, state, 7);

@@ -5,6 +5,12 @@ import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
 
+/**
+ * <p>
+ * Represents an object that can store a certain amount of Fluid.
+ * </p>
+ * For reference look at {@link cf.witcheskitchen.mixin.fluid.BucketItemMixin}
+ */
 public interface IFluidContainer {
 
     int getCapacity();

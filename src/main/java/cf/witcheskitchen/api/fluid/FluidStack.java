@@ -7,8 +7,8 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
+import org.jetbrains.annotations.Nullable;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 /**
  * <h3>Represents a stack of fluids.</h3>
@@ -84,7 +84,7 @@ public final class FluidStack {
     private NbtCompound data;
 
     // Default constructor
-    public FluidStack(Fluid fluid, int amount) {
+    public FluidStack(Fluid fluid,  int amount) {
         this.fluid = fluid;
         this.amount = amount;
         updateEmptyState();
@@ -97,8 +97,8 @@ public final class FluidStack {
         }
     }
 
-    public static FluidStack from(FluidStack old, int amount) {
-        return new FluidStack(old.getFluid(), amount, old.data);
+    public static FluidStack from(FluidStack old,  int amount) {
+        return new FluidStack(old.getFluid(),  amount, old.data);
     }
 
     /**
@@ -111,8 +111,9 @@ public final class FluidStack {
         if (nbt == null) {
             return FluidStack.EMPTY;
         }
-        Fluid fluid = Registry.FLUID.get(new Identifier(nbt.getString(FLUID_KEY)));
-        FluidStack stack = new FluidStack(fluid, nbt.getInt("Amount"));
+        final Fluid fluid = Registry.FLUID.get(new Identifier(nbt.getString(FLUID_KEY)));
+        final int amount = nbt.getInt("Amount");
+        final FluidStack stack = new FluidStack(fluid, amount);
         if (nbt.contains(INTERNAL_NBT_DATA)) {
             stack.data = nbt.getCompound("Tag");
         }
