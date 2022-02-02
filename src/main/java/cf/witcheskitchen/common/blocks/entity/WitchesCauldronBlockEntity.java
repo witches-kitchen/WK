@@ -8,6 +8,7 @@ import cf.witcheskitchen.client.network.packet.ParticleHandlerPacket;
 import cf.witcheskitchen.common.blocks.technical.WitchesCauldronBlock;
 import cf.witcheskitchen.common.registry.WKBlockEntityTypes;
 import cf.witcheskitchen.common.registry.WKParticleTypes;
+import cf.witcheskitchen.common.registry.WKSounds;
 import cf.witcheskitchen.common.registry.WKTags;
 import cf.witcheskitchen.common.util.PacketHelper;
 import cf.witcheskitchen.common.util.TimeHelper;
@@ -146,6 +147,7 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
             double particleZ = 0.2 + (random.nextDouble() * 0.6);
             for (int i = 0; i < 6; i++) {
                 world.addParticle((ParticleEffect) WKParticleTypes.BUBBLE, pos.getX() + particleX, pos.getY() + depth, pos.getZ() + particleZ, r, g, b);
+                world.playSound(null, pos, WKSounds.CAULDRON_BOIL_EVENT, SoundCategory.BLOCKS, 0.8f, 0.7f);
             }
         }
     }
