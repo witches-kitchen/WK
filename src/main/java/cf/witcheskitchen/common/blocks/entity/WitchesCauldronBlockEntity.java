@@ -44,7 +44,7 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
     private static final int DEFAULT_COLOR = 0x3f76e4;
     private final FluidTank tank = new FluidTank(WKFluidAPI.BUCKET_VOLUME);
     private final Box collectionBox = new Box(this.pos).contract(0.65);
-    private final int color;
+    private int color;
     private int ticksHeated;
 
     public WitchesCauldronBlockEntity(BlockPos pos, BlockState state) {
@@ -52,7 +52,7 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
         this.color = DEFAULT_COLOR;
     }
 
-    private static void lavaTick(World world, BlockPos pos, EnvType side, Inventory cauldron) {
+    private static void lavaTick(World world, BlockPos pos, EnvType side) {
         final Random random = world.getRandom();
         final int i = random.nextInt(50) + 1;
         switch (side) {
@@ -100,25 +100,36 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
         boolean lava = this.hasLava();
         if (this.hasFluid()) {
             if (this.hasLava()) {
-                if (world.getTime() % 10L == 8L) { // 10 ticks
-                    WitchesCauldronBlockEntity.lavaTick(world, pos, EnvType.SERVER, this.manager);
+                if (world.getTime() % 10L == 8L) {
+                    // Runs every 10 ticks
+                    WitchesCauldronBlockEntity.lavaTick(world, pos, EnvType.SERVER);
                 }
             } else if (this.hasWater()) {
                 lava = false;
                 if (belowState.isIn(WKTags.HEATS_CAULDRON)) {
+                    final int heatTicks = TimeHelper.toSeconds(this.ticksHeated);
                     if (this.ticksHeated < TICKS_TO_BOIL) {
                         this.ticksHeated++;
-                        if (this.ticksHeated == TICKS_TO_BOIL) {
-                            sync = true;
-                        }
+                    }
+                    // Done to update bubble particles on each second
+                    // And not only when it reaches the ticks required to boil
+                    // This way the client knows that it has to render the particles
+                    // When ticksHeated is at least >= 1
+                    if (TimeHelper.toSeconds(this.ticksHeated) != heatTicks) {
+                        //TODO: UPDATE COLOR
+                        sync = true;
                     }
                 } else if (this.ticksHeated != 0) {
                     this.ticksHeated = 0;
                     sync = true;
                 }
+            } else {
+                this.ticksHeated = 0;
             }
         }
-        this.updateState(world, pos, state, lava);
+        if (lava != world.getBlockState(pos).get(WitchesCauldronBlock.LAVA)) {
+            this.updateState(world, pos, state, lava);
+        }
         if (sync) {
             this.markDirty(true);
         }
@@ -128,27 +139,21 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
         world.setBlockState(pos, state.with(WitchesCauldronBlock.LAVA, lava), Block.NOTIFY_ALL);
     }
 
-    // Render particles
     @Environment(EnvType.CLIENT)
     @Override
     public void onClientTick(World world, BlockPos pos, BlockState state, Random random) {
         super.onClientTick(world, pos, state, random);
         if (this.hasLava()) {
-            WitchesCauldronBlockEntity.lavaTick(world, pos, EnvType.CLIENT, this.manager);
+            WitchesCauldronBlockEntity.lavaTick(world, pos, EnvType.CLIENT);
         }
     }
-
-    @Environment(EnvType.CLIENT)
-    public double getPercentFilled() {
-        return ((((double) tank.getFluidAmount() / this.tank.getCapacity())));
-    }
-
 
     @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
         this.tank.readStorage(nbt.getCompound("Tank"));
         this.ticksHeated = nbt.getInt("TicksHeated");
+        this.color = nbt.getInt("Color");
     }
 
 
@@ -157,21 +162,8 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
         super.writeNbt(nbt);
         nbt.put("Tank", tank.writeStorage());
         nbt.putInt("TicksHeated", this.ticksHeated);
+        nbt.putInt("Color", this.color);
     }
-
-    @Environment(EnvType.CLIENT)
-    public int getColor() {
-        return DEFAULT_COLOR;
-    }
-
-    public boolean isBoiling() {
-        return this.hasFluid() && this.ticksHeated == TICKS_TO_BOIL;
-    }
-
-    public boolean hasFluid() {
-        return !this.tank.isEmpty();
-    }
-
 
     @Nullable
     @Override
@@ -240,12 +232,30 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
         return this.tank.drain(maxAmount, side);
     }
 
+    public boolean isBoiling() {
+        return this.ticksHeated >= TimeHelper.toTicks(1);
+    }
+
+    public boolean hasFluid() {
+        return !this.tank.isEmpty();
+    }
+
     public boolean hasLava() {
         return this.hasFluid() && this.tank.getStack().hasFluid(Fluids.LAVA);
     }
 
     public boolean hasWater() {
         return this.hasFluid() && this.tank.getStack().hasFluid(Fluids.WATER);
+    }
+
+    @Environment(EnvType.CLIENT)
+    public double getPercentFilled() {
+        return ((((double) tank.getFluidAmount() / this.tank.getCapacity())));
+    }
+
+    @Environment(EnvType.CLIENT)
+    public int getColor() {
+        return this.color;
     }
 
     @Environment(EnvType.CLIENT)
