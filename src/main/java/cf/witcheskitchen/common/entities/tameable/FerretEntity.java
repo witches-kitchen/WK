@@ -421,4 +421,3 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         this.playSound(SoundEvents.ENTITY_WOLF_STEP, 0.35F, 0.57F);
     }
 }
-}
