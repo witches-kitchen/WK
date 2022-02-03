@@ -15,39 +15,35 @@ public class WKBubbleParticle extends SpriteBillboardParticle {
     public WKBubbleParticle(ClientWorld clientWorld, double posX, double posY, double posZ, double r, double g, double b) {
         super(clientWorld, posX, posY, posZ, r, g, b);
         this.setBoundingBoxSpacing(0.02F, 0.02F);
-        this.maxAge = (int) (8d / (Math.random() * 0.8 + 0.2));
-
+        float offset = (float) ((Math.random() * 0.4F) + 0.3F);
+        this.scale *= offset;
+        this.maxAge = (int) (8D / (Math.random() * 0.8D + 0.2D));
         this.velocityX *= 0.1;
         this.velocityY *= 0.1;
         this.velocityZ *= 0.1;
-        float f = (float) (Math.random() * 0.4f + 0.6f);
-        this.scale *= f / 2;
-        this.red = (float) (((Math.random() * 0.2) + 0.8f) * r * f);
-        this.green = (float) (((Math.random() * 0.2) + 0.8f) * g * f);
-        this.blue = (float) (((Math.random() * 0.2) + 0.8f) * b * f);
-
-
+        this.red = (float) (((Math.random() * 0.3F) + 1.0F) * r * offset);
+        this.green = (float) (((Math.random() * 0.3F) + 1.0F) * g * offset);
+        this.blue = (float) (((Math.random() * 0.3F) + 1.0F) * b * offset);
     }
 
     @Override
     public void tick() {
-        if (!this.world.isClient) {
-            this.markDead();
-        }
         this.prevPosX = this.x;
         this.prevPosY = this.y;
         this.prevPosZ = this.z;
-        this.velocityY += 0.002;
-        this.move(this.velocityX, this.velocityY, this.velocityZ);
-        this.velocityX *= 0.85;
-        this.velocityY *= 0.85;
-        this.velocityZ *= 0.85;
-        final BlockPos particlePos = new BlockPos(this.x, this.y, this.z);
-        if (this.maxAge-- <= 0 || this.kill(particlePos)) {
+        if (maxAge-- <= 0) {
             this.markDead();
+        } else {
+            this.move(velocityX, velocityY, velocityZ);
+            this.velocityX *= 0.85;
+            this.velocityY *= 0.85;
+            this.velocityZ *= 0.85;
+            final BlockPos pos = new BlockPos(this.x, this.y, this.z);
+            if (this.kill(pos)) {
+                this.markDead();
+            }
         }
     }
-
     protected boolean kill(BlockPos pos) {
         if (world.getBlockState(pos).getMaterial() == Material.WATER) {
             return false;
