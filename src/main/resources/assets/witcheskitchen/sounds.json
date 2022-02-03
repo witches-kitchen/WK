@@ -44,7 +44,7 @@
   },
   "cauldron_bubble": {
     "sounds": [
-      "witcheskitchen:wk_cauldron"
+      "witcheskitchen:cauldron_bubble"
     ]
   }
 }

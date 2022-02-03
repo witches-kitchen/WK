@@ -1,7 +1,7 @@
 package cf.witcheskitchen.common.statuseffect;
 
 
-import cf.witcheskitchen.common.registry.WKSounds;
+import cf.witcheskitchen.common.registry.WKSoundEvents;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
@@ -193,7 +193,7 @@ public class HorrorStatusEffect extends StatusEffect {
                     }
                 }
                 case 16 -> {
-                    world.playSound(null, pos, WKSounds.CUSITH_IDLE_EVENT, SoundCategory.HOSTILE, 1, 1);
+                    world.playSound(null, pos, WKSoundEvents.CUSITH_IDLE_EVENT, SoundCategory.HOSTILE, 1, 1);
                     if (amplifier == 0) {
                         timer = 650;
                     }
@@ -202,7 +202,7 @@ public class HorrorStatusEffect extends StatusEffect {
                     }
                 }
                 case 17 -> {
-                    world.playSound(null, pos, WKSounds.CUSITH_HOWL_EVENT, SoundCategory.HOSTILE, 1, 1);
+                    world.playSound(null, pos, WKSoundEvents.CUSITH_HOWL_EVENT, SoundCategory.HOSTILE, 1, 1);
                     if (amplifier == 0) {
                         timer = 650;
                     }

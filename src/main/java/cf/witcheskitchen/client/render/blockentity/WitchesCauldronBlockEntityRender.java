@@ -4,7 +4,6 @@ import cf.witcheskitchen.api.fluid.FluidStack;
 import cf.witcheskitchen.client.RenderHelper;
 import cf.witcheskitchen.common.blocks.entity.WitchesCauldronBlockEntity;
 import cf.witcheskitchen.common.registry.WKParticleTypes;
-import cf.witcheskitchen.common.registry.WKSounds;
 import cf.witcheskitchen.common.util.TimeHelper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -15,7 +14,6 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.particle.ParticleEffect;
-import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 

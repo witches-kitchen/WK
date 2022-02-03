@@ -1,7 +1,7 @@
 package cf.witcheskitchen.common.entities.hostile;
 
 import cf.witcheskitchen.api.WKHostileEntity;
-import cf.witcheskitchen.common.registry.WKSounds;
+import cf.witcheskitchen.common.registry.WKSoundEvents;
 import cf.witcheskitchen.common.registry.WKStatusEffects;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
@@ -129,7 +129,7 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
         if (i <= 33) {
             if (target instanceof LivingEntity) {
                 ((LivingEntity) target).addStatusEffect(new StatusEffectInstance(WKStatusEffects.HORROR, 1000));
-                this.playSound(WKSounds.CUSITH_HOWL_EVENT, 0.8F, 0.7F);
+                this.playSound(WKSoundEvents.CUSITH_HOWL_EVENT, 0.8F, 0.7F);
             }
         }
         return flag;
@@ -211,12 +211,12 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
     //to-do: add subtitle info
     @Override
     protected SoundEvent getAmbientSound() {
-        return WKSounds.CUSITH_IDLE_EVENT;
+        return WKSoundEvents.CUSITH_IDLE_EVENT;
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return WKSounds.CUSITH_DEATH_EVENT;
+        return WKSoundEvents.CUSITH_DEATH_EVENT;
     }
 
     @Override

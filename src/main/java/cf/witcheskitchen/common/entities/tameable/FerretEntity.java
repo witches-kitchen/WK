@@ -3,7 +3,7 @@ package cf.witcheskitchen.common.entities.tameable;
 import cf.witcheskitchen.api.WKApi;
 import cf.witcheskitchen.api.WKTameableEntity;
 import cf.witcheskitchen.common.registry.WKEntities;
-import cf.witcheskitchen.common.registry.WKSounds;
+import cf.witcheskitchen.common.registry.WKSoundEvents;
 import com.google.common.collect.Sets;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
@@ -403,10 +403,10 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
     protected SoundEvent getAmbientSound() {
         if (this.isTamed()) {
             if (this.isInLove()) {
-                return WKSounds.FERRET_CHIRP_EVENT;
+                return WKSoundEvents.FERRET_CHIRP_EVENT;
             }
         }
-        return WKSounds.FERRET_IDLE_EVENT;
+        return WKSoundEvents.FERRET_IDLE_EVENT;
     }
 
     /*@Override

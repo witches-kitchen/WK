@@ -68,7 +68,7 @@ public class WK implements ModInitializer {
         WKGenerator.register();
         WKEventsRegistry.register();
         WKStatusEffects.register();
-        WKSounds.register();
+        WKSoundEvents.register();
         GeckoLib.initialize();
         WKEntities.register();
         modifyAxeBlockStripping();

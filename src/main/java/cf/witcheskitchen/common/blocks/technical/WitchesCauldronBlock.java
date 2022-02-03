@@ -4,6 +4,7 @@ import cf.witcheskitchen.api.WKBlockEntityProvider;
 import cf.witcheskitchen.api.fluid.FluidStack;
 import cf.witcheskitchen.api.fluid.WKFluidAPI;
 import cf.witcheskitchen.common.blocks.entity.WitchesCauldronBlockEntity;
+import cf.witcheskitchen.common.registry.WKSoundEvents;
 import cf.witcheskitchen.common.util.ItemUtil;
 import cf.witcheskitchen.common.util.TimeHelper;
 import net.minecraft.block.*;
@@ -39,6 +40,8 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Random;
 
 @SuppressWarnings("deprecation")
 public class WitchesCauldronBlock extends WKBlockEntityProvider implements Waterloggable {
@@ -172,6 +175,19 @@ public class WitchesCauldronBlock extends WKBlockEntityProvider implements Water
         }
     }
 
+    @Override
+    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+        final float offset = 0.8F + random.nextFloat() * 0.2F;
+        if(random.nextInt(5) == 0) {
+            final BlockEntity entity = world.getBlockEntity(pos);
+            if (entity instanceof WitchesCauldronBlockEntity cauldron) {
+                if (cauldron.isBoiling()) {
+                    world.playSound(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, WKSoundEvents.CAULDRON_BOIL_EVENT, SoundCategory.BLOCKS, 1, 1, false);
+
+                }
+            }
+        }
+    }
 
     @Override
     public boolean tryFillWithFluid(WorldAccess world, BlockPos pos, BlockState state, FluidState fluidState) {
