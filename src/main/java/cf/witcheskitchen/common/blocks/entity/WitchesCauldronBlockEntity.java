@@ -117,12 +117,22 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
                     if (this.ticksHeated < TICKS_TO_BOIL) {
                         this.ticksHeated++;
                     }
-                    // Done to update bubble particles on each second
-                    // And not only when it reaches the ticks required to boil
-                    // This way the client knows that it has to render the particles
-                    // When ticksHeated is at least >= 1
-                    if (TimeHelper.toSeconds(this.ticksHeated) != heatTicks) {
-                        //TODO: UPDATE COLOR
+                    /*
+                     * Done to update bubble particles on each second
+                     * And not only when it reaches the ticks required to boil
+                     * This way the client knows that it has to render the particles
+                     *  When ticksHeated is at least >= 1
+                     */
+                    final int time = TimeHelper.toSeconds(this.ticksHeated);
+                    if (time != heatTicks) {
+                        switch (time) {
+                            case 0 -> this.color = DEFAULT_COLOR;
+                            case 1 -> this.color = 0x3567cc;
+                            case 2 -> this.color = 0x3363c4;
+                            case 3 -> this.color = 0x305db8;
+                            case 4 -> this.color = 0x2752a8;
+                            case 5 -> this.color = 0x2450a6;
+                        }
                         sync = true;
                     }
                 } else if (this.ticksHeated != 0) {
