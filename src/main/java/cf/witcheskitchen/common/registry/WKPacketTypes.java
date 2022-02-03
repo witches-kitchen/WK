@@ -4,7 +4,8 @@ import cf.witcheskitchen.WK;
 import cf.witcheskitchen.WKConfig;
 import cf.witcheskitchen.api.event.network.C2SPacketRegistryListener;
 import cf.witcheskitchen.api.event.network.S2CPacketRegistryListener;
-import cf.witcheskitchen.client.network.packet.ParticleHandlerPacket;
+import cf.witcheskitchen.client.network.packet.ParticlePacketHandler;
+import cf.witcheskitchen.client.network.packet.SplashParticlePacketHandler;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -20,7 +21,8 @@ public class WKPacketTypes {
     // Packets that are sent by the server and received by the client
     private static final Map<Identifier, S2CPacketRegistryListener> CLIENT_PACKETS = new LinkedHashMap<>();
 
-    public static final S2CPacketRegistryListener PARTICLE_PACKET_HANDLER = registerClientPacket(new ParticleHandlerPacket());
+    public static final S2CPacketRegistryListener PARTICLE_PACKET_HANDLER = registerClientPacket(new ParticlePacketHandler());
+    public static final S2CPacketRegistryListener SPLASH_PARTICLE_HANDLER = registerClientPacket(new SplashParticlePacketHandler());
 
     static {
         if (WKConfig.get().debugMode) {

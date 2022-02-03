@@ -21,7 +21,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.Nullable;
 
-public class ParticleHandlerPacket implements S2CPacketRegistryListener {
+public class ParticlePacketHandler implements S2CPacketRegistryListener {
 
     private static final Identifier CHANNEL = new Identifier(WK.MODID, "particle_packet_handler");
 
@@ -50,7 +50,7 @@ public class ParticleHandlerPacket implements S2CPacketRegistryListener {
             final ParticleType<?> particle = Registry.PARTICLE_TYPE.get(particleId);
             if (world != null) {
                 for (int i = 0; i < range; i++) {
-                    world.addParticle((ParticleEffect) particle, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, 0.5D, 0.5D, 0.5D);
+                    world.addParticle((ParticleEffect) particle, pos.getX() + 0.5D, pos.getY() + 1.0D, pos.getZ() + 0.5D, 0.5D, 0.5D, 0.5D);
                 }
                 if (!soundId.toString().isEmpty()) {
                     final SoundEvent soundEvent = Registry.SOUND_EVENT.get(soundId);

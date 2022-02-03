@@ -4,11 +4,10 @@ import cf.witcheskitchen.api.fluid.FluidStack;
 import cf.witcheskitchen.api.fluid.FluidTank;
 import cf.witcheskitchen.api.fluid.IStorageHandler;
 import cf.witcheskitchen.api.fluid.WKFluidAPI;
-import cf.witcheskitchen.client.network.packet.ParticleHandlerPacket;
+import cf.witcheskitchen.client.network.packet.ParticlePacketHandler;
+import cf.witcheskitchen.client.network.packet.SplashParticlePacketHandler;
 import cf.witcheskitchen.common.blocks.technical.WitchesCauldronBlock;
 import cf.witcheskitchen.common.registry.WKBlockEntityTypes;
-import cf.witcheskitchen.common.registry.WKParticleTypes;
-import cf.witcheskitchen.common.registry.WKSounds;
 import cf.witcheskitchen.common.registry.WKTags;
 import cf.witcheskitchen.common.util.PacketHelper;
 import cf.witcheskitchen.common.util.TimeHelper;
@@ -19,12 +18,11 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.inventory.Inventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.Packet;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
-import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -79,16 +77,21 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
         if (this.isBoiling()) {
             int i = this.manager.findAnyEmptySlot();
             if (i >= 0) {
+                final ItemStack stack = this.getStack(i);
                 world.getEntitiesByType(EntityType.ITEM, this.collectionBox, possibleIngredient -> true).forEach(itemEntity -> {
                     this.setStack(i, entity.getStack());
-                    PacketHelper.sendToAllTracking(entity, serverPlayer -> ParticleHandlerPacket.send(serverPlayer, this.getPos(), Registry.PARTICLE_TYPE.getId(ParticleTypes.SPLASH), Registry.SOUND_EVENT.getId(SoundEvents.ENTITY_PLAYER_SPLASH), (byte) 8));
+                    //TODO: GET COLORS
+                   // PacketHelper.sendToAllTracking(entity, serverPlayer -> SplashParticlePacketHandler.send(serverPlayer, this.getPos(), this.color.getRed(), this.color.getGreen(), this.color.getBlue(), 0.5D, 1.0D, 0.5D, (byte) 6));
                     entity.kill();
                 });
+                if (this.getStack(i) != stack) {
+                    world.playSound(null, pos, SoundEvents.ENTITY_PLAYER_SPLASH, SoundCategory.BLOCKS, 0.2F, 1.0f);
+                }
             }
         }
         if (this.tank.getStack().hasFluid(Fluids.LAVA)) {
             this.manager.clear();
-            PacketHelper.sendToAllTracking(entity, serverPlayer -> ParticleHandlerPacket.send(serverPlayer, this.getPos(), Registry.PARTICLE_TYPE.getId(ParticleTypes.LAVA), Registry.SOUND_EVENT.getId(SoundEvents.BLOCK_LAVA_EXTINGUISH), (byte) 3));
+            PacketHelper.sendToAllTracking(entity, serverPlayer -> ParticlePacketHandler.send(serverPlayer, this.getPos(), Registry.PARTICLE_TYPE.getId(ParticleTypes.LAVA), Registry.SOUND_EVENT.getId(SoundEvents.BLOCK_LAVA_EXTINGUISH), (byte) 3));
             entity.kill();
         }
     }

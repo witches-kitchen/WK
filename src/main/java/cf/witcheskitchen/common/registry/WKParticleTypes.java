@@ -17,6 +17,7 @@ public class WKParticleTypes {
     private static final Map<Identifier, ParticleType<?>> PARTICLE_TYPES = new LinkedHashMap<>();
 
     public static final ParticleType<DefaultParticleType> BUBBLE = create("bubble", FabricParticleTypes.simple());
+    public static final ParticleType<DefaultParticleType> SPLASH = create("splash", FabricParticleTypes.simple());
 
     private static <T extends ParticleEffect> ParticleType<T> create(final String id, final ParticleType<T> type) {
         PARTICLE_TYPES.put(new Identifier(WK.MODID, id), type);
