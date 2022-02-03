@@ -28,6 +28,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.ColorHelper;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
@@ -78,10 +79,12 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
             int i = this.manager.findAnyEmptySlot();
             if (i >= 0) {
                 final ItemStack stack = this.getStack(i);
+                final float red = ColorHelper.Argb.getRed(this.color) / 255F;
+                final float green = ColorHelper.Argb.getGreen(this.color) / 255f;
+                final float blue = ColorHelper.Argb.getBlue(this.color) / 255F;
                 world.getEntitiesByType(EntityType.ITEM, this.collectionBox, possibleIngredient -> true).forEach(itemEntity -> {
                     this.setStack(i, entity.getStack());
-                    //TODO: GET COLORS
-                   // PacketHelper.sendToAllTracking(entity, serverPlayer -> SplashParticlePacketHandler.send(serverPlayer, this.getPos(), this.color.getRed(), this.color.getGreen(), this.color.getBlue(), 0.5D, 1.0D, 0.5D, (byte) 6));
+                     PacketHelper.sendToAllTracking(entity, serverPlayer -> SplashParticlePacketHandler.send(serverPlayer, this.getPos(), red, green, blue, 0.5D, 1.0D, 0.5D, (byte) 6));
                     entity.kill();
                 });
                 if (this.getStack(i) != stack) {
