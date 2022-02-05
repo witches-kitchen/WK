@@ -49,7 +49,7 @@ public class AmaranthCropBlock extends WKTallCropBlock {
 
     @Override
     public int topLayerAge() {
-        return 0;
+        return 2;
     }
 
     public enum Type {

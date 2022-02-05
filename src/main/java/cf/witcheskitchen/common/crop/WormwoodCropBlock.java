@@ -8,7 +8,7 @@ import net.minecraft.item.ItemConvertible;
 import net.minecraft.state.property.IntProperty;
 
 public class WormwoodCropBlock extends WKTallCropBlock {
-    public static final int MAX_AGE = 6;
+    public static final int MAX_AGE = 7;
     private final Type type;
 
     public WormwoodCropBlock(Settings settings) {
@@ -40,7 +40,7 @@ public class WormwoodCropBlock extends WKTallCropBlock {
 
     @Override
     public int topLayerAge() {
-        return 0;
+        return 3;
     }
 
     public enum Type {
