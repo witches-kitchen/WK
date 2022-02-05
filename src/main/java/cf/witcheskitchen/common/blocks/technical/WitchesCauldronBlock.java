@@ -178,7 +178,7 @@ public class WitchesCauldronBlock extends WKBlockEntityProvider implements Water
     @Override
     public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
         final float offset = 0.8F + random.nextFloat() * 0.2F;
-        if(random.nextInt(5) == 0) {
+        if (random.nextInt(5) == 0) {
             final BlockEntity entity = world.getBlockEntity(pos);
             if (entity instanceof WitchesCauldronBlockEntity cauldron) {
                 if (cauldron.isBoiling()) {

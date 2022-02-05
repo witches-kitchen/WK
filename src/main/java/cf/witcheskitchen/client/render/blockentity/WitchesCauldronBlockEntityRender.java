@@ -47,7 +47,8 @@ public class WitchesCauldronBlockEntityRender implements BlockEntityRenderer<Wit
                             if (world.getTime() % 5 == 0) { // Wait 5 ticks
                                 world.addParticle((ParticleEffect) WKParticleTypes.BUBBLE, cauldron.getPos().getX() + offsetX, cauldron.getPos().getY() + depth, cauldron.getPos().getZ() + offsetZ, r, g, b);
                             }
-                        } case 5 -> world.addParticle((ParticleEffect) WKParticleTypes.BUBBLE, cauldron.getPos().getX() + offsetX, cauldron.getPos().getY() + depth, cauldron.getPos().getZ() + offsetZ, r, g, b);
+                        }
+                        case 5 -> world.addParticle((ParticleEffect) WKParticleTypes.BUBBLE, cauldron.getPos().getX() + offsetX, cauldron.getPos().getY() + depth, cauldron.getPos().getZ() + offsetZ, r, g, b);
                     }
                 }
             } else {

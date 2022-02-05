@@ -44,6 +44,7 @@ public class WKBubbleParticle extends SpriteBillboardParticle {
             }
         }
     }
+
     protected boolean kill(BlockPos pos) {
         if (world.getBlockState(pos).getMaterial() == Material.WATER) {
             return false;

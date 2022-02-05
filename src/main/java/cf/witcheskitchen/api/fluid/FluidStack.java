@@ -6,8 +6,8 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-
 import org.jetbrains.annotations.Nullable;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -84,7 +84,7 @@ public final class FluidStack {
     private NbtCompound data;
 
     // Default constructor
-    public FluidStack(Fluid fluid,  int amount) {
+    public FluidStack(Fluid fluid, int amount) {
         this.fluid = fluid;
         this.amount = amount;
         updateEmptyState();
@@ -97,8 +97,8 @@ public final class FluidStack {
         }
     }
 
-    public static FluidStack from(FluidStack old,  int amount) {
-        return new FluidStack(old.getFluid(),  amount, old.data);
+    public static FluidStack from(FluidStack old, int amount) {
+        return new FluidStack(old.getFluid(), amount, old.data);
     }
 
     /**

@@ -16,7 +16,7 @@ public class WKSoundEvents {
     public static final SoundEvent CUSITH_IDLE_EVENT = register("cusith_ambient");
     public static final SoundEvent CUSITH_DEATH_EVENT = register("cusith_death");
     public static final SoundEvent CUSITH_HOWL_EVENT = register("cusith_howl");
- 
+
     //Ferret
     public static final SoundEvent FERRET_IDLE_EVENT = register("ferret_ambient");
     public static final SoundEvent FERRET_ATTACK_EVENT = register("ferret_attack");
@@ -29,6 +29,12 @@ public class WKSoundEvents {
     public static final SoundEvent BROOM_RIDING_EVENT = register("broom_loop");
     public static final SoundEvent BROOM_USE_EVENT = register("broom_mount1");
 
+    static {
+        if (WKConfig.get().debugMode) {
+            WK.logger.info("Witches Kitchen Base Sounds: Successfully Loaded");
+        }
+    }
+
     private static SoundEvent register(String name) {
         Identifier id = new Identifier(WK.MODID, name);
         SoundEvent soundEvent = new SoundEvent(id);
@@ -38,11 +44,5 @@ public class WKSoundEvents {
 
     public static void register() {
         SOUND_EVENTS.keySet().forEach(id -> Registry.register(Registry.SOUND_EVENT, id, SOUND_EVENTS.get(id)));
-    }
-
-    static {
-        if (WKConfig.get().debugMode) {
-            WK.logger.info("Witches Kitchen Base Sounds: Successfully Loaded");
-        }
     }
 }

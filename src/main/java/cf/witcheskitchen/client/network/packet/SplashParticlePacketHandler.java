@@ -20,7 +20,7 @@ public class SplashParticlePacketHandler implements S2CPacketRegistryListener {
     private static final Identifier SPLASH_PARTICLE_CHANNEL = new Identifier(WK.MODID, "splash_particle");
 
     public static void send(ServerPlayerEntity player, BlockPos pos, double r, double g, double b) {
-        send(player, pos, r, g, b, 0,0, 0, (byte) 1);
+        send(player, pos, r, g, b, 0, 0, 0, (byte) 1);
     }
 
     public static void send(ServerPlayerEntity player, BlockPos pos, double r, double g, double b, double offsetX, double offsetY, double offsetZ, byte amount) {

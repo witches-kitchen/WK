@@ -8,7 +8,6 @@ import cf.witcheskitchen.client.network.packet.ParticlePacketHandler;
 import cf.witcheskitchen.client.network.packet.SplashParticlePacketHandler;
 import cf.witcheskitchen.common.blocks.technical.WitchesCauldronBlock;
 import cf.witcheskitchen.common.registry.WKBlockEntityTypes;
-import cf.witcheskitchen.common.registry.WKSoundEvents;
 import cf.witcheskitchen.common.registry.WKTags;
 import cf.witcheskitchen.common.util.PacketHelper;
 import cf.witcheskitchen.common.util.TimeHelper;
@@ -26,7 +25,6 @@ import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -86,7 +84,7 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
                 final float blue = ColorHelper.Argb.getBlue(this.color) / 255F;
                 world.getEntitiesByType(EntityType.ITEM, this.collectionBox, possibleIngredient -> true).forEach(itemEntity -> {
                     this.setStack(i, entity.getStack());
-                     PacketHelper.sendToAllTracking(entity, serverPlayer -> SplashParticlePacketHandler.send(serverPlayer, this.getPos(), red, green, blue, 0.5D, 1.0D, 0.5D, (byte) 6));
+                    PacketHelper.sendToAllTracking(entity, serverPlayer -> SplashParticlePacketHandler.send(serverPlayer, this.getPos(), red, green, blue, 0.5D, 1.0D, 0.5D, (byte) 6));
                     entity.kill();
                 });
                 if (this.getStack(i) != stack) {
