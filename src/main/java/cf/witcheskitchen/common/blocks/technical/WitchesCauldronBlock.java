@@ -163,6 +163,7 @@ public class WitchesCauldronBlock extends WKBlockEntityProvider implements Water
                     final Item item = itemEntity.getStack().getItem();
                     if (item != null && item != Items.AIR) {
                         cauldron.checkAndCollectIngredient(world, itemEntity);
+                        itemEntity.kill();
                     }
                 } else if (entity instanceof LivingEntity living) {
                     if (cauldron.hasLava()) {
@@ -177,13 +178,12 @@ public class WitchesCauldronBlock extends WKBlockEntityProvider implements Water
 
     @Override
     public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
-        final float offset = 0.8F + random.nextFloat() * 0.2F;
         if (random.nextInt(5) == 0) {
             final BlockEntity entity = world.getBlockEntity(pos);
             if (entity instanceof WitchesCauldronBlockEntity cauldron) {
                 if (cauldron.isBoiling()) {
-                    world.playSound(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, WKSoundEvents.CAULDRON_BOIL_EVENT, SoundCategory.BLOCKS, 1, 1, false);
-
+                    final float offset = 0.8F + random.nextFloat() * 0.2F;
+                    world.playSound(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, WKSoundEvents.BUBBLE, SoundCategory.BLOCKS, offset, offset, false);
                 }
             }
         }

@@ -9,15 +9,16 @@ import cf.witcheskitchen.client.network.packet.SplashParticlePacketHandler;
 import cf.witcheskitchen.common.blocks.technical.WitchesCauldronBlock;
 import cf.witcheskitchen.common.registry.WKBlockEntityTypes;
 import cf.witcheskitchen.common.registry.WKTags;
+import cf.witcheskitchen.common.util.InventoryHelper;
 import cf.witcheskitchen.common.util.PacketHelper;
 import cf.witcheskitchen.common.util.TimeHelper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.fluid.Fluids;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.Packet;
@@ -41,13 +42,15 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
 
     private static final int TICKS_TO_BOIL = TimeHelper.toTicks(5);
     private static final int DEFAULT_COLOR = 0x3f76e4;
+    private static final int MAXIMUM_INGREDIENTS = 7;
+    private static final int MINIMUM_INGREDIENTS = 3;
     private final FluidTank tank = new FluidTank(WKFluidAPI.BUCKET_VOLUME);
     private final Box collectionBox = new Box(this.pos).contract(0.65);
     private int color;
     private int ticksHeated;
 
     public WitchesCauldronBlockEntity(BlockPos pos, BlockState state) {
-        super(WKBlockEntityTypes.WITCHES_CAULDRON, pos, state, 7);
+        super(WKBlockEntityTypes.WITCHES_CAULDRON, pos, state, MAXIMUM_INGREDIENTS);
         this.color = DEFAULT_COLOR;
     }
 
@@ -76,22 +79,41 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
 
     public void checkAndCollectIngredient(World world, final ItemEntity entity) {
         if (this.isBoiling()) {
-            int i = this.manager.findAnyEmptySlot();
-            if (i >= 0) {
-                final ItemStack stack = this.getStack(i);
-                final float red = ColorHelper.Argb.getRed(this.color) / 255F;
-                final float green = ColorHelper.Argb.getGreen(this.color) / 255f;
-                final float blue = ColorHelper.Argb.getBlue(this.color) / 255F;
-                world.getEntitiesByType(EntityType.ITEM, this.collectionBox, possibleIngredient -> true).forEach(itemEntity -> {
-                    this.setStack(i, entity.getStack());
-                    PacketHelper.sendToAllTracking(entity, serverPlayer -> SplashParticlePacketHandler.send(serverPlayer, this.getPos(), red, green, blue, 0.5D, 1.0D, 0.5D, (byte) 6));
-                    entity.kill();
-                });
-                if (this.getStack(i) != stack) {
-                    world.playSound(null, pos, SoundEvents.ENTITY_PLAYER_SPLASH, SoundCategory.BLOCKS, 0.2F, 1.0f);
+            final Item item = entity.getStack().getItem();
+            final ItemStack stackIngredient = entity.getStack();
+            int i;
+            // Increment Count
+            if (InventoryHelper.containsItem(this, item)) {
+                i = InventoryHelper.findAnyIndexOf(this, item);
+                final ItemStack stackIn = this.getStack(i);
+                final int nextCount = stackIngredient.getCount() + stackIn.getCount();
+//                // Check free space
+//                // Don't allow more than 3 stacks per item
+//                if (nextCount <= this.getMaxCountPerStack() && nextCount <= stackIngredient.getMaxCount()) {
+//                    if (stackIn.isItemEqualIgnoreDamage(stackIngredient)) {
+//                        stackIn.setCount(stackIn.getCount() + stackIngredient.getCount());
+//                    }
+//                } else {
+//                    stackIn.setCount(this.getMaxCountPerStack());
+//                    ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), stackIngredient);
+//                }
+
+            } else {
+                // Insert new ingredient
+                i = this.manager.findAnyEmptySlot();
+                if (i >= 0) {
+                    this.setStack(i, stackIngredient);
                 }
             }
+            final float red = ColorHelper.Argb.getRed(this.color) / 255F;
+            final float green = ColorHelper.Argb.getGreen(this.color) / 255f;
+            final float blue = ColorHelper.Argb.getBlue(this.color) / 255F;
+            PacketHelper.sendToAllTracking(entity, serverPlayer -> SplashParticlePacketHandler.send(serverPlayer, this.getPos(), red, green, blue, 0.5D, 1.0D, 0.5D, (byte) 6));
+            if (!this.getStack(i).isEmpty()) {
+                world.playSound(null, pos, SoundEvents.ENTITY_PLAYER_SPLASH, SoundCategory.BLOCKS, 0.2F, 1.0f);
+            }
         }
+
         if (this.tank.getStack().hasFluid(Fluids.LAVA)) {
             this.manager.clear();
             PacketHelper.sendToAllTracking(entity, serverPlayer -> ParticlePacketHandler.send(serverPlayer, this.getPos(), Registry.PARTICLE_TYPE.getId(ParticleTypes.LAVA), Registry.SOUND_EVENT.getId(SoundEvents.BLOCK_LAVA_EXTINGUISH), (byte) 3));
@@ -104,6 +126,11 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
         final BlockState belowState = world.getBlockState(pos.down());
         boolean sync = false;
         boolean lava = this.hasLava();
+        for (int i = 0 ; i < this.size(); i++) {
+            final var at = this.getStack(i);
+            System.out.println("Position " + i + " contains "+ at + " count: " + at.getCount());
+        }
+
         if (this.hasFluid()) {
             if (this.hasLava()) {
                 if (world.getTime() % 10L == 8L) {
@@ -277,5 +304,11 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
     @Environment(EnvType.CLIENT)
     public int getTicksHeated() {
         return ticksHeated;
+    }
+
+    @Override
+    public void setStack(int slot, ItemStack stack) {
+
+        super.setStack(slot, stack);
     }
 }

@@ -2,7 +2,11 @@ package cf.witcheskitchen.common.util;
 
 import net.minecraft.item.ItemStack;
 
-public class ItemUtil {
+public final class ItemUtil {
+
+    private ItemUtil() {
+
+    }
 
     //Checks that stackA and stackB are equal
     //This is as check to merge items on shift-click

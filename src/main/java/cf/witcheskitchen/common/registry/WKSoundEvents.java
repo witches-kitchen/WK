@@ -23,7 +23,7 @@ public class WKSoundEvents {
     public static final SoundEvent FERRET_CHIRP_EVENT = register("ferret_chirp");
 
     //Particles
-    public static final SoundEvent CAULDRON_BOIL_EVENT = register("cauldron_bubble");
+    public static final SoundEvent BUBBLE = register("bubble");
 
     //Broom
     public static final SoundEvent BROOM_RIDING_EVENT = register("broom_loop");

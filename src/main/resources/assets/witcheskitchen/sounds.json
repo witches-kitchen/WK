@@ -42,9 +42,9 @@
       "witcheskitchen:ferret_fight1"
     ]
   },
-  "cauldron_bubble": {
+  "bubble": {
     "sounds": [
-      "witcheskitchen:cauldron_bubble"
+      "witcheskitchen:bubble"
     ]
   }
 }
