@@ -1,0 +1,15 @@
+{
+  "type": "witcheskitchen:cauldron_brewing",
+  "ingredients": [
+    {
+      "item": "witcheskitchen:belladonna_blossom"
+    },
+    {
+      "item": "witcheskitchen:amaranth_sprig"
+    }
+  ],
+  "result": {
+    "item": "minecraft:potion"
+  },
+  "color": 1590272
+}

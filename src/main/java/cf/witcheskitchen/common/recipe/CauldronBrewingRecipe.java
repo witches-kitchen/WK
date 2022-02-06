@@ -80,15 +80,14 @@ public class CauldronBrewingRecipe implements Recipe<Inventory> {
         @Override
         public CauldronBrewingRecipe read(Identifier id, JsonObject json) {
             final DefaultedList<Ingredient> ingredients = RecipeUtil.deserializeIngredients(JsonHelper.getArray(json, "ingredients"));
-            if (ingredients.isEmpty()) {
-                throw new JsonParseException("No ingredients for cauldron brewing recipe");
-            } else if (ingredients.size() > 8) {
-                throw new JsonParseException("Too many ingredients for cauldron recipe");
+            if (ingredients.size() < 2) {
+                throw new JsonParseException("Cauldron recipes must have at least 2 ingredients");
+            } else if (ingredients.size() > 7) {
+                throw new JsonParseException("Too many ingredients for Cauldron recipe");
             } else {
                 return new CauldronBrewingRecipe(id, ingredients, RecipeUtil.deserializeStack(JsonHelper.getObject(json, "result")), JsonHelper.getInt(json, "color"));
             }
         }
-
         @Override
         public CauldronBrewingRecipe read(Identifier id, PacketByteBuf buf) {
             final DefaultedList<Ingredient> ingredients = DefaultedList.ofSize(buf.readVarInt(), Ingredient.EMPTY);

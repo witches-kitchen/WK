@@ -6,7 +6,9 @@ import cf.witcheskitchen.api.fluid.IStorageHandler;
 import cf.witcheskitchen.api.fluid.WKFluidAPI;
 import cf.witcheskitchen.client.network.packet.SplashParticlePacketHandler;
 import cf.witcheskitchen.common.blocks.technical.WitchesCauldronBlock;
+import cf.witcheskitchen.common.recipe.CauldronBrewingRecipe;
 import cf.witcheskitchen.common.registry.WKBlockEntityTypes;
+import cf.witcheskitchen.common.registry.WKRecipeTypes;
 import cf.witcheskitchen.common.registry.WKTags;
 import cf.witcheskitchen.common.util.PacketHelper;
 import cf.witcheskitchen.common.util.TimeHelper;
@@ -16,6 +18,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.fluid.Fluids;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -23,6 +26,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.recipe.Ingredient;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
@@ -33,6 +37,7 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.Random;
 
 public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements IStorageHandler {
@@ -81,15 +86,34 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
         if (this.isBoiling()) {
             // You must throw the stack correctly
             if (entity.getBoundingBox().intersects(this.collectionBox)) {
-                final Item item = entity.getStack().getItem();
                 final ItemStack ingredient = entity.getStack();
-                final float red = ColorHelper.Argb.getRed(this.color) / 255F;
-                final float green = ColorHelper.Argb.getGreen(this.color) / 255f;
-                final float blue = ColorHelper.Argb.getBlue(this.color) / 255F;
-                PacketHelper.sendToAllTracking(entity, serverPlayer -> SplashParticlePacketHandler.send(serverPlayer, this.getPos(), red, green, blue, 0.5D, 1.0D, 0.5D, (byte) 6));
-                world.playSound(null, pos, SoundEvents.ENTITY_PLAYER_SPLASH, SoundCategory.BLOCKS, 0.2F, 1.0f);
+                final int emptySlot = this.manager.findAnyEmptySlot();
+                if (emptySlot >= 0 && ingredient.isIn(WKTags.VALID_BREW_ITEM)) {
+                    this.setStack(emptySlot, ingredient.split(1));
+                    final float red = ColorHelper.Argb.getRed(this.color) / 255F;
+                    final float green = ColorHelper.Argb.getGreen(this.color) / 255f;
+                    final float blue = ColorHelper.Argb.getBlue(this.color) / 255F;
+                    PacketHelper.sendToAllTracking(entity, serverPlayer -> SplashParticlePacketHandler.send(serverPlayer, this.getPos(), red, green, blue, 0.5D, 1.0D, 0.5D, (byte) 6));
+                    this.markDirty(true);
+                    world.playSound(null, pos, SoundEvents.ENTITY_PLAYER_SPLASH, SoundCategory.BLOCKS, 0.2F, 1.0f);
+                    entity.kill();
+                }
             }
         }
+    }
+
+    private ItemStack brew(World world, Inventory inventory) {
+        final var recipe = world.getRecipeManager().listAllOfType(WKRecipeTypes.CAULDRON_BREWING_RECIPE_TYPE)
+                .stream().filter(entry -> entry.matches(inventory, world))
+                .findFirst()
+                .orElse(null);
+        if (recipe != null) {
+           this.color = recipe.getColor();
+           this.markDirty(true);
+           return recipe.craft(this);
+        }
+        return ItemStack.EMPTY;
+
     }
 
     @Override
@@ -97,15 +121,9 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
         final BlockState belowState = world.getBlockState(pos.down());
         boolean sync = false;
         boolean lava = this.hasLava();
-//        for (int i = 0 ; i < this.size(); i++) {
-//            final var at = this.getStack(i);
-//            System.out.println("Position " + i + " contains "+ at + " count: " + at.getCount());
-//        }
-   //      System.out.println(this.tank.getStack());
         if (this.hasFluid()) {
             if (this.hasLava()) {
-                if (world.getTime() % 10L == 8L) {
-                    // Runs every 10 ticks
+                if (world.getTime() % 10L == 8L) { // 10 ticks
                     WitchesCauldronBlockEntity.lavaTick(world, pos, EnvType.SERVER);
                 }
             } else if (this.hasWater()) {

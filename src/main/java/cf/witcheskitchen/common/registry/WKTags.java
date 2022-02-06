@@ -27,7 +27,6 @@ public class WKTags {
     public static final Tag<Item> OVEN_BLACKLIST = TagFactory.ITEM.create(new Identifier(WK.MODID, "oven_blacklist"));
     public static final Tag<Item> BARREL_BLACKLIST = TagFactory.ITEM.create(new Identifier(WK.MODID, "barrel_blacklist"));
     public static final Tag<Item> TEA_BLACKLIST = TagFactory.ITEM.create(new Identifier(WK.MODID, "tea_blacklist"));
-
     public static final Tag<Item> VALID_BREW_ITEM = TagFactory.ITEM.create(new Identifier(WK.MODID, "valid_brew_item"));
 
     static {
