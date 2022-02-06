@@ -6,6 +6,7 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
@@ -41,7 +42,7 @@ import javax.annotation.Nonnull;
  * such as the type of fluid it contains, the amount, etc
  * <p>
  */
-public final class FluidStack {
+public final class FluidStack implements Comparable<FluidStack> {
     /**
      * Empty FluidStack instance (similar to a {@link net.minecraft.item.ItemStack#EMPTY)}
      */
@@ -97,7 +98,7 @@ public final class FluidStack {
         }
     }
 
-    public static FluidStack from(FluidStack old, int amount) {
+    public static FluidStack fromStack(FluidStack old, int amount) {
         return new FluidStack(old.getFluid(), amount, old.data);
     }
 
@@ -153,8 +154,8 @@ public final class FluidStack {
      * @param other {@link FluidStack} to compare
      * @return Whether this stack is equal to the other
      */
-    public boolean isEqualTo(@Nonnull FluidStack other) {
-        return this.hasFluid(other.getFluid()) && isTagEqualTo(other);
+    public boolean isEqualIgnoreNbt(@Nonnull FluidStack other) {
+        return this.hasFluid(other.getFluid());
     }
 
     /**
@@ -241,7 +242,7 @@ public final class FluidStack {
     @Override
     public boolean equals(Object object) {
         if (object instanceof FluidStack stackObj) {
-            return this.isEqualTo(stackObj);
+            return this.isEqualIgnoreNbt(stackObj) && this.isTagEqualTo(stackObj);
         } else {
             return false;
         }
@@ -261,5 +262,14 @@ public final class FluidStack {
     @Override
     public String toString() {
         return "FluidStack Properties: " + "[Fluid] = " + Registry.FLUID.getId(this.fluid) + " " + "[FluidAmount] = " + this.amount + " " + "[Is Empty] = " + this.empty + " " + "[NbtData] = " + this.data;
+    }
+
+    @Override
+    public int compareTo(@NotNull FluidStack other) {
+        if (this.isEqualIgnoreNbt(other)) {
+            return Integer.compare(amount, other.amount);
+        } else {
+            return -1;
+        }
     }
 }

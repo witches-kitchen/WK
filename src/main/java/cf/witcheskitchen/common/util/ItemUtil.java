@@ -1,6 +1,9 @@
 package cf.witcheskitchen.common.util;
 
+import net.minecraft.item.GlassBottleItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.item.PotionItem;
 
 public final class ItemUtil {
 
@@ -29,10 +32,15 @@ public final class ItemUtil {
 
     public static ItemStack consumeStack(ItemStack stack) {
         if (stack.getCount() == 1) {
-            return stack.getItem().hasRecipeRemainder() ? new ItemStack(stack.getItem().getRecipeRemainder()) : ItemStack.EMPTY;
-        } else {
-            stack.split(1);
-            return stack;
+            if (stack.getItem().hasRecipeRemainder()) {
+                return new ItemStack(stack.getItem().getRecipeRemainder());
+            } else if (stack.getItem() instanceof PotionItem) {
+                return new ItemStack(Items.GLASS_BOTTLE);
+            } else {
+                return ItemStack.EMPTY;
+            }
         }
+        stack.split(1);
+        return stack;
     }
 }

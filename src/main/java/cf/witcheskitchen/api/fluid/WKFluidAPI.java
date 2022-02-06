@@ -7,8 +7,9 @@ public class WKFluidAPI {
 
     // reference for bucket volume
     public static final int BUCKET_VOLUME = 1000;
+    public static final int GLASS_BOTTLE_VOLUME = 250;
 
-    public static ItemStack getFilledContainerFor(Fluid fluid, ItemStack container) {
+    public static ItemStack getMatchingFilledStack(Fluid fluid, ItemStack container) {
         if (container.getItem() instanceof IFluidContainer handler) {
             return handler.getFilled(fluid);
         }

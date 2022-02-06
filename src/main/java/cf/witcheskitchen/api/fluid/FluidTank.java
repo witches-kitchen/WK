@@ -60,16 +60,18 @@ public class FluidTank implements IFluidStorage {
         if (!canFill(stack)) {
             return 0;
         } else if (this.stack.isEmpty()) {
-            this.stack = FluidStack.from(stack, Math.min(stack.getAmount(), this.capacity));
+            this.stack = FluidStack.fromStack(stack, Math.min(stack.getAmount(), this.capacity));
             // TODO: markDirty
             return this.stack.getAmount();
         } else {
-            int filledAmount = 0;
+            final int filledAmount;
             if (stack.getAmount() < this.getFreeSpace()) {
-                this.growFluid(stack.getAmount());
+                this.grow(stack.getAmount());
                 filledAmount = stack.getAmount();
             } else {
+                final int remainingSpace = this.getFreeSpace();
                 this.stack.setAmount(capacity);
+                filledAmount = remainingSpace;
             }
             if (filledAmount > 0) {
                 // TODO: markDirty
@@ -87,15 +89,11 @@ public class FluidTank implements IFluidStorage {
      * @return The {@link FluidStack} drained.
      */
     @Override
-    public @NotNull
-    FluidStack drain(int amount, @Nullable Direction side) {
-        int drained = 0;
-        if (this.stack.getAmount() <= amount) {
-            drained = this.stack.getAmount();
-        }
-        FluidStack newStack = FluidStack.from(this.stack, drained);
+    public @NotNull FluidStack drain(int amount, @Nullable Direction side) {
+        final int drained = Math.min(this.stack.getAmount(), amount);
+        FluidStack newStack = FluidStack.fromStack(this.stack, drained);
         if (drained > 0) {
-            this.shrinkFluid(drained);
+            this.shrink(drained);
             //TODO: markDirty();
         }
         return newStack;
@@ -112,7 +110,7 @@ public class FluidTank implements IFluidStorage {
     @NotNull
     @Override
     public FluidStack drain(FluidStack stack, @Nullable Direction side) {
-        if (stack.isEmpty() || !stack.isEqualTo(this.stack)) {
+        if (stack.isEmpty() || !stack.isEqualIgnoreNbt(this.stack)) {
             return FluidStack.EMPTY;
         }
         return drain(stack.getAmount(), side);
@@ -131,7 +129,7 @@ public class FluidTank implements IFluidStorage {
             // stack and tank are not empty
             if (!this.filterValidator.test(stack)) {
                 return false;
-            } else if (!stack.isEqualTo(this.stack)) {
+            } else if (!stack.isEqualIgnoreNbt(this.stack)) {
                 return false;
             } else {
                 return stack.getAmount() <= this.getFreeSpace();
@@ -168,7 +166,7 @@ public class FluidTank implements IFluidStorage {
      *
      * @param amount Amount of fluid (in MilliBuckets).
      */
-    public void growFluid(int amount) {
+    public void grow(int amount) {
         this.stack.setAmount(this.stack.getAmount() + amount);
     }
 
@@ -177,8 +175,8 @@ public class FluidTank implements IFluidStorage {
      *
      * @param amount Amount of fluid (in MilliBuckets).
      */
-    public void shrinkFluid(int amount) {
-        this.growFluid(-amount);
+    public void shrink(int amount) {
+        this.grow(-amount);
     }
 
     /**

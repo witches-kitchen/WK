@@ -15,7 +15,7 @@ public class BottleItemMixin implements IFluidContainer {
 
     @Override
     public int getCapacity() {
-        return WKFluidAPI.BUCKET_VOLUME / 3;
+        return WKFluidAPI.BUCKET_VOLUME;
     }
 
     @Override

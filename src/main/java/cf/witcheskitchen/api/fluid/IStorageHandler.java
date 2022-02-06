@@ -38,7 +38,6 @@ public interface IStorageHandler {
      */
     int fill(FluidStack stack, Direction side);
 
-
     /**
      * Determines whether you can fill or not your tank
      *

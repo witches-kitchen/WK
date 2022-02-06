@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.Mixin;
 public class PotionItemMixin implements IFluidContainer {
     @Override
     public int getCapacity() {
-        return WKFluidAPI.BUCKET_VOLUME / 3;
+        return WKFluidAPI.GLASS_BOTTLE_VOLUME;
     }
 
     @Override
