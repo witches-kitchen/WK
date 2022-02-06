@@ -1,5 +1,7 @@
 package cf.witcheskitchen.api;
 
+import cf.witcheskitchen.WK;
+import cf.witcheskitchen.WKConfig;
 import cf.witcheskitchen.common.registry.WKTags;
 import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.LivingEntity;
@@ -157,5 +159,11 @@ public class WKApi {
      */
     public static boolean isWearingFullWitchHunterRobes(LivingEntity entity) {
         return false;
+    }
+
+    static {
+        if (WKConfig.get().debugMode) {
+            WK.logger.info("Witches Kitchen API: Successfully Loaded");
+        }
     }
 }
