@@ -129,6 +129,13 @@ public class WKApi {
     }
 
     /**
+     * This allows one to add items to cauldrons for brewing
+     */
+    public static boolean isValidBrewingItem(Item item) {
+        return WKTags.VALID_BREW_ITEM.contains(item);
+    }
+
+    /**
      * This allows one to check if one is wearing full cold iron armor
      * Currently vacant at the moment.
      */
