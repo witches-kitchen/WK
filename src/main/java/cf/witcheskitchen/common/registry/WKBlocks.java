@@ -11,6 +11,7 @@ import cf.witcheskitchen.common.blocks.technical.WitchesCauldronBlock;
 import cf.witcheskitchen.common.blocks.technical.WitchesOvenBlock;
 import cf.witcheskitchen.common.crop.AmaranthCropBlock;
 import cf.witcheskitchen.common.crop.BelladonnaCropBlock;
+import cf.witcheskitchen.common.crop.WormwoodCropBlock;
 import cf.witcheskitchen.common.generator.WKSaplingGenerator;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -171,6 +172,8 @@ public class WKBlocks {
     public static final Block AMARANTH_DARK_PASSION = new AmaranthCropBlock(FabricBlockSettings.copyOf(AMARANTH), AmaranthCropBlock.Type.DARK_PASSION);
     public static final Block AMARANTH_FIREBIRD = new AmaranthCropBlock(FabricBlockSettings.copyOf(AMARANTH), AmaranthCropBlock.Type.FIREBIRD);
 
+    public static final Block WORMWOOD = new WormwoodCropBlock(AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP));
+
     public static void register() {
         //devices
         registerBlock("iron_witches_oven", IRON_WITCHES_OVEN, WK.WK_GROUP);
@@ -321,6 +324,8 @@ public class WKBlocks {
         registerBlockOnly("amaranth_cerise", AMARANTH_CERISE);
         registerBlockOnly("amaranth_dark_passion", AMARANTH_DARK_PASSION);
         registerBlockOnly("amaranth_firebird", AMARANTH_FIREBIRD);
+
+        registerBlockOnly("wormwood", WORMWOOD);
 
         CompostingChanceRegistry validBlockCompost = CompostingChanceRegistry.INSTANCE;
         validBlockCompost.add(BLACKTHORN_LEAVES, 0.3f);
