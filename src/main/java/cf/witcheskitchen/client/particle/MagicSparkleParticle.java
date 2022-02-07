@@ -6,7 +6,6 @@ import net.minecraft.client.particle.*;
 import net.minecraft.client.util.math.Vector3d;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particle.DefaultParticleType;
-import net.minecraft.util.math.Vec3i;
 
 import java.util.Random;
 
@@ -28,13 +27,14 @@ public class MagicSparkleParticle extends SpriteBillboardParticle {
         this.setAlpha(0.2f);
 
     }
+
     @Override
     public void tick() {
         this.prevPosX = this.x;
         this.prevPosY = this.y;
         this.prevPosZ = this.z;
-        if(this.age ++ < Math.min(super.maxAge, 600) && super.age >= 0) {
-            if((double)super.age > (double)super.maxAge * 0.9D) {
+        if (this.age++ < Math.min(super.maxAge, 600) && super.age >= 0) {
+            if ((double) super.age > (double) super.maxAge * 0.9D) {
 
             }
         } else {
@@ -46,11 +46,12 @@ public class MagicSparkleParticle extends SpriteBillboardParticle {
             super.velocityX *= 1.08D;
             super.velocityY *= 0.85D;
             super.velocityZ *= 1.08D;
-          //  super.velocityY -= 0.04D * (double)super.gravityStrength;
+            //  super.velocityY -= 0.04D * (double)super.gravityStrength;
         }
         this.move(super.velocityX, super.velocityY, super.velocityZ);
 
     }
+
     @Override
     public ParticleTextureSheet getType() {
         return ParticleTextureSheet.PARTICLE_SHEET_OPAQUE;

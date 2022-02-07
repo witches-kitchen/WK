@@ -20,8 +20,9 @@ public final class InventoryHelper {
 
     /**
      * Finds the position of the requested {@link ItemStack} (including empty stacks), or -1 if is not found.
+     *
      * @param inventory {@link Inventory}
-     * @param search {@link ItemStack} to search.
+     * @param search    {@link ItemStack} to search.
      * @return index of the stack
      */
     public static int findAnyIndexOf(Inventory inventory, ItemStack search) {
@@ -36,8 +37,9 @@ public final class InventoryHelper {
 
     /**
      * Finds the position of the requested {@link Item} or -1 if is not found.
+     *
      * @param inventory {@link Inventory}
-     * @param search {@link Item} to search.
+     * @param search    {@link Item} to search.
      * @return index of the stack
      */
     public static int findAnyIndexOf(Inventory inventory, Item search) {
@@ -54,6 +56,7 @@ public final class InventoryHelper {
     /**
      * Finds the amount of <b>NON-EMPTY</b> and <b>NON-DUPLICATED</b>
      * <i>stacks</i> in the given Defaulted List.
+     *
      * @param stacks DefaultedList
      * @return the count of the Set of Items.
      */
@@ -67,6 +70,7 @@ public final class InventoryHelper {
 
     /**
      * Creates an <b>NON EMPTY</b> {@link HashSet} of Items from the given inventory
+     *
      * @param stacks DefaultedList of ItemStack
      * @return A populated HashSet instance
      */

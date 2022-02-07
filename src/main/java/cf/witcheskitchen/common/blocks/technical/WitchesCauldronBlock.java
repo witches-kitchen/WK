@@ -118,7 +118,7 @@ public class WitchesCauldronBlock extends WKBlockEntityProvider implements Water
                         }
                         world.playSound(player, pos, SoundEvents.ENTITY_PLAYER_SWIM, SoundCategory.BLOCKS, 0.5F, 0.4F / ((float) world.random.nextDouble() * 0.4F + 0.8F));
                         cauldron.markDirty(true);
-                    }  else {
+                    } else {
                         return ActionResult.FAIL;
                     }
 

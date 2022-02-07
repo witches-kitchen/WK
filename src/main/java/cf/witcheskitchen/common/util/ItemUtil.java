@@ -1,6 +1,5 @@
 package cf.witcheskitchen.common.util;
 
-import net.minecraft.item.GlassBottleItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.PotionItem;

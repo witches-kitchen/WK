@@ -26,7 +26,6 @@ public class WKSplashParticle extends RainSplashParticle {
     }
 
 
-
     @Environment(EnvType.CLIENT)
     public record Factory(SpriteProvider spriteProvider) implements ParticleFactory<DefaultParticleType> {
         @Override

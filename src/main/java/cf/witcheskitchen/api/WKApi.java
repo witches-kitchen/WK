@@ -12,6 +12,12 @@ public class WKApi {
 
     //Todo: This could go with some improvements, but it is pretty early at the moment.
 
+    static {
+        if (WKConfig.get().debugMode) {
+            WK.logger.info("Witches Kitchen API: Successfully Loaded");
+        }
+    }
+
     /**
      * This allows the mod to track various beings of spiritual origin, as well as undead origin.
      * Use this if you wish to blanket-target such entities.
@@ -159,11 +165,5 @@ public class WKApi {
      */
     public static boolean isWearingFullWitchHunterRobes(LivingEntity entity) {
         return false;
-    }
-
-    static {
-        if (WKConfig.get().debugMode) {
-            WK.logger.info("Witches Kitchen API: Successfully Loaded");
-        }
     }
 }

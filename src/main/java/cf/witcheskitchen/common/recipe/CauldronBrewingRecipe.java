@@ -88,6 +88,7 @@ public class CauldronBrewingRecipe implements Recipe<Inventory> {
                 return new CauldronBrewingRecipe(id, ingredients, RecipeUtil.deserializeStack(JsonHelper.getObject(json, "result")), JsonHelper.getInt(json, "color"));
             }
         }
+
         @Override
         public CauldronBrewingRecipe read(Identifier id, PacketByteBuf buf) {
             final DefaultedList<Ingredient> ingredients = DefaultedList.ofSize(buf.readVarInt(), Ingredient.EMPTY);
