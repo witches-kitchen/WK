@@ -17,6 +17,8 @@ import net.minecraft.particle.ParticleEffect;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
+import java.util.Random;
+
 @Environment(EnvType.CLIENT)
 public class WitchesCauldronBlockEntityRender implements BlockEntityRenderer<WitchesCauldronBlockEntity> {
 
@@ -25,6 +27,7 @@ public class WitchesCauldronBlockEntityRender implements BlockEntityRenderer<Wit
         final FluidStack stack = cauldron.getStackForTank(0);
         if (cauldron.getWorld() != null && !stack.isEmpty()) {
             final World world = cauldron.getWorld();
+            final Random random = world.getRandom();
             matrices.push();
             final float depth = (float) (((cauldron.getPercentFilled() - 1) * (0.4D)) + (0.6D));
             matrices.translate(0, depth, 0);
@@ -39,16 +42,35 @@ public class WitchesCauldronBlockEntityRender implements BlockEntityRenderer<Wit
                 double offsetZ = 0.5D + MathHelper.nextDouble(world.getRandom(), -range, range);
                 final int heatTicks = TimeHelper.toSeconds(cauldron.getTicksHeated());
                 if (heatTicks > 0) {
+
                     final double r = ((color >> 16) & 0xff) / 255F;
                     final double g = ((color >> 8) & 0xff) / 255F;
                     final double b = (color & 0xff) / 255F;
+                    final double xPos = cauldron.getPos().getX();
+                    final double yPos = cauldron.getPos().getY();
+                    final double zPos = cauldron.getPos().getZ();
+                    final double randomLeftPos = (random.nextDouble() * 0.4D) + 0.3D;
+                    final double randomFrontPos = (random.nextDouble() * 0.4D) + 0.3D;
+                    final double sparkOffsetX = xPos + randomLeftPos;
+                    final double sparkOffsetY = yPos + depth + 0.7D;
+                    final double sparkOffsetZ = zPos + randomFrontPos;
+//                    zPos = 0.3D + rand.nextDouble() * 0.4D;
+//                    double var36 = (double)x + xPos;
+//                    double d1 = (double)y + yPos;
+//                    double d2 = (double)z + zPos;
+                    System.out.println(sparkOffsetY);
+                    world.addParticle((ParticleEffect) WKParticleTypes.MAGIC_SPARKLE, sparkOffsetX, sparkOffsetY, sparkOffsetZ, r, g, b);
                     switch (heatTicks) {
                         case 1, 2, 3, 4 -> {
                             if (world.getTime() % 5 == 0) { // Wait 5 ticks
-                                world.addParticle((ParticleEffect) WKParticleTypes.BUBBLE, cauldron.getPos().getX() + offsetX, cauldron.getPos().getY() + depth, cauldron.getPos().getZ() + offsetZ, r, g, b);
+                                world.addParticle((ParticleEffect) WKParticleTypes.BUBBLE, xPos + offsetX, yPos + depth, zPos + offsetZ, r, g, b);
                             }
                         }
-                        case 5 -> world.addParticle((ParticleEffect) WKParticleTypes.BUBBLE, cauldron.getPos().getX() + offsetX, cauldron.getPos().getY() + depth, cauldron.getPos().getZ() + offsetZ, r, g, b);
+                        case 5 -> {
+                            world.addParticle((ParticleEffect) WKParticleTypes.BUBBLE, xPos + offsetX, yPos + depth, zPos + offsetZ, r, g, b);
+                            if (cauldron.isBrewing()) {
+                            }
+                        }
                     }
                 }
             } else {

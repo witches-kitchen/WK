@@ -2,7 +2,8 @@ package cf.witcheskitchen.client;
 
 import cf.witcheskitchen.client.gui.screen.BrewingBarrelScreen;
 import cf.witcheskitchen.client.gui.screen.WitchesOvenScreen;
-import cf.witcheskitchen.client.particle.WKBubbleParticle;
+import cf.witcheskitchen.client.particle.BubbleParticle;
+import cf.witcheskitchen.client.particle.MagicSparkleParticle;
 import cf.witcheskitchen.client.particle.WKSplashParticle;
 import cf.witcheskitchen.client.render.blockentity.BrewingBarrelBlockEntityRender;
 import cf.witcheskitchen.client.render.blockentity.WitchesCauldronBlockEntityRender;
@@ -30,8 +31,9 @@ public class WKClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         WKPacketTypes.register(EnvType.CLIENT);
-        ParticleFactoryRegistry.getInstance().register(WKParticleTypes.BUBBLE, WKBubbleParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(WKParticleTypes.BUBBLE, BubbleParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(WKParticleTypes.SPLASH, WKSplashParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(WKParticleTypes.MAGIC_SPARKLE, MagicSparkleParticle.Factory::new);
         WKEventsRegistry.registerClient();
         modBlocks.forEach(this::registerModBlockLayer);
         BlockEntityRendererRegistry.register(WKBlockEntityTypes.WITCHES_OVEN, (ctx) -> new WitchesOvenBlockEntityRender());

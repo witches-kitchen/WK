@@ -6,7 +6,6 @@ import cf.witcheskitchen.api.fluid.IStorageHandler;
 import cf.witcheskitchen.api.fluid.WKFluidAPI;
 import cf.witcheskitchen.client.network.packet.SplashParticlePacketHandler;
 import cf.witcheskitchen.common.blocks.technical.WitchesCauldronBlock;
-import cf.witcheskitchen.common.recipe.CauldronBrewingRecipe;
 import cf.witcheskitchen.common.registry.WKBlockEntityTypes;
 import cf.witcheskitchen.common.registry.WKRecipeTypes;
 import cf.witcheskitchen.common.registry.WKTags;
@@ -19,14 +18,12 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.Inventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.Packet;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.recipe.Ingredient;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
@@ -37,7 +34,6 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
 import java.util.Random;
 
 public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements IStorageHandler {
@@ -52,6 +48,7 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
     private final Box collectionBox = new Box(this.pos).contract(0.65);
     private int color;
     private int ticksHeated;
+    private boolean brewing;
 
     public WitchesCauldronBlockEntity(BlockPos pos, BlockState state) {
         super(WKBlockEntityTypes.WITCHES_CAULDRON, pos, state, MAXIMUM_INGREDIENTS);
@@ -93,7 +90,7 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
                     final float red = ColorHelper.Argb.getRed(this.color) / 255F;
                     final float green = ColorHelper.Argb.getGreen(this.color) / 255f;
                     final float blue = ColorHelper.Argb.getBlue(this.color) / 255F;
-                    PacketHelper.sendToAllTracking(entity, serverPlayer -> SplashParticlePacketHandler.send(serverPlayer, this.getPos(), red, green, blue, 0.5D, 1.0D, 0.5D, (byte) 6));
+                    PacketHelper.sendToAllTracking(entity, serverPlayer -> SplashParticlePacketHandler.send(serverPlayer, this.getPos(), red, green, blue, 0.5D, 1.0D, 0.5D, (byte) 1));
                     this.markDirty(true);
                     world.playSound(null, pos, SoundEvents.ENTITY_PLAYER_SPLASH, SoundCategory.BLOCKS, 0.2F, 1.0f);
                     entity.kill();
@@ -108,9 +105,12 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
                 .findFirst()
                 .orElse(null);
         if (recipe != null) {
+           this.brewing = true;
            this.color = recipe.getColor();
            this.markDirty(true);
            return recipe.craft(this);
+        } else {
+            this.brewing = false;
         }
         return ItemStack.EMPTY;
 
@@ -121,6 +121,7 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
         final BlockState belowState = world.getBlockState(pos.down());
         boolean sync = false;
         boolean lava = this.hasLava();
+        this.brewing = true; //  testing
         if (this.hasFluid()) {
             if (this.hasLava()) {
                 if (world.getTime() % 10L == 8L) { // 10 ticks
@@ -186,6 +187,7 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
         this.tank.readStorage(nbt.getCompound("Tank"));
         this.ticksHeated = nbt.getInt("TicksHeated");
         this.color = nbt.getInt("Color");
+        this.brewing = nbt.getBoolean("Brewing");
     }
 
 
@@ -195,6 +197,7 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
         nbt.put("Tank", tank.writeStorage());
         nbt.putInt("TicksHeated", this.ticksHeated);
         nbt.putInt("Color", this.color);
+        nbt.putBoolean("Brewing", this.brewing);
     }
 
     @Nullable
@@ -305,6 +308,8 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
         return ticksHeated;
     }
 
-
-
+    @Environment(EnvType.CLIENT)
+    public boolean isBrewing() {
+        return brewing;
+    }
 }

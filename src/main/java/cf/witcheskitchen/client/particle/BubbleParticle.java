@@ -10,9 +10,9 @@ import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.util.math.BlockPos;
 
 @Environment(EnvType.CLIENT)
-public class WKBubbleParticle extends SpriteBillboardParticle {
+public class BubbleParticle extends SpriteBillboardParticle {
 
-    public WKBubbleParticle(ClientWorld clientWorld, double posX, double posY, double posZ, double r, double g, double b) {
+    public BubbleParticle(ClientWorld clientWorld, double posX, double posY, double posZ, double r, double g, double b) {
         super(clientWorld, posX, posY, posZ, r, g, b);
         this.setBoundingBoxSpacing(0.02F, 0.02F);
         float offset = (float) ((Math.random() * 0.4F) + 0.3F);
@@ -66,7 +66,7 @@ public class WKBubbleParticle extends SpriteBillboardParticle {
     @Environment(EnvType.CLIENT)
     public record Factory(SpriteProvider spriteProvider) implements ParticleFactory<DefaultParticleType> {
         public Particle createParticle(DefaultParticleType defaultParticleType, ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {
-            final WKBubbleParticle particle = new WKBubbleParticle(clientWorld, d, e, f, g, h, i);
+            final BubbleParticle particle = new BubbleParticle(clientWorld, d, e, f, g, h, i);
             particle.setSprite(this.spriteProvider);
             return particle;
         }
