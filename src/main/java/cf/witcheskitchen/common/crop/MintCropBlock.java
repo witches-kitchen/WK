@@ -32,7 +32,7 @@ public class MintCropBlock extends WKCropBlock {
     @Override
     protected ItemConvertible getSeedsItem() {
         return switch (this.type) {
-            case COMMON -> WKItems.WORMWOOD_SEEDS;
+            case COMMON -> WKItems.MINT_SPRIG;
         };
     }
 
