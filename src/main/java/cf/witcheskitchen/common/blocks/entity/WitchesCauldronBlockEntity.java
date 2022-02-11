@@ -39,12 +39,12 @@ import java.util.Random;
 
 public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements IStorageHandler {
 
+    public static final int TANK_CAPACITY = WKFluidAPI.BUCKET_VOLUME;
     private static final int TICKS_TO_BOIL = TimeHelper.toTicks(5);
     private static final int DEFAULT_WATER_COLOR = 0x3f76e4;
     private static final int DIRTY_WATER_COLOR = 0x402b2b;
     private static final int MAXIMUM_INGREDIENTS = 7;
     private static final int MINIMUM_INGREDIENTS = 2;
-    public static final int TANK_CAPACITY = WKFluidAPI.BUCKET_VOLUME;
     private final FluidTank tank = new FluidTank(TANK_CAPACITY);
     private final Box collectionBox = new Box(this.pos).contract(0.65);
     private int color;
@@ -95,6 +95,7 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
                 }
             }
         }
+
         if (world.getBlockState(pos).get(WitchesCauldronBlock.LIT)) {
             this.manager.clear();
             PacketHelper.sendToAllTracking(entity, serverPlayer -> ParticlePacketHandler.send(serverPlayer, this.getPos(), Registry.PARTICLE_TYPE.getId(ParticleTypes.LAVA), Registry.SOUND_EVENT.getId(SoundEvents.BLOCK_LAVA_EXTINGUISH), (byte) 3));

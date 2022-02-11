@@ -38,11 +38,13 @@ public class MagicSparkleParticle extends SpriteBillboardParticle {
     public float getAlpha() {
         return this.alpha;
     }
+
     @Override
     public void tick() {
         this.prevPosX = this.x;
         this.prevPosY = this.y;
         this.prevPosZ = this.z;
+
         if (this.age++ >= this.maxAge) {
             this.markDead();
         }
@@ -53,6 +55,7 @@ public class MagicSparkleParticle extends SpriteBillboardParticle {
             this.velocityX *= 0.7F;
             this.velocityZ *= 0.7F;
         }
+
         this.move(super.velocityX, super.velocityY, super.velocityZ);
 
     }
@@ -77,6 +80,7 @@ public class MagicSparkleParticle extends SpriteBillboardParticle {
         this.circling = circling;
         return this;
     }
+
 
     @Override
     public ParticleTextureSheet getType() {

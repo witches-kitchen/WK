@@ -15,6 +15,7 @@ public class WKItems {
     // Flowers
     public static final Item BELLADONNA_BLOSSOM = new Item(new FabricItemSettings().group(WK.WK_SEED_GROUP));
     public static final Item AMARANTH_SPRIG = new Item(new FabricItemSettings().food(WKFoodComponents.AMARANTH_GRAIN).group(WK.WK_SEED_GROUP));
+    public static final Item MINT_SPRIG = new Item(new FabricItemSettings().food(WKFoodComponents.MINT_LEAF).group(WK.WK_SEED_GROUP));
     public static final Item WORMWOOD_SPRIG = new Item(new FabricItemSettings().group(WK.WK_SEED_GROUP));
 
     public static final Item AMARANTH_SEEDS = new WKSeedItem(WKBlocks.AMARANTH, new FabricItemSettings().group(WK.WK_SEED_GROUP));
@@ -60,6 +61,7 @@ public class WKItems {
         registerItem("amaranth_firebird_seeds", AMARANTH_FIREBIRD_SEEDS);
         registerItem("belladonna_blossom", BELLADONNA_BLOSSOM);
         registerItem("amaranth_sprig", AMARANTH_SPRIG);
+        registerItem("mint_sprig", MINT_SPRIG);
         registerItem("belladonna_seeds", BELLADONNA_SEEDS);
         registerItem("belladonna_glow_seeds", BELLADONNA_GLOW_SEEDS);
         registerItem("belladonna_nocturnal_seeds", BELLADONNA_NOCTURNAL_SEEDS);
@@ -88,6 +90,7 @@ public class WKItems {
         validItemCompost.add(BELLADONNA_NOCTURNAL_SEEDS, 0.3f);
         validItemCompost.add(WORMWOOD_SPRIG, 0.65f);
         validItemCompost.add(WORMWOOD_SEEDS, 0.3f);
+        validItemCompost.add(MINT_SPRIG, 0.45f);
 
         if (WKConfig.get().debugMode) {
             WK.logger.info("Witches Kitchen Base Items: Successfully Loaded");
