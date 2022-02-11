@@ -4,6 +4,7 @@ import cf.witcheskitchen.api.fluid.FluidStack;
 import cf.witcheskitchen.api.fluid.FluidTank;
 import cf.witcheskitchen.api.fluid.IStorageHandler;
 import cf.witcheskitchen.api.fluid.WKFluidAPI;
+import cf.witcheskitchen.client.network.packet.ParticlePacketHandler;
 import cf.witcheskitchen.client.network.packet.SplashParticlePacketHandler;
 import cf.witcheskitchen.common.blocks.technical.WitchesCauldronBlock;
 import cf.witcheskitchen.common.registry.WKBlockEntityTypes;
@@ -13,7 +14,6 @@ import cf.witcheskitchen.common.util.PacketHelper;
 import cf.witcheskitchen.common.util.TimeHelper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.fluid.Fluids;
@@ -30,6 +30,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.ColorHelper;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -48,32 +49,29 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
     private final Box collectionBox = new Box(this.pos).contract(0.65);
     private int color;
     private int ticksHeated;
-    private boolean brewing;
+    private boolean powered;
 
     public WitchesCauldronBlockEntity(BlockPos pos, BlockState state) {
         super(WKBlockEntityTypes.WITCHES_CAULDRON, pos, state, MAXIMUM_INGREDIENTS);
         this.color = DEFAULT_WATER_COLOR;
     }
 
-    private static void lavaTick(World world, BlockPos pos, EnvType side) {
-        final Random random = world.getRandom();
+    private static void lavaTick(World world, BlockPos pos, boolean client) {
+        final var random = world.getRandom();
         final int i = random.nextInt(50) + 1;
-        switch (side) {
-            case CLIENT -> {
-                final double offsetPos = 0.3D;
-                if (i == 1) {
-                    world.addParticle(ParticleTypes.LAVA, pos.getX() + offsetPos, pos.getY() + offsetPos, pos.getZ() + offsetPos, 0, 0, 0);
-                } else if (i == 50) {
-                    world.addParticle(ParticleTypes.ASH, pos.getX() + offsetPos, pos.getY() + offsetPos, pos.getZ() + offsetPos, 0, 0, 0);
-                }
+        if (client) {
+            final double offsetPos = 0.3D;
+            if (i == 1) {
+                world.addParticle(ParticleTypes.LAVA, pos.getX() + offsetPos, pos.getY() + offsetPos, pos.getZ() + offsetPos, 0, 0, 0);
+            } else if (i == 50) {
+                world.addParticle(ParticleTypes.ASH, pos.getX() + offsetPos, pos.getY() + offsetPos, pos.getZ() + offsetPos, 0, 0, 0);
             }
-            case SERVER -> {
-                final float pitch = 0.15F;
-                if (i == 1) {
-                    world.playSound(null, pos, SoundEvents.BLOCK_LAVA_POP, SoundCategory.BLOCKS, 0.2F + random.nextFloat() * 0.2F, 0.9F + random.nextFloat() * pitch);
-                } else if (i == 50) {
-                    world.playSound(null, pos, SoundEvents.BLOCK_LAVA_AMBIENT, SoundCategory.BLOCKS, 0.2F + random.nextFloat() * 0.2F, 0.9F + random.nextFloat() * pitch);
-                }
+        } else {
+            final float pitch = 0.15F;
+            if (i == 1) {
+                world.playSound(null, pos, SoundEvents.BLOCK_LAVA_POP, SoundCategory.BLOCKS, 0.2F + random.nextFloat() * 0.2F, 0.9F + random.nextFloat() * pitch);
+            } else if (i == 50) {
+                world.playSound(null, pos, SoundEvents.BLOCK_LAVA_AMBIENT, SoundCategory.BLOCKS, 0.2F + random.nextFloat() * 0.2F, 0.9F + random.nextFloat() * pitch);
             }
         }
     }
@@ -97,87 +95,49 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
                 }
             }
         }
-    }
-
-    private ItemStack brew(World world, Inventory inventory) {
-        final var recipe = world.getRecipeManager().listAllOfType(WKRecipeTypes.CAULDRON_BREWING_RECIPE_TYPE)
-                .stream().filter(entry -> entry.matches(inventory, world))
-                .findFirst()
-                .orElse(null);
-        if (recipe != null) {
-           this.brewing = true;
-           this.color = recipe.getColor();
-           this.markDirty(true);
-           return recipe.craft(this);
-        } else {
-            this.brewing = false;
+        if (world.getBlockState(pos).get(WitchesCauldronBlock.LIT)) {
+            this.manager.clear();
+            PacketHelper.sendToAllTracking(entity, serverPlayer -> ParticlePacketHandler.send(serverPlayer, this.getPos(), Registry.PARTICLE_TYPE.getId(ParticleTypes.LAVA), Registry.SOUND_EVENT.getId(SoundEvents.BLOCK_LAVA_EXTINGUISH), (byte) 3));
+            entity.kill();
         }
-        return ItemStack.EMPTY;
-
     }
 
     @Override
     public void tick(World world, BlockPos pos, BlockState state, WKDeviceBlockEntity blockEntity) {
         final BlockState belowState = world.getBlockState(pos.down());
         boolean sync = false;
-        boolean lava = this.hasLava();
-        this.brewing = true; //  testing
         if (this.hasFluid()) {
-            if (this.hasLava()) {
-                if (world.getTime() % 10L == 8L) { // 10 ticks
-                    WitchesCauldronBlockEntity.lavaTick(world, pos, EnvType.SERVER);
+            if (state.get(WitchesCauldronBlock.LIT)) {
+                if (world.getTime() % 10L == 8L) {
+                    lavaTick(world, pos, false);
                 }
-            } else if (this.hasWater()) {
-                lava = false;
-                if (belowState.isIn(WKTags.HEATS_CAULDRON)) {
-                    final int heatTicks = TimeHelper.toSeconds(this.ticksHeated);
-                    if (this.ticksHeated < TICKS_TO_BOIL) {
-                        this.ticksHeated++;
-                    }
-                    /*
-                     * Done to update bubble particles on each second
-                     * And not only when it reaches the ticks required to boil
-                     * This way the client knows that it has to render the particles
-                     *  When ticksHeated is at least >= 1
-                     */
+            }
+            if (belowState.isIn(WKTags.HEATS_CAULDRON)) {
+                final int secondsHeated = TimeHelper.toSeconds(this.ticksHeated);
+                if (this.ticksHeated < TICKS_TO_BOIL) {
+                    this.ticksHeated++;
                     final int time = TimeHelper.toSeconds(this.ticksHeated);
-                    if (time != heatTicks) {
-                        switch (time) {
-                            case 0 -> this.color = DEFAULT_WATER_COLOR;
-                            case 1 -> this.color = 0x3567cc;
-                            case 2 -> this.color = 0x3363c4;
-                            case 3 -> this.color = 0x305db8;
-                            case 4 -> this.color = 0x2752a8;
-                            case 5 -> this.color = 0x2450a6;
-                        }
+                    if (secondsHeated != time) {
+                        boilWater(time);
                         sync = true;
                     }
-                } else if (this.ticksHeated != 0) {
-                    this.ticksHeated = 0;
-                    sync = true;
                 }
-            } else {
-                this.ticksHeated = 0;
             }
-        }
-        if (lava != world.getBlockState(pos).get(WitchesCauldronBlock.LAVA)) {
-            this.updateState(world, pos, state, lava);
+        } else if(this.ticksHeated > 0) {
+            this.color = DEFAULT_WATER_COLOR;
+            this.ticksHeated = 0;
+            sync = true;
         }
         if (sync) {
             this.markDirty(true);
         }
     }
 
-    private void updateState(World world, BlockPos pos, BlockState state, boolean lava) {
-        world.setBlockState(pos, state.with(WitchesCauldronBlock.LAVA, lava), Block.NOTIFY_ALL);
-    }
-
-    @Environment(EnvType.CLIENT)
     @Override
+    @Environment(EnvType.CLIENT)
     public void onClientTick(World world, BlockPos pos, BlockState state, Random random) {
-        super.onClientTick(world, pos, state, random);
-        if (this.hasLava()) {
-            WitchesCauldronBlockEntity.lavaTick(world, pos, EnvType.CLIENT);
+        if (state.get(WitchesCauldronBlock.LIT)) {
+            WitchesCauldronBlockEntity.lavaTick(world, pos, true);
         }
     }
 
@@ -187,9 +147,8 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
         this.tank.readStorage(nbt.getCompound("Tank"));
         this.ticksHeated = nbt.getInt("TicksHeated");
         this.color = nbt.getInt("Color");
-        this.brewing = nbt.getBoolean("Brewing");
+        this.powered = nbt.getBoolean("Powered");
     }
-
 
     @Override
     protected void writeNbt(NbtCompound nbt) {
@@ -197,7 +156,35 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
         nbt.put("Tank", tank.writeStorage());
         nbt.putInt("TicksHeated", this.ticksHeated);
         nbt.putInt("Color", this.color);
-        nbt.putBoolean("Brewing", this.brewing);
+        nbt.putBoolean("Powered", this.powered);
+    }
+
+    @Override
+    public int fill(FluidStack stack, Direction side) {
+        return this.tank.fill(stack, side);
+    }
+
+    @Override
+    public boolean canFill(FluidStack stack, Direction side) {
+        return (stack.getFluid() == Fluids.WATER || stack.getFluid() == Fluids.LAVA) && this.tank.canFill(stack);
+    }
+
+    @NotNull
+    @Override
+    public FluidStack getFluidStack() {
+        return this.tank.getStack();
+    }
+
+    @NotNull
+    @Override
+    public FluidStack drain(FluidStack stack, Direction side) {
+        return this.tank.drain(stack, side);
+    }
+
+    @NotNull
+    @Override
+    public FluidStack drain(int maxAmount, Direction side) {
+        return this.tank.drain(maxAmount, side);
     }
 
     @Nullable
@@ -213,64 +200,14 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
         return data;
     }
 
-    @Override
-    public int fill(FluidStack stack, Direction side) {
-        int fillAmount;
-        FluidStack filledStack;
-        if (this.tank.isEmpty()) {
-            // returns the filled amount of fluid
-            fillAmount = this.tank.fill(stack, side);
-            filledStack = this.tank.getStack();
-            if (!filledStack.isEmpty()) {
-                filledStack.setNbt(stack.getNbt() == null ? new NbtCompound() : stack.getNbt().copy());
-                this.markDirty(false);
-            }
-            return fillAmount;
-            // Otherwise, if both are valid stacks
-            // let's fill the remaining space
-        } else if (stack.isEqualIgnoreNbt(this.tank.getStack())) {
-            fillAmount = this.tank.fill(stack, side); // fills remaining space of the tank
-            filledStack = this.tank.getStack();
-            if (!filledStack.isEmpty()) {
-                this.markDirty(false);
-            }
-            return fillAmount;
-        } else {
-            return 0;
+    private void boilWater(int time) {
+        switch (time) {
+            case 0 -> this.color = DEFAULT_WATER_COLOR;
+            case 1 -> this.color = 0x3567cc;
+            case 2 -> this.color = 0x3363c4;
+            case 3 -> this.color = 0x305db8;
+            case 5 -> this.color = 0x2450a6;
         }
-    }
-
-    @Override
-    public boolean canFill(FluidStack stack, Direction side) {
-        return true;
-    }
-
-    @NotNull
-    @Override
-    public FluidStack getStackForTank(int tank) {
-        return this.tank.getStack();
-    }
-
-    @NotNull
-    @Override
-    public FluidStack drain(FluidStack stack, Direction side) {
-        var drain = this.tank.drain(stack, side);
-        if (this.tank.getFluidAmount() == 0) {
-            //TODO: invChange
-        }
-        this.markDirty();
-        return drain;
-    }
-
-    @NotNull
-    @Override
-    public FluidStack drain(int maxAmount, Direction side) {
-        var drain = this.tank.drain(maxAmount, side);
-        if (this.tank.getFluidAmount() == 0) {
-            //TODO: invChange
-        }
-        this.markDirty();
-        return drain;
     }
 
     public boolean isHeating() {
@@ -283,14 +220,6 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
 
     public boolean hasFluid() {
         return !this.tank.isEmpty();
-    }
-
-    public boolean hasLava() {
-        return this.hasFluid() && this.tank.getStack().hasFluid(Fluids.LAVA);
-    }
-
-    public boolean hasWater() {
-        return this.hasFluid() && this.tank.getStack().hasFluid(Fluids.WATER);
     }
 
     @Environment(EnvType.CLIENT)
@@ -309,7 +238,7 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
     }
 
     @Environment(EnvType.CLIENT)
-    public boolean isBrewing() {
-        return brewing;
+    public boolean isPowered() {
+        return powered;
     }
 }

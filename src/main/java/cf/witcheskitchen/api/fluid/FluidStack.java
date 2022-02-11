@@ -266,10 +266,9 @@ public final class FluidStack implements Comparable<FluidStack> {
 
     @Override
     public int compareTo(@NotNull FluidStack other) {
-        if (this.isEqualIgnoreNbt(other)) {
-            return Integer.compare(amount, other.amount);
-        } else {
+        if (!this.isEqualIgnoreNbt(other)) {
             return -1;
         }
+        return Integer.compare(this.amount, other.amount);
     }
 }

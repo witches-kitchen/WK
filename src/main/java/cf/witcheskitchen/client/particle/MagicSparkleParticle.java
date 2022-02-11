@@ -1,59 +1,90 @@
 package cf.witcheskitchen.client.particle;
 
+import cf.witcheskitchen.api.event.network.MagicSparkleParticleEvent;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.particle.*;
-import net.minecraft.client.util.math.Vector3d;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particle.DefaultParticleType;
-import net.minecraft.util.math.Vec3i;
 
 import java.util.Random;
 
 @Environment(EnvType.CLIENT)
 public class MagicSparkleParticle extends SpriteBillboardParticle {
 
+    private boolean canMove = false;
+    private boolean circling = false;
+
+    private final Random random;
+
     protected MagicSparkleParticle(ClientWorld clientWorld, double d, double e, double f, double r, double g, double b) {
         super(clientWorld, d, e, f);
-        this.gravityStrength = 0.25F;
-        final Random random = clientWorld.getRandom();
-        this.setMaxAge(25 + clientWorld.random.nextInt(10));
-        this.setVelocity(clientWorld.random.nextDouble() * 0.08D - 0.04D, clientWorld.random.nextDouble() * 0.05D + 0.08D, clientWorld.random.nextDouble() * 0.08D - 0.04D);
-        float maxColorShift = 0.2F;
-        float doubleColorShift = maxColorShift * 2.0F;
-        float shiftR = random.nextFloat() * doubleColorShift - maxColorShift;
-        float shitG = random.nextFloat() * doubleColorShift - maxColorShift;
-        float shitB = random.nextFloat() * doubleColorShift - maxColorShift;
-        this.setColor(shiftR, shitG, shitB);
-        this.setAlpha(0.2f);
+        this.setScale(0.12f);
+        this.setColor((float) r, (float) g, (float) b);
+        this.random = clientWorld.getRandom();
+        this.maxAge = 25 + (random.nextInt(10));
+        MagicSparkleParticleEvent.PARTICLE_CONSTRUCTOR_EVENT.invoker().onConstructor(this);
+    }
 
+    public float getRed() {
+        return this.red;
+    }
+    public float getGreen() {
+        return this.green;
+    }
+    public float getBlue() {
+        return this.blue;
+    }
+    public float getAlpha() {
+        return this.alpha;
     }
     @Override
     public void tick() {
         this.prevPosX = this.x;
         this.prevPosY = this.y;
         this.prevPosZ = this.z;
-        if(this.age ++ < Math.min(super.maxAge, 600) && super.age >= 0) {
-            if((double)super.age > (double)super.maxAge * 0.9D) {
-
-            }
-        } else {
+        if (this.age++ >= this.maxAge) {
             this.markDead();
         }
         if (!this.dead) {
-            Vector3d f = new Vector3d(this.x, this.y, this.z);
-            f.multiply(0.5f);
-            super.velocityX *= 1.08D;
-            super.velocityY *= 0.85D;
-            super.velocityZ *= 1.08D;
-          //  super.velocityY -= 0.04D * (double)super.gravityStrength;
+            super.velocityY -= 0.04D * (double)super.gravityStrength;
+        }
+        if (this.onGround) {
+            this.velocityX *= 0.7F;
+            this.velocityZ *= 0.7F;
         }
         this.move(super.velocityX, super.velocityY, super.velocityZ);
 
     }
+
+    public MagicSparkleParticle setGravity(float gravity) {
+        super.gravityStrength = gravity;
+        return this;
+    }
+
+
+    public MagicSparkleParticle setCanMove(boolean canMove) {
+        this.canMove = canMove;
+        return this;
+    }
+
+    public MagicSparkleParticle setScale(float scale) {
+        super.scale = scale;
+        return this;
+    }
+
+    public MagicSparkleParticle setCircling(boolean circling) {
+        this.circling = circling;
+        return this;
+    }
+
     @Override
     public ParticleTextureSheet getType() {
         return ParticleTextureSheet.PARTICLE_SHEET_OPAQUE;
+    }
+
+    public Random getRandom() {
+        return random;
     }
 
     @Environment(EnvType.CLIENT)
@@ -64,4 +95,5 @@ public class MagicSparkleParticle extends SpriteBillboardParticle {
             return particle;
         }
     }
+
 }

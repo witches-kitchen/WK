@@ -48,7 +48,7 @@ public interface IStorageHandler {
     boolean canFill(FluidStack stack, Direction side);
 
     /**
-     * Returns the FluidStack in a given tank.
+     * Returns the FluidStack from the Tank.
      *
      * <p>
      * <strong>IMPORTANT:</strong> This FluidStack <em>MUST NOT</em> be modified. This method is not for
@@ -56,11 +56,10 @@ public interface IStorageHandler {
      * should throw an exception. It is ENTIRELY reasonable and likely that the stack returned here will be a copy.
      * </p>
      *
-     * @param tank Tank to query or zero if you only have 1 tank
-     * @return FluidStack in a given tank. FluidStack.EMPTY if the tank is empty.
+     * @return The FluidStack from the Tank.
      */
     @Nonnull
-    FluidStack getStackForTank(int tank);
+    FluidStack getFluidStack();
 
     /**
      * Drains the Storage (which ends up modifying the internal {@link FluidStack}) of this tank,

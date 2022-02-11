@@ -1,9 +1,10 @@
 package cf.witcheskitchen.common.blocks.technical;
 
 import cf.witcheskitchen.api.WKBlockEntityProvider;
-import cf.witcheskitchen.api.fluid.FluidStack;
+import cf.witcheskitchen.api.fluid.IFluidContainer;
 import cf.witcheskitchen.api.fluid.WKFluidAPI;
 import cf.witcheskitchen.common.blocks.entity.WitchesCauldronBlockEntity;
+import cf.witcheskitchen.common.registry.WKParticleTypes;
 import cf.witcheskitchen.common.registry.WKSoundEvents;
 import cf.witcheskitchen.common.util.ItemUtil;
 import cf.witcheskitchen.common.util.TimeHelper;
@@ -14,14 +15,14 @@ import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.particle.ParticleEffect;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
@@ -41,13 +42,15 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Dictionary;
+import java.util.Hashtable;
 import java.util.Random;
 
 @SuppressWarnings("deprecation")
 public class WitchesCauldronBlock extends WKBlockEntityProvider implements Waterloggable {
 
     public static final BooleanProperty HANGING = BooleanProperty.of("hanging");
-    public static final BooleanProperty LAVA = BooleanProperty.of("lava"); // Used for lighting when lava
+    public static final BooleanProperty LIT = Properties.LIT;
     public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
     public static final VoxelShape SHAPE = VoxelShapes.union(
             createCuboidShape(2, 9, 1, 14, 11, 2),
@@ -67,7 +70,7 @@ public class WitchesCauldronBlock extends WKBlockEntityProvider implements Water
 
     public WitchesCauldronBlock(Settings settings) {
         super(settings);
-        this.setDefaultState(this.getStateManager().getDefaultState().with(FACING, Direction.NORTH).with(Properties.WATERLOGGED, false).with(HANGING, false).with(LAVA, false));
+        this.setDefaultState(this.getStateManager().getDefaultState().with(FACING, Direction.NORTH).with(Properties.WATERLOGGED, false).with(HANGING, false).with(LIT, false));
     }
 
     @Nullable
@@ -98,64 +101,77 @@ public class WitchesCauldronBlock extends WKBlockEntityProvider implements Water
     }
 
 
+    // Cauldron fill/drain fluid logic
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-
-        final BlockEntity entity = world.getBlockEntity(pos);
-        final ItemStack heldStack = player.getStackInHand(hand);
-        final Direction side = hit.getSide();
-        if (entity instanceof WitchesCauldronBlockEntity cauldron && !heldStack.isEmpty()) {
-            /*
-             * Fill cauldron tank
-             */
-            final FluidStack fluidStackToFill = WKFluidAPI.getFluidStackFor(heldStack);
-            if (!fluidStackToFill.isEmpty()) {
-                if (cauldron.canFill(fluidStackToFill, side)) {
-                    int filled = cauldron.fill(fluidStackToFill, side);
-                    if (filled > 0) {
-                        if (!player.isCreative()) {
-                            player.getInventory().setStack(player.getInventory().selectedSlot, ItemUtil.consumeStack(heldStack));
-                        }
-                        world.playSound(player, pos, SoundEvents.ENTITY_PLAYER_SWIM, SoundCategory.BLOCKS, 0.5F, 0.4F / ((float) world.random.nextDouble() * 0.4F + 0.8F));
-                        cauldron.markDirty(true);
-                    }  else {
-                        return ActionResult.FAIL;
-                    }
-
-                }
-                return ActionResult.SUCCESS;
+        final var blockEntity = world.getBlockEntity(pos);
+        final var heldStack = player.getStackInHand(hand);
+        final var side = hit.getSide();
+        if (blockEntity instanceof final WitchesCauldronBlockEntity cauldron) {
+            if (!(heldStack.getItem() instanceof IFluidContainer)) {
+                // This is not even a fluid container
+                // Fast return
+                return ActionResult.FAIL;
             }
-            /*
-             * Drain cauldron tank
-             */
-            final FluidStack fluidInCauldron = cauldron.getStackForTank(0);
-            if (!fluidInCauldron.isEmpty()) {
-                final ItemStack matchingStack = WKFluidAPI.getMatchingFilledStack(fluidInCauldron.getFluid(), heldStack);
-                final FluidStack heldFluidContainer = WKFluidAPI.getFluidStackFor(matchingStack);
-                int i = fluidInCauldron.compareTo(heldFluidContainer);
-                if (i < 0) {
-                    return ActionResult.FAIL;
-                } else {
-                    if (!heldFluidContainer.isEmpty()) {
-                        if (!player.isCreative()) {
-                            if (heldStack.getCount() > 1) {
-                                if (!player.getInventory().insertStack(matchingStack)) {
-                                    return ActionResult.FAIL;
-                                }
-                                player.getInventory().setStack(player.getInventory().selectedSlot, ItemUtil.consumeStack(heldStack));
-                            } else {
-                                player.getInventory().setStack(player.getInventory().selectedSlot, matchingStack);
-                            }
+            if (!heldStack.isEmpty()) {
+                // FluidStack in hand
+                final var heldFluid = WKFluidAPI.getStackFor(heldStack);
+                if (!heldFluid.isEmpty() && cauldron.canFill(heldFluid, side)) {
+                    final int i = cauldron.fill(heldFluid, side); // filled amount of fluid
+                    if (i > 0) {
+                        ItemUtil.consumeItem(player, hand);
+                        final SoundEvent event;
+                        if (heldFluid.hasFluid(Fluids.LAVA)) {
+                            event = SoundEvents.ITEM_BUCKET_EMPTY_LAVA;
+                            world.setBlockState(pos, state.with(LIT, true), Block.NOTIFY_ALL);
+                        } else {
+                            event = SoundEvents.ENTITY_PLAYER_SWIM;
+                            world.setBlockState(pos, state.with(LIT, false), Block.NOTIFY_ALL);
                         }
-                        cauldron.drain(heldFluidContainer.getAmount(), side);
-                        world.playSound(player, pos, SoundEvents.ENTITY_PLAYER_SWIM, SoundCategory.BLOCKS, 0.5F, 0.4F / ((float) world.random.nextDouble() * 0.4F + 0.8F));
-                        world.markDirty(pos);
+                        playSoundToPlayer(world, pos, player, event);
+                        // Syncs the client
                         cauldron.markDirty(true);
                         return ActionResult.SUCCESS;
+                    } else {
+                        return ActionResult.FAIL;
+                    }
+                } else {
+                    // Otherwise, the fluid container is empty
+                    // Let's try to fill it.
+                    final var stackInCauldron = cauldron.getFluidStack();
+                    if (!stackInCauldron.isEmpty()) {
+                        final var matchingStack = WKFluidAPI.getMatchingStackFor(stackInCauldron.getFluid(), heldStack);
+                        if (matchingStack.isEmpty()) {
+                            // Matching stack is air
+                            // Which means it cannot hold the fluid from the cauldron
+                            // This failed.
+                            return ActionResult.FAIL;
+                        }
+                        final var fluid = WKFluidAPI.getStackFor(matchingStack);
+                        if (stackInCauldron.getAmount() < fluid.getAmount()) {
+                            // The amount of fluid in cauldron can't satisfy the capacity of the container
+                            // (And we cannot return a fraction of water bucket fluid (3/4) or (1/2))
+                            // Therefore this failed
+                            return ActionResult.FAIL;
+                        }
+                        final var drainedStack = cauldron.drain(fluid.getAmount(), side);
+                        if (drainedStack.getAmount() != stackInCauldron.getAmount()) {
+                            ItemUtil.replaceItem(player, hand, matchingStack);
+                            final SoundEvent event;
+                            if (drainedStack.hasFluid(Fluids.LAVA)) {
+                                event = SoundEvents.ITEM_BUCKET_FILL_LAVA;
+                                world.setBlockState(pos, state.with(LIT, false), Block.NOTIFY_ALL);
+                            } else {
+                                event = SoundEvents.ENTITY_PLAYER_SWIM;
+                                world.setBlockState(pos, state.with(LIT, false), Block.NOTIFY_ALL);
+                            }
+                            playSoundToPlayer(world, pos, player, event);
+                            // Syncs the client
+                            cauldron.markDirty(true);
+                            return ActionResult.SUCCESS;
+                        }
                     }
                 }
-                world.updateListeners(pos, world.getBlockState(pos), world.getBlockState(pos), 2);
-                cauldron.markDirty();
             }
         }
         return super.onUse(state, world, pos, player, hand, hit);
@@ -173,7 +189,7 @@ public class WitchesCauldronBlock extends WKBlockEntityProvider implements Water
                         cauldron.checkAndCollectIngredient(world, itemEntity);
                     }
                 } else if (entity instanceof LivingEntity living) {
-                    if (cauldron.hasLava()) {
+                    if (state.get(LIT)) {
                         living.damage(DamageSource.LAVA, 4);
                         living.setFireTicks(TimeHelper.toTicks(15));
                     }
@@ -185,32 +201,34 @@ public class WitchesCauldronBlock extends WKBlockEntityProvider implements Water
 
     @Override
     public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
-        if (random.nextInt(5) == 0) {
-            final BlockEntity entity = world.getBlockEntity(pos);
-            if (entity instanceof WitchesCauldronBlockEntity cauldron) {
-                if (cauldron.isHeating()) {
+        final BlockEntity entity = world.getBlockEntity(pos);
+        if (entity instanceof WitchesCauldronBlockEntity cauldron) {
+            if (cauldron.isPowered()) {
+                if (random.nextInt(5) == 0) {
                     final float volume = 0.8F + (random.nextFloat() * 0.2F);
                     final float pitch = 0.8F + (random.nextFloat() * 0.2F);
                     world.playSound(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, WKSoundEvents.BUBBLE, SoundCategory.BLOCKS, volume, pitch, false);
+                }
+                final int color = cauldron.getColor();
+                final double xPos = cauldron.getPos().getX();
+                final double yPos = cauldron.getPos().getY();
+                final double zPos = cauldron.getPos().getZ();
+                final float depth = (float) (((cauldron.getPercentFilled() - 1) * (0.4D)) + (0.6D));
+                final double r = ((color >> 16) & 0xff) / 255F;
+                final double g = ((color >> 8) & 0xff) / 255F;
+                final double b = (color & 0xff) / 255F;
+                final double left = (random.nextDouble() * 0.4D) + 0.3D;
+                final double front = (random.nextDouble() * 0.4D) + 0.3D;
+                final double particleX = xPos + left;
+                final double particleY = yPos + depth;
+                final double particleZ = zPos + front;
+                for (int i = 0; i < 4; i++) {
+                    world.addParticle((ParticleEffect) WKParticleTypes.MAGIC_SPARKLE, particleX, particleY, particleZ, r, g, b);
                 }
             }
         }
     }
 
-    @Override
-    public boolean tryFillWithFluid(WorldAccess world, BlockPos pos, BlockState state, FluidState fluidState) {
-        return false;
-    }
-
-    @Override
-    public ItemStack tryDrainFluid(WorldAccess world, BlockPos pos, BlockState state) {
-        return Waterloggable.super.tryDrainFluid(world, pos, state);
-    }
-
-    @Override
-    public boolean canFillWithFluid(BlockView world, BlockPos pos, BlockState state, Fluid fluid) {
-        return false;
-    }
 
     @Nullable
     @Override
@@ -221,7 +239,7 @@ public class WitchesCauldronBlock extends WKBlockEntityProvider implements Water
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         super.appendProperties(builder);
-        builder.add(FACING, LAVA, HANGING, Properties.WATERLOGGED);
+        builder.add(FACING, LIT, HANGING, Properties.WATERLOGGED);
     }
 
     @Override
@@ -234,4 +252,7 @@ public class WitchesCauldronBlock extends WKBlockEntityProvider implements Water
         return state.rotate(mirror.getRotation(state.get(FACING)));
     }
 
+    static void playSoundToPlayer(World world, BlockPos pos, PlayerEntity player, SoundEvent event) {
+        world.playSound(player, pos, event, SoundCategory.BLOCKS, 0.5F, 0.4F / ((float) world.random.nextDouble() * 0.4F + 0.8F));
+    }
 }

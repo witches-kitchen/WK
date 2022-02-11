@@ -48,7 +48,7 @@ public class WK implements ModInitializer {
         // Proceed with mild caution.
         AutoConfig.register(WKConfig.class, GsonConfigSerializer::new);
         config = AutoConfig.getConfigHolder(WKConfig.class).getConfig();
-        WKPacketTypes.register(EnvType.SERVER);
+
         logger.info("Remember when I told you how my");
         logger.info("Kin is different in some ways?");
 
@@ -59,14 +59,14 @@ public class WK implements ModInitializer {
 
         logger.info("I hear her in the wind, the bane of our town");
         logger.info("Come with me, father, I'm to expose a heathen");
-
+        WKPacketTypes.register(EnvType.SERVER);
         WKBlocks.register();
         WKItems.register();
         WKBlockEntityTypes.register();
         WKRecipeTypes.register();
         WKParticleTypes.init();
         WKGenerator.register();
-        WKEventsRegistry.register();
+        WKEventsRegistry.register(EnvType.SERVER);
         WKStatusEffects.register();
         WKSoundEvents.register();
         GeckoLib.initialize();
