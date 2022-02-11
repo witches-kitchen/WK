@@ -204,7 +204,6 @@ public class WitchesCauldronBlock extends WKBlockEntityProvider implements Water
         final BlockEntity entity = world.getBlockEntity(pos);
         if (entity instanceof WitchesCauldronBlockEntity cauldron) {
             if (cauldron.isPowered()) {
-                System.out.println("powered");
                 if (random.nextInt(5) == 0) {
                     final float volume = 0.8F + (random.nextFloat() * 0.2F);
                     final float pitch = 0.8F + (random.nextFloat() * 0.2F);
