@@ -26,19 +26,6 @@ public class MagicSparkleParticle extends SpriteBillboardParticle {
         MagicSparkleParticleEvent.PARTICLE_CONSTRUCTOR_EVENT.invoker().onConstructor(this);
     }
 
-    public float getRed() {
-        return this.red;
-    }
-    public float getGreen() {
-        return this.green;
-    }
-    public float getBlue() {
-        return this.blue;
-    }
-    public float getAlpha() {
-        return this.alpha;
-    }
-
     @Override
     public void tick() {
         this.prevPosX = this.x;
@@ -89,6 +76,21 @@ public class MagicSparkleParticle extends SpriteBillboardParticle {
 
     public Random getRandom() {
         return random;
+    }
+
+    public float getRed() {
+        return this.red;
+    }
+
+    public float getGreen() {
+        return this.green;
+    }
+
+    public float getBlue() {
+        return this.blue;
+    }
+    public float getAlpha() {
+        return this.alpha;
     }
 
     @Environment(EnvType.CLIENT)

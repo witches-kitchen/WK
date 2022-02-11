@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
+    "minecraft:sugar",
+    "minecraft:bone",
+    "witcheskitchen:salt",
     "witcheskitchen:belladonna_blossom",
     "witcheskitchen:amaranth_sprig",
     "witcheskitchen:wormwood_sprig"

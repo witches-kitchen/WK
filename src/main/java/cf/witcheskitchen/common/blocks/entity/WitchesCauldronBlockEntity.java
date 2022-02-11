@@ -88,7 +88,7 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
                     final float red = ColorHelper.Argb.getRed(this.color) / 255F;
                     final float green = ColorHelper.Argb.getGreen(this.color) / 255f;
                     final float blue = ColorHelper.Argb.getBlue(this.color) / 255F;
-                    PacketHelper.sendToAllTracking(entity, serverPlayer -> SplashParticlePacketHandler.send(serverPlayer, this.getPos(), red, green, blue, 0.5D, 1.0D, 0.5D, (byte) 1));
+                    PacketHelper.sendToAllTracking(entity, serverPlayer -> SplashParticlePacketHandler.send(serverPlayer, this.getPos(), red, green, blue, 0.5D, 1.0D, 0.5D, (byte) 6));
                     this.markDirty(true);
                     world.playSound(null, pos, SoundEvents.ENTITY_PLAYER_SPLASH, SoundCategory.BLOCKS, 0.2F, 1.0f);
                     entity.kill();
