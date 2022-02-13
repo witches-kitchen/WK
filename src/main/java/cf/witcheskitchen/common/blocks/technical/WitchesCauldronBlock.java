@@ -42,8 +42,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Dictionary;
-import java.util.Hashtable;
 import java.util.Random;
 
 @SuppressWarnings("deprecation")
@@ -73,6 +71,10 @@ public class WitchesCauldronBlock extends WKBlockEntityProvider implements Water
         this.setDefaultState(this.getStateManager().getDefaultState().with(FACING, Direction.NORTH).with(Properties.WATERLOGGED, false).with(HANGING, false).with(LIT, false));
     }
 
+    static void playSoundToPlayer(World world, BlockPos pos, PlayerEntity player, SoundEvent event) {
+        world.playSound(player, pos, event, SoundCategory.BLOCKS, 0.5F, 0.4F / ((float) world.random.nextDouble() * 0.4F + 0.8F));
+    }
+
     @Nullable
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
@@ -99,7 +101,6 @@ public class WitchesCauldronBlock extends WKBlockEntityProvider implements Water
         world.setBlockState(pos, state.with(HANGING, !world.getBlockState(pos.up()).isAir()), Block.NOTIFY_ALL);
         return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
     }
-
 
     // Cauldron fill/drain fluid logic
     @Override
@@ -229,7 +230,6 @@ public class WitchesCauldronBlock extends WKBlockEntityProvider implements Water
         }
     }
 
-
     @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
@@ -250,9 +250,5 @@ public class WitchesCauldronBlock extends WKBlockEntityProvider implements Water
     @Override
     public BlockState mirror(BlockState state, BlockMirror mirror) {
         return state.rotate(mirror.getRotation(state.get(FACING)));
-    }
-
-    static void playSoundToPlayer(World world, BlockPos pos, PlayerEntity player, SoundEvent event) {
-        world.playSound(player, pos, event, SoundCategory.BLOCKS, 0.5F, 0.4F / ((float) world.random.nextDouble() * 0.4F + 0.8F));
     }
 }

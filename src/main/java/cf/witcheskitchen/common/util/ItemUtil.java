@@ -13,19 +13,21 @@ public final class ItemUtil {
     private ItemUtil() {
         // Utility class not meant to be instantiated
     }
+
     /**
      * <p>
      * <b>Consumes</b> the Item at the given hand of the player
      * with the {@link Item#getRecipeRemainder()} or air if it doesn't exist.
      * </p>
+     *
      * @param player PlayerEntity
-     * @param hand Hand
+     * @param hand   Hand
      */
     public static void consumeItem(PlayerEntity player, Hand hand) {
         final var stack = player.getStackInHand(hand);
         final var item = stack.getItem();
         final var hasRemainder = item.hasRecipeRemainder();
-        var remainder =  hasRemainder ? new ItemStack(item.getRecipeRemainder()) : ItemStack.EMPTY;
+        var remainder = hasRemainder ? new ItemStack(item.getRecipeRemainder()) : ItemStack.EMPTY;
         if (item instanceof PotionItem && !hasRemainder) {
             remainder = new ItemStack(Items.GLASS_BOTTLE);
         }
@@ -39,8 +41,9 @@ public final class ItemUtil {
      * </p>
      * If the player inventory is full, the stack is going to be dropped
      * into the {@link net.minecraft.world.World}
-     * @param player PlayerEntity
-     * @param hand Hand
+     *
+     * @param player   PlayerEntity
+     * @param hand     Hand
      * @param toInsert ItemStack to insert
      */
     public static void replaceItem(PlayerEntity player, Hand hand, ItemStack toInsert) {
@@ -74,8 +77,9 @@ public final class ItemUtil {
     /**
      * Checks that stackA and stackB are equal
      * For example to merge items on shift-click
-     * @param stackA ItemStack
-     * @param stackB ItemStack
+     *
+     * @param stackA   ItemStack
+     * @param stackB   ItemStack
      * @param matchNBT boolean flag for whether you want to check the items are completely equal and not just partially .
      * @return Whether the given stacks are equal or not.
      */

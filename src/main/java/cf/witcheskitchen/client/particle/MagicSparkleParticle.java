@@ -12,10 +12,9 @@ import java.util.Random;
 @Environment(EnvType.CLIENT)
 public class MagicSparkleParticle extends SpriteBillboardParticle {
 
+    private final Random random;
     private boolean canMove = false;
     private boolean circling = false;
-
-    private final Random random;
 
     protected MagicSparkleParticle(ClientWorld clientWorld, double d, double e, double f, double r, double g, double b) {
         super(clientWorld, d, e, f);
@@ -36,7 +35,7 @@ public class MagicSparkleParticle extends SpriteBillboardParticle {
             this.markDead();
         }
         if (!this.dead) {
-            super.velocityY -= 0.04D * (double)super.gravityStrength;
+            super.velocityY -= 0.04D * (double) super.gravityStrength;
         }
         if (this.onGround) {
             this.velocityX *= 0.7F;
@@ -89,6 +88,7 @@ public class MagicSparkleParticle extends SpriteBillboardParticle {
     public float getBlue() {
         return this.blue;
     }
+
     public float getAlpha() {
         return this.alpha;
     }

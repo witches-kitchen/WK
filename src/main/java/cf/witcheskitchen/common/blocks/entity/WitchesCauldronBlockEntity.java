@@ -8,7 +8,6 @@ import cf.witcheskitchen.client.network.packet.ParticlePacketHandler;
 import cf.witcheskitchen.client.network.packet.SplashParticlePacketHandler;
 import cf.witcheskitchen.common.blocks.technical.WitchesCauldronBlock;
 import cf.witcheskitchen.common.registry.WKBlockEntityTypes;
-import cf.witcheskitchen.common.registry.WKRecipeTypes;
 import cf.witcheskitchen.common.registry.WKTags;
 import cf.witcheskitchen.common.util.PacketHelper;
 import cf.witcheskitchen.common.util.TimeHelper;
@@ -17,7 +16,6 @@ import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.Packet;
@@ -124,7 +122,7 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
                     }
                 }
             }
-        } else if(this.ticksHeated > 0) {
+        } else if (this.ticksHeated > 0) {
             this.color = DEFAULT_WATER_COLOR;
             this.ticksHeated = 0;
             sync = true;

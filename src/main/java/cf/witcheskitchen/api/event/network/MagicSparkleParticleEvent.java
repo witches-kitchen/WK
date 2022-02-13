@@ -6,15 +6,15 @@ import net.fabricmc.fabric.api.event.EventFactory;
 
 public class MagicSparkleParticleEvent {
 
-   public static final Event<ParticleConstructorCallback> PARTICLE_CONSTRUCTOR_EVENT = EventFactory.createArrayBacked(ParticleConstructorCallback.class, (listeners) -> (particle) -> {
-              for (var callback : listeners) {
-                  callback.onConstructor(particle);
-              }
-           }
-   );
+    public static final Event<ParticleConstructorCallback> PARTICLE_CONSTRUCTOR_EVENT = EventFactory.createArrayBacked(ParticleConstructorCallback.class, (listeners) -> (particle) -> {
+                for (var callback : listeners) {
+                    callback.onConstructor(particle);
+                }
+            }
+    );
 
-   @FunctionalInterface
-   public interface ParticleConstructorCallback {
-      void onConstructor(MagicSparkleParticle particle);
-   }
+    @FunctionalInterface
+    public interface ParticleConstructorCallback {
+        void onConstructor(MagicSparkleParticle particle);
+    }
 }

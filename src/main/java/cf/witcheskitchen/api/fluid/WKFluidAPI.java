@@ -18,6 +18,7 @@ public class WKFluidAPI {
     /**
      * Finds the amount of fluid in Mb (MilliBuckets) of an {@link IFluidContainer}
      * or zero if it couldn't find it.
+     *
      * @param container ItemStack
      * @return the amount of fluid
      */
@@ -39,7 +40,8 @@ public class WKFluidAPI {
      * matching {@link ItemStack} depending on the fluid.
      * </p>
      * (For example, a bucket can be filled with water or lava).
-     * @param fluid Fluid
+     *
+     * @param fluid          Fluid
      * @param fluidContainer ItemStack
      * @return ItemStack the matching stack
      */
@@ -53,6 +55,7 @@ public class WKFluidAPI {
     /**
      * Creates a new {@link FluidStack} according to the {@link IFluidContainer}
      * implementation, or {@link FluidStack#EMPTY} if it is <b>NOT</b> an {@link IFluidContainer}.
+     *
      * @param container ItemStack that can <i>possibly</i> be a fluid container.
      * @return {@link FluidStack}
      */
