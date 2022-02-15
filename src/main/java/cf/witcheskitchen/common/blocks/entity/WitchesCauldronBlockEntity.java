@@ -80,25 +80,48 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
             // You must throw the stack correctly
             if (entity.getBoundingBox().intersects(this.collectionBox)) {
                 final ItemStack ingredient = entity.getStack();
+                if (ingredient.isIn(WKTags.RESETS_CAULDRON)) {
+                    this.reset(false);
+                } else {
                 final int emptySlot = this.manager.findAnyEmptySlot();
-                if (emptySlot >= 0 && ingredient.isIn(WKTags.VALID_BREW_ITEM)) {
+                if (emptySlot >= 0) {
                     this.setStack(emptySlot, ingredient.split(1));
-                    final float red = ColorHelper.Argb.getRed(this.color) / 255F;
-                    final float green = ColorHelper.Argb.getGreen(this.color) / 255f;
-                    final float blue = ColorHelper.Argb.getBlue(this.color) / 255F;
-                    PacketHelper.sendToAllTracking(entity, serverPlayer -> SplashParticlePacketHandler.send(serverPlayer, this.getPos(), red, green, blue, 0.5D, 1.0D, 0.5D, (byte) 6));
-                    this.markDirty(true);
-                    world.playSound(null, pos, SoundEvents.ENTITY_PLAYER_SPLASH, SoundCategory.BLOCKS, 0.2F, 1.0f);
-                    entity.kill();
+                    if (!this.getStack(emptySlot).isEmpty()) {
+                        if (!this.getStack(emptySlot).isIn(WKTags.VALID_BREW_ITEM)) {
+                            this.color = DIRTY_WATER_COLOR;
+                            markDirty(true);
+                        }
+                    }
                 }
             }
+            sendPlashPacket(entity);
+            entity.kill();
         }
+    }
 
-        if (world.getBlockState(pos).get(WitchesCauldronBlock.LIT)) {
+    if (world.getBlockState(pos).get(WitchesCauldronBlock.LIT)) {
             this.manager.clear();
             PacketHelper.sendToAllTracking(entity, serverPlayer -> ParticlePacketHandler.send(serverPlayer, this.getPos(), Registry.PARTICLE_TYPE.getId(ParticleTypes.LAVA), Registry.SOUND_EVENT.getId(SoundEvents.BLOCK_LAVA_EXTINGUISH), (byte) 3));
             entity.kill();
         }
+    }
+    
+    private void sendPlashPacket(ItemEntity trackedEntity) {
+        final float red = ColorHelper.Argb.getRed(this.color) / 255F;
+        final float green = ColorHelper.Argb.getGreen(this.color) / 255f;
+        final float blue = ColorHelper.Argb.getBlue(this.color) / 255F;
+        PacketHelper.sendToAllTracking(trackedEntity, serverPlayer -> SplashParticlePacketHandler.send(serverPlayer, this.getPos(), red, green, blue, 0.5D, 1.0D, 0.5D, (byte) 6));
+        world.playSound(null, pos, SoundEvents.ENTITY_PLAYER_SPLASH, SoundCategory.BLOCKS, 0.2F, 1.0f);
+    }
+
+    private void reset(boolean fullReset) {
+        boilWater(5);
+        manager.clear();
+        powered = false;
+        if (fullReset) {
+            tank.drain(tank.getCapacity(), null);
+        }
+        markDirty(true);
     }
 
     @Override
