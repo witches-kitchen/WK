@@ -60,7 +60,7 @@ public final class InventoryHelper {
      * @param stacks DefaultedList
      * @return the count of the Set of Items.
      */
-    public static int amountNonEmptyOrDuplicated(final DefaultedList<ItemStack> stacks) {
+    public static int countInSet(final DefaultedList<ItemStack> stacks) {
         if (stacks.isEmpty()) {
             return 0;
         }

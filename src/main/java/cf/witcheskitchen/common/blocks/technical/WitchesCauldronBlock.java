@@ -109,6 +109,10 @@ public class WitchesCauldronBlock extends WKBlockEntityProvider implements Water
         final var heldStack = player.getStackInHand(hand);
         final var side = hit.getSide();
         if (blockEntity instanceof final WitchesCauldronBlockEntity cauldron) {
+            if (cauldron.isPowered() && heldStack.isOf(Items.STICK)) {
+                //TODO: brew item
+                return ActionResult.SUCCESS;
+            }
             if (!(heldStack.getItem() instanceof IFluidContainer)) {
                 // This is not even a fluid container
                 // Fast return
@@ -221,9 +225,9 @@ public class WitchesCauldronBlock extends WKBlockEntityProvider implements Water
                 final double left = (random.nextDouble() * 0.4D) + 0.3D;
                 final double front = (random.nextDouble() * 0.4D) + 0.3D;
                 final double particleX = xPos + left;
-                final double particleY = yPos + depth;
+                final double particleY = yPos + depth - 0.3D;
                 final double particleZ = zPos + front;
-                for (int i = 0; i < 4; i++) {
+                for (int i = 0; i < 2; i++) {
                     world.addParticle((ParticleEffect) WKParticleTypes.MAGIC_SPARKLE, particleX, particleY, particleZ, r, g, b);
                 }
             }

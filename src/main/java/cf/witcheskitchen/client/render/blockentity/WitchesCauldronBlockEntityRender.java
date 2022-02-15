@@ -69,11 +69,11 @@ public class WitchesCauldronBlockEntityRender implements BlockEntityRenderer<Wit
         @Override
         public void onConstructor(MagicSparkleParticle particle) {
             final var rand = particle.getRandom();
-            float maxColorShift = 0.2F;
-            float doubleColorShift = maxColorShift * 2.0F;
-            float redShift = rand.nextFloat() * doubleColorShift - maxColorShift;
-            float greenShift = rand.nextFloat() * doubleColorShift - maxColorShift;
-            float blueShift = rand.nextFloat() * doubleColorShift - maxColorShift;
+            final float shift = 0.1F;
+            final float doubleColorShift = shift;
+            final float redShift = rand.nextFloat() * doubleColorShift - shift;
+            final float greenShift = rand.nextFloat() * doubleColorShift - shift;
+            final float blueShift = rand.nextFloat() * doubleColorShift - shift;
             particle.setColor(particle.getRed() + redShift, particle.getGreen() + greenShift, particle.getBlue() + blueShift);
             particle.setGravity(0.25F);
             particle.setVelocity(rand.nextDouble() * 0.08D - 0.04D, rand.nextDouble() * 0.05D + 0.08D, rand.nextDouble() * 0.08D - 0.04D);

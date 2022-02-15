@@ -16,8 +16,8 @@ public class MagicSparkleParticle extends SpriteBillboardParticle {
     private boolean canMove = false;
     private boolean circling = false;
 
-    protected MagicSparkleParticle(ClientWorld clientWorld, double d, double e, double f, double r, double g, double b) {
-        super(clientWorld, d, e, f);
+    protected MagicSparkleParticle(ClientWorld clientWorld, double x, double y, double z, double r, double g, double b) {
+        super(clientWorld, x, y, z);
         this.setScale(0.12f);
         this.setColor((float) r, (float) g, (float) b);
         this.random = clientWorld.getRandom();
@@ -37,13 +37,11 @@ public class MagicSparkleParticle extends SpriteBillboardParticle {
         if (!this.dead) {
             super.velocityY -= 0.04D * (double) super.gravityStrength;
         }
+        this.move(super.velocityX, super.velocityY, super.velocityZ);
         if (this.onGround) {
             this.velocityX *= 0.7F;
             this.velocityZ *= 0.7F;
         }
-
-        this.move(super.velocityX, super.velocityY, super.velocityZ);
-
     }
 
     public MagicSparkleParticle setGravity(float gravity) {

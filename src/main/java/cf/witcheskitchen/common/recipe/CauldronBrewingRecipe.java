@@ -31,6 +31,11 @@ public class CauldronBrewingRecipe implements Recipe<Inventory> {
     }
 
     @Override
+    public boolean isIgnoredInRecipeBook() {
+        return true;
+    }
+
+    @Override
     public boolean matches(Inventory inventory, World world) {
         return RecipeUtil.matches(inventory, this.ingredients);
     }

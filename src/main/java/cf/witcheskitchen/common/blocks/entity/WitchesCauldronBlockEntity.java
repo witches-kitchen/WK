@@ -7,8 +7,10 @@ import cf.witcheskitchen.api.fluid.WKFluidAPI;
 import cf.witcheskitchen.client.network.packet.ParticlePacketHandler;
 import cf.witcheskitchen.client.network.packet.SplashParticlePacketHandler;
 import cf.witcheskitchen.common.blocks.technical.WitchesCauldronBlock;
+import cf.witcheskitchen.common.recipe.CauldronBrewingRecipe;
 import cf.witcheskitchen.common.registry.WKBlockEntityTypes;
 import cf.witcheskitchen.common.registry.WKTags;
+import cf.witcheskitchen.common.util.InventoryHelper;
 import cf.witcheskitchen.common.util.PacketHelper;
 import cf.witcheskitchen.common.util.TimeHelper;
 import net.fabricmc.api.EnvType;
@@ -48,6 +50,7 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
     private int color;
     private int ticksHeated;
     private boolean powered;
+    private CauldronBrewingRecipe recipe = null;
 
     public WitchesCauldronBlockEntity(BlockPos pos, BlockState state) {
         super(WKBlockEntityTypes.WITCHES_CAULDRON, pos, state, MAXIMUM_INGREDIENTS);
@@ -87,10 +90,7 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
                 if (emptySlot >= 0) {
                     this.setStack(emptySlot, ingredient.split(1));
                     if (!this.getStack(emptySlot).isEmpty()) {
-                        if (!this.getStack(emptySlot).isIn(WKTags.VALID_BREW_ITEM)) {
-                            this.color = DIRTY_WATER_COLOR;
-                            markDirty(true);
-                        }
+                       updateCauldron(this.getStack(emptySlot));
                     }
                 }
             }
@@ -104,24 +104,6 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
             PacketHelper.sendToAllTracking(entity, serverPlayer -> ParticlePacketHandler.send(serverPlayer, this.getPos(), Registry.PARTICLE_TYPE.getId(ParticleTypes.LAVA), Registry.SOUND_EVENT.getId(SoundEvents.BLOCK_LAVA_EXTINGUISH), (byte) 3));
             entity.kill();
         }
-    }
-    
-    private void sendPlashPacket(ItemEntity trackedEntity) {
-        final float red = ColorHelper.Argb.getRed(this.color) / 255F;
-        final float green = ColorHelper.Argb.getGreen(this.color) / 255f;
-        final float blue = ColorHelper.Argb.getBlue(this.color) / 255F;
-        PacketHelper.sendToAllTracking(trackedEntity, serverPlayer -> SplashParticlePacketHandler.send(serverPlayer, this.getPos(), red, green, blue, 0.5D, 1.0D, 0.5D, (byte) 6));
-        world.playSound(null, pos, SoundEvents.ENTITY_PLAYER_SPLASH, SoundCategory.BLOCKS, 0.2F, 1.0f);
-    }
-
-    private void reset(boolean fullReset) {
-        boilWater(5);
-        manager.clear();
-        powered = false;
-        if (fullReset) {
-            tank.drain(tank.getCapacity(), null);
-        }
-        markDirty(true);
     }
 
     @Override
@@ -144,6 +126,7 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
                         sync = true;
                     }
                 }
+                //TODO: find recipe
             }
         } else if (this.ticksHeated > 0) {
             this.color = DEFAULT_WATER_COLOR;
@@ -161,6 +144,43 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
         if (state.get(WitchesCauldronBlock.LIT)) {
             WitchesCauldronBlockEntity.lavaTick(world, pos, true);
         }
+    }
+        
+    private void sendPlashPacket(ItemEntity trackedEntity) {
+        final float red = ColorHelper.Argb.getRed(this.color) / 255F;
+        final float green = ColorHelper.Argb.getGreen(this.color) / 255f;
+        final float blue = ColorHelper.Argb.getBlue(this.color) / 255F;
+        PacketHelper.sendToAllTracking(trackedEntity, serverPlayer -> SplashParticlePacketHandler.send(serverPlayer, this.getPos(), red, green, blue, 0.5D, 1.0D, 0.5D, (byte) 6));
+        world.playSound(null, pos, SoundEvents.ENTITY_PLAYER_SPLASH, SoundCategory.BLOCKS, 0.2F, 1.0f);
+    }
+
+    private void reset(boolean fullReset) {
+        boilWater(5);
+        manager.clear();
+        powered = false;
+        if (fullReset) {
+            tank.drain(tank.getCapacity(), null);
+        }
+        markDirty(true);
+    }
+
+    private void updateCauldron(ItemStack stack) {
+        if (!stack.isIn(WKTags.VALID_BREW_ITEM)) {
+            this.color = DIRTY_WATER_COLOR;
+            markDirty(true);
+            return;
+        }
+
+        final int i = InventoryHelper.countInSet(manager.getStacks());
+        if (i >= MINIMUM_INGREDIENTS) {
+            powered = true;
+        }
+        switch (i) {
+            case 1 -> color = 0x6decf2;
+            case 2 -> color = 0x2495ff;
+            case 3 -> color = 0x8936ff;
+        }
+        markDirty(true);
     }
 
     @Override
