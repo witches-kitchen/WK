@@ -100,6 +100,11 @@ public class WKItems {
         registerItem("sanguinary_blossom", SANGUINARY_BLOSSOM);
         registerItem("saint_johns_wort_blossom", SAINT_JOHNS_WORT_BLOSSOM);
         registerItem("iris_blossom", IRIS_BLOSSOM);
+        registerItem("chamomile_blossom", CHAMOMILE_BLOSSOM);
+        registerItem("ginger_rhizome", GINGER_RHIZOME);
+        registerItem("tea_leaf", TEA_LEAF);
+        registerItem("hellebore_blossom", HELLEBORE_BLOSSOM);
+        registerItem("foxglove_blossom", FOXGLOVE_BLOSSOM);
 
         CompostingChanceRegistry validItemCompost = CompostingChanceRegistry.INSTANCE;
         validItemCompost.add(AMARANTH_SPRIG, 0.65f);
