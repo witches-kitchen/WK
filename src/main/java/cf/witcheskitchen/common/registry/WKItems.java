@@ -33,7 +33,8 @@ public class WKItems {
     public static final Item GINGER_RHIZOME = new Item(new FabricItemSettings().group(WK.WK_SEED_GROUP));
     public static final Item TEA_LEAF = new Item(new FabricItemSettings().food(WKFoodComponents.TEA_LEAF).group(WK.WK_SEED_GROUP));
     public static final Item HELLEBORE_BLOSSOM = new Item(new FabricItemSettings().group(WK.WK_SEED_GROUP));
-    
+    public static final Item FOXGLOVE_BLOSSOM = new Item(new FabricItemSettings().group(WK.WK_SEED_GROUP));
+
     public static final Item AMARANTH_SEEDS = new WKSeedItem(WKBlocks.AMARANTH, new FabricItemSettings().group(WK.WK_SEED_GROUP));
     public static final Item AMARANTH_SWEETBERRY_SEEDS = new WKSeedItem(WKBlocks.AMARANTH_SWEETBERRY, new FabricItemSettings().group(WK.WK_SEED_GROUP));
     public static final Item AMARANTH_TORCH_SEEDS = new WKSeedItem(WKBlocks.AMARANTH_TORCH, new FabricItemSettings().group(WK.WK_SEED_GROUP));
@@ -87,6 +88,18 @@ public class WKItems {
         registerItem("cu_sith_spawn_egg", CU_SITH_SPAWN_EGG);
         registerItem("ferret_spawn_egg", FERRET_SPAWN_EGG);
         registerItem("wormwood_sprig", WORMWOOD_SPRIG);
+        registerItem("rowan_berries", ROWAN_BERRIES);
+        registerItem("sloe_berries", SLOE_BERRIES);
+        registerItem("juniper_berries", JUNIPER_BERRIES);
+        registerItem("blackberry", BLACKBERRY);
+        registerItem("hawthorn_berries", HAWTHORN_BERRIES);
+        registerItem("sumac_berries", SUMAC_BERRIES);
+        registerItem("briar_hips", BRIAR_HIPS);
+        registerItem("elder_blossom", ELDER_BLOSSOM);
+        registerItem("coneflower_blossom", CONEFLOWER_BLOSSOM);
+        registerItem("sanguinary_blossom", SANGUINARY_BLOSSOM);
+        registerItem("saint_johns_wort_blossom", SAINT_JOHNS_WORT_BLOSSOM);
+        registerItem("iris_blossom", IRIS_BLOSSOM);
 
         CompostingChanceRegistry validItemCompost = CompostingChanceRegistry.INSTANCE;
         validItemCompost.add(AMARANTH_SPRIG, 0.65f);
