@@ -17,6 +17,17 @@ public class WKItems {
     public static final Item AMARANTH_SPRIG = new Item(new FabricItemSettings().food(WKFoodComponents.AMARANTH_GRAIN).group(WK.WK_SEED_GROUP));
     public static final Item MINT_SPRIG = new Item(new FabricItemSettings().food(WKFoodComponents.MINT_LEAF).group(WK.WK_SEED_GROUP));
     public static final Item WORMWOOD_SPRIG = new Item(new FabricItemSettings().group(WK.WK_SEED_GROUP));
+    public static final Item ROWAN_BERRIES = new Item(new FabricItemSettings().food(WKFoodComponents.BERRIES).group(WK.WK_SEED_GROUP));
+    public static final Item SLOE_BERRIES = new Item(new FabricItemSettings().food(WKFoodComponents.BERRIES).group(WK.WK_SEED_GROUP));
+    public static final Item JUNIPER_BERRIES = new Item(new FabricItemSettings().food(WKFoodComponents.BERRIES).group(WK.WK_SEED_GROUP));
+    public static final Item BLACKBERRY = new Item(new FabricItemSettings().food(WKFoodComponents.BERRIES).group(WK.WK_SEED_GROUP));
+    public static final Item HAWTHORN_BERRIES = new Item(new FabricItemSettings().food(WKFoodComponents.BERRIES).group(WK.WK_SEED_GROUP));
+    public static final Item SUMAC_BERRIES = new Item(new FabricItemSettings().food(WKFoodComponents.BERRIES).group(WK.WK_SEED_GROUP));
+    public static final Item BRIAR_HIPS = new Item(new FabricItemSettings().food(WKFoodComponents.BERRIES).group(WK.WK_SEED_GROUP));
+
+
+
+
 
     public static final Item AMARANTH_SEEDS = new WKSeedItem(WKBlocks.AMARANTH, new FabricItemSettings().group(WK.WK_SEED_GROUP));
     public static final Item AMARANTH_SWEETBERRY_SEEDS = new WKSeedItem(WKBlocks.AMARANTH_SWEETBERRY, new FabricItemSettings().group(WK.WK_SEED_GROUP));
