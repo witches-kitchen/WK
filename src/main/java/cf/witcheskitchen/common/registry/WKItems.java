@@ -125,6 +125,23 @@ public class WKItems {
         validItemCompost.add(WORMWOOD_SPRIG, 0.65f);
         validItemCompost.add(WORMWOOD_SEEDS, 0.3f);
         validItemCompost.add(MINT_SPRIG, 0.45f);
+        validItemCompost.add(ROWAN_BERRIES, 0.45f);
+        validItemCompost.add(SLOE_BERRIES, 0.45f);
+        validItemCompost.add(JUNIPER_BERRIES, 0.45f);
+        validItemCompost.add(BLACKBERRY, 0.45f);
+        validItemCompost.add(HAWTHORN_BERRIES, 0.45f);
+        validItemCompost.add(SUMAC_BERRIES, 0.45f);
+        validItemCompost.add(BRIAR_HIPS, 0.45f);
+        validItemCompost.add(ELDER_BLOSSOM, 0.45f);
+        validItemCompost.add(CONEFLOWER_BLOSSOM, 0.45f);
+        validItemCompost.add(SANGUINARY_BLOSSOM, 0.45f);
+        validItemCompost.add(SAINT_JOHNS_WORT_BLOSSOM, 0.45f);
+        validItemCompost.add(IRIS_BLOSSOM, 0.45f);
+        validItemCompost.add(CHAMOMILE_BLOSSOM, 0.45f);
+        validItemCompost.add(GINGER_RHIZOME, 0.45f);
+        validItemCompost.add(TEA_LEAF, 0.45f);
+        validItemCompost.add(HELLEBORE_BLOSSOM, 0.45f);
+        validItemCompost.add(FOXGLOVE_BLOSSOM, 0.45f);
 
         if (WKConfig.get().debugMode) {
             WK.logger.info("Witches Kitchen Base Items: Successfully Loaded");
