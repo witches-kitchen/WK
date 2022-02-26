@@ -18,6 +18,7 @@ public class WKFoodComponents {
     public static final FoodComponent AMARANTH_GRAIN = new FoodComponent.Builder().hunger(2).saturationModifier(0.5f).snack().alwaysEdible().build();
     public static final FoodComponent MINT_LEAF = new FoodComponent.Builder().hunger(1).saturationModifier(0.2f).snack().alwaysEdible().build();
     public static final FoodComponent BERRIES = new FoodComponent.Builder().hunger(2).saturationModifier(0.5f).snack().alwaysEdible().build();
+    public static final FoodComponent TEA_LEAF = new FoodComponent.Builder().hunger(1).saturationModifier(0.3f).snack().alwaysEdible().statusEffect(new StatusEffectInstance(StatusEffects.HASTE, 100), 0.35F).statusEffect(new StatusEffectInstance(StatusEffects.SPEED, 100), 0.35F).build();
 
     static {
         if (WKConfig.get().debugMode) {

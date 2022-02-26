@@ -28,6 +28,10 @@ public class WKItems {
     public static final Item CONEFLOWER_BLOSSOM = new Item(new FabricItemSettings().group(WK.WK_SEED_GROUP));
     public static final Item SANGUINARY_BLOSSOM = new Item(new FabricItemSettings().group(WK.WK_SEED_GROUP));
     public static final Item SAINT_JOHNS_WORT_BLOSSOM = new Item(new FabricItemSettings().group(WK.WK_SEED_GROUP));
+    public static final Item IRIS_BLOSSOM = new Item(new FabricItemSettings().group(WK.WK_SEED_GROUP));
+    public static final Item CHAMOMILE_BLOSSOM = new Item(new FabricItemSettings().group(WK.WK_SEED_GROUP));
+    public static final Item GINGER_RHIZOME = new Item(new FabricItemSettings().group(WK.WK_SEED_GROUP));
+    public static final Item TEA_LEAF = new Item(new FabricItemSettings().food(WKFoodComponents.TEA_LEAF).group(WK.WK_SEED_GROUP));
 
 
 
