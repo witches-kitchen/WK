@@ -33,10 +33,7 @@ public class WKItems {
     public static final Item GINGER_RHIZOME = new Item(new FabricItemSettings().group(WK.WK_SEED_GROUP));
     public static final Item TEA_LEAF = new Item(new FabricItemSettings().food(WKFoodComponents.TEA_LEAF).group(WK.WK_SEED_GROUP));
     public static final Item HELLEBORE_BLOSSOM = new Item(new FabricItemSettings().group(WK.WK_SEED_GROUP));
-
-
-
-
+    
     public static final Item AMARANTH_SEEDS = new WKSeedItem(WKBlocks.AMARANTH, new FabricItemSettings().group(WK.WK_SEED_GROUP));
     public static final Item AMARANTH_SWEETBERRY_SEEDS = new WKSeedItem(WKBlocks.AMARANTH_SWEETBERRY, new FabricItemSettings().group(WK.WK_SEED_GROUP));
     public static final Item AMARANTH_TORCH_SEEDS = new WKSeedItem(WKBlocks.AMARANTH_TORCH, new FabricItemSettings().group(WK.WK_SEED_GROUP));
