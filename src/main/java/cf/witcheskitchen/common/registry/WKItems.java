@@ -24,6 +24,10 @@ public class WKItems {
     public static final Item HAWTHORN_BERRIES = new Item(new FabricItemSettings().food(WKFoodComponents.BERRIES).group(WK.WK_SEED_GROUP));
     public static final Item SUMAC_BERRIES = new Item(new FabricItemSettings().food(WKFoodComponents.BERRIES).group(WK.WK_SEED_GROUP));
     public static final Item BRIAR_HIPS = new Item(new FabricItemSettings().food(WKFoodComponents.BERRIES).group(WK.WK_SEED_GROUP));
+    public static final Item ELDER_BLOSSOM = new Item(new FabricItemSettings().group(WK.WK_SEED_GROUP));
+    public static final Item CONEFLOWER_BLOSSOM = new Item(new FabricItemSettings().group(WK.WK_SEED_GROUP));
+    public static final Item SANGUINARY_BLOSSOM = new Item(new FabricItemSettings().group(WK.WK_SEED_GROUP));
+    public static final Item SAINT_JOHNS_WORT_BLOSSOM = new Item(new FabricItemSettings().group(WK.WK_SEED_GROUP));
 
 
 
