@@ -50,7 +50,7 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
     private int color;
     private int ticksHeated;
     private boolean powered;
-    private CauldronBrewingRecipe recipe = null;
+    private final CauldronBrewingRecipe recipe = null;
 
     public WitchesCauldronBlockEntity(BlockPos pos, BlockState state) {
         super(WKBlockEntityTypes.WITCHES_CAULDRON, pos, state, MAXIMUM_INGREDIENTS);
@@ -86,20 +86,20 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
                 if (ingredient.isIn(WKTags.RESETS_CAULDRON)) {
                     this.reset(false);
                 } else {
-                final int emptySlot = this.manager.findAnyEmptySlot();
-                if (emptySlot >= 0) {
-                    this.setStack(emptySlot, ingredient.split(1));
-                    if (!this.getStack(emptySlot).isEmpty()) {
-                       updateCauldron(this.getStack(emptySlot));
+                    final int emptySlot = this.manager.findAnyEmptySlot();
+                    if (emptySlot >= 0) {
+                        this.setStack(emptySlot, ingredient.split(1));
+                        if (!this.getStack(emptySlot).isEmpty()) {
+                            updateCauldron(this.getStack(emptySlot));
+                        }
                     }
                 }
+                sendPlashPacket(entity);
+                entity.kill();
             }
-            sendPlashPacket(entity);
-            entity.kill();
         }
-    }
 
-    if (world.getBlockState(pos).get(WitchesCauldronBlock.LIT)) {
+        if (world.getBlockState(pos).get(WitchesCauldronBlock.LIT)) {
             this.manager.clear();
             PacketHelper.sendToAllTracking(entity, serverPlayer -> ParticlePacketHandler.send(serverPlayer, this.getPos(), Registry.PARTICLE_TYPE.getId(ParticleTypes.LAVA), Registry.SOUND_EVENT.getId(SoundEvents.BLOCK_LAVA_EXTINGUISH), (byte) 3));
             entity.kill();
@@ -145,7 +145,7 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
             WitchesCauldronBlockEntity.lavaTick(world, pos, true);
         }
     }
-        
+
     private void sendPlashPacket(ItemEntity trackedEntity) {
         final float red = ColorHelper.Argb.getRed(this.color) / 255F;
         final float green = ColorHelper.Argb.getGreen(this.color) / 255f;
