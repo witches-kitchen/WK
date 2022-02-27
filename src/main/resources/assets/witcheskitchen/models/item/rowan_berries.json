@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "witcheskitchen:item/agriculture/rowan_berries"
+  }
+}
