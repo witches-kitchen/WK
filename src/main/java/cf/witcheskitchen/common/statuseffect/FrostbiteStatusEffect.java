@@ -23,7 +23,7 @@ public class FrostbiteStatusEffect extends StatusEffect {
 
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-        if (!entity.isFreezing()) {
+        if (!entity.isFrozen()) {
             if (amplifier == 0) {
                 entity.damage(DamageSource.FREEZE, 1f);
                 entity.setInPowderSnow(true);

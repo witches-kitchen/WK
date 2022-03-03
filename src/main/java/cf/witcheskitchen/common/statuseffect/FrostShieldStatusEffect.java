@@ -27,7 +27,7 @@ public class FrostShieldStatusEffect extends StatusEffect {
             if (entity.getAttacker() == attacker) {
                 if (attacker != null) {
                     attacker.setFrozenTicks(10);
-                    attacker.isFreezing();
+                    attacker.isFrozen();
                     attacker.damage(DamageSource.FREEZE, 2f);
                     attacker.setInPowderSnow(true);
                 }
@@ -36,7 +36,7 @@ public class FrostShieldStatusEffect extends StatusEffect {
             if (entity.getAttacker() == attacker) {
                 if (attacker != null) {
                     attacker.setFrozenTicks(10);
-                    attacker.isFreezing();
+                    attacker.isFrozen();
                     attacker.damage(DamageSource.FREEZE, 4f);
                     attacker.setInPowderSnow(true);
                 }
