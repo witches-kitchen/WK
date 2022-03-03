@@ -76,6 +76,29 @@ public class WKBlocks {
     public static final Block FROSTED_TILED_GINGERBREAD_BLOCK_PURPLE_SLAB = new SlabBlock(FabricBlockSettings.of(Material.CAKE));
     public static final Block FROSTED_TILED_GINGERBREAD_BLOCK_GREEN_SLAB = new SlabBlock(FabricBlockSettings.of(Material.CAKE));
     public static final Block FROSTED_TILED_GINGERBREAD_BLOCK_VARIANT_SLAB = new SlabBlock(FabricBlockSettings.of(Material.CAKE));
+
+    public static final Block RAW_GINGERBREAD_BLOCK_STAIRS = new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), FabricBlockSettings.copyOf(GINGERBREAD_BLOCK));
+    public static final Block RAW_CHISELED_GINGERBREAD_BLOCK_STAIRS = new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), FabricBlockSettings.copyOf(GINGERBREAD_BLOCK));
+    public static final Block GINGERBREAD_BEVELED_BLOCK_STAIRS = new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), FabricBlockSettings.copyOf(GINGERBREAD_BLOCK));
+    public static final Block GINGERBREAD_BLOCK_STAIRS = new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), FabricBlockSettings.copyOf(GINGERBREAD_BLOCK));
+    public static final Block RAW_GINGERBREAD_BEVELED_BLOCK_STAIRS = new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), FabricBlockSettings.copyOf(GINGERBREAD_BLOCK));
+    public static final Block FROSTED_GINGERBREAD_BLOCK_STAIRS = new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), FabricBlockSettings.copyOf(GINGERBREAD_BLOCK));
+    public static final Block FROSTED_BEVELED_GINGERBREAD_BLOCK_STAIRS = new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), FabricBlockSettings.copyOf(GINGERBREAD_BLOCK));
+    public static final Block CHISELED_GINGERBREAD_BLOCK_STAIRS = new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), FabricBlockSettings.copyOf(GINGERBREAD_BLOCK));
+    public static final Block RAW_GINGERBREAD_TILED_BLOCK_STAIRS = new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), FabricBlockSettings.copyOf(GINGERBREAD_BLOCK));
+    public static final Block GINGERBREAD_TILED_BLOCK_STAIRS = new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), FabricBlockSettings.copyOf(GINGERBREAD_BLOCK));
+    public static final Block FROSTING_BLOCK_STAIRS = new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), FabricBlockSettings.copyOf(GINGERBREAD_BLOCK));
+    public static final Block FROSTED_GINGERBREAD_TILED_BLOCK_STAIRS = new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), FabricBlockSettings.copyOf(GINGERBREAD_BLOCK));
+    public static final Block FROSTED_BEVELED_GINGERBREAD_BLOCK_YELLOW_STAIRS = new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), FabricBlockSettings.copyOf(GINGERBREAD_BLOCK));
+    public static final Block FROSTED_BEVELED_GINGERBREAD_BLOCK_RED_STAIRS = new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), FabricBlockSettings.copyOf(GINGERBREAD_BLOCK));
+    public static final Block FROSTED_BEVELED_GINGERBREAD_BLOCK_PURPLE_STAIRS = new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), FabricBlockSettings.copyOf(GINGERBREAD_BLOCK));
+    public static final Block FROSTED_BEVELED_GINGERBREAD_BLOCK_GREEN_STAIRS = new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), FabricBlockSettings.copyOf(GINGERBREAD_BLOCK));
+    public static final Block FROSTED_TILED_GINGERBREAD_BLOCK_YELLOW_STAIRS = new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), FabricBlockSettings.copyOf(GINGERBREAD_BLOCK));
+    public static final Block FROSTED_TILED_GINGERBREAD_BLOCK_RED_STAIRS = new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), FabricBlockSettings.copyOf(GINGERBREAD_BLOCK));
+    public static final Block FROSTED_TILED_GINGERBREAD_BLOCK_PURPLE_STAIRS = new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), FabricBlockSettings.copyOf(GINGERBREAD_BLOCK));
+    public static final Block FROSTED_TILED_GINGERBREAD_BLOCK_GREEN_STAIRS = new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), FabricBlockSettings.copyOf(GINGERBREAD_BLOCK));
+    public static final Block FROSTED_TILED_GINGERBREAD_BLOCK_VARIANT_STAIRS = new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), FabricBlockSettings.copyOf(GINGERBREAD_BLOCK));
+
     public static final Block ELDER_PLANKS = new Block(FabricBlockSettings.of(Material.WOOD));
     public static final Block SUMAC_PLANKS = new Block(FabricBlockSettings.of(Material.WOOD));
     public static final Block HAWTHORN_PLANKS = new Block(FabricBlockSettings.of(Material.WOOD));
@@ -240,7 +263,27 @@ public class WKBlocks {
         registerBlock("frosted_tiled_gingerbread_block_variant_slab", FROSTED_TILED_GINGERBREAD_BLOCK_VARIANT_SLAB, WK.WK_GROUP);
 
         //Gingerbread Stairs
-
+        registerBlock("raw_gingerbread_block_stairs", RAW_GINGERBREAD_BLOCK_STAIRS, WK.WK_GROUP);
+        registerBlock("raw_chiseled_gingerbread_block_stairs", RAW_CHISELED_GINGERBREAD_BLOCK_STAIRS, WK.WK_GROUP);
+        registerBlock("raw_gingerbread_beveled_block_stairs", RAW_GINGERBREAD_BEVELED_BLOCK_STAIRS, WK.WK_GROUP);
+        registerBlock("gingerbread_beveled_block_stairs", GINGERBREAD_BEVELED_BLOCK_STAIRS, WK.WK_GROUP);
+        registerBlock("gingerbread_block_stairs", GINGERBREAD_BLOCK_STAIRS, WK.WK_GROUP);
+        registerBlock("frosting_block_stairs", FROSTING_BLOCK_STAIRS, WK.WK_GROUP);
+        registerBlock("frosted_gingerbread_block_stairs", FROSTED_GINGERBREAD_BLOCK_STAIRS, WK.WK_GROUP);
+        registerBlock("frosted_beveled_gingerbread_block_stairs", FROSTED_BEVELED_GINGERBREAD_BLOCK_STAIRS, WK.WK_GROUP);
+        registerBlock("chiseled_gingerbread_block_stairs", CHISELED_GINGERBREAD_BLOCK_STAIRS, WK.WK_GROUP);
+        registerBlock("raw_gingerbread_tiled_block_stairs", RAW_GINGERBREAD_TILED_BLOCK_STAIRS, WK.WK_GROUP);
+        registerBlock("gingerbread_tiled_block_stairs", GINGERBREAD_TILED_BLOCK_STAIRS, WK.WK_GROUP);
+        registerBlock("frosted_gingerbread_tiled_block_stairs", FROSTED_GINGERBREAD_TILED_BLOCK_STAIRS, WK.WK_GROUP);
+        registerBlock("frosted_beveled_gingerbread_block_yellow_stairs", FROSTED_BEVELED_GINGERBREAD_BLOCK_YELLOW_STAIRS, WK.WK_GROUP);
+        registerBlock("frosted_beveled_gingerbread_block_red_stairs", FROSTED_BEVELED_GINGERBREAD_BLOCK_RED_STAIRS, WK.WK_GROUP);
+        registerBlock("frosted_beveled_gingerbread_block_green_stairs", FROSTED_BEVELED_GINGERBREAD_BLOCK_GREEN_STAIRS, WK.WK_GROUP);
+        registerBlock("frosted_beveled_gingerbread_block_purple_stairs", FROSTED_BEVELED_GINGERBREAD_BLOCK_PURPLE_STAIRS, WK.WK_GROUP);
+        registerBlock("frosted_tiled_gingerbread_block_yellow_stairs", FROSTED_TILED_GINGERBREAD_BLOCK_YELLOW_STAIRS, WK.WK_GROUP);
+        registerBlock("frosted_tiled_gingerbread_block_red_stairs", FROSTED_TILED_GINGERBREAD_BLOCK_RED_STAIRS, WK.WK_GROUP);
+        registerBlock("frosted_tiled_gingerbread_block_green_stairs", FROSTED_TILED_GINGERBREAD_BLOCK_GREEN_STAIRS, WK.WK_GROUP);
+        registerBlock("frosted_tiled_gingerbread_block_purple_stairs", FROSTED_TILED_GINGERBREAD_BLOCK_PURPLE_STAIRS, WK.WK_GROUP);
+        registerBlock("frosted_tiled_gingerbread_block_variant_stairs", FROSTED_TILED_GINGERBREAD_BLOCK_VARIANT_STAIRS, WK.WK_GROUP);
 
         //Saplings
         registerBlock("blackthorn_sapling", BLACKTHORN_SAPLING, WK.WK_GROUP);
