@@ -92,8 +92,6 @@ dependencies {
     include "io.github.ladysnake:impersonate:${impersonate_version}"
     modImplementation "io.github.ladysnake:PlayerAbilityLib:${playerabilitylib_version}"
     include "io.github.ladysnake:PlayerAbilityLib:${playerabilitylib_version}"
-    include "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cca_version}"
-    include "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cca_version}"
     include "me.lucko:fabric-permissions-api:${fpa_version}"
     modImplementation "com.jamieswhiteshirt:reach-entity-attributes:${reach_entity_attributes_version}"
     include "com.jamieswhiteshirt:reach-entity-attributes:${reach_entity_attributes_version}"
