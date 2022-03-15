@@ -7,7 +7,9 @@ import net.minecraft.entity.Tameable;
 import net.minecraft.entity.mob.Angerable;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.TameableEntity;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.tag.TagKey;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -65,6 +67,16 @@ public class ChurchGrimEntity extends WKTameableEntity implements IAnimatable, A
     @Override
     public void chooseRandomAngerTime() {
 
+    }
+
+    @Override
+    public boolean canBreatheInWater() {
+        return true;
+    }
+
+    @Override
+    protected void swimUpward(TagKey<Fluid> fluid) {
+        super.swimUpward(fluid);
     }
 
     @Nullable
