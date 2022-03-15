@@ -4,6 +4,7 @@ import cf.witcheskitchen.api.WKTameableEntity;
 import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Tameable;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.Angerable;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.TameableEntity;
@@ -72,6 +73,11 @@ public class ChurchGrimEntity extends WKTameableEntity implements IAnimatable, A
     @Override
     public boolean canBreatheInWater() {
         return true;
+    }
+
+    @Override
+    public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
+        return false;
     }
 
     @Override

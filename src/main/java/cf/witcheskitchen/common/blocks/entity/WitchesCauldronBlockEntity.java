@@ -47,10 +47,10 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
     private static final int MINIMUM_INGREDIENTS = 2;
     private final FluidTank tank = new FluidTank(TANK_CAPACITY);
     private final Box collectionBox = new Box(this.pos).contract(0.65);
+    private final CauldronBrewingRecipe recipe = null;
     private int color;
     private int ticksHeated;
     private boolean powered;
-    private final CauldronBrewingRecipe recipe = null;
 
     public WitchesCauldronBlockEntity(BlockPos pos, BlockState state) {
         super(WKBlockEntityTypes.WITCHES_CAULDRON, pos, state, MAXIMUM_INGREDIENTS);
