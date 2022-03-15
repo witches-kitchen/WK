@@ -21,7 +21,7 @@ import java.util.UUID;
 //Todo: This once structures are in
 public class ChurchGrimEntity extends WKTameableEntity implements IAnimatable, Angerable, Tameable {
 
-    //Add a string or something here for a variant that is a white, short-haired dog and can appear if named Max
+    //Add a string or something here for a variant that is a white, short-haired dog and can appear if one is named Max
     private final AnimationFactory factory = new AnimationFactory(this);
 
     public ChurchGrimEntity(EntityType<? extends TameableEntity> entityType, World world) {
