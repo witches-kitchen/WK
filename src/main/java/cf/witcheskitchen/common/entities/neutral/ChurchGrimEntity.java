@@ -4,8 +4,10 @@ import cf.witcheskitchen.api.WKTameableEntity;
 import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Tameable;
+import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.Angerable;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.fluid.Fluid;
@@ -42,6 +44,17 @@ public class ChurchGrimEntity extends WKTameableEntity implements IAnimatable, A
     @Override
     public void setAngerTime(int ticks) {
 
+    }
+
+    @Override
+    protected void initGoals() {
+        super.initGoals();
+        this.goalSelector.add(0, new SwimGoal(this));
+        this.goalSelector.add(1, new PounceAtTargetGoal(this, 0.4f));
+        this.goalSelector.add(2, new MeleeAttackGoal(this, 1, true));
+        this.goalSelector.add(4, new StopAndLookAtEntityGoal(this, MobEntity.class, 2.0f, 0.8f));
+        this.goalSelector.add(6, new WanderAroundFarGoal(this, 0.8D, 1));
+        this.targetSelector.add(0, new RevengeGoal(this).setGroupRevenge());
     }
 
     @Override
