@@ -66,6 +66,15 @@ public class WKItems {
     public static Item FERRET_SPAWN_EGG = new SpawnEggItem(WKEntities.FERRET, 9985082, 2631205, new Item.Settings().group(WK.WK_GROUP));
 
     public static void register() {
+        registerItem("st_john_wort_seeds", ST_JOHNS_WORT_SEEDS);
+        registerItem("briar_seeds", BRIAR_SEEDS);
+        registerItem("camellia_seeds", CAMELLIA_SEEDS);
+        registerItem("chamomile_seeds", CHAMOMILE_SEEDS);
+        registerItem("coneflower_seeds", CONEFLOWER_SEEDS);
+        registerItem("foxglove_seeds", FOXGLOVE_SEEDS);
+        registerItem("hellebore_seeds", HELLEBORE_SEEDS);
+        registerItem("iris_seeds", IRIS_SEEDS);
+        registerItem("sanguinary_seeds", SANGUINARY_SEEDS);
         registerItem("amaranth_seeds", AMARANTH_SEEDS);
         registerItem("amaranth_sweetberry_seeds", AMARANTH_SWEETBERRY_SEEDS);
         registerItem("amaranth_torch_seeds", AMARANTH_TORCH_SEEDS);
@@ -105,6 +114,8 @@ public class WKItems {
         registerItem("tea_leaf", TEA_LEAF);
         registerItem("hellebore_blossom", HELLEBORE_BLOSSOM);
         registerItem("foxglove_blossom", FOXGLOVE_BLOSSOM);
+        registerItem("wormwood_seeds", WORMWOOD_SEEDS);
+
 
         CompostingChanceRegistry validItemCompost = CompostingChanceRegistry.INSTANCE;
         validItemCompost.add(AMARANTH_SPRIG, 0.65f);

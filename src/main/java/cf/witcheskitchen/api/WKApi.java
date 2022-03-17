@@ -31,7 +31,7 @@ public class WKApi {
      * TODO: Make this work better with mobs
      */
     public static boolean isLesserDemon(LivingEntity livingEntity) {
-        return WKTags.LESSER_DEMON.contains(livingEntity.getType());
+        return livingEntity.getType().getRegistryEntry().registryKey().isOf(WKTags.LESSER_DEMON.registry());
     }
 
     /**
@@ -39,7 +39,7 @@ public class WKApi {
      * TODO: Make this work better with mobs
      */
     public static boolean isGreaterDemon(LivingEntity livingEntity) {
-        return WKTags.GREATER_DEMON.contains(livingEntity.getType());
+        return livingEntity.getType().getRegistryEntry().registryKey().isOf(WKTags.GREATER_DEMON.registry());
     }
 
     /**
@@ -47,7 +47,7 @@ public class WKApi {
      * TODO: Make this work better with mobs
      */
     public static boolean isGhost(LivingEntity livingEntity) {
-        return WKTags.GHOST.contains(livingEntity.getType());
+        return  livingEntity.getType().getRegistryEntry().registryKey().isOf(WKTags.GHOST.registry());
     }
 
     /**
@@ -55,7 +55,7 @@ public class WKApi {
      * TODO: Make this work better with mobs
      */
     public static boolean isColdIronImmune(LivingEntity livingEntity) {
-        return WKTags.COLD_IRON_IMMUNE.contains(livingEntity.getType());
+        return  livingEntity.getType().getRegistryEntry().registryKey().isOf(WKTags.COLD_IRON_IMMUNE.registry());
     }
 
     /**
@@ -63,7 +63,7 @@ public class WKApi {
      * TODO: Make this work better with mobs
      */
     public static boolean isColdIronWeak(LivingEntity livingEntity) {
-        return WKTags.COLD_IRON_WEAK.contains(livingEntity.getType());
+        return  livingEntity.getType().getRegistryEntry().registryKey().isOf(WKTags.COLD_IRON_WEAK.registry());
     }
 
     /**
@@ -72,7 +72,7 @@ public class WKApi {
      * TODO: Make this work better with mobs
      */
     public static boolean isSilverImmune(LivingEntity livingEntity) {
-        return WKTags.SILVER_IMMUNE.contains(livingEntity.getType());
+        return  livingEntity.getType().getRegistryEntry().registryKey().isOf(WKTags.SILVER_IMMUNE.registry());
     }
 
     /**
@@ -81,7 +81,7 @@ public class WKApi {
      * TODO: Make this work better with mobs
      */
     public static boolean isSilverWeak(LivingEntity livingEntity) {
-        return WKTags.SILVER_WEAK.contains(livingEntity.getType());
+        return livingEntity.getType().getRegistryEntry().registryKey().isOf(WKTags.SILVER_WEAK.registry());
     }
 
     /**
@@ -89,7 +89,7 @@ public class WKApi {
      * TODO: Make this work better with mobs
      */
     public static boolean isRightHandSummon(LivingEntity livingEntity) {
-        return WKTags.RIGHT_HAND_WITCH_SUMMON.contains(livingEntity.getType());
+        return  livingEntity.getType().getRegistryEntry().registryKey().isOf(WKTags.RIGHT_HAND_WITCH_SUMMON.registry());
     }
 
     /**
@@ -97,7 +97,7 @@ public class WKApi {
      * TODO: Make this work better with mobs
      */
     public static boolean isLeftHandSummon(LivingEntity livingEntity) {
-        return WKTags.LEFT_HAND_WITCH_SUMMON.contains(livingEntity.getType());
+        return  livingEntity.getType().getRegistryEntry().registryKey().isOf(WKTags.LEFT_HAND_WITCH_SUMMON.registry());
     }
 
     /**
@@ -105,42 +105,42 @@ public class WKApi {
      * TODO: Make this work better with mobs
      */
     public static boolean isTaglockBlacklisted(LivingEntity livingEntity) {
-        return WKTags.TAGLOCK_BLACKLIST.contains(livingEntity.getType());
+        return  livingEntity.getType().getRegistryEntry().registryKey().isOf(WKTags.TAGLOCK_BLACKLIST.registry());
     }
 
     /**
      * This allows one to blacklist an item from being used in ovens
      */
     public static boolean isOvenBlacklisted(Item item) {
-        return WKTags.OVEN_BLACKLIST.contains(item);
+        return  item.getRegistryEntry().registryKey().isOf(WKTags.OVEN_BLACKLIST.registry());
     }
 
     /**
      * This allows one to blacklist an item from being used in cauldrons
      */
     public static boolean isCauldronBlacklisted(Item item) {
-        return WKTags.CAULDRON_BLACKLIST.contains(item);
+        return item.getRegistryEntry().registryKey().isOf(WKTags.CAULDRON_BLACKLIST.registry());
     }
 
     /**
      * This allows one to blacklist an item from being used in tea pots
      */
     public static boolean isTeaBlacklisted(Item item) {
-        return WKTags.TEA_BLACKLIST.contains(item);
+        return item.getRegistryEntry().registryKey().isOf(WKTags.TEA_BLACKLIST.registry());
     }
 
     /**
      * This allows one to blacklist an item from being used in fermenting barrels
      */
     public static boolean isBarrelBlacklisted(Item item) {
-        return WKTags.BARREL_BLACKLIST.contains(item);
+        return item.getRegistryEntry().registryKey().isOf(WKTags.BARREL_BLACKLIST.registry());
     }
 
     /**
      * This allows one to add items to cauldrons for brewing
      */
     public static boolean isValidBrewingItem(Item item) {
-        return WKTags.VALID_BREW_ITEM.contains(item);
+        return item.getRegistryEntry().registryKey().isOf(WKTags.VALID_BREW_ITEM.registry());
     }
 
     /**

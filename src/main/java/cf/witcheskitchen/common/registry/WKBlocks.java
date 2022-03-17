@@ -26,6 +26,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryEntry;
 import net.minecraft.world.BlockView;
 
 import static cf.witcheskitchen.WK.leafBlocks;
@@ -160,12 +161,12 @@ public class WKBlocks {
     public static final Block WEATHERED_COPPER_WITCHES_OVEN = new WitchesOvenBlock(FabricBlockSettings.copy(Blocks.WEATHERED_COPPER).luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0));
     public static final Block OXIDIZED_COPPER_WITCHES_OVEN = new WitchesOvenBlock(FabricBlockSettings.copy(Blocks.OXIDIZED_COPPER).luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0));
     public static final Block IRON_WITCHES_CAULDRON = new WitchesCauldronBlock(FabricBlockSettings.copy(Blocks.CAULDRON).luminance(state -> state.get(WitchesCauldronBlock.LIT) ? 13 : 0));
-    public static final Block BLACKTHORN_SAPLING = new WKSaplingBlock(new WKSaplingGenerator(() -> WKGenerator.BLACKTHORN_TREE), FabricBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
-    public static final Block ELDER_SAPLING = new WKSaplingBlock(new WKSaplingGenerator(() -> WKGenerator.ELDER_TREE), FabricBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
-    public static final Block HAWTHORN_SAPLING = new WKSaplingBlock(new WKSaplingGenerator(() -> WKGenerator.HAWTHORN_TREE), FabricBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
-    public static final Block JUNIPER_SAPLING = new WKSaplingBlock(new WKSaplingGenerator(() -> WKGenerator.JUNIPER_TREE), FabricBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
-    public static final Block ROWAN_SAPLING = new WKSaplingBlock(new WKSaplingGenerator(() -> WKGenerator.ROWAN_TREE), FabricBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
-    public static final Block SUMAC_SAPLING = new WKSaplingBlock(new WKSaplingGenerator(() -> WKGenerator.SUMAC_TREE), FabricBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
+    public static final Block BLACKTHORN_SAPLING = new WKSaplingBlock(new WKSaplingGenerator(() -> RegistryEntry.of(WKGenerator.BLACKTHORN_TREE)), FabricBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
+    public static final Block ELDER_SAPLING = new WKSaplingBlock(new WKSaplingGenerator(() -> RegistryEntry.of(WKGenerator.ELDER_TREE)), FabricBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
+    public static final Block HAWTHORN_SAPLING = new WKSaplingBlock(new WKSaplingGenerator(() -> RegistryEntry.of(WKGenerator.HAWTHORN_TREE)), FabricBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
+    public static final Block JUNIPER_SAPLING = new WKSaplingBlock(new WKSaplingGenerator(() -> RegistryEntry.of(WKGenerator.JUNIPER_TREE)), FabricBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
+    public static final Block ROWAN_SAPLING = new WKSaplingBlock(new WKSaplingGenerator(() -> RegistryEntry.of(WKGenerator.ROWAN_TREE)), FabricBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
+    public static final Block SUMAC_SAPLING = new WKSaplingBlock(new WKSaplingGenerator(() -> RegistryEntry.of(WKGenerator.SUMAC_TREE)), FabricBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
     public static final Block POTTED_BLACKTHORN_SAPLING = new FlowerPotBlock(BLACKTHORN_SAPLING, FabricBlockSettings.of(Material.DECORATION).breakInstantly().nonOpaque());
     public static final Block POTTED_ELDER_SAPLING = new FlowerPotBlock(ELDER_SAPLING, FabricBlockSettings.of(Material.DECORATION).breakInstantly().nonOpaque());
     public static final Block POTTED_HAWTHORN_SAPLING = new FlowerPotBlock(HAWTHORN_SAPLING, FabricBlockSettings.of(Material.DECORATION).breakInstantly().nonOpaque());
@@ -201,7 +202,17 @@ public class WKBlocks {
     public static final Block WORMWOOD = new WormwoodCropBlock(AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP));
 
     public static void register() {
+        //Planks
+        registerBlock("elder_planks", ELDER_PLANKS, WK.WK_GROUP);
+        registerBlock("sumac_planks", SUMAC_PLANKS, WK.WK_GROUP);
+        registerBlock("hawthorn_planks", HAWTHORN_PLANKS, WK.WK_GROUP);
+        registerBlock("blackthorn_planks", BLACKTHORN_PLANKS, WK.WK_GROUP);
+        registerBlock("juniper_planks", JUNIPER_PLANKS, WK.WK_GROUP);
+        registerBlock("rowan_planks", ROWAN_PLANKS, WK.WK_GROUP);
+
         //devices
+        registerBlock("teapot", TEAPOT, WK.WK_GROUP);
+
         registerBlock("iron_witches_oven", IRON_WITCHES_OVEN, WK.WK_GROUP);
         registerBlock("copper_witches_oven", COPPER_WITCHES_OVEN, WK.WK_GROUP);
         registerBlock("exposed_copper_witches_oven", EXPOSED_COPPER_WITCHES_OVEN, WK.WK_GROUP);
@@ -370,6 +381,8 @@ public class WKBlocks {
         registerBlockOnly("amaranth_cerise", AMARANTH_CERISE);
         registerBlockOnly("amaranth_dark_passion", AMARANTH_DARK_PASSION);
         registerBlockOnly("amaranth_firebird", AMARANTH_FIREBIRD);
+
+        registerBlockOnly("mint", MINT);
 
         registerBlockOnly("wormwood", WORMWOOD);
 

@@ -46,7 +46,8 @@ public class WKCropBlock extends CropBlock {
     @Override // JANK
     @SuppressWarnings("deprecation")
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-        Biome.Category biomeCat = world.getBiome(pos).getCategory();
+        world.getBiome(pos).value();
+        Biome.Category biomeCat = Biome.getCategory(world.getBiome(pos));
         if (world.getChunk(pos).getStatus().getIndex() < ChunkStatus.FULL.getIndex()) {
             // ON WORLD GENERATION
             if (seed.getCategory().contains(biomeCat)) {

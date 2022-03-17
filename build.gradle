@@ -97,9 +97,6 @@ dependencies {
     include "com.jamieswhiteshirt:reach-entity-attributes:${reach_entity_attributes_version}"
     modImplementation "com.github.emilyploszaj:step-height-entity-attribute:${step_height_version}"
     include "com.github.emilyploszaj:step-height-entity-attribute:${step_height_version}"
-    modImplementation("com.github.virtuoel:pehkui:${pehkui_version}") {
-        exclude(group: "net.fabricmc.fabric-api")
-    }
     modCompileOnly("squeek.appleskin:appleskin-fabric:${appleskin_version}:api") {
         transitive = false
     }
