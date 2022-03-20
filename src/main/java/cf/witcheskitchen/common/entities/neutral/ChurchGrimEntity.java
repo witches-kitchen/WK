@@ -1,9 +1,8 @@
 package cf.witcheskitchen.common.entities.neutral;
 
 import cf.witcheskitchen.api.WKTameableEntity;
-import net.minecraft.entity.EntityGroup;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Tameable;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.Angerable;
@@ -11,14 +10,22 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.fluid.Fluid;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.tag.TagKey;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
+import java.util.SplittableRandom;
 import java.util.UUID;
 
 //Todo: This once structures are in
@@ -33,7 +40,7 @@ public class ChurchGrimEntity extends WKTameableEntity implements IAnimatable, A
 
     @Override
     public int getVariants() {
-        return 0;
+        return 8;
     }
 
     @Override
@@ -44,6 +51,55 @@ public class ChurchGrimEntity extends WKTameableEntity implements IAnimatable, A
     @Override
     public void setAngerTime(int ticks) {
 
+    }
+
+    @Nullable
+    @Override
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
+        SplittableRandom random = new SplittableRandom();
+        int var = random.nextInt(0, 9);
+        this.setVariant(var);
+        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+    }
+
+    @Override
+    public void writeCustomDataToNbt(NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
+        nbt.putInt("Variant", this.getVariant());
+    }
+
+    @Override
+    public void readCustomDataFromNbt(NbtCompound tag) {
+        super.readCustomDataFromNbt(tag);
+        this.setVariant(tag.getInt("Variant"));
+    }
+
+    public int getVariant() {
+        return MathHelper.clamp(this.dataTracker.get(VARIANT), 1, 9);
+    }
+
+    public void setVariant(int variant) {
+        this.dataTracker.set(VARIANT, variant);
+    }
+
+    @Override
+    protected void playStepSound(BlockPos pos, BlockState state) {
+        this.playSound(SoundEvents.ENTITY_WOLF_STEP, 0.5F, 0.7F);
+    }
+
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return SoundEvents.ENTITY_WOLF_AMBIENT;
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return SoundEvents.ENTITY_WOLF_DEATH;
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource source) {
+        return SoundEvents.ENTITY_WOLF_HURT;
     }
 
     @Override
