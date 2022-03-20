@@ -87,7 +87,7 @@ dependencies {
     modImplementation("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}")
     modImplementation "curse.maven:trinkets-fabric-341284:3669842"
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${rei_version}"
-    modImplementation "curse.maven:architectury-fabric-419697:3684742"
+    modImplementation "curse.maven:architectury-fabric-419697:3705894"
     modImplementation "io.github.ladysnake:impersonate:${impersonate_version}"
     include "io.github.ladysnake:impersonate:${impersonate_version}"
     modImplementation "io.github.ladysnake:PlayerAbilityLib:${playerabilitylib_version}"
