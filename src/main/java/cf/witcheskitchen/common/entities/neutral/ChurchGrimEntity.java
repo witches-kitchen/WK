@@ -4,6 +4,8 @@ import cf.witcheskitchen.api.WKTameableEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.attribute.DefaultAttributeContainer;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.Angerable;
 import net.minecraft.entity.mob.MobEntity;
@@ -51,6 +53,13 @@ public class ChurchGrimEntity extends WKTameableEntity implements IAnimatable, A
     @Override
     public void setAngerTime(int ticks) {
 
+    }
+
+    public static DefaultAttributeContainer.Builder createAttributes() {
+        return LivingEntity.createLivingAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 32.0D)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.85D)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 35).add(EntityAttributes.GENERIC_ARMOR, 2.5D)
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 6.0D).add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 0.35D);
     }
 
     @Nullable

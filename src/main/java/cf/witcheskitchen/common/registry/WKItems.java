@@ -62,8 +62,10 @@ public class WKItems {
     public static Item DOLLOP_OF_FROSTING = new Item(new FabricItemSettings().food(WKFoodComponents.FROSTING).group(WK.WK_GROUP));
     public static Item CHOCOLATE_RUM_BALLS = new Item(new FabricItemSettings().food(WKFoodComponents.RUM_BALLS).group(WK.WK_GROUP));
     public static Item SUPER_BOOZE = new Item(new FabricItemSettings().food(WKFoodComponents.SUPER_BOOZE).group(WK.WK_GROUP));
+    //Todo: Convert to usage of hex triplets fully
     public static Item CU_SITH_SPAWN_EGG = new SpawnEggItem(WKEntities.CUSITH, 3421236, 3497531, new Item.Settings().group(WK.WK_GROUP));
     public static Item FERRET_SPAWN_EGG = new SpawnEggItem(WKEntities.FERRET, 9985082, 2631205, new Item.Settings().group(WK.WK_GROUP));
+    public static Item CHURCH_GRIM_SPAWN_EGG = new SpawnEggItem(WKEntities.CHURCH_GRIM, 0xFFFAFA, 0x36454F, new Item.Settings().group(WK.WK_GROUP));
 
     public static void register() {
         registerItem("st_john_wort_seeds", ST_JOHNS_WORT_SEEDS);
@@ -96,6 +98,7 @@ public class WKItems {
         registerItem("super_booze", SUPER_BOOZE);
         registerItem("cu_sith_spawn_egg", CU_SITH_SPAWN_EGG);
         registerItem("ferret_spawn_egg", FERRET_SPAWN_EGG);
+        registerItem("church_grim_spawn_egg", CHURCH_GRIM_SPAWN_EGG);
         registerItem("wormwood_sprig", WORMWOOD_SPRIG);
         registerItem("rowan_berries", ROWAN_BERRIES);
         registerItem("sloe_berries", SLOE_BERRIES);

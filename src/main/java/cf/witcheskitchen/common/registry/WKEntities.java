@@ -3,6 +3,7 @@ package cf.witcheskitchen.common.registry;
 import cf.witcheskitchen.WK;
 import cf.witcheskitchen.WKConfig;
 import cf.witcheskitchen.common.entities.hostile.CuSithEntity;
+import cf.witcheskitchen.common.entities.neutral.ChurchGrimEntity;
 import cf.witcheskitchen.common.entities.tameable.FerretEntity;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
@@ -23,6 +24,7 @@ public class WKEntities {
 
     //animals
     public static final EntityType<FerretEntity> FERRET = create("ferret", FerretEntity.createAttributes(), FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, FerretEntity::new).dimensions(EntityDimensions.changing(1.0f, 1.0f)).build());
+    public static final EntityType<ChurchGrimEntity> CHURCH_GRIM = create("church_grim", ChurchGrimEntity.createAttributes(), FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, ChurchGrimEntity::new).dimensions(EntityDimensions.changing(1.0f, 1.0f)).build());
 
     private static <T extends LivingEntity> EntityType<T> create(String name, DefaultAttributeContainer.Builder attributes, EntityType<T> type) {
         FabricDefaultAttributeRegistry.register(type, attributes);
