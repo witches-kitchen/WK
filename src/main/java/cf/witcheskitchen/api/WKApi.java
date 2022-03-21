@@ -47,7 +47,7 @@ public class WKApi {
      * TODO: Make this work better with mobs
      */
     public static boolean isGhost(LivingEntity livingEntity) {
-        return  livingEntity.getType().getRegistryEntry().registryKey().isOf(WKTags.GHOST.registry());
+        return livingEntity.getType().getRegistryEntry().registryKey().isOf(WKTags.GHOST.registry());
     }
 
     /**
@@ -55,7 +55,7 @@ public class WKApi {
      * TODO: Make this work better with mobs
      */
     public static boolean isColdIronImmune(LivingEntity livingEntity) {
-        return  livingEntity.getType().getRegistryEntry().registryKey().isOf(WKTags.COLD_IRON_IMMUNE.registry());
+        return livingEntity.getType().getRegistryEntry().registryKey().isOf(WKTags.COLD_IRON_IMMUNE.registry());
     }
 
     /**
@@ -63,7 +63,7 @@ public class WKApi {
      * TODO: Make this work better with mobs
      */
     public static boolean isColdIronWeak(LivingEntity livingEntity) {
-        return  livingEntity.getType().getRegistryEntry().registryKey().isOf(WKTags.COLD_IRON_WEAK.registry());
+        return livingEntity.getType().getRegistryEntry().registryKey().isOf(WKTags.COLD_IRON_WEAK.registry());
     }
 
     /**
@@ -72,7 +72,7 @@ public class WKApi {
      * TODO: Make this work better with mobs
      */
     public static boolean isSilverImmune(LivingEntity livingEntity) {
-        return  livingEntity.getType().getRegistryEntry().registryKey().isOf(WKTags.SILVER_IMMUNE.registry());
+        return livingEntity.getType().getRegistryEntry().registryKey().isOf(WKTags.SILVER_IMMUNE.registry());
     }
 
     /**
@@ -89,7 +89,7 @@ public class WKApi {
      * TODO: Make this work better with mobs
      */
     public static boolean isRightHandSummon(LivingEntity livingEntity) {
-        return  livingEntity.getType().getRegistryEntry().registryKey().isOf(WKTags.RIGHT_HAND_WITCH_SUMMON.registry());
+        return livingEntity.getType().getRegistryEntry().registryKey().isOf(WKTags.RIGHT_HAND_WITCH_SUMMON.registry());
     }
 
     /**
@@ -97,7 +97,7 @@ public class WKApi {
      * TODO: Make this work better with mobs
      */
     public static boolean isLeftHandSummon(LivingEntity livingEntity) {
-        return  livingEntity.getType().getRegistryEntry().registryKey().isOf(WKTags.LEFT_HAND_WITCH_SUMMON.registry());
+        return livingEntity.getType().getRegistryEntry().registryKey().isOf(WKTags.LEFT_HAND_WITCH_SUMMON.registry());
     }
 
     /**
@@ -105,14 +105,14 @@ public class WKApi {
      * TODO: Make this work better with mobs
      */
     public static boolean isTaglockBlacklisted(LivingEntity livingEntity) {
-        return  livingEntity.getType().getRegistryEntry().registryKey().isOf(WKTags.TAGLOCK_BLACKLIST.registry());
+        return livingEntity.getType().getRegistryEntry().registryKey().isOf(WKTags.TAGLOCK_BLACKLIST.registry());
     }
 
     /**
      * This allows one to blacklist an item from being used in ovens
      */
     public static boolean isOvenBlacklisted(Item item) {
-        return  item.getRegistryEntry().registryKey().isOf(WKTags.OVEN_BLACKLIST.registry());
+        return item.getRegistryEntry().registryKey().isOf(WKTags.OVEN_BLACKLIST.registry());
     }
 
     /**

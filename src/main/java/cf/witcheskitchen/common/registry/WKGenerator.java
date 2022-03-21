@@ -51,7 +51,7 @@ public class WKGenerator {
 
 
     public static final ConfiguredFeature<TreeFeatureConfig, ?> ELDER_TREE =
-           new ConfiguredFeature<>(Feature.TREE, new TreeFeatureConfig.Builder(
+            new ConfiguredFeature<>(Feature.TREE, new TreeFeatureConfig.Builder(
                     SimpleBlockStateProvider.of(WKBlocks.ELDER_LOG),
                     new StraightTrunkPlacer(8, 4, 0),
                     new WeightedBlockStateProvider(DataPool.<BlockState>builder().add(WKBlocks.ELDER_LEAVES.getDefaultState(), 3).add(WKBlocks.ELDER_LEAVES_COLORED.getDefaultState(), 2)),
@@ -112,10 +112,10 @@ public class WKGenerator {
 
 
     public static final PlacedFeature BLACKTHORN_TREE_CONFIGURED =
-            new PlacedFeature (RegistryEntry.of(BLACKTHORN_TREE), List.of(SquarePlacementModifier.of(), PlacedFeatures.createCountExtraModifier(0, 0.1F, 1), VegetationPlacedFeatures.NOT_IN_SURFACE_WATER_MODIFIER, PlacedFeatures.OCEAN_FLOOR_HEIGHTMAP, BlockFilterPlacementModifier.of(BlockPredicate.wouldSurvive(WKBlocks.BLACKTHORN_SAPLING.getDefaultState(), BlockPos.ORIGIN)), BiomePlacementModifier.of()));
+            new PlacedFeature(RegistryEntry.of(BLACKTHORN_TREE), List.of(SquarePlacementModifier.of(), PlacedFeatures.createCountExtraModifier(0, 0.1F, 1), VegetationPlacedFeatures.NOT_IN_SURFACE_WATER_MODIFIER, PlacedFeatures.OCEAN_FLOOR_HEIGHTMAP, BlockFilterPlacementModifier.of(BlockPredicate.wouldSurvive(WKBlocks.BLACKTHORN_SAPLING.getDefaultState(), BlockPos.ORIGIN)), BiomePlacementModifier.of()));
 
     public static final PlacedFeature ELDER_TREE_CONFIGURED =
-           new PlacedFeature (RegistryEntry.of(ELDER_TREE), List.of(SquarePlacementModifier.of(), PlacedFeatures.createCountExtraModifier(0, 0.1F, 1), VegetationPlacedFeatures.NOT_IN_SURFACE_WATER_MODIFIER, PlacedFeatures.OCEAN_FLOOR_HEIGHTMAP, BlockFilterPlacementModifier.of(BlockPredicate.wouldSurvive(WKBlocks.ELDER_SAPLING.getDefaultState(), BlockPos.ORIGIN)), BiomePlacementModifier.of()));
+            new PlacedFeature(RegistryEntry.of(ELDER_TREE), List.of(SquarePlacementModifier.of(), PlacedFeatures.createCountExtraModifier(0, 0.1F, 1), VegetationPlacedFeatures.NOT_IN_SURFACE_WATER_MODIFIER, PlacedFeatures.OCEAN_FLOOR_HEIGHTMAP, BlockFilterPlacementModifier.of(BlockPredicate.wouldSurvive(WKBlocks.ELDER_SAPLING.getDefaultState(), BlockPos.ORIGIN)), BiomePlacementModifier.of()));
 
 //dont know if this method needs to be changed. didn't want to debug this atm. will do 
 /* public static final PlacedFeature ELDER_ELDER_TREE_CONFIGURED =
