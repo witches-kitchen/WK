@@ -83,6 +83,11 @@ public class ChurchGrimEntity extends WKTameableEntity implements IAnimatable, A
         this.setVariant(tag.getInt("Variant"));
     }
 
+    @Override
+    public boolean isPushable() {
+        return false;
+    }
+
     public int getVariant() {
         return MathHelper.clamp(this.dataTracker.get(VARIANT), 1, 9);
     }
