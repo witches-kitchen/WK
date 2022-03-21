@@ -7,8 +7,12 @@ import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.Angerable;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.fluid.Fluid;
@@ -33,11 +37,20 @@ import java.util.UUID;
 //Todo: This once structures are in
 public class ChurchGrimEntity extends WKTameableEntity implements IAnimatable, Angerable, Tameable {
 
+    public static final TrackedData<Integer> VARIANT = DataTracker.registerData(WKTameableEntity.class,
+            TrackedDataHandlerRegistry.INTEGER);
     //Add a string or something here for a variant that is a white, short-haired dog and can appear if one is named Max
     private final AnimationFactory factory = new AnimationFactory(this);
 
     public ChurchGrimEntity(EntityType<? extends TameableEntity> entityType, World world) {
         super(entityType, world);
+    }
+
+    public static DefaultAttributeContainer.Builder createAttributes() {
+        return LivingEntity.createLivingAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 32.0D)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.85D)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 35).add(EntityAttributes.GENERIC_ARMOR, 2.5D)
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 6.0D).add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 0.35D);
     }
 
     @Override
@@ -55,13 +68,6 @@ public class ChurchGrimEntity extends WKTameableEntity implements IAnimatable, A
 
     }
 
-    public static DefaultAttributeContainer.Builder createAttributes() {
-        return LivingEntity.createLivingAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 32.0D)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.85D)
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 35).add(EntityAttributes.GENERIC_ARMOR, 2.5D)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 6.0D).add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 0.35D);
-    }
-
     @Nullable
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
@@ -69,18 +75,6 @@ public class ChurchGrimEntity extends WKTameableEntity implements IAnimatable, A
         int var = random.nextInt(0, 9);
         this.setVariant(var);
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
-    }
-
-    @Override
-    public void writeCustomDataToNbt(NbtCompound nbt) {
-        super.writeCustomDataToNbt(nbt);
-        nbt.putInt("Variant", this.getVariant());
-    }
-
-    @Override
-    public void readCustomDataFromNbt(NbtCompound tag) {
-        super.readCustomDataFromNbt(tag);
-        this.setVariant(tag.getInt("Variant"));
     }
 
     @Override
@@ -117,6 +111,30 @@ public class ChurchGrimEntity extends WKTameableEntity implements IAnimatable, A
     }
 
     @Override
+    public boolean canBreedWith(AnimalEntity other) {
+        return false;
+    }
+
+    @Override
+    public void writeCustomDataToNbt(NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
+        nbt.putInt("Variant", this.getVariant());
+        this.writeAngerToNbt(nbt);
+    }
+
+    @Override
+    public float getEyeHeight(EntityPose pose) {
+        return super.getEyeHeight(pose);
+    }
+
+    @Override
+    public void readCustomDataFromNbt(NbtCompound tag) {
+        super.readCustomDataFromNbt(tag);
+        this.setVariant(tag.getInt("Variant"));
+        this.readAngerFromNbt(this.world, tag);
+    }
+
+    @Override
     protected void initGoals() {
         super.initGoals();
         this.goalSelector.add(0, new SwimGoal(this));
@@ -125,6 +143,12 @@ public class ChurchGrimEntity extends WKTameableEntity implements IAnimatable, A
         this.goalSelector.add(4, new StopAndLookAtEntityGoal(this, MobEntity.class, 2.0f, 0.8f));
         this.goalSelector.add(6, new WanderAroundFarGoal(this, 0.8D, 1));
         this.targetSelector.add(0, new RevengeGoal(this).setGroupRevenge());
+    }
+
+    @Override
+    protected void initDataTracker() {
+        super.initDataTracker();
+        this.dataTracker.startTracking(VARIANT, 0);
     }
 
     @Override
