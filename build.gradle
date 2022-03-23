@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '0.10-SNAPSHOT'
+    id 'fabric-loom' version '0.11-SNAPSHOT'
     id 'maven-publish'
 }
 
@@ -93,6 +93,9 @@ dependencies {
     modImplementation "io.github.ladysnake:PlayerAbilityLib:${playerabilitylib_version}"
     include "io.github.ladysnake:PlayerAbilityLib:${playerabilitylib_version}"
     include "me.lucko:fabric-permissions-api:${fpa_version}"
+    modImplementation("com.github.virtuoel:pehkui:${pehkui_version}") {
+        exclude(group: "net.fabricmc.fabric-api")
+    }    
     modImplementation "com.jamieswhiteshirt:reach-entity-attributes:${reach_entity_attributes_version}"
     include "com.jamieswhiteshirt:reach-entity-attributes:${reach_entity_attributes_version}"
     modImplementation "com.github.emilyploszaj:step-height-entity-attribute:${step_height_version}"
