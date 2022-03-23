@@ -10,12 +10,12 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 public class WKTags {
-    public static final TagKey<EntityType<?>> GREATER_DEMON = registerEntity("greater_demon");
-    public static final TagKey<EntityType<?>> LESSER_DEMON = registerEntity("lesser_demon");
-    public static final TagKey<EntityType<?>> GHOST = registerEntity("ghost");
-    public static final TagKey<EntityType<?>> TAGLOCK_BLACKLIST = registerEntity("taglock_blacklist");
-    public static final TagKey<EntityType<?>> COLD_IRON_WEAK = registerEntity("cold_iron_weak");
-    public static final TagKey<EntityType<?>> COLD_IRON_IMMUNE = registerEntity("cold_iron_immune");
+    public static final TagKey<EntityType<?>> GREATER_DEMON = TagKey.of(Registry.ENTITY_TYPE_KEY, new Identifier(WK.MODID, "greater_demon"));
+    public static final TagKey<EntityType<?>> LESSER_DEMON = TagKey.of(Registry.ENTITY_TYPE_KEY, new Identifier(WK.MODID, "lesser_demon"));
+    public static final TagKey<EntityType<?>> GHOST = TagKey.of(Registry.ENTITY_TYPE_KEY, new Identifier(WK.MODID, "ghost"));
+    public static final TagKey<EntityType<?>> TAGLOCK_BLACKLIST = TagKey.of(Registry.ENTITY_TYPE_KEY, new Identifier(WK.MODID, "taglock_blacklist"));
+    public static final TagKey<EntityType<?>> COLD_IRON_WEAK = TagKey.of(Registry.ENTITY_TYPE_KEY, new Identifier(WK.MODID, "cold_iron_weak"));
+    public static final TagKey<EntityType<?>> COLD_IRON_IMMUNE = TagKey.of(Registry.ENTITY_TYPE_KEY, new Identifier(WK.MODID, "cold_iron_immune"));
     public static final TagKey<EntityType<?>> SILVER_WEAK = TagKey.of(Registry.ENTITY_TYPE_KEY, new Identifier(WK.MODID, "silver_weak"));
     public static final TagKey<EntityType<?>> SILVER_IMMUNE = TagKey.of(Registry.ENTITY_TYPE_KEY, new Identifier(WK.MODID, "silver_immune"));
     public static final TagKey<EntityType<?>> RIGHT_HAND_WITCH_SUMMON = TagKey.of(Registry.ENTITY_TYPE_KEY, new Identifier(WK.MODID, "right_hand_witch_summon"));
