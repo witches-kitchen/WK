@@ -1,6 +1,7 @@
 package cf.witcheskitchen.common.entities.neutral;
 
 import cf.witcheskitchen.api.WKTameableEntity;
+import dev.onyxstudios.cca.api.v3.component.ComponentContainer;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
@@ -211,5 +212,10 @@ public class ChurchGrimEntity extends WKTameableEntity implements IAnimatable, A
     @Override
     public void registerControllers(AnimationData animationData) {
 
+    }
+
+    @Override
+    public ComponentContainer getComponentContainer() {
+        return null;
     }
 }

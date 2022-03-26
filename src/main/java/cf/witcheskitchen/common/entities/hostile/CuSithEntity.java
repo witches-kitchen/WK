@@ -3,6 +3,7 @@ package cf.witcheskitchen.common.entities.hostile;
 import cf.witcheskitchen.api.WKHostileEntity;
 import cf.witcheskitchen.common.registry.WKSoundEvents;
 import cf.witcheskitchen.common.registry.WKStatusEffects;
+import dev.onyxstudios.cca.api.v3.component.ComponentContainer;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
@@ -238,5 +239,10 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
     @Override
     public boolean canBreatheInWater() {
         return true;
+    }
+
+    @Override
+    public ComponentContainer getComponentContainer() {
+        return null;
     }
 }

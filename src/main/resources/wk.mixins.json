@@ -9,7 +9,6 @@
     "FoliagePlacerTypeInvoker",
     "SaplingBlockInvoker",
     "SimpleBlockStateProviderInvoker",
-    "StructurePoolsMixin",
     "fluid.BottleItemMixin",
     "fluid.BucketItemMixin",
     "fluid.PotionItemMixin",

@@ -5,6 +5,7 @@ import cf.witcheskitchen.api.WKTameableEntity;
 import cf.witcheskitchen.common.registry.WKEntities;
 import cf.witcheskitchen.common.registry.WKSoundEvents;
 import com.google.common.collect.Sets;
+import dev.onyxstudios.cca.api.v3.component.ComponentContainer;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
@@ -417,5 +418,10 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
     @Override
     protected void playStepSound(BlockPos pos, BlockState state) {
         this.playSound(SoundEvents.ENTITY_WOLF_STEP, 0.35F, 0.57F);
+    }
+
+    @Override
+    public ComponentContainer getComponentContainer() {
+        return null;
     }
 }

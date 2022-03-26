@@ -81,23 +81,48 @@ dependencies {
 
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-    modImplementation "vazkii.patchouli:Patchouli:${project.patchouli_version}"
-    modImplementation 'software.bernie.geckolib:geckolib-fabric-1.18:3.0.35'
-    modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
-    modImplementation("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}")
-    modImplementation "curse.maven:trinkets-fabric-341284:3669842"
-    modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${rei_version}"
-    modImplementation "curse.maven:architectury-fabric-419697:3705894"
-    modImplementation "io.github.ladysnake:impersonate:${impersonate_version}"
-    include "io.github.ladysnake:impersonate:${impersonate_version}"
-    modImplementation "io.github.ladysnake:PlayerAbilityLib:${playerabilitylib_version}"
-    include "io.github.ladysnake:PlayerAbilityLib:${playerabilitylib_version}"
-    modImplementation "com.github.virtuoel:pehkui:${pehkui_version}"
-    modImplementation "com.jamieswhiteshirt:reach-entity-attributes:${reach_entity_attributes_version}"
-    include "com.jamieswhiteshirt:reach-entity-attributes:${reach_entity_attributes_version}"
-    modImplementation "com.github.emilyploszaj:step-height-entity-attribute:${step_height_version}"
-    include "com.github.emilyploszaj:step-height-entity-attribute:${step_height_version}"
+    modImplementation ("vazkii.patchouli:Patchouli:${project.patchouli_version}"){
+        exclude(group: "net.fabricmc.fabric-api")
+    }
+    modImplementation ('software.bernie.geckolib:geckolib-fabric-1.18:3.0.35'){
+        exclude(group: "net.fabricmc.fabric-api")
+    }
+    modImplementation ("com.terraformersmc:modmenu:${project.modmenu_version}"){
+        exclude(group: "net.fabricmc.fabric-api")
+    }
+    modImplementation("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}"){
+        exclude(group: "net.fabricmc.fabric-api")
+    }
+    modImplementation ("curse.maven:trinkets-fabric-341284:3669842"){
+        exclude(group: "net.fabricmc.fabric-api")
+    }
+    modCompileOnly ("me.shedaniel:RoughlyEnoughItems-api-fabric:${rei_version}"){
+        exclude(group: "net.fabricmc.fabric-api")
+    }
+    modImplementation ("curse.maven:architectury-fabric-419697:3705894"){
+        exclude(group: "net.fabricmc.fabric-api")
+    }
+    modImplementation ("io.github.ladysnake:impersonate:${impersonate_version}"){
+        exclude(group: "net.fabricmc.fabric-api")
+    }
+    include ("io.github.ladysnake:impersonate:${impersonate_version}")
+    modImplementation ("io.github.ladysnake:PlayerAbilityLib:${playerabilitylib_version}"){
+        exclude(group: "net.fabricmc.fabric-api")
+    }
+    include ("io.github.ladysnake:PlayerAbilityLib:${playerabilitylib_version}")
+    modImplementation("com.github.virtuoel:pehkui:${pehkui_version}") {
+        exclude(group: "net.fabricmc.fabric-api")
+    }
+    modImplementation ("com.jamieswhiteshirt:reach-entity-attributes:${reach_entity_attributes_version}"){
+        exclude(group: "net.fabricmc.fabric-api")
+    }
+    include ("com.jamieswhiteshirt:reach-entity-attributes:${reach_entity_attributes_version}")
+    modImplementation ("com.github.emilyploszaj:step-height-entity-attribute:${step_height_version}"){
+        exclude(group: "net.fabricmc.fabric-api")
+    }
+    include ("com.github.emilyploszaj:step-height-entity-attribute:${step_height_version}")
     modCompileOnly("squeek.appleskin:appleskin-fabric:${appleskin_version}:api") {
+        exclude(group: "net.fabricmc.fabric-api")
         transitive = false
     }
 
