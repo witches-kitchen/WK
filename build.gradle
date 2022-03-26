@@ -101,7 +101,7 @@ dependencies {
     modCompileOnly ("me.shedaniel:RoughlyEnoughItems-api-fabric:${rei_version}"){
         exclude(group: "net.fabricmc.fabric-api")
     }
-    modImplementation ("curse.maven:architectury-fabric-419697:3705894"){
+    modImplementation ("curse.maven:architectury-fabric-419697:3712834"){
         exclude(group: "net.fabricmc.fabric-api")
     }
     modImplementation ("io.github.ladysnake:impersonate:${impersonate_version}"){
