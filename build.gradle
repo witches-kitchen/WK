@@ -58,9 +58,9 @@ repositories {
         url "https://maven.ryanliptak.com/"
     }
 
-        maven {
-           name = 'Cotton'
-           url = 'https://server.bbkr.space/artifactory/libs-release/'
+    maven {
+        name = 'Cotton'
+        url = 'https://server.bbkr.space/artifactory/libs-release/'
     }
 
     maven {
