@@ -10,3 +10,5 @@ This mod is avaliable under the MIT License.
 ## Todo
 
 Everything. Lots of everything.
+
+Notice: This will likely switch to Quilt at some point, once it comes out. Preparations for that day are in already.
