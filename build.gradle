@@ -107,7 +107,7 @@ dependencies {
     }
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:8.0.442"
     modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:8.0.442"
-    modImplementation("curse.maven:architectury-fabric-419697:3712834") {
+    modImplementation("curse.maven:architectury-fabric-419697:3717905") {
         exclude(group: "net.fabricmc.fabric-api")
     }
     modImplementation("io.github.ladysnake:impersonate:${impersonate_version}") {
