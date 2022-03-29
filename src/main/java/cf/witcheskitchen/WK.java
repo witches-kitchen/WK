@@ -23,6 +23,7 @@ import java.util.Map;
 public class WK implements ModInitializer {
 
     public static final String MODID = "witcheskitchen";
+    public static final String VERSION = WKVersions.getVersion();
     public static final Logger logger = LogManager.getLogger(MODID);
     //public static List<ConfigurableSeed> seeds = new ArrayList<>(); //used for placed feature seeds, allowing world gen to use them and for users to configure how seeds are spawned in
     public static final ItemGroup WK_GROUP = FabricItemGroupBuilder.create(
@@ -76,6 +77,7 @@ public class WK implements ModInitializer {
         if (WKConfig.get().debugMode) {
             logger.info("Witches Kitchen Base: Successfully Loaded");
         }
+        logger.info("WitchesKitchen V{} Initialized", VERSION);
     }
 
     private void modifyAxeBlockStripping() {
