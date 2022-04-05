@@ -1,9 +1,11 @@
 package paperdomo101.lightstones.api.banner.impl;
 
+import paperdomo101.lightstones.api.banner.loom.LoomPattern;
+import paperdomo101.lightstones.api.banner.loom.LoomPatterns;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import paperdomo101.lightstones.api.banner.loom.LoomPattern;
 
 /**
  * Loom pattern utility methods.
