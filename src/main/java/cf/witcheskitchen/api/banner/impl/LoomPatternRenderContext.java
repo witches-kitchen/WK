@@ -1,4 +1,4 @@
-package paperdomo101.lightstones.api.banner.impl;
+package cf.witcheskitchen.api.banner.impl;
 
 import java.util.Collections;
 import java.util.List;
@@ -12,14 +12,14 @@ public final class LoomPatternRenderContext {
     private LoomPatternRenderContext() {
     }
 
+    public static List<LoomPatternData> getLoomPatterns() {
+        return loomPatterns;
+    }
+
     /**
      * Set before BannerBlockEntityRenderer.method_23802 is called.
      */
     public static void setLoomPatterns(List<LoomPatternData> patterns) {
         loomPatterns = patterns;
-    }
-
-    public static List<LoomPatternData> getLoomPatterns() {
-        return loomPatterns;
     }
 }

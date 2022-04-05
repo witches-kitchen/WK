@@ -1,4 +1,4 @@
-package paperdomo101.lightstones.api.banner.impl;
+package cf.witcheskitchen.api.banner.impl;
 
 import net.minecraft.nbt.NbtList;
 

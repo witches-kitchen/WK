@@ -1,8 +1,4 @@
-package paperdomo101.lightstones.api.banner.loom;
-
-import static com.google.common.base.Preconditions.checkNotNull;
-
-import java.util.List;
+package cf.witcheskitchen.api.banner.loom;
 
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.Item;
@@ -12,6 +8,10 @@ import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
+
+import java.util.List;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * The Banner++ equivalent of BannerPatternItem.

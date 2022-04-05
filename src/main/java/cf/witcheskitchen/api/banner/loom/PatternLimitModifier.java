@@ -1,9 +1,8 @@
-package paperdomo101.lightstones.api.banner.loom;
-
-import net.minecraft.entity.player.PlayerEntity;
+package cf.witcheskitchen.api.banner.loom;
 
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
+import net.minecraft.entity.player.PlayerEntity;
 
 /**
  * Modifier callback for adjusting the banner pattern limit based
@@ -12,16 +11,16 @@ import net.fabricmc.fabric.api.event.EventFactory;
 @FunctionalInterface
 public interface PatternLimitModifier {
     Event<PatternLimitModifier> EVENT = EventFactory.createArrayBacked(
-    PatternLimitModifier.class,
-    modifiers -> (currentLimit, player) -> {
-        int limit = currentLimit;
+            PatternLimitModifier.class,
+            modifiers -> (currentLimit, player) -> {
+                int limit = currentLimit;
 
-        for (PatternLimitModifier modifier : modifiers) {
-            limit = modifier.computePatternLimit(limit, player);
-        }
+                for (PatternLimitModifier modifier : modifiers) {
+                    limit = modifier.computePatternLimit(limit, player);
+                }
 
-        return limit;
-    }
+                return limit;
+            }
     );
 
     /**

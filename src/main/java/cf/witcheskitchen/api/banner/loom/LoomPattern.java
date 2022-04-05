@@ -1,12 +1,12 @@
-package paperdomo101.lightstones.api.banner.loom;
-
-import java.util.List;
+package cf.witcheskitchen.api.banner.loom;
 
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
+
+import java.util.List;
 
 /**
  * An extensible version of BannerPattern. Instances are referenced
@@ -17,6 +17,15 @@ public class LoomPattern {
 
     public LoomPattern(boolean special) {
         this.special = special;
+    }
+
+    /**
+     * @throws NullPointerException if {@code patternId} does not refer to a registered LoomPattern.
+     * @deprecated Acquire a {@link LoomPattern} instance and call {@link #getSpriteId(String)} directly.
+     */
+    @Deprecated
+    public static Identifier getSpriteId(Identifier patternId, String namespace) {
+        return LoomPatterns.REGISTRY.get(patternId).getSpriteId(namespace);
     }
 
     /**
@@ -45,16 +54,7 @@ public class LoomPattern {
     public void addPatternLine(List<Text> lines, DyeColor color) {
         Identifier id = LoomPatterns.REGISTRY.getId(this);
         lines.add(new TranslatableText(
-        "bannerpp.pattern." + id.getNamespace() + "." + id.getPath() + "." + color.getName())
-        .formatted(Formatting.GRAY));
-    }
-
-    /**
-     * @throws NullPointerException if {@code patternId} does not refer to a registered LoomPattern.
-     * @deprecated Acquire a {@link LoomPattern} instance and call {@link #getSpriteId(String)} directly.
-     */
-    @Deprecated
-    public static Identifier getSpriteId(Identifier patternId, String namespace) {
-        return LoomPatterns.REGISTRY.get(patternId).getSpriteId(namespace);
+                "bannerpp.pattern." + id.getNamespace() + "." + id.getPath() + "." + color.getName())
+                .formatted(Formatting.GRAY));
     }
 }

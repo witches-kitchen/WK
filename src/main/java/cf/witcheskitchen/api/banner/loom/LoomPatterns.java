@@ -1,9 +1,9 @@
-package paperdomo101.lightstones.api.banner.loom;
+package cf.witcheskitchen.api.banner.loom;
 
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
 
-import static paperdomo101.lightstones.api.banner.LightstonesBannerRegistry.LOOM_PATTERN_REGISTRY;
+import static cf.witcheskitchen.api.banner.WKBannerRegistry.LOOM_PATTERN_REGISTRY;
 
 /**
  * API location of the loom pattern registry.

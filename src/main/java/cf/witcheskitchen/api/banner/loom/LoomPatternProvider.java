@@ -1,4 +1,4 @@
-package paperdomo101.lightstones.api.banner.loom;
+package cf.witcheskitchen.api.banner.loom;
 
 /**
  * Implement this on an Item to mark it as a pattern item.

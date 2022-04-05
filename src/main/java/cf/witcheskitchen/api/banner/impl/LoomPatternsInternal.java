@@ -1,7 +1,7 @@
-package paperdomo101.lightstones.api.banner.impl;
+package cf.witcheskitchen.api.banner.impl;
 
-import paperdomo101.lightstones.api.banner.loom.LoomPattern;
-import paperdomo101.lightstones.api.banner.loom.LoomPatterns;
+import cf.witcheskitchen.api.banner.loom.LoomPattern;
+import cf.witcheskitchen.api.banner.loom.LoomPatterns;
 
 import java.util.ArrayList;
 import java.util.List;

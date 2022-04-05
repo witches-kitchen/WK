@@ -34,9 +34,9 @@ public class WK implements ModInitializer {
                     new Identifier(MODID, "seed"))
             .icon(() -> new ItemStack(WKItems.AMARANTH_SEEDS))
             .build();
-    public static WKConfig config;
     public static final ArrayList<Block> modBlocks = new ArrayList<>();
     public static final ArrayList<Block> leafBlocks = new ArrayList<>();
+    public static WKConfig config;
 
     public static Identifier id(String name) {
         return new Identifier(MODID, name);

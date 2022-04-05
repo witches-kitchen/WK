@@ -1,8 +1,8 @@
-package paperdomo101.lightstones.api.banner.impl;
+package cf.witcheskitchen.api.banner.impl;
 
 
+import cf.witcheskitchen.api.banner.loom.LoomPattern;
 import net.minecraft.util.DyeColor;
-import paperdomo101.lightstones.api.banner.loom.LoomPattern;
 
 /**
  * Class to store loom pattern data in the banner - its pattern,

@@ -1,13 +1,13 @@
-package paperdomo101.lightstones.api.banner.impl;
+package cf.witcheskitchen.api.banner.impl;
 
+import cf.witcheskitchen.api.banner.loom.LoomPattern;
+import cf.witcheskitchen.api.banner.loom.LoomPatterns;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
-import paperdomo101.lightstones.api.banner.loom.LoomPattern;
-import paperdomo101.lightstones.api.banner.loom.LoomPatterns;
 
 import java.util.ArrayList;
 import java.util.List;
