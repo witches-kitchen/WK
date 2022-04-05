@@ -27,16 +27,16 @@ public class WK implements ModInitializer {
     public static final Logger logger = LogManager.getLogger(MODID);
     //public static List<ConfigurableSeed> seeds = new ArrayList<>(); //used for placed feature seeds, allowing world gen to use them and for users to configure how seeds are spawned in
     public static final ItemGroup WK_GROUP = FabricItemGroupBuilder.create(
-                    new Identifier("witcheskitchen", "general"))
+                    new Identifier(MODID, "general"))
             .icon(() -> new ItemStack(Items.POTION))
             .build();
     public static final ItemGroup WK_SEED_GROUP = FabricItemGroupBuilder.create(
-                    new Identifier("witcheskitchen", "seed"))
+                    new Identifier(MODID, "seed"))
             .icon(() -> new ItemStack(WKItems.AMARANTH_SEEDS))
             .build();
     public static WKConfig config;
-    public static ArrayList<Block> modBlocks = new ArrayList<>();
-    public static ArrayList<Block> leafBlocks = new ArrayList<>();
+    public static final ArrayList<Block> modBlocks = new ArrayList<>();
+    public static final ArrayList<Block> leafBlocks = new ArrayList<>();
 
     public static Identifier id(String name) {
         return new Identifier(MODID, name);

@@ -1,6 +1,6 @@
 package cf.witcheskitchen.client.compat;
 
-import cf.witcheskitchen.common.WKConfig;
+import cf.witcheskitchen.WKConfig;
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
 import me.shedaniel.autoconfig.AutoConfig;
