@@ -1,5 +1,7 @@
-package paperdomo101.lightstones.mixin.client;
+package cf.witcheskitchen.mixin.client;
 
+import cf.witcheskitchen.api.banner.impl.LoomPatternConversions;
+import cf.witcheskitchen.api.banner.impl.LoomPatternRenderContext;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.item.BuiltinModelItemRenderer;
 import net.minecraft.client.render.model.json.ModelTransformation;
@@ -10,8 +12,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import paperdomo101.lightstones.api.banner.impl.LoomPatternConversions;
-import paperdomo101.lightstones.api.banner.impl.LoomPatternRenderContext;
 
 /**
  * Sets loom pattern context for shield rendering.

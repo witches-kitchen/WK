@@ -1,5 +1,11 @@
-package paperdomo101.lightstones.mixin.block;
+package cf.witcheskitchen.mixin.block;
 
+import cf.witcheskitchen.api.banner.impl.LoomPatternContainer;
+import cf.witcheskitchen.api.banner.impl.LoomPatternsInternal;
+import cf.witcheskitchen.api.banner.loom.LoomPattern;
+import cf.witcheskitchen.api.banner.loom.LoomPatternProvider;
+import cf.witcheskitchen.api.banner.loom.LoomPatterns;
+import cf.witcheskitchen.api.banner.loom.PatternLimitModifier;
 import net.minecraft.block.entity.BannerBlockEntity;
 import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.entity.player.PlayerEntity;
@@ -21,12 +27,6 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import paperdomo101.lightstones.api.banner.impl.LoomPatternContainer;
-import paperdomo101.lightstones.api.banner.impl.LoomPatternsInternal;
-import paperdomo101.lightstones.api.banner.loom.LoomPattern;
-import paperdomo101.lightstones.api.banner.loom.LoomPatternProvider;
-import paperdomo101.lightstones.api.banner.loom.LoomPatterns;
-import paperdomo101.lightstones.api.banner.loom.PatternLimitModifier;
 
 @Mixin(LoomScreenHandler.class)
 public abstract class LoomContainerMixin extends ScreenHandler {

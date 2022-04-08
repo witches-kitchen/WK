@@ -1,5 +1,8 @@
-package paperdomo101.lightstones.mixin.client;
+package cf.witcheskitchen.mixin.client;
 
+import cf.witcheskitchen.api.banner.impl.LoomPatternContainer;
+import cf.witcheskitchen.api.banner.loom.LoomPattern;
+import cf.witcheskitchen.api.banner.loom.LoomPatterns;
 import net.minecraft.item.BannerItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.WallStandingBlockItem;
@@ -13,9 +16,6 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import paperdomo101.lightstones.api.banner.impl.LoomPatternContainer;
-import paperdomo101.lightstones.api.banner.loom.LoomPattern;
-import paperdomo101.lightstones.api.banner.loom.LoomPatterns;
 
 import java.util.List;
 
