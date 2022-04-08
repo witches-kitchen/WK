@@ -1,5 +1,6 @@
 package cf.witcheskitchen.client;
 
+import cf.witcheskitchen.api.banner.WKBannerRegistry;
 import cf.witcheskitchen.client.gui.screen.BrewingBarrelScreen;
 import cf.witcheskitchen.client.gui.screen.WitchesOvenScreen;
 import cf.witcheskitchen.client.particle.BubbleParticle;
@@ -43,6 +44,8 @@ public class WKClient implements ClientModInitializer {
         ScreenRegistry.register(WKScreenHandlerTypes.BREWING_BARREL, BrewingBarrelScreen::new);
         registerColorProvider();
         RenderRegistry.register();
+        WKBannerRegistry.registerBanner();
+        WKBannerRegistry.registerBannerClient();
     }
 
     //modified from croptopia
