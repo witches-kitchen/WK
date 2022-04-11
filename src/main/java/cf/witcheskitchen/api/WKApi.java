@@ -85,6 +85,15 @@ public class WKApi {
     }
 
     /**
+     * This allows one to tell if something is part of the family of animals known as cervids, aka deer and kin, and is used to target only such mobs.
+     * This is namely for specific deer-related drops.
+     * TODO: Make this work better with mobs
+     */
+    public static boolean isCervid(LivingEntity livingEntity) {
+        return livingEntity.getType().getRegistryEntry().registryKey().isOf(WKTags.IS_CERVID.registry());
+    }
+
+    /**
      * This allows one to tell if something is a summon for a right-hand (good/light/cunning man) witch mob
      * TODO: Make this work better with mobs
      */

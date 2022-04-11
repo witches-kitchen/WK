@@ -20,6 +20,7 @@ public class WKTags {
     public static final TagKey<EntityType<?>> SILVER_IMMUNE = TagKey.of(Registry.ENTITY_TYPE_KEY, new Identifier(WK.MODID, "silver_immune"));
     public static final TagKey<EntityType<?>> RIGHT_HAND_WITCH_SUMMON = TagKey.of(Registry.ENTITY_TYPE_KEY, new Identifier(WK.MODID, "right_hand_witch_summon"));
     public static final TagKey<EntityType<?>> LEFT_HAND_WITCH_SUMMON = TagKey.of(Registry.ENTITY_TYPE_KEY, new Identifier(WK.MODID, "left_hand_witch_summon"));
+    public static final TagKey<EntityType<?>> IS_CERVID = TagKey.of(Registry.ENTITY_TYPE_KEY, new Identifier(WK.MODID, "is_cervid"));
 
     public static final TagKey<Block> HEATS_CAULDRON = TagKey.of(Registry.BLOCK_KEY, new Identifier(WK.MODID, "heats_cauldron"));
 
