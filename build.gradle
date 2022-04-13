@@ -118,9 +118,9 @@ dependencies {
         exclude(group: "net.fabricmc.fabric-api")
     }
     include("io.github.ladysnake:PlayerAbilityLib:${playerabilitylib_version}")
-//    modImplementation("com.github.virtuoel:pehkui:${pehkui_version}") {
-//        exclude(group: "net.fabricmc.fabric-api")
-//    }
+    modImplementation("com.github.virtuoel:pehkui:${pehkui_version}") {
+       exclude(group: "net.fabricmc.fabric-api")
+    }
     modImplementation("com.jamieswhiteshirt:reach-entity-attributes:${reach_entity_attributes_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
