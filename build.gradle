@@ -105,8 +105,8 @@ dependencies {
     modImplementation("curse.maven:trinkets-fabric-341284:3669842") {
         exclude(group: "net.fabricmc.fabric-api")
     }
-    modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:8.0.442"
-    modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:8.0.442"
+    modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:8.1.449"
+    modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:8.1.449"
     modImplementation("curse.maven:architectury-fabric-419697:3752162") {
         exclude(group: "net.fabricmc.fabric-api")
     }
