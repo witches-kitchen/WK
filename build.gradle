@@ -93,7 +93,7 @@ dependencies {
     }
     modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cardinal_components_version}"
     modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}"
-    modImplementation('software.bernie.geckolib:geckolib-fabric-1.18:3.0.36') {
+    modImplementation('software.bernie.geckolib:geckolib-fabric-1.18:3.0.38') {
         exclude(group: "net.fabricmc.fabric-api")
     }
     modImplementation("com.terraformersmc:modmenu:${project.modmenu_version}") {
@@ -105,8 +105,8 @@ dependencies {
     modImplementation("curse.maven:trinkets-fabric-341284:3669842") {
         exclude(group: "net.fabricmc.fabric-api")
     }
-    modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:8.1.449"
-    modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:8.1.449"
+    modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:8.1.457"
+    modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:8.1.457"
     modImplementation("curse.maven:architectury-fabric-419697:3752162") {
         exclude(group: "net.fabricmc.fabric-api")
     }
