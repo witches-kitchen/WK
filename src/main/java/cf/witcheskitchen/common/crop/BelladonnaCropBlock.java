@@ -17,11 +17,13 @@ public class BelladonnaCropBlock extends WKTallCropBlock {
     public BelladonnaCropBlock(Settings settings) {
         this(settings, Type.COMMON);
     }
+
     public BelladonnaCropBlock(Settings settings, Type type) {
         super(settings);
         this.type = type;
         this.setDefaultState(this.getDefaultState().with(AGE, 0).with(HALF, DoubleBlockHalf.LOWER));
     }
+
     @Environment(EnvType.CLIENT)
     @Override
     protected ItemConvertible getSeedsItem() {
@@ -31,6 +33,7 @@ public class BelladonnaCropBlock extends WKTallCropBlock {
             case NOCTURNAL -> WKItems.BELLADONNA_NOCTURNAL_SEEDS;
         };
     }
+
     @Override
     public int getMaxAge() {
         return MAX_AGE;

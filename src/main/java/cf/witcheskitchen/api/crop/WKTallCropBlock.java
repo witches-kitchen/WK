@@ -44,12 +44,11 @@ import java.util.Random;
  * Determines the age where the growing crop should be
  * considered as a "tall plant" and therefore start occupying a second block.
  * </p>
- * 
+ *
  * <strong> IMPORTANT: </strong>
  * <p>
  * You <strong> MUST </strong> build the block properties overriding {@link #appendProperties(StateManager.Builder)}
  * </p>
- *
  */
 public abstract class WKTallCropBlock extends WKCropBlock {
 
@@ -61,9 +60,29 @@ public abstract class WKTallCropBlock extends WKCropBlock {
     public WKTallCropBlock(Settings settings) {
         super(settings);
     }
+
+    /**
+     * From {@link TallPlantBlock#onBreakInCreative(World, BlockPos, BlockState, PlayerEntity)}
+     * Destroys a bottom half of a tall double block (such as a plant or a door)
+     * without dropping an item when broken in creative.
+     *
+     * @see Block#onBreak(World, BlockPos, BlockState, PlayerEntity)
+     */
+    protected static void onBreakInCreative(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+        BlockPos blockPos;
+        BlockState blockState;
+        DoubleBlockHalf doubleBlockHalf = state.get(HALF);
+        if (doubleBlockHalf == DoubleBlockHalf.UPPER && (blockState = world.getBlockState(blockPos = pos.down())).isOf(state.getBlock()) && blockState.get(HALF) == DoubleBlockHalf.LOWER) {
+            BlockState blockState2 = blockState.contains(Properties.WATERLOGGED) && blockState.get(Properties.WATERLOGGED) != false ? Blocks.WATER.getDefaultState() : Blocks.AIR.getDefaultState();
+            world.setBlockState(blockPos, blockState2, Block.NOTIFY_ALL | Block.SKIP_DROPS);
+            world.syncWorldEvent(player, WorldEvents.BLOCK_BROKEN, blockPos, Block.getRawIdFromState(blockState));
+        }
+    }
+
     /**
      * Age where the plant is going to begin
      * using a second block (upper part).
+     *
      * @return Integer
      */
     public abstract int doubleBlockAge();
@@ -71,8 +90,9 @@ public abstract class WKTallCropBlock extends WKCropBlock {
     /**
      * Checks that the block below and this are the same
      * to see if this is the upper part of the plant.
+     *
      * @param world World
-     * @param pos BlockPos
+     * @param pos   BlockPos
      * @return whether this is the upper state
      */
     protected boolean isUpperState(World world, BlockPos pos) {
@@ -97,23 +117,6 @@ public abstract class WKTallCropBlock extends WKCropBlock {
         }
         super.onBreak(world, pos, state, player);
     }
-    /**
-     * From {@link TallPlantBlock#onBreakInCreative(World, BlockPos, BlockState, PlayerEntity)}
-     * Destroys a bottom half of a tall double block (such as a plant or a door)
-     * without dropping an item when broken in creative.
-     *
-     * @see Block#onBreak(World, BlockPos, BlockState, PlayerEntity)
-     */
-    protected static void onBreakInCreative(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-        BlockPos blockPos;
-        BlockState blockState;
-        DoubleBlockHalf doubleBlockHalf = state.get(HALF);
-        if (doubleBlockHalf == DoubleBlockHalf.UPPER && (blockState = world.getBlockState(blockPos = pos.down())).isOf(state.getBlock()) && blockState.get(HALF) == DoubleBlockHalf.LOWER) {
-            BlockState blockState2 = blockState.contains(Properties.WATERLOGGED) && blockState.get(Properties.WATERLOGGED) != false ? Blocks.WATER.getDefaultState() : Blocks.AIR.getDefaultState();
-            world.setBlockState(blockPos, blockState2, Block.NOTIFY_ALL | Block.SKIP_DROPS);
-            world.syncWorldEvent(player, WorldEvents.BLOCK_BROKEN, blockPos, Block.getRawIdFromState(blockState));
-        }
-    }
 
     public BlockState withHalf(int age, DoubleBlockHalf half) {
         if (age < doubleBlockAge() && half == DoubleBlockHalf.UPPER) {
@@ -135,7 +138,7 @@ public abstract class WKTallCropBlock extends WKCropBlock {
             // And the crop has not reached its last stage
             if (age < getMaxAge()) {
                 // Vanilla algorithm to check the available moisture
-                if (random.nextInt((int)(25.0f / (CropBlock.getAvailableMoisture(this, world, pos))) + 1) == 0){
+                if (random.nextInt((int) (25.0f / (CropBlock.getAvailableMoisture(this, world, pos))) + 1) == 0) {
                     final int nextAge = age + 1;
                     world.setBlockState(pos, withHalf(nextAge, DoubleBlockHalf.LOWER), Block.NOTIFY_LISTENERS);
                     if (age >= doubleBlockAge()) {

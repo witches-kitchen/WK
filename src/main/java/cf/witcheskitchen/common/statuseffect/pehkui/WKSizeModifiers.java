@@ -1,6 +1,5 @@
 package cf.witcheskitchen.common.statuseffect.pehkui;
 
-import cf.witcheskitchen.WK;
 //import virtuoel.pehkui.api.ScaleRegistries;
 //import virtuoel.pehkui.api.ScaleType;
 

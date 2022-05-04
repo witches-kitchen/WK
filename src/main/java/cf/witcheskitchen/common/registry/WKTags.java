@@ -31,6 +31,10 @@ public class WKTags {
     public static final TagKey<Item> VALID_BREW_ITEM = TagKey.of(Registry.ITEM_KEY, new Identifier(WK.MODID, "valid_brew_item"));
     public static final TagKey<Item> RESETS_CAULDRON = TagKey.of(Registry.ITEM_KEY, new Identifier(WK.MODID, "resets_cauldron"));
 
+    //Seeds
+
+    public static final TagKey<Item> SEED_AMARANTH = TagKey.of(Registry.ITEM_KEY, new Identifier(WK.MODID, "seeds/seed_amaranth"));
+
     static {
         if (WKConfig.get().debugMode) {
             WK.logger.info("Witches Kitchen Base Custom Tags: Successfully Loaded");

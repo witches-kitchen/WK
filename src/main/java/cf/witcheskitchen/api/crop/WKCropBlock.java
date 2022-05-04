@@ -30,7 +30,7 @@ import java.util.Random;
  * with a certain range of numbers.
  * </p>
  *
- *<p>
+ * <p>
  * The <strong>WKCropBlock</strong> class wraps the {@link CropBlock} and removes the
  * default property of seven ages and instead provides a way of specifying a certain
  * age range for the crop.
@@ -51,13 +51,13 @@ import java.util.Random;
  * <p>
  * As an example, you could consider the following json model:
  * {
- *   "variants": {
- *     "age=0": {
- *       "model": "modid:block/custom_crop_stage0"
- *     },
- *     "age=1": {
- *       "model": "minecraft:block/custom_crop_stage1"
- *     }
+ * "variants": {
+ * "age=0": {
+ * "model": "modid:block/custom_crop_stage0"
+ * },
+ * "age=1": {
+ * "model": "minecraft:block/custom_crop_stage1"
+ * }
  * }
  * It declares a CropBlock with 2 ages, which means it will only have 2 stages
  * and will only be considered as matured when the {@link BlockState} returns
@@ -89,6 +89,7 @@ public abstract class WKCropBlock extends CropBlock {
 
     /**
      * Max age of this crop
+     *
      * @return Integer
      */
     @Override
@@ -96,6 +97,7 @@ public abstract class WKCropBlock extends CropBlock {
 
     /**
      * Overrides the default age property
+     *
      * @return IntProperty
      */
     @Override
@@ -140,6 +142,7 @@ public abstract class WKCropBlock extends CropBlock {
     /**
      * Creates a new crop {@link BlockState} reference, with the {@link IntProperty}
      * already set.
+     *
      * @param age {@link Integer} that represents the age of the new crop BlockState.
      * @return A new crop {@link BlockState}
      */
@@ -156,6 +159,7 @@ public abstract class WKCropBlock extends CropBlock {
      * </p>
      * It is used as a filter in different places, such as when the player
      * attempts to use a {@link net.minecraft.item.BoneMealItem} in the crop
+     *
      * @return Whether the given crop is mature
      */
     @Override
@@ -169,11 +173,11 @@ public abstract class WKCropBlock extends CropBlock {
      * a "tick" code execution, by default it gets a
      * random tick as long as the crop is not matured.
      * </p>
-     *<p>
+     * <p>
      * This is triggered in {@link ServerWorld#tickChunk(WorldChunk, int)} and
      * if this returns false, {@link WKCropBlock#randomTick(BlockState, ServerWorld, BlockPos, Random)}
      * will never get executed.
-     *</p>
+     * </p>
      */
     @Override
     public boolean hasRandomTicks(BlockState state) {
@@ -203,7 +207,6 @@ public abstract class WKCropBlock extends CropBlock {
     /**
      * Updates the crop {@link BlockState}, by checking {@link CropBlock#getAge(BlockState)} is <  {@link CropBlock#getMaxAge()}.
      * <strong>NOTE:</strong> THIS METHOD IS ONLY TRIGGERED BY {@link WKCropBlock#grow(ServerWorld, Random, BlockPos, BlockState)}
-     *
      */
     @Override
     public void applyGrowth(World world, BlockPos pos, BlockState state) {
@@ -228,10 +231,10 @@ public abstract class WKCropBlock extends CropBlock {
      * <p>
      * All what this method does is to call {@link WKCropBlock#applyGrowth(World, BlockPos, BlockState)}.
      * <strong>IMPORTANT</strong>:
-     *
+     * <p>
      * This method is part of {@link net.minecraft.block.Fertilizable} interface, and it's only triggered
      * in the following places
-     *</p>
+     * </p>
      * {@link net.minecraft.item.BoneMealItem#useOnFertilizable(ItemStack, World, BlockPos)}
      * {@link BeeEntity.GrowCropsGoal#tick()}
      */
