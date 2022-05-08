@@ -2,12 +2,12 @@ package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WK;
 import cf.witcheskitchen.WKConfig;
+import cf.witcheskitchen.WKIdentifier;
 import cf.witcheskitchen.common.items.WKSeedItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.item.SpawnEggItem;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 public class WKItems {
@@ -163,7 +163,7 @@ public class WKItems {
     }
 
     public static void registerItem(String id, Item item) {
-        Registry.register(Registry.ITEM, new Identifier(WK.MODID, id), item);
+        Registry.register(Registry.ITEM, new WKIdentifier(id), item);
     }
 }
 

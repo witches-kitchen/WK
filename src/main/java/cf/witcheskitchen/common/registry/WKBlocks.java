@@ -2,6 +2,7 @@ package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WK;
 import cf.witcheskitchen.WKConfig;
+import cf.witcheskitchen.WKIdentifier;
 import cf.witcheskitchen.common.blocks.SaltBlock;
 import cf.witcheskitchen.common.blocks.WKSaplingBlock;
 import cf.witcheskitchen.common.blocks.WKStairsBlock;
@@ -29,8 +30,10 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryEntry;
 import net.minecraft.world.BlockView;
 
-import static cf.witcheskitchen.WK.leafBlocks;
-import static cf.witcheskitchen.WK.modBlocks;
+import java.util.Objects;
+
+import static cf.witcheskitchen.WK.LEAF_BLOCKS;
+import static cf.witcheskitchen.WK.BLOCKS;
 
 public class WKBlocks {
 
@@ -434,16 +437,12 @@ public class WKBlocks {
 
     //this is used to register all blocks as a modBlock and to also register all but blackthorn leaves as leaves blocks. this is used to tell the client how to render these blocks. 
     public static void registerBlock(String id, Block block, ItemGroup tab) {
-        modBlocks.add(block);
-
-        if (block instanceof LeavesBlock && id != "blackthorn_leaves") { //this logic needs work to not label blackthorn leaves as those able to be color mapped differently
-            leafBlocks.add(block);
-        } else {
-
+        BLOCKS.add(block);
+        if (block instanceof LeavesBlock && !Objects.equals(id, "blackthorn_leaves")) { //this logic needs work to not label blackthorn leaves as those able to be color mapped differently
+            LEAF_BLOCKS.add(block);
         }
-
-        Registry.register(Registry.BLOCK, new Identifier(WK.MODID, id), block);
-        Registry.register(Registry.ITEM, new Identifier(WK.MODID, id), new BlockItem(block, new FabricItemSettings().group(tab)));
+        Registry.register(Registry.BLOCK, new WKIdentifier(id), block);
+        Registry.register(Registry.ITEM, new WKIdentifier(id), new BlockItem(block, new FabricItemSettings().group(tab)));
 
         if (WKConfig.get().debugMode) {
             WK.logger.info("Witches Kitchen Base Blocks: Successfully Loaded");
@@ -451,7 +450,7 @@ public class WKBlocks {
     }
 
     private static <T extends Block> void registerBlockOnly(final String id, final T block) {
-        modBlocks.add(block);
+        BLOCKS.add(block);
         Registry.register(Registry.BLOCK, new Identifier(WK.MODID, id), block);
     }
 

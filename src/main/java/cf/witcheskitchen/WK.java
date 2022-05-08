@@ -27,20 +27,18 @@ public class WK implements ModInitializer {
     public static final String VERSION = WKVersions.getVersion();
     public static final Logger logger = LoggerFactory.getLogger(MODID);
     //public static List<ConfigurableSeed> seeds = new ArrayList<>(); //used for placed feature seeds, allowing world gen to use them and for users to configure how seeds are spawned in
-    public static final ItemGroup WK_GROUP = FabricItemGroupBuilder.create(
-                    new Identifier(MODID, "general"))
+    public static final ItemGroup WK_GROUP = FabricItemGroupBuilder.create(new WKIdentifier( "general"))
             .icon(() -> new ItemStack(Items.POTION))
             .build();
-    public static final ItemGroup WK_SEED_GROUP = FabricItemGroupBuilder.create(
-                    new Identifier(MODID, "seed"))
+    public static final ItemGroup WK_SEED_GROUP = FabricItemGroupBuilder.create(new WKIdentifier("seed"))
             .icon(() -> new ItemStack(WKItems.AMARANTH_SEEDS))
             .build();
-    public static final ArrayList<Block> modBlocks = new ArrayList<>();
-    public static final ArrayList<Block> leafBlocks = new ArrayList<>();
+    public static final ArrayList<Block> BLOCKS = new ArrayList<>();
+    public static final ArrayList<Block> LEAF_BLOCKS = new ArrayList<>();
     public static WKConfig config;
 
-    public static Identifier id(String name) {
-        return new Identifier(MODID, name);
+    public static WKIdentifier id(String name) {
+        return new WKIdentifier(name);
     }
 
     @Override

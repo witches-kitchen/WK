@@ -18,14 +18,14 @@ import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
-import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.color.world.FoliageColors;
+import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.render.RenderLayer;
 
-import static cf.witcheskitchen.WK.leafBlocks;
-import static cf.witcheskitchen.WK.modBlocks;
+import static cf.witcheskitchen.WK.LEAF_BLOCKS;
+import static cf.witcheskitchen.WK.BLOCKS;
 
 @Environment(EnvType.CLIENT)
 public class WKClient implements ClientModInitializer {
@@ -36,12 +36,12 @@ public class WKClient implements ClientModInitializer {
         ParticleFactoryRegistry.getInstance().register(WKParticleTypes.SPLASH, WKSplashParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(WKParticleTypes.MAGIC_SPARKLE, MagicSparkleParticle.Factory::new);
         WKEventsRegistry.registerClient();
-        modBlocks.forEach(this::registerModBlockLayer);
+        BLOCKS.forEach(this::registerModBlockLayer);
         BlockEntityRendererRegistry.register(WKBlockEntityTypes.WITCHES_OVEN, (ctx) -> new WitchesOvenBlockEntityRender());
         BlockEntityRendererRegistry.register(WKBlockEntityTypes.WITCHES_CAULDRON, (ctx) -> new WitchesCauldronBlockEntityRender());
         BlockEntityRendererRegistry.register(WKBlockEntityTypes.BREWING_BARREL, (ctx) -> new BrewingBarrelBlockEntityRender());
-        ScreenRegistry.register(WKScreenHandlerTypes.WITCHES_OVEN, WitchesOvenScreen::new);
-        ScreenRegistry.register(WKScreenHandlerTypes.BREWING_BARREL, BrewingBarrelScreen::new);
+        HandledScreens.register(WKScreenHandlerTypes.WITCHES_OVEN, WitchesOvenScreen::new);
+        HandledScreens.register(WKScreenHandlerTypes.BREWING_BARREL, BrewingBarrelScreen::new);
         registerColorProvider();
         RenderRegistry.register();
         WKBannerRegistry.registerBanner();
@@ -63,6 +63,6 @@ public class WKClient implements ClientModInitializer {
         ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) ->
                 world != null && pos != null
                         ? BiomeColors.getFoliageColor(world, pos)
-                        : FoliageColors.getDefaultColor(), leafBlocks.toArray(new Block[]{}));
+                        : FoliageColors.getDefaultColor(), LEAF_BLOCKS.toArray(new Block[]{}));
     }
 }
