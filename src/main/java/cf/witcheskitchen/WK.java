@@ -13,7 +13,6 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import software.bernie.geckolib3.GeckoLib;
@@ -27,7 +26,7 @@ public class WK implements ModInitializer {
     public static final String VERSION = WKVersions.getVersion();
     public static final Logger logger = LoggerFactory.getLogger(MODID);
     //public static List<ConfigurableSeed> seeds = new ArrayList<>(); //used for placed feature seeds, allowing world gen to use them and for users to configure how seeds are spawned in
-    public static final ItemGroup WK_GROUP = FabricItemGroupBuilder.create(new WKIdentifier( "general"))
+    public static final ItemGroup WK_GROUP = FabricItemGroupBuilder.create(new WKIdentifier("general"))
             .icon(() -> new ItemStack(Items.POTION))
             .build();
     public static final ItemGroup WK_SEED_GROUP = FabricItemGroupBuilder.create(new WKIdentifier("seed"))

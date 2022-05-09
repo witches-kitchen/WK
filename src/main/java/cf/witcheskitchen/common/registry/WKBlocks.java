@@ -32,8 +32,8 @@ import net.minecraft.world.BlockView;
 
 import java.util.Objects;
 
-import static cf.witcheskitchen.WK.LEAF_BLOCKS;
 import static cf.witcheskitchen.WK.BLOCKS;
+import static cf.witcheskitchen.WK.LEAF_BLOCKS;
 
 public class WKBlocks {
 
