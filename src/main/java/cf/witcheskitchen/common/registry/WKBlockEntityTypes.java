@@ -3,6 +3,7 @@ package cf.witcheskitchen.common.registry;
 import cf.witcheskitchen.WK;
 import cf.witcheskitchen.WKConfig;
 import cf.witcheskitchen.common.blocks.entity.BrewingBarrelBlockEntity;
+import cf.witcheskitchen.common.blocks.entity.WKTeapotEntity;
 import cf.witcheskitchen.common.blocks.entity.WitchesCauldronBlockEntity;
 import cf.witcheskitchen.common.blocks.entity.WitchesOvenBlockEntity;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
@@ -21,6 +22,7 @@ public class WKBlockEntityTypes {
         registerBlockEntity("witches_oven", WITCHES_OVEN);
         registerBlockEntity("witches_cauldron", WITCHES_CAULDRON);
         registerBlockEntity("brewing_barrel", BREWING_BARREL);
+        registerBlockEntity("teapot", TEAPOT);
 
         if (WKConfig.get().debugMode) {
             WK.logger.info("Witches Kitchen Base Block Entities: Successfully Loaded");
@@ -30,5 +32,6 @@ public class WKBlockEntityTypes {
     public static final BlockEntityType<WitchesOvenBlockEntity> WITCHES_OVEN = FabricBlockEntityTypeBuilder.create(WitchesOvenBlockEntity::new, WKBlocks.IRON_WITCHES_OVEN, WKBlocks.COPPER_WITCHES_OVEN, WKBlocks.EXPOSED_COPPER_WITCHES_OVEN, WKBlocks.WEATHERED_COPPER_WITCHES_OVEN, WKBlocks.OXIDIZED_COPPER_WITCHES_OVEN).build();
     public static final BlockEntityType<BrewingBarrelBlockEntity> BREWING_BARREL = FabricBlockEntityTypeBuilder.create(BrewingBarrelBlockEntity::new, WKBlocks.OAK_BREWING_BARREL, WKBlocks.SPRUCE_BREWING_BARREL, WKBlocks.BIRCH_BREWING_BARREL, WKBlocks.JUNGLE_BREWING_BARREL, WKBlocks.ACACIA_BREWING_BARREL, WKBlocks.DARK_OAK_BREWING_BARREL, WKBlocks.CRIMSON_BREWING_BARREL, WKBlocks.WARPED_BREWING_BARREL).build();
     public static final BlockEntityType<WitchesCauldronBlockEntity> WITCHES_CAULDRON = FabricBlockEntityTypeBuilder.create(WitchesCauldronBlockEntity::new, WKBlocks.IRON_WITCHES_CAULDRON).build();
+    public static final BlockEntityType<WKTeapotEntity> TEAPOT = FabricBlockEntityTypeBuilder.create(WKTeapotEntity::new, WKBlocks.TEAPOT).build();
 
 }

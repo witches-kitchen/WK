@@ -1,8 +1,8 @@
 package cf.witcheskitchen.common.blocks.entity;
 
+import cf.witcheskitchen.common.registry.WKBlockEntityTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
@@ -11,8 +11,8 @@ import net.minecraft.util.Nameable;
 import net.minecraft.util.math.BlockPos;
 
 public class WKTeapotEntity extends BlockEntity implements Inventory, Nameable {
-    public WKTeapotEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
-        super(type, pos, state);
+    public WKTeapotEntity(BlockPos pos, BlockState state) {
+        super(WKBlockEntityTypes.TEAPOT, pos, state);
     }
 
     @Override
