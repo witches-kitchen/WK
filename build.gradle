@@ -83,7 +83,7 @@ repositories {
 dependencies {
     // To change the versions see the gradle.properties file
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v3"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
     // Fabric API. This is technically optional, but you probably want it anyway.
@@ -93,7 +93,7 @@ dependencies {
     }
     modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cardinal_components_version}"
     modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}"
-    modImplementation('software.bernie.geckolib:geckolib-fabric-1.18:3.0.40') {
+    modImplementation('software.bernie.geckolib:geckolib-fabric-1.18:3.0.42') {
         exclude(group: "net.fabricmc.fabric-api")
     }
     modImplementation("com.terraformersmc:modmenu:${project.modmenu_version}") {
@@ -107,7 +107,7 @@ dependencies {
     }
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:8.1.457"
     modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:8.1.457"
-    modImplementation("curse.maven:architectury-fabric-419697:3752162") {
+    modImplementation("curse.maven:architectury-fabric-419697:3782867") {
         exclude(group: "net.fabricmc.fabric-api")
     }
     modImplementation("io.github.ladysnake:impersonate:${impersonate_version}") {
