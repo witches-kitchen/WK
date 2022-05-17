@@ -252,7 +252,6 @@ public class WKBlocks {
         registerBlock("frosted_tiled_gingerbread_block_green", FROSTED_TILED_GINGERBREAD_BLOCK_GREEN, WK.WK_GROUP);
         registerBlock("frosted_tiled_gingerbread_block_purple", FROSTED_TILED_GINGERBREAD_BLOCK_PURPLE, WK.WK_GROUP);
         registerBlock("frosted_tiled_gingerbread_block_variant", FROSTED_TILED_GINGERBREAD_BLOCK_VARIANT, WK.WK_GROUP);
-
         //Gingerbread slabs
         registerBlock("raw_gingerbread_block_slab", RAW_GINGERBREAD_BLOCK_SLAB, WK.WK_GROUP);
         registerBlock("raw_chiseled_gingerbread_block_slab", RAW_CHISELED_GINGERBREAD_BLOCK_SLAB, WK.WK_GROUP);
@@ -406,15 +405,6 @@ public class WKBlocks {
         validBlockCompost.add(SUMAC_SAPLING, 0.3f);
     }
 
-    //needs to be reworked for better suiting our needs.. maybe? keeping the never and 2 always in case we end up needing to use them.
-    private static Boolean never(BlockState state, BlockView world, BlockPos pos, EntityType<?> type) {
-        return false;
-    }
-
-    private static Boolean always(BlockState state, BlockView world, BlockPos pos, EntityType<?> type) {
-        return true;
-    }
-
     private static Boolean willSpawnOnLeaves(BlockState state, BlockView world, BlockPos pos, EntityType<?> type) {
         return type == EntityType.OCELOT || type == EntityType.PARROT;
     }
@@ -422,11 +412,6 @@ public class WKBlocks {
     public static PillarBlock newLogBlock(MapColor topMapColor, MapColor sideMapColor) {
         return new PillarBlock(FabricBlockSettings.of(Material.WOOD, state -> state.get(PillarBlock.AXIS) == Direction.Axis.Y ? topMapColor : sideMapColor).strength(2.0f).sounds(BlockSoundGroup.WOOD));
     }
-
-    private static boolean always(BlockState state, BlockView world, BlockPos pos) {
-        return true;
-    }
-
     private static boolean never(BlockState state, BlockView world, BlockPos pos) {
         return false;
     }

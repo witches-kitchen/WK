@@ -3,123 +3,109 @@ package cf.witcheskitchen.common.registry;
 import cf.witcheskitchen.WK;
 import cf.witcheskitchen.WKConfig;
 import cf.witcheskitchen.WKIdentifier;
+import cf.witcheskitchen.api.registry.ObjectDefinition;
 import cf.witcheskitchen.common.items.WKSeedItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.SpawnEggItem;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.function.Function;
 
 public class WKItems {
 
+    public static final List<ObjectDefinition<Item>> ITEMS = new ArrayList<>();
     // Flowers
-    public static final Item BELLADONNA_BLOSSOM = new Item(new FabricItemSettings().group(WK.WK_SEED_GROUP));
-    public static final Item AMARANTH_SPRIG = new Item(new FabricItemSettings().food(WKFoodComponents.AMARANTH_GRAIN).group(WK.WK_SEED_GROUP));
-    public static final Item MINT_SPRIG = new Item(new FabricItemSettings().food(WKFoodComponents.MINT_LEAF).group(WK.WK_SEED_GROUP));
-    public static final Item WORMWOOD_SPRIG = new Item(new FabricItemSettings().group(WK.WK_SEED_GROUP));
-    public static final Item ROWAN_BERRIES = new Item(new FabricItemSettings().food(WKFoodComponents.BERRIES).group(WK.WK_SEED_GROUP));
-    public static final Item SLOE_BERRIES = new Item(new FabricItemSettings().food(WKFoodComponents.BERRIES).group(WK.WK_SEED_GROUP));
-    public static final Item JUNIPER_BERRIES = new Item(new FabricItemSettings().food(WKFoodComponents.BERRIES).group(WK.WK_SEED_GROUP));
-    public static final Item BLACKBERRY = new Item(new FabricItemSettings().food(WKFoodComponents.BERRIES).group(WK.WK_SEED_GROUP));
-    public static final Item HAWTHORN_BERRIES = new Item(new FabricItemSettings().food(WKFoodComponents.BERRIES).group(WK.WK_SEED_GROUP));
-    public static final Item SUMAC_BERRIES = new Item(new FabricItemSettings().food(WKFoodComponents.BERRIES).group(WK.WK_SEED_GROUP));
-    public static final Item BRIAR_HIPS = new Item(new FabricItemSettings().food(WKFoodComponents.BERRIES).group(WK.WK_SEED_GROUP));
-    public static final Item ELDER_BLOSSOM = new Item(new FabricItemSettings().group(WK.WK_SEED_GROUP));
-    public static final Item CONEFLOWER_BLOSSOM = new Item(new FabricItemSettings().group(WK.WK_SEED_GROUP));
-    public static final Item SANGUINARY_BLOSSOM = new Item(new FabricItemSettings().group(WK.WK_SEED_GROUP));
-    public static final Item SAINT_JOHNS_WORT_BLOSSOM = new Item(new FabricItemSettings().group(WK.WK_SEED_GROUP));
-    public static final Item IRIS_BLOSSOM = new Item(new FabricItemSettings().group(WK.WK_SEED_GROUP));
-    public static final Item CHAMOMILE_BLOSSOM = new Item(new FabricItemSettings().group(WK.WK_SEED_GROUP));
-    public static final Item GINGER_RHIZOME = new Item(new FabricItemSettings().group(WK.WK_SEED_GROUP));
-    public static final Item TEA_LEAF = new Item(new FabricItemSettings().food(WKFoodComponents.TEA_LEAF).group(WK.WK_SEED_GROUP));
-    public static final Item HELLEBORE_BLOSSOM = new Item(new FabricItemSettings().group(WK.WK_SEED_GROUP));
-    public static final Item FOXGLOVE_BLOSSOM = new Item(new FabricItemSettings().group(WK.WK_SEED_GROUP));
+    public static final Item BELLADONNA_BLOSSOM = registerPlant("belladonna_blossom");
+    public static final Item AMARANTH_SPRIG = registerPlant("amaranth_sprig", settings -> new Item(settings.food(WKFoodComponents.AMARANTH_GRAIN)));
+    public static final Item MINT_SPRIG = registerPlant("mint_sprig", settings -> new Item(settings.food(WKFoodComponents.MINT_LEAF)));
+    public static final Item WORMWOOD_SPRIG = registerPlant("wormwood_sprig");
+    public static final Item ROWAN_BERRIES = registerPlant("rowan_berries", settings -> new Item(settings.food(WKFoodComponents.BERRIES)));
+    public static final Item SLOE_BERRIES = registerPlant("sloe_berries", settings -> new Item(settings.food(WKFoodComponents.BERRIES)));
+    public static final Item JUNIPER_BERRIES = registerPlant("juniper_berries", settings -> new Item(settings.food(WKFoodComponents.BERRIES)));
+    public static final Item BLACKBERRY = registerPlant("blackberry", settings -> new Item(settings.food(WKFoodComponents.BERRIES)));
+    public static final Item HAWTHORN_BERRIES = registerPlant("hawthorn_berries", settings -> new Item(settings.food(WKFoodComponents.BERRIES)));
+    public static final Item SUMAC_BERRIES = registerPlant("sumac_berries", settings -> new Item(settings.food(WKFoodComponents.BERRIES)));
+    public static final Item BRIAR_HIPS = registerPlant("briar_hips", settings -> new Item(settings.food(WKFoodComponents.BERRIES)));
+    public static final Item ELDER_BLOSSOM = registerPlant("elder_blossom");
+    public static final Item CONEFLOWER_BLOSSOM = registerPlant("coneflower_blossom");
+    public static final Item SANGUINARY_BLOSSOM = registerPlant("sanguinary_blossom");
+    public static final Item SAINT_JOHNS_WORT_BLOSSOM = registerPlant("saint_johns_wort_blossom");
+    public static final Item IRIS_BLOSSOM = registerPlant("iris_blossom");
+    public static final Item CHAMOMILE_BLOSSOM = registerPlant("chamomile_blossom");
+    public static final Item GINGER_RHIZOME = registerPlant("ginger_rhizome");
+    public static final Item TEA_LEAF = registerPlant("tea_leaf", settings -> new Item(settings.food(WKFoodComponents.TEA_LEAF)));
+    public static final Item HELLEBORE_BLOSSOM = registerPlant("hellebore_blossom");
+    public static final Item FOXGLOVE_BLOSSOM = registerPlant("foxglove_blossom");
 
-    public static final Item AMARANTH_SEEDS = new WKSeedItem(WKBlocks.AMARANTH, new FabricItemSettings().group(WK.WK_SEED_GROUP));
-    public static final Item AMARANTH_SWEETBERRY_SEEDS = new WKSeedItem(WKBlocks.AMARANTH_SWEETBERRY, new FabricItemSettings().group(WK.WK_SEED_GROUP));
-    public static final Item AMARANTH_TORCH_SEEDS = new WKSeedItem(WKBlocks.AMARANTH_TORCH, new FabricItemSettings().group(WK.WK_SEED_GROUP));
-    public static final Item AMARANTH_SUNDEW_SEEDS = new WKSeedItem(WKBlocks.AMARANTH_SUNDEW, new FabricItemSettings().group(WK.WK_SEED_GROUP));
-    public static final Item AMARANTH_CREEPER_SEEDS = new WKSeedItem(WKBlocks.AMARANTH_CREEPER, new FabricItemSettings().group(WK.WK_SEED_GROUP));
-    public static final Item AMARANTH_VIRIDIAN_SEEDS = new WKSeedItem(WKBlocks.AMARANTH_VIRIDIAN, new FabricItemSettings().group(WK.WK_SEED_GROUP));
-    public static final Item AMARANTH_GRISELIN_SEEDS = new WKSeedItem(WKBlocks.AMARANTH_GRISELIN, new FabricItemSettings().group(WK.WK_SEED_GROUP));
-    public static final Item AMARANTH_CERISE_SEEDS = new WKSeedItem(WKBlocks.AMARANTH_CERISE, new FabricItemSettings().group(WK.WK_SEED_GROUP));
-    public static final Item AMARANTH_DARK_PASSION_SEEDS = new WKSeedItem(WKBlocks.AMARANTH_DARK_PASSION, new FabricItemSettings().group(WK.WK_SEED_GROUP));
-    public static final Item AMARANTH_FIREBIRD_SEEDS = new WKSeedItem(WKBlocks.AMARANTH_FIREBIRD, new FabricItemSettings().group(WK.WK_SEED_GROUP));
-    public static final Item BELLADONNA_SEEDS = new WKSeedItem(WKBlocks.BELLADONNA, new FabricItemSettings().group(WK.WK_SEED_GROUP));
-    public static final Item BELLADONNA_GLOW_SEEDS = new WKSeedItem(WKBlocks.BELLADONNA_GLOW, new FabricItemSettings().group(WK.WK_SEED_GROUP));
-    public static final Item BELLADONNA_NOCTURNAL_SEEDS = new WKSeedItem(WKBlocks.BELLADONNA_NOCTURNAL, new FabricItemSettings().group(WK.WK_SEED_GROUP));
-    public static Item ST_JOHNS_WORT_SEEDS = new Item(new FabricItemSettings().group(WK.WK_GROUP));
-    public static Item BRIAR_SEEDS = new Item(new FabricItemSettings().group(WK.WK_GROUP));
-    public static Item CAMELLIA_SEEDS = new Item(new FabricItemSettings().group(WK.WK_GROUP));
-    public static Item CHAMOMILE_SEEDS = new Item(new FabricItemSettings().group(WK.WK_GROUP));
-    public static Item CONEFLOWER_SEEDS = new Item(new FabricItemSettings().group(WK.WK_GROUP));
-    public static Item FOXGLOVE_SEEDS = new Item(new FabricItemSettings().group(WK.WK_GROUP));
-    public static Item HELLEBORE_SEEDS = new Item(new FabricItemSettings().group(WK.WK_GROUP));
-    public static Item IRIS_SEEDS = new Item(new FabricItemSettings().group(WK.WK_GROUP));
-    public static Item SANGUINARY_SEEDS = new Item(new FabricItemSettings().group(WK.WK_GROUP));
-    public static Item WORMWOOD_SEEDS = new Item(new FabricItemSettings().group(WK.WK_GROUP));
-
-    public static Item DOLLOP_OF_FROSTING = new Item(new FabricItemSettings().food(WKFoodComponents.FROSTING).group(WK.WK_GROUP));
-    public static Item CHOCOLATE_RUM_BALLS = new Item(new FabricItemSettings().food(WKFoodComponents.RUM_BALLS).group(WK.WK_GROUP));
-    public static Item SUPER_BOOZE = new Item(new FabricItemSettings().food(WKFoodComponents.SUPER_BOOZE).group(WK.WK_GROUP));
+    public static final Item AMARANTH_SEEDS = registerSeed("amaranth_seeds", WKBlocks.AMARANTH);
+    public static final Item AMARANTH_SWEETBERRY_SEEDS = registerSeed("amaranth_sweetberry_seeds", WKBlocks.AMARANTH_SWEETBERRY);
+    public static final Item AMARANTH_TORCH_SEEDS = registerSeed("amaranth_torch_seeds", WKBlocks.AMARANTH_TORCH);
+    public static final Item AMARANTH_SUNDEW_SEEDS = registerSeed("amaranth_sundew_seeds", WKBlocks.AMARANTH_SUNDEW);
+    public static final Item AMARANTH_CREEPER_SEEDS = registerSeed("amaranth_creeper_seeds", WKBlocks.AMARANTH_CREEPER);
+    public static final Item AMARANTH_VIRIDIAN_SEEDS = registerSeed("amaranth_viridian_seeds", WKBlocks.AMARANTH_VIRIDIAN);
+    public static final Item AMARANTH_GRISELIN_SEEDS = registerSeed("amaranth_griselin_seeds", WKBlocks.AMARANTH_GRISELIN);
+    public static final Item AMARANTH_CERISE_SEEDS = registerSeed("amaranth_cerise_seeds", WKBlocks.AMARANTH_CERISE);
+    public static final Item AMARANTH_DARK_PASSION_SEEDS = registerSeed("amaranth_dark_passion_seeds", WKBlocks.AMARANTH_DARK_PASSION);
+    public static final Item AMARANTH_FIREBIRD_SEEDS = registerSeed("amaranth_firebird_seeds", WKBlocks.AMARANTH_FIREBIRD);
+    public static final Item BELLADONNA_SEEDS = registerSeed("belladonna_seeds", WKBlocks.BELLADONNA);
+    public static final Item BELLADONNA_GLOW_SEEDS = registerSeed("belladonna_glow_seeds", WKBlocks.BELLADONNA_GLOW);
+    public static final Item BELLADONNA_NOCTURNAL_SEEDS = registerSeed("belladonna_nocturnal_seeds", WKBlocks.BELLADONNA_NOCTURNAL);
+    public static final Item ST_JOHNS_WORT_SEEDS = registerPlant("st_john_wort_seeds");
+    public static final Item BRIAR_SEEDS = registerPlant("briar_seeds");
+    public static final Item CAMELLIA_SEEDS = registerPlant("camellia_seeds");
+    public static final Item CHAMOMILE_SEEDS = registerPlant("chamomile_seeds");
+    public static final Item CONEFLOWER_SEEDS = registerPlant("coneflower_seeds");
+    public static final Item FOXGLOVE_SEEDS = registerPlant("foxglove_seeds");
+    public static final Item HELLEBORE_SEEDS =  registerPlant("hellebore_seeds");
+    public static final Item IRIS_SEEDS = registerPlant("iris_seeds");
+    public static final Item SANGUINARY_SEEDS = registerPlant("sanguinary_seeds");
+    public static final Item WORMWOOD_SEEDS = registerPlant("wormwood_seeds");
+    public static final Item DOLLOP_OF_FROSTING =  registerPlant("dollop_of_frosting", settings -> new Item(settings.food(WKFoodComponents.FROSTING)));
+    public static final Item CHOCOLATE_RUM_BALLS = registerPlant("chocolate_rum_balls", settings -> new Item(settings.food(WKFoodComponents.RUM_BALLS)));
+    public static final Item SUPER_BOOZE = registerPlant("super_booze", settings -> new Item(new Item.Settings().food(WKFoodComponents.SUPER_BOOZE)));
     //Todo: Convert to usage of hex triplets fully
-    public static Item CU_SITH_SPAWN_EGG = new SpawnEggItem(WKEntities.CUSITH, 3421236, 3497531, new Item.Settings().group(WK.WK_GROUP));
-    public static Item FERRET_SPAWN_EGG = new SpawnEggItem(WKEntities.FERRET, 9985082, 2631205, new Item.Settings().group(WK.WK_GROUP));
-    public static Item CHURCH_GRIM_SPAWN_EGG = new SpawnEggItem(WKEntities.CHURCH_GRIM, 0xFFFAFA, 0x36454F, new Item.Settings().group(WK.WK_GROUP));
+    public static final Item CU_SITH_SPAWN_EGG = register("cu_sith_spawn_egg", settings -> new SpawnEggItem(WKEntities.CUSITH, 3421236, 3497531, settings));
+    public static final Item FERRET_SPAWN_EGG = register("ferret_spawn_egg", settings -> new SpawnEggItem(WKEntities.FERRET, 9985082, 2631205, settings));
+    public static final Item CHURCH_GRIM_SPAWN_EGG = register("church_grim_spawn_egg", settings -> new SpawnEggItem(WKEntities.CHURCH_GRIM, 0xFFFAFA, 0x36454F, settings));
+    public static List<ObjectDefinition<Item>> getItems() {
+        return Collections.unmodifiableList(ITEMS);
+    }
+    static Item registerSeed(String id, Block block) {
+        return register(id, settings -> new WKSeedItem(block, settings), WK.WK_SEED_GROUP);
+    }
+    static Item registerPlant(String id) {
+        return register(id, Item::new, WK.WK_SEED_GROUP);
+    }
+    static <T extends Item> T registerPlant(String id, Function<FabricItemSettings, T> factory) {
+        return register(id, factory, WK.WK_SEED_GROUP);
+    }
 
+    static Item register(String id) {
+        return register(id, Item::new, WK.WK_GROUP);
+    }
+
+    static <T extends Item> T register(String id, Function<FabricItemSettings, T> factory) {
+        return register(id, factory, WK.WK_GROUP);
+    }
+    static <T extends Item> T register(String id, Function<FabricItemSettings, T> factory, ItemGroup tab) {
+        final Identifier resource = new WKIdentifier(id);
+        final T item = factory.apply(new FabricItemSettings().group(tab));
+        final ObjectDefinition<Item> itemIdentifier = new ObjectDefinition<>(resource, item);
+        ITEMS.add(itemIdentifier);
+        return item;
+    }
     public static void register() {
-        registerItem("st_john_wort_seeds", ST_JOHNS_WORT_SEEDS);
-        registerItem("briar_seeds", BRIAR_SEEDS);
-        registerItem("camellia_seeds", CAMELLIA_SEEDS);
-        registerItem("chamomile_seeds", CHAMOMILE_SEEDS);
-        registerItem("coneflower_seeds", CONEFLOWER_SEEDS);
-        registerItem("foxglove_seeds", FOXGLOVE_SEEDS);
-        registerItem("hellebore_seeds", HELLEBORE_SEEDS);
-        registerItem("iris_seeds", IRIS_SEEDS);
-        registerItem("sanguinary_seeds", SANGUINARY_SEEDS);
-        registerItem("amaranth_seeds", AMARANTH_SEEDS);
-        registerItem("amaranth_sweetberry_seeds", AMARANTH_SWEETBERRY_SEEDS);
-        registerItem("amaranth_torch_seeds", AMARANTH_TORCH_SEEDS);
-        registerItem("amaranth_sundew_seeds", AMARANTH_SUNDEW_SEEDS);
-        registerItem("amaranth_creeper_seeds", AMARANTH_CREEPER_SEEDS);
-        registerItem("amaranth_viridian_seeds", AMARANTH_VIRIDIAN_SEEDS);
-        registerItem("amaranth_griselin_seeds", AMARANTH_GRISELIN_SEEDS);
-        registerItem("amaranth_cerise_seeds", AMARANTH_CERISE_SEEDS);
-        registerItem("amaranth_dark_passion_seeds", AMARANTH_DARK_PASSION_SEEDS);
-        registerItem("amaranth_firebird_seeds", AMARANTH_FIREBIRD_SEEDS);
-        registerItem("belladonna_blossom", BELLADONNA_BLOSSOM);
-        registerItem("amaranth_sprig", AMARANTH_SPRIG);
-        registerItem("mint_sprig", MINT_SPRIG);
-        registerItem("belladonna_seeds", BELLADONNA_SEEDS);
-        registerItem("belladonna_glow_seeds", BELLADONNA_GLOW_SEEDS);
-        registerItem("belladonna_nocturnal_seeds", BELLADONNA_NOCTURNAL_SEEDS);
-        registerItem("dollop_of_frosting", DOLLOP_OF_FROSTING);
-        registerItem("chocolate_rum_balls", CHOCOLATE_RUM_BALLS);
-        registerItem("super_booze", SUPER_BOOZE);
-        registerItem("cu_sith_spawn_egg", CU_SITH_SPAWN_EGG);
-        registerItem("ferret_spawn_egg", FERRET_SPAWN_EGG);
-        registerItem("church_grim_spawn_egg", CHURCH_GRIM_SPAWN_EGG);
-        registerItem("wormwood_sprig", WORMWOOD_SPRIG);
-        registerItem("rowan_berries", ROWAN_BERRIES);
-        registerItem("sloe_berries", SLOE_BERRIES);
-        registerItem("juniper_berries", JUNIPER_BERRIES);
-        registerItem("blackberry", BLACKBERRY);
-        registerItem("hawthorn_berries", HAWTHORN_BERRIES);
-        registerItem("sumac_berries", SUMAC_BERRIES);
-        registerItem("briar_hips", BRIAR_HIPS);
-        registerItem("elder_blossom", ELDER_BLOSSOM);
-        registerItem("coneflower_blossom", CONEFLOWER_BLOSSOM);
-        registerItem("sanguinary_blossom", SANGUINARY_BLOSSOM);
-        registerItem("saint_johns_wort_blossom", SAINT_JOHNS_WORT_BLOSSOM);
-        registerItem("iris_blossom", IRIS_BLOSSOM);
-        registerItem("chamomile_blossom", CHAMOMILE_BLOSSOM);
-        registerItem("ginger_rhizome", GINGER_RHIZOME);
-        registerItem("tea_leaf", TEA_LEAF);
-        registerItem("hellebore_blossom", HELLEBORE_BLOSSOM);
-        registerItem("foxglove_blossom", FOXGLOVE_BLOSSOM);
-        registerItem("wormwood_seeds", WORMWOOD_SEEDS);
-
-
+        for (ObjectDefinition<Item> entry : ITEMS) {
+            Registry.register(Registry.ITEM, entry.id(), entry.object());
+        }
         CompostingChanceRegistry validItemCompost = CompostingChanceRegistry.INSTANCE;
         validItemCompost.add(AMARANTH_SPRIG, 0.65f);
         validItemCompost.add(AMARANTH_SEEDS, 0.3f);
@@ -160,10 +146,6 @@ public class WKItems {
         if (WKConfig.get().debugMode) {
             WK.logger.info("Witches Kitchen Base Items: Successfully Loaded");
         }
-    }
-
-    public static void registerItem(String id, Item item) {
-        Registry.register(Registry.ITEM, new WKIdentifier(id), item);
     }
 }
 
