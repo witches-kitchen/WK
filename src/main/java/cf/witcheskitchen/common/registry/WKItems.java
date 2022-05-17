@@ -21,7 +21,7 @@ import java.util.function.Function;
 
 public class WKItems {
 
-    public static final List<ObjectDefinition<Item>> ITEMS = new ArrayList<>();
+    private static final List<ObjectDefinition<Item>> ITEMS = new ArrayList<>();
     // Flowers
     public static final Item BELLADONNA_BLOSSOM = registerPlant("belladonna_blossom");
     public static final Item AMARANTH_SPRIG = registerPlant("amaranth_sprig", settings -> new Item(settings.food(WKFoodComponents.AMARANTH_GRAIN)));

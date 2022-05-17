@@ -3,6 +3,7 @@ package cf.witcheskitchen.common.registry;
 import cf.witcheskitchen.WK;
 import cf.witcheskitchen.WKConfig;
 import cf.witcheskitchen.WKIdentifier;
+import cf.witcheskitchen.api.registry.ObjectDefinition;
 import cf.witcheskitchen.common.blocks.SaltBlock;
 import cf.witcheskitchen.common.blocks.WKSaplingBlock;
 import cf.witcheskitchen.common.blocks.WKStairsBlock;
@@ -21,6 +22,7 @@ import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
 import net.minecraft.block.*;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
@@ -30,13 +32,17 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryEntry;
 import net.minecraft.world.BlockView;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
 
-import static cf.witcheskitchen.WK.BLOCKS;
 import static cf.witcheskitchen.WK.LEAF_BLOCKS;
 
 public class WKBlocks {
 
+    private static final List<ObjectDefinition<Block>> BLOCKS = new ArrayList<>();
     public static final Block SALT_BLOCK = new SaltBlock(FabricBlockSettings.of(Material.DECORATION).noCollision().breakInstantly());
     public static final Block RAW_GINGERBREAD_BLOCK = new Block(FabricBlockSettings.of(Material.CAKE));
     public static final Block RAW_CHISELED_GINGERBREAD_BLOCK = new Block(FabricBlockSettings.of(Material.CAKE));
@@ -204,7 +210,13 @@ public class WKBlocks {
 
     public static final Block WORMWOOD = new WormwoodCropBlock(AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP));
 
+    public static List<ObjectDefinition<Block>> getItems() {
+        return Collections.unmodifiableList(BLOCKS);
+    }
     public static void register() {
+        for (ObjectDefinition<Block> entry : BLOCKS) {
+            Registry.register(Registry.BLOCK, entry.id(), entry.object());
+        }
         //Planks
         registerBlock("elder_planks", ELDER_PLANKS, WK.WK_GROUP);
         registerBlock("sumac_planks", SUMAC_PLANKS, WK.WK_GROUP);
@@ -419,10 +431,17 @@ public class WKBlocks {
     private static LeavesBlock newLeavesBlock(BlockSoundGroup soundGroup) {
         return new LeavesBlock(FabricBlockSettings.of(Material.LEAVES).strength(0.2f).ticksRandomly().sounds(soundGroup).nonOpaque().allowsSpawning(WKBlocks::willSpawnOnLeaves).suffocates(WKBlocks::never).blockVision(WKBlocks::never));
     }
+    static <T extends Block> T register(String id, Function<FabricBlockSettings, T> factory) {
+        final Identifier resource = new WKIdentifier(id);
+        final T block = factory.apply(FabricBlockSettings.of(Material.STONE));
+        final ObjectDefinition<Block> blockIdentifier = new ObjectDefinition<>(resource, block);
+        BLOCKS.add(blockIdentifier);
+        return block;
+    }
 
     //this is used to register all blocks as a modBlock and to also register all but blackthorn leaves as leaves blocks. this is used to tell the client how to render these blocks. 
     public static void registerBlock(String id, Block block, ItemGroup tab) {
-        BLOCKS.add(block);
+        // BLOCKS.add(block);
         if (block instanceof LeavesBlock && !Objects.equals(id, "blackthorn_leaves")) { //this logic needs work to not label blackthorn leaves as those able to be color mapped differently
             LEAF_BLOCKS.add(block);
         }
@@ -435,7 +454,7 @@ public class WKBlocks {
     }
 
     private static <T extends Block> void registerBlockOnly(final String id, final T block) {
-        BLOCKS.add(block);
+      //  BLOCKS.add(block);
         Registry.register(Registry.BLOCK, new Identifier(WK.MODID, id), block);
     }
 

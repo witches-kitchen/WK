@@ -32,7 +32,6 @@ public class WK implements ModInitializer {
     public static final ItemGroup WK_SEED_GROUP = FabricItemGroupBuilder.create(new WKIdentifier("seed"))
             .icon(() -> new ItemStack(WKItems.AMARANTH_SEEDS))
             .build();
-    public static final ArrayList<Block> BLOCKS = new ArrayList<>();
     public static final ArrayList<Block> LEAF_BLOCKS = new ArrayList<>();
     public static WKConfig config;
 
