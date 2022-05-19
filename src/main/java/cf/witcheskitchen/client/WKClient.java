@@ -24,7 +24,7 @@ import net.minecraft.client.color.world.FoliageColors;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.render.RenderLayer;
 
-import static cf.witcheskitchen.WK.BLOCKS;
+
 import static cf.witcheskitchen.WK.LEAF_BLOCKS;
 
 @Environment(EnvType.CLIENT)
@@ -36,7 +36,7 @@ public class WKClient implements ClientModInitializer {
         ParticleFactoryRegistry.getInstance().register(WKParticleTypes.SPLASH, WKSplashParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(WKParticleTypes.MAGIC_SPARKLE, MagicSparkleParticle.Factory::new);
         WKEventsRegistry.registerClient();
-        BLOCKS.forEach(this::registerModBlockLayer);
+        //BLOCKS.forEach(this::registerModBlockLayer);
         BlockEntityRendererRegistry.register(WKBlockEntityTypes.WITCHES_OVEN, (ctx) -> new WitchesOvenBlockEntityRender());
         BlockEntityRendererRegistry.register(WKBlockEntityTypes.WITCHES_CAULDRON, (ctx) -> new WitchesCauldronBlockEntityRender());
         BlockEntityRendererRegistry.register(WKBlockEntityTypes.BREWING_BARREL, (ctx) -> new BrewingBarrelBlockEntityRender());

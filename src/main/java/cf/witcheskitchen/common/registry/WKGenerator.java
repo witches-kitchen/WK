@@ -110,29 +110,32 @@ public class WKGenerator {
                     new SumacFoliagePlacer(ConstantIntProvider.create(2), ConstantIntProvider.create(0)),
                     new TwoLayersFeatureSize(1, 0, 1)).ignoreVines().build());
 
-
-    public static final PlacedFeature BLACKTHORN_TREE_CONFIGURED =
-            new PlacedFeature(RegistryEntry.of(BLACKTHORN_TREE), List.of(SquarePlacementModifier.of(), PlacedFeatures.createCountExtraModifier(0, 0.1F, 1), VegetationPlacedFeatures.NOT_IN_SURFACE_WATER_MODIFIER, PlacedFeatures.OCEAN_FLOOR_HEIGHTMAP, BlockFilterPlacementModifier.of(BlockPredicate.wouldSurvive(WKBlocks.BLACKTHORN_SAPLING.getDefaultState(), BlockPos.ORIGIN)), BiomePlacementModifier.of()));
-
-    public static final PlacedFeature ELDER_TREE_CONFIGURED =
-            new PlacedFeature(RegistryEntry.of(ELDER_TREE), List.of(SquarePlacementModifier.of(), PlacedFeatures.createCountExtraModifier(0, 0.1F, 1), VegetationPlacedFeatures.NOT_IN_SURFACE_WATER_MODIFIER, PlacedFeatures.OCEAN_FLOOR_HEIGHTMAP, BlockFilterPlacementModifier.of(BlockPredicate.wouldSurvive(WKBlocks.ELDER_SAPLING.getDefaultState(), BlockPos.ORIGIN)), BiomePlacementModifier.of()));
+    //TODO: change the way placed features are registered
+    // They end up calling the parent block when it is still null
+    // In other words before they get even initialized.
+    // May 19 2022 - Daniking
+//    public static final PlacedFeature BLACKTHORN_TREE_CONFIGURED =
+//            new PlacedFeature(RegistryEntry.of(BLACKTHORN_TREE), List.of(SquarePlacementModifier.of(), PlacedFeatures.createCountExtraModifier(0, 0.1F, 1), VegetationPlacedFeatures.NOT_IN_SURFACE_WATER_MODIFIER, PlacedFeatures.OCEAN_FLOOR_HEIGHTMAP, BlockFilterPlacementModifier.of(BlockPredicate.wouldSurvive(WKBlocks.BLACKTHORN_SAPLING.getDefaultState(), BlockPos.ORIGIN)), BiomePlacementModifier.of()));
+//
+//    public static final PlacedFeature ELDER_TREE_CONFIGURED =
+//            new PlacedFeature(RegistryEntry.of(ELDER_TREE), List.of(SquarePlacementModifier.of(), PlacedFeatures.createCountExtraModifier(0, 0.1F, 1), VegetationPlacedFeatures.NOT_IN_SURFACE_WATER_MODIFIER, PlacedFeatures.OCEAN_FLOOR_HEIGHTMAP, BlockFilterPlacementModifier.of(BlockPredicate.wouldSurvive(WKBlocks.ELDER_SAPLING.getDefaultState(), BlockPos.ORIGIN)), BiomePlacementModifier.of()));
 
 //dont know if this method needs to be changed. didn't want to debug this atm. will do 
 /* public static final PlacedFeature ELDER_ELDER_TREE_CONFIGURED =
          ELDER_ELDER_TREE.withPlacement(SquarePlacementModifier.of(), PlacedFeatures.createCountExtraModifier(0, 0.1F, 1), VegetationPlacedFeatures.NOT_IN_SURFACE_WATER_MODIFIER, PlacedFeatures.OCEAN_FLOOR_HEIGHTMAP, BlockFilterPlacementModifier.of(BlockPredicate.wouldSurvive(WKBlocks.ELDER_SAPLING.getDefaultState(), BlockPos.ORIGIN)), BiomePlacementModifier.of());*/
-
-    public static final PlacedFeature HAWTHORN_TREE_CONFIGURED =
-            new PlacedFeature(RegistryEntry.of(HAWTHORN_TREE), List.of(SquarePlacementModifier.of(), PlacedFeatures.createCountExtraModifier(0, 0.1F, 1), VegetationPlacedFeatures.NOT_IN_SURFACE_WATER_MODIFIER, PlacedFeatures.OCEAN_FLOOR_HEIGHTMAP, BlockFilterPlacementModifier.of(BlockPredicate.wouldSurvive(WKBlocks.HAWTHORN_SAPLING.getDefaultState(), BlockPos.ORIGIN)), BiomePlacementModifier.of()));
-
-    public static final PlacedFeature JUNIPER_TREE_CONFIGURED =
-            new PlacedFeature(RegistryEntry.of(JUNIPER_TREE), List.of(SquarePlacementModifier.of(), PlacedFeatures.createCountExtraModifier(0, 0.1F, 1), VegetationPlacedFeatures.NOT_IN_SURFACE_WATER_MODIFIER, PlacedFeatures.OCEAN_FLOOR_HEIGHTMAP, BlockFilterPlacementModifier.of(BlockPredicate.wouldSurvive(WKBlocks.JUNIPER_SAPLING.getDefaultState(), BlockPos.ORIGIN)), BiomePlacementModifier.of()));
-
-    public static final PlacedFeature ROWAN_TREE_CONFIGURED =
-            new PlacedFeature(RegistryEntry.of(ROWAN_TREE), List.of(SquarePlacementModifier.of(), PlacedFeatures.createCountExtraModifier(0, 0.1F, 1), VegetationPlacedFeatures.NOT_IN_SURFACE_WATER_MODIFIER, PlacedFeatures.OCEAN_FLOOR_HEIGHTMAP, BlockFilterPlacementModifier.of(BlockPredicate.wouldSurvive(WKBlocks.ROWAN_SAPLING.getDefaultState(), BlockPos.ORIGIN)), BiomePlacementModifier.of()));
-
-    public static final PlacedFeature SUMAC_TREE_CONFIGURED =
-            new PlacedFeature(RegistryEntry.of(SUMAC_TREE), List.of(SquarePlacementModifier.of(), PlacedFeatures.createCountExtraModifier(0, 0.1F, 1), VegetationPlacedFeatures.NOT_IN_SURFACE_WATER_MODIFIER, PlacedFeatures.OCEAN_FLOOR_HEIGHTMAP, BlockFilterPlacementModifier.of(BlockPredicate.wouldSurvive(WKBlocks.SUMAC_SAPLING.getDefaultState(), BlockPos.ORIGIN)), BiomePlacementModifier.of()));
-
+//
+//    public static final PlacedFeature HAWTHORN_TREE_CONFIGURED =
+//            new PlacedFeature(RegistryEntry.of(HAWTHORN_TREE), List.of(SquarePlacementModifier.of(), PlacedFeatures.createCountExtraModifier(0, 0.1F, 1), VegetationPlacedFeatures.NOT_IN_SURFACE_WATER_MODIFIER, PlacedFeatures.OCEAN_FLOOR_HEIGHTMAP, BlockFilterPlacementModifier.of(BlockPredicate.wouldSurvive(WKBlocks.HAWTHORN_SAPLING.getDefaultState(), BlockPos.ORIGIN)), BiomePlacementModifier.of()));
+//
+//    public static final PlacedFeature JUNIPER_TREE_CONFIGURED =
+//            new PlacedFeature(RegistryEntry.of(JUNIPER_TREE), List.of(SquarePlacementModifier.of(), PlacedFeatures.createCountExtraModifier(0, 0.1F, 1), VegetationPlacedFeatures.NOT_IN_SURFACE_WATER_MODIFIER, PlacedFeatures.OCEAN_FLOOR_HEIGHTMAP, BlockFilterPlacementModifier.of(BlockPredicate.wouldSurvive(WKBlocks.JUNIPER_SAPLING.getDefaultState(), BlockPos.ORIGIN)), BiomePlacementModifier.of()));
+//
+//    public static final PlacedFeature ROWAN_TREE_CONFIGURED =
+//            new PlacedFeature(RegistryEntry.of(ROWAN_TREE), List.of(SquarePlacementModifier.of(), PlacedFeatures.createCountExtraModifier(0, 0.1F, 1), VegetationPlacedFeatures.NOT_IN_SURFACE_WATER_MODIFIER, PlacedFeatures.OCEAN_FLOOR_HEIGHTMAP, BlockFilterPlacementModifier.of(BlockPredicate.wouldSurvive(WKBlocks.ROWAN_SAPLING.getDefaultState(), BlockPos.ORIGIN)), BiomePlacementModifier.of()));
+//
+//    public static final PlacedFeature SUMAC_TREE_CONFIGURED =
+//            new PlacedFeature(RegistryEntry.of(SUMAC_TREE), List.of(SquarePlacementModifier.of(), PlacedFeatures.createCountExtraModifier(0, 0.1F, 1), VegetationPlacedFeatures.NOT_IN_SURFACE_WATER_MODIFIER, PlacedFeatures.OCEAN_FLOOR_HEIGHTMAP, BlockFilterPlacementModifier.of(BlockPredicate.wouldSurvive(WKBlocks.SUMAC_SAPLING.getDefaultState(), BlockPos.ORIGIN)), BiomePlacementModifier.of()));
+//
 
     public static void register() {
         RegistryKey<ConfiguredFeature<?, ?>> blackthornTree = RegistryKey.of(Registry.CONFIGURED_FEATURE_KEY, new Identifier("witcheskitchen", "tree_blackthorn"));
