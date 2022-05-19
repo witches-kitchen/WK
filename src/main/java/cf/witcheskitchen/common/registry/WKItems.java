@@ -64,26 +64,30 @@ public class WKItems {
     public static final Item CHAMOMILE_SEEDS = registerPlant("chamomile_seeds");
     public static final Item CONEFLOWER_SEEDS = registerPlant("coneflower_seeds");
     public static final Item FOXGLOVE_SEEDS = registerPlant("foxglove_seeds");
-    public static final Item HELLEBORE_SEEDS =  registerPlant("hellebore_seeds");
+    public static final Item HELLEBORE_SEEDS = registerPlant("hellebore_seeds");
     public static final Item IRIS_SEEDS = registerPlant("iris_seeds");
     public static final Item SANGUINARY_SEEDS = registerPlant("sanguinary_seeds");
     public static final Item WORMWOOD_SEEDS = registerPlant("wormwood_seeds");
-    public static final Item DOLLOP_OF_FROSTING =  registerPlant("dollop_of_frosting", settings -> new Item(settings.food(WKFoodComponents.FROSTING)));
+    public static final Item DOLLOP_OF_FROSTING = registerPlant("dollop_of_frosting", settings -> new Item(settings.food(WKFoodComponents.FROSTING)));
     public static final Item CHOCOLATE_RUM_BALLS = registerPlant("chocolate_rum_balls", settings -> new Item(settings.food(WKFoodComponents.RUM_BALLS)));
     public static final Item SUPER_BOOZE = registerPlant("super_booze", settings -> new Item(new Item.Settings().food(WKFoodComponents.SUPER_BOOZE)));
     //Todo: Convert to usage of hex triplets fully
     public static final Item CU_SITH_SPAWN_EGG = register("cu_sith_spawn_egg", settings -> new SpawnEggItem(WKEntities.CUSITH, 3421236, 3497531, settings));
     public static final Item FERRET_SPAWN_EGG = register("ferret_spawn_egg", settings -> new SpawnEggItem(WKEntities.FERRET, 9985082, 2631205, settings));
     public static final Item CHURCH_GRIM_SPAWN_EGG = register("church_grim_spawn_egg", settings -> new SpawnEggItem(WKEntities.CHURCH_GRIM, 0xFFFAFA, 0x36454F, settings));
+
     public static List<ObjectDefinition<Item>> getItems() {
         return Collections.unmodifiableList(ITEMS);
     }
+
     static Item registerSeed(String id, Block block) {
         return register(id, settings -> new WKSeedItem(block, settings), WK.WK_SEED_GROUP);
     }
+
     static Item registerPlant(String id) {
         return register(id, Item::new, WK.WK_SEED_GROUP);
     }
+
     static <T extends Item> T registerPlant(String id, Function<FabricItemSettings, T> factory) {
         return register(id, factory, WK.WK_SEED_GROUP);
     }
@@ -95,6 +99,7 @@ public class WKItems {
     static <T extends Item> T register(String id, Function<FabricItemSettings, T> factory) {
         return register(id, factory, WK.WK_GROUP);
     }
+
     static <T extends Item> T register(String id, Function<FabricItemSettings, T> factory, ItemGroup tab) {
         final Identifier resource = new WKIdentifier(id);
         final T item = factory.apply(new FabricItemSettings().group(tab));
@@ -102,6 +107,7 @@ public class WKItems {
         ITEMS.add(itemIdentifier);
         return item;
     }
+
     public static void register() {
         for (ObjectDefinition<Item> entry : ITEMS) {
             Registry.register(Registry.ITEM, entry.id(), entry.object());

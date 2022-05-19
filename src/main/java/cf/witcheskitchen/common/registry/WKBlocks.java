@@ -22,7 +22,6 @@ import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
 import net.minecraft.block.*;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
@@ -42,7 +41,6 @@ import static cf.witcheskitchen.WK.LEAF_BLOCKS;
 
 public class WKBlocks {
 
-    private static final List<ObjectDefinition<Block>> BLOCKS = new ArrayList<>();
     public static final Block SALT_BLOCK = new SaltBlock(FabricBlockSettings.of(Material.DECORATION).noCollision().breakInstantly());
     public static final Block RAW_GINGERBREAD_BLOCK = new Block(FabricBlockSettings.of(Material.CAKE));
     public static final Block RAW_CHISELED_GINGERBREAD_BLOCK = new Block(FabricBlockSettings.of(Material.CAKE));
@@ -86,7 +84,6 @@ public class WKBlocks {
     public static final Block FROSTED_TILED_GINGERBREAD_BLOCK_PURPLE_SLAB = new SlabBlock(FabricBlockSettings.of(Material.CAKE));
     public static final Block FROSTED_TILED_GINGERBREAD_BLOCK_GREEN_SLAB = new SlabBlock(FabricBlockSettings.of(Material.CAKE));
     public static final Block FROSTED_TILED_GINGERBREAD_BLOCK_VARIANT_SLAB = new SlabBlock(FabricBlockSettings.of(Material.CAKE));
-
     public static final Block RAW_GINGERBREAD_BLOCK_STAIRS = new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), FabricBlockSettings.copyOf(GINGERBREAD_BLOCK));
     public static final Block RAW_CHISELED_GINGERBREAD_BLOCK_STAIRS = new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), FabricBlockSettings.copyOf(GINGERBREAD_BLOCK));
     public static final Block GINGERBREAD_BEVELED_BLOCK_STAIRS = new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), FabricBlockSettings.copyOf(GINGERBREAD_BLOCK));
@@ -108,7 +105,6 @@ public class WKBlocks {
     public static final Block FROSTED_TILED_GINGERBREAD_BLOCK_PURPLE_STAIRS = new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), FabricBlockSettings.copyOf(GINGERBREAD_BLOCK));
     public static final Block FROSTED_TILED_GINGERBREAD_BLOCK_GREEN_STAIRS = new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), FabricBlockSettings.copyOf(GINGERBREAD_BLOCK));
     public static final Block FROSTED_TILED_GINGERBREAD_BLOCK_VARIANT_STAIRS = new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), FabricBlockSettings.copyOf(GINGERBREAD_BLOCK));
-
     public static final Block ELDER_PLANKS = new Block(FabricBlockSettings.of(Material.WOOD));
     public static final Block SUMAC_PLANKS = new Block(FabricBlockSettings.of(Material.WOOD));
     public static final Block HAWTHORN_PLANKS = new Block(FabricBlockSettings.of(Material.WOOD));
@@ -145,14 +141,12 @@ public class WKBlocks {
     public static final Block STRIPPED_ROWAN_WOOD = new PillarBlock(FabricBlockSettings.of(Material.WOOD, MapColor.TERRACOTTA_BLACK).strength(2.0f).sounds(BlockSoundGroup.WOOD));
     public static final Block SUMAC_WOOD = new PillarBlock(FabricBlockSettings.of(Material.WOOD, MapColor.OAK_TAN).strength(2.0f).sounds(BlockSoundGroup.WOOD));
     public static final Block STRIPPED_SUMAC_WOOD = new PillarBlock(FabricBlockSettings.of(Material.WOOD, MapColor.OAK_TAN).strength(2.0f).sounds(BlockSoundGroup.WOOD));
-
     public static final Block ELDER_SLAB = new SlabBlock(FabricBlockSettings.of(Material.WOOD));
     public static final Block SUMAC_SLAB = new SlabBlock(FabricBlockSettings.of(Material.WOOD));
     public static final Block HAWTHORN_SLAB = new SlabBlock(FabricBlockSettings.of(Material.WOOD));
     public static final Block BLACKTHORN_SLAB = new SlabBlock(FabricBlockSettings.of(Material.WOOD));
     public static final Block JUNIPER_SLAB = new SlabBlock(FabricBlockSettings.of(Material.WOOD));
     public static final Block ROWAN_SLAB = new SlabBlock(FabricBlockSettings.of(Material.WOOD));
-
     public static final Block ELDER_LEAVES = WKBlocks.newLeavesBlock(BlockSoundGroup.GRASS);
     public static final Block ELDER_LEAVES_COLORED = WKBlocks.newLeavesBlock(BlockSoundGroup.GRASS);
     public static final Block SUMAC_LEAVES = WKBlocks.newLeavesBlock(BlockSoundGroup.GRASS);
@@ -161,7 +155,6 @@ public class WKBlocks {
     public static final Block BLACKTHORN_LEAVES = WKBlocks.newLeavesBlock(BlockSoundGroup.GRASS);
     public static final Block JUNIPER_LEAVES = WKBlocks.newLeavesBlock(BlockSoundGroup.GRASS);
     public static final Block ROWAN_LEAVES = WKBlocks.newLeavesBlock(BlockSoundGroup.GRASS);
-
     //Tile Entities
     public static final Block TEAPOT = new TeapotBlock(FabricBlockSettings.copyOf(Blocks.AMETHYST_BLOCK));
     public static final Block IRON_WITCHES_OVEN = new WitchesOvenBlock(AbstractBlock.Settings.of(Material.METAL).strength(4.0F, 5.0F).requiresTool().nonOpaque().luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0));
@@ -194,7 +187,6 @@ public class WKBlocks {
     public static final Block BELLADONNA = new BelladonnaCropBlock(AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP));
     public static final Block BELLADONNA_GLOW = new BelladonnaCropBlock(FabricBlockSettings.copyOf(BELLADONNA), BelladonnaCropBlock.Type.GLOW);
     public static final Block BELLADONNA_NOCTURNAL = new BelladonnaCropBlock(FabricBlockSettings.copyOf(BELLADONNA), BelladonnaCropBlock.Type.NOCTURNAL);
-
     public static final Block AMARANTH = new AmaranthCropBlock(AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP));
     public static final Block AMARANTH_SWEETBERRY = new AmaranthCropBlock(FabricBlockSettings.copyOf(AMARANTH), AmaranthCropBlock.Type.SWEETBERRY);
     public static final Block AMARANTH_TORCH = new AmaranthCropBlock(FabricBlockSettings.copyOf(AMARANTH), AmaranthCropBlock.Type.TORCH);
@@ -205,14 +197,14 @@ public class WKBlocks {
     public static final Block AMARANTH_CERISE = new AmaranthCropBlock(FabricBlockSettings.copyOf(AMARANTH), AmaranthCropBlock.Type.CERISE);
     public static final Block AMARANTH_DARK_PASSION = new AmaranthCropBlock(FabricBlockSettings.copyOf(AMARANTH), AmaranthCropBlock.Type.DARK_PASSION);
     public static final Block AMARANTH_FIREBIRD = new AmaranthCropBlock(FabricBlockSettings.copyOf(AMARANTH), AmaranthCropBlock.Type.FIREBIRD);
-
     public static final Block MINT = new MintCropBlock(AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP));
-
     public static final Block WORMWOOD = new WormwoodCropBlock(AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP));
+    private static final List<ObjectDefinition<Block>> BLOCKS = new ArrayList<>();
 
     public static List<ObjectDefinition<Block>> getItems() {
         return Collections.unmodifiableList(BLOCKS);
     }
+
     public static void register() {
         for (ObjectDefinition<Block> entry : BLOCKS) {
             Registry.register(Registry.BLOCK, entry.id(), entry.object());
@@ -424,6 +416,7 @@ public class WKBlocks {
     public static PillarBlock newLogBlock(MapColor topMapColor, MapColor sideMapColor) {
         return new PillarBlock(FabricBlockSettings.of(Material.WOOD, state -> state.get(PillarBlock.AXIS) == Direction.Axis.Y ? topMapColor : sideMapColor).strength(2.0f).sounds(BlockSoundGroup.WOOD));
     }
+
     private static boolean never(BlockState state, BlockView world, BlockPos pos) {
         return false;
     }
@@ -431,6 +424,7 @@ public class WKBlocks {
     private static LeavesBlock newLeavesBlock(BlockSoundGroup soundGroup) {
         return new LeavesBlock(FabricBlockSettings.of(Material.LEAVES).strength(0.2f).ticksRandomly().sounds(soundGroup).nonOpaque().allowsSpawning(WKBlocks::willSpawnOnLeaves).suffocates(WKBlocks::never).blockVision(WKBlocks::never));
     }
+
     static <T extends Block> T register(String id, Function<FabricBlockSettings, T> factory) {
         final Identifier resource = new WKIdentifier(id);
         final T block = factory.apply(FabricBlockSettings.of(Material.STONE));
@@ -454,7 +448,7 @@ public class WKBlocks {
     }
 
     private static <T extends Block> void registerBlockOnly(final String id, final T block) {
-      //  BLOCKS.add(block);
+        //  BLOCKS.add(block);
         Registry.register(Registry.BLOCK, new Identifier(WK.MODID, id), block);
     }
 

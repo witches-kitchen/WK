@@ -24,7 +24,7 @@ import net.minecraft.client.color.world.FoliageColors;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.render.RenderLayer;
 
-import static cf.witcheskitchen.WK.BLOCKS;
+
 import static cf.witcheskitchen.WK.LEAF_BLOCKS;
 
 @Environment(EnvType.CLIENT)
