@@ -62,6 +62,7 @@ public class WK implements ModInitializer {
         WKItems.register();
         WKBlockEntityTypes.register();
         WKRecipeTypes.register();
+        WKScreenHandlerTypes.register();
         WKParticleTypes.init();
         WKGenerator.register();
         WKEventsRegistry.register(EnvType.SERVER);

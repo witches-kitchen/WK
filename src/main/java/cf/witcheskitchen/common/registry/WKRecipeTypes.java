@@ -13,10 +13,7 @@ import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class WKRecipeTypes {
 
@@ -51,6 +48,12 @@ public class WKRecipeTypes {
         return type;
     }
 
+    public static List<ObjectDefinition<RecipeSerializer<?>>> getSerializers() {
+        return Collections.unmodifiableList(RECIPE_SERIALIZERS);
+    }
+    public static List<ObjectDefinition<RecipeType<?>>> getTypes() {
+        return Collections.unmodifiableList(RECIPE_TYPES);
+    }
     public static void register() {
         for (ObjectDefinition<RecipeSerializer<?>> entry : RECIPE_SERIALIZERS) {
             Registry.register(Registry.RECIPE_SERIALIZER, entry.id(), entry.object());

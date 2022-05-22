@@ -3,6 +3,7 @@ package cf.witcheskitchen.client;
 import cf.witcheskitchen.api.banner.WKBannerRegistry;
 import cf.witcheskitchen.client.gui.screen.BrewingBarrelScreen;
 import cf.witcheskitchen.client.gui.screen.WitchesOvenScreen;
+import cf.witcheskitchen.client.gui.screen.handler.WKScreenHandler;
 import cf.witcheskitchen.client.particle.BubbleParticle;
 import cf.witcheskitchen.client.particle.MagicSparkleParticle;
 import cf.witcheskitchen.client.particle.WKSplashParticle;
