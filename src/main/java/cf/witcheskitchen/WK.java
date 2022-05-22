@@ -25,13 +25,7 @@ public class WK implements ModInitializer {
     public static final String MODID = "witcheskitchen";
     public static final String VERSION = WKVersions.getVersion();
     public static final Logger logger = LoggerFactory.getLogger(MODID);
-    //public static List<ConfigurableSeed> seeds = new ArrayList<>(); //used for placed feature seeds, allowing world gen to use them and for users to configure how seeds are spawned in
-    public static final ItemGroup WK_GROUP = FabricItemGroupBuilder.create(new WKIdentifier("general"))
-            .icon(() -> new ItemStack(Items.POTION))
-            .build();
-    public static final ItemGroup WK_SEED_GROUP = FabricItemGroupBuilder.create(new WKIdentifier("seed"))
-            .icon(() -> new ItemStack(WKItems.AMARANTH_SEEDS))
-            .build();
+
     public static final ArrayList<Block> LEAF_BLOCKS = new ArrayList<>();
     public static WKConfig config;
 
@@ -46,24 +40,30 @@ public class WK implements ModInitializer {
         // Proceed with mild caution.
         AutoConfig.register(WKConfig.class, GsonConfigSerializer::new);
         config = AutoConfig.getConfigHolder(WKConfig.class).getConfig();
-
         logger.info("Remember when I told you how my");
         logger.info("Kin is different in some ways?");
-
         logger.info("It's a fact, she is exactly that!");
         logger.info("A harbinger of death from the world of witchcraft,");
         logger.info("And she's feeding them cakes and her ale to this innocent boy,");
         logger.info("And her magic brings dismay!");
-
         logger.info("I hear her in the wind, the bane of our town");
         logger.info("Come with me, father, I'm to expose a heathen");
+        registerAll();
+        if (WKConfig.get().debugMode) {
+            logger.info("Witches Kitchen Base: Successfully Loaded");
+        }
+        logger.info("WitchesKitchen V{} Initialized", VERSION);
+    }
+
+    private void registerAll() {
+        WKCreativeTabs.register();
         WKPacketTypes.register(EnvType.SERVER);
         WKBlocks.register();
         WKItems.register();
         WKBlockEntityTypes.register();
         WKRecipeTypes.register();
         WKScreenHandlerTypes.register();
-        WKParticleTypes.init();
+        WKParticleTypes.register();
         WKGenerator.register();
         WKEventsRegistry.register(EnvType.SERVER);
         WKStatusEffects.register();
@@ -73,15 +73,10 @@ public class WK implements ModInitializer {
         modifyAxeBlockStripping();
         WKBannerRegistry.registerBanner();
         WKBannerRegistry.registerBannerClient();
-
-        if (WKConfig.get().debugMode) {
-            logger.info("Witches Kitchen Base: Successfully Loaded");
-        }
-        logger.info("WitchesKitchen V{} Initialized", VERSION);
     }
 
-    private void modifyAxeBlockStripping() {
-        Map<Block, Block> immutableBlocks = AxeAccess.getStrippedBlocks();
+    private static void modifyAxeBlockStripping() {
+        final Map<Block, Block> immutableBlocks = AxeAccess.getStrippedBlocks();
         AxeAccess.setStrippedBlocks(new ImmutableMap.Builder<Block, Block>()
                 .putAll(immutableBlocks)
                 .put(WKBlocks.BLACKTHORN_LOG, WKBlocks.STRIPPED_BLACKTHORN_LOG)

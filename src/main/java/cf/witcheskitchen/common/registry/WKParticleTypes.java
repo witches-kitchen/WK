@@ -32,7 +32,7 @@ public class WKParticleTypes {
         return Collections.unmodifiableList(PARTICLE_TYPES);
     }
 
-    public static void init() {
+    public static void register() {
         PARTICLE_TYPES.forEach(entry -> Registry.register(Registry.PARTICLE_TYPE, entry.id(), entry.object()));
         if (WKConfig.get().debugMode) {
             WK.logger.info("Witches Kitchen Base Custom Particles: Successfully Loaded");

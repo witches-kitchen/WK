@@ -81,23 +81,23 @@ public class WKItems {
     }
 
     static Item registerSeed(String id, Block block) {
-        return register(id, settings -> new WKSeedItem(block, settings), WK.WK_SEED_GROUP);
+        return register(id, settings -> new WKSeedItem(block, settings), WKCreativeTabs.SEED_TAB);
     }
 
     static Item registerPlant(String id) {
-        return register(id, Item::new, WK.WK_SEED_GROUP);
+        return register(id, Item::new, WKCreativeTabs.SEED_TAB);
     }
 
     static <T extends Item> T registerPlant(String id, Function<FabricItemSettings, T> factory) {
-        return register(id, factory, WK.WK_SEED_GROUP);
+        return register(id, factory, WKCreativeTabs.SEED_TAB);
     }
 
     static Item register(String id) {
-        return register(id, Item::new, WK.WK_GROUP);
+        return register(id, Item::new, WKCreativeTabs.SEED_TAB);
     }
 
     static <T extends Item> T register(String id, Function<FabricItemSettings, T> factory) {
-        return register(id, factory, WK.WK_GROUP);
+        return register(id, factory, WKCreativeTabs.SEED_TAB);
     }
 
     static <T extends Item> T register(String id, Function<FabricItemSettings, T> factory, ItemGroup tab) {

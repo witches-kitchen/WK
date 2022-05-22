@@ -19,4 +19,6 @@ public interface AxeAccess {
     static void setStrippedBlocks(Map<Block, Block> map) {
         throw new AssertionError();
     }
+
+
 }

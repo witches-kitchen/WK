@@ -24,11 +24,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryEntry;
-import net.minecraft.world.BlockView;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.TreeFeatureConfig;
 
@@ -38,7 +36,7 @@ import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-import static cf.witcheskitchen.WK.WK_GROUP;
+import static cf.witcheskitchen.common.registry.WKCreativeTabs.GENERAL_TAB;
 
 public class WKBlocks {
 
@@ -265,20 +263,21 @@ public class WKBlocks {
         return register(path, Material.WOOD, settings -> new WKStairsBlock(block.getDefaultState(), settings));
     }
     static Block registerGingerBread(String path)  {
-        return register(path, Material.CAKE, Block::new, BlockItem::new, WK_GROUP);
+
+        return register(path, Material.CAKE, Block::new, BlockItem::new, GENERAL_TAB);
     }
 
     static Block register(String path, Material material)  {
-        return register(path, material, Block::new, BlockItem::new, WK_GROUP);
+        return register(path, material, Block::new, BlockItem::new, GENERAL_TAB);
     }
 
 
     static <T extends Block> T register(String path, Material material, Function<FabricBlockSettings, T> blockFactory)  {
-        return register(path, material, blockFactory, BlockItem::new, WK_GROUP);
+        return register(path, material, blockFactory, BlockItem::new, GENERAL_TAB);
     }
 
     static <T extends Block, E extends Item> T register(String path, Material material, Function<FabricBlockSettings, T> blockFactory, BiFunction<T, FabricItemSettings, E> itemFactory)  {
-        return register(path, material, blockFactory, itemFactory, WK_GROUP);
+        return register(path, material, blockFactory, itemFactory, GENERAL_TAB);
     }
     
     static <T extends Block> T registerFrom(String path, T block) {
@@ -287,7 +286,7 @@ public class WKBlocks {
             throw new IllegalArgumentException("Block with id " + path + " returned null");
         }
         BLOCKS.add(new ObjectDefinition<>(id, block));
-        ITEMS.add(new ObjectDefinition<>(id, new BlockItem(block, new Item.Settings().group(WK_GROUP))));
+        ITEMS.add(new ObjectDefinition<>(id, new BlockItem(block, new Item.Settings().group(GENERAL_TAB))));
         return block;
     }
     
