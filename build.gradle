@@ -115,6 +115,9 @@ dependencies {
     modImplementation("io.github.ladysnake:PlayerAbilityLib:${playerabilitylib_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
+    modImplementation("dev.architectury:architectury:${rootProject.architectury_version}") {
+        exclude(group: "net.fabricmc.fabric-api")
+    }
     include("io.github.ladysnake:PlayerAbilityLib:${playerabilitylib_version}")
     modImplementation("com.github.virtuoel:pehkui:${pehkui_version}") {
        exclude(group: "net.fabricmc.fabric-api")
