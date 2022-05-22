@@ -16,6 +16,7 @@ repositories {
         name = "patchouli"
         url = "https://maven.blamejared.com"
     }
+    maven { url "https://maven.architectury.dev/" }
     maven {
         url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
     }
@@ -107,9 +108,6 @@ dependencies {
     }
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:8.1.457"
     modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:8.1.457"
-    modImplementation("curse.maven:architectury-api-419699:3786590") {
-        exclude(group: "net.fabricmc.fabric-api")
-    }
     modImplementation("io.github.ladysnake:impersonate:${impersonate_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
