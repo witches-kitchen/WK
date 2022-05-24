@@ -1,5 +1,6 @@
 package cf.witcheskitchen.client;
 
+import cf.witcheskitchen.WK;
 import cf.witcheskitchen.api.banner.WKBannerRegistry;
 import cf.witcheskitchen.client.gui.screen.BrewingBarrelScreen;
 import cf.witcheskitchen.client.gui.screen.WitchesOvenScreen;
@@ -37,12 +38,12 @@ public class WKClient implements ClientModInitializer {
         ParticleFactoryRegistry.getInstance().register(WKParticleTypes.SPLASH, WKSplashParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(WKParticleTypes.MAGIC_SPARKLE, MagicSparkleParticle.Factory::new);
         WKEventsRegistry.registerClient();
-        //BLOCKS.forEach(this::registerModBlockLayer);
         BlockEntityRendererRegistry.register(WKBlockEntityTypes.WITCHES_OVEN, (ctx) -> new WitchesOvenBlockEntityRender());
         BlockEntityRendererRegistry.register(WKBlockEntityTypes.WITCHES_CAULDRON, (ctx) -> new WitchesCauldronBlockEntityRender());
         BlockEntityRendererRegistry.register(WKBlockEntityTypes.BREWING_BARREL, (ctx) -> new BrewingBarrelBlockEntityRender());
         HandledScreens.register(WKScreenHandlerTypes.WITCHES_OVEN, WitchesOvenScreen::new);
         HandledScreens.register(WKScreenHandlerTypes.BREWING_BARREL, BrewingBarrelScreen::new);
+        WKBlocks.getBlocks().forEach(entry -> BlockRenderLayerMap.INSTANCE.putBlock(entry.object(), RenderLayer.getCutoutMipped()));
         registerColorProvider();
         RenderRegistry.register();
         WKBannerRegistry.registerBanner();
