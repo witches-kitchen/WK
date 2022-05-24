@@ -2,6 +2,8 @@ package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WK;
 import cf.witcheskitchen.WKConfig;
+import cf.witcheskitchen.WKIdentifier;
+import cf.witcheskitchen.api.registry.ObjectDefinition;
 import cf.witcheskitchen.common.statuseffect.*;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -9,13 +11,12 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import org.apache.commons.lang3.Validate;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 public class WKStatusEffects {
-    private static final Map<StatusEffect, Identifier> STATUS_EFFECTS = new LinkedHashMap<>();
-
+    private static final List<ObjectDefinition<StatusEffect>> STATUS_EFFECTS = new ArrayList<>();
     public static final StatusEffect HORROR = create("horror", new HorrorStatusEffect(StatusEffectCategory.HARMFUL, 0x555D50));
     public static final StatusEffect HELLFIRE = create("hellfire", new HellfireStatusEffect(StatusEffectCategory.HARMFUL, 0xA91101));
     public static final StatusEffect FROST_SHIELD = create("frost_shield", new FrostShieldStatusEffect(StatusEffectCategory.BENEFICIAL, 0xAFDBF5));
@@ -33,14 +34,20 @@ public class WKStatusEffects {
     public static final StatusEffect REINFORCEMENT = create("reinforcement", new ReinforcementStatusEffect(StatusEffectCategory.BENEFICIAL, 0x4000FF)).addAttributeModifier(EntityAttributes.GENERIC_ARMOR, "52823351-ea91-4db3-958d-1b1ce3804dd6", 4D, EntityAttributeModifier.Operation.ADDITION).addAttributeModifier(EntityAttributes.GENERIC_ARMOR_TOUGHNESS, "ec255b60-8b01-450b-8538-17a8a28e4aaf", 2D, EntityAttributeModifier.Operation.ADDITION);
     public static final StatusEffect FELIFORM = create("feliform", new FeliformStatusEffect(StatusEffectCategory.BENEFICIAL, 0x228B22));
 
-    private static <T extends StatusEffect> T create(String name, T effect) {
-        STATUS_EFFECTS.put(effect, new Identifier(WK.MODID, name));
+    public static List<ObjectDefinition<StatusEffect>> getStatusEffects() {
+        return Collections.unmodifiableList(STATUS_EFFECTS);
+    }
+
+    static <T extends StatusEffect> T create(String name, T effect) {
+        Validate.isTrue(effect != null);
+        final Identifier id = new WKIdentifier(name);
+        final ObjectDefinition<StatusEffect> def = new ObjectDefinition<>(id, effect);
+        STATUS_EFFECTS.add(def);
         return effect;
     }
 
     public static void register() {
-        STATUS_EFFECTS.keySet().forEach(effect -> Registry.register(Registry.STATUS_EFFECT, STATUS_EFFECTS.get(effect), effect));
-
+        STATUS_EFFECTS.forEach(entry -> Registry.register(Registry.STATUS_EFFECT, entry.id(), entry.object()));
         if (WKConfig.get().debugMode) {
             WK.logger.info("Witches Kitchen Base Potions: Successfully Loaded");
         }
