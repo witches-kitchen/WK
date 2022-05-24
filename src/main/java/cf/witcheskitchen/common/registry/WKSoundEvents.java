@@ -8,13 +8,10 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class WKSoundEvents {
-    public static final List<ObjectDefinition<SoundEvent>> SOUND_EVENTS = new ArrayList<>();
+    private static final List<ObjectDefinition<SoundEvent>> SOUND_EVENTS = new ArrayList<>();
     // Cu-Sith 
     public static final SoundEvent CUSITH_IDLE_EVENT = register("cusith_ambient");
     public static final SoundEvent CUSITH_DEATH_EVENT = register("cusith_death");
@@ -33,6 +30,10 @@ public class WKSoundEvents {
         if (WKConfig.get().debugMode) {
             WK.logger.info("Witches Kitchen Base Sounds: Successfully Loaded");
         }
+    }
+
+    public static List<ObjectDefinition<SoundEvent>> getSoundEvents() {
+        return Collections.unmodifiableList(SOUND_EVENTS);
     }
     static SoundEvent register(String name) {
         final Identifier id = new WKIdentifier(name);
