@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": " witcheskitchen:block/trees/sumac_sapling"
+    "layer0": "witcheskitchen:block/sumac_sapling"
   }
 }

@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cross",
   "textures": {
-    "cross": "witcheskitchen:block/trees/elder_sapling"
+    "cross": "witcheskitchen:block/elder_sapling"
   }
 }
