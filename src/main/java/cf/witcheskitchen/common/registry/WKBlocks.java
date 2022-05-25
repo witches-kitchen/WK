@@ -2,8 +2,9 @@ package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WKIdentifier;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
+import cf.witcheskitchen.common.blocks.BlackthornPillarBlock;
 import cf.witcheskitchen.common.blocks.SaltBlock;
-import cf.witcheskitchen.common.blocks.WKSaplingBlock;
+import cf.witcheskitchen.common.blocks.sapling.WKSaplingBlock;
 import cf.witcheskitchen.common.blocks.WKStairsBlock;
 import cf.witcheskitchen.common.blocks.technical.BrewingBarrelBlock;
 import cf.witcheskitchen.common.blocks.technical.TeapotBlock;
@@ -85,7 +86,6 @@ public class WKBlocks {
     public static final Block FROSTED_TILED_GINGERBREAD_BLOCK_PURPLE_SLAB = registerGingerBread("frosted_tiled_gingerbread_block_purple_slab");
     public static final Block FROSTED_TILED_GINGERBREAD_BLOCK_GREEN_SLAB = registerGingerBread("frosted_tiled_gingerbread_block_green_slab");
     public static final Block FROSTED_TILED_GINGERBREAD_BLOCK_VARIANT_SLAB = registerGingerBread("frosted_tiled_gingerbread_block_variant_slab");
-
     public static final Block RAW_GINGERBREAD_BLOCK_STAIRS = register("raw_gingerbread_block_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
     public static final Block RAW_CHISELED_GINGERBREAD_BLOCK_STAIRS = register("raw_chiseled_gingerbread_block_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
     public static final Block GINGERBREAD_BEVELED_BLOCK_STAIRS = register("gingerbread_beveled_block_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
@@ -124,7 +124,7 @@ public class WKBlocks {
     public static final Block ELDER_LOG = registerLog("elder_log", MapColor.PALE_YELLOW, MapColor.OAK_TAN);
     public static final Block SUMAC_LOG = registerLog("sumac_log", MapColor.DEEPSLATE_GRAY, MapColor.DARK_DULL_PINK);
     public static final Block HAWTHORN_LOG = registerLog("hawthorn_log", MapColor.PALE_YELLOW, MapColor.DIRT_BROWN);
-    public static final Block BLACKTHORN_LOG = registerLog("blackthorn_log", MapColor.TERRACOTTA_BROWN, MapColor.TERRACOTTA_BLACK);
+    public static final Block BLACKTHORN_LOG = registerFrom("blackthorn_log", new BlackthornPillarBlock(logSettings(MapColor.TERRACOTTA_BROWN, MapColor.TERRACOTTA_BLACK)));
     public static final Block JUNIPER_LOG = registerLog("juniper_log", MapColor.DIRT_BROWN, MapColor.DEEPSLATE_GRAY);
     public static final Block ROWAN_LOG = registerLog("rowan_log", MapColor.TERRACOTTA_BLACK, MapColor.BROWN);
     public static final Block STRIPPED_BLACKTHORN_LOG = registerLog("stripped_blackthorn_log", MapColor.TERRACOTTA_BROWN, MapColor.TERRACOTTA_BLACK);
@@ -255,8 +255,12 @@ public class WKBlocks {
        final PillarBlock wood = new PillarBlock(FabricBlockSettings.of(Material.WOOD, color).strength(2.0f).sounds(BlockSoundGroup.WOOD));
        return registerFrom(path, wood);
     }
+    static AbstractBlock.Settings logSettings(MapColor topMapColor, MapColor sideMapColor) {
+        return FabricBlockSettings.of(Material.WOOD, state -> state.get(PillarBlock.AXIS) == Direction.Axis.Y ? topMapColor : sideMapColor).strength(2.0f).sounds(BlockSoundGroup.WOOD).ticksRandomly();
+    }
+
     static PillarBlock registerLog(String path, MapColor topMapColor, MapColor sideMapColor) {
-        final PillarBlock log = new PillarBlock(FabricBlockSettings.of(Material.WOOD, state -> state.get(PillarBlock.AXIS) == Direction.Axis.Y ? topMapColor : sideMapColor).strength(2.0f).sounds(BlockSoundGroup.WOOD));
+        final PillarBlock log = new PillarBlock(logSettings(topMapColor, sideMapColor));
         return registerFrom(path, log);
     }
     static Block registerWoodenStair(String path, Block block) {

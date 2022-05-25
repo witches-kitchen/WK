@@ -1,4 +1,4 @@
-package cf.witcheskitchen.common.generator.saplings;
+package cf.witcheskitchen.common.blocks.sapling.generator;
 
 import cf.witcheskitchen.common.registry.WKConfiguredFeatures;
 import net.minecraft.util.registry.RegistryEntry;

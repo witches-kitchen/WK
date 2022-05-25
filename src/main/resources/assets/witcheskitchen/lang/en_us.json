@@ -133,6 +133,8 @@
   "item.witcheskitchen.chocolate_rum_balls": "Chocolate Rum Balls",
   "item.witcheskitchen.super_booze": "Super Booze",
   "death.attack.on_oven": "%s cooked themselves to a crisp... they do not taste great",
+  "death.attack.hugging_blackthorn": "%s forgot to use protection while hugging a tree",
+  "death.attack.punching_blackthorn": "%s lost a fight with a blackthorn",
   "screen.title.witcheskitchen.witches_oven": "Witches' Oven",
   "screen.title.witcheskitchen.brewing_barrel": "Brewing Barrel",
   "rei.witcheskitchen.oven_cooking": "Witches' Oven Cooking",

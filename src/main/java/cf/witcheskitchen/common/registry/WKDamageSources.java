@@ -8,6 +8,8 @@ public class WKDamageSources {
 
     public static final DamageSource ON_OVEN = new WKFireDamageSource("on_oven");
     public static final DamageSource HOLY = new WKHolyDamageSource("holy");
+    public static final DamageSource HUGGING_BLACKTHORN = new BlackthornDamageSource("hugging_blackthorn");
+    public static final DamageSource PUNCHING_BLACKTHORN = new BlackthornDamageSource("punching_blackthorn");
 
     static {
         if (WKConfig.get().debugMode) {
@@ -24,6 +26,7 @@ public class WKDamageSources {
         }
     }
 
+
     private static class WKHolyDamageSource extends DamageSource {
 
         protected WKHolyDamageSource(String name) {
@@ -32,6 +35,11 @@ public class WKDamageSources {
             this.setFire();
             this.isMagic();
             this.setUnblockable();
+        }
+    }
+    static class BlackthornDamageSource extends DamageSource {
+        public BlackthornDamageSource(String name) {
+            super(name);
         }
     }
 }

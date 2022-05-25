@@ -1,4 +1,4 @@
-package cf.witcheskitchen.common.blocks;
+package cf.witcheskitchen.common.blocks.sapling;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.SaplingBlock;
