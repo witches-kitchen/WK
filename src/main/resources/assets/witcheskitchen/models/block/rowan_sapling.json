@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cross",
   "textures": {
-    "cross": "witcheskitchen:block/trees/rowan_sapling"
+    "cross": "witcheskitchen:block/rowan_sapling"
   }
 }

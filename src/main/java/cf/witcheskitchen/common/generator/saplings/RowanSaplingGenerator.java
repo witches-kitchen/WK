@@ -1,6 +1,6 @@
 package cf.witcheskitchen.common.generator.saplings;
 
-import cf.witcheskitchen.common.registry.WKGenerator;
+import cf.witcheskitchen.common.registry.WKConfiguredFeatures;
 import net.minecraft.util.registry.RegistryEntry;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.TreeConfiguredFeatures;
@@ -17,6 +17,6 @@ public class RowanSaplingGenerator
 //        if (random.nextInt(30) == 0) {
 //            return bees ? TreeConfiguredFeatures.OAK_BEES_005 : WKGenerator.ELDER_ROWAN_TREE;
 //        }
-        return bees ? TreeConfiguredFeatures.OAK_BEES_005 : RegistryEntry.of(WKGenerator.ROWAN_TREE);
+        return bees ? TreeConfiguredFeatures.OAK_BEES_005 : RegistryEntry.of(WKConfiguredFeatures.ROWAN_TREE);
     }
 }

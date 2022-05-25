@@ -3,7 +3,7 @@ package cf.witcheskitchen.common.generator;
 
 //this will all need to be reworked to better suit our needs
 
-import cf.witcheskitchen.common.registry.WKGenerator;
+import cf.witcheskitchen.common.registry.WKConfiguredFeatures;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.block.BlockState;
@@ -27,7 +27,7 @@ public class SumacFoliagePlacer
 
     @Override
     protected FoliagePlacerType<?> getType() {
-        return WKGenerator.SUMAC_FOLIAGE_PLACER;
+        return WKConfiguredFeatures.SUMAC_FOLIAGE_PLACER;
     }
 
     @Override
