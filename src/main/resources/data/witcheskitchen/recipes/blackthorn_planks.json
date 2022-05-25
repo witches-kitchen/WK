@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "witcheskitchen:blackthorn_logs"
+    }
+  ],
+  "result": {
+    "item": "witcheskitchen:blackthorn_planks",
+    "count": 4
+  }
+}

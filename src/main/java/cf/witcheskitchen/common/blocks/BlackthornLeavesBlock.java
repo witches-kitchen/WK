@@ -20,8 +20,8 @@ public class BlackthornLeavesBlock extends LeavesBlock {
     private static final VoxelShape COLLISION_BOX = Block.createCuboidShape(1.0, 1.0, 1.0, 15.0, 15.0, 15.0);
 
     public BlackthornLeavesBlock(Settings settings) {
-        super(settings);
-    }
+            super(settings);
+        }
 
     @Override
     public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {

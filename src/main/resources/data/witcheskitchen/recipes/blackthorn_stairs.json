@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "witcheskitchen:blackthorn_planks"
+    }
+  },
+  "result": {
+    "item": "witcheskitchen:blackthorn_stairs",
+    "count": 4
+  }
+}
