@@ -2,6 +2,7 @@ package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WKIdentifier;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
+import cf.witcheskitchen.common.blocks.BlackthornLeavesBlock;
 import cf.witcheskitchen.common.blocks.BlackthornPillarBlock;
 import cf.witcheskitchen.common.blocks.SaltBlock;
 import cf.witcheskitchen.common.blocks.sapling.WKSaplingBlock;
@@ -156,7 +157,7 @@ public class WKBlocks {
     public static final Block SUMAC_LEAVES = registerLeaf("sumac_leaves");
     public static final Block HAWTHORN_LEAVES = registerLeaf("hawthorn_leaves");
     public static final Block HAWTHORN_LEAVES_COLORED = registerLeaf("hawthorn_leaves_colored");
-    public static final Block BLACKTHORN_LEAVES = registerLeaf("blackthorn_leaves");
+    public static final Block BLACKTHORN_LEAVES = registerFrom("blackthorn_leaves", new BlackthornLeavesBlock(leavesSettings()));
     public static final Block JUNIPER_LEAVES = registerLeaf("juniper_leaves");
     public static final Block ROWAN_LEAVES = registerLeaf("rowan_leaves");
     //Tile Entities
@@ -219,6 +220,16 @@ public class WKBlocks {
                 .sounds(BlockSoundGroup.CROP), type);
         return registerFrom(path, amaranth);
     }
+    static FabricBlockSettings leavesSettings() {
+        return FabricBlockSettings.of(Material.LEAVES)
+                .strength(0.2F)
+                .ticksRandomly()
+                .sounds(BlockSoundGroup.GRASS)
+                .nonOpaque()
+                .allowsSpawning((state, world, pos, type) -> type == EntityType.OCELOT || type == EntityType.PARROT)
+                .suffocates((state, world, pos) -> false)
+                .blockVision((state, world, pos) -> false);
+    }
     static Block registerBarrel(String path) {
         return register(path, Material.WOOD, settings -> new BrewingBarrelBlock(settings.nonOpaque().strength(2.5F)));
     }
@@ -238,14 +249,7 @@ public class WKBlocks {
     }
 
     static Block registerLeaf(String path) {
-        final LeavesBlock leaf = new LeavesBlock(FabricBlockSettings.of(Material.LEAVES)
-                .strength(0.2F)
-                .ticksRandomly()
-                .sounds(BlockSoundGroup.GRASS)
-                .nonOpaque()
-                .allowsSpawning((state, world, pos, type) -> type == EntityType.OCELOT || type == EntityType.PARROT)
-                .suffocates((state, world, pos) -> false)
-                .blockVision((state, world, pos) -> false));
+        final LeavesBlock leaf = new LeavesBlock(leavesSettings());
         return registerFrom(path, leaf);
     }
     static Block registerSlab(String path) {
