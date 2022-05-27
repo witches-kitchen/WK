@@ -50,15 +50,6 @@ public class WKClient implements ClientModInitializer {
         WKBannerRegistry.registerBannerClient();
     }
 
-    //modified from croptopia
-    public void registerModBlockLayer(Block block) {
-        if (block instanceof WKLeafCropBlock) {
-            BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutoutMipped());
-            return;
-        }
-        BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutoutMipped());
-    }
-
     //allows for color map modification of leaves based on biome
     public void registerColorProvider() {
 

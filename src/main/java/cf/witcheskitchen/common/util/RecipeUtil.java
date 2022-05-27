@@ -26,7 +26,11 @@ import java.util.stream.Collector;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class RecipeUtil {
+public final class RecipeUtil {
+
+    private RecipeUtil() {
+        // Don't let anyone instantiate this
+    }
 
     /**
      * Checks that a list of Ingredients match the contents inside an {@link Inventory}.

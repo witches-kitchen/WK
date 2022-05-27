@@ -56,6 +56,7 @@ public class WK implements ModInitializer {
         WKPacketTypes.register(EnvType.SERVER);
         WKBlocks.register();
         WKItems.register();
+        WKFoodComponents.register();
         WKTags.register();
         WKBlockEntityTypes.register();
         WKRecipeTypes.register();
@@ -66,10 +67,11 @@ public class WK implements ModInitializer {
         WKStatusEffects.register();
         WKSoundEvents.register();
         GeckoLib.initialize();
-        WKEntities.register();
+        WKEntityTypes.register();
         modifyAxeBlockStripping();
         WKBannerRegistry.registerBanner();
         WKBannerRegistry.registerBannerClient();
+        WKDamageSources.register();
     }
 
     private static void modifyAxeBlockStripping() {

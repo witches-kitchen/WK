@@ -72,9 +72,9 @@ public class WKItems {
     public static final Item CHOCOLATE_RUM_BALLS = registerPlant("chocolate_rum_balls", settings -> new Item(settings.food(WKFoodComponents.RUM_BALLS)));
     public static final Item SUPER_BOOZE = registerPlant("super_booze", settings -> new Item(new Item.Settings().food(WKFoodComponents.SUPER_BOOZE)));
     //Todo: Convert to usage of hex triplets fully
-    public static final Item CU_SITH_SPAWN_EGG = register("cu_sith_spawn_egg", settings -> new SpawnEggItem(WKEntities.CUSITH, 3421236, 3497531, settings));
-    public static final Item FERRET_SPAWN_EGG = register("ferret_spawn_egg", settings -> new SpawnEggItem(WKEntities.FERRET, 9985082, 2631205, settings));
-    public static final Item CHURCH_GRIM_SPAWN_EGG = register("church_grim_spawn_egg", settings -> new SpawnEggItem(WKEntities.CHURCH_GRIM, 0xFFFAFA, 0x36454F, settings));
+    public static final Item CU_SITH_SPAWN_EGG = register("cu_sith_spawn_egg", settings -> new SpawnEggItem(WKEntityTypes.CUSITH, 3421236, 3497531, settings));
+    public static final Item FERRET_SPAWN_EGG = register("ferret_spawn_egg", settings -> new SpawnEggItem(WKEntityTypes.FERRET, 9985082, 2631205, settings));
+    public static final Item CHURCH_GRIM_SPAWN_EGG = register("church_grim_spawn_egg", settings -> new SpawnEggItem(WKEntityTypes.CHURCH_GRIM, 0xFFFAFA, 0x36454F, settings));
 
     public static List<ObjectDefinition<Item>> getItems() {
         return Collections.unmodifiableList(ITEMS);

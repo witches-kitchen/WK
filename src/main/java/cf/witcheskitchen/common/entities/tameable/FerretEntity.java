@@ -2,7 +2,7 @@ package cf.witcheskitchen.common.entities.tameable;
 
 import cf.witcheskitchen.api.WKApi;
 import cf.witcheskitchen.api.WKTameableEntity;
-import cf.witcheskitchen.common.registry.WKEntities;
+import cf.witcheskitchen.common.registry.WKEntityTypes;
 import cf.witcheskitchen.common.registry.WKSoundEvents;
 import com.google.common.collect.Sets;
 import net.minecraft.block.BlockState;
@@ -76,7 +76,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         TAMING_INGREDIENTS = Sets.newHashSet(Items.RABBIT, Items.COOKED_RABBIT, Items.CHICKEN, Items.COOKED_CHICKEN, Items.EGG, Items.RABBIT_FOOT, Items.TURTLE_EGG);
         FLEE_SUPERNATURAL = (entity) -> {
             EntityType<?> entityType = entity.getType();
-            return entityType == WKEntities.CUSITH || WKApi.isGreaterDemon(entity);
+            return entityType == WKEntityTypes.CUSITH || WKApi.isGreaterDemon(entity);
         };
     }
 
@@ -138,7 +138,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
     @Nullable
     @Override
     public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
-        FerretEntity ferretEntity = WKEntities.FERRET.create(world);
+        FerretEntity ferretEntity = WKEntityTypes.FERRET.create(world);
         UUID uUID = this.getOwnerUuid();
         if (uUID != null) {
             ferretEntity.setOwnerUuid(uUID);

@@ -1,8 +1,10 @@
 package cf.witcheskitchen.common.util;
 
 //Mostly for debugging
-public class TimeHelper {
-
+public final class TimeHelper {
+    private TimeHelper() {
+        // Don't let anyone instantiate this
+    }
     public static int toTicks(int seconds) {
         return seconds * 20;
     }

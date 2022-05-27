@@ -42,4 +42,8 @@ public class WKDamageSources {
             super(name);
         }
     }
+    // Used to control in which order static constructors are called
+    public static void register() {
+
+    }
 }

@@ -6,7 +6,11 @@ import net.minecraft.server.network.ServerPlayerEntity;
 
 import java.util.function.Consumer;
 
-public class PacketHelper {
+public final class PacketHelper {
+
+    private PacketHelper() {
+        // Don't let anyone instantiate this
+    }
 
     /**
      * Sends the packet to all players tracking the given entity in a server world.
