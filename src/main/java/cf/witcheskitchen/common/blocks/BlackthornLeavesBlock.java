@@ -12,7 +12,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import org.checkerframework.checker.units.qual.C;
 
 @SuppressWarnings("deprecation")
 public class BlackthornLeavesBlock extends LeavesBlock {
@@ -20,8 +19,8 @@ public class BlackthornLeavesBlock extends LeavesBlock {
     private static final VoxelShape COLLISION_BOX = Block.createCuboidShape(1.0, 1.0, 1.0, 15.0, 15.0, 15.0);
 
     public BlackthornLeavesBlock(Settings settings) {
-            super(settings);
-        }
+        super(settings);
+    }
 
     @Override
     public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {

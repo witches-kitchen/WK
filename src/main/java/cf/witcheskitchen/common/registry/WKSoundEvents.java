@@ -8,7 +8,9 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class WKSoundEvents {
     private static final List<ObjectDefinition<SoundEvent>> SOUND_EVENTS = new ArrayList<>();
@@ -35,6 +37,7 @@ public class WKSoundEvents {
     public static List<ObjectDefinition<SoundEvent>> getSoundEvents() {
         return Collections.unmodifiableList(SOUND_EVENTS);
     }
+
     static SoundEvent register(String name) {
         final Identifier id = new WKIdentifier(name);
         final SoundEvent soundEvent = new SoundEvent(id);
@@ -42,6 +45,7 @@ public class WKSoundEvents {
         SOUND_EVENTS.add(def);
         return soundEvent;
     }
+
     public static void register() {
         SOUND_EVENTS.forEach(entry -> Registry.register(Registry.SOUND_EVENT, entry.id(), entry.object()));
     }

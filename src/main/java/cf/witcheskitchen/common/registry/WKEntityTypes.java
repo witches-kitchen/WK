@@ -9,12 +9,16 @@ import cf.witcheskitchen.common.entities.neutral.ChurchGrimEntity;
 import cf.witcheskitchen.common.entities.tameable.FerretEntity;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
-import net.minecraft.entity.*;
+import net.minecraft.entity.EntityDimensions;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class WKEntityTypes {
     private static final List<ObjectDefinition<EntityType<?>>> ENTITY_TYPES = new ArrayList<>();

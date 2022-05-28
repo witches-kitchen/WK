@@ -25,6 +25,7 @@ public class WKFoodComponents {
             WK.logger.info("Witches Kitchen Base Food Components: Successfully Loaded");
         }
     }
+
     // Used to control in which order static constructors are called
     public static void register() {
 

@@ -11,6 +11,7 @@ public class WKCreativeTabs {
 
     public static final ItemGroup GENERAL_TAB = register("general", new ItemStack(Items.POTION));
     public static final ItemGroup SEED_TAB = register("seed", new ItemStack(WKItems.AMARANTH_SEEDS));
+
     static ItemGroup register(String name, ItemStack icon) {
         final Identifier id = new WKIdentifier(name);
         return FabricItemGroupBuilder.create(id).icon(() -> icon).build();

@@ -1,6 +1,5 @@
 package cf.witcheskitchen.client;
 
-import cf.witcheskitchen.WK;
 import cf.witcheskitchen.api.banner.WKBannerRegistry;
 import cf.witcheskitchen.client.gui.screen.BrewingBarrelScreen;
 import cf.witcheskitchen.client.gui.screen.WitchesOvenScreen;
@@ -11,7 +10,6 @@ import cf.witcheskitchen.client.registry.RenderRegistry;
 import cf.witcheskitchen.client.render.blockentity.BrewingBarrelBlockEntityRender;
 import cf.witcheskitchen.client.render.blockentity.WitchesCauldronBlockEntityRender;
 import cf.witcheskitchen.client.render.blockentity.WitchesOvenBlockEntityRender;
-import cf.witcheskitchen.common.blocks.WKLeafCropBlock;
 import cf.witcheskitchen.common.registry.*;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
@@ -25,7 +23,6 @@ import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.color.world.FoliageColors;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.render.RenderLayer;
-
 
 import static cf.witcheskitchen.WK.LEAF_BLOCKS;
 

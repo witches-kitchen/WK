@@ -29,6 +29,25 @@ public class WK implements ModInitializer {
         return new WKIdentifier(name);
     }
 
+    private static void modifyAxeBlockStripping() {
+        final Map<Block, Block> immutableBlocks = AxeAccess.getStrippedBlocks();
+        AxeAccess.setStrippedBlocks(new ImmutableMap.Builder<Block, Block>()
+                .putAll(immutableBlocks)
+                .put(WKBlocks.BLACKTHORN_LOG, WKBlocks.STRIPPED_BLACKTHORN_LOG)
+                .put(WKBlocks.BLACKTHORN_WOOD, WKBlocks.STRIPPED_BLACKTHORN_WOOD)
+                .put(WKBlocks.ELDER_LOG, WKBlocks.STRIPPED_ELDER_LOG)
+                .put(WKBlocks.ELDER_WOOD, WKBlocks.STRIPPED_ELDER_WOOD)
+                .put(WKBlocks.HAWTHORN_LOG, WKBlocks.STRIPPED_HAWTHORN_LOG)
+                .put(WKBlocks.HAWTHORN_WOOD, WKBlocks.STRIPPED_HAWTHORN_WOOD)
+                .put(WKBlocks.JUNIPER_LOG, WKBlocks.STRIPPED_JUNIPER_LOG)
+                .put(WKBlocks.JUNIPER_WOOD, WKBlocks.STRIPPED_JUNIPER_WOOD)
+                .put(WKBlocks.ROWAN_LOG, WKBlocks.STRIPPED_ROWAN_LOG)
+                .put(WKBlocks.ROWAN_WOOD, WKBlocks.STRIPPED_ROWAN_WOOD)
+                .put(WKBlocks.SUMAC_LOG, WKBlocks.STRIPPED_SUMAC_LOG)
+                .put(WKBlocks.SUMAC_WOOD, WKBlocks.STRIPPED_SUMAC_WOOD)
+                .build());
+    }
+
     @Override
     public void onInitialize() {
         // This code runs as soon as Minecraft is in a mod-load-ready state.
@@ -72,24 +91,5 @@ public class WK implements ModInitializer {
         WKBannerRegistry.registerBanner();
         WKBannerRegistry.registerBannerClient();
         WKDamageSources.register();
-    }
-
-    private static void modifyAxeBlockStripping() {
-        final Map<Block, Block> immutableBlocks = AxeAccess.getStrippedBlocks();
-        AxeAccess.setStrippedBlocks(new ImmutableMap.Builder<Block, Block>()
-                .putAll(immutableBlocks)
-                .put(WKBlocks.BLACKTHORN_LOG, WKBlocks.STRIPPED_BLACKTHORN_LOG)
-                .put(WKBlocks.BLACKTHORN_WOOD, WKBlocks.STRIPPED_BLACKTHORN_WOOD)
-                .put(WKBlocks.ELDER_LOG, WKBlocks.STRIPPED_ELDER_LOG)
-                .put(WKBlocks.ELDER_WOOD, WKBlocks.STRIPPED_ELDER_WOOD)
-                .put(WKBlocks.HAWTHORN_LOG, WKBlocks.STRIPPED_HAWTHORN_LOG)
-                .put(WKBlocks.HAWTHORN_WOOD, WKBlocks.STRIPPED_HAWTHORN_WOOD)
-                .put(WKBlocks.JUNIPER_LOG, WKBlocks.STRIPPED_JUNIPER_LOG)
-                .put(WKBlocks.JUNIPER_WOOD, WKBlocks.STRIPPED_JUNIPER_WOOD)
-                .put(WKBlocks.ROWAN_LOG, WKBlocks.STRIPPED_ROWAN_LOG)
-                .put(WKBlocks.ROWAN_WOOD, WKBlocks.STRIPPED_ROWAN_WOOD)
-                .put(WKBlocks.SUMAC_LOG, WKBlocks.STRIPPED_SUMAC_LOG)
-                .put(WKBlocks.SUMAC_WOOD, WKBlocks.STRIPPED_SUMAC_WOOD)
-                .build());
     }
 }

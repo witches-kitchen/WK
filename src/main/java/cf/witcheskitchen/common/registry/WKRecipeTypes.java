@@ -13,17 +13,18 @@ import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class WKRecipeTypes {
 
 
     private static final List<ObjectDefinition<RecipeSerializer<?>>> RECIPE_SERIALIZERS = new ArrayList<>();
-    private static final List<ObjectDefinition<RecipeType<?>>> RECIPE_TYPES = new ArrayList<>();
-
     public static final RecipeSerializer<OvenCookingRecipe> WITCHES_OVEN_COOKING_RECIPE_SERIALIZER = register("oven_cooking", new OvenCookingRecipe.Serializer());
     public static final RecipeSerializer<BarrelFermentingRecipe> BARREL_FERMENTING_RECIPE_SERIALIZER = register("fermenting", new BarrelFermentingRecipe.Serializer());
     public static final RecipeSerializer<CauldronBrewingRecipe> CAULDRON_BREWING_RECIPE_SERIALIZER = register("cauldron_brewing", new CauldronBrewingRecipe.Serializer());
+    private static final List<ObjectDefinition<RecipeType<?>>> RECIPE_TYPES = new ArrayList<>();
     public static final RecipeType<OvenCookingRecipe> WITCHES_OVEN_COOKING_RECIPE_TYPE = register("oven_cooking");
     public static final RecipeType<BarrelFermentingRecipe> BARREL_FERMENTING_RECIPE_TYPE = register("fermenting");
     public static final RecipeType<CauldronBrewingRecipe> CAULDRON_BREWING_RECIPE_TYPE = register("cauldron_brewing");
@@ -51,9 +52,11 @@ public class WKRecipeTypes {
     public static List<ObjectDefinition<RecipeSerializer<?>>> getSerializers() {
         return Collections.unmodifiableList(RECIPE_SERIALIZERS);
     }
+
     public static List<ObjectDefinition<RecipeType<?>>> getTypes() {
         return Collections.unmodifiableList(RECIPE_TYPES);
     }
+
     public static void register() {
         for (ObjectDefinition<RecipeSerializer<?>> entry : RECIPE_SERIALIZERS) {
             Registry.register(Registry.RECIPE_SERIALIZER, entry.id(), entry.object());

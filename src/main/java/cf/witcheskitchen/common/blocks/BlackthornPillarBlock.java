@@ -12,6 +12,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+
 @SuppressWarnings("deprecation")
 public class BlackthornPillarBlock extends PillarBlock {
 
@@ -25,7 +26,7 @@ public class BlackthornPillarBlock extends PillarBlock {
 
     @Override
     public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return switch(state.get(AXIS)) {
+        return switch (state.get(AXIS)) {
             case X -> X_AXIS_COLLISION_SHAPE;
             case Y -> Y_AXIS_COLLISION_SHAPE;
             case Z -> Z_AXIS_COLLISION_SHAPE;
@@ -36,7 +37,7 @@ public class BlackthornPillarBlock extends PillarBlock {
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
         super.onEntityCollision(state, world, pos, entity);
         if (entity instanceof LivingEntity) {
-           entity.damage(WKDamageSources.HUGGING_BLACKTHORN, 2.0F);
+            entity.damage(WKDamageSources.HUGGING_BLACKTHORN, 2.0F);
         }
     }
 

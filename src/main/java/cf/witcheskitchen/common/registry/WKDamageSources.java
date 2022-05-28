@@ -17,6 +17,11 @@ public class WKDamageSources {
         }
     }
 
+    // Used to control in which order static constructors are called
+    public static void register() {
+
+    }
+
     private static class WKFireDamageSource extends DamageSource {
 
         protected WKFireDamageSource(String name) {
@@ -25,7 +30,6 @@ public class WKDamageSources {
             this.setFire();
         }
     }
-
 
     private static class WKHolyDamageSource extends DamageSource {
 
@@ -37,13 +41,10 @@ public class WKDamageSources {
             this.setUnblockable();
         }
     }
+
     static class BlackthornDamageSource extends DamageSource {
         public BlackthornDamageSource(String name) {
             super(name);
         }
-    }
-    // Used to control in which order static constructors are called
-    public static void register() {
-
     }
 }

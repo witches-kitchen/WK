@@ -5,6 +5,7 @@ public final class TimeHelper {
     private TimeHelper() {
         // Don't let anyone instantiate this
     }
+
     public static int toTicks(int seconds) {
         return seconds * 20;
     }

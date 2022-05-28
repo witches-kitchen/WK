@@ -38,9 +38,8 @@ import java.util.OptionalInt;
 
 public class WKConfiguredFeatures {
 
-    private static final List<ObjectDefinition<ConfiguredFeature<TreeFeatureConfig, ?>>> CONFIGURED_FEATURES = new ArrayList<>();
     public static final FoliagePlacerType<SumacFoliagePlacer> SUMAC_FOLIAGE_PLACER = FoliagePlacerTypeInvoker.callRegister("sumac_foliage_placer", SumacFoliagePlacer.CODEC);
-
+    private static final List<ObjectDefinition<ConfiguredFeature<TreeFeatureConfig, ?>>> CONFIGURED_FEATURES = new ArrayList<>();
     public static final ConfiguredFeature<TreeFeatureConfig, ?> BLACKTHORN_TREE = register("blackthorn_tree",
             new ConfiguredFeature<>(Feature.TREE, new TreeFeatureConfig.Builder(
                     SimpleBlockStateProvider.of(WKBlocks.BLACKTHORN_LOG),
@@ -124,7 +123,6 @@ public class WKConfiguredFeatures {
         }
     }
 }
-
 
 
 //TODO: change the way placed features are registered

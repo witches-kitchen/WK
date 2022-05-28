@@ -5,8 +5,8 @@ import cf.witcheskitchen.api.registry.ObjectDefinition;
 import cf.witcheskitchen.common.blocks.BlackthornLeavesBlock;
 import cf.witcheskitchen.common.blocks.BlackthornPillarBlock;
 import cf.witcheskitchen.common.blocks.SaltBlock;
-import cf.witcheskitchen.common.blocks.sapling.WKSaplingBlock;
 import cf.witcheskitchen.common.blocks.WKStairsBlock;
+import cf.witcheskitchen.common.blocks.sapling.WKSaplingBlock;
 import cf.witcheskitchen.common.blocks.technical.BrewingBarrelBlock;
 import cf.witcheskitchen.common.blocks.technical.TeapotBlock;
 import cf.witcheskitchen.common.blocks.technical.WitchesCauldronBlock;
@@ -49,6 +49,27 @@ public class WKBlocks {
     public static final Block RAW_CHISELED_GINGERBREAD_BLOCK = registerGingerBread("raw_chiseled_gingerbread_block");
     public static final Block GINGERBREAD_BEVELED_BLOCK = registerGingerBread("gingerbread_beveled_block");
     public static final Block GINGERBREAD_BLOCK = registerGingerBread("gingerbread_block");
+    public static final Block RAW_GINGERBREAD_BLOCK_STAIRS = register("raw_gingerbread_block_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
+    public static final Block RAW_CHISELED_GINGERBREAD_BLOCK_STAIRS = register("raw_chiseled_gingerbread_block_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
+    public static final Block GINGERBREAD_BEVELED_BLOCK_STAIRS = register("gingerbread_beveled_block_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
+    public static final Block GINGERBREAD_BLOCK_STAIRS = register("gingerbread_block_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
+    public static final Block RAW_GINGERBREAD_BEVELED_BLOCK_STAIRS = register("raw_gingerbread_beveled_block_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
+    public static final Block FROSTED_GINGERBREAD_BLOCK_STAIRS = register("frosted_gingerbread_block_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
+    public static final Block FROSTED_BEVELED_GINGERBREAD_BLOCK_STAIRS = register("frosted_beveled_gingerbread_block_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
+    public static final Block CHISELED_GINGERBREAD_BLOCK_STAIRS = register("chiseled_gingerbread_block_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
+    public static final Block RAW_GINGERBREAD_TILED_BLOCK_STAIRS = register("raw_gingerbread_tiled_block_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
+    public static final Block GINGERBREAD_TILED_BLOCK_STAIRS = register("gingerbread_tiled_block_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
+    public static final Block FROSTING_BLOCK_STAIRS = register("frosting_block_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
+    public static final Block FROSTED_GINGERBREAD_TILED_BLOCK_STAIRS = register("frosted_gingerbread_tiled_block_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
+    public static final Block FROSTED_BEVELED_GINGERBREAD_BLOCK_YELLOW_STAIRS = register("frosted_beveled_gingerbread_block_yellow_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
+    public static final Block FROSTED_BEVELED_GINGERBREAD_BLOCK_RED_STAIRS = register("frosted_beveled_gingerbread_block_red_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
+    public static final Block FROSTED_BEVELED_GINGERBREAD_BLOCK_PURPLE_STAIRS = register("frosted_beveled_gingerbread_block_purple_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
+    public static final Block FROSTED_BEVELED_GINGERBREAD_BLOCK_GREEN_STAIRS = register("frosted_beveled_gingerbread_block_green_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
+    public static final Block FROSTED_TILED_GINGERBREAD_BLOCK_YELLOW_STAIRS = register("frosted_tiled_gingerbread_block_yellow_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
+    public static final Block FROSTED_TILED_GINGERBREAD_BLOCK_RED_STAIRS = register("frosted_tiled_gingerbread_block_red_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
+    public static final Block FROSTED_TILED_GINGERBREAD_BLOCK_PURPLE_STAIRS = register("frosted_tiled_gingerbread_block_purple_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
+    public static final Block FROSTED_TILED_GINGERBREAD_BLOCK_GREEN_STAIRS = register("frosted_tiled_gingerbread_block_green_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
+    public static final Block FROSTED_TILED_GINGERBREAD_BLOCK_VARIANT_STAIRS = register("frosted_tiled_gingerbread_block_variant_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
     public static final Block RAW_GINGERBREAD_BEVELED_BLOCK = registerGingerBread("raw_gingerbread_beveled_block");
     public static final Block FROSTED_GINGERBREAD_BLOCK = registerGingerBread("frosted_gingerbread_block");
     public static final Block FROSTED_BEVELED_GINGERBREAD_BLOCK = registerGingerBread("frosted_beveled_gingerbread_block");
@@ -87,41 +108,18 @@ public class WKBlocks {
     public static final Block FROSTED_TILED_GINGERBREAD_BLOCK_PURPLE_SLAB = registerGingerBread("frosted_tiled_gingerbread_block_purple_slab");
     public static final Block FROSTED_TILED_GINGERBREAD_BLOCK_GREEN_SLAB = registerGingerBread("frosted_tiled_gingerbread_block_green_slab");
     public static final Block FROSTED_TILED_GINGERBREAD_BLOCK_VARIANT_SLAB = registerGingerBread("frosted_tiled_gingerbread_block_variant_slab");
-    public static final Block RAW_GINGERBREAD_BLOCK_STAIRS = register("raw_gingerbread_block_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
-    public static final Block RAW_CHISELED_GINGERBREAD_BLOCK_STAIRS = register("raw_chiseled_gingerbread_block_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
-    public static final Block GINGERBREAD_BEVELED_BLOCK_STAIRS = register("gingerbread_beveled_block_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
-    public static final Block GINGERBREAD_BLOCK_STAIRS = register("gingerbread_block_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
-    public static final Block RAW_GINGERBREAD_BEVELED_BLOCK_STAIRS = register("raw_gingerbread_beveled_block_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
-    public static final Block FROSTED_GINGERBREAD_BLOCK_STAIRS = register("frosted_gingerbread_block_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
-    public static final Block FROSTED_BEVELED_GINGERBREAD_BLOCK_STAIRS = register("frosted_beveled_gingerbread_block_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
-    public static final Block CHISELED_GINGERBREAD_BLOCK_STAIRS = register("chiseled_gingerbread_block_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
-    public static final Block RAW_GINGERBREAD_TILED_BLOCK_STAIRS = register("raw_gingerbread_tiled_block_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
-    public static final Block GINGERBREAD_TILED_BLOCK_STAIRS = register("gingerbread_tiled_block_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
-    public static final Block FROSTING_BLOCK_STAIRS = register("frosting_block_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
-    public static final Block FROSTED_GINGERBREAD_TILED_BLOCK_STAIRS = register("frosted_gingerbread_tiled_block_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
-    public static final Block FROSTED_BEVELED_GINGERBREAD_BLOCK_YELLOW_STAIRS = register("frosted_beveled_gingerbread_block_yellow_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
-    public static final Block FROSTED_BEVELED_GINGERBREAD_BLOCK_RED_STAIRS = register("frosted_beveled_gingerbread_block_red_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
-    public static final Block FROSTED_BEVELED_GINGERBREAD_BLOCK_PURPLE_STAIRS = register("frosted_beveled_gingerbread_block_purple_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
-    public static final Block FROSTED_BEVELED_GINGERBREAD_BLOCK_GREEN_STAIRS = register("frosted_beveled_gingerbread_block_green_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
-    public static final Block FROSTED_TILED_GINGERBREAD_BLOCK_YELLOW_STAIRS = register("frosted_tiled_gingerbread_block_yellow_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
-    public static final Block FROSTED_TILED_GINGERBREAD_BLOCK_RED_STAIRS = register("frosted_tiled_gingerbread_block_red_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
-    public static final Block FROSTED_TILED_GINGERBREAD_BLOCK_PURPLE_STAIRS = register("frosted_tiled_gingerbread_block_purple_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
-    public static final Block FROSTED_TILED_GINGERBREAD_BLOCK_GREEN_STAIRS =  register("frosted_tiled_gingerbread_block_green_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
-    public static final Block FROSTED_TILED_GINGERBREAD_BLOCK_VARIANT_STAIRS =  register("frosted_tiled_gingerbread_block_variant_stairs", Material.CAKE, settings -> new WKStairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
-
     public static final Block ELDER_PLANKS = register("elder_planks", Material.WOOD);
+    public static final Block ELDER_STAIRS = registerWoodenStair("elder_stairs", ELDER_PLANKS);
     public static final Block SUMAC_PLANKS = register("sumac_planks", Material.WOOD);
+    public static final Block SUMAC_STAIRS = registerWoodenStair("sumac_stairs", SUMAC_PLANKS);
     public static final Block HAWTHORN_PLANKS = register("hawthorn_planks", Material.WOOD);
+    public static final Block HAWTHORN_STAIRS = registerWoodenStair("hawthorn_stairs", HAWTHORN_PLANKS);
     public static final Block BLACKTHORN_PLANKS = register("blackthorn_planks", Material.WOOD);
+    public static final Block BLACKTHORN_STAIRS = registerWoodenStair("blackthorn_stairs", BLACKTHORN_PLANKS);
     public static final Block JUNIPER_PLANKS = register("juniper_planks", Material.WOOD);
+    public static final Block JUNIPER_STAIRS = registerWoodenStair("juniper_stairs", JUNIPER_PLANKS);
     public static final Block ROWAN_PLANKS = register("rowan_planks", Material.WOOD);
     public static final Block ROWAN_STAIRS = registerWoodenStair("rowan_stairs", ROWAN_PLANKS);
-    
-    public static final Block ELDER_STAIRS = registerWoodenStair("elder_stairs", ELDER_PLANKS);
-    public static final Block SUMAC_STAIRS = registerWoodenStair("sumac_stairs", SUMAC_PLANKS);
-    public static final Block BLACKTHORN_STAIRS = registerWoodenStair("blackthorn_stairs", BLACKTHORN_PLANKS);
-    public static final Block HAWTHORN_STAIRS = registerWoodenStair("hawthorn_stairs", HAWTHORN_PLANKS);
-    public static final Block JUNIPER_STAIRS = registerWoodenStair("juniper_stairs", JUNIPER_PLANKS);
     public static final Block ELDER_LOG = registerLog("elder_log", MapColor.PALE_YELLOW, MapColor.OAK_TAN);
     public static final Block SUMAC_LOG = registerLog("sumac_log", MapColor.DEEPSLATE_GRAY, MapColor.DARK_DULL_PINK);
     public static final Block HAWTHORN_LOG = registerLog("hawthorn_log", MapColor.PALE_YELLOW, MapColor.DIRT_BROWN);
@@ -169,17 +167,17 @@ public class WKBlocks {
     public static final Block OXIDIZED_COPPER_WITCHES_OVEN = registerFrom("oxidized_copper_witches_oven", new WitchesOvenBlock(FabricBlockSettings.copy(Blocks.OXIDIZED_COPPER).luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0)));
     public static final Block IRON_WITCHES_CAULDRON = registerFrom("iron_witches_cauldron", new WitchesCauldronBlock(FabricBlockSettings.copy(Blocks.CAULDRON).luminance(state -> state.get(WitchesCauldronBlock.LIT) ? 13 : 0)));
     public static final Block BLACKTHORN_SAPLING = registerSapling("blackthorn_sapling", WKConfiguredFeatures.BLACKTHORN_TREE);
-    public static final Block ELDER_SAPLING = registerSapling("elder_sapling", WKConfiguredFeatures.ELDER_TREE);
-    public static final Block HAWTHORN_SAPLING = registerSapling("hawthorn_sapling", WKConfiguredFeatures.HAWTHORN_TREE);
-    public static final Block JUNIPER_SAPLING = registerSapling("juniper_sapling", WKConfiguredFeatures.JUNIPER_TREE);
-    public static final Block ROWAN_SAPLING = registerSapling("rowan_sapling", WKConfiguredFeatures.ROWAN_TREE);
-    public static final Block SUMAC_SAPLING = registerSapling("sumac_sapling", WKConfiguredFeatures.SUMAC_TREE);
     public static final Block POTTED_BLACKTHORN_SAPLING = registerPottedSapling("potted_blackthorn_sapling");
     public static final Block POTTED_ELDER_SAPLING = registerPottedSapling("potted_elder_sapling");
     public static final Block POTTED_HAWTHORN_SAPLING = registerPottedSapling("potted_hawthorn_sapling");
     public static final Block POTTED_JUNIPER_SAPLING = registerPottedSapling("potted_juniper_sapling");
     public static final Block POTTED_ROWAN_SAPLING = registerPottedSapling("potted_rowan_sapling");
     public static final Block POTTED_SUMAC_SAPLING = registerPottedSapling("potted_sumac_sapling");
+    public static final Block ELDER_SAPLING = registerSapling("elder_sapling", WKConfiguredFeatures.ELDER_TREE);
+    public static final Block HAWTHORN_SAPLING = registerSapling("hawthorn_sapling", WKConfiguredFeatures.HAWTHORN_TREE);
+    public static final Block JUNIPER_SAPLING = registerSapling("juniper_sapling", WKConfiguredFeatures.JUNIPER_TREE);
+    public static final Block ROWAN_SAPLING = registerSapling("rowan_sapling", WKConfiguredFeatures.ROWAN_TREE);
+    public static final Block SUMAC_SAPLING = registerSapling("sumac_sapling", WKConfiguredFeatures.SUMAC_TREE);
     public static final Block OAK_BREWING_BARREL = registerBarrel("oak_brewing_barrel");
     public static final Block SPRUCE_BREWING_BARREL = registerBarrel("spruce_brewing_barrel");
     public static final Block BIRCH_BREWING_BARREL = registerBarrel("birch_brewing_barrel");
@@ -205,9 +203,11 @@ public class WKBlocks {
 
     public static final Block MINT = registerFrom("mint", new MintCropBlock(AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
     public static final Block WORMWOOD = registerFrom("wormwood", new WormwoodCropBlock(AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
+
     public static List<ObjectDefinition<Block>> getBlocks() {
         return Collections.unmodifiableList(BLOCKS);
     }
+
     public static List<ObjectDefinition<Item>> getItems() {
         return Collections.unmodifiableList(ITEMS);
     }
@@ -220,6 +220,7 @@ public class WKBlocks {
                 .sounds(BlockSoundGroup.CROP), type);
         return registerFrom(path, amaranth);
     }
+
     static FabricBlockSettings leavesSettings() {
         return FabricBlockSettings.of(Material.LEAVES)
                 .strength(0.2F)
@@ -230,14 +231,17 @@ public class WKBlocks {
                 .suffocates((state, world, pos) -> false)
                 .blockVision((state, world, pos) -> false);
     }
+
     static Block registerBarrel(String path) {
         return register(path, Material.WOOD, settings -> new BrewingBarrelBlock(settings.nonOpaque().strength(2.5F)));
     }
+
     static Block registerPottedSapling(String path) {
-       final Block pottedSapling = new FlowerPotBlock(BLACKTHORN_SAPLING, FabricBlockSettings.of(Material.DECORATION).breakInstantly().nonOpaque());
-       return registerFrom(path, pottedSapling);
+        final Block pottedSapling = new FlowerPotBlock(BLACKTHORN_SAPLING, FabricBlockSettings.of(Material.DECORATION).breakInstantly().nonOpaque());
+        return registerFrom(path, pottedSapling);
 
     }
+
     static Block registerSapling(String path, ConfiguredFeature<TreeFeatureConfig, ?> feature) {
         final Block sapling = new WKSaplingBlock(new WKSaplingGenerator(() -> RegistryEntry.of(feature)),
                 FabricBlockSettings.of(Material.PLANT)
@@ -252,13 +256,16 @@ public class WKBlocks {
         final LeavesBlock leaf = new LeavesBlock(leavesSettings());
         return registerFrom(path, leaf);
     }
+
     static Block registerSlab(String path) {
         return register(path, Material.WOOD, SlabBlock::new);
     }
+
     static Block registerWood(String path, MapColor color) {
-       final PillarBlock wood = new PillarBlock(FabricBlockSettings.of(Material.WOOD, color).strength(2.0f).sounds(BlockSoundGroup.WOOD));
-       return registerFrom(path, wood);
+        final PillarBlock wood = new PillarBlock(FabricBlockSettings.of(Material.WOOD, color).strength(2.0f).sounds(BlockSoundGroup.WOOD));
+        return registerFrom(path, wood);
     }
+
     static AbstractBlock.Settings logSettings(MapColor topMapColor, MapColor sideMapColor) {
         return FabricBlockSettings.of(Material.WOOD, state -> state.get(PillarBlock.AXIS) == Direction.Axis.Y ? topMapColor : sideMapColor).strength(2.0f).sounds(BlockSoundGroup.WOOD).ticksRandomly();
     }
@@ -267,27 +274,29 @@ public class WKBlocks {
         final PillarBlock log = new PillarBlock(logSettings(topMapColor, sideMapColor));
         return registerFrom(path, log);
     }
+
     static Block registerWoodenStair(String path, Block block) {
         return register(path, Material.WOOD, settings -> new WKStairsBlock(block.getDefaultState(), settings));
     }
-    static Block registerGingerBread(String path)  {
+
+    static Block registerGingerBread(String path) {
 
         return register(path, Material.CAKE, Block::new, BlockItem::new, GENERAL_TAB);
     }
 
-    static Block register(String path, Material material)  {
+    static Block register(String path, Material material) {
         return register(path, material, Block::new, BlockItem::new, GENERAL_TAB);
     }
 
 
-    static <T extends Block> T register(String path, Material material, Function<FabricBlockSettings, T> blockFactory)  {
+    static <T extends Block> T register(String path, Material material, Function<FabricBlockSettings, T> blockFactory) {
         return register(path, material, blockFactory, BlockItem::new, GENERAL_TAB);
     }
 
-    static <T extends Block, E extends Item> T register(String path, Material material, Function<FabricBlockSettings, T> blockFactory, BiFunction<T, FabricItemSettings, E> itemFactory)  {
+    static <T extends Block, E extends Item> T register(String path, Material material, Function<FabricBlockSettings, T> blockFactory, BiFunction<T, FabricItemSettings, E> itemFactory) {
         return register(path, material, blockFactory, itemFactory, GENERAL_TAB);
     }
-    
+
     static <T extends Block> T registerFrom(String path, T block) {
         final Identifier id = new WKIdentifier(path);
         if (block == null) {
@@ -297,8 +306,8 @@ public class WKBlocks {
         ITEMS.add(new ObjectDefinition<>(id, new BlockItem(block, new Item.Settings().group(GENERAL_TAB))));
         return block;
     }
-    
-    static <T extends Block, E extends Item> T register(String path, Material material, Function<FabricBlockSettings, T> blockFactory,  BiFunction<T, FabricItemSettings, E> itemFactory, ItemGroup tab) {
+
+    static <T extends Block, E extends Item> T register(String path, Material material, Function<FabricBlockSettings, T> blockFactory, BiFunction<T, FabricItemSettings, E> itemFactory, ItemGroup tab) {
         final Identifier id = new WKIdentifier(path);
         final T block = blockFactory.apply(FabricBlockSettings.of(material));
         BLOCKS.add(new ObjectDefinition<>(id, block));

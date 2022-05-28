@@ -13,7 +13,9 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import org.apache.commons.lang3.Validate;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class WKStatusEffects {
     private static final List<ObjectDefinition<StatusEffect>> STATUS_EFFECTS = new ArrayList<>();
