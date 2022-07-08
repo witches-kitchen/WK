@@ -24,7 +24,7 @@ public class WKScreenHandlerTypes {
         if (WKConfig.get().debugMode) {
             WK.logger.info("Witches Kitchen Base Screen Handlers: Successfully Loaded");
         }
-    }    public static final ScreenHandlerType<WitchesOvenScreenHandler> WITCHES_OVEN = register("witches_oven", WitchesOvenScreenHandler::new);
+    }
 
     static <T extends ScreenHandler> ScreenHandlerType<T> register(final String name, final ScreenHandlerType.Factory<T> factory) {
         Validate.isTrue(factory != null);
@@ -32,7 +32,7 @@ public class WKScreenHandlerTypes {
         final Identifier id = new WKIdentifier(name);
         SCREEN_HANDLER_TYPES.add(new ObjectDefinition<>(id, handler));
         return handler;
-    }    public static final ScreenHandlerType<BrewingBarrelScreenHandler> BREWING_BARREL = register("brewing_barrel", BrewingBarrelScreenHandler::new);
+    }    public static final ScreenHandlerType<WitchesOvenScreenHandler> WITCHES_OVEN = register("witches_oven", WitchesOvenScreenHandler::new);
 
     public static List<ObjectDefinition<ScreenHandlerType<?>>> getScreenHandlers() {
         return Collections.unmodifiableList(SCREEN_HANDLER_TYPES);
@@ -40,7 +40,9 @@ public class WKScreenHandlerTypes {
 
     public static void register() {
         SCREEN_HANDLER_TYPES.forEach(entry -> Registry.register(Registry.SCREEN_HANDLER, entry.id(), entry.object()));
-    }
+    }    public static final ScreenHandlerType<BrewingBarrelScreenHandler> BREWING_BARREL = register("brewing_barrel", BrewingBarrelScreenHandler::new);
+
+
 
 
 

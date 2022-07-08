@@ -24,16 +24,16 @@ public class WKItems {
     private static final List<ObjectDefinition<Item>> ITEMS = new ArrayList<>();
     // Flowers
     public static final Item BELLADONNA_BLOSSOM = registerPlant("belladonna_blossom");
-    public static final Item AMARANTH_SPRIG = registerPlant("amaranth_sprig", settings -> new Item(settings.food(WKFoodComponents.AMARANTH_GRAIN)));
-    public static final Item MINT_SPRIG = registerPlant("mint_sprig", settings -> new Item(settings.food(WKFoodComponents.MINT_LEAF)));
+    public static final Item AMARANTH_SPRIG = registerItem("amaranth_sprig", settings -> new Item(settings.food(WKFoodComponents.AMARANTH_GRAIN)));
+    public static final Item MINT_SPRIG = registerItem("mint_sprig", settings -> new Item(settings.food(WKFoodComponents.MINT_LEAF)));
     public static final Item WORMWOOD_SPRIG = registerPlant("wormwood_sprig");
-    public static final Item ROWAN_BERRIES = registerPlant("rowan_berries", settings -> new Item(settings.food(WKFoodComponents.BERRIES)));
-    public static final Item SLOE_BERRIES = registerPlant("sloe_berries", settings -> new Item(settings.food(WKFoodComponents.BERRIES)));
-    public static final Item JUNIPER_BERRIES = registerPlant("juniper_berries", settings -> new Item(settings.food(WKFoodComponents.BERRIES)));
-    public static final Item BLACKBERRY = registerPlant("blackberry", settings -> new Item(settings.food(WKFoodComponents.BERRIES)));
-    public static final Item HAWTHORN_BERRIES = registerPlant("hawthorn_berries", settings -> new Item(settings.food(WKFoodComponents.BERRIES)));
-    public static final Item SUMAC_BERRIES = registerPlant("sumac_berries", settings -> new Item(settings.food(WKFoodComponents.BERRIES)));
-    public static final Item BRIAR_HIPS = registerPlant("briar_hips", settings -> new Item(settings.food(WKFoodComponents.BERRIES)));
+    public static final Item ROWAN_BERRIES = registerItem("rowan_berries", settings -> new Item(settings.food(WKFoodComponents.BERRIES)));
+    public static final Item SLOE_BERRIES = registerItem("sloe_berries", settings -> new Item(settings.food(WKFoodComponents.BERRIES)));
+    public static final Item JUNIPER_BERRIES = registerItem("juniper_berries", settings -> new Item(settings.food(WKFoodComponents.BERRIES)));
+    public static final Item BLACKBERRY = registerItem("blackberry", settings -> new Item(settings.food(WKFoodComponents.BERRIES)));
+    public static final Item HAWTHORN_BERRIES = registerItem("hawthorn_berries", settings -> new Item(settings.food(WKFoodComponents.BERRIES)));
+    public static final Item SUMAC_BERRIES = registerItem("sumac_berries", settings -> new Item(settings.food(WKFoodComponents.BERRIES)));
+    public static final Item BRIAR_HIPS = registerItem("briar_hips", settings -> new Item(settings.food(WKFoodComponents.BERRIES)));
     public static final Item ELDER_BLOSSOM = registerPlant("elder_blossom");
     public static final Item CONEFLOWER_BLOSSOM = registerPlant("coneflower_blossom");
     public static final Item SANGUINARY_BLOSSOM = registerPlant("sanguinary_blossom");
@@ -41,9 +41,12 @@ public class WKItems {
     public static final Item IRIS_BLOSSOM = registerPlant("iris_blossom");
     public static final Item CHAMOMILE_BLOSSOM = registerPlant("chamomile_blossom");
     public static final Item GINGER_RHIZOME = registerPlant("ginger_rhizome");
-    public static final Item TEA_LEAF = registerPlant("tea_leaf", settings -> new Item(settings.food(WKFoodComponents.TEA_LEAF)));
+    public static final Item TEA_LEAF = registerItem("tea_leaf", settings -> new Item(settings.food(WKFoodComponents.TEA_LEAF)));
     public static final Item HELLEBORE_BLOSSOM = registerPlant("hellebore_blossom");
     public static final Item FOXGLOVE_BLOSSOM = registerPlant("foxglove_blossom");
+
+    //Foodstuffs
+    public static final Item AMARANTH_COOKIES = registerItem("amaranth_cookies", settings -> new Item(settings.food(WKFoodComponents.BERRIES)));
 
     public static final Item AMARANTH_SEEDS = registerSeed("amaranth_seeds", WKBlocks.AMARANTH);
     public static final Item AMARANTH_SWEETBERRY_SEEDS = registerSeed("amaranth_sweetberry_seeds", WKBlocks.AMARANTH_SWEETBERRY);
@@ -68,9 +71,9 @@ public class WKItems {
     public static final Item IRIS_SEEDS = registerPlant("iris_seeds");
     public static final Item SANGUINARY_SEEDS = registerPlant("sanguinary_seeds");
     public static final Item WORMWOOD_SEEDS = registerPlant("wormwood_seeds");
-    public static final Item DOLLOP_OF_FROSTING = registerPlant("dollop_of_frosting", settings -> new Item(settings.food(WKFoodComponents.FROSTING)));
-    public static final Item CHOCOLATE_RUM_BALLS = registerPlant("chocolate_rum_balls", settings -> new Item(settings.food(WKFoodComponents.RUM_BALLS)));
-    public static final Item SUPER_BOOZE = registerPlant("super_booze", settings -> new Item(new Item.Settings().food(WKFoodComponents.SUPER_BOOZE)));
+    public static final Item DOLLOP_OF_FROSTING = registerItem("dollop_of_frosting", settings -> new Item(settings.food(WKFoodComponents.FROSTING)));
+    public static final Item CHOCOLATE_RUM_BALLS = registerItem("chocolate_rum_balls", settings -> new Item(settings.food(WKFoodComponents.RUM_BALLS)));
+    public static final Item SUPER_BOOZE = registerItem("super_booze", settings -> new Item(new Item.Settings().food(WKFoodComponents.SUPER_BOOZE)));
     //Todo: Convert to usage of hex triplets fully
     public static final Item CU_SITH_SPAWN_EGG = register("cu_sith_spawn_egg", settings -> new SpawnEggItem(WKEntityTypes.CUSITH, 3421236, 3497531, settings));
     public static final Item FERRET_SPAWN_EGG = register("ferret_spawn_egg", settings -> new SpawnEggItem(WKEntityTypes.FERRET, 9985082, 2631205, settings));
@@ -88,7 +91,7 @@ public class WKItems {
         return register(id, Item::new, WKCreativeTabs.SEED_TAB);
     }
 
-    static <T extends Item> T registerPlant(String id, Function<FabricItemSettings, T> factory) {
+    static <T extends Item> T registerItem(String id, Function<FabricItemSettings, T> factory) {
         return register(id, factory, WKCreativeTabs.SEED_TAB);
     }
 

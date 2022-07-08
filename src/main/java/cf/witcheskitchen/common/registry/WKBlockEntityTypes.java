@@ -36,11 +36,11 @@ public class WKBlockEntityTypes {
         final BlockEntityType<E> type = builder.build();
         BLOCK_ENTITY_TYPES.add(new ObjectDefinition<>(id, type));
         return type;
-    }    public static final BlockEntityType<WitchesOvenBlockEntity> WITCHES_OVEN = register("witches_oven", WitchesOvenBlockEntity::new, WKBlocks.IRON_WITCHES_OVEN, WKBlocks.COPPER_WITCHES_OVEN, WKBlocks.EXPOSED_COPPER_WITCHES_OVEN, WKBlocks.WEATHERED_COPPER_WITCHES_OVEN, WKBlocks.OXIDIZED_COPPER_WITCHES_OVEN);
+    }
 
     public static List<ObjectDefinition<BlockEntityType<?>>> getEntityTypes() {
         return Collections.unmodifiableList(BLOCK_ENTITY_TYPES);
-    }    public static final BlockEntityType<BrewingBarrelBlockEntity> BREWING_BARREL = register("brewing_barrel", BrewingBarrelBlockEntity::new, WKBlocks.OAK_BREWING_BARREL, WKBlocks.SPRUCE_BREWING_BARREL, WKBlocks.BIRCH_BREWING_BARREL, WKBlocks.JUNGLE_BREWING_BARREL, WKBlocks.ACACIA_BREWING_BARREL, WKBlocks.DARK_OAK_BREWING_BARREL, WKBlocks.CRIMSON_BREWING_BARREL, WKBlocks.WARPED_BREWING_BARREL);
+    }    public static final BlockEntityType<WitchesOvenBlockEntity> WITCHES_OVEN = register("witches_oven", WitchesOvenBlockEntity::new, WKBlocks.IRON_WITCHES_OVEN, WKBlocks.COPPER_WITCHES_OVEN, WKBlocks.EXPOSED_COPPER_WITCHES_OVEN, WKBlocks.WEATHERED_COPPER_WITCHES_OVEN, WKBlocks.OXIDIZED_COPPER_WITCHES_OVEN);
 
     public static void register() {
         for (ObjectDefinition<BlockEntityType<?>> entry : BLOCK_ENTITY_TYPES) {
@@ -49,12 +49,14 @@ public class WKBlockEntityTypes {
         if (WKConfig.get().debugMode) {
             WK.logger.info("Witches Kitchen Base Block Entities: Successfully Loaded");
         }
-    }    public static final BlockEntityType<WitchesCauldronBlockEntity> WITCHES_CAULDRON = register("witches_cauldron", WitchesCauldronBlockEntity::new, WKBlocks.IRON_WITCHES_CAULDRON);
+    }
+
+    public static final BlockEntityType<BrewingBarrelBlockEntity> BREWING_BARREL = register("brewing_barrel", BrewingBarrelBlockEntity::new, WKBlocks.OAK_BREWING_BARREL, WKBlocks.SPRUCE_BREWING_BARREL, WKBlocks.BIRCH_BREWING_BARREL, WKBlocks.JUNGLE_BREWING_BARREL, WKBlocks.ACACIA_BREWING_BARREL, WKBlocks.DARK_OAK_BREWING_BARREL, WKBlocks.CRIMSON_BREWING_BARREL, WKBlocks.WARPED_BREWING_BARREL);
+
+
+
+    public static final BlockEntityType<WitchesCauldronBlockEntity> WITCHES_CAULDRON = register("witches_cauldron", WitchesCauldronBlockEntity::new, WKBlocks.IRON_WITCHES_CAULDRON);
     public static final BlockEntityType<WKTeapotEntity> TEAPOT = register("teapot", WKTeapotEntity::new, WKBlocks.TEAPOT);
-
-
-
-
 
 
 }
