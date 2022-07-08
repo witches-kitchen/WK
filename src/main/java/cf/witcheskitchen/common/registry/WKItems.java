@@ -23,30 +23,33 @@ public class WKItems {
 
     private static final List<ObjectDefinition<Item>> ITEMS = new ArrayList<>();
     // Flowers
-    public static final Item BELLADONNA_BLOSSOM = registerPlant("belladonna_blossom");
-    public static final Item AMARANTH_SPRIG = registerItem("amaranth_sprig", settings -> new Item(settings.food(WKFoodComponents.AMARANTH_GRAIN)));
-    public static final Item MINT_SPRIG = registerItem("mint_sprig", settings -> new Item(settings.food(WKFoodComponents.MINT_LEAF)));
-    public static final Item WORMWOOD_SPRIG = registerPlant("wormwood_sprig");
-    public static final Item ROWAN_BERRIES = registerItem("rowan_berries", settings -> new Item(settings.food(WKFoodComponents.BERRIES)));
-    public static final Item SLOE_BERRIES = registerItem("sloe_berries", settings -> new Item(settings.food(WKFoodComponents.BERRIES)));
-    public static final Item JUNIPER_BERRIES = registerItem("juniper_berries", settings -> new Item(settings.food(WKFoodComponents.BERRIES)));
-    public static final Item BLACKBERRY = registerItem("blackberry", settings -> new Item(settings.food(WKFoodComponents.BERRIES)));
-    public static final Item HAWTHORN_BERRIES = registerItem("hawthorn_berries", settings -> new Item(settings.food(WKFoodComponents.BERRIES)));
-    public static final Item SUMAC_BERRIES = registerItem("sumac_berries", settings -> new Item(settings.food(WKFoodComponents.BERRIES)));
-    public static final Item BRIAR_HIPS = registerItem("briar_hips", settings -> new Item(settings.food(WKFoodComponents.BERRIES)));
-    public static final Item ELDER_BLOSSOM = registerPlant("elder_blossom");
-    public static final Item CONEFLOWER_BLOSSOM = registerPlant("coneflower_blossom");
-    public static final Item SANGUINARY_BLOSSOM = registerPlant("sanguinary_blossom");
-    public static final Item SAINT_JOHNS_WORT_BLOSSOM = registerPlant("saint_johns_wort_blossom");
-    public static final Item IRIS_BLOSSOM = registerPlant("iris_blossom");
-    public static final Item CHAMOMILE_BLOSSOM = registerPlant("chamomile_blossom");
-    public static final Item GINGER_RHIZOME = registerPlant("ginger_rhizome");
-    public static final Item TEA_LEAF = registerItem("tea_leaf", settings -> new Item(settings.food(WKFoodComponents.TEA_LEAF)));
-    public static final Item HELLEBORE_BLOSSOM = registerPlant("hellebore_blossom");
-    public static final Item FOXGLOVE_BLOSSOM = registerPlant("foxglove_blossom");
+    public static final Item BELLADONNA_BLOSSOM = registerItem("belladonna_blossom");
+    public static final Item AMARANTH_SPRIG = registerFoodStuffs("amaranth_sprig", settings -> new Item(settings.food(WKFoodComponents.AMARANTH_GRAIN)));
+    public static final Item MINT_SPRIG = registerFoodStuffs("mint_sprig", settings -> new Item(settings.food(WKFoodComponents.MINT_LEAF)));
+    public static final Item WORMWOOD_SPRIG = registerItem("wormwood_sprig");
+    public static final Item ROWAN_BERRIES = registerFoodStuffs("rowan_berries", settings -> new Item(settings.food(WKFoodComponents.BERRIES)));
+    public static final Item SLOE_BERRIES = registerFoodStuffs("sloe_berries", settings -> new Item(settings.food(WKFoodComponents.BERRIES)));
+    public static final Item JUNIPER_BERRIES = registerFoodStuffs("juniper_berries", settings -> new Item(settings.food(WKFoodComponents.BERRIES)));
+    public static final Item BLACKBERRY = registerFoodStuffs("blackberry", settings -> new Item(settings.food(WKFoodComponents.BERRIES)));
+    public static final Item HAWTHORN_BERRIES = registerFoodStuffs("hawthorn_berries", settings -> new Item(settings.food(WKFoodComponents.BERRIES)));
+    public static final Item SUMAC_BERRIES = registerFoodStuffs("sumac_berries", settings -> new Item(settings.food(WKFoodComponents.BERRIES)));
+    public static final Item BRIAR_HIPS = registerFoodStuffs("briar_hips", settings -> new Item(settings.food(WKFoodComponents.BERRIES)));
+    public static final Item ELDER_BLOSSOM = registerItem("elder_blossom");
+    public static final Item CONEFLOWER_BLOSSOM = registerItem("coneflower_blossom");
+    public static final Item SANGUINARY_BLOSSOM = registerItem("sanguinary_blossom");
+    public static final Item SAINT_JOHNS_WORT_BLOSSOM = registerItem("saint_johns_wort_blossom");
+    public static final Item IRIS_BLOSSOM = registerItem("iris_blossom");
+    public static final Item CHAMOMILE_BLOSSOM = registerItem("chamomile_blossom");
+    public static final Item GINGER_RHIZOME = registerItem("ginger_rhizome");
+    public static final Item TEA_LEAF = registerFoodStuffs("tea_leaf", settings -> new Item(settings.food(WKFoodComponents.TEA_LEAF)));
+    public static final Item HELLEBORE_BLOSSOM = registerItem("hellebore_blossom");
+    public static final Item FOXGLOVE_BLOSSOM = registerItem("foxglove_blossom");
 
     //Foodstuffs
-    public static final Item AMARANTH_COOKIES = registerItem("amaranth_cookies", settings -> new Item(settings.food(WKFoodComponents.BERRIES)));
+    public static final Item AMARANTH_COOKIES = registerFoodStuffs("amaranth_cookies", settings -> new Item(settings.food(WKFoodComponents.BERRIES)));
+
+    //Materials
+    public static final Item HEART_OF_INNOCENCE = registerItem("heart_of_innocence");
 
     public static final Item AMARANTH_SEEDS = registerSeed("amaranth_seeds", WKBlocks.AMARANTH);
     public static final Item AMARANTH_SWEETBERRY_SEEDS = registerSeed("amaranth_sweetberry_seeds", WKBlocks.AMARANTH_SWEETBERRY);
@@ -61,37 +64,47 @@ public class WKItems {
     public static final Item BELLADONNA_SEEDS = registerSeed("belladonna_seeds", WKBlocks.BELLADONNA);
     public static final Item BELLADONNA_GLOW_SEEDS = registerSeed("belladonna_glow_seeds", WKBlocks.BELLADONNA_GLOW);
     public static final Item BELLADONNA_NOCTURNAL_SEEDS = registerSeed("belladonna_nocturnal_seeds", WKBlocks.BELLADONNA_NOCTURNAL);
-    public static final Item ST_JOHNS_WORT_SEEDS = registerPlant("st_john_wort_seeds");
-    public static final Item BRIAR_SEEDS = registerPlant("briar_seeds");
-    public static final Item CAMELLIA_SEEDS = registerPlant("camellia_seeds");
-    public static final Item CHAMOMILE_SEEDS = registerPlant("chamomile_seeds");
-    public static final Item CONEFLOWER_SEEDS = registerPlant("coneflower_seeds");
-    public static final Item FOXGLOVE_SEEDS = registerPlant("foxglove_seeds");
-    public static final Item HELLEBORE_SEEDS = registerPlant("hellebore_seeds");
-    public static final Item IRIS_SEEDS = registerPlant("iris_seeds");
-    public static final Item SANGUINARY_SEEDS = registerPlant("sanguinary_seeds");
-    public static final Item WORMWOOD_SEEDS = registerPlant("wormwood_seeds");
-    public static final Item DOLLOP_OF_FROSTING = registerItem("dollop_of_frosting", settings -> new Item(settings.food(WKFoodComponents.FROSTING)));
-    public static final Item CHOCOLATE_RUM_BALLS = registerItem("chocolate_rum_balls", settings -> new Item(settings.food(WKFoodComponents.RUM_BALLS)));
-    public static final Item SUPER_BOOZE = registerItem("super_booze", settings -> new Item(new Item.Settings().food(WKFoodComponents.SUPER_BOOZE)));
+    public static final Item ST_JOHNS_WORT_SEEDS = registerItem("st_john_wort_seeds");
+    public static final Item BRIAR_SEEDS = registerItem("briar_seeds");
+    public static final Item CAMELLIA_SEEDS = registerItem("camellia_seeds");
+    public static final Item CHAMOMILE_SEEDS = registerItem("chamomile_seeds");
+    public static final Item CONEFLOWER_SEEDS = registerItem("coneflower_seeds");
+    public static final Item FOXGLOVE_SEEDS = registerItem("foxglove_seeds");
+    public static final Item HELLEBORE_SEEDS = registerItem("hellebore_seeds");
+    public static final Item IRIS_SEEDS = registerItem("iris_seeds");
+    public static final Item SANGUINARY_SEEDS = registerItem("sanguinary_seeds");
+    public static final Item WORMWOOD_SEEDS = registerItem("wormwood_seeds");
+    public static final Item DOLLOP_OF_FROSTING = registerFoodStuffs("dollop_of_frosting", settings -> new Item(settings.food(WKFoodComponents.FROSTING)));
+    public static final Item CHOCOLATE_RUM_BALLS = registerFoodStuffs("chocolate_rum_balls", settings -> new Item(settings.food(WKFoodComponents.RUM_BALLS)));
+    public static final Item SUPER_BOOZE = registerFoodStuffs("super_booze", settings -> new Item(new Item.Settings().food(WKFoodComponents.SUPER_BOOZE)));
     //Todo: Convert to usage of hex triplets fully
-    public static final Item CU_SITH_SPAWN_EGG = register("cu_sith_spawn_egg", settings -> new SpawnEggItem(WKEntityTypes.CUSITH, 3421236, 3497531, settings));
-    public static final Item FERRET_SPAWN_EGG = register("ferret_spawn_egg", settings -> new SpawnEggItem(WKEntityTypes.FERRET, 9985082, 2631205, settings));
-    public static final Item CHURCH_GRIM_SPAWN_EGG = register("church_grim_spawn_egg", settings -> new SpawnEggItem(WKEntityTypes.CHURCH_GRIM, 0xFFFAFA, 0x36454F, settings));
+    public static final Item CU_SITH_SPAWN_EGG = registerSpawnEgg("cu_sith_spawn_egg", settings -> new SpawnEggItem(WKEntityTypes.CUSITH, 3421236, 3497531, settings));
+    public static final Item FERRET_SPAWN_EGG = registerSpawnEgg("ferret_spawn_egg", settings -> new SpawnEggItem(WKEntityTypes.FERRET, 9985082, 2631205, settings));
+    public static final Item CHURCH_GRIM_SPAWN_EGG = registerSpawnEgg("church_grim_spawn_egg", settings -> new SpawnEggItem(WKEntityTypes.CHURCH_GRIM, 0xFFFAFA, 0x36454F, settings));
 
     public static List<ObjectDefinition<Item>> getItems() {
         return Collections.unmodifiableList(ITEMS);
     }
 
+    /**
+     * Use me for registering seeds!
+     */
+
     static Item registerSeed(String id, Block block) {
         return register(id, settings -> new WKSeedItem(block, settings), WKCreativeTabs.SEED_TAB);
     }
 
-    static Item registerPlant(String id) {
+    /**
+     * Use me for registering items!
+     */
+    static Item registerItem(String id) {
         return register(id, Item::new, WKCreativeTabs.SEED_TAB);
     }
 
-    static <T extends Item> T registerItem(String id, Function<FabricItemSettings, T> factory) {
+    /**
+     * Use me for registering foodstuffs!
+     */
+    static <T extends Item> T registerFoodStuffs(String id, Function<FabricItemSettings, T> factory) {
         return register(id, factory, WKCreativeTabs.SEED_TAB);
     }
 
@@ -99,7 +112,10 @@ public class WKItems {
         return register(id, Item::new, WKCreativeTabs.SEED_TAB);
     }
 
-    static <T extends Item> T register(String id, Function<FabricItemSettings, T> factory) {
+    /**
+     * Use me for registering spawn eggs!
+     */
+    static <T extends Item> T registerSpawnEgg(String id, Function<FabricItemSettings, T> factory) {
         return register(id, factory, WKCreativeTabs.SEED_TAB);
     }
 
