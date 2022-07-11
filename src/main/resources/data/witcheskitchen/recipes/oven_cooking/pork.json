@@ -1,0 +1,13 @@
+{
+  "type": "witcheskitchen:oven_cooking",
+  "ingredient": {
+    "item": "minecraft:porkchop"
+  },
+  "results": [
+    {
+      "item": "minecraft:cooked_porkchop",
+      "count": 1
+    }
+  ],
+  "experience": 0.2
+}

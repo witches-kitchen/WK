@@ -1,0 +1,13 @@
+{
+  "type": "witcheskitchen:oven_cooking",
+  "ingredient": {
+    "item": "minecraft:potato"
+  },
+  "results": [
+    {
+      "item": "minecraft:baked_potato",
+      "count": 1
+    }
+  ],
+  "experience": 0.2
+}

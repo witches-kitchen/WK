@@ -1,0 +1,13 @@
+{
+  "type": "witcheskitchen:oven_cooking",
+  "ingredient": {
+    "item": "minecraft:raw_mutton"
+  },
+  "results": [
+    {
+      "item": "minecraft:cooked_mutton",
+      "count": 1
+    }
+  ],
+  "experience": 0.2
+}

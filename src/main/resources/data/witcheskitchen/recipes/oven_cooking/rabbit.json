@@ -1,0 +1,13 @@
+{
+  "type": "witcheskitchen:oven_cooking",
+  "ingredient": {
+    "item": "minecraft:rabbit"
+  },
+  "results": [
+    {
+      "item": "minecraft:cooked_rabbit",
+      "count": 1
+    }
+  ],
+  "experience": 0.2
+}

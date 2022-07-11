@@ -1,0 +1,13 @@
+{
+  "type": "witcheskitchen:oven_cooking",
+  "ingredient": {
+    "item": "minecraft:chicken"
+  },
+  "results": [
+    {
+      "item": "minecraft:cooked_chicken",
+      "count": 1
+    }
+  ],
+  "experience": 0.2
+}
