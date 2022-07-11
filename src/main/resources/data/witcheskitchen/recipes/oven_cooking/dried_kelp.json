@@ -1,0 +1,13 @@
+{
+  "type": "witcheskitchen:oven_cooking",
+  "ingredient": {
+    "item": "minecraft:kelp"
+  },
+  "results": [
+    {
+      "item": "minecraft:dried_kelp",
+      "count": 1
+    }
+  ],
+  "experience": 0.2
+}

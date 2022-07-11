@@ -1,0 +1,13 @@
+{
+  "type": "witcheskitchen:oven_cooking",
+  "ingredient": {
+    "item": "minecraft:cod"
+  },
+  "results": [
+    {
+      "item": "minecraft:cooked_cod",
+      "count": 1
+    }
+  ],
+  "experience": 0.2
+}

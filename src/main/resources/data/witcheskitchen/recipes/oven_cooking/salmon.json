@@ -1,0 +1,13 @@
+{
+  "type": "witcheskitchen:oven_cooking",
+  "ingredient": {
+    "item": "minecraft:salmon"
+  },
+  "results": [
+    {
+      "item": "minecraft:cooked_salmon",
+      "count": 1
+    }
+  ],
+  "experience": 0.2
+}
