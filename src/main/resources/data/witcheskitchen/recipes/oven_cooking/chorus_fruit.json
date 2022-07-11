@@ -1,0 +1,13 @@
+{
+  "type": "witcheskitchen:oven_cooking",
+  "ingredient": {
+    "item": "minecraft:chorus_fruit"
+  },
+  "results": [
+    {
+      "item": "minecraft:popped_chorus_fruit",
+      "count": 1
+    }
+  ],
+  "experience": 0.2
+}
