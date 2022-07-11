@@ -1,0 +1,17 @@
+{
+  "type": "witcheskitchen:oven_cooking",
+  "ingredient": {
+    "item": "minecraft:rotten_flesh"
+  },
+  "results": [
+    {
+      "item": "minecraft:bone",
+      "count": 1
+    },
+    {
+      "item": "minecraft:leather",
+      "count": 1
+    }
+  ],
+  "experience": 0.2
+}

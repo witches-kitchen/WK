@@ -1,0 +1,17 @@
+{
+  "type": "witcheskitchen:oven_cooking",
+  "ingredient": {
+    "item": "minecraft:water_bucket"
+  },
+  "results": [
+    {
+      "item": "witcheskitchen:salt",
+      "count": 4
+    },
+    {
+      "item": "minecraft:bucket",
+      "count": 1
+    }
+  ],
+  "experience": 0.2
+}

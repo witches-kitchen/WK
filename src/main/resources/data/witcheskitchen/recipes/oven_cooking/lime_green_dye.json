@@ -1,0 +1,13 @@
+{
+  "type": "witcheskitchen:oven_cooking",
+  "ingredient": {
+    "item": "minecraft:sea_pickle"
+  },
+  "results": [
+    {
+      "item": "minecraft:lime_dye",
+      "count": 3
+    }
+  ],
+  "experience": 0.2
+}

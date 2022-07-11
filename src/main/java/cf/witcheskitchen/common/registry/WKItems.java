@@ -46,7 +46,7 @@ public class WKItems {
     public static final Item FOXGLOVE_BLOSSOM = registerItem("foxglove_blossom");
 
     //Foodstuffs
-    public static final Item AMARANTH_COOKIES = registerFoodStuffs("amaranth_cookies", settings -> new Item(settings.food(WKFoodComponents.BERRIES)));
+    public static final Item AMARANTH_COOKIES = registerFoodStuffs("amaranth_cookies", settings -> new Item(settings.food(WKFoodComponents.COOKIES)));
 
     //Materials
     public static final Item HEART_OF_INNOCENCE = registerItem("heart_of_innocence");

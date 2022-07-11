@@ -1,0 +1,13 @@
+{
+  "type": "witcheskitchen:oven_cooking",
+  "ingredient": {
+    "item": "minecraft:wet_sponge"
+  },
+  "results": [
+    {
+      "item": "minecraft:sponge",
+      "count": 1
+    }
+  ],
+  "experience": 0.2
+}

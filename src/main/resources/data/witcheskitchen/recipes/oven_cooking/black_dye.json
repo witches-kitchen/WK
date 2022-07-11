@@ -1,0 +1,17 @@
+{
+  "type": "witcheskitchen:oven_cooking",
+  "ingredient": {
+    "item": "minecraft:bone"
+  },
+  "results": [
+    {
+      "item": "minecraft:bonemeal",
+      "count": 1
+    },
+    {
+      "item": "minecraft:black_dye",
+      "count": 3
+    }
+  ],
+  "experience": 0.2
+}
