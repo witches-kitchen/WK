@@ -1,0 +1,13 @@
+{
+  "type": "witcheskitchen:oven_cooking",
+  "ingredient": {
+    "item": "minecraft:clay_ball"
+  },
+  "results": [
+    {
+      "item": "minecraft:brick",
+      "count": 1
+    }
+  ],
+  "experience": 0.2
+}

@@ -1,0 +1,13 @@
+{
+  "type": "witcheskitchen:oven_cooking",
+  "ingredient": {
+    "item": "minecraft:clay"
+  },
+  "results": [
+    {
+      "item": "minecraft:terracotta",
+      "count": 1
+    }
+  ],
+  "experience": 0.2
+}
