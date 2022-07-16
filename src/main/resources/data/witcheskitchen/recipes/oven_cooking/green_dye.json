@@ -1,0 +1,13 @@
+{
+  "type": "witcheskitchen:oven_cooking",
+  "ingredient": {
+    "item": "minecraft:cactus"
+  },
+  "results": [
+    {
+      "item": "minecraft:green_dye",
+      "count": 3
+    }
+  ],
+  "experience": 0.2
+}
