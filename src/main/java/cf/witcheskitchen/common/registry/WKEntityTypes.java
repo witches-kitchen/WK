@@ -42,8 +42,8 @@ public class WKEntityTypes {
 
     public static void register() {
         ENTITY_TYPES.forEach(entity -> Registry.register(Registry.ENTITY_TYPE, entity.id(), entity.object()));
-        if (WKConfig.get().debugMode) {
-            WK.logger.info("Witches Kitchen Base Entities: Successfully Loaded");
+        if (WKConfig.getInstance().debugMode) {
+            WK.LOGGER.info("Witches Kitchen Base Entities: Successfully Loaded");
         }
     }
 

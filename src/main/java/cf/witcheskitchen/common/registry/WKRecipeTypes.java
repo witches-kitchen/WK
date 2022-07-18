@@ -64,8 +64,8 @@ public class WKRecipeTypes {
         for (ObjectDefinition<RecipeType<?>> entry : RECIPE_TYPES) {
             Registry.register(Registry.RECIPE_TYPE, entry.id(), entry.object());
         }
-        if (WKConfig.get().debugMode) {
-            WK.logger.info("Witches Kitchen Base Custom Recipes: Successfully Loaded");
+        if (WKConfig.getInstance().debugMode) {
+            WK.LOGGER.info("Witches Kitchen Base Custom Recipes: Successfully Loaded");
         }
     }
 }

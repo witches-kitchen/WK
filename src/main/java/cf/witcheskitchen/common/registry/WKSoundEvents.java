@@ -29,8 +29,8 @@ public class WKSoundEvents {
     public static final SoundEvent BROOM_USE_EVENT = register("broom_mount1");
 
     static {
-        if (WKConfig.get().debugMode) {
-            WK.logger.info("Witches Kitchen Base Sounds: Successfully Loaded");
+        if (WKConfig.getInstance().debugMode) {
+            WK.LOGGER.info("Witches Kitchen Base Sounds: Successfully Loaded");
         }
     }
 

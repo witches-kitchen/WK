@@ -50,8 +50,8 @@ public class WKStatusEffects {
 
     public static void register() {
         STATUS_EFFECTS.forEach(entry -> Registry.register(Registry.STATUS_EFFECT, entry.id(), entry.object()));
-        if (WKConfig.get().debugMode) {
-            WK.logger.info("Witches Kitchen Base Potions: Successfully Loaded");
+        if (WKConfig.getInstance().debugMode) {
+            WK.LOGGER.info("Witches Kitchen Base Potions: Successfully Loaded");
         }
     }
 }

@@ -168,8 +168,8 @@ public class WKItems {
         validItemCompost.add(HELLEBORE_BLOSSOM, 0.45f);
         validItemCompost.add(FOXGLOVE_BLOSSOM, 0.45f);
 
-        if (WKConfig.get().debugMode) {
-            WK.logger.info("Witches Kitchen Base Items: Successfully Loaded");
+        if (WKConfig.getInstance().debugMode) {
+            WK.LOGGER.info("Witches Kitchen Base Items: Successfully Loaded");
         }
     }
 }

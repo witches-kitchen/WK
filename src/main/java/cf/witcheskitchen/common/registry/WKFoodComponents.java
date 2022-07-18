@@ -22,8 +22,8 @@ public class WKFoodComponents {
     public static final FoodComponent TEA_LEAF = new FoodComponent.Builder().hunger(1).saturationModifier(0.3f).snack().alwaysEdible().statusEffect(new StatusEffectInstance(StatusEffects.HASTE, 100), 0.35F).statusEffect(new StatusEffectInstance(StatusEffects.SPEED, 100), 0.35F).build();
 
     static {
-        if (WKConfig.get().debugMode) {
-            WK.logger.info("Witches Kitchen Base Food Components: Successfully Loaded");
+        if (WKConfig.getInstance().debugMode) {
+            WK.LOGGER.info("Witches Kitchen Base Food Components: Successfully Loaded");
         }
     }
 

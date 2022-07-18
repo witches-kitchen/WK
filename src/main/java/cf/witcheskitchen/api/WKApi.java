@@ -13,8 +13,8 @@ public class WKApi {
     //Todo: This could go with some improvements, but it is pretty early at the moment.
 
     static {
-        if (WKConfig.get().debugMode) {
-            WK.logger.info("Witches Kitchen API: Successfully Loaded");
+        if (WKConfig.getInstance().debugMode) {
+            WK.LOGGER.info("Witches Kitchen API: Successfully Loaded");
         }
     }
 

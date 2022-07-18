@@ -44,6 +44,8 @@ public class WKBlocks {
 
     private static final List<ObjectDefinition<Block>> BLOCKS = new ArrayList<>();
     private static final List<ObjectDefinition<Item>> ITEMS = new ArrayList<>();
+    public static final ArrayList<Block> LEAF_BLOCKS = new ArrayList<>();
+
     public static final Block SALT_BLOCK = register("salt", Material.DECORATION, settings -> new SaltBlock(settings.noCollision().breakInstantly()));
     public static final Block RAW_GINGERBREAD_BLOCK = registerGingerBread("raw_gingerbread_block");
     public static final Block RAW_CHISELED_GINGERBREAD_BLOCK = registerGingerBread("raw_chiseled_gingerbread_block");

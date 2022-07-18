@@ -12,8 +12,8 @@ public class WKDamageSources {
     public static final DamageSource PUNCHING_BLACKTHORN = new BlackthornDamageSource("punching_blackthorn");
 
     static {
-        if (WKConfig.get().debugMode) {
-            WK.logger.info("Witches Kitchen Base Damage Sources: Successfully Loaded");
+        if (WKConfig.getInstance().debugMode) {
+            WK.LOGGER.info("Witches Kitchen Base Damage Sources: Successfully Loaded");
         }
     }
 

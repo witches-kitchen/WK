@@ -46,8 +46,8 @@ public class WKBlockEntityTypes {
         for (ObjectDefinition<BlockEntityType<?>> entry : BLOCK_ENTITY_TYPES) {
             Registry.register(Registry.BLOCK_ENTITY_TYPE, entry.id(), entry.object());
         }
-        if (WKConfig.get().debugMode) {
-            WK.logger.info("Witches Kitchen Base Block Entities: Successfully Loaded");
+        if (WKConfig.getInstance().debugMode) {
+            WK.LOGGER.info("Witches Kitchen Base Block Entities: Successfully Loaded");
         }
     }
 

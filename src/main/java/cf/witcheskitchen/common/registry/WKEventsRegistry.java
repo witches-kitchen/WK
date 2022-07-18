@@ -23,8 +23,8 @@ public class WKEventsRegistry {
 
     // used for client events
     public static void registerClient() {
-        if (WKConfig.get().debugMode) {
-            WK.logger.info("Witches Kitchen Base Client Registry: Successfully Loaded");
+        if (WKConfig.getInstance().debugMode) {
+            WK.LOGGER.info("Witches Kitchen Base Client Registry: Successfully Loaded");
         }
     }
 

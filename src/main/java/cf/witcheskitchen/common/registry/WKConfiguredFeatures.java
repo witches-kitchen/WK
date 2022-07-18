@@ -118,8 +118,8 @@ public class WKConfiguredFeatures {
             final RegistryKey<ConfiguredFeature<?, ?>> key = RegistryKey.of(Registry.CONFIGURED_FEATURE_KEY, feature.id());
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, key.getValue(), feature.object());
         });
-        if (WKConfig.get().debugMode) {
-            WK.logger.info("Witches Kitchen Base Generation: Successfully Loaded");
+        if (WKConfig.getInstance().debugMode) {
+            WK.LOGGER.info("Witches Kitchen Base Generation: Successfully Loaded");
         }
     }
 }

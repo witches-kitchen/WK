@@ -23,8 +23,6 @@ import net.minecraft.client.color.world.FoliageColors;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.render.RenderLayer;
 
-import static cf.witcheskitchen.WK.LEAF_BLOCKS;
-
 @Environment(EnvType.CLIENT)
 public class WKClient implements ClientModInitializer {
     @Override
@@ -52,6 +50,6 @@ public class WKClient implements ClientModInitializer {
         ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) ->
                 world != null && pos != null
                         ? BiomeColors.getFoliageColor(world, pos)
-                        : FoliageColors.getDefaultColor(), LEAF_BLOCKS.toArray(new Block[]{}));
+                        : FoliageColors.getDefaultColor(), WKBlocks.LEAF_BLOCKS.toArray(new Block[]{}));
     }
 }

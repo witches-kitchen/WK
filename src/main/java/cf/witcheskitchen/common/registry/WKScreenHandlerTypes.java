@@ -21,8 +21,8 @@ public class WKScreenHandlerTypes {
     private static final List<ObjectDefinition<ScreenHandlerType<?>>> SCREEN_HANDLER_TYPES = new ArrayList<>();
 
     static {
-        if (WKConfig.get().debugMode) {
-            WK.logger.info("Witches Kitchen Base Screen Handlers: Successfully Loaded");
+        if (WKConfig.getInstance().debugMode) {
+            WK.LOGGER.info("Witches Kitchen Base Screen Handlers: Successfully Loaded");
         }
     }
 

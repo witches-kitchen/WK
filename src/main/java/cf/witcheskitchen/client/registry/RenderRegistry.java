@@ -17,8 +17,8 @@ public class RenderRegistry {
         EntityRendererRegistry.register(WKEntityTypes.FERRET, FerretRender::new);
         EntityRendererRegistry.register(WKEntityTypes.CHURCH_GRIM, ChurchGrimRender::new);
 
-        if (WKConfig.get().debugMode) {
-            WK.logger.info("Witches Kitchen Base Renderer: Successfully Loaded");
+        if (WKConfig.getInstance().debugMode) {
+            WK.LOGGER.info("Witches Kitchen Base Renderer: Successfully Loaded");
         }
     }
 }

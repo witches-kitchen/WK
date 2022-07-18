@@ -38,8 +38,8 @@ public class WKTags {
     public static final TagKey<Item> SEED_AMARANTH = register(Registry.ITEM_KEY, "seeds/seed_amaranth");
 
     static {
-        if (WKConfig.get().debugMode) {
-            WK.logger.info("Witches Kitchen Base Custom Tags: Successfully Loaded");
+        if (WKConfig.getInstance().debugMode) {
+            WK.LOGGER.info("Witches Kitchen Base Custom Tags: Successfully Loaded");
         }
     }
 

@@ -25,8 +25,8 @@ public class WKPacketTypes {
     public static final S2CPacketRegistryListener SPLASH_PARTICLE_HANDLER = registerClientPacket(new SplashParticlePacketHandler());
 
     static {
-        if (WKConfig.get().debugMode) {
-            WK.logger.info("Witches Kitchen Base Packet Handlers: Successfully Loaded");
+        if (WKConfig.getInstance().debugMode) {
+            WK.LOGGER.info("Witches Kitchen Base Packet Handlers: Successfully Loaded");
         }
     }
 
