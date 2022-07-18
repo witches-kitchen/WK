@@ -27,7 +27,7 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
@@ -118,7 +118,7 @@ public class WitchesOvenBlock extends WKDeviceBlock implements Waterloggable {
 
     @Override
     @Environment(EnvType.CLIENT)
-    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+    public void randomDisplayTick(BlockState state, World world, BlockPos pos, RandomGenerator random) {
         if (state.get(LIT)) {
             CampfireBlock.spawnSmokeParticle(world, pos, false, false);
             Blocks.FURNACE.randomDisplayTick(state, world, pos, random);

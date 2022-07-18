@@ -3,14 +3,14 @@ package cf.witcheskitchen.common.statuseffect;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectCategory;
+import net.minecraft.entity.effect.StatusEffectType;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class ParalysisStatusEffect extends StatusEffect {
-    public ParalysisStatusEffect(StatusEffectCategory type, int color) {
+    public ParalysisStatusEffect(StatusEffectType type, int color) {
         super(type, color);
     }
 
@@ -33,7 +33,7 @@ public class ParalysisStatusEffect extends StatusEffect {
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
         BlockPos pos = entity.getBlockPos();
-        World world = entity.getEntityWorld();
+        World world = entity.getWorld();
         entity.setVelocity(0, 0, 0);
         if (entity.isSwimming()) {
             entity.damage(DamageSource.DROWN, 2f);

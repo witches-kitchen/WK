@@ -5,12 +5,12 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import org.jetbrains.annotations.Nullable;
 
-import net.minecraft.util.math.random.Random;
 
 public abstract class WKLargeSaplingGenerator extends WKSaplingGenerator {
 
@@ -20,7 +20,7 @@ public abstract class WKLargeSaplingGenerator extends WKSaplingGenerator {
     }
 
     @Override
-    public boolean generate(ServerWorld world, ChunkGenerator chunkGenerator, BlockPos pos, BlockState state, Random random) {
+    public boolean generate(ServerWorld world, ChunkGenerator chunkGenerator, BlockPos pos, BlockState state, RandomGenerator random) {
         for (int i = 0; i >= -1; --i) {
             for (int j = 0; j >= -1; --j) {
                 if (!WKLargeSaplingGenerator.canGenerateLargeTree(state, world, pos, i, j)) continue;
@@ -31,9 +31,9 @@ public abstract class WKLargeSaplingGenerator extends WKSaplingGenerator {
     }
 
     @Nullable
-    protected abstract ConfiguredFeature<?, ?> getLargeTreeFeature(Random var1);
+    protected abstract ConfiguredFeature<?, ?> getLargeTreeFeature(RandomGenerator var1);
 
-    public boolean generateLargeTree(ServerWorld world, ChunkGenerator chunkGenerator, BlockPos pos, BlockState state, Random random, int x, int z) {
+    public boolean generateLargeTree(ServerWorld world, ChunkGenerator chunkGenerator, BlockPos pos, BlockState state, RandomGenerator random, int x, int z) {
         ConfiguredFeature<?, ?> configuredFeature = this.getLargeTreeFeature(random);
         if (configuredFeature == null) {
             return false;

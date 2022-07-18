@@ -1,14 +1,13 @@
 package cf.witcheskitchen.common.statuseffect;
 
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MovementType;
 import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectCategory;
+import net.minecraft.entity.effect.StatusEffectType;
 import net.minecraft.util.math.BlockPos;
 
 //Todo: This
 public class ShadowsStatusEffect extends StatusEffect {
-    public ShadowsStatusEffect(StatusEffectCategory category, int color) {
+    public ShadowsStatusEffect(StatusEffectType category, int color) {
         super(category, color);
     }
 
@@ -27,10 +26,12 @@ public class ShadowsStatusEffect extends StatusEffect {
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
         BlockPos pos = entity.getBlockPos();
-        if (entity.getEntityWorld().isNight() || !entity.getEntityWorld().isSkyVisible(pos)) {
+        if (entity.getWorld().isNight() || !entity.getWorld().isSkyVisible(pos)) {
             entity.setInvisible(true);
-        } else if (entity.getEntityWorld().isDay() && entity.getEntityWorld().isSkyVisible(pos) && MovementType.PLAYER.equals(false) || MovementType.PISTON.equals(false) || MovementType.SELF.equals(false) || MovementType.SHULKER.equals(false) || MovementType.SHULKER_BOX.equals(false)) {
-            entity.setInvisible(true);
+        } else {
+            if (entity.getWorld().isDay()) {
+                entity.getWorld().isSkyVisible(pos);
+            }
         }
     }
 }

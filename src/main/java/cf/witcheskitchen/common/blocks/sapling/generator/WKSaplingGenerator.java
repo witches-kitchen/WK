@@ -6,9 +6,9 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.sapling.SaplingGenerator;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.tag.BlockTags;
+import net.minecraft.util.Holder;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.util.registry.RegistryEntry;
+import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
@@ -16,10 +16,10 @@ import net.minecraft.world.gen.feature.ConfiguredFeature;
 
 
 public abstract class WKSaplingGenerator extends SaplingGenerator {
-    protected abstract RegistryEntry<? extends ConfiguredFeature<?, ?>> getTreeFeature(Random var1, boolean var2);
+    protected abstract Holder<? extends ConfiguredFeature<?, ?>> getTreeFeature(RandomGenerator var1, boolean var2);
 
-    public boolean generate(ServerWorld world, ChunkGenerator chunkGenerator, BlockPos pos, BlockState state, Random random) {
-        RegistryEntry<? extends ConfiguredFeature<?, ?>> registryEntry = this.getTreeFeature(random, this.areFlowersNearby(world, pos));
+    public boolean generate(ServerWorld world, ChunkGenerator chunkGenerator, BlockPos pos, BlockState state, RandomGenerator random) {
+        Holder<? extends ConfiguredFeature<?, ?>> registryEntry = this.getTreeFeature(random, this.areFlowersNearby(world, pos));
         if (registryEntry == null) {
             return false;
         }

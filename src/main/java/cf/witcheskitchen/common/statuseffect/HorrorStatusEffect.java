@@ -4,20 +4,20 @@ package cf.witcheskitchen.common.statuseffect;
 import cf.witcheskitchen.common.registry.WKSoundEvents;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffectType;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.World;
 
 //Todo: Work on this
 public class HorrorStatusEffect extends StatusEffect {
     public int timer = 650;
 
-    public HorrorStatusEffect(StatusEffectCategory type, int color) {
+    public HorrorStatusEffect(StatusEffectType type, int color) {
         super(type, color);
     }
 
@@ -33,8 +33,8 @@ public class HorrorStatusEffect extends StatusEffect {
 
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-        Random rand = entity.getRandom();
-        World world = entity.getEntityWorld();
+        RandomGenerator rand = entity.getRandom();
+        World world = entity.getWorld();
         BlockPos pos = entity.getBlockPos();
         if (!entity.hasStatusEffect(StatusEffects.BLINDNESS)) {
             entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 6000, 3));

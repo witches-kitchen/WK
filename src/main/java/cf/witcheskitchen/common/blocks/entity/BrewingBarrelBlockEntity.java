@@ -254,7 +254,7 @@ public class BrewingBarrelBlockEntity extends WKDeviceBlockEntity implements Nam
     // Client Sync
     @Override
     public BlockEntityUpdateS2CPacket toUpdatePacket() {
-        return BlockEntityUpdateS2CPacket.create(this);
+        return BlockEntityUpdateS2CPacket.of(this);
     }
 
     @Override

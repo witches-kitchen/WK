@@ -14,7 +14,7 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.World;
 
 public class WKDeviceBlockEntity extends BlockEntity implements BlockEntityTicker<WKDeviceBlockEntity>, Inventory {
@@ -39,7 +39,7 @@ public class WKDeviceBlockEntity extends BlockEntity implements BlockEntityTicke
 
     // Client-side Tick
     @Environment(EnvType.CLIENT)
-    public void onClientTick(World world, BlockPos pos, BlockState state, Random random) {
+    public void onClientTick(World world, BlockPos pos, BlockState state, RandomGenerator random) {
 
     }
 

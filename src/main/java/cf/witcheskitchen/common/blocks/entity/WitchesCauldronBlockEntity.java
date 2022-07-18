@@ -16,6 +16,7 @@ import cf.witcheskitchen.common.util.TimeHelper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.util.ColorUtil;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
@@ -28,9 +29,8 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
-import net.minecraft.util.math.ColorHelper;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
@@ -139,16 +139,16 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
 
     @Override
     @Environment(EnvType.CLIENT)
-    public void onClientTick(World world, BlockPos pos, BlockState state, Random random) {
+    public void onClientTick(World world, BlockPos pos, BlockState state, RandomGenerator random) {
         if (state.get(WitchesCauldronBlock.LIT)) {
             WitchesCauldronBlockEntity.lavaTick(world, pos, true);
         }
     }
 
     private void sendPlashPacket(ItemEntity trackedEntity) {
-        final float red = ColorHelper.Argb.getRed(this.color) / 255F;
-        final float green = ColorHelper.Argb.getGreen(this.color) / 255f;
-        final float blue = ColorHelper.Argb.getBlue(this.color) / 255F;
+        final float red = ColorUtil.ARGB32.getRed(this.color) / 255F;
+        final float green = ColorUtil.ARGB32.getGreen(this.color) / 255f;
+        final float blue = ColorUtil.ARGB32.getBlue(this.color) / 255F;
         PacketHelper.sendToAllTracking(trackedEntity, serverPlayer -> SplashParticlePacketHandler.send(serverPlayer, this.getPos(), red, green, blue, 0.5D, 1.0D, 0.5D, (byte) 6));
         world.playSound(null, pos, SoundEvents.ENTITY_PLAYER_SPLASH, SoundCategory.BLOCKS, 0.2F, 1.0f);
     }
@@ -231,7 +231,7 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
     @Nullable
     @Override
     public Packet<ClientPlayPacketListener> toUpdatePacket() {
-        return BlockEntityUpdateS2CPacket.create(this);
+        return BlockEntityUpdateS2CPacket.of(this);
     }
 
     @Override

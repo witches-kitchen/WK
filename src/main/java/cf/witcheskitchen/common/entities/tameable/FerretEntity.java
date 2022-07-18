@@ -121,9 +121,9 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         this.goalSelector.add(10, new StopAndLookAtEntityGoal(this, MobEntity.class, 2.0f, 0.8f));
         this.goalSelector.add(11, new WanderAroundFarGoal(this, 0.8D, 1.0000001E-5F));
         this.goalSelector.add(12, new FleeEntityGoal(this, LivingEntity.class, 16, 1, 3, FLEE_SUPERNATURAL));
-        this.targetSelector.add(1, new ActiveTargetGoal<>(this, PlayerEntity.class, 10, true, false, this::shouldAngerAt));
-        this.targetSelector.add(2, new UntamedActiveTargetGoal(this, RabbitEntity.class, false, null));
-        this.targetSelector.add(2, new UntamedActiveTargetGoal(this, ChickenEntity.class, false, null));
+        this.targetSelector.add(1, new TargetGoal<>(this, PlayerEntity.class, 10, true, false, this::shouldAngerAt));
+        this.targetSelector.add(2, new UntamedTargetGoal<>(this, RabbitEntity.class, false, null));
+        this.targetSelector.add(2, new UntamedTargetGoal(this, ChickenEntity.class, false, null));
         this.targetSelector.add(4, new RevengeGoal(this).setGroupRevenge());
         this.targetSelector.add(5, new UniversalAngerGoal(this, true));
         this.targetSelector.add(6, new TrackOwnerAttackerGoal(this));
@@ -310,7 +310,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
                 return !ferretEntity.isTamed() || ferretEntity.getOwner() != owner;
             } else if (target instanceof PlayerEntity && owner instanceof PlayerEntity && !((PlayerEntity) owner).shouldDamagePlayer((PlayerEntity) target)) {
                 return false;
-            } else if (target instanceof AbstractHorseEntity && ((AbstractHorseEntity) target).isTame()) {
+            } else if (target instanceof HorseBaseEntity && ((HorseBaseEntity) target).isTame()) {
                 return false;
             } else {
                 return !(target instanceof TameableEntity) || !((TameableEntity) target).isTamed();

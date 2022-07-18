@@ -1,20 +1,19 @@
 package cf.witcheskitchen.common.blocks.sapling.generator;
 
 import cf.witcheskitchen.common.registry.WKConfiguredFeatures;
-import net.minecraft.util.registry.RegistryEntry;
+import net.minecraft.util.Holder;
+import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
-
-import net.minecraft.util.math.random.Random;
+import org.jetbrains.annotations.Nullable;
 
 public class JuniperSaplingGenerator extends WKLargeSaplingGenerator {
     @Override
-    protected RegistryEntry<? extends ConfiguredFeature<?, ?>> getTreeFeature(Random random, boolean bees) {
-        return RegistryEntry.of(WKConfiguredFeatures.JUNIPER_TREE);
+    protected Holder<? extends ConfiguredFeature<?, ?>> getTreeFeature(RandomGenerator random, boolean bees) {
+        return Holder.createDirect(WKConfiguredFeatures.JUNIPER_TREE);
     }
 
     @Override
-    protected ConfiguredFeature<?, ?> getLargeTreeFeature(Random random) {
-        // return WKGenerator.MEGA_JUNIPER_TREE;
+    protected @Nullable ConfiguredFeature<?, ?> getLargeTreeFeature(RandomGenerator var1) {
         return null;
     }
 }

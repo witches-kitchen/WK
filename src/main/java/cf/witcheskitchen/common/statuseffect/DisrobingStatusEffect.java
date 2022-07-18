@@ -9,23 +9,23 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.InstantStatusEffect;
-import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffectType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Pair;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.random.RandomGenerator;
 
 import java.util.List;
 import java.util.Optional;
 
 public class DisrobingStatusEffect extends InstantStatusEffect {
 
-    public DisrobingStatusEffect(StatusEffectCategory type, int color) {
+    public DisrobingStatusEffect(StatusEffectType type, int color) {
         super(type, color);
     }
 
-    private static EquipmentSlot getRandomArmor(final Random random) {
+    private static EquipmentSlot getRandomArmor(final RandomGenerator random) {
         final int i = random.nextInt(4);
         switch (i) {
             case 0 -> {
@@ -56,7 +56,7 @@ public class DisrobingStatusEffect extends InstantStatusEffect {
         if (entity.hasStatusEffect(WKStatusEffects.COOLDOWN)) {
             return;
         }
-        final Random random = entity.getRandom();
+        final RandomGenerator random = entity.getRandom();
         final int i = random.nextInt(100) + 1;
         if (i <= 50) {
             final EquipmentSlot dice = getRandomArmor(random);

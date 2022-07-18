@@ -206,7 +206,7 @@ public class InventoryManager<T extends BlockEntity> implements Inventory {
      * @return a {@link Predicate} of {@link PlayerEntity}.
      */
     protected Predicate<PlayerEntity> canUse() {
-        return player -> player.getEntityWorld().getBlockEntity(this.getContainer().getPos()) == this.getContainer() && player.getPos().distanceTo(Vec3d.of(this.getContainer().getPos())) < 16;
+        return player -> player.getWorld().getBlockEntity(this.getContainer().getPos()) == this.getContainer() && player.getPos().distanceTo(Vec3d.of(this.getContainer().getPos())) < 16;
     }
 
     /**

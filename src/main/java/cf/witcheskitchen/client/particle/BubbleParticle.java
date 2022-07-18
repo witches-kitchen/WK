@@ -21,9 +21,9 @@ public class BubbleParticle extends SpriteBillboardParticle {
         this.velocityX *= 0.1;
         this.velocityY *= 0.1;
         this.velocityZ *= 0.1;
-        this.red = (float) (((Math.random() * 0.3F) + 1.0F) * r * offset);
-        this.green = (float) (((Math.random() * 0.3F) + 1.0F) * g * offset);
-        this.blue = (float) (((Math.random() * 0.3F) + 1.0F) * b * offset);
+        this.colorRed = (float) (((Math.random() * 0.3F) + 1.0F) * r * offset);
+        this.colorGreen = (float) (((Math.random() * 0.3F) + 1.0F) * g * offset);
+        this.colorBlue = (float) (((Math.random() * 0.3F) + 1.0F) * b * offset);
     }
 
     @Override

@@ -3,10 +3,10 @@ package cf.witcheskitchen.common.statuseffect;
 import cf.witcheskitchen.common.registry.WKStatusEffects;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectCategory;
+import net.minecraft.entity.effect.StatusEffectType;
 
 public class CooldownStatusEffect extends StatusEffect {
-    public CooldownStatusEffect(StatusEffectCategory type, int color) {
+    public CooldownStatusEffect(StatusEffectType type, int color) {
         super(type, color);
     }
 

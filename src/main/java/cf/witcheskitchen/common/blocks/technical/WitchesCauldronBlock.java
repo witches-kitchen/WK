@@ -35,7 +35,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
@@ -204,7 +204,7 @@ public class WitchesCauldronBlock extends WKBlockEntityProvider implements Water
     }
 
     @Override
-    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+    public void randomDisplayTick(BlockState state, World world, BlockPos pos, RandomGenerator random) {
         final BlockEntity entity = world.getBlockEntity(pos);
         if (entity instanceof WitchesCauldronBlockEntity cauldron) {
             if (cauldron.isPowered()) {

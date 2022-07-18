@@ -6,8 +6,9 @@ import com.google.common.collect.ImmutableMap;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.EnvType;
-import net.fabricmc.api.ModInitializer;
 import net.minecraft.block.Block;
+import org.quiltmc.loader.api.ModContainer;
+import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import software.bernie.geckolib3.GeckoLib;
@@ -24,6 +25,27 @@ public class WK implements ModInitializer {
     public static final ArrayList<Block> LEAF_BLOCKS = new ArrayList<>();
     public static WKConfig config;
 
+    @Override
+    public void onInitialize(ModContainer mod) {
+        // This code runs as soon as Minecraft is in a mod-load-ready state.
+        // However, some things (like resources) may still be uninitialized.
+        // Proceed with mild caution.
+        AutoConfig.register(WKConfig.class, GsonConfigSerializer::new);
+        config = AutoConfig.getConfigHolder(WKConfig.class).getConfig();
+        logger.info("Remember when I told you how my");
+        logger.info("Kin is different in some ways?");
+        logger.info("It's a fact, she is exactly that!");
+        logger.info("A harbinger of death from the world of witchcraft,");
+        logger.info("And she's feeding them cakes and her ale to this innocent boy,");
+        logger.info("And her magic brings dismay!");
+        logger.info("I hear her in the wind, the bane of our town");
+        logger.info("Come with me, father, I'm to expose a heathen");
+        registerAll();
+        if (WKConfig.get().debugMode) {
+            logger.info("Witches Kitchen Base: Successfully Loaded");
+        }
+        logger.info("WitchesKitchen V{} Initialized", VERSION);
+    }
     public static WKIdentifier id(String name) {
         return new WKIdentifier(name);
     }
@@ -45,28 +67,6 @@ public class WK implements ModInitializer {
                 .put(WKBlocks.SUMAC_LOG, WKBlocks.STRIPPED_SUMAC_LOG)
                 .put(WKBlocks.SUMAC_WOOD, WKBlocks.STRIPPED_SUMAC_WOOD)
                 .build());
-    }
-
-    @Override
-    public void onInitialize() {
-        // This code runs as soon as Minecraft is in a mod-load-ready state.
-        // However, some things (like resources) may still be uninitialized.
-        // Proceed with mild caution.
-        AutoConfig.register(WKConfig.class, GsonConfigSerializer::new);
-        config = AutoConfig.getConfigHolder(WKConfig.class).getConfig();
-        logger.info("Remember when I told you how my");
-        logger.info("Kin is different in some ways?");
-        logger.info("It's a fact, she is exactly that!");
-        logger.info("A harbinger of death from the world of witchcraft,");
-        logger.info("And she's feeding them cakes and her ale to this innocent boy,");
-        logger.info("And her magic brings dismay!");
-        logger.info("I hear her in the wind, the bane of our town");
-        logger.info("Come with me, father, I'm to expose a heathen");
-        registerAll();
-        if (WKConfig.get().debugMode) {
-            logger.info("Witches Kitchen Base: Successfully Loaded");
-        }
-        logger.info("WitchesKitchen V{} Initialized", VERSION);
     }
 
     private void registerAll() {
@@ -91,4 +91,6 @@ public class WK implements ModInitializer {
 //        WKBannerRegistry.registerBannerClient();
         WKDamageSources.register();
     }
+
+
 }

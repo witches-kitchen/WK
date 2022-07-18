@@ -4,10 +4,10 @@ import cf.witcheskitchen.common.registry.WKStatusEffects;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectCategory;
+import net.minecraft.entity.effect.StatusEffectType;
 
 public class FrostbiteStatusEffect extends StatusEffect {
-    public FrostbiteStatusEffect(StatusEffectCategory type, int color) {
+    public FrostbiteStatusEffect(StatusEffectType type, int color) {
         super(type, color);
     }
 

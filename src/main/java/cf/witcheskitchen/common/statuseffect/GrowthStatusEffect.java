@@ -6,8 +6,8 @@ import net.minecraft.block.Fertilizable;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffectType;
 import net.minecraft.item.BoneMealItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -15,7 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class GrowthStatusEffect extends StatusEffect {
-    public GrowthStatusEffect(StatusEffectCategory type, int color) {
+    public GrowthStatusEffect(StatusEffectType type, int color) {
         super(type, color);
     }
 

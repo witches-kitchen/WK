@@ -5,8 +5,10 @@ build/
 out/
 classes/
 
-# eclipse
+# Quilt Loom
+run/
 
+# eclipse
 *.launch
 
 # idea
@@ -28,6 +30,5 @@ bin/
 
 *.DS_Store
 
-# fabric
-
-run/
+# Eclipse JDT LS
+workspace/

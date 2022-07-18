@@ -9,12 +9,12 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.intprovider.IntProvider;
+import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.TestableWorld;
 import net.minecraft.world.gen.feature.TreeFeatureConfig;
 import net.minecraft.world.gen.foliage.FoliagePlacer;
 import net.minecraft.world.gen.foliage.FoliagePlacerType;
 
-import net.minecraft.util.math.random.Random;
 import java.util.function.BiConsumer;
 
 public class SumacFoliagePlacer
@@ -30,22 +30,23 @@ public class SumacFoliagePlacer
         return WKConfiguredFeatures.SUMAC_FOLIAGE_PLACER;
     }
 
+    // generate()
     @Override
-    protected void generate(TestableWorld world, BiConsumer<BlockPos, BlockState> replacer, Random random, TreeFeatureConfig config, int trunkHeight, FoliagePlacer.TreeNode treeNode, int foliageHeight, int radius, int offset) {
+    protected void method_23448(TestableWorld testableWorld, BiConsumer<BlockPos, BlockState> biConsumer, RandomGenerator randomGenerator, TreeFeatureConfig treeFeatureConfig, int i, TreeNode treeNode, int foliageHeight, int radius, int offset) {
         boolean bl = treeNode.isGiantTrunk();
         BlockPos blockPos = treeNode.getCenter().up(offset);
-        this.generateSquare(world, replacer, random, config, blockPos, radius + treeNode.getFoliageRadius(), -1 - foliageHeight, bl);
-        this.generateSquare(world, replacer, random, config, blockPos, radius - 1, -foliageHeight, bl);
-        this.generateSquare(world, replacer, random, config, blockPos, radius + treeNode.getFoliageRadius() - 1, 0, bl);
+        this.generateSquare(testableWorld, biConsumer, randomGenerator, treeFeatureConfig, blockPos, radius + treeNode.getFoliageRadius(), -1 - foliageHeight, bl);
+        this.generateSquare(testableWorld, biConsumer, randomGenerator, treeFeatureConfig, blockPos, radius - 1, -foliageHeight, bl);
+        this.generateSquare(testableWorld, biConsumer, randomGenerator, treeFeatureConfig, blockPos, radius + treeNode.getFoliageRadius() - 1, 0, bl);
     }
 
     @Override
-    public int getRandomHeight(Random random, int trunkHeight, TreeFeatureConfig config) {
+    public int getRandomHeight(RandomGenerator random, int trunkHeight, TreeFeatureConfig config) {
         return 0;
     }
 
     @Override
-    protected boolean isInvalidForLeaves(Random random, int dx, int y, int dz, int radius, boolean giantTrunk) {
+    protected boolean isInvalidForLeaves(RandomGenerator random, int dx, int y, int dz, int radius, boolean giantTrunk) {
         if (y == 0) {
             return (dx > 1 || dz > 1) && dx != 0 && dz != 0;
         }

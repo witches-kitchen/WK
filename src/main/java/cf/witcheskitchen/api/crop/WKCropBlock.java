@@ -14,7 +14,7 @@ import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
@@ -174,7 +174,7 @@ public abstract class WKCropBlock extends CropBlock {
      * </p>
      * <p>
      * This is triggered in {@link ServerWorld#tickChunk(WorldChunk, int)} and
-     * if this returns false, {@link WKCropBlock#randomTick(BlockState, ServerWorld, BlockPos, Random)}
+     * if this returns false, {@link WKCropBlock#randomTick(BlockState, ServerWorld, BlockPos, RandomGenerator)}
      * will never get executed.
      * </p>
      */
@@ -199,13 +199,13 @@ public abstract class WKCropBlock extends CropBlock {
      * </p>
      */
     @Override
-    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, RandomGenerator random) {
         super.randomTick(state, world, pos, random);
     }
 
     /**
      * Updates the crop {@link BlockState}, by checking {@link CropBlock#getAge(BlockState)} is <  {@link CropBlock#getMaxAge()}.
-     * <strong>NOTE:</strong> THIS METHOD IS ONLY TRIGGERED BY {@link WKCropBlock#grow(ServerWorld, Random, BlockPos, BlockState)}
+     * <strong>NOTE:</strong> THIS METHOD IS ONLY TRIGGERED BY {@link WKCropBlock#grow(ServerWorld, RandomGenerator, BlockPos, BlockState)}
      */
     @Override
     public void applyGrowth(World world, BlockPos pos, BlockState state) {
@@ -215,14 +215,14 @@ public abstract class WKCropBlock extends CropBlock {
 
     /**
      * <p>
-     * This method is a filter for {@link #grow(ServerWorld, Random, BlockPos, BlockState)} and the BoneMeal grow method.
+     * This method is a filter for {@link #grow(ServerWorld, RandomGenerator, BlockPos, BlockState)} and the BoneMeal grow method.
      * It is only used by {@link net.minecraft.item.BoneMealItem#useOnFertilizable(ItemStack, World, BlockPos)},
-     * although when extending this class it will also be triggered by {@link #grow(ServerWorld, Random, BlockPos, BlockState)}.
+     * although when extending this class it will also be triggered by {@link #grow(ServerWorld, RandomGenerator, BlockPos, BlockState)}.
      * </p>
      * It is always returning true by the parent class unless overridden.
      */
     @Override
-    public boolean canGrow(World world, Random random, BlockPos pos, BlockState state) {
+    public boolean canGrow(World world, RandomGenerator random, BlockPos pos, BlockState state) {
         return super.canGrow(world, random, pos, state);
     }
 
@@ -238,7 +238,7 @@ public abstract class WKCropBlock extends CropBlock {
      * {@link BeeEntity.GrowCropsGoal#tick()}
      */
     @Override
-    public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
+    public void grow(ServerWorld world, RandomGenerator random, BlockPos pos, BlockState state) {
         if (canGrow(world, random, pos, state)) {
             super.grow(world, random, pos, state);
         }

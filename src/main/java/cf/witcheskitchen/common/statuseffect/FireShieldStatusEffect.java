@@ -2,10 +2,10 @@ package cf.witcheskitchen.common.statuseffect;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectCategory;
+import net.minecraft.entity.effect.StatusEffectType;
 
 public class FireShieldStatusEffect extends StatusEffect {
-    public FireShieldStatusEffect(StatusEffectCategory type, int color) {
+    public FireShieldStatusEffect(StatusEffectType type, int color) {
         super(type, color);
     }
 

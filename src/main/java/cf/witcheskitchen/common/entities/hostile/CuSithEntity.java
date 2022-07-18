@@ -86,16 +86,16 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
         this.goalSelector.add(2, new MeleeAttackGoal(this, 1, true));
         this.goalSelector.add(4, new StopAndLookAtEntityGoal(this, MobEntity.class, 2.0f, 0.8f));
         this.goalSelector.add(6, new WanderAroundFarGoal(this, 0.8D, 1));
-        this.targetSelector.add(3, new ActiveTargetGoal<>(this, PlayerEntity.class, false));
-        this.targetSelector.add(3, new ActiveTargetGoal<>(this, VillagerEntity.class, false));
-        this.targetSelector.add(3, new ActiveTargetGoal<>(this, GolemEntity.class, false));
-        this.targetSelector.add(3, new ActiveTargetGoal<>(this, WitchEntity.class, false));
-        this.targetSelector.add(3, new ActiveTargetGoal<>(this, CowEntity.class, false));
-        this.targetSelector.add(3, new ActiveTargetGoal<>(this, PiglinEntity.class, false));
-        this.targetSelector.add(3, new ActiveTargetGoal<>(this, PiglinBruteEntity.class, false));
-        this.targetSelector.add(3, new ActiveTargetGoal<>(this, SheepEntity.class, false));
-        this.targetSelector.add(3, new ActiveTargetGoal<>(this, GoatEntity.class, false));
-        this.targetSelector.add(3, new ActiveTargetGoal<>(this, LivingEntity.class, 10, false, false, entity -> entity.getGroup() == EntityGroup.ILLAGER));
+        this.targetSelector.add(3, new TargetGoal<>(this, PlayerEntity.class, false));
+        this.targetSelector.add(3, new TargetGoal<>(this, VillagerEntity.class, false));
+        this.targetSelector.add(3, new TargetGoal<>(this, GolemEntity.class, false));
+        this.targetSelector.add(3, new TargetGoal<>(this, WitchEntity.class, false));
+        this.targetSelector.add(3, new TargetGoal<>(this, CowEntity.class, false));
+        this.targetSelector.add(3, new TargetGoal<>(this, PiglinEntity.class, false));
+        this.targetSelector.add(3, new TargetGoal<>(this, PiglinBruteEntity.class, false));
+        this.targetSelector.add(3, new TargetGoal<>(this, SheepEntity.class, false));
+        this.targetSelector.add(3, new TargetGoal<>(this, GoatEntity.class, false));
+        this.targetSelector.add(3, new TargetGoal<>(this, LivingEntity.class, 10, false, false, entity -> entity.getGroup() == EntityGroup.ILLAGER));
         this.targetSelector.add(0, new RevengeGoal(this).setGroupRevenge());
     }
 

@@ -6,12 +6,12 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particle.DefaultParticleType;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.random.RandomGenerator;
 
 @Environment(EnvType.CLIENT)
 public class MagicSparkleParticle extends SpriteBillboardParticle {
 
-    private final Random random;
+    private final RandomGenerator random;
     private boolean canMove = false;
     private boolean circling = false;
 
@@ -70,24 +70,24 @@ public class MagicSparkleParticle extends SpriteBillboardParticle {
         return ParticleTextureSheet.PARTICLE_SHEET_OPAQUE;
     }
 
-    public Random getRandom() {
+    public RandomGenerator getRandom() {
         return random;
     }
 
     public float getRed() {
-        return this.red;
+        return this.colorRed;
     }
 
     public float getGreen() {
-        return this.green;
+        return this.colorGreen;
     }
 
     public float getBlue() {
-        return this.blue;
+        return this.colorBlue;
     }
 
     public float getAlpha() {
-        return this.alpha;
+        return this.colorAlpha;
     }
 
     @Environment(EnvType.CLIENT)

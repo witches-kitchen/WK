@@ -1,14 +1,15 @@
 package cf.witcheskitchen.client;
 
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.texture.Sprite;
+import net.minecraft.client.util.ColorUtil;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.ColorHelper;
+
 
 @Environment(EnvType.CLIENT)
 public class RenderHelper {
@@ -25,15 +26,15 @@ public class RenderHelper {
     }
 
     public static void renderFluidSprite(final MatrixStack stack, final VertexConsumer buffer, final Sprite sprite, final int argb, final float size, final int light, final int overlay) {
-        var matrix = stack.peek().getPositionMatrix();
+        var matrix = stack.peek().getPosition();
         float maxV = (sprite.getMaxV() - sprite.getMinV()) * size;
         float minV = (sprite.getMaxV() - sprite.getMinV()) * (1 - size);
-        final int r = ColorHelper.Argb.getRed(argb);
-        final int g = ColorHelper.Argb.getGreen(argb);
-        final int b = ColorHelper.Argb.getBlue(argb);
-        buffer.vertex(matrix, size, 0, 1 - size).color(r, g, b, 255).texture(sprite.getMinU(), sprite.getMinV() + maxV).light(light).overlay(overlay).normal(1, 1, 1).next();
-        buffer.vertex(matrix, 1 - size, 0, 1 - size).color(r, g, b, 255).texture(sprite.getMaxU(), sprite.getMinV() + maxV).light(light).overlay(overlay).normal(1, 1, 1).next();
-        buffer.vertex(matrix, 1 - size, 0, size).color(r, g, b, 255).texture(sprite.getMaxU(), sprite.getMinV() + minV).light(light).overlay(overlay).normal(1, 1, 1).next();
-        buffer.vertex(matrix, size, 0, size).color(r, g, b, 255).texture(sprite.getMinU(), sprite.getMinV() + minV).light(light).overlay(overlay).normal(1, 1, 1).next();
+        final int r = ColorUtil.ARGB32.getRed(argb);
+        final int g = ColorUtil.ARGB32.getGreen(argb);
+        final int b = ColorUtil.ARGB32.getBlue(argb);
+        buffer.vertex(matrix, size, 0, 1 - size).color(r, g, b, 255).uv(sprite.getMinU(), sprite.getMinV() + maxV).light(light).overlay(overlay).normal(1, 1, 1).next();
+        buffer.vertex(matrix, 1 - size, 0, 1 - size).color(r, g, b, 255).uv(sprite.getMaxU(), sprite.getMinV() + maxV).light(light).overlay(overlay).normal(1, 1, 1).next();
+        buffer.vertex(matrix, 1 - size, 0, size).color(r, g, b, 255).uv(sprite.getMaxU(), sprite.getMinV() + minV).light(light).overlay(overlay).normal(1, 1, 1).next();
+        buffer.vertex(matrix, size, 0, size).color(r, g, b, 255).uv(sprite.getMinU(), sprite.getMinV() + minV).light(light).overlay(overlay).normal(1, 1, 1).next();
     }
 }

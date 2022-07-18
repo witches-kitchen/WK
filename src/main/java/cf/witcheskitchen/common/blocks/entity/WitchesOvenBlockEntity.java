@@ -36,7 +36,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -238,7 +238,7 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements IDevi
     }
 
     @Override
-    public void onClientTick(World world, BlockPos pos, BlockState state, Random random) {
+    public void onClientTick(World world, BlockPos pos, BlockState state, RandomGenerator random) {
         super.onClientTick(world, pos, state, random);
         int facing = state.get(CampfireBlock.FACING).getHorizontal();
         for (int j = 0; j < this.passiveInventory.size(); ++j) {
@@ -458,7 +458,7 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements IDevi
     //Client Sync
     @Override
     public BlockEntityUpdateS2CPacket toUpdatePacket() {
-        return BlockEntityUpdateS2CPacket.create(this);
+        return BlockEntityUpdateS2CPacket.of(this);
     }
 
     // Syncs the inventory

@@ -20,9 +20,9 @@ public class WKSplashParticle extends RainSplashParticle {
             this.velocityY = 0.1;
             this.velocityZ = b;
         }
-        this.red = (float) r;
-        this.green = (float) g;
-        this.blue = (float) b;
+        this.colorRed = (float) r;
+        this.colorGreen = (float) g;
+        this.colorBlue = (float) b;
     }
 
 

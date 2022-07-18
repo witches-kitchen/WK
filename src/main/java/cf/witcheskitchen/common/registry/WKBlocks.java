@@ -25,10 +25,10 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.util.Holder;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryEntry;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.TreeFeatureConfig;
 
@@ -243,7 +243,7 @@ public class WKBlocks {
     }
 
     static Block registerSapling(String path, ConfiguredFeature<TreeFeatureConfig, ?> feature) {
-        final Block sapling = new WKSaplingBlock(new WKSaplingGenerator(() -> RegistryEntry.of(feature)),
+        final Block sapling = new WKSaplingBlock(new WKSaplingGenerator(() -> Holder.createDirect(feature)),
                 FabricBlockSettings.of(Material.PLANT)
                         .noCollision()
                         .ticksRandomly()
