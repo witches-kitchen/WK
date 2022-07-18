@@ -1,19 +1,14 @@
 package cf.witcheskitchen.api.banner;
 
 import cf.witcheskitchen.WK;
-import cf.witcheskitchen.api.banner.impl.LoomPatternContainer;
 import cf.witcheskitchen.api.banner.impl.LoomPatternsInternal;
 import cf.witcheskitchen.api.banner.loom.LoomPattern;
 import cf.witcheskitchen.api.banner.loom.LoomPatterns;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
 import net.fabricmc.fabric.api.event.registry.RegistryAttribute;
-import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback;
 import net.fabricmc.fabric.api.event.registry.RegistryIdRemapCallback;
-import net.fabricmc.fabric.api.loot.v1.event.LootTableLoadingCallback;
 import net.minecraft.client.render.TexturedRenderLayers;
-import net.minecraft.loot.function.CopyNbtLootFunction;
-import net.minecraft.loot.provider.nbt.ContextLootNbtProvider;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
@@ -55,16 +50,16 @@ public class WKBannerRegistry {
             LoomPatternsInternal.addPattern(p);
         }
 
-        RegistryEntryAddedCallback.event(LOOM_PATTERN_REGISTRY).register((raw, id, p) -> LoomPatternsInternal.addPattern(p));
-        LootTableLoadingCallback.EVENT.register((resourceManager, lootManager, lootTableId, supplier, setter) -> {
-            if (BANNER_LOOT_TABLES.contains(lootTableId)) {
-                supplier.withFunction(CopyNbtLootFunction
-                        .builder(ContextLootNbtProvider.BLOCK_ENTITY)
-                        .withOperation(LoomPatternContainer.NBT_KEY, "BlockEntityTag." + LoomPatternContainer.NBT_KEY)
-                        .build()
-                );
-            }
-        });
+     //   RegistryEntryAddedCallback.event(LOOM_PATTERN_REGISTRY).register((raw, id, p) -> LoomPatternsInternal.addPattern(p));
+//        LootTableEvents.MODIFY.register((resourceManager, lootManager, lootTableId, supplier, setter) -> {
+//            if (BANNER_LOOT_TABLES.contains(lootTableId)) {
+//                supplier.apply(CopyNbtLootFunction
+//                        .builder(ContextLootNbtProvider.BLOCK_ENTITY)
+//                        .withOperation(LoomPatternContainer.NBT_KEY, "BlockEntityTag." + LoomPatternContainer.NBT_KEY)
+//                        .build()
+//                );
+//            }
+//        });
     }
 
     public static void registerBannerClient() {

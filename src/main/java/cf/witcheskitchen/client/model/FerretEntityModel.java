@@ -6,18 +6,19 @@ import net.minecraft.util.Identifier;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 
 public class FerretEntityModel extends AnimatedGeoModel<FerretEntity> {
+
     @Override
-    public Identifier getModelLocation(FerretEntity object) {
+    public Identifier getModelResource(FerretEntity object) {
         return new Identifier(WK.MODID, "geo/ferret.geo.json");
     }
 
     @Override
-    public Identifier getTextureLocation(FerretEntity object) {
+    public Identifier getTextureResource(FerretEntity object) {
         return new Identifier(WK.MODID, "textures/entity/ferret_" + object.getVariant() + ".png");
     }
 
     @Override
-    public Identifier getAnimationFileLocation(FerretEntity animatable) {
+    public Identifier getAnimationResource(FerretEntity animatable) {
         return new Identifier(WK.MODID, "animations/ferret.json");
     }
 }

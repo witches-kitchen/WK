@@ -30,17 +30,15 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.property.Properties;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Random;
 
 public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements IDeviceExperienceHandler, NamedScreenHandlerFactory {
 
@@ -475,7 +473,7 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements IDevi
     // From NamedScreenHandlerFactory
     @Override
     public Text getDisplayName() {
-        return new TranslatableText("screen.title.witcheskitchen.witches_oven");
+        return Text.translatable(("screen.title.witcheskitchen.witches_oven"));
     }
 
     @Nullable

@@ -1,6 +1,5 @@
 package cf.witcheskitchen.client;
 
-import cf.witcheskitchen.api.banner.WKBannerRegistry;
 import cf.witcheskitchen.client.gui.screen.BrewingBarrelScreen;
 import cf.witcheskitchen.client.gui.screen.WitchesOvenScreen;
 import cf.witcheskitchen.client.particle.BubbleParticle;
@@ -43,8 +42,8 @@ public class WKClient implements ClientModInitializer {
         WKBlocks.getBlocks().forEach(entry -> BlockRenderLayerMap.INSTANCE.putBlock(entry.object(), RenderLayer.getCutout()));
         registerColorProvider();
         RenderRegistry.register();
-        WKBannerRegistry.registerBanner();
-        WKBannerRegistry.registerBannerClient();
+       // WKBannerRegistry.registerBanner();
+       // WKBannerRegistry.registerBannerClient();
     }
 
     //allows for color map modification of leaves based on biome

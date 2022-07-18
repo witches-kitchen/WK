@@ -1,6 +1,5 @@
 package cf.witcheskitchen;
 
-import cf.witcheskitchen.api.banner.WKBannerRegistry;
 import cf.witcheskitchen.common.registry.*;
 import cf.witcheskitchen.mixin.AxeAccess;
 import com.google.common.collect.ImmutableMap;
@@ -88,8 +87,8 @@ public class WK implements ModInitializer {
         GeckoLib.initialize();
         WKEntityTypes.register();
         modifyAxeBlockStripping();
-        WKBannerRegistry.registerBanner();
-        WKBannerRegistry.registerBannerClient();
+//        WKBannerRegistry.registerBanner();
+//        WKBannerRegistry.registerBannerClient();
         WKDamageSources.register();
     }
 }

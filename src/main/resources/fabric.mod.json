@@ -33,7 +33,7 @@
     "modmenu": [
       "cf.witcheskitchen.client.compat.WKModMenu"
     ],
-    "rei_plugins": [
+    "rei_client": [
       "cf.witcheskitchen.client.compat.rei.WKREIPlugin"
     ]
   },
@@ -43,7 +43,7 @@
   "depends": {
     "fabricloader": ">=0.13.3",
     "fabric": ">=0.44.0",
-    "minecraft": "1.18.2",
+    "minecraft": "1.19",
     "java": ">=17",
     "cloth-config2": ">=6.2.57",
     "patchouli": "*",
@@ -60,6 +60,6 @@
     "tir": "???",
     "athene": "???",
     "wallamide": "???",
-    "daniking": "???"
+    "daniking": "https://www.paypal.com/paypalme/danikingrd"
   }
 }

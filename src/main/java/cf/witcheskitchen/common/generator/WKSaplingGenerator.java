@@ -6,7 +6,7 @@ import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.TreeFeatureConfig;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Random;
+import net.minecraft.util.math.random.Random;
 import java.util.function.Supplier;
 
 //code currently thanks to croptopia as other attempts kept failing here

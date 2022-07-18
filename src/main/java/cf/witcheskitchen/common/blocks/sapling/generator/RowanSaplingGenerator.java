@@ -5,7 +5,7 @@ import net.minecraft.util.registry.RegistryEntry;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.TreeConfiguredFeatures;
 
-import java.util.Random;
+import net.minecraft.util.math.random.Random;
 
 public class RowanSaplingGenerator
         extends WKSaplingGenerator {

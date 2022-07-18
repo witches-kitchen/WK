@@ -9,9 +9,6 @@
     "FoliagePlacerTypeInvoker",
     "SaplingBlockInvoker",
     "SimpleBlockStateProviderInvoker",
-    "block.BannerBlockEntityMixin",
-    "block.LoomContainerMixin",
-    "block.LoomContainerPatternSlotMixin",
     "fluid.BottleItemMixin",
     "fluid.BucketItemMixin",
     "fluid.PotionItemMixin",
@@ -20,11 +17,6 @@
     "statuseffect.FleeEntityGoalMixin"
   ],
   "client": [
-    "client.BannerBlockEntityClientMixin",
-    "client.BannerBlockEntityRendererMixin",
-    "client.BannerItemMixin",
-    "client.BuiltinModelItemRendererMixin",
-    "client.LoomScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

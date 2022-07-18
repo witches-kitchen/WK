@@ -9,27 +9,24 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome.Category;
-
-import java.util.List;
 
 public class WKSeedItem extends AliasedBlockItem {
 
-    private List<Category> category;
+    //private List<Category> category;
 
     public WKSeedItem(Block block, Settings settings) {
         super(block, settings);
     }
 
-    public WKSeedItem(Block block, Settings settings, List<Category> category) {
-        super(block, settings);
-        //   ((WKCropBlock) block).setSeedsItem(this);
-        this.category = category;
-    }
+//    public WKSeedItem(Block block, Settings settings, List<Category> category) {
+//        super(block, settings);
+//        //   ((WKCropBlock) block).setSeedsItem(this);
+//       // this.category = category;
+//    }
 
-    public WKSeedItem(Block block, Settings settings, Category... category) {
-        this(block, settings, List.of(category));
-    }
+//    public WKSeedItem(Block block, Settings settings, Category... category) {
+//        this(block, settings, List.of(category));
+//    }
 
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
@@ -48,14 +45,14 @@ public class WKSeedItem extends AliasedBlockItem {
                 .append(" ").append(category.get(0).asString().toLowerCase(Locale.ROOT)));
     }*/
 
-    @SuppressWarnings("DeprecatedIsStillUsed")
-    @Deprecated(forRemoval = true)
-    public List<Category> getCategory() {
-        return category;
-    }
-
-    @Deprecated(forRemoval = true)
-    public void setCategory(List<Category> category) {
-        this.category = category;
-    }
+//    @SuppressWarnings("DeprecatedIsStillUsed")
+//    @Deprecated(forRemoval = true)
+//    public List<Category> getCategory() {
+//        return category;
+//    }
+//
+//    @Deprecated(forRemoval = true)
+//    public void setCategory(List<Category> category) {
+//        this.category = category;
+//    }
 }

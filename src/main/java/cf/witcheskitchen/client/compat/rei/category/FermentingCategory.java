@@ -18,7 +18,6 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +26,7 @@ import java.util.List;
 public class FermentingCategory implements DisplayCategory<FermentingDisplay> {
 
     public static final EntryStack<ItemStack> ICON = EntryStacks.of(WKBlocks.OAK_BREWING_BARREL);
-    public static final Text TITLE = new TranslatableText("rei.witcheskitchen.fermenting");
+    public static final Text TITLE = Text.translatable("rei.witcheskitchen.fermenting");
 
     public static void register(CategoryRegistry registry) {
         registry.add(new FermentingCategory());

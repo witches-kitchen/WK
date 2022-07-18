@@ -25,7 +25,6 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
@@ -223,7 +222,7 @@ public class BrewingBarrelBlockEntity extends WKDeviceBlockEntity implements Nam
 
     @Override
     public Text getDisplayName() {
-        return new TranslatableText("screen.title.witcheskitchen.brewing_barrel");
+        return Text.translatable("screen.title.witcheskitchen.brewing_barrel");
     }
 
     @Override

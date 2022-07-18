@@ -5,7 +5,6 @@ import cf.witcheskitchen.api.banner.loom.LoomPattern;
 import cf.witcheskitchen.api.banner.loom.LoomPatterns;
 import cf.witcheskitchen.api.banner.loom.PatternLimitModifier;
 import net.minecraft.block.entity.BannerBlockEntity;
-import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.screen.ingame.LoomScreen;
@@ -55,7 +54,8 @@ public abstract class LoomScreenMixin extends HandledScreen<LoomScreenHandler> {
             )
     )
     private static int takeBppIntoAccountForRowCount() {
-        return BannerPattern.COUNT + LoomPatternsInternal.dyeLoomPatternCount();
+       return -1;
+        // return BannerPattern.COUNT + LoomPatternsInternal.dyeLoomPatternCount();
     }
 
     /**
@@ -70,7 +70,8 @@ public abstract class LoomScreenMixin extends HandledScreen<LoomScreenHandler> {
             )
     )
     private int modifyDyePatternCount() {
-        return BannerPattern.COUNT + LoomPatternsInternal.dyeLoomPatternCount();
+        return -1;
+        //return BannerPattern.COUNT + LoomPatternsInternal.dyeLoomPatternCount();
     }
 
     @Redirect(
@@ -158,7 +159,8 @@ public abstract class LoomScreenMixin extends HandledScreen<LoomScreenHandler> {
         singleBppPattern.clear();
 
         if (loomPatternIndex < 0) {
-            int loomPatternIdx = -loomPatternIndex - (1 + BannerPattern.LOOM_APPLICABLE_COUNT);
+           // int loomPatternIdx = -loomPatternIndex - (1 + BannerPattern.LOOM_APPLICABLE_COUNT);
+            int loomPatternIdx = -1;
             LoomPattern pattern = LoomPatternsInternal.byLoomIndex(loomPatternIdx);
             NbtList loomPatterns = new NbtList();
             NbtCompound patternNbtElement = new NbtCompound();
@@ -203,9 +205,9 @@ public abstract class LoomScreenMixin extends HandledScreen<LoomScreenHandler> {
             index = 0
     )
     private int modifyBppPatternIdxArg(int patternIdx) {
-        if (patternIdx > BannerPattern.LOOM_APPLICABLE_COUNT) {
-            patternIdx = -patternIdx;
-        }
+//        if (patternIdx > BannerPattern.LOOM_APPLICABLE_COUNT) {
+//            patternIdx = -patternIdx;
+//        }
 
         return patternIdx;
     }

@@ -17,7 +17,6 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -27,7 +26,7 @@ import java.util.List;
 public class OvenCookingCategory implements DisplayCategory<OvenCookingDisplay> {
 
     public static final EntryStack<ItemStack> ICON = EntryStacks.of(WKBlocks.IRON_WITCHES_OVEN);
-    public static final Text TITLE = new TranslatableText("rei.witcheskitchen.oven_cooking");
+    public static final Text TITLE = Text.translatable("rei.witcheskitchen.oven_cooking");
 
     public static void register(CategoryRegistry registry) {
         registry.add(new OvenCookingCategory());
@@ -59,7 +58,7 @@ public class OvenCookingCategory implements DisplayCategory<OvenCookingDisplay> 
         widgets.add(Widgets.createRecipeBase(bounds));
         widgets.add(Widgets.createResultSlotBackground(new Point(startPoint.x + 61, startPoint.y + 9)));
         widgets.add(Widgets.createBurningFire(new Point(startPoint.x + 1, startPoint.y + 20)).animationDurationMS(10000));
-        widgets.add(Widgets.createLabel(new Point(bounds.getX() + bounds.getWidth() - 5, bounds.getY() + 5), new TranslatableText("category.rei.cooking.time&xp", df.format(display.getExperience()), df.format(time / 20d))).noShadow().rightAligned().color(0xFF404040, 0xFFBBBBBB));
+        widgets.add(Widgets.createLabel(new Point(bounds.getX() + bounds.getWidth() - 5, bounds.getY() + 5), Text.translatable("category.rei.cooking.time&xp", df.format(display.getExperience()), df.format(time / 20d))).noShadow().rightAligned().color(0xFF404040, 0xFFBBBBBB));
         widgets.add(Widgets.createArrow(new Point(startPoint.x + 24, startPoint.y + 8)).animationDurationTicks(time));
         widgets.add(Widgets.createSlot(new Point(startPoint.x + 1, startPoint.y + 1)).entries(display.getInputEntries().get(0)).markInput());
         widgets.add(Widgets.createSlot(new Point(startPoint.x + 61, startPoint.y + 9)).entries(display.getOutputEntries().get(0)).disableBackground().markOutput());

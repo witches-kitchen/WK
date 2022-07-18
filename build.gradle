@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '0.11-SNAPSHOT'
+    id 'fabric-loom' version '0.12-SNAPSHOT'
     id 'io.github.juuxel.loom-quiltflower' version '1.6.1'
     id 'maven-publish'
 }
@@ -94,20 +94,19 @@ dependencies {
     }
     modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cardinal_components_version}"
     modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}"
-    modImplementation('software.bernie.geckolib:geckolib-fabric-1.18:3.0.42') {
+    modImplementation("software.bernie.geckolib:geckolib-fabric-${project.geckolib_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
-    modImplementation("com.terraformersmc:modmenu:${project.modmenu_version}") {
+    modImplementation("com.terraformersmc:modmenu:${project.mod_menu_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
     modImplementation("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
-    modImplementation("curse.maven:trinkets-fabric-341284:3669842") {
-        exclude(group: "net.fabricmc.fabric-api")
-    }
-    modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:8.1.457"
-    modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:8.1.457"
+    modImplementation "dev.emi:trinkets:${project.trinkets_version}"
+
+    modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"
+    modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
     modImplementation("io.github.ladysnake:impersonate:${impersonate_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }

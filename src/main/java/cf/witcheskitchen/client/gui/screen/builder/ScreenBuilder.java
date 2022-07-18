@@ -5,7 +5,7 @@ import cf.witcheskitchen.WK;
 import cf.witcheskitchen.client.gui.screen.ScreenBase;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 
@@ -33,7 +33,7 @@ public final class ScreenBuilder {
         y -= base.getY();
         if (base.isPointWithinBounds(x, y, width, height, xMouse, yMouse)) {
             int percentage = scaledPercentageOf(value, max);
-            base.renderTooltip(stack, new LiteralText(String.valueOf(percentage))
+            base.renderTooltip(stack, Text.literal(String.valueOf(percentage))
                     .formatted(percentageColor(percentage))
                     .append("%"), xMouse, yMouse);
         }

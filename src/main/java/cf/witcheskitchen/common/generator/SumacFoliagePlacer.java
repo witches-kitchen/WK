@@ -14,7 +14,7 @@ import net.minecraft.world.gen.feature.TreeFeatureConfig;
 import net.minecraft.world.gen.foliage.FoliagePlacer;
 import net.minecraft.world.gen.foliage.FoliagePlacerType;
 
-import java.util.Random;
+import net.minecraft.util.math.random.Random;
 import java.util.function.BiConsumer;
 
 public class SumacFoliagePlacer

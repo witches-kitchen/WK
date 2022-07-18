@@ -16,9 +16,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldView;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.chunk.ChunkStatus;
 
 @SuppressWarnings("removal")
 public class WKCropBlock extends CropBlock {
@@ -42,22 +39,22 @@ public class WKCropBlock extends CropBlock {
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return AGE_TO_SHAPE[state.get(this.getAgeProperty())];
     }
-
-    @Override // JANK
-    @SuppressWarnings("deprecation")
-    public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-        Biome.Category biomeCat = Biome.getCategory(world.getBiome(pos));
-        if (world.getChunk(pos).getStatus().getIndex() < ChunkStatus.FULL.getIndex()) {
-            // ON WORLD GENERATION
-            if (seed.getCategory().contains(biomeCat)) {
-                return super.canPlaceAt(state, world, pos);
-            }
-        } else if (world.getChunk(pos).getStatus().getIndex() == ChunkStatus.FULL.getIndex()) {
-            // ON PLAYER PLACEMENT
-            return super.canPlaceAt(state, world, pos);
-        }
-        return false;
-    }
+//
+//    @Override // JANK
+//    @SuppressWarnings("deprecation")
+//    public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
+//        Biome.Category biomeCat = Biome.getCategory(world.getBiome(pos));
+//        if (world.getChunk(pos).getStatus().getIndex() < ChunkStatus.FULL.getIndex()) {
+//            // ON WORLD GENERATION
+//            if (seed.getCategory().contains(biomeCat)) {
+//                return super.canPlaceAt(state, world, pos);
+//            }
+//        } else if (world.getChunk(pos).getStatus().getIndex() == ChunkStatus.FULL.getIndex()) {
+//            // ON PLAYER PLACEMENT
+//            return super.canPlaceAt(state, world, pos);
+//        }
+//        return false;
+//    }
 
     protected boolean canPlantOnTop(BlockState floor, BlockView world, BlockPos pos) {
         return super.canPlantOnTop(floor, world, pos) || floor.isIn(BlockTags.DIRT) || floor.isIn(BlockTags.SAND);

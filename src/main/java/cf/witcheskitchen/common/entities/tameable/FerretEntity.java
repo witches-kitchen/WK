@@ -310,7 +310,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
                 return !ferretEntity.isTamed() || ferretEntity.getOwner() != owner;
             } else if (target instanceof PlayerEntity && owner instanceof PlayerEntity && !((PlayerEntity) owner).shouldDamagePlayer((PlayerEntity) target)) {
                 return false;
-            } else if (target instanceof HorseBaseEntity && ((HorseBaseEntity) target).isTame()) {
+            } else if (target instanceof AbstractHorseEntity && ((AbstractHorseEntity) target).isTame()) {
                 return false;
             } else {
                 return !(target instanceof TameableEntity) || !((TameableEntity) target).isTamed();

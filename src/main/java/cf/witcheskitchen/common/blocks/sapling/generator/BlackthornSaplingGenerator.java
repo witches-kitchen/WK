@@ -4,7 +4,7 @@ import cf.witcheskitchen.common.registry.WKConfiguredFeatures;
 import net.minecraft.util.registry.RegistryEntry;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 
-import java.util.Random;
+import net.minecraft.util.math.random.Random;
 
 public class BlackthornSaplingGenerator extends WKSaplingGenerator {
     protected RegistryEntry<? extends ConfiguredFeature<?, ?>> getTreeFeature(Random random, boolean bees) {

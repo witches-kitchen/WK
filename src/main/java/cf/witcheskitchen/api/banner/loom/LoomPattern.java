@@ -1,7 +1,6 @@
 package cf.witcheskitchen.api.banner.loom;
 
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
@@ -53,7 +52,7 @@ public class LoomPattern {
      */
     public void addPatternLine(List<Text> lines, DyeColor color) {
         Identifier id = LoomPatterns.REGISTRY.getId(this);
-        lines.add(new TranslatableText(
+        lines.add(Text.translatable(
                 "bannerpp.pattern." + id.getNamespace() + "." + id.getPath() + "." + color.getName())
                 .formatted(Formatting.GRAY));
     }

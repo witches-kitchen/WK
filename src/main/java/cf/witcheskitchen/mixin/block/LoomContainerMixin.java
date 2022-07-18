@@ -7,7 +7,6 @@ import cf.witcheskitchen.api.banner.loom.LoomPatternProvider;
 import cf.witcheskitchen.api.banner.loom.LoomPatterns;
 import cf.witcheskitchen.api.banner.loom.PatternLimitModifier;
 import net.minecraft.block.entity.BannerBlockEntity;
-import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.DyeItem;
@@ -76,13 +75,13 @@ public abstract class LoomContainerMixin extends ScreenHandler {
      */
     @Inject(method = "onButtonClick", at = @At("HEAD"), cancellable = true)
     private void selectBppLoomPatternOnClick(PlayerEntity entity, int clicked, CallbackInfoReturnable<Boolean> info) {
-        int vanillaCount = BannerPattern.LOOM_APPLICABLE_COUNT;
-
-        if (clicked > vanillaCount && clicked - (1 + vanillaCount) < LoomPatternsInternal.dyeLoomPatternCount()) {
-            selectedPattern.set(-clicked);
-            this.updateOutputSlot();
-            info.setReturnValue(true);
-        }
+//        int vanillaCount = BannerPattern.LOOM_APPLICABLE_COUNT;
+//
+//        if (clicked > vanillaCount && clicked - (1 + vanillaCount) < LoomPatternsInternal.dyeLoomPatternCount()) {
+//            selectedPattern.set(-clicked);
+//            this.updateOutputSlot();
+//            info.setReturnValue(true);
+//        }
     }
 
     /**
@@ -162,15 +161,16 @@ public abstract class LoomContainerMixin extends ScreenHandler {
 
             if (!overfull) {
                 LoomPattern pattern = provider.getPattern();
-                this.selectedPattern.set(-LoomPatternsInternal.getLoomIndex(pattern) - (1 + BannerPattern.LOOM_APPLICABLE_COUNT));
+           //     this.selectedPattern.set(-LoomPatternsInternal.getLoomIndex(pattern) - (1 + BannerPattern.LOOM_APPLICABLE_COUNT));
             } else {
                 this.selectedPattern.set(0);
             }
-        } else if (-this.selectedPattern.get() - (1 + BannerPattern.LOOM_APPLICABLE_COUNT) >= LoomPatternsInternal.dyeLoomPatternCount()) {
-            // reset special loom pattern on removal
-            this.selectedPattern.set(0);
-            this.outputSlot.setStack(ItemStack.EMPTY);
         }
+//        else if (-this.selectedPattern.get() - (1 + BannerPattern.LOOM_APPLICABLE_COUNT) >= LoomPatternsInternal.dyeLoomPatternCount()) {
+//            // reset special loom pattern on removal
+//            this.selectedPattern.set(0);
+//            this.outputSlot.setStack(ItemStack.EMPTY);
+//        }
     }
 
     /**
@@ -183,7 +183,8 @@ public abstract class LoomContainerMixin extends ScreenHandler {
         ItemStack dyeStack = this.dyeSlot.getStack();
 
         if (this.selectedPattern.get() < 0 && !bannerStack.isEmpty() && !dyeStack.isEmpty()) {
-            int rawId = -this.selectedPattern.get() - (1 + BannerPattern.LOOM_APPLICABLE_COUNT);
+            int rawId = -1;
+            //int rawId = -this.selectedPattern.get() - (1 + BannerPattern.LOOM_APPLICABLE_COUNT);
 
             if (rawId < LoomPatternsInternal.totalLoomPatternCount()) {
                 LoomPattern pattern = LoomPatternsInternal.byLoomIndex(rawId);
