@@ -16,6 +16,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.registry.Registry;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.function.BiConsumer;
@@ -112,7 +113,7 @@ public final class RecipeUtil {
      * @param object JsonObject
      * @return brand-new Item deserialized
      */
-    public static ItemStack deserializeStack(JsonObject object) {
+    public static @NotNull ItemStack deserializeStack(JsonObject object) {
         final Identifier id = new Identifier(JsonHelper.getString(object, "item"));
         final Item item = Registry.ITEM.get(id);
         if (Items.AIR == item) {

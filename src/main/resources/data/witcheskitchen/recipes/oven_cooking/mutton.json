@@ -1,7 +1,7 @@
 {
   "type": "witcheskitchen:oven_cooking",
   "ingredient": {
-    "item": "minecraft:raw_mutton"
+    "item": "minecraft:mutton"
   },
   "results": [
     {
