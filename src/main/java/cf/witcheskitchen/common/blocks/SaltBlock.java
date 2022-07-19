@@ -31,6 +31,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
+import org.quiltmc.qsl.block.extensions.api.QuiltBlockSettings;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -64,7 +65,7 @@ public class SaltBlock extends Block {
 
     private final BlockState dotState;
 
-    public SaltBlock(FabricBlockSettings settings) {
+    public SaltBlock(QuiltBlockSettings settings) {
         super(settings);
         this.setDefaultState(this.stateManager.getDefaultState().with(WIRE_CONNECTION_NORTH, WireConnection.NONE).with(WIRE_CONNECTION_EAST, WireConnection.NONE).with(WIRE_CONNECTION_SOUTH, WireConnection.NONE).with(WIRE_CONNECTION_WEST, WireConnection.NONE));
         this.dotState = this.getDefaultState().with(WIRE_CONNECTION_NORTH, WireConnection.SIDE).with(WIRE_CONNECTION_EAST, WireConnection.SIDE).with(WIRE_CONNECTION_SOUTH, WireConnection.SIDE).with(WIRE_CONNECTION_WEST, WireConnection.SIDE);

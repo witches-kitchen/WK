@@ -1,6 +1,5 @@
-package cf.witcheskitchen.client.gui.screen.builder;
+package cf.witcheskitchen.api.client.screen;
 
-import cf.witcheskitchen.client.gui.screen.handler.WKScreenHandler;
 import cf.witcheskitchen.client.gui.screen.handler.slot.WKOutputSlot;
 import cf.witcheskitchen.client.gui.screen.handler.slot.WKSlot;
 import net.minecraft.entity.player.PlayerEntity;
@@ -12,6 +11,11 @@ import org.apache.commons.lang3.Range;
 
 import java.util.function.Predicate;
 
+/**
+ * A ScreenHandler slot builder.
+ *
+ * <p> Make sure to call {@link #build()} at the end of the method chaining.</p>
+ */
 public final class ScreenHandlerBuilder {
 
     private final WKScreenHandler parent;
@@ -45,6 +49,9 @@ public final class ScreenHandlerBuilder {
         return this.playerSetup(8, 84);
     }
 
+    /**
+     * Builds the player inventory, including the hot-bar.
+     */
     public ScreenHandlerBuilder playerSetup(int posX, int posY) {
         final int i = this.parent.slots.size();
         for (int j = 0; j < 3; ++j) {

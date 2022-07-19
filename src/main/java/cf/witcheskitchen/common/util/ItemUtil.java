@@ -7,7 +7,6 @@ import net.minecraft.item.Items;
 import net.minecraft.item.PotionItem;
 import net.minecraft.util.Hand;
 
-// By Dani
 public final class ItemUtil {
 
     private ItemUtil() {

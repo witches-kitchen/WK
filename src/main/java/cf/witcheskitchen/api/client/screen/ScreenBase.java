@@ -1,6 +1,5 @@
-package cf.witcheskitchen.client.gui.screen;
+package cf.witcheskitchen.api.client.screen;
 
-import cf.witcheskitchen.client.gui.screen.builder.ScreenBuilder;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
@@ -10,7 +9,7 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 
 @Environment(EnvType.CLIENT)
-public class ScreenBase<T extends ScreenHandler> extends HandledScreen<T> {
+public abstract class ScreenBase<T extends ScreenHandler> extends HandledScreen<T> {
 
     private final ScreenBuilder builder;
 

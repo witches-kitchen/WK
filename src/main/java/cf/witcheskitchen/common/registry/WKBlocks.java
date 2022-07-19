@@ -16,8 +16,6 @@ import cf.witcheskitchen.common.crop.BelladonnaCropBlock;
 import cf.witcheskitchen.common.crop.MintCropBlock;
 import cf.witcheskitchen.common.crop.WormwoodCropBlock;
 import cf.witcheskitchen.common.generator.WKSaplingGenerator;
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
 import net.minecraft.block.*;
 import net.minecraft.entity.EntityType;
@@ -31,6 +29,8 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.TreeFeatureConfig;
+import org.quiltmc.qsl.block.extensions.api.QuiltBlockSettings;
+import org.quiltmc.qsl.item.setting.api.QuiltItemSettings;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -161,13 +161,13 @@ public class WKBlocks {
     public static final Block JUNIPER_LEAVES = registerLeaf("juniper_leaves");
     public static final Block ROWAN_LEAVES = registerLeaf("rowan_leaves");
     //Tile Entities
-    public static final Block TEAPOT = registerFrom("teapot", new TeapotBlock(FabricBlockSettings.copyOf(Blocks.AMETHYST_BLOCK)));
+    public static final Block TEAPOT = registerFrom("teapot", new TeapotBlock(QuiltBlockSettings.copyOf(Blocks.AMETHYST_BLOCK)));
     public static final Block IRON_WITCHES_OVEN = registerFrom("iron_witches_oven", new WitchesOvenBlock(AbstractBlock.Settings.of(Material.METAL).strength(4.0F, 5.0F).requiresTool().nonOpaque().luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0)));
-    public static final Block COPPER_WITCHES_OVEN = registerFrom("copper_witches_oven", new WitchesOvenBlock(FabricBlockSettings.copyOf(Blocks.COPPER_BLOCK).luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0)));
-    public static final Block EXPOSED_COPPER_WITCHES_OVEN = registerFrom("exposed_copper_witches_oven", new WitchesOvenBlock(FabricBlockSettings.copy(Blocks.EXPOSED_COPPER).luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0)));
-    public static final Block WEATHERED_COPPER_WITCHES_OVEN = registerFrom("weathered_copper_witches_oven", new WitchesOvenBlock(FabricBlockSettings.copy(Blocks.WEATHERED_COPPER).luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0)));
-    public static final Block OXIDIZED_COPPER_WITCHES_OVEN = registerFrom("oxidized_copper_witches_oven", new WitchesOvenBlock(FabricBlockSettings.copy(Blocks.OXIDIZED_COPPER).luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0)));
-    public static final Block IRON_WITCHES_CAULDRON = registerFrom("iron_witches_cauldron", new WitchesCauldronBlock(FabricBlockSettings.copy(Blocks.CAULDRON).luminance(state -> state.get(WitchesCauldronBlock.LIT) ? 13 : 0)));
+    public static final Block COPPER_WITCHES_OVEN = registerFrom("copper_witches_oven", new WitchesOvenBlock(QuiltBlockSettings.copyOf(Blocks.COPPER_BLOCK).luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0)));
+    public static final Block EXPOSED_COPPER_WITCHES_OVEN = registerFrom("exposed_copper_witches_oven", new WitchesOvenBlock(QuiltBlockSettings.copy(Blocks.EXPOSED_COPPER).luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0)));
+    public static final Block WEATHERED_COPPER_WITCHES_OVEN = registerFrom("weathered_copper_witches_oven", new WitchesOvenBlock(QuiltBlockSettings.copy(Blocks.WEATHERED_COPPER).luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0)));
+    public static final Block OXIDIZED_COPPER_WITCHES_OVEN = registerFrom("oxidized_copper_witches_oven", new WitchesOvenBlock(QuiltBlockSettings.copy(Blocks.OXIDIZED_COPPER).luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0)));
+    public static final Block IRON_WITCHES_CAULDRON = registerFrom("iron_witches_cauldron", new WitchesCauldronBlock(QuiltBlockSettings.copy(Blocks.CAULDRON).luminance(state -> state.get(WitchesCauldronBlock.LIT) ? 13 : 0)));
     public static final Block BLACKTHORN_SAPLING = registerSapling("blackthorn_sapling", WKConfiguredFeatures.BLACKTHORN_TREE);
     public static final Block POTTED_BLACKTHORN_SAPLING = registerPottedSapling("potted_blackthorn_sapling");
     public static final Block POTTED_ELDER_SAPLING = registerPottedSapling("potted_elder_sapling");
@@ -190,8 +190,8 @@ public class WKBlocks {
     public static final Block WARPED_BREWING_BARREL = registerBarrel("warped_brewing_barrel");
     //Crops
     public static final Block BELLADONNA = registerFrom("belladonna", new BelladonnaCropBlock(AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
-    public static final Block BELLADONNA_GLOW = registerFrom("belladonna_glow", new BelladonnaCropBlock(FabricBlockSettings.copyOf(BELLADONNA), BelladonnaCropBlock.Type.GLOW));
-    public static final Block BELLADONNA_NOCTURNAL = registerFrom("belladonna_nocturnal", new BelladonnaCropBlock(FabricBlockSettings.copyOf(BELLADONNA), BelladonnaCropBlock.Type.NOCTURNAL));
+    public static final Block BELLADONNA_GLOW = registerFrom("belladonna_glow", new BelladonnaCropBlock(QuiltBlockSettings.copyOf(BELLADONNA), BelladonnaCropBlock.Type.GLOW));
+    public static final Block BELLADONNA_NOCTURNAL = registerFrom("belladonna_nocturnal", new BelladonnaCropBlock(QuiltBlockSettings.copyOf(BELLADONNA), BelladonnaCropBlock.Type.NOCTURNAL));
     public static final Block AMARANTH = registerAmaranth("amaranth", AmaranthCropBlock.Type.COMMON);
     public static final Block AMARANTH_SWEETBERRY = registerAmaranth("amaranth_sweetberry", AmaranthCropBlock.Type.SWEETBERRY);
     public static final Block AMARANTH_TORCH = registerAmaranth("amaranth_torch", AmaranthCropBlock.Type.TORCH);
@@ -223,8 +223,8 @@ public class WKBlocks {
         return registerFrom(path, amaranth);
     }
 
-    static FabricBlockSettings leavesSettings() {
-        return FabricBlockSettings.of(Material.LEAVES)
+    static QuiltBlockSettings leavesSettings() {
+        return QuiltBlockSettings.of(Material.LEAVES)
                 .strength(0.2F)
                 .ticksRandomly()
                 .sounds(BlockSoundGroup.GRASS)
@@ -239,14 +239,14 @@ public class WKBlocks {
     }
 
     static Block registerPottedSapling(String path) {
-        final Block pottedSapling = new FlowerPotBlock(BLACKTHORN_SAPLING, FabricBlockSettings.of(Material.DECORATION).breakInstantly().nonOpaque());
+        final Block pottedSapling = new FlowerPotBlock(BLACKTHORN_SAPLING, QuiltBlockSettings.of(Material.DECORATION).breakInstantly().nonOpaque());
         return registerFrom(path, pottedSapling);
 
     }
 
     static Block registerSapling(String path, ConfiguredFeature<TreeFeatureConfig, ?> feature) {
         final Block sapling = new WKSaplingBlock(new WKSaplingGenerator(() -> Holder.createDirect(feature)),
-                FabricBlockSettings.of(Material.PLANT)
+                QuiltBlockSettings.of(Material.PLANT)
                         .noCollision()
                         .ticksRandomly()
                         .breakInstantly()
@@ -264,12 +264,12 @@ public class WKBlocks {
     }
 
     static Block registerWood(String path, MapColor color) {
-        final PillarBlock wood = new PillarBlock(FabricBlockSettings.of(Material.WOOD, color).strength(2.0f).sounds(BlockSoundGroup.WOOD));
+        final PillarBlock wood = new PillarBlock(QuiltBlockSettings.of(Material.WOOD, color).strength(2.0f).sounds(BlockSoundGroup.WOOD));
         return registerFrom(path, wood);
     }
 
     static AbstractBlock.Settings logSettings(MapColor topMapColor, MapColor sideMapColor) {
-        return FabricBlockSettings.of(Material.WOOD, state -> state.get(PillarBlock.AXIS) == Direction.Axis.Y ? topMapColor : sideMapColor).strength(2.0f).sounds(BlockSoundGroup.WOOD).ticksRandomly();
+        return QuiltBlockSettings.of(Material.WOOD, state -> state.get(PillarBlock.AXIS) == Direction.Axis.Y ? topMapColor : sideMapColor).strength(2.0f).sounds(BlockSoundGroup.WOOD).ticksRandomly();
     }
 
     static PillarBlock registerLog(String path, MapColor topMapColor, MapColor sideMapColor) {
@@ -291,11 +291,11 @@ public class WKBlocks {
     }
 
 
-    static <T extends Block> T register(String path, Material material, Function<FabricBlockSettings, T> blockFactory) {
+    static <T extends Block> T register(String path, Material material, Function<QuiltBlockSettings, T> blockFactory) {
         return register(path, material, blockFactory, BlockItem::new, GENERAL_TAB);
     }
 
-    static <T extends Block, E extends Item> T register(String path, Material material, Function<FabricBlockSettings, T> blockFactory, BiFunction<T, FabricItemSettings, E> itemFactory) {
+    static <T extends Block, E extends Item> T register(String path, Material material, Function<QuiltBlockSettings, T> blockFactory, BiFunction<T, QuiltItemSettings, E> itemFactory) {
         return register(path, material, blockFactory, itemFactory, GENERAL_TAB);
     }
 
@@ -309,12 +309,12 @@ public class WKBlocks {
         return block;
     }
 
-    static <T extends Block, E extends Item> T register(String path, Material material, Function<FabricBlockSettings, T> blockFactory, BiFunction<T, FabricItemSettings, E> itemFactory, ItemGroup tab) {
+    static <T extends Block, E extends Item> T register(String path, Material material, Function<QuiltBlockSettings, T> blockFactory, BiFunction<T, QuiltItemSettings, E> itemFactory, ItemGroup tab) {
         final Identifier id = new WKIdentifier(path);
-        final T block = blockFactory.apply(FabricBlockSettings.of(material));
+        final T block = blockFactory.apply(QuiltBlockSettings.of(material));
         BLOCKS.add(new ObjectDefinition<>(id, block));
         if (itemFactory != null) {
-            final E item = itemFactory.apply(block, new FabricItemSettings().group(tab));
+            final E item = itemFactory.apply(block, new QuiltItemSettings().group(tab));
             if (item == null) {
                 throw new IllegalArgumentException("BlockItem factory for " + id + " returned null");
             }

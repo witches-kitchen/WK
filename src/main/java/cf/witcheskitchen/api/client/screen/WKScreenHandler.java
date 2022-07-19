@@ -1,6 +1,5 @@
-package cf.witcheskitchen.client.gui.screen.handler;
+package cf.witcheskitchen.api.client.screen;
 
-import cf.witcheskitchen.client.gui.screen.builder.ScreenHandlerBuilder;
 import cf.witcheskitchen.common.util.ItemUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -15,6 +14,17 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * WitchesKitchen's ScreenHandler base for devices.
+ * <p>
+ * It defines a default {@link #transferSlot(PlayerEntity, int)} implementation
+ * which should work for the most of devices.
+ * </p>
+ *
+ * <p>
+ * You can build the slots by chaining {@link #builder} methods.
+ * </p>
+ */
 public abstract class WKScreenHandler extends ScreenHandler {
 
     protected final List<Range<Integer>> playerRanges;
@@ -23,7 +33,7 @@ public abstract class WKScreenHandler extends ScreenHandler {
     private final Inventory inventory;
     private final ScreenHandlerBuilder builder;
 
-    public WKScreenHandler(@Nullable ScreenHandlerType<?> type, int syncId, PlayerInventory playerInventory, Inventory inventory) {
+    protected WKScreenHandler(@Nullable ScreenHandlerType<?> type, int syncId, PlayerInventory playerInventory, Inventory inventory) {
         super(type, syncId);
         this.playerInventory = playerInventory;
         this.inventory = inventory;
@@ -32,7 +42,6 @@ public abstract class WKScreenHandler extends ScreenHandler {
         this.builder = new ScreenHandlerBuilder(this);
         this.inventory.onOpen(playerInventory.player);
     }
-
 
     @Override
     public ItemStack transferSlot(final PlayerEntity player, final int index) {
@@ -100,7 +109,6 @@ public abstract class WKScreenHandler extends ScreenHandler {
             return false;
         }
         int inCount = stackToShift.getCount();
-
         // First lets see if we have the same item in a slot to merge with
         for (int slotIndex = start; stackToShift.getCount() > 0 && slotIndex < end; slotIndex++) {
             final Slot slot = this.slots.get(slotIndex);
@@ -180,7 +188,6 @@ public abstract class WKScreenHandler extends ScreenHandler {
         return inventory;
     }
 
-    //was protected
     @Override
     public Slot addSlot(Slot slot) {
         return super.addSlot(slot);

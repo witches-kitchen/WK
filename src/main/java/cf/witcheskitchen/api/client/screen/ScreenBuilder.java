@@ -1,8 +1,7 @@
-package cf.witcheskitchen.client.gui.screen.builder;
+package cf.witcheskitchen.api.client.screen;
 
 
 import cf.witcheskitchen.WK;
-import cf.witcheskitchen.client.gui.screen.ScreenBase;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
@@ -47,6 +46,9 @@ public final class ScreenBuilder {
         }
     }
 
+    /**
+     * Device percentage formatting color
+     */
     public static Formatting percentageColor(int percentage) {
         if (percentage < 20) {
             return Formatting.RED;
@@ -76,7 +78,7 @@ public final class ScreenBuilder {
      * @param posY        originY
      */
     public void drawPlayerSlots(final MatrixStack matrixStack, int posX, int posY) {
-        //fixed position in minecraft
+        // fixed position in minecraft
         posX += 7;
         posY += 83;
         bindTexture();
