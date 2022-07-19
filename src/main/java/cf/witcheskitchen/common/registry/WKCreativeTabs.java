@@ -6,6 +6,7 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
+import org.quiltmc.qsl.item.group.api.QuiltItemGroup;
 
 public class WKCreativeTabs {
 
@@ -14,7 +15,9 @@ public class WKCreativeTabs {
 
     static ItemGroup register(String name, ItemStack icon) {
         final Identifier id = new WKIdentifier(name);
-        return FabricItemGroupBuilder.create(id).icon(() -> icon).build();
+        final QuiltItemGroup group = QuiltItemGroup.create(id);
+        group.setIcon(icon);
+        return group;
     }
 
     // Used to control in which order static constructors are called

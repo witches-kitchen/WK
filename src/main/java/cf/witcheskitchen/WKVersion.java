@@ -7,8 +7,8 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * Finds the Current WitchesKitchen version statically
- * invoked before it gets loaded.
+ * Finds the Current WitchesKitchen version statically.
+ * It gets loaded before the mod initialization.
  */
 public class WKVersion {
 

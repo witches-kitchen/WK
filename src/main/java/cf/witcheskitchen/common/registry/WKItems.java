@@ -5,7 +5,6 @@ import cf.witcheskitchen.WKConfig;
 import cf.witcheskitchen.WKIdentifier;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
 import cf.witcheskitchen.common.items.WKSeedItem;
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -13,6 +12,7 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import org.quiltmc.qsl.item.setting.api.QuiltItemSettings;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -104,7 +104,7 @@ public class WKItems {
     /**
      * Use me for registering foodstuffs!
      */
-    static <T extends Item> T registerFoodStuffs(String id, Function<FabricItemSettings, T> factory) {
+    static <T extends Item> T registerFoodStuffs(String id, Function<QuiltItemSettings, T> factory) {
         return register(id, factory, WKCreativeTabs.SEED_TAB);
     }
 
@@ -115,13 +115,13 @@ public class WKItems {
     /**
      * Use me for registering spawn eggs!
      */
-    static <T extends Item> T registerSpawnEgg(String id, Function<FabricItemSettings, T> factory) {
+    static <T extends Item> T registerSpawnEgg(String id, Function<QuiltItemSettings, T> factory) {
         return register(id, factory, WKCreativeTabs.SEED_TAB);
     }
 
-    static <T extends Item> T register(String id, Function<FabricItemSettings, T> factory, ItemGroup tab) {
+    static <T extends Item> T register(String id, Function<QuiltItemSettings, T> factory, ItemGroup tab) {
         final Identifier resource = new WKIdentifier(id);
-        final T item = factory.apply(new FabricItemSettings().group(tab));
+        final T item = factory.apply(new QuiltItemSettings().group(tab));
         final ObjectDefinition<Item> itemIdentifier = new ObjectDefinition<>(resource, item);
         ITEMS.add(itemIdentifier);
         return item;

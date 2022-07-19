@@ -1,13 +1,9 @@
 package cf.witcheskitchen;
 
-import dev.architectury.utils.Env;
-import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 
 @Config(name = WK.MODID)
 public class WKConfig implements ConfigData {

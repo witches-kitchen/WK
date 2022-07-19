@@ -20,7 +20,7 @@ public class WK implements ModInitializer {
     public static final String MODID = "witcheskitchen";
     public static final String VERSION = WKVersion.getVersion();
     public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
-    public static WKConfig CONFIG_FILE;
+    public static final WKConfig CONFIG_FILE;
 
     static {
         AutoConfig.register(WKConfig.class, JanksonConfigSerializer::new);
@@ -46,9 +46,7 @@ public class WK implements ModInitializer {
         }
 
     }
-    public static WKIdentifier id(String name) {
-        return new WKIdentifier(name);
-    }
+
 
     private static void initialize() {
         WKCreativeTabs.register();
