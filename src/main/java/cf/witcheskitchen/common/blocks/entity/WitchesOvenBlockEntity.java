@@ -1,7 +1,7 @@
 package cf.witcheskitchen.common.blocks.entity;
 
-import cf.witcheskitchen.api.IDeviceExperienceHandler;
-import cf.witcheskitchen.api.InventoryManager;
+import cf.witcheskitchen.api.block.entity.IDeviceExperienceHandler;
+import cf.witcheskitchen.common.util.InventoryManager;
 import cf.witcheskitchen.api.block.entity.WKDeviceBlockEntity;
 import cf.witcheskitchen.client.gui.screen.handler.WitchesOvenScreenHandler;
 import cf.witcheskitchen.common.blocks.device.WitchesOvenBlock;
@@ -400,7 +400,7 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements IDevi
         return false;
     }
 
-    //More checks to craft the recipe and update experience
+    // More checks to craft the recipe and update experience
     public boolean craftRecipe(final DefaultedList<ItemStack> outputs, final float experience) {
         if (this.world == null) {
             return false;
@@ -456,7 +456,7 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements IDevi
     }
 
 
-    //Client Sync
+    // Client Sync
     @Override
     public BlockEntityUpdateS2CPacket toUpdatePacket() {
         return BlockEntityUpdateS2CPacket.of(this);
@@ -474,7 +474,7 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements IDevi
     // From NamedScreenHandlerFactory
     @Override
     public Text getDisplayName() {
-        return Text.translatable(("screen.title.witcheskitchen.witches_oven"));
+        return Text.translatable(this.getCachedState().getBlock().getTranslationKey());
     }
 
     @Nullable

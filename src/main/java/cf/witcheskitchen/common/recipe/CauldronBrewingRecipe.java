@@ -97,9 +97,7 @@ public class CauldronBrewingRecipe implements Recipe<Inventory> {
         @Override
         public CauldronBrewingRecipe read(Identifier id, PacketByteBuf buf) {
             final DefaultedList<Ingredient> ingredients = DefaultedList.ofSize(buf.readVarInt(), Ingredient.EMPTY);
-            for (int i = 0; i < ingredients.size(); i++) {
-                ingredients.set(i, Ingredient.fromPacket(buf));
-            }
+            ingredients.replaceAll(ignored -> Ingredient.fromPacket(buf));
             return new CauldronBrewingRecipe(id, ingredients, buf.readItemStack(), buf.readInt());
         }
 

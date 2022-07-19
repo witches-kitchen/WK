@@ -1,4 +1,4 @@
-package cf.witcheskitchen.api;
+package cf.witcheskitchen.common.util;
 
 import cf.witcheskitchen.common.util.InventoryHelper;
 import net.minecraft.block.entity.BlockEntity;

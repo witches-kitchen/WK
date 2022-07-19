@@ -1,7 +1,6 @@
 package cf.witcheskitchen.api.block;
 
-import cf.witcheskitchen.api.IDeviceExperienceHandler;
-import cf.witcheskitchen.api.block.WKBlockWithEntity;
+import cf.witcheskitchen.api.block.entity.IDeviceExperienceHandler;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;

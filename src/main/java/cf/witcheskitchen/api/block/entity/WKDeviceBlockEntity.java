@@ -1,6 +1,6 @@
 package cf.witcheskitchen.api.block.entity;
 
-import cf.witcheskitchen.api.InventoryManager;
+import cf.witcheskitchen.common.util.InventoryManager;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;

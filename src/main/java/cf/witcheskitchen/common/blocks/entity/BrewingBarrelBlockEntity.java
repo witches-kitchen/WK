@@ -1,6 +1,6 @@
 package cf.witcheskitchen.common.blocks.entity;
 
-import cf.witcheskitchen.api.InventoryManager;
+import cf.witcheskitchen.common.util.InventoryManager;
 import cf.witcheskitchen.api.block.entity.WKDeviceBlockEntity;
 import cf.witcheskitchen.client.gui.screen.handler.BrewingBarrelScreenHandler;
 import cf.witcheskitchen.common.recipe.BarrelFermentingRecipe;

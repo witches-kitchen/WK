@@ -1,4 +1,4 @@
-package cf.witcheskitchen.api;
+package cf.witcheskitchen.api.block.entity;
 
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Vec3d;
