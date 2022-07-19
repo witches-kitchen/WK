@@ -128,9 +128,7 @@ public class WKItems {
     }
 
     public static void register() {
-        for (ObjectDefinition<Item> entry : ITEMS) {
-            Registry.register(Registry.ITEM, entry.id(), entry.object());
-        }
+        ITEMS.forEach(entry -> Registry.register(Registry.ITEM, entry.id(), entry.object()));
         CompostingChanceRegistry validItemCompost = CompostingChanceRegistry.INSTANCE;
         validItemCompost.add(AMARANTH_SPRIG, 0.65f);
         validItemCompost.add(AMARANTH_SEEDS, 0.3f);

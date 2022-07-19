@@ -1,6 +1,6 @@
-package cf.witcheskitchen.common.blocks.technical;
+package cf.witcheskitchen.common.blocks;
 
-import cf.witcheskitchen.api.WKBlockEntityProvider;
+import cf.witcheskitchen.api.block.WKBlockWithEntity;
 import cf.witcheskitchen.api.fluid.IFluidContainer;
 import cf.witcheskitchen.api.fluid.WKFluidAPI;
 import cf.witcheskitchen.common.blocks.entity.WitchesCauldronBlockEntity;
@@ -44,7 +44,7 @@ import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
-public class WitchesCauldronBlock extends WKBlockEntityProvider implements Waterloggable {
+public class WitchesCauldronBlock extends WKBlockWithEntity implements Waterloggable {
 
     public static final BooleanProperty HANGING = BooleanProperty.of("hanging");
     public static final BooleanProperty LIT = Properties.LIT;

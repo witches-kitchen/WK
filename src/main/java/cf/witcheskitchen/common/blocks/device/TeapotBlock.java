@@ -1,5 +1,6 @@
-package cf.witcheskitchen.common.blocks.technical;
+package cf.witcheskitchen.common.blocks.device;
 
+import cf.witcheskitchen.api.block.WKDeviceBlock;
 import cf.witcheskitchen.common.blocks.entity.WKTeapotEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Waterloggable;

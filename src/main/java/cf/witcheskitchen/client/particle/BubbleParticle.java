@@ -1,6 +1,6 @@
 package cf.witcheskitchen.client.particle;
 
-import cf.witcheskitchen.common.blocks.technical.WKDeviceBlock;
+import cf.witcheskitchen.api.block.WKDeviceBlock;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.Material;

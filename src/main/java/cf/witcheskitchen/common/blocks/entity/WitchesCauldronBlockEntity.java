@@ -1,12 +1,13 @@
 package cf.witcheskitchen.common.blocks.entity;
 
+import cf.witcheskitchen.api.block.entity.WKDeviceBlockEntity;
 import cf.witcheskitchen.api.fluid.FluidStack;
 import cf.witcheskitchen.api.fluid.FluidTank;
 import cf.witcheskitchen.api.fluid.IStorageHandler;
 import cf.witcheskitchen.api.fluid.WKFluidAPI;
 import cf.witcheskitchen.client.network.packet.ParticlePacketHandler;
 import cf.witcheskitchen.client.network.packet.SplashParticlePacketHandler;
-import cf.witcheskitchen.common.blocks.technical.WitchesCauldronBlock;
+import cf.witcheskitchen.common.blocks.WitchesCauldronBlock;
 import cf.witcheskitchen.common.recipe.CauldronBrewingRecipe;
 import cf.witcheskitchen.common.registry.WKBlockEntityTypes;
 import cf.witcheskitchen.common.registry.WKTags;

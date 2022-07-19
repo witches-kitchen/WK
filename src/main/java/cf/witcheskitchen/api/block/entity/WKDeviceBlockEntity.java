@@ -1,4 +1,4 @@
-package cf.witcheskitchen.common.blocks.entity;
+package cf.witcheskitchen.api.block.entity;
 
 import cf.witcheskitchen.api.InventoryManager;
 import net.fabricmc.api.EnvType;

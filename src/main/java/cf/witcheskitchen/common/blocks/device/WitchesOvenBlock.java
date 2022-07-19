@@ -1,5 +1,6 @@
-package cf.witcheskitchen.common.blocks.technical;
+package cf.witcheskitchen.common.blocks.device;
 
+import cf.witcheskitchen.api.block.WKDeviceBlock;
 import cf.witcheskitchen.common.blocks.entity.WitchesOvenBlockEntity;
 import cf.witcheskitchen.common.registry.WKDamageSources;
 import net.fabricmc.api.EnvType;
@@ -15,7 +16,6 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.CampfireCookingRecipe;
-import net.minecraft.screen.ScreenHandler;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
@@ -124,19 +124,6 @@ public class WitchesOvenBlock extends WKDeviceBlock implements Waterloggable {
             Blocks.FURNACE.randomDisplayTick(state, world, pos, random);
         }
     }
-
-    @SuppressWarnings("deprecation")
-    @Override
-    public boolean hasComparatorOutput(BlockState state) {
-        return true;
-    }
-
-    @SuppressWarnings("deprecation")
-    @Override
-    public int getComparatorOutput(BlockState state, World world, BlockPos pos) {
-        return ScreenHandler.calculateComparatorOutput(world.getBlockEntity(pos));
-    }
-
     @Override
     public void onSteppedOn(World world, BlockPos pos, BlockState state, Entity entity) {
         super.onSteppedOn(world, pos, state, entity);

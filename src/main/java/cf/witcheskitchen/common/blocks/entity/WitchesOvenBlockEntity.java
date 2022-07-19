@@ -2,8 +2,9 @@ package cf.witcheskitchen.common.blocks.entity;
 
 import cf.witcheskitchen.api.IDeviceExperienceHandler;
 import cf.witcheskitchen.api.InventoryManager;
+import cf.witcheskitchen.api.block.entity.WKDeviceBlockEntity;
 import cf.witcheskitchen.client.gui.screen.handler.WitchesOvenScreenHandler;
-import cf.witcheskitchen.common.blocks.technical.WitchesOvenBlock;
+import cf.witcheskitchen.common.blocks.device.WitchesOvenBlock;
 import cf.witcheskitchen.common.recipe.OvenCookingRecipe;
 import cf.witcheskitchen.common.registry.WKBlockEntityTypes;
 import cf.witcheskitchen.common.registry.WKRecipeTypes;

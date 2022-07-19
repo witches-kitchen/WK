@@ -1,5 +1,6 @@
-package cf.witcheskitchen.common.blocks.technical;
+package cf.witcheskitchen.common.blocks.device;
 
+import cf.witcheskitchen.api.block.WKDeviceBlock;
 import cf.witcheskitchen.common.blocks.entity.BrewingBarrelBlockEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -13,7 +14,6 @@ import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsage;
 import net.minecraft.item.Items;
-import net.minecraft.screen.ScreenHandler;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
@@ -104,18 +104,6 @@ public class BrewingBarrelBlock extends WKDeviceBlock implements Waterloggable {
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new BrewingBarrelBlockEntity(pos, state);
-    }
-
-    @SuppressWarnings("deprecation")
-    @Override
-    public boolean hasComparatorOutput(BlockState state) {
-        return true;
-    }
-
-    @SuppressWarnings("deprecation")
-    @Override
-    public int getComparatorOutput(BlockState state, World world, BlockPos pos) {
-        return ScreenHandler.calculateComparatorOutput(world.getBlockEntity(pos));
     }
 
     @Override

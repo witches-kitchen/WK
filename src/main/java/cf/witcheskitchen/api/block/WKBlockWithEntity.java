@@ -1,6 +1,6 @@
-package cf.witcheskitchen.api;
+package cf.witcheskitchen.api.block;
 
-import cf.witcheskitchen.common.blocks.entity.WKDeviceBlockEntity;
+import cf.witcheskitchen.api.block.entity.WKDeviceBlockEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -10,9 +10,18 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class WKBlockEntityProvider extends Block implements BlockEntityProvider {
 
-    public WKBlockEntityProvider(Settings settings) {
+/**
+ * <p>
+ *     Base class for WitchesKitchen's blocks with entity.
+ * </p>
+ * <p>
+ *   It simply creates a ticking context, Nothing else.
+ * </p>
+ */
+public abstract class WKBlockWithEntity extends Block implements BlockEntityProvider {
+
+    protected WKBlockWithEntity(Settings settings) {
         super(settings);
     }
 

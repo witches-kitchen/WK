@@ -1,12 +1,13 @@
-package cf.witcheskitchen.common.blocks.technical;
+package cf.witcheskitchen.api.block;
 
 import cf.witcheskitchen.api.IDeviceExperienceHandler;
-import cf.witcheskitchen.api.WKBlockEntityProvider;
+import cf.witcheskitchen.api.block.WKBlockWithEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.screen.NamedScreenHandlerFactory;
+import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -16,13 +17,40 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public abstract class WKDeviceBlock extends WKBlockEntityProvider {
 
-    public WKDeviceBlock(Settings settings) {
+/**
+ * Represents a device.
+ *
+ * <p>
+ * A device has the following components and capabilities:
+ * </p>
+ * <p>
+ * - Block Entity
+ * </p>
+ * - Ticking
+ * <p>
+ * - Inventory
+ * </p>
+ * - ScreenHandler (aka container)
+ * <p>
+ * - Screen (aka GUI)
+ * </p>
+ * <p>
+ * - May or may not drop experience
+ * </p>
+ * <p>
+ * If your block is not intended to have these components you may consider
+ * extending the parent class instead.
+ * </p>
+ *
+ */
+@SuppressWarnings("deprecation")
+public abstract class WKDeviceBlock extends WKBlockWithEntity {
+
+    protected WKDeviceBlock(Settings settings) {
         super(settings);
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         final BlockEntity entity = world.getBlockEntity(pos);
@@ -31,7 +59,7 @@ public abstract class WKDeviceBlock extends WKBlockEntityProvider {
         if (entity == null) {
             return ActionResult.PASS;
         }
-        //Requests a screen
+        // Requests a screen
         if (entity instanceof NamedScreenHandlerFactory factory) {
             player.openHandledScreen(factory);
             return ActionResult.success(world.isClient);
@@ -39,7 +67,6 @@ public abstract class WKDeviceBlock extends WKBlockEntityProvider {
         return ActionResult.PASS;
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         if (!state.isOf(newState.getBlock())) {
@@ -56,4 +83,15 @@ public abstract class WKDeviceBlock extends WKBlockEntityProvider {
         }
         super.onStateReplaced(state, world, pos, newState, moved);
     }
+
+    @Override
+    public boolean hasComparatorOutput(BlockState state) {
+        return true;
+    }
+
+    @Override
+    public int getComparatorOutput(BlockState state, World world, BlockPos pos) {
+        return ScreenHandler.calculateComparatorOutput(world.getBlockEntity(pos));
+    }
+
 }
