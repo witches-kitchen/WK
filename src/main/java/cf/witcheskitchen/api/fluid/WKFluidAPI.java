@@ -47,7 +47,7 @@ public class WKFluidAPI {
      */
     public static ItemStack getMatchingStackFor(Fluid fluid, ItemStack fluidContainer) {
         if (fluidContainer.getItem() instanceof IFluidContainer handler) {
-            return handler.getFilled(fluid);
+            return handler.getFullStack(fluid);
         }
         return ItemStack.EMPTY;
     }
@@ -61,7 +61,7 @@ public class WKFluidAPI {
      */
     public static FluidStack getStackFor(ItemStack container) {
         if (container.getItem() instanceof IFluidContainer fluidContainer) {
-            return new FluidStack(fluidContainer.getFluid(container), fluidContainer.getCapacity());
+            return new FluidStack(fluidContainer.getFluidType(container), fluidContainer.getCapacity());
         }
         return FluidStack.EMPTY;
     }

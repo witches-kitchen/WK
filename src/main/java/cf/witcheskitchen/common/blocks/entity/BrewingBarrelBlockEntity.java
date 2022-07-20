@@ -84,7 +84,7 @@ public class BrewingBarrelBlockEntity extends WKDeviceBlockEntity implements Nam
         } else {
             if (this.canMakeAlcohol(recipe)) {
                 dirty = true;
-                this.timer++;
+                this.timer+= 1000;
             } else {
                 this.timer = 0;
             }
@@ -130,6 +130,14 @@ public class BrewingBarrelBlockEntity extends WKDeviceBlockEntity implements Nam
             return true;
         }
         return false;
+    }
+
+    public void removeBottle(PlayerEntity player) {
+        this.setRenderStack(ItemStack.EMPTY);
+        final ItemStack output = new ItemStack(Items.GLASS_BOTTLE);
+        if (!player.getInventory().insertStack(output)) {
+            player.dropItem(output, false, false);
+        }
     }
 
     private boolean canMakeAlcohol(BarrelFermentingRecipe matchingRecipe) {

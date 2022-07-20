@@ -1,6 +1,7 @@
 package cf.witcheskitchen.api.fluid;
 
 
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.nbt.NbtCompound;
@@ -12,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 import javax.annotation.Nonnull;
 
 /**
- * <h3>Represents a stack of fluids.</h3>
+ * <h3>Represents a stack of fluids.</h3>.
  *
  * <h2 id="nbt-operations">NBT operations</h2>
  *
@@ -258,17 +259,22 @@ public final class FluidStack implements Comparable<FluidStack> {
         return result;
     }
 
-    // debugging
     @Override
     public String toString() {
-        return "FluidStack Properties: " + "[Fluid] = " + Registry.FLUID.getId(this.fluid) + " " + "[FluidAmount] = " + this.amount + " " + "[Is Empty] = " + this.empty + " " + "[NbtData] = " + this.data;
+        return "FluidStack{" +
+                "fluid=" + fluid +
+                ", amount=" + amount +
+                ", empty=" + empty +
+                ", data=" + data +
+                '}';
     }
 
     @Override
     public int compareTo(@NotNull FluidStack other) {
         if (!this.isEqualIgnoreNbt(other)) {
             return -1;
+        } else {
+            return Integer.compare(this.amount, other.amount);
         }
-        return Integer.compare(this.amount, other.amount);
     }
 }

@@ -13,15 +13,29 @@ import javax.annotation.Nonnull;
  */
 public interface IFluidContainer {
 
+    /**
+     * @return The capacity of this container
+     */
     int getCapacity();
 
+    /**
+     * @return The empty stack that is returned when this fluid container is empty
+     */
     @Nonnull
-    ItemStack getEmpty();
+    ItemStack getEmptyStack();
 
+    /**
+     * @param fluid Fluid
+     * @return The filled stack that is returned based on the FluidType when this fluid container is not empty
+     */
     @Nonnull
-    ItemStack getFilled(Fluid fluid);
+    ItemStack getFullStack(Fluid fluid);
 
+    /**
+     * @param stack ItemStack container
+     * @return the FluidType for the container
+     */
     @Nonnull
-    Fluid getFluid(ItemStack stack);
+    Fluid getFluidType(ItemStack stack);
 
 }

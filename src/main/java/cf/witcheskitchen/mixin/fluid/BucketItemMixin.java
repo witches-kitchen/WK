@@ -26,27 +26,19 @@ public class BucketItemMixin implements IFluidContainer {
 
     @Override
     public @NotNull
-    ItemStack getEmpty() {
-        return new ItemStack((((BucketItem) (Object) this).getRecipeRemainder()));
+    ItemStack getEmptyStack() {
+        return new ItemStack(Items.BUCKET);
     }
 
     @Override
     public @NotNull
-    ItemStack getFilled(Fluid fluid) {
-        if (fluid == Fluids.EMPTY) {
-            return new ItemStack(Items.BUCKET);
-        } else if (fluid == Fluids.WATER) {
-            return new ItemStack(Items.WATER_BUCKET);
-        } else if (fluid == Fluids.LAVA) {
-            return new ItemStack(Items.LAVA_BUCKET);
-        } else {
-            return ItemStack.EMPTY;
-        }
+    ItemStack getFullStack(Fluid fluid) {
+        return new ItemStack(fluid.getBucketItem());
     }
 
     @Override
     public @NotNull
-    Fluid getFluid(ItemStack stack) {
+    Fluid getFluidType(ItemStack stack) {
         return this.fluid;
     }
 }

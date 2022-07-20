@@ -43,32 +43,36 @@ public class BrewingBarrelBlock extends WKDeviceBlock implements Waterloggable {
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         final var blockEntity = world.getBlockEntity(pos);
-        if (blockEntity instanceof BrewingBarrelBlockEntity) {
+        if (blockEntity instanceof BrewingBarrelBlockEntity barrel) {
             if (state.get(FACING) == hit.getSide()) {
-                if (((BrewingBarrelBlockEntity) blockEntity).hasFinished()) {
+                if (barrel.hasFinished()) {
                     ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), ((BrewingBarrelBlockEntity) blockEntity).getRenderStack());
-                    ((BrewingBarrelBlockEntity) blockEntity).reset();
+                    barrel.reset();
                     return ActionResult.SUCCESS;
                 }
                 final ItemStack stack = player.isCreative() ? player.getStackInHand(hand).copy() : player.getStackInHand(hand);
                 if (!stack.isEmpty()) {
                     if (stack.isOf(Items.GLASS_BOTTLE)) {
-                        if (((BrewingBarrelBlockEntity) blockEntity).insertBottle(stack)) {
+                        if (barrel.insertBottle(stack)) {
                             return ActionResult.SUCCESS;
                         }
                     }
                     if (stack.isOf(Items.WATER_BUCKET)) {
-                        if (((BrewingBarrelBlockEntity) blockEntity).fillBarrel(stack)) {
+                        if (barrel.fillBarrel(stack)) {
                             player.setStackInHand(hand, ItemUsage.exchangeStack(stack, player, new ItemStack(Items.BUCKET)));
                             return ActionResult.SUCCESS;
                         }
                     }
                     if (stack.isOf(Items.BUCKET)) {
-                        if (((BrewingBarrelBlockEntity) blockEntity).emptyBarrel(stack)) {
+                        if (barrel.emptyBarrel(stack)) {
                             player.setStackInHand(hand, ItemUsage.exchangeStack(stack, player, new ItemStack(Items.WATER_BUCKET)));
                             return ActionResult.SUCCESS;
                         }
                     }
+                }
+                if (player.isSneaking() && !barrel.getRenderStack().isEmpty()) {
+                    barrel.removeBottle(player);
+                    return ActionResult.SUCCESS;
                 }
                 // Open GUI
                 return super.onUse(state, world, pos, player, hand, hit);
