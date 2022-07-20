@@ -2,7 +2,7 @@ package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WKIdentifier;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
-import cf.witcheskitchen.mixin.BrewingRecipeRegistryMixin;
+import cf.witcheskitchen.common.potion.RumPotion;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.Items;
@@ -19,7 +19,7 @@ public class WKPotions {
 
     private static final List<ObjectDefinition<Potion>> POTIONS = new ArrayList<>();
 
-    public static final Potion RUM = register("rum", new Potion(withEffect(WKStatusEffects.DRUNK, 200)));
+    public static final Potion RUM = register("rum", new RumPotion(withEffect(WKStatusEffects.DRUNK, 200)));
 
     private static <T extends Potion> T register(String path, T potion) {
         final Identifier resource = new WKIdentifier(path);
@@ -38,7 +38,6 @@ public class WKPotions {
 
     public static void register() {
         POTIONS.forEach(entry -> Registry.register(Registry.POTION, entry.id(), entry.object()));
-        BrewingRecipeRegistryMixin.callRegisterPotionRecipe(Potions.AWKWARD, Items.COPPER_INGOT, RUM);
     }
 
     public static List<ObjectDefinition<Potion>> getPotions() {
