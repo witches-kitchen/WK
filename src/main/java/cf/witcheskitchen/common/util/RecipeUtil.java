@@ -17,7 +17,6 @@ import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.NotNull;
-
 import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.BinaryOperator;

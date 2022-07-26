@@ -26,7 +26,7 @@ public class WK implements ModInitializer {
     public static final String VERSION = WKVersion.getVersion();
     public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
     public static final WKConfig CONFIG_FILE;
-
+    
     static {
         AutoConfig.register(WKConfig.class, JanksonConfigSerializer::new);
         CONFIG_FILE = AutoConfig.getConfigHolder(WKConfig.class).getConfig();
@@ -52,7 +52,6 @@ public class WK implements ModInitializer {
 
     }
 
-
     private static void initialize() {
         WKCreativeTabs.register();
         WKPacketTypes.register(EnvType.SERVER);
@@ -72,8 +71,8 @@ public class WK implements ModInitializer {
         GeckoLib.initialize();
         WKEntityTypes.register();
         modifyAxeBlockStripping();
-//        WKBannerRegistry.registerBanner();
-//        WKBannerRegistry.registerBannerClient();
+        // WKBannerRegistry.registerBanner();
+        // WKBannerRegistry.registerBannerClient();
         WKDamageSources.register();
         LOGGER.info("WitchesKitchen V{} Initialized", VERSION);
     }

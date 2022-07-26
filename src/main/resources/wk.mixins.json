@@ -17,8 +17,7 @@
     "statuseffect.CreeperEntityMixin",
     "statuseffect.FleeEntityGoalMixin"
   ],
-  "client": [
-  ],
+  "client": [],
   "injectors": {
     "defaultRequire": 1
   }

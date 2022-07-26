@@ -3,7 +3,6 @@ package cf.witcheskitchen.mixin.fluid;
 import cf.witcheskitchen.api.fluid.IFluidContainer;
 import cf.witcheskitchen.api.fluid.WKFluidAPI;
 import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.Fluids;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
