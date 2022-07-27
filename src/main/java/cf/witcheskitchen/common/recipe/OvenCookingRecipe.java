@@ -1,7 +1,7 @@
 package cf.witcheskitchen.common.recipe;
 
 import cf.witcheskitchen.common.registry.WKRecipeTypes;
-import cf.witcheskitchen.common.util.RecipeUtil;
+import cf.witcheskitchen.common.util.RecipeUtils;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import net.minecraft.inventory.Inventory;
@@ -32,7 +32,7 @@ public class OvenCookingRecipe implements Recipe<Inventory> {
 
     @Override
     public boolean matches(Inventory inventory, World world) {
-        return false;
+        return input.test(inventory.getStack(0));
     }
 
     @Override
@@ -83,7 +83,7 @@ public class OvenCookingRecipe implements Recipe<Inventory> {
         public OvenCookingRecipe read(Identifier id, JsonObject json) {
             final Ingredient input = Ingredient.fromJson(JsonHelper.getObject(json, "ingredient"));
             var array = JsonHelper.getArray(json, "results");
-            final DefaultedList<ItemStack> outputs = RecipeUtil.deserializeStacks(array);
+            final DefaultedList<ItemStack> outputs = RecipeUtils.deserializeStacks(array);
             if (outputs.isEmpty()) {
                 throw new JsonParseException("No output for Witches' Oven recipe");
             } else if (outputs.size() > 2) {

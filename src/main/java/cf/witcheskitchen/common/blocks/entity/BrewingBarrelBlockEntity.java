@@ -185,8 +185,8 @@ public class BrewingBarrelBlockEntity extends WKDeviceBlockEntity implements Nam
         } else if (!canMakeAlcohol(recipe)) {
             return false;
         } else {
-            for (int i = 0; i < recipe.getInputs().size(); i++) {
-                final DefaultedList<Ingredient> ingredients = recipe.getInputs();
+            for (int i = 0; i < recipe.getIngredients().size(); i++) {
+                final DefaultedList<Ingredient> ingredients = recipe.getIngredients();
                 final Ingredient ingredient = ingredients.get(i);
                 final ItemStack stack = this.getStack(i);
                 if (ingredient.test(stack)) {

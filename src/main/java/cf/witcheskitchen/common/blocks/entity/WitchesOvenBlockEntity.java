@@ -288,7 +288,7 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements IDevi
         if (input.isEmpty()) {
             return null;
         } else if (input.isFood()) {
-            return world.getRecipeManager().listAllOfType(RecipeType.SMELTING)
+            final var found =  world.getRecipeManager().listAllOfType(RecipeType.SMELTING)
                     .stream()
                     .filter(recipe -> {
                         if (recipe.getIngredients().size() == 1 && recipe.getIngredients().get(0).test(input)) {
@@ -297,14 +297,28 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements IDevi
                         return false;
                     }).findFirst()
                     .orElse(null);
+            // Fixes oven cooking bug.
+            // If we couldn't find a vanilla recipe
+            // Let's see if it exists in the mod
+            // For example rotten flesh
+            if (found == null) {
+                return getOvenRecipe(input);
+            } else {
+                return found;
+            }
         } else {
-            return world.getRecipeManager().listAllOfType(WKRecipeTypes.WITCHES_OVEN_COOKING_RECIPE_TYPE)
-                    .stream()
-                    .filter(type -> type.getInput().test(input))
-                    .findFirst()
-                    .orElse(null);
+            return getOvenRecipe(input);
         }
     }
+
+    public OvenCookingRecipe getOvenRecipe(ItemStack input) {
+        return world.getRecipeManager().listAllOfType(WKRecipeTypes.WITCHES_OVEN_COOKING_RECIPE_TYPE)
+                .stream()
+                .filter(type -> type.getInput().test(input))
+                .findFirst()
+                .orElse(null);
+    }
+
 
     /**
      * Returns the experience of the recipe

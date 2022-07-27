@@ -41,7 +41,6 @@ import java.util.function.Function;
 import static cf.witcheskitchen.common.registry.WKCreativeTabs.GENERAL_TAB;
 
 public class WKBlocks {
-
     private static final List<ObjectDefinition<Block>> BLOCKS = new ArrayList<>();
     private static final List<ObjectDefinition<Item>> ITEMS = new ArrayList<>();
     public static final ArrayList<Block> LEAF_BLOCKS = new ArrayList<>();
