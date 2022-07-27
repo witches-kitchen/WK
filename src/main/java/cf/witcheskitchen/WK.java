@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableMap;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.fabricmc.api.EnvType;
+import net.fabricmc.fabric.api.registry.OxidizableBlocksRegistry;
 import net.fabricmc.fabric.mixin.content.registry.AxeItemAccessor;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
@@ -56,6 +57,7 @@ public class WK implements ModInitializer {
         WKCreativeTabs.register();
         WKPacketTypes.register(EnvType.SERVER);
         WKBlocks.register();
+        registerOxidizableBlocks();
         WKItems.register();
         WKPotions.register();
         WKFoodComponents.register();
@@ -75,6 +77,17 @@ public class WK implements ModInitializer {
         // WKBannerRegistry.registerBannerClient();
         WKDamageSources.register();
         LOGGER.info("WitchesKitchen V{} Initialized", VERSION);
+    }
+
+    private static void registerOxidizableBlocks() {
+        OxidizableBlocksRegistry.registerOxidizableBlockPair(WKBlocks.COPPER_WITCHES_OVEN, WKBlocks.EXPOSED_COPPER_WITCHES_OVEN);
+        OxidizableBlocksRegistry.registerOxidizableBlockPair(WKBlocks.EXPOSED_COPPER_WITCHES_OVEN, WKBlocks.WEATHERED_COPPER_WITCHES_OVEN);
+        OxidizableBlocksRegistry.registerOxidizableBlockPair(WKBlocks.WEATHERED_COPPER_WITCHES_OVEN, WKBlocks.OXIDIZED_COPPER_WITCHES_OVEN);
+        OxidizableBlocksRegistry.registerWaxableBlockPair(WKBlocks.COPPER_WITCHES_OVEN, WKBlocks.WAXED_COPPER_WITCHES_OVEN);
+        OxidizableBlocksRegistry.registerWaxableBlockPair(WKBlocks.EXPOSED_COPPER_WITCHES_OVEN, WKBlocks.WAXED_EXPOSED_COPPER_WITCHES_OVEN);
+        OxidizableBlocksRegistry.registerWaxableBlockPair(WKBlocks.WEATHERED_COPPER_WITCHES_OVEN, WKBlocks.WAXED_WEATHERED_COPPER_WITCHES_OVEN);
+        OxidizableBlocksRegistry.registerWaxableBlockPair(WKBlocks.OXIDIZED_COPPER_WITCHES_OVEN, WKBlocks.WAXED_OXIDIZED_COPPER_WITCHES_OVEN);
+
     }
 
     private static void modifyAxeBlockStripping() {

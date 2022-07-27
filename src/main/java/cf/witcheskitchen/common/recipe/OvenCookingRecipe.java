@@ -21,12 +21,14 @@ public class OvenCookingRecipe implements Recipe<Inventory> {
     private final Identifier id;
     private final Ingredient input;
     private final DefaultedList<ItemStack> outputs;
+    private final int time;
     private final float xp;
 
-    public OvenCookingRecipe(Identifier id, Ingredient input, DefaultedList<ItemStack> outputs, float xp) {
+    public OvenCookingRecipe(Identifier id, Ingredient input, DefaultedList<ItemStack> outputs, int time, float xp) {
         this.id = id;
         this.input = input;
         this.outputs = outputs;
+        this.time = time;
         this.xp = xp;
     }
 
@@ -59,6 +61,10 @@ public class OvenCookingRecipe implements Recipe<Inventory> {
         return input;
     }
 
+    public int getTime() {
+        return time;
+    }
+
     public DefaultedList<ItemStack> getOutputs() {
         return outputs;
     }
@@ -89,8 +95,9 @@ public class OvenCookingRecipe implements Recipe<Inventory> {
             } else if (outputs.size() > 2) {
                 throw new JsonParseException("Too many outputs for Witches' Oven recipe");
             }
+            final int time = JsonHelper.getInt(json, "time");
             final float xp = JsonHelper.getFloat(json, "experience");
-            return new OvenCookingRecipe(id, input, outputs, xp);
+            return new OvenCookingRecipe(id, input, outputs, time, xp);
         }
 
         @Override
@@ -100,8 +107,9 @@ public class OvenCookingRecipe implements Recipe<Inventory> {
             for (int i = 0; i < outputs.size(); i++) {
                 outputs.set(i, buf.readItemStack());
             }
+            final int time = buf.readInt();
             final float xp = buf.readFloat();
-            return new OvenCookingRecipe(id, input, outputs, xp);
+            return new OvenCookingRecipe(id, input, outputs, time, xp);
         }
 
         @Override
@@ -111,6 +119,7 @@ public class OvenCookingRecipe implements Recipe<Inventory> {
             for (var stack : recipe.outputs) {
                 buf.writeItemStack(stack);
             }
+            buf.writeInt(recipe.getTime());
             buf.writeFloat(recipe.getXp());
         }
     }

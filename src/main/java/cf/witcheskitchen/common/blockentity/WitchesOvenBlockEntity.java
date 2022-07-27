@@ -57,12 +57,14 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements IDevi
     private int maxProgress;
     private float experience;
 
+    // Default cooking value for vanilla recipes is 200
+    private static final int DEFAULT_COOKING_TIME = 200;
+
     public WitchesOvenBlockEntity(BlockPos pos, BlockState state) {
         super(WKBlockEntityTypes.WITCHES_OVEN, pos, state, 4);
         // Passive cooking inventory manager
         this.passiveInventory = new InventoryManager<>(this, 4);
-        // Default value for witches oven smelting recipes is 100
-        this.maxProgress = 100;
+        this.maxProgress = DEFAULT_COOKING_TIME;
         // Passive cooking times
         this.passiveProgress = new int[4];
         // Sync the values between client and server
@@ -169,10 +171,11 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements IDevi
             }
         }
         boolean dirty = false;
-        final Optional<Recipe<?>> optionRecipe = this.findMatchingRecipeFor(world, this.getStack(this.input));
+        final Optional<Recipe<?>> optionRecipe = findMatchingRecipeFor(world, this.getStack(this.input));
         if (optionRecipe.isPresent()) {
             final Recipe<?> recipe = optionRecipe.get();
             final DefaultedList<ItemStack> outputs = this.getResults(recipe);
+            this.maxProgress = getCookingTime(recipe);
             if (outputs != null && !outputs.isEmpty()) {
                 if (!this.isBurning() && canCraft(outputs)) {
                     dirty = true;
@@ -193,7 +196,7 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements IDevi
                     ++this.activeProgress;
                     if (this.activeProgress == this.maxProgress) {
                         this.activeProgress = 0;
-                        this.maxProgress = 100;
+                        this.maxProgress = getCookingTime(recipe);
                         if (this.craftRecipe(outputs, this.getExperience(recipe))) {
                             dirty = true;
                         }
@@ -246,6 +249,19 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements IDevi
     }
 
     /**
+     * Cast recipe and find more appropriate cooking time
+     */
+    protected int getCookingTime(Recipe<?> recipe) {
+        if (recipe instanceof SmeltingRecipe) {
+            return ((SmeltingRecipe) recipe).getCookTime();
+        } else if (recipe instanceof OvenCookingRecipe) {
+            return ((OvenCookingRecipe) recipe).getTime();
+        } else {
+            return DEFAULT_COOKING_TIME;
+        }
+    }
+
+    /**
      * Spawns passive cooking some particles
      */
     @Override
@@ -291,7 +307,7 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements IDevi
      * Finds the matching recipe for the given input
      * @param world World
      * @param input ItemStack
-     * @return possible return types are optional SmeltingRecipe (furnace) OvenCookingRecipe (witches oven), or Optional.EMPTY
+     * @return possible return types are optional SmeltingRecipe (furnace) OvenCookingRecipe (witches oven), or Optional.empty()
      */
     private static Optional<Recipe<?>> findMatchingRecipeFor(World world, final ItemStack input) {
         Objects.requireNonNull(world);

@@ -31,7 +31,6 @@ public class OvenCookingCategory implements DisplayCategory<OvenCookingDisplay> 
     public static void register(CategoryRegistry registry) {
         registry.add(new OvenCookingCategory());
         registry.addWorkstations(WKREIPlugin.OVEN_COOKING, ICON, EntryStacks.of(WKBlocks.COPPER_WITCHES_OVEN), EntryStacks.of(WKBlocks.EXPOSED_COPPER_WITCHES_OVEN), EntryStacks.of(WKBlocks.WEATHERED_COPPER_WITCHES_OVEN), EntryStacks.of(WKBlocks.OXIDIZED_COPPER_WITCHES_OVEN));
-        registry.removePlusButton(WKREIPlugin.OVEN_COOKING);
     }
 
     @Override
@@ -52,7 +51,7 @@ public class OvenCookingCategory implements DisplayCategory<OvenCookingDisplay> 
     @Override
     public List<Widget> setupDisplay(OvenCookingDisplay display, Rectangle bounds) {
         final Point startPoint = new Point(bounds.getCenterX() - 41, bounds.y + 16);
-        final double time = 100D; // Default Cooking time for oven recipes is 100
+        final double time = display.getTime();
         final DecimalFormat df = new DecimalFormat("###.##");
         final List<Widget> widgets = new ArrayList<>();
         widgets.add(Widgets.createRecipeBase(bounds));

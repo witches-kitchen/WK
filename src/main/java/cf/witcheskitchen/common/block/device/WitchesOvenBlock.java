@@ -142,5 +142,4 @@ public class WitchesOvenBlock extends WKDeviceBlock implements Waterloggable {
         }
         super.onStateReplaced(state, world, pos, newState, moved);
     }
-
 }

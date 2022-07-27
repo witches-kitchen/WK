@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ccc",
+    "r r",
+    "rrr"
+  ],
+  "key": {
+    "c": {
+      "item": "minecraft:chain"
+    },
+    "r": {
+      "item": "minecraft:copper_ingot"
+    }
+  },
+  "result": {
+    "item": "witcheskitchen:copper_witches_oven"
+  }
+}

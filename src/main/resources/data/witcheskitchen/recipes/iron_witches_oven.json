@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ccc",
+    "r r",
+    "rrr"
+  ],
+  "key": {
+    "c": {
+      "item": "minecraft:chain"
+    },
+    "r": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "witcheskitchen:iron_witches_oven"
+  }
+}

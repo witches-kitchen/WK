@@ -18,11 +18,14 @@ public class OvenCookingDisplay implements Display {
 
     private final EntryIngredient input;
     private final List<EntryIngredient> outputs;
+
+    private final int time;
     private final float experience;
 
     public OvenCookingDisplay(OvenCookingRecipe recipe) {
         this.input = EntryIngredients.ofIngredient(recipe.getInput());
         this.outputs = Collections.singletonList(EntryIngredients.ofItemStacks(recipe.getOutputs()));
+        this.time = recipe.getTime();
         this.experience = recipe.getXp();
     }
 
@@ -47,5 +50,9 @@ public class OvenCookingDisplay implements Display {
 
     public float getExperience() {
         return experience;
+    }
+
+    public int getTime() {
+        return time;
     }
 }

@@ -31,7 +31,6 @@ public class FermentingCategory implements DisplayCategory<FermentingDisplay> {
     public static void register(CategoryRegistry registry) {
         registry.add(new FermentingCategory());
         registry.addWorkstations(WKREIPlugin.FERMENTING, ICON, EntryStacks.of(WKBlocks.SPRUCE_BREWING_BARREL), EntryStacks.of(WKBlocks.BIRCH_BREWING_BARREL), EntryStacks.of(WKBlocks.JUNGLE_BREWING_BARREL), EntryStacks.of(WKBlocks.ACACIA_BREWING_BARREL), EntryStacks.of(WKBlocks.DARK_OAK_BREWING_BARREL), EntryStacks.of(WKBlocks.CRIMSON_BREWING_BARREL), EntryStacks.of(WKBlocks.WARPED_BREWING_BARREL));
-        registry.removePlusButton(WKREIPlugin.FERMENTING);
     }
 
     @Override

@@ -44,7 +44,6 @@ public final class InventoryHelper {
      */
     public static int findAnyIndexOf(Inventory inventory, Item search) {
         for (int i = 0; i < inventory.size(); i++) {
-            System.out.println("Element at pos " + i + " is " + inventory.getStack(i));
             if (inventory.getStack(i).getItem() == search) {
                 return i;
             }
