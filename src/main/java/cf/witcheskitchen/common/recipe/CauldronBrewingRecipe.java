@@ -1,7 +1,7 @@
 package cf.witcheskitchen.common.recipe;
 
 import cf.witcheskitchen.common.registry.WKRecipeTypes;
-import cf.witcheskitchen.common.util.RecipeUtil;
+import cf.witcheskitchen.common.util.RecipeUtils;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import net.minecraft.inventory.Inventory;
@@ -37,7 +37,7 @@ public class CauldronBrewingRecipe implements Recipe<Inventory> {
 
     @Override
     public boolean matches(Inventory inventory, World world) {
-        return RecipeUtil.matches(inventory, this.ingredients);
+        return RecipeUtils.matches(inventory, this.ingredients, 0, inventory.size());
     }
 
     @Override
@@ -84,13 +84,13 @@ public class CauldronBrewingRecipe implements Recipe<Inventory> {
 
         @Override
         public CauldronBrewingRecipe read(Identifier id, JsonObject json) {
-            final DefaultedList<Ingredient> ingredients = RecipeUtil.deserializeIngredients(JsonHelper.getArray(json, "ingredients"));
+            final DefaultedList<Ingredient> ingredients = RecipeUtils.deserializeIngredients(JsonHelper.getArray(json, "ingredients"));
             if (ingredients.size() < 2) {
                 throw new JsonParseException("Cauldron recipes must have at least 2 ingredients");
             } else if (ingredients.size() > 7) {
                 throw new JsonParseException("Too many ingredients for Cauldron recipe");
             } else {
-                return new CauldronBrewingRecipe(id, ingredients, RecipeUtil.deserializeStack(JsonHelper.getObject(json, "result")), JsonHelper.getInt(json, "color"));
+                return new CauldronBrewingRecipe(id, ingredients, RecipeUtils.deserializeStack(JsonHelper.getObject(json, "result")), JsonHelper.getInt(json, "color"));
             }
         }
 

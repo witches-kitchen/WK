@@ -1,7 +1,7 @@
 package cf.witcheskitchen.common.recipe;
 
 import cf.witcheskitchen.common.registry.WKRecipeTypes;
-import cf.witcheskitchen.common.util.RecipeUtil;
+import cf.witcheskitchen.common.util.RecipeUtils;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import net.minecraft.inventory.Inventory;
@@ -30,7 +30,7 @@ public class BarrelFermentingRecipe implements Recipe<Inventory> {
 
     @Override
     public boolean matches(Inventory inventory, World world) {
-        return RecipeUtil.matches(inventory, this.inputs);
+        return RecipeUtils.matches(inventory, this.inputs, 0, 5);
     }
 
     @Override
@@ -72,13 +72,13 @@ public class BarrelFermentingRecipe implements Recipe<Inventory> {
 
         @Override
         public BarrelFermentingRecipe read(Identifier id, JsonObject json) {
-            final DefaultedList<Ingredient> inputs = RecipeUtil.deserializeIngredients(JsonHelper.getArray(json, "ingredients"));
+            final DefaultedList<Ingredient> inputs = RecipeUtils.deserializeIngredients(JsonHelper.getArray(json, "ingredients"));
             if (inputs.isEmpty()) {
                 throw new JsonParseException("No ingredients for fermenting recipe");
             } else if (inputs.size() > 6) {
                 throw new JsonParseException("Too many ingredients for fermenting recipe");
             } else {
-                final ItemStack output = RecipeUtil.deserializeStack(JsonHelper.getObject(json, "result"));
+                final ItemStack output = RecipeUtils.deserializeStack(JsonHelper.getObject(json, "result"));
                 if (output.isEmpty()) {
                     throw new JsonParseException("No output for fermenting recipe");
                 } else {

@@ -16,6 +16,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.registry.Registry;
+import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.NotNull;
 import java.util.*;
 import java.util.function.BiConsumer;
@@ -26,48 +27,69 @@ import java.util.stream.Collector;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public final class RecipeUtil {
+public final class RecipeUtils {
 
-    private RecipeUtil() {
+    private RecipeUtils() {
         // Don't let anyone instantiate this
     }
 
     /**
-     * Checks that a list of Ingredients match the contents inside an {@link Inventory}.
-     *
-     * @return Whether they match.
+     * <p>
+     * This function finds out whether the given slots from the {@link Inventory}
+     * do match the {@link DefaultedList} of Ingredients, which is used as a filter
+     * for crafting recipes.
+     * </p>
+     * @param inventory Inventory
+     * @param ingredients DefaultedList
+     * @param startIndex inclusive
+     * @param endIndex inclusive
+     * @return If the inventory contains the inputs for the recipe.
      */
-    public static boolean matches(Inventory inventory, DefaultedList<Ingredient> ingredients) {
+    public static boolean matches(final Inventory inventory, final DefaultedList<Ingredient> ingredients, final int startIndex, final int endIndex) {
+        // Throw unexpected arguments away which lead to bugs
+        Validate.isTrue(inventory != null);
+        Validate.isTrue(ingredients != null);
+        if (endIndex < startIndex) throw new IllegalArgumentException("End index %d expected to be > starting index %d".formatted(endIndex, startIndex));
+        // Quick fail if there is no data at all
         if (inventory.isEmpty()) {
             return false;
-        } else if (ingredients.isEmpty()) {
+        }
+        // Same for the inputs
+        if (ingredients.isEmpty()) {
             return false;
-        } else {
-            final List<ItemStack> nonEmptyStacks = new ArrayList<>();
-            for (int i = 0; i < inventory.size(); i++) {
-                final ItemStack stack = inventory.getStack(i);
-                if (!stack.isEmpty()) {
-                    nonEmptyStacks.add(stack);
+        }
+        // This collection holds the valid stacks
+        final var validStacks = new ArrayList<ItemStack>();
+        for (int slot = startIndex; slot <= endIndex; slot += 1) {
+            final ItemStack stackInSlot = inventory.getStack(slot);
+            // All the empty stacks are discarded
+            if (stackInSlot.isEmpty()) {
+                continue;
+            }
+            validStacks.add(stackInSlot);
+         }
+
+        // Our collection now has all the available items from the inventory
+        if (validStacks.size() != ingredients.size()) {
+            // If they do not have the same size there is no point on doing more processing
+            return false;
+        }
+        // Now we compare the valid stacks with the inputs
+        for (Ingredient ingredient : ingredients) {
+            boolean valid = false; // flag that tells if the stack is valid
+            for (int entry = 0; entry < validStacks.size(); entry++) {
+                if (ingredient.test(validStacks.get(entry))) {
+                    valid = true;
+                    validStacks.remove(entry);
+                    break;
                 }
             }
-            if (nonEmptyStacks.size() != ingredients.size()) {
+            // If the item is not valid, it fails.
+            if (!valid) {
                 return false;
             }
-            for (Ingredient ingredient : ingredients) {
-                boolean matchesIngredient = false;
-                for (int j = 0; j < nonEmptyStacks.size(); j++) {
-                    if (ingredient.test(nonEmptyStacks.get(j))) {
-                        matchesIngredient = true;
-                        nonEmptyStacks.remove(j);
-                        break;
-                    }
-                }
-                if (!matchesIngredient) {
-                    return false;
-                }
-            }
-            return true;
         }
+        return true;
     }
 
     /**
