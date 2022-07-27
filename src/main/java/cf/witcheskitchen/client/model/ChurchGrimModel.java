@@ -1,7 +1,7 @@
 package cf.witcheskitchen.client.model;
 
 import cf.witcheskitchen.WK;
-import cf.witcheskitchen.common.entities.neutral.ChurchGrimEntity;
+import cf.witcheskitchen.common.entity.neutral.ChurchGrimEntity;
 import net.minecraft.util.Identifier;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 

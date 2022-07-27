@@ -1,7 +1,7 @@
 package cf.witcheskitchen.client.model;
 
 import cf.witcheskitchen.WK;
-import cf.witcheskitchen.common.entities.tameable.FerretEntity;
+import cf.witcheskitchen.common.entity.tameable.FerretEntity;
 import net.minecraft.util.Identifier;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 

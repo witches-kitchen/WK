@@ -2,15 +2,15 @@ package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WKIdentifier;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
-import cf.witcheskitchen.common.blocks.BlackthornLeavesBlock;
-import cf.witcheskitchen.common.blocks.BlackthornPillarBlock;
-import cf.witcheskitchen.common.blocks.SaltBlock;
-import cf.witcheskitchen.common.blocks.WKStairsBlock;
-import cf.witcheskitchen.common.blocks.sapling.WKSaplingBlock;
-import cf.witcheskitchen.common.blocks.device.BrewingBarrelBlock;
-import cf.witcheskitchen.common.blocks.device.TeapotBlock;
-import cf.witcheskitchen.common.blocks.WitchesCauldronBlock;
-import cf.witcheskitchen.common.blocks.device.WitchesOvenBlock;
+import cf.witcheskitchen.common.block.BlackthornLeavesBlock;
+import cf.witcheskitchen.common.block.BlackthornPillarBlock;
+import cf.witcheskitchen.common.block.SaltBlock;
+import cf.witcheskitchen.common.block.WKStairsBlock;
+import cf.witcheskitchen.common.block.sapling.WKSaplingBlock;
+import cf.witcheskitchen.common.block.device.BrewingBarrelBlock;
+import cf.witcheskitchen.common.block.device.TeapotBlock;
+import cf.witcheskitchen.common.block.WitchesCauldronBlock;
+import cf.witcheskitchen.common.block.device.WitchesOvenBlock;
 import cf.witcheskitchen.common.crop.AmaranthCropBlock;
 import cf.witcheskitchen.common.crop.BelladonnaCropBlock;
 import cf.witcheskitchen.common.crop.MintCropBlock;
@@ -205,15 +205,21 @@ public class WKBlocks {
     public static final Block MINT = registerFrom("mint", new MintCropBlock(AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
     public static final Block WORMWOOD = registerFrom("wormwood", new WormwoodCropBlock(AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
 
+    /**
+     * Returns an <a href="Collection.html#unmodview">read-only view</a> of the WitchesKitchen's Blocks
+     */
     public static List<ObjectDefinition<Block>> getBlocks() {
         return Collections.unmodifiableList(BLOCKS);
     }
 
+    /**
+     * Returns an <a href="Collection.html#unmodview">read-only view</a> of the WitchesKitchen's BlockItems
+     */
     public static List<ObjectDefinition<Item>> getItems() {
         return Collections.unmodifiableList(ITEMS);
     }
 
-    static Block registerAmaranth(String path, AmaranthCropBlock.Type type) {
+    private static Block registerAmaranth(String path, AmaranthCropBlock.Type type) {
         final Block amaranth = new AmaranthCropBlock(AbstractBlock.Settings.of(Material.PLANT)
                 .noCollision()
                 .ticksRandomly()
@@ -222,7 +228,7 @@ public class WKBlocks {
         return registerFrom(path, amaranth);
     }
 
-    static QuiltBlockSettings leavesSettings() {
+    private static QuiltBlockSettings leavesSettings() {
         return QuiltBlockSettings.of(Material.LEAVES)
                 .strength(0.2F)
                 .ticksRandomly()
@@ -233,17 +239,17 @@ public class WKBlocks {
                 .blockVision((state, world, pos) -> false);
     }
 
-    static Block registerBarrel(String path) {
+    private static Block registerBarrel(String path) {
         return register(path, Material.WOOD, settings -> new BrewingBarrelBlock(settings.nonOpaque().strength(2.5F)));
     }
 
-    static Block registerPottedSapling(String path) {
+    private static Block registerPottedSapling(String path) {
         final Block pottedSapling = new FlowerPotBlock(BLACKTHORN_SAPLING, QuiltBlockSettings.of(Material.DECORATION).breakInstantly().nonOpaque());
         return registerFrom(path, pottedSapling);
 
     }
 
-    static Block registerSapling(String path, ConfiguredFeature<TreeFeatureConfig, ?> feature) {
+    private static Block registerSapling(String path, ConfiguredFeature<TreeFeatureConfig, ?> feature) {
         final Block sapling = new WKSaplingBlock(new WKSaplingGenerator(() -> Holder.createDirect(feature)),
                 QuiltBlockSettings.of(Material.PLANT)
                         .noCollision()
@@ -253,52 +259,52 @@ public class WKBlocks {
         return registerFrom(path, sapling);
     }
 
-    static Block registerLeaf(String path) {
+    private static Block registerLeaf(String path) {
         final LeavesBlock leaf = new LeavesBlock(leavesSettings());
         return registerFrom(path, leaf);
     }
 
-    static Block registerSlab(String path) {
+    private static Block registerSlab(String path) {
         return register(path, Material.WOOD, SlabBlock::new);
     }
 
-    static Block registerWood(String path, MapColor color) {
+    private static Block registerWood(String path, MapColor color) {
         final PillarBlock wood = new PillarBlock(QuiltBlockSettings.of(Material.WOOD, color).strength(2.0f).sounds(BlockSoundGroup.WOOD));
         return registerFrom(path, wood);
     }
 
-    static AbstractBlock.Settings logSettings(MapColor topMapColor, MapColor sideMapColor) {
+    private static AbstractBlock.Settings logSettings(MapColor topMapColor, MapColor sideMapColor) {
         return QuiltBlockSettings.of(Material.WOOD, state -> state.get(PillarBlock.AXIS) == Direction.Axis.Y ? topMapColor : sideMapColor).strength(2.0f).sounds(BlockSoundGroup.WOOD).ticksRandomly();
     }
 
-    static PillarBlock registerLog(String path, MapColor topMapColor, MapColor sideMapColor) {
+    private static PillarBlock registerLog(String path, MapColor topMapColor, MapColor sideMapColor) {
         final PillarBlock log = new PillarBlock(logSettings(topMapColor, sideMapColor));
         return registerFrom(path, log);
     }
 
-    static Block registerWoodenStair(String path, Block block) {
+    private static Block registerWoodenStair(String path, Block block) {
         return register(path, Material.WOOD, settings -> new WKStairsBlock(block.getDefaultState(), settings));
     }
 
-    static Block registerGingerBread(String path) {
+    private static Block registerGingerBread(String path) {
 
         return register(path, Material.CAKE, Block::new, BlockItem::new, GENERAL_TAB);
     }
 
-    static Block register(String path, Material material) {
+    private static Block register(String path, Material material) {
         return register(path, material, Block::new, BlockItem::new, GENERAL_TAB);
     }
 
 
-    static <T extends Block> T register(String path, Material material, Function<QuiltBlockSettings, T> blockFactory) {
+    private static <T extends Block> T register(String path, Material material, Function<QuiltBlockSettings, T> blockFactory) {
         return register(path, material, blockFactory, BlockItem::new, GENERAL_TAB);
     }
 
-    static <T extends Block, E extends Item> T register(String path, Material material, Function<QuiltBlockSettings, T> blockFactory, BiFunction<T, QuiltItemSettings, E> itemFactory) {
+    private static <T extends Block, E extends Item> T register(String path, Material material, Function<QuiltBlockSettings, T> blockFactory, BiFunction<T, QuiltItemSettings, E> itemFactory) {
         return register(path, material, blockFactory, itemFactory, GENERAL_TAB);
     }
 
-    static <T extends Block> T registerFrom(String path, T block) {
+    private static <T extends Block> T registerFrom(String path, T block) {
         final Identifier id = new WKIdentifier(path);
         if (block == null) {
             throw new IllegalArgumentException("Block with id " + path + " returned null");
@@ -308,7 +314,7 @@ public class WKBlocks {
         return block;
     }
 
-    static <T extends Block, E extends Item> T register(String path, Material material, Function<QuiltBlockSettings, T> blockFactory, BiFunction<T, QuiltItemSettings, E> itemFactory, ItemGroup tab) {
+    private static <T extends Block, E extends Item> T register(String path, Material material, Function<QuiltBlockSettings, T> blockFactory, BiFunction<T, QuiltItemSettings, E> itemFactory, ItemGroup tab) {
         final Identifier id = new WKIdentifier(path);
         final T block = blockFactory.apply(QuiltBlockSettings.of(material));
         BLOCKS.add(new ObjectDefinition<>(id, block));

@@ -1,7 +1,7 @@
 package cf.witcheskitchen.client.render;
 
 import cf.witcheskitchen.client.model.FerretEntityModel;
-import cf.witcheskitchen.common.entities.tameable.FerretEntity;
+import cf.witcheskitchen.common.entity.tameable.FerretEntity;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 

@@ -1,7 +1,7 @@
 package cf.witcheskitchen.client.render;
 
 import cf.witcheskitchen.client.model.CuSithEntityModel;
-import cf.witcheskitchen.common.entities.hostile.CuSithEntity;
+import cf.witcheskitchen.common.entity.hostile.CuSithEntity;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 

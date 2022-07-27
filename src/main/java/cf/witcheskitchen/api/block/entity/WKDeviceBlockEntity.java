@@ -20,7 +20,6 @@ import net.minecraft.world.World;
 public class WKDeviceBlockEntity extends BlockEntity implements BlockEntityTicker<WKDeviceBlockEntity>, Inventory {
 
     protected final InventoryManager<WKDeviceBlockEntity> manager;
-    private boolean isUnderWater;
 
     public WKDeviceBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int size) {
         super(type, pos, state);
@@ -30,11 +29,7 @@ public class WKDeviceBlockEntity extends BlockEntity implements BlockEntityTicke
     // Server-side Tick
     @Override
     public void tick(World world, BlockPos pos, BlockState state, WKDeviceBlockEntity blockEntity) {
-        if (this.world != null && !this.world.isClient) {
-            if (state.getBlock() instanceof Waterloggable) {
-                this.isUnderWater = !state.getFluidState().isEmpty();
-            }
-        }
+
     }
 
     // Client-side Tick
@@ -107,10 +102,6 @@ public class WKDeviceBlockEntity extends BlockEntity implements BlockEntityTicke
     @Override
     public void clear() {
         this.manager.clear();
-    }
-
-    public boolean isUnderWater() {
-        return isUnderWater;
     }
 
 }

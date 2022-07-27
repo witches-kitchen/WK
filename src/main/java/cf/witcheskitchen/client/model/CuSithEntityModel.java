@@ -1,7 +1,7 @@
 package cf.witcheskitchen.client.model;
 
 import cf.witcheskitchen.WK;
-import cf.witcheskitchen.common.entities.hostile.CuSithEntity;
+import cf.witcheskitchen.common.entity.hostile.CuSithEntity;
 import net.minecraft.util.Identifier;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 

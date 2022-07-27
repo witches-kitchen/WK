@@ -1,7 +1,7 @@
 package cf.witcheskitchen.client.render.blockentity;
 
-import cf.witcheskitchen.common.blocks.entity.WitchesOvenBlockEntity;
-import cf.witcheskitchen.common.blocks.device.WitchesOvenBlock;
+import cf.witcheskitchen.common.blockentity.WitchesOvenBlockEntity;
+import cf.witcheskitchen.common.block.device.WitchesOvenBlock;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;

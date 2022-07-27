@@ -22,7 +22,7 @@
     "entrypoints": {
       "init": "cf.witcheskitchen.WK",
       "client": "cf.witcheskitchen.client.WKClient",
-      "rei_client": "cf.witcheskitchen.client.compat.rei.WKREIPlugin",
+      "rei_client": "cf.witcheskitchen.integration.client.rei.WKREIPlugin",
       "modmenu": "cf.witcheskitchen.client.compat.WKModMenu"
     },
     "depends": [

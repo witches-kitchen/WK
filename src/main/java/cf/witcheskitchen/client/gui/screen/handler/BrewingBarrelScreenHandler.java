@@ -1,7 +1,7 @@
 package cf.witcheskitchen.client.gui.screen.handler;
 
 import cf.witcheskitchen.api.client.screen.WKScreenHandler;
-import cf.witcheskitchen.common.blocks.entity.BrewingBarrelBlockEntity;
+import cf.witcheskitchen.common.blockentity.BrewingBarrelBlockEntity;
 import cf.witcheskitchen.common.registry.WKScreenHandlerTypes;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;

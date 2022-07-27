@@ -4,7 +4,7 @@ import cf.witcheskitchen.WK;
 import cf.witcheskitchen.WKConfig;
 import cf.witcheskitchen.WKIdentifier;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
-import cf.witcheskitchen.common.items.WKSeedItem;
+import cf.witcheskitchen.common.item.WKSeedItem;
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -82,6 +82,9 @@ public class WKItems {
     public static final Item FERRET_SPAWN_EGG = registerSpawnEgg("ferret_spawn_egg", settings -> new SpawnEggItem(WKEntityTypes.FERRET, 9985082, 2631205, settings));
     public static final Item CHURCH_GRIM_SPAWN_EGG = registerSpawnEgg("church_grim_spawn_egg", settings -> new SpawnEggItem(WKEntityTypes.CHURCH_GRIM, 0xFFFAFA, 0x36454F, settings));
 
+    /**
+     * Returns an <a href="Collection.html#unmodview">read-only view</a> of the WitchesKitchen's Items
+     */
     public static List<ObjectDefinition<Item>> getItems() {
         return Collections.unmodifiableList(ITEMS);
     }
@@ -90,41 +93,44 @@ public class WKItems {
      * Use me for registering seeds!
      */
 
-    static Item registerSeed(String id, Block block) {
+    private static Item registerSeed(String id, Block block) {
         return register(id, settings -> new WKSeedItem(block, settings), WKCreativeTabs.SEED_TAB);
     }
 
     /**
      * Use me for registering items!
      */
-    static Item registerItem(String id) {
+    private static Item registerItem(String id) {
         return register(id, Item::new, WKCreativeTabs.SEED_TAB);
     }
 
     /**
      * Use me for registering foodstuffs!
      */
-    static <T extends Item> T registerFoodStuffs(String id, Function<QuiltItemSettings, T> factory) {
+    private static <T extends Item> T registerFoodStuffs(String id, Function<QuiltItemSettings, T> factory) {
         return register(id, factory, WKCreativeTabs.SEED_TAB);
     }
 
-    static Item register(String id) {
+    private static Item register(String id) {
         return register(id, Item::new, WKCreativeTabs.SEED_TAB);
     }
 
     /**
      * Use me for registering spawn eggs!
      */
-    static <T extends Item> T registerSpawnEgg(String id, Function<QuiltItemSettings, T> factory) {
+    private static <T extends Item> T registerSpawnEgg(String id, Function<QuiltItemSettings, T> factory) {
         return register(id, factory, WKCreativeTabs.SEED_TAB);
     }
 
-    static <T extends Item> T register(String id, Function<QuiltItemSettings, T> factory, ItemGroup tab) {
+    private static <T extends Item> T register(String id, Function<QuiltItemSettings, T> factory, ItemGroup tab) {
         final Identifier resource = new WKIdentifier(id);
-        final T item = factory.apply(new QuiltItemSettings().group(tab));
+        final T item = factory.apply(itemBuilder(tab));
         final ObjectDefinition<Item> itemIdentifier = new ObjectDefinition<>(resource, item);
         ITEMS.add(itemIdentifier);
         return item;
+    }
+    private static QuiltItemSettings itemBuilder(ItemGroup tab) {
+        return new QuiltItemSettings().group(tab);
     }
 
     public static void register() {

@@ -5,8 +5,9 @@ import net.minecraft.util.math.Vec3d;
 
 public interface IDeviceExperienceHandler {
 
-    /***
-     * Fired when the player takes the crafted recipe  from the output slot
+    /**
+     * <p>Fired when the player takes the crafted recipe  from the output slot.</p>
+     * <p>As well as when the block is mined</p>
      * @param world ServerWorld
      * @param playerPos Vec3d ((position of the player))
      */
