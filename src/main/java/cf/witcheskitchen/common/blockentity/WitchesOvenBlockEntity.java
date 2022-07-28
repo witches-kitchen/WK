@@ -528,7 +528,7 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements IDevi
     // From NamedScreenHandlerFactory
     @Override
     public Text getDisplayName() {
-        return Text.translatable(this.getCachedState().getBlock().getTranslationKey());
+        return Text.translatable("screen.title.witcheskitchen.witches_oven");
     }
 
     @Nullable

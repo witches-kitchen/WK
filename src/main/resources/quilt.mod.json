@@ -7,8 +7,8 @@
     "metadata": {
       "name": "Witches' Kitchen",
       "description": "A cottagecore-themed magic mod. Addons are planned!",
-      "contributors": {
-        "Me!": "Owner"
+      "authors": {
+        "Me!": "DanikingRD"
       },
       "contact": {
         "homepage": "https://github.com/witches-kitchen/WK",
@@ -23,9 +23,21 @@
       "init": "cf.witcheskitchen.WK",
       "client": "cf.witcheskitchen.client.WKClient",
       "rei_client": "cf.witcheskitchen.integration.client.rei.WKREIPlugin",
-      "modmenu": "cf.witcheskitchen.client.compat.WKModMenu"
+      "modmenu": "cf.witcheskitchen.integration.client.WKModMenu"
     },
     "depends": [
+      {
+        "id": "geckolib3",
+        "versions": ">=3.1.6"
+      },
+      {
+        "id": "trinkets",
+        "versions": ">=3.4.0"
+      },
+      {
+        "id": "cloth-config2",
+        "versions": ">=7.0.73"
+      },
       {
         "id": "quilt_loader",
         "versions": ">=0.17.0-"

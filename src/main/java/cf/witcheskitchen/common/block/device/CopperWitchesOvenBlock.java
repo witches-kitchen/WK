@@ -13,9 +13,6 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.World;
-import org.checkerframework.checker.units.qual.A;
-
-import java.util.List;
 
 public class CopperWitchesOvenBlock extends WitchesOvenBlock implements Oxidizable {
 
@@ -34,19 +31,14 @@ public class CopperWitchesOvenBlock extends WitchesOvenBlock implements Oxidizab
         return Oxidizable.getIncreasedOxidationBlock(state.getBlock()).isPresent();
     }
 
-
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         final ItemStack stack  = player.getStackInHand(hand);
         // Allow axe item interaction from Oxidizable
-        if (stack.getItem() instanceof HoneycombItem) {
+        if (stack.getItem() instanceof HoneycombItem || stack.getItem() instanceof AxeItem) {
             return ActionResult.PASS;
         }
-        if (oxidizationLevel != OxidizationLevel.UNAFFECTED && stack.getItem() instanceof AxeItem) {
-            return ActionResult.PASS;
-        } else {
-            return super.onUse(state, world, pos, player, hand, hit);
-        }
+        return super.onUse(state, world, pos, player, hand, hit);
     }
 
     @Override

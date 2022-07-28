@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "OH"
+  ],
+  "key": {
+    "O": {
+      "item": "witcheskitchen:oxidized_copper_witches_oven"
+    },
+    "H": {
+      "item": "minecraft:honeycomb"
+    }
+  },
+  "result": {
+    "item": "witcheskitchen:waxed_oxidized_copper_witches_oven"
+  }
+}
