@@ -10,6 +10,7 @@ import cf.witcheskitchen.client.render.blockentity.BrewingBarrelBlockEntityRende
 import cf.witcheskitchen.client.render.blockentity.WitchesCauldronBlockEntityRender;
 import cf.witcheskitchen.client.render.blockentity.WitchesOvenBlockEntityRender;
 import cf.witcheskitchen.common.registry.*;
+import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
@@ -21,14 +22,11 @@ import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.color.world.FoliageColors;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.render.RenderLayer;
-import org.quiltmc.loader.api.ModContainer;
-import org.quiltmc.qsl.base.api.entrypoint.client.ClientModInitializer;
 
 @Environment(EnvType.CLIENT)
 public class WKClient implements ClientModInitializer {
-
     @Override
-    public void onInitializeClient(ModContainer mod) {
+    public void onInitializeClient() {
         WKPacketTypes.register(EnvType.CLIENT);
         ParticleFactoryRegistry.getInstance().register(WKParticleTypes.BUBBLE, BubbleParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(WKParticleTypes.SPLASH, WKSplashParticle.Factory::new);
@@ -42,8 +40,8 @@ public class WKClient implements ClientModInitializer {
         WKBlocks.getBlocks().forEach(entry -> BlockRenderLayerMap.INSTANCE.putBlock(entry.object(), RenderLayer.getCutout()));
         registerColorProvider();
         RenderRegistry.register();
-        // WKBannerRegistry.registerBanner();
-        // WKBannerRegistry.registerBannerClient();
+       // WKBannerRegistry.registerBanner();
+       // WKBannerRegistry.registerBannerClient();
     }
 
     //allows for color map modification of leaves based on biome
@@ -54,6 +52,4 @@ public class WKClient implements ClientModInitializer {
                         ? BiomeColors.getFoliageColor(world, pos)
                         : FoliageColors.getDefaultColor(), WKBlocks.LEAF_BLOCKS.toArray(new Block[]{}));
     }
-
-
 }
