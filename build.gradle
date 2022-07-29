@@ -1,7 +1,7 @@
 plugins {
     id 'maven-publish'
     alias(libs.plugins.quilt.loom)
-    id 'io.github.juuxel.loom-quiltflower' version '1.6.1'
+    id 'io.github.juuxel.loom-quiltflower' version '1.7.+'
 }
 
 archivesBaseName = project.archives_base_name
@@ -13,7 +13,6 @@ repositories {
     //     name = "patchouli"
     //     url = "https://maven.blamejared.com"
     // }
-    maven { url "https://maven.architectury.dev/" }
     maven {
         url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
     }
@@ -33,11 +32,12 @@ repositories {
             includeGroupByRegex '(dev|io\\.github)\\.onyxstudios\\..*'
         }
     }
-    maven {
-        url "https://www.cursemaven.com"
-    }
+
     maven {
         url "https://maven.shedaniel.me/"
+    }
+    maven {
+        url "https://www.cursemaven.com"
     }
     maven {
         name = "Nexus Repository Manager"
@@ -94,6 +94,7 @@ dependencies {
     //     exclude(group: "net.fabricmc.fabric-api")
     // }
     modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cardinal_components_version}"
+
     modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}"
 
     modImplementation("software.bernie.geckolib:geckolib-quilt-${project.geckolib_version}") {
@@ -109,16 +110,16 @@ dependencies {
 
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"
     modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
-    modImplementation("io.github.ladysnake:impersonate:${impersonate_version}") {
-        exclude(group: "net.fabricmc.fabric-api")
-    }
-    include("io.github.ladysnake:impersonate:${impersonate_version}")
+
+
+//    modImplementation("io.github.ladysnake:impersonate:${impersonate_version}") {
+//        exclude(group: "net.fabricmc.fabric-api")
+//    }
+   // include("io.github.ladysnake:impersonate:${impersonate_version}")
     modImplementation("io.github.ladysnake:PlayerAbilityLib:${playerabilitylib_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
-    modImplementation("dev.architectury:architectury:${rootProject.architectury_version}") {
-        exclude(group: "net.fabricmc.fabric-api")
-    }
+
     include("io.github.ladysnake:PlayerAbilityLib:${playerabilitylib_version}")
     modImplementation("com.github.virtuoel:pehkui:${pehkui_version}") {
        exclude(group: "net.fabricmc.fabric-api")
