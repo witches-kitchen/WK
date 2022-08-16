@@ -15,6 +15,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
+import org.quiltmc.qsl.recipe.api.serializer.QuiltRecipeSerializer;
 
 public class OvenCookingRecipe implements Recipe<Inventory> {
 
@@ -83,7 +84,7 @@ public class OvenCookingRecipe implements Recipe<Inventory> {
         return WKRecipeTypes.WITCHES_OVEN_COOKING_RECIPE_TYPE;
     }
 
-    public static class Serializer implements RecipeSerializer<OvenCookingRecipe> {
+    public static class Serializer implements QuiltRecipeSerializer<OvenCookingRecipe> {
 
         @Override
         public OvenCookingRecipe read(Identifier id, JsonObject json) {
@@ -121,6 +122,11 @@ public class OvenCookingRecipe implements Recipe<Inventory> {
             }
             buf.writeInt(recipe.getTime());
             buf.writeFloat(recipe.getXp());
+        }
+
+        @Override
+        public JsonObject toJson(OvenCookingRecipe recipe) {
+            return null;
         }
     }
 }

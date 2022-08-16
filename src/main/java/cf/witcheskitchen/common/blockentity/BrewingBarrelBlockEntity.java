@@ -84,7 +84,7 @@ public class BrewingBarrelBlockEntity extends WKDeviceBlockEntity implements Nam
         } else {
             if (this.canMakeAlcohol(recipe)) {
                 dirty = true;
-                this.timer+= 1000;
+                this.timer++;
             } else {
                 this.timer = 0;
             }

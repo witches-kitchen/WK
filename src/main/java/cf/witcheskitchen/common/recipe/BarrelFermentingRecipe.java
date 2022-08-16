@@ -15,6 +15,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
+import org.quiltmc.qsl.recipe.api.serializer.QuiltRecipeSerializer;
 
 public class BarrelFermentingRecipe implements Recipe<Inventory> {
 
@@ -68,7 +69,7 @@ public class BarrelFermentingRecipe implements Recipe<Inventory> {
         return WKRecipeTypes.BARREL_FERMENTING_RECIPE_TYPE;
     }
 
-    public static class Serializer implements RecipeSerializer<BarrelFermentingRecipe> {
+    public static class Serializer implements QuiltRecipeSerializer<BarrelFermentingRecipe> {
 
         @Override
         public BarrelFermentingRecipe read(Identifier id, JsonObject json) {
@@ -103,6 +104,11 @@ public class BarrelFermentingRecipe implements Recipe<Inventory> {
                 ingredient.write(buf);
             }
             buf.writeItemStack(recipe.getOutput());
+        }
+
+        @Override
+        public JsonObject toJson(BarrelFermentingRecipe recipe) {
+            return null;
         }
     }
 }

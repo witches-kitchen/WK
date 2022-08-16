@@ -15,6 +15,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
+import org.quiltmc.qsl.recipe.api.serializer.QuiltRecipeSerializer;
 
 public class CauldronBrewingRecipe implements Recipe<Inventory> {
 
@@ -80,7 +81,7 @@ public class CauldronBrewingRecipe implements Recipe<Inventory> {
     }
 
 
-    public static class Serializer implements RecipeSerializer<CauldronBrewingRecipe> {
+    public static class Serializer implements QuiltRecipeSerializer<CauldronBrewingRecipe> {
 
         @Override
         public CauldronBrewingRecipe read(Identifier id, JsonObject json) {
@@ -109,6 +110,11 @@ public class CauldronBrewingRecipe implements Recipe<Inventory> {
             }
             buf.writeItemStack(recipe.getOutput());
             buf.writeInt(recipe.color);
+        }
+
+        @Override
+        public JsonObject toJson(CauldronBrewingRecipe recipe) {
+            return null;
         }
     }
 }
