@@ -119,7 +119,7 @@ public class WKItems {
      * Use me for registering spawn eggs!
      */
     private static <T extends Item> T registerSpawnEgg(String id, Function<QuiltItemSettings, T> factory) {
-        return register(id, factory, WKCreativeTabs.SEED_TAB);
+        return register(id, factory, WKCreativeTabs.GENERAL_TAB);
     }
 
     private static <T extends Item> T register(String id, Function<QuiltItemSettings, T> factory, ItemGroup tab) {

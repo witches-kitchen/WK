@@ -62,15 +62,15 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
     public static final Ingredient BREEDING_INGREDIENTS;
     public static final Set<Item> TAMING_INGREDIENTS;
     public static final Predicate<LivingEntity> FLEE_SUPERNATURAL;
-    public static final TrackedData<Integer> VARIANT = DataTracker.registerData(WKTameableEntity.class,
+    public static final TrackedData<Integer> VARIANT = DataTracker.registerData(FerretEntity.class,
             TrackedDataHandlerRegistry.INTEGER);
-    public static final TrackedData<Boolean> NIGHT = DataTracker.registerData(WKTameableEntity.class,
+    public static final TrackedData<Boolean> NIGHT = DataTracker.registerData(FerretEntity.class,
             TrackedDataHandlerRegistry.BOOLEAN);
     private static final UniformIntProvider ANGER_TIME_RANGE;
     private static final TrackedData<Integer> ANGER_TIME;
 
     static {
-        ANGER_TIME = DataTracker.registerData(WolfEntity.class, TrackedDataHandlerRegistry.INTEGER);
+        ANGER_TIME = DataTracker.registerData(FerretEntity.class, TrackedDataHandlerRegistry.INTEGER);
         ANGER_TIME_RANGE = TimeHelper.betweenSeconds(20, 39);
         BREEDING_INGREDIENTS = Ingredient.ofItems(Items.RABBIT, Items.COOKED_RABBIT, Items.CHICKEN, Items.COOKED_CHICKEN, Items.EGG, Items.RABBIT_FOOT, Items.TURTLE_EGG);
         TAMING_INGREDIENTS = Sets.newHashSet(Items.RABBIT, Items.COOKED_RABBIT, Items.CHICKEN, Items.COOKED_CHICKEN, Items.EGG, Items.RABBIT_FOOT, Items.TURTLE_EGG);
@@ -120,12 +120,12 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         this.goalSelector.add(9, new MeleeAttackGoal(this, 1, true));
         this.goalSelector.add(10, new StopAndLookAtEntityGoal(this, MobEntity.class, 2.0f, 0.8f));
         this.goalSelector.add(11, new WanderAroundFarGoal(this, 0.8D, 1.0000001E-5F));
-        this.goalSelector.add(12, new FleeEntityGoal(this, LivingEntity.class, 16, 1, 3, FLEE_SUPERNATURAL));
+        this.goalSelector.add(12, new FleeEntityGoal<>(this, LivingEntity.class, 16, 1, 3, FLEE_SUPERNATURAL));
         this.targetSelector.add(1, new TargetGoal<>(this, PlayerEntity.class, 10, true, false, this::shouldAngerAt));
         this.targetSelector.add(2, new UntamedTargetGoal<>(this, RabbitEntity.class, false, null));
-        this.targetSelector.add(2, new UntamedTargetGoal(this, ChickenEntity.class, false, null));
+        this.targetSelector.add(2, new UntamedTargetGoal<>(this, ChickenEntity.class, false, null));
         this.targetSelector.add(4, new RevengeGoal(this).setGroupRevenge());
-        this.targetSelector.add(5, new UniversalAngerGoal(this, true));
+        this.targetSelector.add(5, new UniversalAngerGoal<>(this, true));
         this.targetSelector.add(6, new TrackOwnerAttackerGoal(this));
         this.targetSelector.add(7, new AttackWithOwnerGoal(this));
     }
@@ -196,7 +196,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
 
     @Override
     public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController(this, "controller", 0, this::predicate));
+        data.addAnimationController(new AnimationController<>(this, "controller", 0, this::predicate));
     }
 
     @Override
