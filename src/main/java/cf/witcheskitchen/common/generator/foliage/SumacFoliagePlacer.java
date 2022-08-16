@@ -30,8 +30,9 @@ public class SumacFoliagePlacer
         return WKConfiguredFeatures.SUMAC_FOLIAGE_PLACER;
     }
 
+
     @Override
-    protected void method_23448(TestableWorld world, BiConsumer<BlockPos, BlockState> replacer, RandomGenerator random, TreeFeatureConfig config, int i, TreeNode treeNode, int foliageHeight, int radius, int offset) {
+    protected void generate(TestableWorld world, BiConsumer<BlockPos, BlockState> replacer, RandomGenerator random, TreeFeatureConfig config, int i, TreeNode treeNode, int foliageHeight, int radius, int offset) {
         boolean bl = treeNode.isGiantTrunk();
         BlockPos blockPos = treeNode.getCenter().up(offset);
         this.generateSquare(world, replacer, random, config, blockPos, radius + treeNode.getFoliageRadius(), -1 - foliageHeight, bl);

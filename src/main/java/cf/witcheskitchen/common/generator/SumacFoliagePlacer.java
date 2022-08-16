@@ -19,6 +19,8 @@ import java.util.function.BiConsumer;
 
 public class SumacFoliagePlacer
         extends FoliagePlacer {
+
+
     public static final Codec<SumacFoliagePlacer> CODEC = RecordCodecBuilder.create(instance -> SumacFoliagePlacer.fillFoliagePlacerFields(instance).apply(instance, SumacFoliagePlacer::new));
 
     public SumacFoliagePlacer(IntProvider intProvider, IntProvider intProvider2) {
@@ -30,14 +32,13 @@ public class SumacFoliagePlacer
         return WKConfiguredFeatures.SUMAC_FOLIAGE_PLACER;
     }
 
-    // generate()
     @Override
-    protected void method_23448(TestableWorld testableWorld, BiConsumer<BlockPos, BlockState> biConsumer, RandomGenerator randomGenerator, TreeFeatureConfig treeFeatureConfig, int i, TreeNode treeNode, int foliageHeight, int radius, int offset) {
-        boolean bl = treeNode.isGiantTrunk();
-        BlockPos blockPos = treeNode.getCenter().up(offset);
-        this.generateSquare(testableWorld, biConsumer, randomGenerator, treeFeatureConfig, blockPos, radius + treeNode.getFoliageRadius(), -1 - foliageHeight, bl);
-        this.generateSquare(testableWorld, biConsumer, randomGenerator, treeFeatureConfig, blockPos, radius - 1, -foliageHeight, bl);
-        this.generateSquare(testableWorld, biConsumer, randomGenerator, treeFeatureConfig, blockPos, radius + treeNode.getFoliageRadius() - 1, 0, bl);
+    protected void generate(TestableWorld world, BiConsumer<BlockPos, BlockState> replacer, RandomGenerator random, TreeFeatureConfig config, int trunkHeight, TreeNode node, int foliageHeight, int radius, int offset) {
+        boolean bl = node.isGiantTrunk();
+        BlockPos blockPos = node.getCenter().up(offset);
+        this.generateSquare(world, replacer, random, config, blockPos, radius + node.getFoliageRadius(), -1 - foliageHeight, bl);
+        this.generateSquare(world, replacer, random, config, blockPos, radius - 1, -foliageHeight, bl);
+        this.generateSquare(world, replacer, random, config, blockPos, radius + node.getFoliageRadius() - 1, 0, bl);
     }
 
     @Override

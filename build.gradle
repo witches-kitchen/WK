@@ -107,7 +107,7 @@ dependencies {
     modImplementation "dev.emi:trinkets:${project.trinkets_version}"
 
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"
-    modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
+//    modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
     modImplementation("io.github.ladysnake:impersonate:${impersonate_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
