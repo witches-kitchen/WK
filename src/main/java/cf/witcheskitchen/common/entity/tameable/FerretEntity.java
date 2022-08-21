@@ -4,10 +4,9 @@ import cf.witcheskitchen.api.WKApi;
 import cf.witcheskitchen.api.WKTameableEntity;
 import cf.witcheskitchen.common.registry.WKEntityTypes;
 import cf.witcheskitchen.common.registry.WKSoundEvents;
-import com.google.common.collect.Sets;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.goal.SitGoal;
+import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
@@ -17,7 +16,11 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.Angerable;
 import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.entity.mob.GhastEntity;
-import net.minecraft.entity.passive.*;
+import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.passive.HorseBaseEntity;
+import net.minecraft.entity.passive.PassiveEntity;
+import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.fluid.Fluid;
@@ -55,20 +58,21 @@ import java.util.function.Predicate;
 
 public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnimationTickable, Angerable {
 
-    //FIXME: Figure out why this won't breed!
-    //FIXME: This entire damn mob
     public static final Ingredient BREEDING_INGREDIENTS;
     public static final Item TAMING_INGREDIENT;
     public static final Predicate<LivingEntity> FLEE_SUPERNATURAL;
-    public static final TrackedData<Integer> VARIANT = DataTracker.registerData(FerretEntity.class, TrackedDataHandlerRegistry.INTEGER);
-    public static final TrackedData<Boolean> NIGHT = DataTracker.registerData(FerretEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    public static final TrackedData<Integer> VARIANT;
+    public static final TrackedData<Boolean> NIGHT;
     private static final UniformIntProvider ANGER_TIME_RANGE;
     private static final TrackedData<Integer> ANGER_TIME;
     private static final TrackedData<Boolean> SITTING;
+    private static final TrackedData<Boolean> ATTACKING;
 
     static {
         BREEDING_INGREDIENTS = Ingredient.ofItems(Items.RABBIT, Items.COOKED_RABBIT, Items.CHICKEN, Items.COOKED_CHICKEN, Items.EGG, Items.RABBIT_FOOT, Items.TURTLE_EGG);
         TAMING_INGREDIENT = Items.EGG;
+        VARIANT = DataTracker.registerData(FerretEntity.class, TrackedDataHandlerRegistry.INTEGER);
+        NIGHT = DataTracker.registerData(FerretEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
         ANGER_TIME = DataTracker.registerData(FerretEntity.class, TrackedDataHandlerRegistry.INTEGER);
         ANGER_TIME_RANGE = TimeHelper.betweenSeconds(20, 39);
         FLEE_SUPERNATURAL = (entity) -> {
@@ -76,56 +80,40 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
             return entityType == WKEntityTypes.CUSITH || WKApi.isGreaterDemon(entity);
         };
         SITTING = DataTracker.registerData(FerretEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+        ATTACKING = DataTracker.registerData(FerretEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     }
 
-    private final AnimationFactory factory = new AnimationFactory(this);
+    private final AnimationFactory factory;
     @Nullable
     private UUID targetUuid;
 
     public FerretEntity(EntityType<? extends TameableEntity> entityType, World world) {
         super(entityType, world);
+        this.factory = new AnimationFactory(this);
         this.setTamed(false);
     }
 
-
     public static DefaultAttributeContainer.Builder createAttributes() {
-        return LivingEntity.createLivingAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 25.0D)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.65D)
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 10).add(EntityAttributes.GENERIC_ARMOR, 0.0D)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 2.0D).add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 0.15D);
+        return MobEntity.createMobAttributes()
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.5)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 6.0)
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE);
     }
 
-    public boolean isSleeping() {
-        return this.dataTracker.get(NIGHT);
-    }
-
-    public void setSleeping(boolean sleeping) {
-        this.dataTracker.set(NIGHT, sleeping);
-    }
 
     //Todo: Custom goal where ferrets and other tameables from this mod flee greater demons, which are defined by a tag.
     @Override
     protected void initGoals() {
-//        this.goalSelector.add(0, new SwimGoal(this));
-//        this.goalSelector.add(1, new LookAtEntityGoal(this, RabbitEntity.class, 12.0f));
-//        this.goalSelector.add(1, new LookAtEntityGoal(this, ChickenEntity.class, 12.0f));
-//        this.goalSelector.add(3, new AnimalMateGoal(this, 1.0D));
-//        this.goalSelector.add(3, new FollowParentGoal(this, 1.25D));
-//        this.goalSelector.add(5, new AttackGoal(this));
-        this.goalSelector.add(5, new SitGoal(this));
-//        this.goalSelector.add(7, new FollowMobGoal(this, 1.0D, 3.0F, 7.0F));
-//        this.goalSelector.add(7, new FollowOwnerGoal(this, 1.0D, 3.0F, 10.0F, false));
-//        this.goalSelector.add(9, new MeleeAttackGoal(this, 1, true));
-//        this.goalSelector.add(10, new StopAndLookAtEntityGoal(this, MobEntity.class, 2.0f, 0.8f));
-//        this.goalSelector.add(11, new WanderAroundFarGoal(this, 0.8D, 1.0000001E-5F));
-//        this.goalSelector.add(12, new FleeEntityGoal<>(this, LivingEntity.class, 16, 1, 3, FLEE_SUPERNATURAL));
-//        this.targetSelector.add(1, new TargetGoal<>(this, PlayerEntity.class, 10, true, false, this::shouldAngerAt));
-//        this.targetSelector.add(2, new UntamedTargetGoal<>(this, RabbitEntity.class, false, null));
-//        this.targetSelector.add(2, new UntamedTargetGoal<>(this, ChickenEntity.class, false, null));
-//        this.targetSelector.add(4, new RevengeGoal(this).setGroupRevenge());
-//        this.targetSelector.add(5, new UniversalAngerGoal<>(this, true));
-//        this.targetSelector.add(6, new TrackOwnerAttackerGoal(this));
-//        this.targetSelector.add(7, new AttackWithOwnerGoal(this));
+        this.goalSelector.add(0, new SwimGoal(this));
+        this.goalSelector.add(3, new SitGoal(this));
+        this.goalSelector.add(4, new PounceAtTargetGoal(this, 0.4F));
+        this.goalSelector.add(5, new MeleeAttackGoal(this, 1.0, true));
+        this.goalSelector.add(6, new FollowOwnerGoal(this, 1.0, 10.0F, 2.0F, false));
+        this.goalSelector.add(8, new WanderAroundFarGoal(this, 1.0));
+        this.goalSelector.add(10, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
+        this.goalSelector.add(10, new LookAroundGoal(this));
+        this.targetSelector.add(1, new TrackOwnerAttackerGoal(this));
+        this.targetSelector.add(2, new AttackWithOwnerGoal(this));
     }
 
     @Override
@@ -261,6 +249,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         this.dataTracker.startTracking(VARIANT, 0);
         this.dataTracker.startTracking(ANGER_TIME, 0);
         this.dataTracker.startTracking(SITTING, false);
+        this.dataTracker.startTracking(ATTACKING, false);
     }
 
     @Override
@@ -324,32 +313,20 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         return true;
     }
 
-    //TODO: Rework animations for sitting at night and day
-    //FIXME: Make it sit during the day, wait during the night. Jesus fucking Christ this thing is cursed.
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         if (this.isSitting()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("sit", true));
             return PlayState.CONTINUE;
+        } else if (event.isMoving()) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("run", true));
+            return PlayState.CONTINUE;
+        }  else if (this.isAttacking()) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("gore", true));
+            return PlayState.CONTINUE;
+        } else {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
+            return PlayState.CONTINUE;
         }
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
-//        if (event.isMoving() && !isSitting()) {
-//            event.getController().setAnimation(new AnimationBuilder().addAnimation("run", true));
-//            return PlayState.CONTINUE;
-//        }
-//        if (!event.isMoving() && !isAttacking()) {
-//            event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
-//            return PlayState.CONTINUE;
-//        }
-//        if (!event.isMoving() && isSitting()) {
-//            event.getController().setAnimation(new AnimationBuilder().addAnimation("sit", true));
-//            return PlayState.CONTINUE;
-//        }
-//        //Todo: When this gets in game, figure out how to set up the proper conditions for it to appear. (Around the ankles of other mobs)
-//        if (isAttacking() && !isSitting()) {
-//            event.getController().setAnimation(new AnimationBuilder().addAnimation("gore", true));
-//            return PlayState.CONTINUE;
-//        }
-        return PlayState.CONTINUE;
     }
 
     @Override
@@ -418,6 +395,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         return WKSounds.;
     }*/
 
+
     @Override
     protected void playStepSound(BlockPos pos, BlockState state) {
         this.playSound(SoundEvents.ENTITY_WOLF_STEP, 0.35F, 0.57F);
@@ -427,9 +405,24 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         this.dataTracker.set(SITTING, sitting);
         super.setSitting(sitting);
     }
-
+    public void setAttacking(boolean attacking) {
+        this.dataTracker.set(ATTACKING, attacking);
+        super.setAttacking(attacking);
+    }
     @Override
     public boolean isSitting() {
         return this.dataTracker.get(SITTING);
+    }
+
+    @Override
+    public boolean isAttacking() {
+        return this.dataTracker.get(ATTACKING);
+    }
+    public boolean isSleeping() {
+        return this.dataTracker.get(NIGHT);
+    }
+
+    public void setSleeping(boolean sleeping) {
+        this.dataTracker.set(NIGHT, sleeping);
     }
 }
