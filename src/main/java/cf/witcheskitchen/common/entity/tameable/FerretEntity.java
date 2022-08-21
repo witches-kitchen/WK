@@ -99,7 +99,19 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 6.0)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE);
     }
+    @Nullable
+    @Override
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
+        SplittableRandom random = new SplittableRandom();
+        int var = random.nextInt(0, 13);
+        this.setVariant(var);
+        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+    }
 
+    @Override
+    public void registerControllers(AnimationData data) {
+        data.addAnimationController(new AnimationController<>(this, "controller", 0, this::predicate));
+    }
 
     //Todo: Custom goal where ferrets and other tameables from this mod flee greater demons, which are defined by a tag.
     @Override
@@ -115,11 +127,83 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         this.targetSelector.add(1, new TrackOwnerAttackerGoal(this));
         this.targetSelector.add(2, new AttackWithOwnerGoal(this));
     }
+    @Override
+    protected void initDataTracker() {
+        super.initDataTracker();
+        this.dataTracker.startTracking(NIGHT, false);
+        this.dataTracker.startTracking(VARIANT, 0);
+        this.dataTracker.startTracking(ANGER_TIME, 0);
+        this.dataTracker.startTracking(SITTING, false);
+        this.dataTracker.startTracking(ATTACKING, false);
+    }
+
+    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+        if (this.isSitting()) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("sit", true));
+            return PlayState.CONTINUE;
+        } else if (event.isMoving()) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("run", true));
+            return PlayState.CONTINUE;
+        }  else if (this.isAttacking()) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("gore", true));
+            return PlayState.CONTINUE;
+        } else {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
+            return PlayState.CONTINUE;
+        }
+    }
 
     @Override
-    public int getVariants() {
-        return 12;
+    public boolean canAttackWithOwner(LivingEntity target, LivingEntity owner) {
+        if (!(target instanceof CreeperEntity) && !(target instanceof GhastEntity)) {
+            if (target instanceof FerretEntity ferretEntity) {
+                return !ferretEntity.isTamed() || ferretEntity.getOwner() != owner;
+            } else if (target instanceof PlayerEntity && owner instanceof PlayerEntity && !((PlayerEntity) owner).shouldDamagePlayer((PlayerEntity) target)) {
+                return false;
+            } else if (target instanceof HorseBaseEntity && ((HorseBaseEntity) target).isTame()) {
+                return false;
+            } else {
+                return !(target instanceof TameableEntity) || !((TameableEntity) target).isTamed();
+            }
+        } else {
+            return false;
+        }
     }
+
+    @Override
+    public ActionResult interactMob(PlayerEntity player, Hand hand) {
+        final ItemStack stack = player.getStackInHand(hand);
+        if (!isTamed() && stack.isOf(TAMING_INGREDIENT)) {
+            if (world.isClient()) {
+                return ActionResult.CONSUME;
+            } else {
+                if (!player.isCreative()) {
+                    stack.decrement(1);
+                }
+                if (!world.isClient()) {
+                    if (this.random.nextInt(3) == 0) {
+                        super.setOwner(player);
+                        this.navigation.recalculatePath();
+                        this.setTarget(null);
+                        setSit(true);
+                        this.world.sendEntityStatus(this, (byte) 7);
+                    } else {
+                        this.world.sendEntityStatus(this, (byte) 6);
+                    }
+                }
+                return ActionResult.SUCCESS;
+            }
+        }
+        if (isTamed() && !this.world.isClient() && hand == Hand.MAIN_HAND) {
+            setSit(!isSitting());
+            return ActionResult.SUCCESS;
+        }
+        if (stack.isOf(TAMING_INGREDIENT)) {
+            return ActionResult.PASS;
+        }
+        return super.interactMob(player, hand);
+    }
+
 
     @Nullable
     @Override
@@ -170,19 +254,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         this.dataTracker.set(VARIANT, variant);
     }
 
-    @Nullable
-    @Override
-    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
-        SplittableRandom random = new SplittableRandom();
-        int var = random.nextInt(0, 13);
-        this.setVariant(var);
-        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
-    }
 
-    @Override
-    public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(this, "controller", 0, this::predicate));
-    }
 
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
@@ -242,69 +314,8 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
     }
 
     @Override
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(NIGHT, false);
-        this.dataTracker.startTracking(VARIANT, 0);
-        this.dataTracker.startTracking(ANGER_TIME, 0);
-        this.dataTracker.startTracking(SITTING, false);
-        this.dataTracker.startTracking(ATTACKING, false);
-    }
-
-    @Override
-    public ActionResult interactMob(PlayerEntity player, Hand hand) {
-        final ItemStack stack = player.getStackInHand(hand);
-        if (!isTamed() && stack.isOf(TAMING_INGREDIENT)) {
-            if (world.isClient()) {
-                return ActionResult.CONSUME;
-            } else {
-                if (!player.isCreative()) {
-                    stack.decrement(1);
-                }
-                if (!world.isClient()) {
-                    if (this.random.nextInt(3) == 0) {
-                        super.setOwner(player);
-                        this.navigation.recalculatePath();
-                        this.setTarget(null);
-                        setSit(true);
-                        this.world.sendEntityStatus(this, (byte) 7);
-                    } else {
-                        this.world.sendEntityStatus(this, (byte) 6);
-                    }
-                }
-                return ActionResult.SUCCESS;
-            }
-        }
-        if (isTamed() && !this.world.isClient() && hand == Hand.MAIN_HAND) {
-            setSit(!isSitting());
-            return ActionResult.SUCCESS;
-        }
-        if (stack.isOf(TAMING_INGREDIENT)) {
-            return ActionResult.PASS;
-        }
-        return super.interactMob(player, hand);
-    }
-
-    @Override
     public boolean isBreedingItem(ItemStack stack) {
         return BREEDING_INGREDIENTS.test(stack);
-    }
-
-    @Override
-    public boolean canAttackWithOwner(LivingEntity target, LivingEntity owner) {
-        if (!(target instanceof CreeperEntity) && !(target instanceof GhastEntity)) {
-            if (target instanceof FerretEntity ferretEntity) {
-                return !ferretEntity.isTamed() || ferretEntity.getOwner() != owner;
-            } else if (target instanceof PlayerEntity && owner instanceof PlayerEntity && !((PlayerEntity) owner).shouldDamagePlayer((PlayerEntity) target)) {
-                return false;
-            } else if (target instanceof HorseBaseEntity && ((HorseBaseEntity) target).isTame()) {
-                return false;
-            } else {
-                return !(target instanceof TameableEntity) || !((TameableEntity) target).isTamed();
-            }
-        } else {
-            return false;
-        }
     }
 
     @Override
@@ -312,21 +323,6 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         return true;
     }
 
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (this.isSitting()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("sit", true));
-            return PlayState.CONTINUE;
-        } else if (event.isMoving()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("run", true));
-            return PlayState.CONTINUE;
-        }  else if (this.isAttacking()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("gore", true));
-            return PlayState.CONTINUE;
-        } else {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
-            return PlayState.CONTINUE;
-        }
-    }
 
     @Override
     public AnimationFactory getFactory() {
@@ -394,7 +390,6 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         return WKSounds.;
     }*/
 
-
     @Override
     protected void playStepSound(BlockPos pos, BlockState state) {
         this.playSound(SoundEvents.ENTITY_WOLF_STEP, 0.35F, 0.57F);
@@ -423,5 +418,9 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
 
     public void setSleeping(boolean sleeping) {
         this.dataTracker.set(NIGHT, sleeping);
+    }
+    @Override
+    public int getVariants() {
+        return 12;
     }
 }
