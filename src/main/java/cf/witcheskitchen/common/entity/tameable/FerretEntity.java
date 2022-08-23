@@ -13,6 +13,8 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.Angerable;
 import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.entity.mob.GhastEntity;
@@ -136,12 +138,20 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         this.dataTracker.startTracking(SITTING, false);
         this.dataTracker.startTracking(ATTACKING, false);
     }
+    @Override
+    public boolean tryAttack(Entity target) {
+        if (target instanceof LivingEntity living) {
+            living.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 100, 1));
+        }
+        return target.damage(DamageSource.mob(this), 3.0F);
+    }
+
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         if (this.isSitting()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("sit", true));
             return PlayState.CONTINUE;
-        } else if (event.isMoving()) {
+        } else if (event.isMoving() && !isAttacking()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("run", true));
             return PlayState.CONTINUE;
         }  else if (this.isAttacking()) {
@@ -218,10 +228,6 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         return ferretEntity;
     }
 
-    @Override
-    public boolean tryAttack(Entity target) {
-        return target.damage(DamageSource.mob(this), 3.0F);
-    }
 
     @Override
     public boolean isPushable() {
