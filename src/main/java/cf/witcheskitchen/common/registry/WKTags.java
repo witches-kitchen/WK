@@ -36,6 +36,19 @@ public class WKTags {
     public static final TagKey<Item> RESETS_CAULDRON = register(Registry.ITEM_KEY, "resets_cauldron");
     //Seeds
     public static final TagKey<Item> SEED_AMARANTH = register(Registry.ITEM_KEY, "seeds/seed_amaranth");
+    public static final TagKey<Item> SEED_BELLADONNA = register(Registry.ITEM_KEY, "seeds/seed_belladonna");
+    public static final TagKey<Item> SEED_IRIS = register(Registry.ITEM_KEY, "seeds/seed_iris");
+    public static final TagKey<Item> SEED_GINGER = register(Registry.ITEM_KEY, "seeds/seed_ginger");
+    public static final TagKey<Item> SEED_CAMELLIA = register(Registry.ITEM_KEY, "seeds/seed_camellia");
+    public static final TagKey<Item> SEED_ST_JOHNS_WORT = register(Registry.ITEM_KEY, "seeds/seed_st_johns_wort");
+    public static final TagKey<Item> SEED_SANGUINARY = register(Registry.ITEM_KEY, "seeds/seed_sanguinary");
+    public static final TagKey<Item> SEED_WORMWOOD = register(Registry.ITEM_KEY, "seeds/seed_wormwood");
+    public static final TagKey<Item> SEED_FOXGLOVE = register(Registry.ITEM_KEY, "seeds/seed_foxglove");
+    public static final TagKey<Item> SEED_CONEFLOWER = register(Registry.ITEM_KEY, "seeds/seed_coneflower");
+    public static final TagKey<Item> SEED_CHAMOMILE = register(Registry.ITEM_KEY, "seeds/seed_chamomile");
+    public static final TagKey<Item> SEED_BRIAR = register(Registry.ITEM_KEY, "seeds/seed_briar");
+    public static final TagKey<Item> SEED_MINT = register(Registry.ITEM_KEY, "seeds/seed_mint");
+    public static final TagKey<Item> SEED_BLACKBERRY = register(Registry.ITEM_KEY, "seeds/seed_blackberry");
 
     static {
         if (WKConfig.getInstance().debugMode) {
