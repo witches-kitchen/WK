@@ -15,6 +15,7 @@ import net.minecraft.util.registry.Registry;
 import java.util.Arrays;
 import java.util.List;
 
+//Todo: Pull old banner registry. Use vanilla's provided system if we want to add any, since we don't need mixins for it anymore.
 public class WKBannerRegistry {
     public static final Registry<LoomPattern> LOOM_PATTERN_REGISTRY = FabricRegistryBuilder
             .createSimple(LoomPattern.class, new Identifier(WK.MODID, "loom_patterns"))
