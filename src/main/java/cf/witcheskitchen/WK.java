@@ -74,8 +74,6 @@ public class WK implements ModInitializer {
         GeckoLib.initialize();
         WKEntityTypes.register();
         modifyAxeBlockStripping();
-        // WKBannerRegistry.registerBanner();
-        // WKBannerRegistry.registerBannerClient();
         WKDamageSources.register();
         LOGGER.info("WitchesKitchen V{} Initialized", VERSION);
     }

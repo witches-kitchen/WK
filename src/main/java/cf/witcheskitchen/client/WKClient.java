@@ -40,8 +40,6 @@ public class WKClient implements ClientModInitializer {
         WKBlocks.getBlocks().forEach(entry -> BlockRenderLayerMap.INSTANCE.putBlock(entry.object(), RenderLayer.getCutout()));
         registerColorProvider();
         RenderRegistry.register();
-       // WKBannerRegistry.registerBanner();
-       // WKBannerRegistry.registerBannerClient();
     }
 
     //allows for color map modification of leaves based on biome
