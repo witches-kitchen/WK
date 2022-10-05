@@ -70,6 +70,8 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
     private static final TrackedData<Boolean> SITTING;
     private static final TrackedData<Boolean> ATTACKING;
 
+    private static final Predicate<LivingEntity> UNTAMED_TARGET_PREDICATE;
+
     static {
         BREEDING_INGREDIENTS = Ingredient.ofItems(Items.RABBIT, Items.COOKED_RABBIT, Items.CHICKEN, Items.COOKED_CHICKEN, Items.EGG, Items.RABBIT_FOOT, Items.TURTLE_EGG);
         TAMING_INGREDIENT = Items.EGG;
@@ -83,6 +85,10 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         };
         SITTING = DataTracker.registerData(FerretEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
         ATTACKING = DataTracker.registerData(FerretEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+        UNTAMED_TARGET_PREDICATE = entity -> {
+            final EntityType<?> entityType = entity.getType();
+            return entityType == EntityType.RABBIT || entityType == EntityType.CHICKEN;
+        };
     }
 
     private final AnimationFactory factory;
@@ -119,9 +125,10 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
     @Override
     protected void initGoals() {
         this.goalSelector.add(0, new SwimGoal(this));
-        this.goalSelector.add(3, new SitGoal(this));
+        this.goalSelector.add(2, new SitGoal(this));
         this.goalSelector.add(4, new PounceAtTargetGoal(this, 0.4F));
         this.goalSelector.add(5, new MeleeAttackGoal(this, 1.0, true));
+        this.goalSelector.add(5, new UntamedTargetGoal<>(this, AnimalEntity.class, false, UNTAMED_TARGET_PREDICATE));
         this.goalSelector.add(6, new FollowOwnerGoal(this, 1.0, 10.0F, 2.0F, false));
         this.goalSelector.add(8, new WanderAroundFarGoal(this, 1.0));
         this.goalSelector.add(10, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
