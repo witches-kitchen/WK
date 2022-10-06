@@ -36,11 +36,12 @@ public class WKScreenHandlerTypes {
 
     public static List<ObjectDefinition<ScreenHandlerType<?>>> getScreenHandlers() {
         return Collections.unmodifiableList(SCREEN_HANDLER_TYPES);
-    }    public static final ScreenHandlerType<WitchesOvenScreenHandler> WITCHES_OVEN = register("witches_oven", WitchesOvenScreenHandler::new);
+    }
 
     public static void register() {
         SCREEN_HANDLER_TYPES.forEach(entry -> Registry.register(Registry.SCREEN_HANDLER, entry.id(), entry.object()));
-    }
+    }    public static final ScreenHandlerType<WitchesOvenScreenHandler> WITCHES_OVEN = register("witches_oven", WitchesOvenScreenHandler::new);
+
 
 
 
