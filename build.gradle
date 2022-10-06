@@ -92,8 +92,8 @@ dependencies {
     // modImplementation("vazkii.patchouli:Patchouli:${project.patchouli_version}") {
     //     exclude(group: "net.fabricmc.fabric-api")
     // }
-    modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cardinal_components_version}"
-    modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}"
+    //modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cardinal_components_version}"
+    //modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}"
 
     modImplementation("software.bernie.geckolib:geckolib-quilt-${project.geckolib_version}") {
         exclude(group: "net.fabricmc.fabric-api")
