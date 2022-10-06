@@ -1,20 +1,15 @@
 package cf.witcheskitchen;
 
 import cf.witcheskitchen.common.registry.*;
-import com.google.common.collect.ImmutableMap;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.registry.OxidizableBlocksRegistry;
-import net.fabricmc.fabric.mixin.content.registry.AxeItemAccessor;
-import net.minecraft.block.Block;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import software.bernie.geckolib3.GeckoLib;
-
-import java.util.Map;
 
 public class WK implements ModInitializer {
 
@@ -64,22 +59,22 @@ public class WK implements ModInitializer {
     }
 
     private static void modifyAxeBlockStripping() {
-        final Map<Block, Block> immutableBlocks = AxeItemAccessor.getStrippedBlocks();
-        AxeItemAccessor.setStrippedBlocks(new ImmutableMap.Builder<Block, Block>()
-                .putAll(immutableBlocks)
-                .put(WKBlocks.BLACKTHORN_LOG, WKBlocks.STRIPPED_BLACKTHORN_LOG)
-                .put(WKBlocks.BLACKTHORN_WOOD, WKBlocks.STRIPPED_BLACKTHORN_WOOD)
-                .put(WKBlocks.ELDER_LOG, WKBlocks.STRIPPED_ELDER_LOG)
-                .put(WKBlocks.ELDER_WOOD, WKBlocks.STRIPPED_ELDER_WOOD)
-                .put(WKBlocks.HAWTHORN_LOG, WKBlocks.STRIPPED_HAWTHORN_LOG)
-                .put(WKBlocks.HAWTHORN_WOOD, WKBlocks.STRIPPED_HAWTHORN_WOOD)
-                .put(WKBlocks.JUNIPER_LOG, WKBlocks.STRIPPED_JUNIPER_LOG)
-                .put(WKBlocks.JUNIPER_WOOD, WKBlocks.STRIPPED_JUNIPER_WOOD)
-                .put(WKBlocks.ROWAN_LOG, WKBlocks.STRIPPED_ROWAN_LOG)
-                .put(WKBlocks.ROWAN_WOOD, WKBlocks.STRIPPED_ROWAN_WOOD)
-                .put(WKBlocks.SUMAC_LOG, WKBlocks.STRIPPED_SUMAC_LOG)
-                .put(WKBlocks.SUMAC_WOOD, WKBlocks.STRIPPED_SUMAC_WOOD)
-                .build());
+        //        final Map<Block, Block> immutableBlocks = AxeItemAccessor.getStrippedBlocks();
+        //        AxeItemAccessor.setStrippedBlocks(new ImmutableMap.Builder<Block, Block>()
+        //                .putAll(immutableBlocks)
+        //                .put(WKBlocks.BLACKTHORN_LOG, WKBlocks.STRIPPED_BLACKTHORN_LOG)
+        //                .put(WKBlocks.BLACKTHORN_WOOD, WKBlocks.STRIPPED_BLACKTHORN_WOOD)
+        //                .put(WKBlocks.ELDER_LOG, WKBlocks.STRIPPED_ELDER_LOG)
+        //                .put(WKBlocks.ELDER_WOOD, WKBlocks.STRIPPED_ELDER_WOOD)
+        //                .put(WKBlocks.HAWTHORN_LOG, WKBlocks.STRIPPED_HAWTHORN_LOG)
+        //                .put(WKBlocks.HAWTHORN_WOOD, WKBlocks.STRIPPED_HAWTHORN_WOOD)
+        //                .put(WKBlocks.JUNIPER_LOG, WKBlocks.STRIPPED_JUNIPER_LOG)
+        //                .put(WKBlocks.JUNIPER_WOOD, WKBlocks.STRIPPED_JUNIPER_WOOD)
+        //                .put(WKBlocks.ROWAN_LOG, WKBlocks.STRIPPED_ROWAN_LOG)
+        //                .put(WKBlocks.ROWAN_WOOD, WKBlocks.STRIPPED_ROWAN_WOOD)
+        //                .put(WKBlocks.SUMAC_LOG, WKBlocks.STRIPPED_SUMAC_LOG)
+        //                .put(WKBlocks.SUMAC_WOOD, WKBlocks.STRIPPED_SUMAC_WOOD)
+        //                .build());
     }
 
     public static WKConfig getConfigFile() {
