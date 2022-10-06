@@ -60,17 +60,32 @@ import java.util.function.Predicate;
 
 public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnimationTickable, Angerable {
 
-    public static final Ingredient BREEDING_INGREDIENTS;
-    public static final Item TAMING_INGREDIENT;
-    public static final Predicate<LivingEntity> FLEE_SUPERNATURAL;
     public static final TrackedData<Integer> VARIANT;
     public static final TrackedData<Boolean> NIGHT;
     private static final UniformIntProvider ANGER_TIME_RANGE;
     private static final TrackedData<Integer> ANGER_TIME;
+
+
+    // ---------- Client-side data trackers ---------- //
     private static final TrackedData<Boolean> SITTING;
     private static final TrackedData<Boolean> ATTACKING;
 
+    /**
+     * Item for taming a ferret entity
+     */
+    public static final Item TAMING_INGREDIENT;
+
+    /**
+     * This ingredient contains the items that are valid
+     * for breeding a ferret entity.
+     */
+    public static final Ingredient BREEDING_INGREDIENTS;
+    /**
+     * Function that represents which living entities will
+     * untamed ferret attack.
+     */
     private static final Predicate<LivingEntity> UNTAMED_TARGET_PREDICATE;
+    private static final Predicate<LivingEntity> FLEE_SUPERNATURAL;
 
     static {
         BREEDING_INGREDIENTS = Ingredient.ofItems(Items.RABBIT, Items.COOKED_RABBIT, Items.CHICKEN, Items.COOKED_CHICKEN, Items.EGG, Items.RABBIT_FOOT, Items.TURTLE_EGG);
@@ -110,8 +125,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
     @Nullable
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
-        SplittableRandom random = new SplittableRandom();
-        int var = random.nextInt(0, 13);
+        int var = new SplittableRandom().nextInt(0, 13);
         this.setVariant(var);
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
@@ -227,11 +241,10 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
     public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
         FerretEntity ferretEntity = WKEntityTypes.FERRET.create(world);
         UUID uUID = this.getOwnerUuid();
-        if (uUID != null) {
+        if (uUID != null && ferretEntity != null) {
             ferretEntity.setOwnerUuid(uUID);
             ferretEntity.setTamed(true);
         }
-
         return ferretEntity;
     }
 
@@ -283,11 +296,6 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         this.setSleeping(tag.getBoolean("Sleep"));
         this.setVariant(tag.getInt("Variant"));
         this.readAngerFromNbt(this.world, tag);
-    }
-
-    @Override
-    public float getEyeHeight(EntityPose pose) {
-        return super.getEyeHeight(pose);
     }
 
     @Override
@@ -356,10 +364,6 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
     @Override
     public int tickTimer() {
         return age;
-    }
-
-    public void tick() {
-        super.tick();
     }
 
     @Override
