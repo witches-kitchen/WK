@@ -129,6 +129,7 @@ public class WKItems {
         ITEMS.add(itemIdentifier);
         return item;
     }
+
     private static QuiltItemSettings itemBuilder(ItemGroup tab) {
         return new QuiltItemSettings().group(tab);
     }

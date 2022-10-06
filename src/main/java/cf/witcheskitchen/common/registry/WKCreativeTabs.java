@@ -1,7 +1,6 @@
 package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WKIdentifier;
-import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;

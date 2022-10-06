@@ -107,6 +107,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 6.0)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE);
     }
+
     @Nullable
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
@@ -136,6 +137,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         this.targetSelector.add(1, new TrackOwnerAttackerGoal(this));
         this.targetSelector.add(2, new AttackWithOwnerGoal(this));
     }
+
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
@@ -145,6 +147,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         this.dataTracker.startTracking(SITTING, false);
         this.dataTracker.startTracking(ATTACKING, false);
     }
+
     @Override
     public boolean tryAttack(Entity target) {
         if (target instanceof LivingEntity living) {
@@ -161,7 +164,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         } else if (event.isMoving() && !isAttacking()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("run", true));
             return PlayState.CONTINUE;
-        }  else if (this.isAttacking()) {
+        } else if (this.isAttacking()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("gore", true));
             return PlayState.CONTINUE;
         } else {
@@ -266,7 +269,6 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
     public void setVariant(int variant) {
         this.dataTracker.set(VARIANT, variant);
     }
-
 
 
     @Override
@@ -412,10 +414,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         this.dataTracker.set(SITTING, sitting);
         super.setSitting(sitting);
     }
-    public void setAttacking(boolean attacking) {
-        this.dataTracker.set(ATTACKING, attacking);
-        super.setAttacking(attacking);
-    }
+
     @Override
     public boolean isSitting() {
         return this.dataTracker.get(SITTING);
@@ -425,6 +424,12 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
     public boolean isAttacking() {
         return this.dataTracker.get(ATTACKING);
     }
+
+    public void setAttacking(boolean attacking) {
+        this.dataTracker.set(ATTACKING, attacking);
+        super.setAttacking(attacking);
+    }
+
     public boolean isSleeping() {
         return this.dataTracker.get(NIGHT);
     }
@@ -432,6 +437,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
     public void setSleeping(boolean sleeping) {
         this.dataTracker.set(NIGHT, sleeping);
     }
+
     @Override
     public int getVariants() {
         return 12;

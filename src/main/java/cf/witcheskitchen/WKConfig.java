@@ -23,16 +23,18 @@ public class WKConfig implements ConfigData {
     @ConfigEntry.Category(value = "Server")
     public ServerEntry server = new ServerEntry();
 
+    public static WKConfig getInstance() {
+        return WK.getConfigFile();
+    }
+
     public static class GeneralEntry {
 
     }
 
     public static class ClientEntry {
     }
+
     public static class ServerEntry {
 
-    }
-    public static WKConfig getInstance() {
-        return WK.getConfigFile();
     }
 }

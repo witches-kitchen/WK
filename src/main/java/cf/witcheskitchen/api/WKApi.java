@@ -17,6 +17,7 @@ public class WKApi {
             WK.LOGGER.info("Witches Kitchen API: Successfully Loaded");
         }
     }
+
     /**
      * This allows the mod to track various beings of spiritual origin, as well as undead origin.
      * Use this if you wish to blanket-target such entities.

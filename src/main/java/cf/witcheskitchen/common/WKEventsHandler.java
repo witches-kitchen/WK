@@ -1,6 +1,5 @@
 package cf.witcheskitchen.common;
 
-import cf.witcheskitchen.WK;
 import cf.witcheskitchen.WKIdentifier;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.fabricmc.fabric.api.loot.v2.LootTableSource;

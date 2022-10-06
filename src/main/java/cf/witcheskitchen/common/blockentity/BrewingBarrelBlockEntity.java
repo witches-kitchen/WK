@@ -1,11 +1,11 @@
 package cf.witcheskitchen.common.blockentity;
 
-import cf.witcheskitchen.common.util.InventoryManager;
 import cf.witcheskitchen.api.block.entity.WKDeviceBlockEntity;
 import cf.witcheskitchen.client.gui.screen.handler.BrewingBarrelScreenHandler;
 import cf.witcheskitchen.common.recipe.BarrelFermentingRecipe;
 import cf.witcheskitchen.common.registry.WKBlockEntityTypes;
 import cf.witcheskitchen.common.registry.WKRecipeTypes;
+import cf.witcheskitchen.common.util.InventoryManager;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;

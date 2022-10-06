@@ -41,7 +41,6 @@ import net.minecraft.world.World;
  * If your block is not intended to have these components you may consider
  * extending the parent class instead.
  * </p>
- *
  */
 @SuppressWarnings("deprecation")
 public abstract class WKDeviceBlock extends WKBlockWithEntity {

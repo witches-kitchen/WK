@@ -17,6 +17,7 @@ import net.minecraft.world.World;
 public class CopperWitchesOvenBlock extends WitchesOvenBlock implements Oxidizable {
 
     private final Oxidizable.OxidizationLevel oxidizationLevel;
+
     public CopperWitchesOvenBlock(Settings settings, Oxidizable.OxidizationLevel oxidizationLevel) {
         super(settings);
         this.oxidizationLevel = oxidizationLevel;
@@ -26,6 +27,7 @@ public class CopperWitchesOvenBlock extends WitchesOvenBlock implements Oxidizab
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, RandomGenerator random) {
         this.tickDegradation(state, world, pos, random);
     }
+
     @Override
     public boolean hasRandomTicks(BlockState state) {
         return Oxidizable.getIncreasedOxidationBlock(state.getBlock()).isPresent();
@@ -33,7 +35,7 @@ public class CopperWitchesOvenBlock extends WitchesOvenBlock implements Oxidizab
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        final ItemStack stack  = player.getStackInHand(hand);
+        final ItemStack stack = player.getStackInHand(hand);
         // Allow axe item interaction from Oxidizable
         if (stack.getItem() instanceof HoneycombItem || stack.getItem() instanceof AxeItem) {
             return ActionResult.PASS;

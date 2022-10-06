@@ -2,16 +2,12 @@ package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WKIdentifier;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
-import cf.witcheskitchen.common.block.BlackthornLeavesBlock;
-import cf.witcheskitchen.common.block.BlackthornPillarBlock;
-import cf.witcheskitchen.common.block.SaltBlock;
-import cf.witcheskitchen.common.block.WKStairsBlock;
-import cf.witcheskitchen.common.block.device.CopperWitchesOvenBlock;
-import cf.witcheskitchen.common.block.sapling.WKSaplingBlock;
+import cf.witcheskitchen.common.block.*;
 import cf.witcheskitchen.common.block.device.BrewingBarrelBlock;
+import cf.witcheskitchen.common.block.device.CopperWitchesOvenBlock;
 import cf.witcheskitchen.common.block.device.TeapotBlock;
-import cf.witcheskitchen.common.block.WitchesCauldronBlock;
 import cf.witcheskitchen.common.block.device.WitchesOvenBlock;
+import cf.witcheskitchen.common.block.sapling.WKSaplingBlock;
 import cf.witcheskitchen.common.crop.AmaranthCropBlock;
 import cf.witcheskitchen.common.crop.BelladonnaCropBlock;
 import cf.witcheskitchen.common.crop.MintCropBlock;
@@ -42,10 +38,9 @@ import java.util.function.Function;
 import static cf.witcheskitchen.common.registry.WKCreativeTabs.GENERAL_TAB;
 
 public class WKBlocks {
+    public static final ArrayList<Block> LEAF_BLOCKS = new ArrayList<>();
     private static final List<ObjectDefinition<Block>> BLOCKS = new ArrayList<>();
     private static final List<ObjectDefinition<Item>> ITEMS = new ArrayList<>();
-    public static final ArrayList<Block> LEAF_BLOCKS = new ArrayList<>();
-
     public static final Block SALT_BLOCK = register("salt", Material.DECORATION, settings -> new SaltBlock(settings.noCollision().breakInstantly()));
     public static final Block RAW_GINGERBREAD_BLOCK = registerGingerBread("raw_gingerbread_block");
     public static final Block RAW_CHISELED_GINGERBREAD_BLOCK = registerGingerBread("raw_chiseled_gingerbread_block");
@@ -164,13 +159,12 @@ public class WKBlocks {
     public static final Block TEAPOT = register("teapot", new TeapotBlock(QuiltBlockSettings.copyOf(Blocks.AMETHYST_BLOCK)));
     public static final Block IRON_WITCHES_OVEN = register("iron_witches_oven", new WitchesOvenBlock(AbstractBlock.Settings.of(Material.METAL).strength(4.0F, 5.0F).requiresTool().nonOpaque().luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0)));
     public static final Block COPPER_WITCHES_OVEN = register("copper_witches_oven", new CopperWitchesOvenBlock(QuiltBlockSettings.copyOf(Blocks.COPPER_BLOCK).luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0), Oxidizable.OxidizationLevel.UNAFFECTED));
-    public static final Block EXPOSED_COPPER_WITCHES_OVEN = register("exposed_copper_witches_oven", new CopperWitchesOvenBlock(QuiltBlockSettings.copy(Blocks.EXPOSED_COPPER).luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0), Oxidizable.OxidizationLevel.EXPOSED));
-    public static final Block WEATHERED_COPPER_WITCHES_OVEN = register("weathered_copper_witches_oven", new CopperWitchesOvenBlock(QuiltBlockSettings.copy(Blocks.WEATHERED_COPPER).luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0), Oxidizable.OxidizationLevel.WEATHERED));
-    public static final Block OXIDIZED_COPPER_WITCHES_OVEN = register("oxidized_copper_witches_oven", new CopperWitchesOvenBlock(QuiltBlockSettings.copy(Blocks.OXIDIZED_COPPER).luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0), Oxidizable.OxidizationLevel.OXIDIZED));
-
     public static final Block WAXED_COPPER_WITCHES_OVEN = register("waxed_copper_witches_oven", new WitchesOvenBlock(QuiltBlockSettings.copy(COPPER_WITCHES_OVEN)));
+    public static final Block EXPOSED_COPPER_WITCHES_OVEN = register("exposed_copper_witches_oven", new CopperWitchesOvenBlock(QuiltBlockSettings.copy(Blocks.EXPOSED_COPPER).luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0), Oxidizable.OxidizationLevel.EXPOSED));
     public static final Block WAXED_EXPOSED_COPPER_WITCHES_OVEN = register("waxed_exposed_copper_witches_oven", new WitchesOvenBlock(QuiltBlockSettings.copy(EXPOSED_COPPER_WITCHES_OVEN)));
+    public static final Block WEATHERED_COPPER_WITCHES_OVEN = register("weathered_copper_witches_oven", new CopperWitchesOvenBlock(QuiltBlockSettings.copy(Blocks.WEATHERED_COPPER).luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0), Oxidizable.OxidizationLevel.WEATHERED));
     public static final Block WAXED_WEATHERED_COPPER_WITCHES_OVEN = register("waxed_weathered_copper_witches_oven", new WitchesOvenBlock(QuiltBlockSettings.copy(WEATHERED_COPPER_WITCHES_OVEN)));
+    public static final Block OXIDIZED_COPPER_WITCHES_OVEN = register("oxidized_copper_witches_oven", new CopperWitchesOvenBlock(QuiltBlockSettings.copy(Blocks.OXIDIZED_COPPER).luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0), Oxidizable.OxidizationLevel.OXIDIZED));
     public static final Block WAXED_OXIDIZED_COPPER_WITCHES_OVEN = register("waxed_oxidized_copper_witches_oven", new WitchesOvenBlock(QuiltBlockSettings.copy(OXIDIZED_COPPER_WITCHES_OVEN)));
 
     public static final Block IRON_WITCHES_CAULDRON = register("iron_witches_cauldron", new WitchesCauldronBlock(QuiltBlockSettings.copy(Blocks.CAULDRON).luminance(state -> state.get(WitchesCauldronBlock.LIT) ? 13 : 0)));
