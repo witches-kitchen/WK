@@ -1,6 +1,7 @@
 package cf.witcheskitchen.common.entity.hostile;
 
 import cf.witcheskitchen.api.WKHostileEntity;
+import cf.witcheskitchen.common.entity.tameable.FerretEntity;
 import cf.witcheskitchen.common.registry.WKSoundEvents;
 import cf.witcheskitchen.common.registry.WKStatusEffects;
 import net.minecraft.block.BlockState;
@@ -95,6 +96,7 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
         this.targetSelector.add(3, new TargetGoal<>(this, PiglinBruteEntity.class, false));
         this.targetSelector.add(3, new TargetGoal<>(this, SheepEntity.class, false));
         this.targetSelector.add(3, new TargetGoal<>(this, GoatEntity.class, false));
+        this.targetSelector.add(3, new TargetGoal<>(this, FerretEntity.class, false));
         this.targetSelector.add(3, new TargetGoal<>(this, LivingEntity.class, 10, false, false, entity -> entity.getGroup() == EntityGroup.ILLAGER));
         this.targetSelector.add(0, new RevengeGoal(this).setGroupRevenge());
     }

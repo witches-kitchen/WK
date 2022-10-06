@@ -5,9 +5,7 @@ import cf.witcheskitchen.api.registry.ObjectDefinition;
 import cf.witcheskitchen.common.potion.RumPotion;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.item.Items;
 import net.minecraft.potion.Potion;
-import net.minecraft.potion.Potions;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 

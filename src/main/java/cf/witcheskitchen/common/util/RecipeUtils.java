@@ -18,7 +18,11 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.registry.Registry;
 import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.NotNull;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.EnumSet;
+import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
@@ -39,17 +43,19 @@ public final class RecipeUtils {
      * do match the {@link DefaultedList} of Ingredients, which is used as a filter
      * for crafting recipes.
      * </p>
-     * @param inventory Inventory
+     *
+     * @param inventory   Inventory
      * @param ingredients DefaultedList
-     * @param startIndex inclusive
-     * @param endIndex inclusive
+     * @param startIndex  inclusive
+     * @param endIndex    inclusive
      * @return If the inventory contains the inputs for the recipe.
      */
     public static boolean matches(final Inventory inventory, final DefaultedList<Ingredient> ingredients, final int startIndex, final int endIndex) {
         // Throw unexpected arguments away which lead to bugs
         Validate.isTrue(inventory != null);
         Validate.isTrue(ingredients != null);
-        if (endIndex < startIndex) throw new IllegalArgumentException("End index %d expected to be > starting index %d".formatted(endIndex, startIndex));
+        if (endIndex < startIndex)
+            throw new IllegalArgumentException("End index %d expected to be > starting index %d".formatted(endIndex, startIndex));
         // Quick fail if there is no data at all
         if (inventory.isEmpty()) {
             return false;
@@ -67,7 +73,7 @@ public final class RecipeUtils {
                 continue;
             }
             validStacks.add(stackInSlot);
-         }
+        }
 
         // Our collection now has all the available items from the inventory
         if (validStacks.size() != ingredients.size()) {

@@ -14,7 +14,6 @@ import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 
 
-
 public abstract class WKSaplingGenerator extends SaplingGenerator {
     protected abstract Holder<? extends ConfiguredFeature<?, ?>> getTreeFeature(RandomGenerator var1, boolean var2);
 

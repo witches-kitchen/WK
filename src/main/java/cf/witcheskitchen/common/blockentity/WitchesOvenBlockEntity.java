@@ -2,13 +2,13 @@ package cf.witcheskitchen.common.blockentity;
 
 import cf.witcheskitchen.WK;
 import cf.witcheskitchen.api.block.entity.IDeviceExperienceHandler;
-import cf.witcheskitchen.common.util.InventoryManager;
 import cf.witcheskitchen.api.block.entity.WKDeviceBlockEntity;
 import cf.witcheskitchen.client.gui.screen.handler.WitchesOvenScreenHandler;
 import cf.witcheskitchen.common.block.device.WitchesOvenBlock;
 import cf.witcheskitchen.common.recipe.OvenCookingRecipe;
 import cf.witcheskitchen.common.registry.WKBlockEntityTypes;
 import cf.witcheskitchen.common.registry.WKRecipeTypes;
+import cf.witcheskitchen.common.util.InventoryManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CampfireBlock;
@@ -44,6 +44,8 @@ import java.util.Optional;
 
 public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements IDeviceExperienceHandler, NamedScreenHandlerFactory {
 
+    // Default cooking value for vanilla recipes is 200
+    private static final int DEFAULT_COOKING_TIME = 200;
     private final InventoryManager<WitchesOvenBlockEntity> passiveInventory;
     private final PropertyDelegate propertyDelegate;
     private final int[] passiveProgress;
@@ -56,9 +58,6 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements IDevi
     private int activeProgress;
     private int maxProgress;
     private float experience;
-
-    // Default cooking value for vanilla recipes is 200
-    private static final int DEFAULT_COOKING_TIME = 200;
 
     public WitchesOvenBlockEntity(BlockPos pos, BlockState state) {
         super(WKBlockEntityTypes.WITCHES_OVEN, pos, state, 4);
@@ -104,6 +103,49 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements IDevi
             ++i;
         }
         ExperienceOrbEntity.spawn(world, pos, i);
+    }
+
+    /**
+     * Finds the matching recipe for the given input
+     *
+     * @param world World
+     * @param input ItemStack
+     * @return possible return types are optional SmeltingRecipe (furnace) OvenCookingRecipe (witches oven), or Optional.empty()
+     */
+    private static Optional<Recipe<?>> findMatchingRecipeFor(World world, final ItemStack input) {
+        Objects.requireNonNull(world);
+        Objects.requireNonNull(input);
+        if (input.isEmpty()) {
+            return Optional.empty();
+        }
+        final Optional<OvenCookingRecipe> optionalOvenRecipe = getOvenRecipe(world, input);
+        if (optionalOvenRecipe.isPresent()) {
+            return Optional.of(optionalOvenRecipe.get());
+        }
+        if (input.isFood()) {
+            final Optional<SmeltingRecipe> optional = world.getRecipeManager()
+                    .listAllOfType(RecipeType.SMELTING)
+                    .stream()
+                    .filter(recipe -> {
+                        final DefaultedList<Ingredient> ingredients = recipe.getIngredients();
+                        if (ingredients.size() == 1 && ingredients.get(0).test(input)) {
+                            return recipe.getOutput().isFood();
+                        }
+                        return false;
+                    }).findFirst();
+            if (optional.isPresent()) return Optional.of(optional.get());
+        }
+        return Optional.empty();
+    }
+
+    /**
+     * Returns an Optional recipe that matches the given input stack
+     */
+    private static Optional<OvenCookingRecipe> getOvenRecipe(World world, ItemStack input) {
+        return world.getRecipeManager().listAllOfType(WKRecipeTypes.WITCHES_OVEN_COOKING_RECIPE_TYPE)
+                .stream()
+                .filter(type -> type.getInput().test(input))
+                .findFirst();
     }
 
     @Override
@@ -304,49 +346,6 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements IDevi
     }
 
     /**
-     * Finds the matching recipe for the given input
-     * @param world World
-     * @param input ItemStack
-     * @return possible return types are optional SmeltingRecipe (furnace) OvenCookingRecipe (witches oven), or Optional.empty()
-     */
-    private static Optional<Recipe<?>> findMatchingRecipeFor(World world, final ItemStack input) {
-        Objects.requireNonNull(world);
-        Objects.requireNonNull(input);
-        if (input.isEmpty()) {
-            return Optional.empty();
-        }
-        final Optional<OvenCookingRecipe> optionalOvenRecipe = getOvenRecipe(world, input);
-        if (optionalOvenRecipe.isPresent()) {
-            return Optional.of(optionalOvenRecipe.get());
-        }
-        if (input.isFood()) {
-            final Optional<SmeltingRecipe> optional = world.getRecipeManager()
-                    .listAllOfType(RecipeType.SMELTING)
-                    .stream()
-                    .filter(recipe -> {
-                        final DefaultedList<Ingredient> ingredients = recipe.getIngredients();
-                        if (ingredients.size() == 1 && ingredients.get(0).test(input)) {
-                            return recipe.getOutput().isFood();
-                        }
-                        return false;
-                    }).findFirst();
-            if (optional.isPresent()) return Optional.of(optional.get());
-        }
-        return Optional.empty();
-    }
-
-    /**
-     * Returns an Optional recipe that matches the given input stack
-     */
-    private static Optional<OvenCookingRecipe> getOvenRecipe(World world, ItemStack input) {
-        return world.getRecipeManager().listAllOfType(WKRecipeTypes.WITCHES_OVEN_COOKING_RECIPE_TYPE)
-                .stream()
-                .filter(type -> type.getInput().test(input))
-                .findFirst();
-    }
-
-
-    /**
      * Returns the experience of the recipe
      *
      * @param recipe RecipeType
@@ -381,6 +380,7 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements IDevi
     /**
      * <p> Witches' Oven recipes may give you more than one item as result. </p>
      * <p>  This function is a handle for that. </p>
+     *
      * @param recipe Recipe
      * @return the outputs of the given recipe
      */

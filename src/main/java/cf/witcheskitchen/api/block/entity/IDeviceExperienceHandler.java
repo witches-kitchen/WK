@@ -8,7 +8,8 @@ public interface IDeviceExperienceHandler {
     /**
      * <p>Fired when the player takes the crafted recipe  from the output slot.</p>
      * <p>As well as when the block is mined</p>
-     * @param world ServerWorld
+     *
+     * @param world     ServerWorld
      * @param playerPos Vec3d ((position of the player))
      */
     void dropExperience(final ServerWorld world, final Vec3d playerPos);

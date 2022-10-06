@@ -13,10 +13,10 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * <p>
- *     Base class for WitchesKitchen's blocks with entity.
+ * Base class for WitchesKitchen's blocks with entity.
  * </p>
  * <p>
- *   It simply creates a ticking context, Nothing else.
+ * It simply creates a ticking context, Nothing else.
  * </p>
  */
 public abstract class WKBlockWithEntity extends Block implements BlockEntityProvider {

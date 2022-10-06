@@ -122,6 +122,7 @@ public class WitchesOvenBlock extends WKDeviceBlock implements Waterloggable {
             Blocks.FURNACE.randomDisplayTick(state, world, pos, random);
         }
     }
+
     @Override
     public void onSteppedOn(World world, BlockPos pos, BlockState state, Entity entity) {
         super.onSteppedOn(world, pos, state, entity);
