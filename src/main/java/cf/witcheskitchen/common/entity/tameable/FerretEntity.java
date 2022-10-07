@@ -67,7 +67,15 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
 
 
     // ---------- Client-side data trackers ---------- //
+
+
+    /**
+     * Tracks whether this entity is sitting.
+     */
     private static final TrackedData<Boolean> SITTING;
+    /**
+     * Tracks whether this entity is attacking another one.
+     */
     private static final TrackedData<Boolean> ATTACKING;
 
     /**
@@ -129,11 +137,6 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         int var = new SplittableRandom().nextInt(0, 13);
         this.setVariant(var);
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
-    }
-
-    @Override
-    public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(this, "controller", 0, this::predicate));
     }
 
     //Todo: Custom goal where ferrets and other tameables from this mod flee greater demons, which are defined by a tag.
@@ -336,21 +339,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         return true;
     }
 
-    @Override
-    public boolean isBreedingItem(ItemStack stack) {
-        return BREEDING_INGREDIENTS.test(stack);
-    }
 
-    @Override
-    public boolean canAvoidTraps() {
-        return true;
-    }
-
-
-    @Override
-    public AnimationFactory getFactory() {
-        return this.factory;
-    }
 
     @Override
     public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
@@ -394,44 +383,58 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         this.setAngerTime(ANGER_TIME_RANGE.get(this.random));
     }
 
-    @Override
-    protected SoundEvent getAmbientSound() {
-        if (this.isTamed()) {
-            if (this.isInLove()) {
-                return WKSoundEvents.FERRET_CHIRP_EVENT;
-            }
-        }
-        return WKSoundEvents.FERRET_IDLE_EVENT;
-    }
 
-    /*@Override
-    protected SoundEvent getDeathSound() {
-        return WKSounds.;
-    }*/
-
-    @Override
-    protected void playStepSound(BlockPos pos, BlockState state) {
-        this.playSound(SoundEvents.ENTITY_WOLF_STEP, 0.35F, 0.57F);
-    }
-
+    /**
+     * <p>
+     * Updates the {@link #SITTING} value of the ferret.
+     * </p>
+     * <p>
+     * It also updates the sitting value of the server.
+     * </p>
+     * <p>
+     * This function should be used whenever you want to
+     * update the ferret sit state in both client and server.
+     * </p>
+     */
     public void setSit(boolean sitting) {
         this.dataTracker.set(SITTING, sitting);
         super.setSitting(sitting);
     }
+    /**
+     * <p>
+     * Updates the {@link #ATTACKING} value of the ferret.
+     * </p>
+     * <p>
+     * It also updates the attacking value of the server.
+     * </p>
+     * <p>
+     * This function should be used whenever you want to
+     * update the ferret attacking state in both client and server.
+     * </p>
+     */
+    public void setAttacking(boolean attacking) {
+        this.dataTracker.set(ATTACKING, attacking);
+        super.setAttacking(attacking);
+    }
 
+    /**
+     * Overrides the {@link TameableEntity#isSitting()}
+     * to rather keep track of the {@link #SITTING} property which is
+     * relevant for updating the animations.
+     */
     @Override
     public boolean isSitting() {
         return this.dataTracker.get(SITTING);
     }
 
+    /**
+     * Overrides the {@link TameableEntity#isAttacking()}
+     * to rather keep track of the {@link #ATTACKING} property which is
+     * relevant for updating the animations.
+     */
     @Override
     public boolean isAttacking() {
         return this.dataTracker.get(ATTACKING);
-    }
-
-    public void setAttacking(boolean attacking) {
-        this.dataTracker.set(ATTACKING, attacking);
-        super.setAttacking(attacking);
     }
 
     public boolean isSleeping() {
@@ -446,4 +449,41 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
     public int getVariants() {
         return 12;
     }
+    @Override
+    public void registerControllers(AnimationData data) {
+        data.addAnimationController(new AnimationController<>(this, "controller", 0, this::predicate));
+    }
+
+    @Override
+    public boolean isBreedingItem(ItemStack stack) {
+        return BREEDING_INGREDIENTS.test(stack);
+    }
+
+    @Override
+    public boolean canAvoidTraps() {
+        return true;
+    }
+
+
+    @Override
+    public AnimationFactory getFactory() {
+        return this.factory;
+    }
+
+    // Handle ferret sounds
+    @Override
+    protected SoundEvent getAmbientSound() {
+        if (this.isTamed()) {
+            if (this.isInLove()) {
+                return WKSoundEvents.FERRET_CHIRP_EVENT;
+            }
+        }
+        return WKSoundEvents.FERRET_IDLE_EVENT;
+    }
+
+    @Override
+    protected void playStepSound(BlockPos pos, BlockState state) {
+        this.playSound(SoundEvents.ENTITY_WOLF_STEP, 0.35F, 0.57F);
+    }
+
 }
