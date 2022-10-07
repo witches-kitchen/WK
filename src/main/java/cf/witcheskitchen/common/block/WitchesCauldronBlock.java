@@ -107,6 +107,9 @@ public class WitchesCauldronBlock extends WKBlockWithEntity implements Waterlogg
         final var blockEntity = world.getBlockEntity(pos);
         final var heldStack = player.getStackInHand(hand);
         final var side = hit.getSide();
+        if (world.isClient) {
+            world.playSound(player, pos, WKSoundEvents.FERRET_IDLE_EVENT, SoundCategory.BLOCKS, 1.0f, 1.0f);
+        }
         if (blockEntity instanceof final WitchesCauldronBlockEntity cauldron) {
             if (cauldron.isPowered() && heldStack.isOf(Items.STICK)) {
                 //TODO: brew item

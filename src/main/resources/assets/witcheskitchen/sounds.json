@@ -26,10 +26,10 @@
       "witcheskitchen:broom_mount1"
     ]
   },
-  "ferret_ambient": {
+  "ferret_idle": {
     "sounds": [
-      "witcheskitchen:ferret_dooking1",
-      "witcheskitchen:ferret_dooking2"
+      "witcheskitchen:ferret_idle1",
+      "witcheskitchen:ferret_idle2"
     ]
   },
   "ferret_chirp": {

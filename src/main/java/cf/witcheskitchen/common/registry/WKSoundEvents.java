@@ -19,7 +19,7 @@ public class WKSoundEvents {
     public static final SoundEvent CUSITH_DEATH_EVENT = register("cusith_death");
     public static final SoundEvent CUSITH_HOWL_EVENT = register("cusith_howl");
     //Ferret
-    public static final SoundEvent FERRET_IDLE_EVENT = register("ferret_ambient");
+    public static final SoundEvent FERRET_IDLE_EVENT = register("ferret_idle");
     public static final SoundEvent FERRET_ATTACK_EVENT = register("ferret_attack");
     public static final SoundEvent FERRET_CHIRP_EVENT = register("ferret_chirp");
     //Particles
@@ -38,7 +38,7 @@ public class WKSoundEvents {
         return Collections.unmodifiableList(SOUND_EVENTS);
     }
 
-    static SoundEvent register(String name) {
+    private static SoundEvent register(String name) {
         final Identifier id = new WKIdentifier(name);
         final SoundEvent soundEvent = new SoundEvent(id);
         final ObjectDefinition<SoundEvent> def = new ObjectDefinition<>(id, soundEvent);
