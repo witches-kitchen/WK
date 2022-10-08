@@ -76,6 +76,11 @@ public class WKItems {
     public static final Item IRIS_DEEP_SEA_SEEDS = registerItem("iris_deep_sea_seeds");
     public static final Item IRIS_BLEEDING_HEART_SEEDS = registerItem("iris_bleeding_heart_seeds");
     public static final Item SANGUINARY_SEEDS = registerItem("sanguinary_seeds");
+    public static final Item SANGUINARY_MEADOW_SEEDS = registerItem("sanguinary_meadow_seeds");
+    public static final Item SANGUINARY_BLUSHING_SEEDS = registerItem("sanguinary_blushing_seeds");
+    public static final Item SANGUINARY_SUNSET_SEEDS = registerItem("sanguinary_sunset_seeds");
+    public static final Item SANGUINARY_MADDER_SEEDS = registerItem("sanguinary_madder_seeds");
+    public static final Item SANGUINARY_AUREOLIN_SEEDS = registerItem("sanguinary_aureolin_seeds");
     public static final Item WORMWOOD_SEEDS = registerItem("wormwood_seeds");
     public static final Item DOLLOP_OF_FROSTING = registerFoodStuffs("dollop_of_frosting", settings -> new Item(settings.food(WKFoodComponents.FROSTING)));
     public static final Item CHOCOLATE_RUM_BALLS = registerFoodStuffs("chocolate_rum_balls", settings -> new Item(settings.food(WKFoodComponents.RUM_BALLS)));
