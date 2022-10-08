@@ -150,6 +150,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         this.goalSelector.add(10, new LookAroundGoal(this));
         this.targetSelector.add(1, new TrackOwnerAttackerGoal(this));
         this.targetSelector.add(2, new AttackWithOwnerGoal(this));
+        this.targetSelector.add(3, (new RevengeGoal(this)).setGroupRevenge());
     }
 
     @Override
