@@ -67,7 +67,14 @@ public class WKItems {
     public static final Item ST_JOHNS_WORT_SEEDS = registerItem("st_john_wort_seeds");
     public static final Item BRIAR_SEEDS = registerItem("briar_seeds");
     public static final Item CAMELLIA_SEEDS = registerItem("camellia_seeds");
+    public static final Item CAMELLIA_BUTTERCREAM_SEEDS = registerItem("camellia_buttercream_seeds");
+    public static final Item CAMELLIA_BISQUE_SEEDS = registerItem("camellia_bisque_seeds");
+    public static final Item CAMELLIA_FLINT_SEEDS = registerItem("camellia_flint_seeds");
+    public static final Item CAMELLIA_DEEP_LOVE_SEEDS = registerItem("camellia_deep_love_seeds");
     public static final Item CHAMOMILE_SEEDS = registerItem("chamomile_seeds");
+    public static final Item CHAMOMILE_VIRESCENT_SEEDS = registerItem("chamomile_virescent_seeds");
+    public static final Item CHAMOMILE_STARLETT_SEEDS = registerItem("chamomile_starlett_seeds");
+    public static final Item CHAMOMILE_DYEWORKS_SEEDS = registerItem("chamomile_dyeworks_seeds");
     public static final Item CONEFLOWER_SEEDS = registerItem("coneflower_seeds");
     public static final Item FOXGLOVE_SEEDS = registerItem("foxglove_seeds");
     public static final Item HELLEBORE_SEEDS = registerItem("hellebore_seeds");
