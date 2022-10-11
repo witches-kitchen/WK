@@ -78,6 +78,15 @@ public class WKItems {
     public static final Item CONEFLOWER_SEEDS = registerItem("coneflower_seeds");
     public static final Item FOXGLOVE_SEEDS = registerItem("foxglove_seeds");
     public static final Item HELLEBORE_SEEDS = registerItem("hellebore_seeds");
+    public static final Item HELLEBORE_MORNING_TEA_SEEDS = registerItem("hellebore_morning_tea_seeds");
+    public static final Item HELLEBORE_CASANOVA_SEEDS = registerItem("hellebore_casanova_seeds");
+    public static final Item HELLEBORE_BLUSHING_SEEDS = registerItem("hellebore_blushing_seeds");
+    public static final Item HELLEBORE_CELADON_SEEDS = registerItem("hellebore_celadon_seeds");
+    public static final Item HELLEBORE_FURY_SEEDS = registerItem("hellebore_fury_seeds");
+    public static final Item HELLEBORE_ANGEL_SEEDS = registerItem("hellebore_angel_seeds");
+    public static final Item HELLEBORE_TWILIGHT_SEEDS = registerItem("hellebore_twilight_seeds");
+    public static final Item HELLEBORE_GRIMM_SEEDS = registerItem("hellebore_grimm_seeds");
+    public static final Item HELLEBORE_NOCTURNE_SEEDS = registerItem("hellebore_nocturne_seeds");
     public static final Item IRIS_SEEDS = registerItem("iris_seeds");
     public static final Item IRIS_OCEAN_SEEDS = registerItem("iris_ocean_seeds");
     public static final Item IRIS_DEEP_SEA_SEEDS = registerItem("iris_deep_sea_seeds");
