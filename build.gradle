@@ -82,6 +82,7 @@ dependencies {
     minecraft libs.minecraft
 	mappings variantOf(libs.quilt.mappings) { classifier 'intermediary-v2' }
 
+	modImplementation libs.quilt.loader
     // QSL is not a complete API; You will need Quilted Fabric API to fill in the gaps.
     // Quilted Fabric API will automatically pull in the correct QSL version.
     modImplementation libs.quilted.fabric.api
