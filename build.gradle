@@ -21,10 +21,6 @@ repositories {
         url = "https://maven.terraformersmc.com/"
     }
     maven {
-        name = "Ladysnake Libs"
-        url = "https://ladysnake.jfrog.io/artifactory/mods"
-    }
-    maven {
         name = "Ladysnake Mods"
         url = "https://ladysnake.jfrog.io/artifactory/mods"
         content {
@@ -59,11 +55,6 @@ repositories {
         name = 'Cotton'
         url = 'https://server.bbkr.space/artifactory/libs-release/'
     }
-
-    maven {
-        name "ladysnake_mirror"
-        url "https://ladysnake.jfrog.io/ui/native/mods"
-    }
     maven {
         name "jitpack"
         url "https://jitpack.io"
@@ -74,6 +65,10 @@ repositories {
         content {
             includeGroup "com.jamieswhiteshirt"
         }
+    }
+    maven {
+        name 'Quilt'
+        url 'https://maven.quiltmc.org/repository/release'
     }
 }
 
