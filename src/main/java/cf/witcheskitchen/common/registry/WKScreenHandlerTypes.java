@@ -40,9 +40,9 @@ public class WKScreenHandlerTypes {
 
     public static void register() {
         SCREEN_HANDLER_TYPES.forEach(entry -> Registry.register(Registry.SCREEN_HANDLER, entry.id(), entry.object()));
-    }    public static final ScreenHandlerType<WitchesOvenScreenHandler> WITCHES_OVEN = register("witches_oven", WitchesOvenScreenHandler::new);
+    }
 
-
+    public static final ScreenHandlerType<WitchesOvenScreenHandler> WITCHES_OVEN = register("witches_oven", WitchesOvenScreenHandler::new);
 
 
     public static final ScreenHandlerType<BrewingBarrelScreenHandler> BREWING_BARREL = register("brewing_barrel", BrewingBarrelScreenHandler::new);

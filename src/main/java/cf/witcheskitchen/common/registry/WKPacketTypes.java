@@ -42,8 +42,10 @@ public class WKPacketTypes {
 
     public static void register(EnvType side) {
         switch (side) {
-            case SERVER -> SERVER_PACKETS.keySet().forEach(id -> ServerPlayNetworking.registerGlobalReceiver(id, SERVER_PACKETS.get(id)::handle));
-            case CLIENT -> CLIENT_PACKETS.keySet().forEach(id -> ClientPlayNetworking.registerGlobalReceiver(id, CLIENT_PACKETS.get(id)::handle));
+            case SERVER ->
+                    SERVER_PACKETS.keySet().forEach(id -> ServerPlayNetworking.registerGlobalReceiver(id, SERVER_PACKETS.get(id)::handle));
+            case CLIENT ->
+                    CLIENT_PACKETS.keySet().forEach(id -> ClientPlayNetworking.registerGlobalReceiver(id, CLIENT_PACKETS.get(id)::handle));
         }
     }
 }

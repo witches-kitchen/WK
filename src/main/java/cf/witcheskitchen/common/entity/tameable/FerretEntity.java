@@ -19,7 +19,10 @@ import net.minecraft.entity.mob.Angerable;
 import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.entity.mob.GhastEntity;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.passive.*;
+import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.passive.HorseBaseEntity;
+import net.minecraft.entity.passive.PassiveEntity;
+import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.fluid.Fluid;
@@ -338,7 +341,6 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
     }
 
 
-
     @Override
     public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
         return false;
@@ -398,6 +400,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         this.dataTracker.set(SITTING, sitting);
         super.setSitting(sitting);
     }
+
     /**
      * <p>
      * Updates the {@link #ATTACKING} value of the ferret.
@@ -447,6 +450,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
     public int getVariants() {
         return 12;
     }
+
     @Override
     public void registerControllers(AnimationData data) {
         data.addAnimationController(new AnimationController<>(this, "controller", 0, this::predicate));
