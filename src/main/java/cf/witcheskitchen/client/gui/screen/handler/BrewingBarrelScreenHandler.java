@@ -3,9 +3,11 @@ package cf.witcheskitchen.client.gui.screen.handler;
 import cf.witcheskitchen.api.client.screen.WKScreenHandler;
 import cf.witcheskitchen.common.blockentity.BrewingBarrelBlockEntity;
 import cf.witcheskitchen.common.registry.WKScreenHandlerTypes;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ArrayPropertyDelegate;
 import net.minecraft.screen.PropertyDelegate;
 
@@ -43,4 +45,8 @@ public class BrewingBarrelScreenHandler extends WKScreenHandler {
 
     }
 
+    @Override
+    public ItemStack quickTransfer(PlayerEntity player, int fromIndex) {
+        return ItemStack.EMPTY;
+    }
 }

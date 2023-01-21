@@ -43,8 +43,7 @@ public abstract class WKScreenHandler extends ScreenHandler {
         this.inventory.onOpen(playerInventory.player);
     }
 
-    @Override
-    public ItemStack transferSlot(final PlayerEntity player, final int index) {
+    public ItemStack transferSlot(PlayerEntity player, int index) {
         ItemStack originalStack = ItemStack.EMPTY;
         final Slot slot = this.getSlot(index);
         if (slot != null && slot.hasStack()) {

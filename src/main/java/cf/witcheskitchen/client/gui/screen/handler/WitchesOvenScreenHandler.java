@@ -3,9 +3,11 @@ package cf.witcheskitchen.client.gui.screen.handler;
 import cf.witcheskitchen.api.client.screen.WKScreenHandler;
 import cf.witcheskitchen.common.registry.WKScreenHandlerTypes;
 import cf.witcheskitchen.common.registry.WKTags;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ArrayPropertyDelegate;
 import net.minecraft.screen.PropertyDelegate;
 
@@ -48,5 +50,10 @@ public class WitchesOvenScreenHandler extends WKScreenHandler {
             return this.delegate.get(2) * scale / this.delegate.get(3);
         }
         return 0;
+    }
+
+    @Override
+    public ItemStack quickTransfer(PlayerEntity player, int fromIndex) {
+        return ItemStack.EMPTY;
     }
 }

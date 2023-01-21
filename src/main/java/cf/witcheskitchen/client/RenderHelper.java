@@ -26,7 +26,7 @@ public class RenderHelper {
     }
 
     public static void renderFluidSprite(final MatrixStack stack, final VertexConsumer buffer, final Sprite sprite, final int argb, final float size, final int light, final int overlay) {
-        var matrix = stack.peek().getPosition();
+        var matrix = stack.peek().getModel();
         float maxV = (sprite.getMaxV() - sprite.getMinV()) * size;
         float minV = (sprite.getMaxV() - sprite.getMinV()) * (1 - size);
         final int r = ColorUtil.ARGB32.getRed(argb);
