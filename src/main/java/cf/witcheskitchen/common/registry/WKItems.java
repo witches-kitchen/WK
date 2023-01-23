@@ -92,6 +92,13 @@ public class WKItems {
     public static final Item CONEFLOWER_MASQUERADE_SEEDS = registerItem("coneflower_masquerade_seeds");
     public static final Item CONEFLOWER_PARTY_BLEND_SEEDS = registerItem("coneflower_party_blend_seeds");
     public static final Item FOXGLOVE_SEEDS = registerItem("foxglove_seeds");
+    public static final Item FOXGLOVE_SMALT_SEEDS = registerItem("foxglove_smalt_seeds");
+    public static final Item FOXGLOVE_TRANQUIL_EVENING_SEEDS = registerItem("foxglove_tranquil_evening_seeds");
+    public static final Item FOXGLOVE_PURPUREA_SEEDS = registerItem("foxglove_purpurea_seeds");
+    public static final Item FOXGLOVE_LOVELY_MORNING_SEEDS = registerItem("foxglove_lovely_morning_seeds");
+    public static final Item FOXGLOVE_IANTHINE_SEEDS = registerItem("foxglove_ianthine_seeds");
+    public static final Item FOXGLOVE_QUEENS_HAT_SEEDS = registerItem("foxglove_queens_hat_seeds");
+    public static final Item FOXGLOVE_BLUSH_SEEDS = registerItem("foxglove_blush_seeds");
     public static final Item HELLEBORE_SEEDS = registerItem("hellebore_seeds");
     public static final Item HELLEBORE_MORNING_TEA_SEEDS = registerItem("hellebore_morning_tea_seeds");
     public static final Item HELLEBORE_CASANOVA_SEEDS = registerItem("hellebore_casanova_seeds");
