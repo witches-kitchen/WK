@@ -113,6 +113,13 @@ public class WKItems {
     public static final Item FOXGLOVE_FIERY_FIELD_SEEDS = registerItem("foxglove_fiery_field_seeds");
     public static final Item FOXGLOVE_PASSION_SEEDS = registerItem("foxglove_passion_seeds");
     public static final Item FOXGLOVE_BASTARD_AMBER_SEEDS = registerItem("foxglove_bastard_amber_seeds");
+    public static final Item FOXGLOVE_SUNDROP_SEEDS = registerItem("foxglove_sundrop_seeds");
+    public static final Item FOXGLOVE_AURULENT_SEEDS = registerItem("foxglove_aurulent_seeds");
+    public static final Item FOXGLOVE_IVORY_SEEDS = registerItem("foxglove_ivory_seeds");
+    public static final Item FOXGLOVE_NIVEOUS_SEEDS = registerItem("foxglove_niveous_seeds");
+    public static final Item FOXGLOVE_COWS_CREAM_SEEDS = registerItem("foxglove_cows_cream_seeds");
+    public static final Item FOXGLOVE_SIDHE_MIST_SEEDS = registerItem("foxglove_sidhe_mist_seeds");
+    public static final Item FOXGLOVE_PURITY_SEEDS = registerItem("foxglove_purity_seeds");
     public static final Item HELLEBORE_SEEDS = registerItem("hellebore_seeds");
     public static final Item HELLEBORE_MORNING_TEA_SEEDS = registerItem("hellebore_morning_tea_seeds");
     public static final Item HELLEBORE_CASANOVA_SEEDS = registerItem("hellebore_casanova_seeds");
