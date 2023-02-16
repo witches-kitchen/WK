@@ -1,20 +1,34 @@
 plugins {
 	id 'maven-publish'
-	alias libs.plugins.quilt.loom
+    id 'io.github.juuxel.loom-quiltflower' version '1.8.+'
+    id 'org.quiltmc.loom' version '1.0.+'
 }
 
 archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
 
+loom {
+    accessWidenerPath = file("src/main/resources/wk.accesswidener")
+    runs {
+        datagen {
+            server()
+
+            name "Minecraft Data"
+            vmArg "-Dfabric-api.datagen"
+            vmArg "-Dfabric-api.datagen.output-dir=${file("src/main/generated")}"
+
+            runDir "build/datagen"
+        }
+    }
+}
+
+sourceSets.main.resources.srcDirs += ['src/main/generated']
+
 repositories {
-    // maven {
-    //     name = "patchouli"
-    //     url = "https://maven.blamejared.com"
-    // }
-    maven { url "https://maven.architectury.dev/" }
     maven {
-        url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+        name = "GeckoLib"
+        url = "https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/"
     }
     maven {
         name = "TerraformersMC"
@@ -29,106 +43,83 @@ repositories {
         }
     }
     maven {
-        url "https://www.cursemaven.com"
+        name = "REI"
+        url = "https://maven.shedaniel.me/"
     }
     maven {
-        url "https://maven.shedaniel.me/"
+        name = "Curse"
+        url = "https://www.cursemaven.com"
     }
     maven {
         name = "Nexus Repository Manager"
-        url = 'https://oss.sonatype.org/content/repositories/snapshots'
+        url = "https://oss.sonatype.org/content/repositories/snapshots"
     }
     maven {
-        name "Siphalor's Maven"
-        url "https://maven.siphalor.de"
+        name = "impersonate"
+        url = "https://oss.sonatype.org/content/repositories/snapshots"
     }
     maven {
-        name "impersonate"
-        url "https://oss.sonatype.org/content/repositories/snapshots"
+        name = "appleskin"
+        url = "https://maven.ryanliptak.com/"
     }
     maven {
-        name "appleskin"
-        url "https://maven.ryanliptak.com/"
-    }
-
-    maven {
-        name = 'Cotton'
-        url = 'https://server.bbkr.space/artifactory/libs-release/'
+        name = "jitpack"
+        url = "https://jitpack.io"
     }
     maven {
-        name "jitpack"
-        url "https://jitpack.io"
-    }
-    maven {
-        name "reach entity attributes"
-        url "https://maven.jamieswhiteshirt.com/libs-release"
+        name = "reach entity attributes"
+        url = "https://maven.jamieswhiteshirt.com/libs-release"
         content {
             includeGroup "com.jamieswhiteshirt"
         }
     }
     maven {
-        name 'Quilt'
-        url 'https://maven.quiltmc.org/repository/release'
+        name = "Quilt"
+        url = "https://maven.quiltmc.org/repository/release"
+    }
+    maven {
+        name = "Modrinth"
+        url = "https://api.modrinth.com/maven"
+        content {
+            includeGroup "maven.modrinth"
+        }
     }
 }
 
 dependencies {
-    // To change the versions see the gradle.properties file
-    minecraft libs.minecraft
-	mappings variantOf(libs.quilt.mappings) { classifier 'intermediary-v2' }
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
 
-	modImplementation libs.quilt.loader
-    // QSL is not a complete API; You will need Quilted Fabric API to fill in the gaps.
-    // Quilted Fabric API will automatically pull in the correct QSL version.
-    modImplementation libs.quilted.fabric.api
-    // modImplementation("vazkii.patchouli:Patchouli:${project.patchouli_version}") {
-    //     exclude(group: "net.fabricmc.fabric-api")
-    // }
-    //modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cardinal_components_version}"
-    //modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}"
+    mappings "org.quiltmc:quilt-mappings:${project.minecraft_version}+build.${project.quilt_mappings}:intermediary-v2"
+    modImplementation "org.quiltmc:quilt-loader:${project.quilt_loader}"
+    modImplementation "org.quiltmc.quilted-fabric-api:quilted-fabric-api:${project.quilted_fabric_api_version}-${project.minecraft_version}"
 
-    modImplementation("software.bernie.geckolib:geckolib-quilt-${project.geckolib_version}") {
+    //QSL
+    modImplementation "org.quiltmc:qsl:${project.qsl_version}+${project.minecraft_version}"
+
+    //GeckoLib
+    modImplementation("software.bernie.geckolib:geckolib-fabric-${project.geckolib_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
+
+    //Mod Menu
     modImplementation("com.terraformersmc:modmenu:${project.mod_menu_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
-    modImplementation("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}") {
-        exclude(group: "net.fabricmc.fabric-api")
-    }
+
+    //Trinkets
     modImplementation "dev.emi:trinkets:${project.trinkets_version}"
 
+    //REI
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"
-    // modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
-    modImplementation("io.github.ladysnake:impersonate:${impersonate_version}") {
-        exclude(group: "net.fabricmc.fabric-api")
-    }
-    include("io.github.ladysnake:impersonate:${impersonate_version}")
-    modImplementation("io.github.ladysnake:PlayerAbilityLib:${playerabilitylib_version}") {
-        exclude(group: "net.fabricmc.fabric-api")
-    }
-    modImplementation("dev.architectury:architectury:${rootProject.architectury_version}") {
-        exclude(group: "net.fabricmc.fabric-api")
-    }
-    include("io.github.ladysnake:PlayerAbilityLib:${playerabilitylib_version}")
-    modImplementation("com.github.virtuoel:pehkui:${pehkui_version}") {
-        exclude(group: "net.fabricmc.fabric-api")
-    }
-    modImplementation("com.jamieswhiteshirt:reach-entity-attributes:${reach_entity_attributes_version}") {
-        exclude(group: "net.fabricmc.fabric-api")
-    }
-    include("com.jamieswhiteshirt:reach-entity-attributes:${reach_entity_attributes_version}")
-    modImplementation("com.github.emilyploszaj:step-height-entity-attribute:${step_height_version}") {
-        exclude(group: "net.fabricmc.fabric-api")
-    }
-    include("com.github.emilyploszaj:step-height-entity-attribute:${step_height_version}")
+
+    //Appleskin
     modCompileOnly("squeek.appleskin:appleskin-fabric:${appleskin_version}:api") {
         exclude(group: "net.fabricmc.fabric-api")
         transitive = false
     }
 
-    // PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
-    // You may need to force-disable transitiveness on them.
+    //MidnightLib
+    modImplementation include("maven.modrinth:midnightlib:$midnightlib_version")
 }
 
 processResources {
@@ -139,25 +130,16 @@ processResources {
     }
 }
 
-
 tasks.withType(JavaCompile).configureEach {
     it.options.encoding = "UTF-8"
-    // Minecraft 1.18 (1.18-pre2) upwards uses Java 17.
     it.options.release = 17
 }
 
 java {
-    // Still required by IDEs such as Eclipse and Visual Studio Code
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
 
-    // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task if it is present.
-    // If you remove this line, sources will not be generated.
     withSourcesJar()
-
-    // If this mod is going to be a library, then it should also generate Javadocs in order to aid with development.
-    // Uncomment this line to generate them.
-    // withJavadocJar()
 }
 
 jar {
@@ -166,19 +148,12 @@ jar {
     }
 }
 
-// configure the maven publication
 publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
         }
     }
-
-    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
     repositories {
-        // Add repositories to publish to here.
-        // Notice: This block does NOT have the same function as the block in the top level.
-        // The repositories here will be used for publishing your artifact, not for
-        // retrieving dependencies.
     }
 }

@@ -1,6 +1,6 @@
 package cf.witcheskitchen.api.block;
 
-import cf.witcheskitchen.api.block.entity.WKDeviceBlockEntity;
+import cf.witcheskitchen.api.block.entity.WKBlockEntityWithInventory;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -21,7 +21,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public abstract class WKBlockWithEntity extends Block implements BlockEntityProvider {
 
-    protected WKBlockWithEntity(Settings settings) {
+    public WKBlockWithEntity(Settings settings) {
         super(settings);
     }
 
@@ -34,7 +34,7 @@ public abstract class WKBlockWithEntity extends Block implements BlockEntityProv
                     ticker.tick(tickerWorld, pos, tickerState, blockEntity);
                 }
             } else {
-                if (blockEntity instanceof WKDeviceBlockEntity deviceEntity) {
+                if (blockEntity instanceof WKBlockEntityWithInventory deviceEntity) {
                     deviceEntity.onClientTick(tickerWorld, pos, tickerState, tickerWorld.getRandom());
                 }
             }

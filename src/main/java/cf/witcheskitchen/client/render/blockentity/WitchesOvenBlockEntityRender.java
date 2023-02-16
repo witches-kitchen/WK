@@ -1,9 +1,7 @@
 package cf.witcheskitchen.client.render.blockentity;
 
-import cf.witcheskitchen.common.block.device.WitchesOvenBlock;
+import cf.witcheskitchen.common.block.WitchesOvenBlock;
 import cf.witcheskitchen.common.blockentity.WitchesOvenBlockEntity;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
@@ -13,8 +11,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3f;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 
-@Environment(EnvType.CLIENT)
+@ClientOnly
 public class WitchesOvenBlockEntityRender implements BlockEntityRenderer<WitchesOvenBlockEntity> {
 
     @Override

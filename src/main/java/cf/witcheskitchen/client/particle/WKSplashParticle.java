@@ -1,15 +1,14 @@
 package cf.witcheskitchen.client.particle;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleFactory;
 import net.minecraft.client.particle.RainSplashParticle;
 import net.minecraft.client.particle.SpriteProvider;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particle.DefaultParticleType;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 
-@Environment(EnvType.CLIENT)
+@ClientOnly
 public class WKSplashParticle extends RainSplashParticle {
 
     public WKSplashParticle(ClientWorld clientWorld, double d, double e, double f, double r, double g, double b) {
@@ -26,7 +25,7 @@ public class WKSplashParticle extends RainSplashParticle {
     }
 
 
-    @Environment(EnvType.CLIENT)
+    @ClientOnly
     public record Factory(SpriteProvider spriteProvider) implements ParticleFactory<DefaultParticleType> {
         @Override
         public Particle createParticle(DefaultParticleType defaultParticleType, ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {

@@ -1,6 +1,6 @@
 package cf.witcheskitchen.common.registry;
 
-import cf.witcheskitchen.WKIdentifier;
+import cf.witcheskitchen.WK;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -13,7 +13,7 @@ public class WKCreativeTabs {
     public static final ItemGroup SEED_TAB = register("seed", new ItemStack(WKItems.AMARANTH_SEEDS));
 
     static ItemGroup register(String name, ItemStack icon) {
-        final Identifier id = new WKIdentifier(name);
+        final Identifier id = WK.id(name);
         final QuiltItemGroup group = QuiltItemGroup.create(id);
         group.setIcon(icon);
         return group;

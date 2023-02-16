@@ -1,11 +1,10 @@
 package cf.witcheskitchen.common.crop;
 
-import cf.witcheskitchen.api.WKCropBlock;
+import cf.witcheskitchen.api.crop.WKCropBlock;
 import cf.witcheskitchen.common.registry.WKItems;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.state.property.IntProperty;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 import static cf.witcheskitchen.common.crop.MintCropBlock.Type.COMMON;
 
@@ -24,11 +23,11 @@ public class MintCropBlock extends WKCropBlock {
     }
 
     @Override
-    public IntProperty getAgeRange() {
+    public IntProperty getAgeProperty() {
         return IntProperty.of("age", 0, MAX_AGE);
     }
 
-    @Environment(EnvType.CLIENT)
+    @ClientOnly
     @Override
     protected ItemConvertible getSeedsItem() {
         return switch (this.type) {

@@ -8,8 +8,6 @@ import cf.witcheskitchen.common.blockentity.WitchesCauldronBlockEntity;
 import cf.witcheskitchen.common.registry.WKParticleTypes;
 import cf.witcheskitchen.common.util.TimeHelper;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
@@ -18,8 +16,9 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 
-@Environment(EnvType.CLIENT)
+@ClientOnly
 public class WitchesCauldronBlockEntityRender implements BlockEntityRenderer<WitchesCauldronBlockEntity> {
 
     @Override
@@ -64,7 +63,7 @@ public class WitchesCauldronBlockEntityRender implements BlockEntityRenderer<Wit
         }
     }
 
-    @Environment(EnvType.CLIENT)
+    @ClientOnly
     public static class MagicalParticleEventHandler implements MagicSparkleParticleEvent.ParticleConstructorCallback {
 
         @Override

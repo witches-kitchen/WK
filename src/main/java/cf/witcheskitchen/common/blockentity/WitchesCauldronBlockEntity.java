@@ -1,6 +1,7 @@
 package cf.witcheskitchen.common.blockentity;
 
-import cf.witcheskitchen.api.block.entity.WKDeviceBlockEntity;
+import cf.witcheskitchen.api.block.entity.WKBlockEntity;
+import cf.witcheskitchen.api.block.entity.WKBlockEntityWithInventory;
 import cf.witcheskitchen.api.fluid.FluidStack;
 import cf.witcheskitchen.api.fluid.FluidTank;
 import cf.witcheskitchen.api.fluid.IStorageHandler;
@@ -14,17 +15,12 @@ import cf.witcheskitchen.common.registry.WKTags;
 import cf.witcheskitchen.common.util.InventoryHelper;
 import cf.witcheskitchen.common.util.PacketHelper;
 import cf.witcheskitchen.common.util.TimeHelper;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ColorUtil;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.Packet;
-import net.minecraft.network.listener.ClientPlayPacketListener;
-import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -35,9 +31,9 @@ import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 
-public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements IStorageHandler {
+public class WitchesCauldronBlockEntity extends WKBlockEntityWithInventory implements IStorageHandler {
 
     public static final int TANK_CAPACITY = WKFluidAPI.BUCKET_VOLUME;
     private static final int TICKS_TO_BOIL = TimeHelper.toTicks(5);
@@ -107,7 +103,7 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
     }
 
     @Override
-    public void tick(World world, BlockPos pos, BlockState state, WKDeviceBlockEntity blockEntity) {
+    public void tick(World world, BlockPos pos, BlockState state, WKBlockEntity blockEntity) {
         final BlockState belowState = world.getBlockState(pos.down());
         boolean sync = false;
         if (this.hasFluid()) {
@@ -134,12 +130,12 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
             sync = true;
         }
         if (sync) {
-            this.markDirty(true);
+            this.markDirty();
         }
     }
 
     @Override
-    @Environment(EnvType.CLIENT)
+    @ClientOnly
     public void onClientTick(World world, BlockPos pos, BlockState state, RandomGenerator random) {
         if (state.get(WitchesCauldronBlock.LIT)) {
             WitchesCauldronBlockEntity.lavaTick(world, pos, true);
@@ -161,13 +157,13 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
         if (fullReset) {
             tank.drain(tank.getCapacity(), null);
         }
-        markDirty(true);
+        markDirty();
     }
 
     private void updateCauldron(ItemStack stack) {
         if (!stack.isIn(WKTags.VALID_BREW_ITEM)) {
             this.color = DIRTY_WATER_COLOR;
-            markDirty(true);
+            markDirty();
             return;
         }
 
@@ -180,7 +176,7 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
             case 2 -> color = 0x2495ff;
             case 3 -> color = 0x8936ff;
         }
-        markDirty(true);
+        markDirty();
     }
 
     @Override
@@ -229,12 +225,6 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
         return this.tank.drain(maxAmount, side);
     }
 
-    @Nullable
-    @Override
-    public Packet<ClientPlayPacketListener> toUpdatePacket() {
-        return BlockEntityUpdateS2CPacket.of(this);
-    }
-
     @Override
     public NbtCompound toInitialChunkDataNbt() {
         final NbtCompound data = super.toInitialChunkDataNbt();
@@ -264,22 +254,22 @@ public class WitchesCauldronBlockEntity extends WKDeviceBlockEntity implements I
         return !this.tank.isEmpty();
     }
 
-    @Environment(EnvType.CLIENT)
+    @ClientOnly
     public double getPercentFilled() {
         return ((((double) tank.getFluidAmount() / this.tank.getCapacity())));
     }
 
-    @Environment(EnvType.CLIENT)
+    @ClientOnly
     public int getColor() {
         return this.color;
     }
 
-    @Environment(EnvType.CLIENT)
+    @ClientOnly
     public int getTicksHeated() {
         return ticksHeated;
     }
 
-    @Environment(EnvType.CLIENT)
+    @ClientOnly
     public boolean isPowered() {
         return powered;
     }

@@ -1,13 +1,12 @@
 package cf.witcheskitchen.common.blockentity;
 
-import cf.witcheskitchen.api.block.entity.WKDeviceBlockEntity;
+import cf.witcheskitchen.api.block.entity.WKBlockEntity;
+import cf.witcheskitchen.api.block.entity.WKBlockEntityWithInventory;
 import cf.witcheskitchen.client.gui.screen.handler.BrewingBarrelScreenHandler;
 import cf.witcheskitchen.common.recipe.BarrelFermentingRecipe;
 import cf.witcheskitchen.common.registry.WKBlockEntityTypes;
 import cf.witcheskitchen.common.registry.WKRecipeTypes;
 import cf.witcheskitchen.common.util.InventoryManager;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalFacingBlock;
@@ -31,11 +30,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 
-public class BrewingBarrelBlockEntity extends WKDeviceBlockEntity implements NamedScreenHandlerFactory {
+public class BrewingBarrelBlockEntity extends WKBlockEntityWithInventory implements NamedScreenHandlerFactory {
 
     public static final int MAX_TIME = 168_000; // 7 days
-    @Environment(EnvType.CLIENT)
+    @ClientOnly
     private final InventoryManager<BrewingBarrelBlockEntity> clientInventoryManager;
     private final PropertyDelegate delegate;
     private boolean hasWater;
@@ -65,8 +65,10 @@ public class BrewingBarrelBlockEntity extends WKDeviceBlockEntity implements Nam
         };
     }
 
+
+
     @Override
-    public void tick(World world, BlockPos pos, BlockState state, WKDeviceBlockEntity blockEntity) {
+    public void tick(World world, BlockPos pos, BlockState state, WKBlockEntity blockEntity) {
         super.tick(world, pos, state, blockEntity);
         boolean dirty = false;
         final var recipe = this.findRecipeFor(world, this.manager.getStacks());
@@ -98,7 +100,7 @@ public class BrewingBarrelBlockEntity extends WKDeviceBlockEntity implements Nam
         if (this.clientInventoryManager.isEmpty() && stack.isOf(Items.GLASS_BOTTLE)) {
             this.timer = 0;
             this.setRenderStack(stack.split(1));
-            this.markDirty(true);
+            this.markDirty();
             return true;
         }
         return false;
@@ -281,7 +283,7 @@ public class BrewingBarrelBlockEntity extends WKDeviceBlockEntity implements Nam
         this.world.playSound(null, d, e, f, soundEvent, SoundCategory.BLOCKS, 0.5f, this.world.random.nextFloat() * 0.1f + 0.9f);
     }
 
-    @Environment(EnvType.CLIENT)
+    @ClientOnly
     public ItemStack getRenderStack() {
         if (this.clientInventoryManager.isEmpty()) {
             return ItemStack.EMPTY;

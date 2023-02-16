@@ -1,10 +1,11 @@
 package cf.witcheskitchen.common.blockentity;
 
 import cf.witcheskitchen.WK;
-import cf.witcheskitchen.api.block.entity.IDeviceExperienceHandler;
-import cf.witcheskitchen.api.block.entity.WKDeviceBlockEntity;
+import cf.witcheskitchen.api.block.entity.IExperienceHandler;
+import cf.witcheskitchen.api.block.entity.WKBlockEntity;
+import cf.witcheskitchen.api.block.entity.WKBlockEntityWithInventory;
 import cf.witcheskitchen.client.gui.screen.handler.WitchesOvenScreenHandler;
-import cf.witcheskitchen.common.block.device.WitchesOvenBlock;
+import cf.witcheskitchen.common.block.WitchesOvenBlock;
 import cf.witcheskitchen.common.recipe.OvenCookingRecipe;
 import cf.witcheskitchen.common.registry.WKBlockEntityTypes;
 import cf.witcheskitchen.common.registry.WKRecipeTypes;
@@ -42,7 +43,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Objects;
 import java.util.Optional;
 
-public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements IDeviceExperienceHandler, NamedScreenHandlerFactory {
+public class WitchesOvenBlockEntity extends WKBlockEntityWithInventory implements IExperienceHandler, NamedScreenHandlerFactory {
 
     // Default cooking value for vanilla recipes is 200
     private static final int DEFAULT_COOKING_TIME = 200;
@@ -191,7 +192,7 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements IDevi
             if (stackOnTop.isEmpty()) { //We don't want to replace an item being cooked
                 this.passiveProgress[i] = 0; // reset progress
                 this.passiveInventory.setStack(i, stack.split(1)); // we only want to cook 1 stack at the time
-                this.markDirty(true);
+                this.markDirty();
                 return true;
             }
         }
@@ -199,7 +200,7 @@ public class WitchesOvenBlockEntity extends WKDeviceBlockEntity implements IDevi
     }
 
     @Override
-    public void tick(World world, BlockPos pos, BlockState state, WKDeviceBlockEntity blockEntity) {
+    public void tick(World world, BlockPos pos, BlockState state, WKBlockEntity blockEntity) {
         super.tick(world, pos, state, blockEntity);
         if (world.isClient()) return;
         if (!state.getFluidState().isEmpty()) return;

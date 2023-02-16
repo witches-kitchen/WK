@@ -1,11 +1,11 @@
 package cf.witcheskitchen.api.event.network;
 
-import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
+import org.quiltmc.qsl.networking.api.PacketSender;
 
 public interface C2SPacketRegistryListener {
 

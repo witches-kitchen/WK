@@ -1,12 +1,8 @@
 package cf.witcheskitchen.common.registry;
 
-import cf.witcheskitchen.WKIdentifier;
+import cf.witcheskitchen.WK;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
 import cf.witcheskitchen.common.block.*;
-import cf.witcheskitchen.common.block.device.BrewingBarrelBlock;
-import cf.witcheskitchen.common.block.device.CopperWitchesOvenBlock;
-import cf.witcheskitchen.common.block.device.TeapotBlock;
-import cf.witcheskitchen.common.block.device.WitchesOvenBlock;
 import cf.witcheskitchen.common.block.sapling.WKSaplingBlock;
 import cf.witcheskitchen.common.crop.AmaranthCropBlock;
 import cf.witcheskitchen.common.crop.BelladonnaCropBlock;
@@ -306,7 +302,7 @@ public class WKBlocks {
     }
 
     private static <T extends Block> T register(String path, T block) {
-        final Identifier id = new WKIdentifier(path);
+        final Identifier id = WK.id(path);
         if (block == null) {
             throw new IllegalArgumentException("Block with id " + path + " returned null");
         }
@@ -316,7 +312,7 @@ public class WKBlocks {
     }
 
     private static <T extends Block, E extends Item> T register(String path, Material material, Function<QuiltBlockSettings, T> blockFactory, BiFunction<T, QuiltItemSettings, E> itemFactory, ItemGroup tab) {
-        final Identifier id = new WKIdentifier(path);
+        final Identifier id = WK.id(path);
         final T block = blockFactory.apply(QuiltBlockSettings.of(material));
         BLOCKS.add(new ObjectDefinition<>(id, block));
         if (itemFactory != null) {

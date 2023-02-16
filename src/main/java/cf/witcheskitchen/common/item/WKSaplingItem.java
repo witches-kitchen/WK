@@ -21,7 +21,7 @@ public class WKSaplingItem extends AliasedBlockItem {
     public ActionResult useOnBlock(ItemUsageContext context) {
         BlockState atPos = context.getWorld().getBlockState(context.getBlockPos());
         if (atPos.getBlock() == baseLeafBlock) {
-            if (!context.getPlayer().isCreative()) {
+            if (context.getPlayer() != null && !context.getPlayer().isCreative()) {
                 context.getStack().decrement(1);
             }
             context.getWorld().setBlockState(context.getBlockPos(), saplingLeafBlock.getDefaultState());

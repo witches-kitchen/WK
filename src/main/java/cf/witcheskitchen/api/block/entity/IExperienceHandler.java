@@ -3,7 +3,7 @@ package cf.witcheskitchen.api.block.entity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Vec3d;
 
-public interface IDeviceExperienceHandler {
+public interface IExperienceHandler {
 
     /**
      * <p>Fired when the player takes the crafted recipe  from the output slot.</p>

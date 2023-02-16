@@ -7,9 +7,6 @@ import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.data.DataTracker;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.Angerable;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.AnimalEntity;
@@ -30,17 +27,16 @@ import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.SplittableRandom;
 import java.util.UUID;
 
 //Todo: This once structures are in
 public class ChurchGrimEntity extends WKTameableEntity implements IAnimatable, Angerable, Tameable {
-
-    public static final TrackedData<Integer> VARIANT = DataTracker.registerData(WKTameableEntity.class,
-            TrackedDataHandlerRegistry.INTEGER);
+    private final int VARIANTS = 8;
     //Add a string or something here for a variant that is a white, short-haired dog and can appear if one is named Max
-    private final AnimationFactory factory = new AnimationFactory(this);
+    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public ChurchGrimEntity(EntityType<? extends TameableEntity> entityType, World world) {
         super(entityType, world);
@@ -55,7 +51,7 @@ public class ChurchGrimEntity extends WKTameableEntity implements IAnimatable, A
 
     @Override
     public int getVariants() {
-        return 8;
+        return VARIANTS;
     }
 
     @Override
@@ -83,7 +79,7 @@ public class ChurchGrimEntity extends WKTameableEntity implements IAnimatable, A
     }
 
     public int getVariant() {
-        return MathHelper.clamp(this.dataTracker.get(VARIANT), 1, 9);
+        return MathHelper.clamp(this.dataTracker.get(VARIANT), 0, VARIANTS);
     }
 
     public void setVariant(int variant) {
@@ -143,12 +139,6 @@ public class ChurchGrimEntity extends WKTameableEntity implements IAnimatable, A
         this.goalSelector.add(4, new StopAndLookAtEntityGoal(this, MobEntity.class, 2.0f, 0.8f));
         this.goalSelector.add(6, new WanderAroundFarGoal(this, 0.8D, 1));
         this.targetSelector.add(0, new RevengeGoal(this).setGroupRevenge());
-    }
-
-    @Override
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(VARIANT, 0);
     }
 
     @Override

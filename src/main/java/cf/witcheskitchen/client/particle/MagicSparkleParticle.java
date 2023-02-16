@@ -1,14 +1,13 @@
 package cf.witcheskitchen.client.particle;
 
 import cf.witcheskitchen.api.event.network.MagicSparkleParticleEvent;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.util.random.RandomGenerator;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 
-@Environment(EnvType.CLIENT)
+@ClientOnly
 public class MagicSparkleParticle extends SpriteBillboardParticle {
 
     private final RandomGenerator random;
@@ -90,7 +89,7 @@ public class MagicSparkleParticle extends SpriteBillboardParticle {
         return this.colorAlpha;
     }
 
-    @Environment(EnvType.CLIENT)
+    @ClientOnly
     public record Factory(SpriteProvider spriteProvider) implements ParticleFactory<DefaultParticleType> {
         public Particle createParticle(DefaultParticleType defaultParticleType, ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {
             final MagicSparkleParticle particle = new MagicSparkleParticle(clientWorld, d, e, f, g, h, i);

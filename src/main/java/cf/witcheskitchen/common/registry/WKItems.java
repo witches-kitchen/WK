@@ -2,7 +2,6 @@ package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WK;
 import cf.witcheskitchen.WKConfig;
-import cf.witcheskitchen.WKIdentifier;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
 import cf.witcheskitchen.common.item.WKSeedItem;
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
@@ -190,7 +189,7 @@ public class WKItems {
     }
 
     private static <T extends Item> T register(String id, Function<QuiltItemSettings, T> factory, ItemGroup tab) {
-        final Identifier resource = new WKIdentifier(id);
+        final Identifier resource = WK.id(id);
         final T item = factory.apply(itemBuilder(tab));
         final ObjectDefinition<Item> itemIdentifier = new ObjectDefinition<>(resource, item);
         ITEMS.add(itemIdentifier);
@@ -203,44 +202,44 @@ public class WKItems {
 
     public static void register() {
         ITEMS.forEach(entry -> Registry.register(Registry.ITEM, entry.id(), entry.object()));
-        CompostingChanceRegistry validItemCompost = CompostingChanceRegistry.INSTANCE;
-        validItemCompost.add(AMARANTH_SPRIG, 0.65f);
-        validItemCompost.add(AMARANTH_SEEDS, 0.3f);
-        validItemCompost.add(AMARANTH_CERISE_SEEDS, 0.3f);
-        validItemCompost.add(AMARANTH_SWEETBERRY_SEEDS, 0.3f);
-        validItemCompost.add(AMARANTH_TORCH_SEEDS, 0.3f);
-        validItemCompost.add(AMARANTH_SUNDEW_SEEDS, 0.3f);
-        validItemCompost.add(AMARANTH_CREEPER_SEEDS, 0.3f);
-        validItemCompost.add(AMARANTH_VIRIDIAN_SEEDS, 0.3f);
-        validItemCompost.add(AMARANTH_GRISELIN_SEEDS, 0.3f);
-        validItemCompost.add(AMARANTH_DARK_PASSION_SEEDS, 0.3f);
-        validItemCompost.add(AMARANTH_FIREBIRD_SEEDS, 0.3f);
-        validItemCompost.add(BELLADONNA_BLOSSOM, 0.65f);
-        validItemCompost.add(BELLADONNA_SEEDS, 0.3f);
-        validItemCompost.add(BELLADONNA_GLOW_SEEDS, 0.3f);
-        validItemCompost.add(BELLADONNA_NOCTURNAL_SEEDS, 0.3f);
-        validItemCompost.add(WORMWOOD_SPRIG, 0.65f);
-        validItemCompost.add(WORMWOOD_SEEDS, 0.3f);
-        validItemCompost.add(MINT_SPRIG, 0.45f);
-        validItemCompost.add(ROWAN_BERRIES, 0.45f);
-        validItemCompost.add(SLOE_BERRIES, 0.45f);
-        validItemCompost.add(JUNIPER_BERRIES, 0.45f);
-        validItemCompost.add(BLACKBERRY, 0.45f);
-        validItemCompost.add(HAWTHORN_BERRIES, 0.45f);
-        validItemCompost.add(SUMAC_BERRIES, 0.45f);
-        validItemCompost.add(BRIAR_HIPS, 0.45f);
-        validItemCompost.add(ELDER_BLOSSOM, 0.45f);
-        validItemCompost.add(CONEFLOWER_BLOSSOM, 0.45f);
-        validItemCompost.add(SANGUINARY_BLOSSOM, 0.45f);
-        validItemCompost.add(SAINT_JOHNS_WORT_BLOSSOM, 0.45f);
-        validItemCompost.add(IRIS_BLOSSOM, 0.45f);
-        validItemCompost.add(CHAMOMILE_BLOSSOM, 0.45f);
-        validItemCompost.add(GINGER_RHIZOME, 0.45f);
-        validItemCompost.add(TEA_LEAF, 0.45f);
-        validItemCompost.add(HELLEBORE_BLOSSOM, 0.45f);
-        validItemCompost.add(FOXGLOVE_BLOSSOM, 0.45f);
+        CompostingChanceRegistry compostingChanceRegistry = CompostingChanceRegistry.INSTANCE;
+        compostingChanceRegistry.add(AMARANTH_SPRIG, 0.65f);
+        compostingChanceRegistry.add(AMARANTH_SEEDS, 0.3f);
+        compostingChanceRegistry.add(AMARANTH_CERISE_SEEDS, 0.3f);
+        compostingChanceRegistry.add(AMARANTH_SWEETBERRY_SEEDS, 0.3f);
+        compostingChanceRegistry.add(AMARANTH_TORCH_SEEDS, 0.3f);
+        compostingChanceRegistry.add(AMARANTH_SUNDEW_SEEDS, 0.3f);
+        compostingChanceRegistry.add(AMARANTH_CREEPER_SEEDS, 0.3f);
+        compostingChanceRegistry.add(AMARANTH_VIRIDIAN_SEEDS, 0.3f);
+        compostingChanceRegistry.add(AMARANTH_GRISELIN_SEEDS, 0.3f);
+        compostingChanceRegistry.add(AMARANTH_DARK_PASSION_SEEDS, 0.3f);
+        compostingChanceRegistry.add(AMARANTH_FIREBIRD_SEEDS, 0.3f);
+        compostingChanceRegistry.add(BELLADONNA_BLOSSOM, 0.65f);
+        compostingChanceRegistry.add(BELLADONNA_SEEDS, 0.3f);
+        compostingChanceRegistry.add(BELLADONNA_GLOW_SEEDS, 0.3f);
+        compostingChanceRegistry.add(BELLADONNA_NOCTURNAL_SEEDS, 0.3f);
+        compostingChanceRegistry.add(WORMWOOD_SPRIG, 0.65f);
+        compostingChanceRegistry.add(WORMWOOD_SEEDS, 0.3f);
+        compostingChanceRegistry.add(MINT_SPRIG, 0.45f);
+        compostingChanceRegistry.add(ROWAN_BERRIES, 0.45f);
+        compostingChanceRegistry.add(SLOE_BERRIES, 0.45f);
+        compostingChanceRegistry.add(JUNIPER_BERRIES, 0.45f);
+        compostingChanceRegistry.add(BLACKBERRY, 0.45f);
+        compostingChanceRegistry.add(HAWTHORN_BERRIES, 0.45f);
+        compostingChanceRegistry.add(SUMAC_BERRIES, 0.45f);
+        compostingChanceRegistry.add(BRIAR_HIPS, 0.45f);
+        compostingChanceRegistry.add(ELDER_BLOSSOM, 0.45f);
+        compostingChanceRegistry.add(CONEFLOWER_BLOSSOM, 0.45f);
+        compostingChanceRegistry.add(SANGUINARY_BLOSSOM, 0.45f);
+        compostingChanceRegistry.add(SAINT_JOHNS_WORT_BLOSSOM, 0.45f);
+        compostingChanceRegistry.add(IRIS_BLOSSOM, 0.45f);
+        compostingChanceRegistry.add(CHAMOMILE_BLOSSOM, 0.45f);
+        compostingChanceRegistry.add(GINGER_RHIZOME, 0.45f);
+        compostingChanceRegistry.add(TEA_LEAF, 0.45f);
+        compostingChanceRegistry.add(HELLEBORE_BLOSSOM, 0.45f);
+        compostingChanceRegistry.add(FOXGLOVE_BLOSSOM, 0.45f);
 
-        if (WKConfig.getInstance().debugMode) {
+        if (WKConfig.debugMode) {
             WK.LOGGER.info("Witches Kitchen Base Items: Successfully Loaded");
         }
     }

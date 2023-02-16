@@ -3,13 +3,12 @@ package cf.witcheskitchen.client.gui.screen;
 
 import cf.witcheskitchen.api.client.screen.ScreenBase;
 import cf.witcheskitchen.client.gui.screen.handler.WitchesOvenScreenHandler;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 
-@Environment(EnvType.CLIENT)
+@ClientOnly
 public class WitchesOvenScreen extends ScreenBase<WitchesOvenScreenHandler> {
 
     public WitchesOvenScreen(WitchesOvenScreenHandler handler, PlayerInventory inventory, Text title) {

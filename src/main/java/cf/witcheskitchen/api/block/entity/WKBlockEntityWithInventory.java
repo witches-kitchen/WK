@@ -1,40 +1,21 @@
 package cf.witcheskitchen.api.block.entity;
 
 import cf.witcheskitchen.common.util.InventoryManager;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.random.RandomGenerator;
-import net.minecraft.world.World;
 
-public class WKDeviceBlockEntity extends BlockEntity implements BlockEntityTicker<WKDeviceBlockEntity>, Inventory {
+public class WKBlockEntityWithInventory extends WKBlockEntity implements Inventory {
 
-    protected final InventoryManager<WKDeviceBlockEntity> manager;
+    protected final InventoryManager<WKBlockEntityWithInventory> manager;
 
-    public WKDeviceBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int size) {
+    public WKBlockEntityWithInventory(BlockEntityType<?> type, BlockPos pos, BlockState state, int size) {
         super(type, pos, state);
         this.manager = new InventoryManager<>(this, size);
-    }
-
-    // Server-side Tick
-    @Override
-    public void tick(World world, BlockPos pos, BlockState state, WKDeviceBlockEntity blockEntity) {
-
-    }
-
-    // Client-side Tick
-    @Environment(EnvType.CLIENT)
-    public void onClientTick(World world, BlockPos pos, BlockState state, RandomGenerator random) {
-
     }
 
     @Override
@@ -48,20 +29,6 @@ public class WKDeviceBlockEntity extends BlockEntity implements BlockEntityTicke
         super.writeNbt(nbt);
         this.manager.writeNbt(nbt);
     }
-
-
-    public void markDirty(boolean syncToClient) {
-        this.markDirty();
-        if (this.world != null && syncToClient) {
-            super.world.updateListeners(this.getPos(), this.getCachedState(), this.getCachedState(), Block.NOTIFY_ALL);
-        }
-    }
-
-    @Override
-    public void markDirty() {
-        super.markDirty();
-    }
-
 
     @Override
     public int size() {
@@ -102,5 +69,4 @@ public class WKDeviceBlockEntity extends BlockEntity implements BlockEntityTicke
     public void clear() {
         this.manager.clear();
     }
-
 }

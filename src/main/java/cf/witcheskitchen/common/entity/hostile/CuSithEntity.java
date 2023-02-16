@@ -10,9 +10,6 @@ import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.data.DataTracker;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.*;
@@ -33,19 +30,19 @@ import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.builder.ILoopType;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.Random;
 import java.util.SplittableRandom;
 
 public class CuSithEntity extends WKHostileEntity implements IAnimatable {
-    public static final TrackedData<Integer> VARIANT = DataTracker.registerData(WKHostileEntity.class,
-            TrackedDataHandlerRegistry.INTEGER);
     public static final int EYE_VARIANTS = 7;
-    private final AnimationFactory factory = new AnimationFactory(this);
+    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
 
     public CuSithEntity(EntityType<? extends HostileEntity> entityType, World world) {
@@ -154,11 +151,11 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
     //Todo: Redo logic for howl animation
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         if (event.isMoving()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("run", true));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("run", ILoopType.EDefaultLoopTypes.LOOP));
             return PlayState.CONTINUE;
         }
         if (!event.isMoving()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", ILoopType.EDefaultLoopTypes.LOOP));
             return PlayState.CONTINUE;
         }
         return PlayState.CONTINUE;
@@ -182,13 +179,6 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
         this.setVariant(var);
         this.dataTracker.set(VARIANT, random.nextInt(EYE_VARIANTS));
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
-    }
-
-
-    @Override
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(VARIANT, 0);
     }
 
     @Override

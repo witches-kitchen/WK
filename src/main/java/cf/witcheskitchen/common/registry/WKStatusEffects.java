@@ -2,7 +2,6 @@ package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WK;
 import cf.witcheskitchen.WKConfig;
-import cf.witcheskitchen.WKIdentifier;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
 import cf.witcheskitchen.common.statuseffect.*;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
@@ -19,6 +18,7 @@ import java.util.List;
 
 public class WKStatusEffects {
     private static final List<ObjectDefinition<StatusEffect>> STATUS_EFFECTS = new ArrayList<>();
+
     public static final StatusEffect HORROR = create("horror", new HorrorStatusEffect(StatusEffectType.HARMFUL, 0x555D50));
     public static final StatusEffect HELLFIRE = create("hellfire", new HellfireStatusEffect(StatusEffectType.HARMFUL, 0xA91101));
     public static final StatusEffect FROST_SHIELD = create("frost_shield", new FrostShieldStatusEffect(StatusEffectType.BENEFICIAL, 0xAFDBF5));
@@ -42,7 +42,7 @@ public class WKStatusEffects {
 
     static <T extends StatusEffect> T create(String name, T effect) {
         Validate.isTrue(effect != null);
-        final Identifier id = new WKIdentifier(name);
+        final Identifier id = WK.id(name);
         final ObjectDefinition<StatusEffect> def = new ObjectDefinition<>(id, effect);
         STATUS_EFFECTS.add(def);
         return effect;
@@ -50,7 +50,7 @@ public class WKStatusEffects {
 
     public static void register() {
         STATUS_EFFECTS.forEach(entry -> Registry.register(Registry.STATUS_EFFECT, entry.id(), entry.object()));
-        if (WKConfig.getInstance().debugMode) {
+        if (WKConfig.debugMode) {
             WK.LOGGER.info("Witches Kitchen Base Potions: Successfully Loaded");
         }
     }

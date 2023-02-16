@@ -1,10 +1,8 @@
-package cf.witcheskitchen.common.block.device;
+package cf.witcheskitchen.common.block;
 
-import cf.witcheskitchen.api.block.WKDeviceBlock;
+import cf.witcheskitchen.api.block.WKBlock;
 import cf.witcheskitchen.common.blockentity.WitchesOvenBlockEntity;
 import cf.witcheskitchen.common.registry.WKDamageSources;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -33,9 +31,10 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 @SuppressWarnings("deprecation")
-public class WitchesOvenBlock extends WKDeviceBlock implements Waterloggable {
+public class WitchesOvenBlock extends WKBlock implements Waterloggable {
 
     public static final BooleanProperty LIT = Properties.LIT;
     public static final BooleanProperty PASSIVE_LIT = BooleanProperty.of("passive_lit");
@@ -115,7 +114,7 @@ public class WitchesOvenBlock extends WKDeviceBlock implements Waterloggable {
     }
 
     @Override
-    @Environment(EnvType.CLIENT)
+    @ClientOnly
     public void randomDisplayTick(BlockState state, World world, BlockPos pos, RandomGenerator random) {
         if (state.get(LIT)) {
             CampfireBlock.spawnSmokeParticle(world, pos, false, false);

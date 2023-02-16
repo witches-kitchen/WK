@@ -1,15 +1,14 @@
 package cf.witcheskitchen.client.particle;
 
-import cf.witcheskitchen.api.block.WKDeviceBlock;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import cf.witcheskitchen.api.block.WKBlock;
 import net.minecraft.block.Material;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.util.math.BlockPos;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 
-@Environment(EnvType.CLIENT)
+@ClientOnly
 public class BubbleParticle extends SpriteBillboardParticle {
 
     public BubbleParticle(ClientWorld clientWorld, double posX, double posY, double posZ, double r, double g, double b) {
@@ -49,7 +48,7 @@ public class BubbleParticle extends SpriteBillboardParticle {
         if (world.getBlockState(pos).getMaterial() == Material.WATER) {
             return false;
         } else {
-            return !(this.world.getBlockState(pos).getBlock() instanceof WKDeviceBlock);
+            return !(this.world.getBlockState(pos).getBlock() instanceof WKBlock);
         }
     }
 
@@ -63,7 +62,7 @@ public class BubbleParticle extends SpriteBillboardParticle {
     }
 
     // Immutable Factory
-    @Environment(EnvType.CLIENT)
+    @ClientOnly
     public record Factory(SpriteProvider spriteProvider) implements ParticleFactory<DefaultParticleType> {
         public Particle createParticle(DefaultParticleType defaultParticleType, ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {
             final BubbleParticle particle = new BubbleParticle(clientWorld, d, e, f, g, h, i);

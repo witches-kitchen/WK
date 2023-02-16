@@ -21,9 +21,10 @@
     "intermediate_mappings": "net.fabricmc:intermediary",
     "entrypoints": {
       "init": "cf.witcheskitchen.WK",
-      "client": "cf.witcheskitchen.client.WKClient",
+      "client_init": "cf.witcheskitchen.client.WKClient",
       "rei_client": "cf.witcheskitchen.integration.client.rei.WKREIPlugin",
-      "modmenu": "cf.witcheskitchen.integration.client.WKModMenu"
+      "modmenu": "cf.witcheskitchen.integration.client.WKModMenu",
+      "fabric-datagen" : "cf.witcheskitchen.datagen.WKDatagen"
     },
     "depends": [
       {
@@ -33,10 +34,6 @@
       {
         "id": "trinkets",
         "versions": ">=3.4.0"
-      },
-      {
-        "id": "cloth-config2",
-        "versions": ">=7.0.73"
       },
       {
         "id": "quilt_loader",
@@ -52,5 +49,6 @@
       }
     ]
   },
+  "access_widener": "wk.accesswidener",
   "mixin": "wk.mixins.json"
 }

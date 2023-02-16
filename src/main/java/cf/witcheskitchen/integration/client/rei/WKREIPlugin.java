@@ -1,6 +1,6 @@
 package cf.witcheskitchen.integration.client.rei;
 
-import cf.witcheskitchen.WKIdentifier;
+import cf.witcheskitchen.WK;
 import cf.witcheskitchen.client.gui.screen.WitchesOvenScreen;
 import cf.witcheskitchen.integration.client.rei.category.FermentingCategory;
 import cf.witcheskitchen.integration.client.rei.category.OvenCookingCategory;
@@ -12,14 +12,13 @@ import me.shedaniel.rei.api.client.registry.category.CategoryRegistry;
 import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
 import me.shedaniel.rei.api.client.registry.screen.ScreenRegistry;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 
-@Environment(EnvType.CLIENT)
+@ClientOnly
 public class WKREIPlugin implements REIClientPlugin {
 
-    public static final CategoryIdentifier<OvenCookingDisplay> OVEN_COOKING = CategoryIdentifier.of(WKIdentifier.of("oven_cooking"));
-    public static final CategoryIdentifier<FermentingDisplay> FERMENTING = CategoryIdentifier.of(WKIdentifier.of("fermenting"));
+    public static final CategoryIdentifier<OvenCookingDisplay> OVEN_COOKING = CategoryIdentifier.of(WK.id("oven_cooking"));
+    public static final CategoryIdentifier<FermentingDisplay> FERMENTING = CategoryIdentifier.of(WK.id("fermenting"));
 
     @Override
     public void registerCategories(CategoryRegistry registry) {
