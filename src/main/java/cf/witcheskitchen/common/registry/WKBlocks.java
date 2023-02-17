@@ -9,6 +9,7 @@ import cf.witcheskitchen.common.crop.BelladonnaCropBlock;
 import cf.witcheskitchen.common.crop.MintCropBlock;
 import cf.witcheskitchen.common.crop.WormwoodCropBlock;
 import cf.witcheskitchen.common.generator.WKSaplingGenerator;
+import cf.witcheskitchen.common.variants.BelladonnaTypes;
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
 import net.minecraft.block.*;
 import net.minecraft.entity.EntityType;
@@ -25,19 +26,22 @@ import net.minecraft.world.gen.feature.TreeFeatureConfig;
 import org.quiltmc.qsl.block.extensions.api.QuiltBlockSettings;
 import org.quiltmc.qsl.item.setting.api.QuiltItemSettings;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import static cf.witcheskitchen.common.registry.WKCreativeTabs.GENERAL_TAB;
 
 public class WKBlocks {
+
     public static final ArrayList<Block> LEAF_BLOCKS = new ArrayList<>();
     private static final List<ObjectDefinition<Block>> BLOCKS = new ArrayList<>();
     private static final List<ObjectDefinition<Item>> ITEMS = new ArrayList<>();
+    private static final Map<String, Block> TYPE_BLOCKS = new LinkedHashMap<>();
+
+
     public static final Block SALT_BLOCK = register("salt", Material.DECORATION, settings -> new SaltBlock(settings.noCollision().breakInstantly()));
+
     public static final Block RAW_GINGERBREAD_BLOCK = registerGingerBread("raw_gingerbread_block");
     public static final Block RAW_CHISELED_GINGERBREAD_BLOCK = registerGingerBread("raw_chiseled_gingerbread_block");
     public static final Block GINGERBREAD_BEVELED_BLOCK = registerGingerBread("gingerbread_beveled_block");
@@ -101,6 +105,7 @@ public class WKBlocks {
     public static final Block FROSTED_TILED_GINGERBREAD_BLOCK_PURPLE_SLAB = registerGingerBread("frosted_tiled_gingerbread_block_purple_slab");
     public static final Block FROSTED_TILED_GINGERBREAD_BLOCK_GREEN_SLAB = registerGingerBread("frosted_tiled_gingerbread_block_green_slab");
     public static final Block FROSTED_TILED_GINGERBREAD_BLOCK_VARIANT_SLAB = registerGingerBread("frosted_tiled_gingerbread_block_variant_slab");
+
     public static final Block ELDER_PLANKS = register("elder_planks", Material.WOOD);
     public static final Block ELDER_STAIRS = registerWoodenStair("elder_stairs", ELDER_PLANKS);
     public static final Block SUMAC_PLANKS = register("sumac_planks", Material.WOOD);
@@ -185,9 +190,10 @@ public class WKBlocks {
     public static final Block CRIMSON_BREWING_BARREL = registerBarrel("crimson_brewing_barrel");
     public static final Block WARPED_BREWING_BARREL = registerBarrel("warped_brewing_barrel");
     //Crops
-    public static final Block BELLADONNA = register("belladonna", new BelladonnaCropBlock(AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
-    public static final Block BELLADONNA_GLOW = register("belladonna_glow", new BelladonnaCropBlock(QuiltBlockSettings.copyOf(BELLADONNA), BelladonnaCropBlock.Type.GLOW));
-    public static final Block BELLADONNA_NOCTURNAL = register("belladonna_nocturnal", new BelladonnaCropBlock(QuiltBlockSettings.copyOf(BELLADONNA), BelladonnaCropBlock.Type.NOCTURNAL));
+    public static final Block BELLADONNA = registerWithType("belladonna", new BelladonnaCropBlock(AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
+    public static final Block BELLADONNA_GLOW = registerWithType("belladonna_glow", new BelladonnaCropBlock(QuiltBlockSettings.copyOf(BELLADONNA), BelladonnaTypes.GLOW));
+    public static final Block BELLADONNA_NOCTURNAL = registerWithType("belladonna_nocturnal", new BelladonnaCropBlock(QuiltBlockSettings.copyOf(BELLADONNA), BelladonnaTypes.NOCTURNAL));
+
     public static final Block AMARANTH = registerAmaranth("amaranth", AmaranthCropBlock.Type.COMMON);
     public static final Block AMARANTH_SWEETBERRY = registerAmaranth("amaranth_sweetberry", AmaranthCropBlock.Type.SWEETBERRY);
     public static final Block AMARANTH_TORCH = registerAmaranth("amaranth_torch", AmaranthCropBlock.Type.TORCH);
@@ -214,6 +220,11 @@ public class WKBlocks {
      */
     public static List<ObjectDefinition<Item>> getItems() {
         return Collections.unmodifiableList(ITEMS);
+    }
+
+
+    public static Map<String, Block> getTypeBlocks() {
+        return TYPE_BLOCKS;
     }
 
     private static Block registerAmaranth(String path, AmaranthCropBlock.Type type) {
@@ -299,6 +310,11 @@ public class WKBlocks {
 
     private static <T extends Block, E extends Item> T register(String path, Material material, Function<QuiltBlockSettings, T> blockFactory, BiFunction<T, QuiltItemSettings, E> itemFactory) {
         return register(path, material, blockFactory, itemFactory, GENERAL_TAB);
+    }
+
+    private static <T extends Block> T registerWithType(String name, T block) {
+        TYPE_BLOCKS.put(name, block);
+        return register(name, block);
     }
 
     private static <T extends Block> T register(String path, T block) {
