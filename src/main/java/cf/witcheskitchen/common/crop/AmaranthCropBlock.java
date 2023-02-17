@@ -1,11 +1,10 @@
 package cf.witcheskitchen.common.crop;
 
-import cf.witcheskitchen.api.WKTallCropBlock;
+import cf.witcheskitchen.api.crop.WKTallCropBlock;
 import cf.witcheskitchen.common.registry.WKItems;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.state.property.IntProperty;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 public class AmaranthCropBlock extends WKTallCropBlock {
     public static final int MAX_AGE = 6;
@@ -15,17 +14,19 @@ public class AmaranthCropBlock extends WKTallCropBlock {
         this(settings, Type.COMMON);
     }
 
+
+
     public AmaranthCropBlock(Settings settings, Type rarity) {
         super(settings);
         this.type = rarity;
     }
 
     @Override
-    protected IntProperty getAgeRange() {
+    public IntProperty getAgeProperty() {
         return IntProperty.of("age", 0, MAX_AGE);
     }
 
-    @Environment(EnvType.CLIENT)
+    @ClientOnly
     @Override
     protected ItemConvertible getSeedsItem() {
         return switch (this.type) {
@@ -48,7 +49,7 @@ public class AmaranthCropBlock extends WKTallCropBlock {
     }
 
     @Override
-    public int topLayerAge() {
+    public int doubleBlockAge() {
         return 2;
     }
 

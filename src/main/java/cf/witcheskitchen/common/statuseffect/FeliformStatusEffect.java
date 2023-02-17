@@ -14,6 +14,4 @@ public class FeliformStatusEffect extends StatusEffect {
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
 
     }
-
-
 }

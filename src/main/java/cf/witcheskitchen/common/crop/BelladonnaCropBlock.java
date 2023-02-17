@@ -2,11 +2,10 @@ package cf.witcheskitchen.common.crop;
 
 import cf.witcheskitchen.api.crop.WKTallCropBlock;
 import cf.witcheskitchen.common.registry.WKItems;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.state.property.IntProperty;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 public class BelladonnaCropBlock extends WKTallCropBlock {
 
@@ -24,7 +23,7 @@ public class BelladonnaCropBlock extends WKTallCropBlock {
         this.setDefaultState(this.getDefaultState().with(AGE, 0).with(HALF, DoubleBlockHalf.LOWER));
     }
 
-    @Environment(EnvType.CLIENT)
+    @ClientOnly
     @Override
     protected ItemConvertible getSeedsItem() {
         return switch (this.type) {

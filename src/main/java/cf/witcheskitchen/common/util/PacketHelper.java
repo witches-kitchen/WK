@@ -1,8 +1,8 @@
 package cf.witcheskitchen.common.util;
 
-import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.entity.Entity;
 import net.minecraft.server.network.ServerPlayerEntity;
+import org.quiltmc.qsl.networking.api.PlayerLookup;
 
 import java.util.function.Consumer;
 

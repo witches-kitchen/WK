@@ -1,4 +1,4 @@
-package cf.witcheskitchen.common.block.device;
+package cf.witcheskitchen.common.block;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Oxidizable;

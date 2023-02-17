@@ -137,7 +137,7 @@ public class WitchesCauldronBlock extends WKBlockWithEntity implements Waterlogg
                         }
                         playSoundToPlayer(world, pos, player, event);
                         // Syncs the client
-                        cauldron.markDirty(true);
+                        cauldron.markDirty();
                         return ActionResult.SUCCESS;
                     } else {
                         return ActionResult.FAIL;
@@ -174,7 +174,7 @@ public class WitchesCauldronBlock extends WKBlockWithEntity implements Waterlogg
                             }
                             playSoundToPlayer(world, pos, player, event);
                             // Syncs the client
-                            cauldron.markDirty(true);
+                            cauldron.markDirty();
                             return ActionResult.SUCCESS;
                         }
                     }

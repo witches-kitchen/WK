@@ -1,7 +1,5 @@
 package cf.witcheskitchen.api;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
@@ -10,6 +8,7 @@ import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 //Todo: Revamp texture variants and their code
 public abstract class WKPassiveEntity extends PassiveEntity {
@@ -24,6 +23,12 @@ public abstract class WKPassiveEntity extends PassiveEntity {
         super(entityType, world);
     }
 
+    @Override
+    protected void initDataTracker() {
+        super.initDataTracker();
+        this.getDataTracker().startTracking(VARIANT, 0);
+    }
+
     @Nullable
     @Override
     public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
@@ -31,7 +36,7 @@ public abstract class WKPassiveEntity extends PassiveEntity {
     }
 
     @Override
-    @Environment(EnvType.CLIENT)
+    @ClientOnly
     public boolean shouldRender(double distance) {
         return true;
     }

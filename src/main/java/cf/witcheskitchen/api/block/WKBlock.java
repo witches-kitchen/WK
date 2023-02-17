@@ -1,6 +1,6 @@
 package cf.witcheskitchen.api.block;
 
-import cf.witcheskitchen.api.block.entity.IDeviceExperienceHandler;
+import cf.witcheskitchen.api.block.entity.IExperienceHandler;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -43,9 +43,9 @@ import net.minecraft.world.World;
  * </p>
  */
 @SuppressWarnings("deprecation")
-public abstract class WKDeviceBlock extends WKBlockWithEntity {
+public abstract class WKBlock extends WKBlockWithEntity {
 
-    protected WKDeviceBlock(Settings settings) {
+    protected WKBlock(Settings settings) {
         super(settings);
     }
 
@@ -73,7 +73,7 @@ public abstract class WKDeviceBlock extends WKBlockWithEntity {
                 if (entity instanceof Inventory inventory) {
                     ItemScatterer.spawn(world, pos, inventory);
                 }
-                if (entity instanceof IDeviceExperienceHandler handler) {
+                if (entity instanceof IExperienceHandler handler) {
                     handler.dropExperience(serverWorld, Vec3d.of(pos));
                 }
             }

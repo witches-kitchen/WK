@@ -8,6 +8,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
+import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
@@ -49,10 +50,12 @@ import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.IAnimationTickable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.builder.ILoopType;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.SplittableRandom;
 import java.util.UUID;
@@ -60,10 +63,9 @@ import java.util.function.Predicate;
 
 public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnimationTickable, Angerable {
 
-    public static final TrackedData<Integer> VARIANT;
-    public static final TrackedData<Boolean> NIGHT;
-    private static final UniformIntProvider ANGER_TIME_RANGE;
-    private static final TrackedData<Integer> ANGER_TIME;
+    public static final TrackedData<Boolean> NIGHT = DataTracker.registerData(FerretEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    private static final UniformIntProvider ANGER_TIME_RANGE = TimeHelper.betweenSeconds(20, 39);
+    private static final TrackedData<Integer> ANGER_TIME = DataTracker.registerData(FerretEntity.class, TrackedDataHandlerRegistry.INTEGER);
 
 
     // ---------- Client-side data trackers ---------- //
@@ -72,55 +74,42 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
     /**
      * Tracks whether this entity is sitting.
      */
-    private static final TrackedData<Boolean> SITTING;
+    private static final TrackedData<Boolean> SITTING = DataTracker.registerData(FerretEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     /**
      * Tracks whether this entity is attacking another one.
      */
-    private static final TrackedData<Boolean> ATTACKING;
+    private static final TrackedData<Boolean> ATTACKING = DataTracker.registerData(FerretEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
     /**
      * Item for taming a ferret entity
      */
-    public static final Item TAMING_INGREDIENT;
+    public static final Item TAMING_INGREDIENT = Items.EGG;
 
     /**
      * This ingredient contains the items that are valid
      * for breeding a ferret entity.
      */
-    public static final Ingredient BREEDING_INGREDIENTS;
+    public static final Ingredient BREEDING_INGREDIENTS = Ingredient.ofItems(Items.RABBIT, Items.COOKED_RABBIT, Items.CHICKEN, Items.COOKED_CHICKEN, Items.EGG, Items.RABBIT_FOOT, Items.TURTLE_EGG);
     /**
      * Function that represents which living entities will
      * untamed ferret attack.
      */
-    private static final Predicate<LivingEntity> UNTAMED_TARGET_PREDICATE;
-    private static final Predicate<LivingEntity> FLEE_SUPERNATURAL;
+    private static final Predicate<LivingEntity> UNTAMED_TARGET_PREDICATE = entity -> {
+        final EntityType<?> entityType = entity.getType();
+        return entityType == EntityType.RABBIT || entityType == EntityType.CHICKEN;
+    };
 
-    static {
-        BREEDING_INGREDIENTS = Ingredient.ofItems(Items.RABBIT, Items.COOKED_RABBIT, Items.CHICKEN, Items.COOKED_CHICKEN, Items.EGG, Items.RABBIT_FOOT, Items.TURTLE_EGG);
-        TAMING_INGREDIENT = Items.EGG;
-        VARIANT = DataTracker.registerData(FerretEntity.class, TrackedDataHandlerRegistry.INTEGER);
-        NIGHT = DataTracker.registerData(FerretEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-        ANGER_TIME = DataTracker.registerData(FerretEntity.class, TrackedDataHandlerRegistry.INTEGER);
-        ANGER_TIME_RANGE = TimeHelper.betweenSeconds(20, 39);
-        FLEE_SUPERNATURAL = (entity) -> {
-            EntityType<?> entityType = entity.getType();
-            return entityType == WKEntityTypes.CUSITH || WKApi.isGreaterDemon(entity);
-        };
-        SITTING = DataTracker.registerData(FerretEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-        ATTACKING = DataTracker.registerData(FerretEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-        UNTAMED_TARGET_PREDICATE = entity -> {
-            final EntityType<?> entityType = entity.getType();
-            return entityType == EntityType.RABBIT || entityType == EntityType.CHICKEN;
-        };
-    }
+    private static final Predicate<LivingEntity> FLEE_SUPERNATURAL = (entity) -> {
+        EntityType<?> entityType = entity.getType();
+        return entityType == WKEntityTypes.CUSITH || WKApi.isGreaterDemon(entity);
+    };
 
-    private final AnimationFactory factory;
+    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
     @Nullable
     private UUID targetUuid;
 
     public FerretEntity(EntityType<? extends TameableEntity> entityType, World world) {
         super(entityType, world);
-        this.factory = new AnimationFactory(this);
         this.setTamed(false);
     }
 
@@ -160,7 +149,6 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
     protected void initDataTracker() {
         super.initDataTracker();
         this.dataTracker.startTracking(NIGHT, false);
-        this.dataTracker.startTracking(VARIANT, 0);
         this.dataTracker.startTracking(ANGER_TIME, 0);
         this.dataTracker.startTracking(SITTING, false);
         this.dataTracker.startTracking(ATTACKING, false);
@@ -177,16 +165,16 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         if (this.isSitting()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("sit", true));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("sit", ILoopType.EDefaultLoopTypes.LOOP));
             return PlayState.CONTINUE;
         } else if (event.isMoving() && !isAttacking()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("run", true));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("run", ILoopType.EDefaultLoopTypes.LOOP));
             return PlayState.CONTINUE;
         } else if (this.isAttacking()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("gore", true));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("gore", ILoopType.EDefaultLoopTypes.LOOP));
             return PlayState.CONTINUE;
         } else {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", ILoopType.EDefaultLoopTypes.LOOP));
             return PlayState.CONTINUE;
         }
     }
@@ -264,13 +252,15 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
     @Override
     public void setTamed(boolean tamed) {
         super.setTamed(tamed);
-        if (tamed) {
-            this.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH).setBaseValue(12.0D);
-            this.setHealth(12.0F);
-        } else {
-            this.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH).setBaseValue(8.0D);
+        EntityAttributeInstance attributeInstance = this.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH);
+        if(attributeInstance != null){
+            if (tamed) {
+                attributeInstance.setBaseValue(12.0D);
+                this.setHealth(12.0F);
+            } else {
+                attributeInstance.setBaseValue(8.0D);
+            }
         }
-        this.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE).setBaseValue(6.0D);
     }
 
 

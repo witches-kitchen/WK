@@ -1,6 +1,6 @@
-package cf.witcheskitchen.common.block.device;
+package cf.witcheskitchen.common.block;
 
-import cf.witcheskitchen.api.block.WKDeviceBlock;
+import cf.witcheskitchen.api.block.WKBlock;
 import cf.witcheskitchen.common.blockentity.WKTeapotEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Waterloggable;
@@ -13,7 +13,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-public class TeapotBlock extends WKDeviceBlock implements Waterloggable {
+public class TeapotBlock extends WKBlock implements Waterloggable {
     public TeapotBlock(Settings settings) {
         super(settings);
     }

@@ -1,7 +1,5 @@
 package cf.witcheskitchen.api;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.JumpingMount;
 import net.minecraft.entity.Saddleable;
@@ -16,6 +14,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 //Todo: Revamp texture variants and their code
 public abstract class WKMountEntity extends AnimalEntity implements InventoryChangedListener, JumpingMount, Saddleable {
@@ -24,6 +23,12 @@ public abstract class WKMountEntity extends AnimalEntity implements InventoryCha
 
     public WKMountEntity(EntityType<? extends AnimalEntity> entityType, World world) {
         super(entityType, world);
+    }
+
+    @Override
+    protected void initDataTracker() {
+        super.initDataTracker();
+        this.getDataTracker().startTracking(VARIANT, 0);
     }
 
     @Override
@@ -73,7 +78,7 @@ public abstract class WKMountEntity extends AnimalEntity implements InventoryCha
     }
 
     @Override
-    @Environment(EnvType.CLIENT)
+    @ClientOnly
     public boolean shouldRender(double distance) {
         return true;
     }

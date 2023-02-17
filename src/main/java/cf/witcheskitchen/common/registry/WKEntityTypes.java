@@ -2,7 +2,6 @@ package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WK;
 import cf.witcheskitchen.WKConfig;
-import cf.witcheskitchen.WKIdentifier;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
 import cf.witcheskitchen.common.entity.hostile.CuSithEntity;
 import cf.witcheskitchen.common.entity.neutral.ChurchGrimEntity;
@@ -36,13 +35,13 @@ public class WKEntityTypes {
 
     private static <T extends LivingEntity> EntityType<T> create(String name, DefaultAttributeContainer.Builder attributes, EntityType<T> type) {
         FabricDefaultAttributeRegistry.register(type, attributes);
-        ENTITY_TYPES.add(new ObjectDefinition<>(new WKIdentifier(name), type));
+        ENTITY_TYPES.add(new ObjectDefinition<>(WK.id(name), type));
         return type;
     }
 
     public static void register() {
         ENTITY_TYPES.forEach(entity -> Registry.register(Registry.ENTITY_TYPE, entity.id(), entity.object()));
-        if (WKConfig.getInstance().debugMode) {
+        if (WKConfig.debugMode) {
             WK.LOGGER.info("Witches Kitchen Base Entities: Successfully Loaded");
         }
     }

@@ -1,13 +1,12 @@
 package cf.witcheskitchen.api;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.world.World;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 //Todo: Revamp texture variants and their code
 public abstract class WKTameableEntity extends TameableEntity {
@@ -23,7 +22,13 @@ public abstract class WKTameableEntity extends TameableEntity {
     }
 
     @Override
-    @Environment(EnvType.CLIENT)
+    protected void initDataTracker() {
+        super.initDataTracker();
+        this.getDataTracker().startTracking(VARIANT, 0);
+    }
+
+    @Override
+    @ClientOnly
     public boolean shouldRender(double distance) {
         return true;
     }

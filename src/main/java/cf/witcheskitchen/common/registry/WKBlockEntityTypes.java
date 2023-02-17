@@ -2,13 +2,11 @@ package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WK;
 import cf.witcheskitchen.WKConfig;
-import cf.witcheskitchen.WKIdentifier;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
 import cf.witcheskitchen.common.blockentity.BrewingBarrelBlockEntity;
 import cf.witcheskitchen.common.blockentity.WKTeapotEntity;
 import cf.witcheskitchen.common.blockentity.WitchesCauldronBlockEntity;
 import cf.witcheskitchen.common.blockentity.WitchesOvenBlockEntity;
-import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -17,6 +15,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import org.apache.commons.lang3.Validate;
+import org.quiltmc.qsl.block.entity.api.QuiltBlockEntityTypeBuilder;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,8 +30,8 @@ public class WKBlockEntityTypes {
         // Throw if any of these is false
         Validate.isTrue(blocks.length > 0);
         Validate.isTrue(factory != null);
-        final Identifier id = new WKIdentifier(path);
-        final FabricBlockEntityTypeBuilder<E> builder = FabricBlockEntityTypeBuilder.create(factory::apply, blocks);
+        final Identifier id = WK.id(path);
+        final QuiltBlockEntityTypeBuilder<E> builder = QuiltBlockEntityTypeBuilder.create(factory::apply, blocks);
         final BlockEntityType<E> type = builder.build();
         BLOCK_ENTITY_TYPES.add(new ObjectDefinition<>(id, type));
         return type;
@@ -46,7 +45,7 @@ public class WKBlockEntityTypes {
 
     public static void register() {
         BLOCK_ENTITY_TYPES.forEach(type -> Registry.register(Registry.BLOCK_ENTITY_TYPE, type.id(), type.object()));
-        if (WKConfig.getInstance().debugMode) {
+        if (WKConfig.debugMode) {
             WK.LOGGER.info("Witches Kitchen Base Block Entities: Successfully Loaded");
         }
     }

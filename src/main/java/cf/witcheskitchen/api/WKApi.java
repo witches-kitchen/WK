@@ -1,7 +1,5 @@
 package cf.witcheskitchen.api;
 
-import cf.witcheskitchen.WK;
-import cf.witcheskitchen.WKConfig;
 import cf.witcheskitchen.common.registry.WKTags;
 import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.LivingEntity;
@@ -11,12 +9,6 @@ import net.minecraft.item.Item;
 public class WKApi {
 
     //Todo: This could go with some improvements, but it is pretty early at the moment.
-
-    static {
-        if (WKConfig.getInstance().debugMode) {
-            WK.LOGGER.info("Witches Kitchen API: Successfully Loaded");
-        }
-    }
 
     /**
      * This allows the mod to track various beings of spiritual origin, as well as undead origin.

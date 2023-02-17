@@ -1,17 +1,16 @@
 package cf.witcheskitchen.integration.client;
 
-import cf.witcheskitchen.WKConfig;
+import cf.witcheskitchen.WK;
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
-import me.shedaniel.autoconfig.AutoConfig;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import eu.midnightdust.lib.config.MidnightConfig;
 import net.minecraft.client.gui.screen.Screen;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 
-@Environment(EnvType.CLIENT)
+@ClientOnly
 public class WKModMenu implements ModMenuApi {
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
-        return (ConfigScreenFactory<Screen>) screen -> AutoConfig.getConfigScreen(WKConfig.class, screen).get();
+        return (ConfigScreenFactory<Screen>) screen -> MidnightConfig.getScreen(screen, WK.MODID);
     }
 }

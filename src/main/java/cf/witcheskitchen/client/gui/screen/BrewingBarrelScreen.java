@@ -2,13 +2,12 @@ package cf.witcheskitchen.client.gui.screen;
 
 import cf.witcheskitchen.api.client.screen.ScreenBase;
 import cf.witcheskitchen.client.gui.screen.handler.BrewingBarrelScreenHandler;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 
-@Environment(EnvType.CLIENT)
+@ClientOnly
 public class BrewingBarrelScreen extends ScreenBase<BrewingBarrelScreenHandler> {
 
     public BrewingBarrelScreen(BrewingBarrelScreenHandler handler, PlayerInventory inventory, Text title) {

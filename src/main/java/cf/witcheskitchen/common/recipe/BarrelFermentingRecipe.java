@@ -91,9 +91,7 @@ public class BarrelFermentingRecipe implements Recipe<Inventory> {
         @Override
         public BarrelFermentingRecipe read(Identifier id, PacketByteBuf buf) {
             final DefaultedList<Ingredient> inputs = DefaultedList.ofSize(buf.readVarInt(), Ingredient.EMPTY);
-            for (int i = 0; i < inputs.size(); i++) {
-                inputs.set(i, Ingredient.fromPacket(buf));
-            }
+            inputs.replaceAll(ignored -> Ingredient.fromPacket(buf));
             return new BarrelFermentingRecipe(id, inputs, buf.readItemStack());
         }
 

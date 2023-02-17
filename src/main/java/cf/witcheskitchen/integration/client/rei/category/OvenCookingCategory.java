@@ -13,16 +13,15 @@ import me.shedaniel.rei.api.client.registry.display.DisplayCategory;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.entry.EntryStack;
 import me.shedaniel.rei.api.common.util.EntryStacks;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-@Environment(EnvType.CLIENT)
+@ClientOnly
 public class OvenCookingCategory implements DisplayCategory<OvenCookingDisplay> {
 
     public static final EntryStack<ItemStack> ICON = EntryStacks.of(WKBlocks.IRON_WITCHES_OVEN);
