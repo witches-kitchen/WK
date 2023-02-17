@@ -6,6 +6,7 @@ out/
 classes/
 
 # Quilt Loom
+remappedSrc/
 run/
 
 # eclipse
