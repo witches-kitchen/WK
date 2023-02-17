@@ -1,7 +1,7 @@
 package cf.witcheskitchen.common.registry;
 
-import cf.witcheskitchen.WK;
-import cf.witcheskitchen.WKConfig;
+import cf.witcheskitchen.WitchesKitchen;
+import cf.witcheskitchen.WitchesKitchenConfig;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
 import cf.witcheskitchen.common.item.WKSeedItem;
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
@@ -189,7 +189,7 @@ public class WKItems {
     }
 
     private static <T extends Item> T register(String id, Function<QuiltItemSettings, T> factory, ItemGroup tab) {
-        final Identifier resource = WK.id(id);
+        final Identifier resource = WitchesKitchen.id(id);
         final T item = factory.apply(itemBuilder(tab));
         final ObjectDefinition<Item> itemIdentifier = new ObjectDefinition<>(resource, item);
         ITEMS.add(itemIdentifier);
@@ -239,8 +239,8 @@ public class WKItems {
         compostingChanceRegistry.add(HELLEBORE_BLOSSOM, 0.45f);
         compostingChanceRegistry.add(FOXGLOVE_BLOSSOM, 0.45f);
 
-        if (WKConfig.debugMode) {
-            WK.LOGGER.info("Witches Kitchen Base Items: Successfully Loaded");
+        if (WitchesKitchenConfig.debugMode) {
+            WitchesKitchen.LOGGER.info("Witches Kitchen Base Items: Successfully Loaded");
         }
     }
 }

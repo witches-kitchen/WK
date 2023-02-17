@@ -1,6 +1,6 @@
 package cf.witcheskitchen.integration.client.rei;
 
-import cf.witcheskitchen.WK;
+import cf.witcheskitchen.WitchesKitchen;
 import cf.witcheskitchen.client.gui.screen.WitchesOvenScreen;
 import cf.witcheskitchen.integration.client.rei.category.FermentingCategory;
 import cf.witcheskitchen.integration.client.rei.category.OvenCookingCategory;
@@ -17,8 +17,8 @@ import org.quiltmc.loader.api.minecraft.ClientOnly;
 @ClientOnly
 public class WKREIPlugin implements REIClientPlugin {
 
-    public static final CategoryIdentifier<OvenCookingDisplay> OVEN_COOKING = CategoryIdentifier.of(WK.id("oven_cooking"));
-    public static final CategoryIdentifier<FermentingDisplay> FERMENTING = CategoryIdentifier.of(WK.id("fermenting"));
+    public static final CategoryIdentifier<OvenCookingDisplay> OVEN_COOKING = CategoryIdentifier.of(WitchesKitchen.id("oven_cooking"));
+    public static final CategoryIdentifier<FermentingDisplay> FERMENTING = CategoryIdentifier.of(WitchesKitchen.id("fermenting"));
 
     @Override
     public void registerCategories(CategoryRegistry registry) {

@@ -1,7 +1,7 @@
 package cf.witcheskitchen.common.registry;
 
-import cf.witcheskitchen.WK;
-import cf.witcheskitchen.WKConfig;
+import cf.witcheskitchen.WitchesKitchen;
+import cf.witcheskitchen.WitchesKitchenConfig;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
@@ -50,13 +50,13 @@ public class WKTags {
     public static final TagKey<Item> SEED_BLACKBERRY = register(Registry.ITEM_KEY, "seeds/seed_blackberry");
 
     static {
-        if (WKConfig.debugMode) {
-            WK.LOGGER.info("Witches Kitchen Base Custom Tags: Successfully Loaded");
+        if (WitchesKitchenConfig.debugMode) {
+            WitchesKitchen.LOGGER.info("Witches Kitchen Base Custom Tags: Successfully Loaded");
         }
     }
 
     static <T> TagKey<T> register(final RegistryKey<? extends Registry<T>> key, final String path) {
-        final Identifier resourceLoc = WK.id(path);
+        final Identifier resourceLoc = WitchesKitchen.id(path);
         return TagKey.of(key, resourceLoc);
 
     }

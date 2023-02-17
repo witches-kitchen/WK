@@ -1,7 +1,7 @@
 package cf.witcheskitchen.common.registry;
 
-import cf.witcheskitchen.WK;
-import cf.witcheskitchen.WKConfig;
+import cf.witcheskitchen.WitchesKitchen;
+import cf.witcheskitchen.WitchesKitchenConfig;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
 import cf.witcheskitchen.common.blockentity.BrewingBarrelBlockEntity;
 import cf.witcheskitchen.common.blockentity.WKTeapotEntity;
@@ -30,7 +30,7 @@ public class WKBlockEntityTypes {
         // Throw if any of these is false
         Validate.isTrue(blocks.length > 0);
         Validate.isTrue(factory != null);
-        final Identifier id = WK.id(path);
+        final Identifier id = WitchesKitchen.id(path);
         final QuiltBlockEntityTypeBuilder<E> builder = QuiltBlockEntityTypeBuilder.create(factory::apply, blocks);
         final BlockEntityType<E> type = builder.build();
         BLOCK_ENTITY_TYPES.add(new ObjectDefinition<>(id, type));
@@ -45,8 +45,8 @@ public class WKBlockEntityTypes {
 
     public static void register() {
         BLOCK_ENTITY_TYPES.forEach(type -> Registry.register(Registry.BLOCK_ENTITY_TYPE, type.id(), type.object()));
-        if (WKConfig.debugMode) {
-            WK.LOGGER.info("Witches Kitchen Base Block Entities: Successfully Loaded");
+        if (WitchesKitchenConfig.debugMode) {
+            WitchesKitchen.LOGGER.info("Witches Kitchen Base Block Entities: Successfully Loaded");
         }
     }
 

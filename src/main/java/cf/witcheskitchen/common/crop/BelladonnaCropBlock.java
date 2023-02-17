@@ -10,7 +10,7 @@ import org.quiltmc.loader.api.minecraft.ClientOnly;
 public class BelladonnaCropBlock extends WKTallCropBlock {
 
     public static final int MAX_AGE = 6;
-    private static final IntProperty AGE = IntProperty.of("age", 0, MAX_AGE);
+    public static final IntProperty AGE = IntProperty.of("age", 0, MAX_AGE);
     private final Type type;
 
     public BelladonnaCropBlock(Settings settings) {

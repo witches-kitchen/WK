@@ -1,7 +1,7 @@
 package cf.witcheskitchen.common.registry;
 
-import cf.witcheskitchen.WK;
-import cf.witcheskitchen.WKConfig;
+import cf.witcheskitchen.WitchesKitchen;
+import cf.witcheskitchen.WitchesKitchenConfig;
 import cf.witcheskitchen.api.event.network.MagicSparkleParticleEvent;
 import cf.witcheskitchen.client.render.blockentity.WitchesCauldronBlockEntityRender;
 import cf.witcheskitchen.common.WKEventsHandler;
@@ -14,17 +14,17 @@ public class WKEventsRegistry {
         switch (type) {
             case SERVER -> {
                 LootTableEvents.MODIFY.register(new WKEventsHandler.LootTablesListener());
-                MagicSparkleParticleEvent.PARTICLE_CONSTRUCTOR_EVENT.register(new WitchesCauldronBlockEntityRender.MagicalParticleEventHandler());
             }
             case CLIENT -> {
+                MagicSparkleParticleEvent.PARTICLE_CONSTRUCTOR_EVENT.register(new WitchesCauldronBlockEntityRender.MagicalParticleEventHandler());
             }
         }
     }
 
     // used for client events
     public static void registerClient() {
-        if (WKConfig.debugMode) {
-            WK.LOGGER.info("Witches Kitchen Base Client Registry: Successfully Loaded");
+        if (WitchesKitchenConfig.debugMode) {
+            WitchesKitchen.LOGGER.info("Witches Kitchen Base Client Registry: Successfully Loaded");
         }
     }
 

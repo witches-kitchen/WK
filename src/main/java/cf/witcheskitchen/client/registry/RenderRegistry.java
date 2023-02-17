@@ -1,7 +1,7 @@
 package cf.witcheskitchen.client.registry;
 
-import cf.witcheskitchen.WK;
-import cf.witcheskitchen.WKConfig;
+import cf.witcheskitchen.WitchesKitchen;
+import cf.witcheskitchen.WitchesKitchenConfig;
 import cf.witcheskitchen.client.render.ChurchGrimRender;
 import cf.witcheskitchen.client.render.CuSithRender;
 import cf.witcheskitchen.client.render.FerretRender;
@@ -16,8 +16,8 @@ public class RenderRegistry {
         EntityRendererRegistry.register(WKEntityTypes.FERRET, FerretRender::new);
         EntityRendererRegistry.register(WKEntityTypes.CHURCH_GRIM, ChurchGrimRender::new);
 
-        if (WKConfig.debugMode) {
-            WK.LOGGER.info("Witches Kitchen Base Renderer: Successfully Loaded");
+        if (WitchesKitchenConfig.debugMode) {
+            WitchesKitchen.LOGGER.info("Witches Kitchen Base Renderer: Successfully Loaded");
         }
     }
 }

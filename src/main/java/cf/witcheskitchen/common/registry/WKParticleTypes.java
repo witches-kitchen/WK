@@ -1,7 +1,7 @@
 package cf.witcheskitchen.common.registry;
 
-import cf.witcheskitchen.WK;
-import cf.witcheskitchen.WKConfig;
+import cf.witcheskitchen.WitchesKitchen;
+import cf.witcheskitchen.WitchesKitchenConfig;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.minecraft.particle.DefaultParticleType;
@@ -23,7 +23,7 @@ public class WKParticleTypes {
     public static final ParticleType<DefaultParticleType> MAGIC_SPARKLE = create("magic_sparkle", FabricParticleTypes.simple());
 
     private static <T extends ParticleEffect> ParticleType<T> create(final String name, final ParticleType<T> type) {
-        final Identifier id = WK.id(name);
+        final Identifier id = WitchesKitchen.id(name);
         final ObjectDefinition<ParticleType<?>> definition = new ObjectDefinition<>(id, type);
         PARTICLE_TYPES.add(definition);
         return type;
@@ -35,8 +35,8 @@ public class WKParticleTypes {
 
     public static void register() {
         PARTICLE_TYPES.forEach(entry -> Registry.register(Registry.PARTICLE_TYPE, entry.id(), entry.object()));
-        if (WKConfig.debugMode) {
-            WK.LOGGER.info("Witches Kitchen Base Custom Particles: Successfully Loaded");
+        if (WitchesKitchenConfig.debugMode) {
+            WitchesKitchen.LOGGER.info("Witches Kitchen Base Custom Particles: Successfully Loaded");
         }
     }
 }

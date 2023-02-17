@@ -1,6 +1,6 @@
 package cf.witcheskitchen.common.registry;
 
-import cf.witcheskitchen.WK;
+import cf.witcheskitchen.WitchesKitchen;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
 import cf.witcheskitchen.common.potion.RumPotion;
 import net.minecraft.entity.effect.StatusEffect;
@@ -20,7 +20,7 @@ public class WKPotions {
     public static final Potion RUM = register("rum", new RumPotion(withEffect(WKStatusEffects.DRUNK, 200)));
 
     private static <T extends Potion> T register(String path, T potion) {
-        final Identifier resource = WK.id(path);
+        final Identifier resource = WitchesKitchen.id(path);
         POTIONS.add(new ObjectDefinition<>(resource, potion));
         return potion;
     }

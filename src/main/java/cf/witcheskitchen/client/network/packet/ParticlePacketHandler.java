@@ -1,6 +1,6 @@
 package cf.witcheskitchen.client.network.packet;
 
-import cf.witcheskitchen.WK;
+import cf.witcheskitchen.WitchesKitchen;
 import cf.witcheskitchen.api.event.network.S2CPacketRegistryListener;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
@@ -22,7 +22,7 @@ import org.quiltmc.qsl.networking.api.ServerPlayNetworking;
 
 public class ParticlePacketHandler implements S2CPacketRegistryListener {
 
-    private static final Identifier CHANNEL = new Identifier(WK.MODID, "particle_packet_handler");
+    private static final Identifier CHANNEL = new Identifier(WitchesKitchen.MODID, "particle_packet_handler");
 
     public static void send(ServerPlayerEntity player, final BlockPos pos, final Identifier particle, final byte range) {
         send(player, pos, particle, null, range);
