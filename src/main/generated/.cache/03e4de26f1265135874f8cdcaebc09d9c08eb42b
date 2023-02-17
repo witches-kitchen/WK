@@ -1,6 +1,25 @@
-// 1.19.2	2023-02-17T17:38:53.511668704	Tags for minecraft:item
-bc592bdff21f88ed7882b1f5c33c7ccb576a71ab data/minecraft/tags/items/planks.json
-2276f4976b6dc864a2d4796dda50b5d420d4bad0 data/minecraft/tags/items/logs_that_burn.json
+// 1.19.2	2023-02-17T18:23:07.894636243	Tags for minecraft:item
+a3b870884a089e7083f2ab2fd0890257aaaa685a data/witcheskitchen/tags/items/resets_cauldron.json
+8a23702b05296c8af5014d6aa6e9265ded85c7d9 data/witcheskitchen/tags/items/seeds/seed_ginger.json
 e9c3b84775d3456109b48e37838ea7b4b10cc4e5 data/minecraft/tags/items/saplings.json
+71d895f0408d583bdecb559b8ad115f309aa022e data/witcheskitchen/tags/items/seeds/seed_coneflower.json
+11982dc90c17c3d6c7e7b76c19d12c9670d96f11 data/witcheskitchen/tags/items/valid_brew_item.json
+51a790f48a60fc55a468c328d06ffbe79966dafc data/witcheskitchen/tags/items/seeds/seed_foxglove.json
 2276f4976b6dc864a2d4796dda50b5d420d4bad0 data/minecraft/tags/items/logs.json
+0b7d463ad5785bdcd0de5f131531f10092747726 data/witcheskitchen/tags/items/seeds/seed_iris.json
+381098a365655fb12194bf15c51c6414d46ee181 data/witcheskitchen/tags/items/seeds/seed_chamomile.json
 a4531a94257ab3d3fab6932dc8b1bc62392fefc4 data/minecraft/tags/items/leaves.json
+ee23ccf2a74127ffdd2cbe9d58a22d22224ee9e7 data/witcheskitchen/tags/items/seeds/seed_wormwood.json
+8a23702b05296c8af5014d6aa6e9265ded85c7d9 data/witcheskitchen/tags/items/seeds/seed_mint.json
+bc592bdff21f88ed7882b1f5c33c7ccb576a71ab data/minecraft/tags/items/planks.json
+7d27d27e89f9507a0868b3b248b1d41fbb93a7ec data/witcheskitchen/tags/items/barrel_blacklist.json
+e93ab825baf367499fd2efd76db45fb7f9f6f87b data/witcheskitchen/tags/items/seeds/seed_belladonna.json
+2276f4976b6dc864a2d4796dda50b5d420d4bad0 data/minecraft/tags/items/logs_that_burn.json
+ed9566b2aad6188ba643b5e955d925b2dbf61be6 data/witcheskitchen/tags/items/seeds/seed_amaranth.json
+e7266a3af3b5e27adb4d632f80f4b1f515e75683 data/witcheskitchen/tags/items/tea_blacklist.json
+1b238d9f0f3943672db9cee95e3174d49ef809c4 data/witcheskitchen/tags/items/seeds/seed_sanguinary.json
+0b6a3dfde510cfba1b810731eaeb6830c90331eb data/witcheskitchen/tags/items/seeds/seed_briar.json
+e7266a3af3b5e27adb4d632f80f4b1f515e75683 data/witcheskitchen/tags/items/oven_blacklist.json
+8a23702b05296c8af5014d6aa6e9265ded85c7d9 data/witcheskitchen/tags/items/seeds/seed_blackberry.json
+a767d286682def2d7da951a1a09e137cd6a65f7d data/witcheskitchen/tags/items/seeds/seed_camellia.json
+6ad10ed34d838ad08fc61e887a49485f669c1624 data/witcheskitchen/tags/items/seeds/seed_st_johns_wort.json
