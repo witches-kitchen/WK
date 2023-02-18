@@ -3,23 +3,35 @@ package cf.witcheskitchen.common.variants;
 import java.util.Optional;
 
 public enum AmaranthTypes {
-    COMMON(""),
-    SWEETBERRY("sweetberry"),
-    TORCH("torch"),
-    SUNDEW("sundew"),
-    CREEPER("creeper"),
-    VIRIDIAN("viridian"),
-    GRISELIN("griselin"),
-    CERISE("cerise"),
-    DARK_PASSION("dark_passion"),
-    FIREBIRD("firebird");
+    COMMON("", 0xffffff),
+    SWEETBERRY("sweetberry", 0xffffff),
+    TORCH("torch", 0xffffff),
+    SUNDEW("sundew", 0xffffff),
+    CREEPER("creeper", 0xffffff),
+    VIRIDIAN("viridian", 0xffffff),
+    GRISELIN("griselin", 0xffffff),
+    CERISE("cerise", 0xffffff),
+    DARK_PASSION("dark_passion", 0xffffff),
+    FIREBIRD("firebird", 0xffffff);
 
-    AmaranthTypes(String s) {
+    private final int color;
+    private final String type;
+
+    AmaranthTypes(String type, int color) {
+        this.type = type;
+        this.color = color;
     }
 
-    public String getString(AmaranthTypes type){
-        String name = "amaranth";
-        return type.name().isEmpty() ? name : name + "_" + type.name();
+    public String getName(){
+        return "amatanth";
+    }
+
+    public String getType(){
+        return type;
+    }
+
+    public int getColor() {
+        return color;
     }
 
     public Optional<AmaranthTypes> next(AmaranthTypes v){

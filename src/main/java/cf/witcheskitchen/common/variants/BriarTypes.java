@@ -3,9 +3,26 @@ package cf.witcheskitchen.common.variants;
 import java.util.Optional;
 
 public enum BriarTypes {
-    NONE("");
+    COMMON("", 0xffffff);
 
-    BriarTypes(String s) {
+    private final int color;
+    private final String type;
+
+    BriarTypes(String type, int color) {
+        this.type = type;
+        this.color = color;
+    }
+
+    public String getName(){
+        return "briar";
+    }
+
+    public String getType(){
+        return type;
+    }
+
+    public int getColor() {
+        return color;
     }
 
     public Optional<BriarTypes> next(BriarTypes v){

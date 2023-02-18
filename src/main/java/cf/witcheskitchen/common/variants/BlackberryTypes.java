@@ -3,11 +3,27 @@ package cf.witcheskitchen.common.variants;
 import java.util.Optional;
 
 public enum BlackberryTypes {
-    NONE("");
+    COMMON("", 0xffffff);
 
-    BlackberryTypes(String s) {
+    private final int color;
+    private final String type;
+
+    BlackberryTypes(String type, int color) {
+        this.type = type;
+        this.color = color;
     }
 
+    public String getName(){
+        return "blackberry";
+    }
+
+    public String getType(){
+        return type;
+    }
+
+    public int getColor() {
+        return color;
+    }
     public Optional<BlackberryTypes> next(BlackberryTypes v){
         BlackberryTypes[] variants = BlackberryTypes.values();
         int index = v.ordinal();

@@ -9,6 +9,7 @@ import cf.witcheskitchen.common.crop.BelladonnaCropBlock;
 import cf.witcheskitchen.common.crop.MintCropBlock;
 import cf.witcheskitchen.common.crop.WormwoodCropBlock;
 import cf.witcheskitchen.common.generator.WKSaplingGenerator;
+import cf.witcheskitchen.common.variants.AmaranthTypes;
 import cf.witcheskitchen.common.variants.BelladonnaTypes;
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
 import net.minecraft.block.*;
@@ -190,20 +191,22 @@ public class WKBlocks {
     public static final Block CRIMSON_BREWING_BARREL = registerBarrel("crimson_brewing_barrel");
     public static final Block WARPED_BREWING_BARREL = registerBarrel("warped_brewing_barrel");
     //Crops
+    public static final Block AMARANTH = registerWithType("amaranth", new AmaranthCropBlock(AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
+    public static final Block AMARANTH_SWEETBERRY = registerWithType("amaranth_sweetberry", new AmaranthCropBlock(QuiltBlockSettings.copyOf(AMARANTH), AmaranthTypes.SWEETBERRY));
+    public static final Block AMARANTH_TORCH = registerWithType("amaranth_torch", new AmaranthCropBlock(QuiltBlockSettings.copyOf(AMARANTH), AmaranthTypes.TORCH));
+    public static final Block AMARANTH_SUNDEW = registerWithType("amaranth_sundew", new AmaranthCropBlock(QuiltBlockSettings.copyOf(AMARANTH), AmaranthTypes.SUNDEW));
+    public static final Block AMARANTH_CREEPER = registerWithType("amaranth_creeper", new AmaranthCropBlock(QuiltBlockSettings.copyOf(AMARANTH), AmaranthTypes.CREEPER));
+    public static final Block AMARANTH_VIRIDIAN = registerWithType("amaranth_viridian", new AmaranthCropBlock(QuiltBlockSettings.copyOf(AMARANTH), AmaranthTypes.VIRIDIAN));
+    public static final Block AMARANTH_GRISELIN = registerWithType("amaranth_griselin", new AmaranthCropBlock(QuiltBlockSettings.copyOf(AMARANTH), AmaranthTypes.GRISELIN));
+    public static final Block AMARANTH_CERISE = registerWithType("amaranth_cerise", new AmaranthCropBlock(QuiltBlockSettings.copyOf(AMARANTH), AmaranthTypes.CERISE));
+    public static final Block AMARANTH_DARK_PASSION = registerWithType("amaranth_dark_passion", new AmaranthCropBlock(QuiltBlockSettings.copyOf(AMARANTH), AmaranthTypes.DARK_PASSION));
+    public static final Block AMARANTH_FIREBIRD = registerWithType("amaranth_firebird", new AmaranthCropBlock(QuiltBlockSettings.copyOf(AMARANTH), AmaranthTypes.FIREBIRD));
+
     public static final Block BELLADONNA = registerWithType("belladonna", new BelladonnaCropBlock(AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
     public static final Block BELLADONNA_GLOW = registerWithType("belladonna_glow", new BelladonnaCropBlock(QuiltBlockSettings.copyOf(BELLADONNA), BelladonnaTypes.GLOW));
     public static final Block BELLADONNA_NOCTURNAL = registerWithType("belladonna_nocturnal", new BelladonnaCropBlock(QuiltBlockSettings.copyOf(BELLADONNA), BelladonnaTypes.NOCTURNAL));
 
-    public static final Block AMARANTH = registerAmaranth("amaranth", AmaranthCropBlock.Type.COMMON);
-    public static final Block AMARANTH_SWEETBERRY = registerAmaranth("amaranth_sweetberry", AmaranthCropBlock.Type.SWEETBERRY);
-    public static final Block AMARANTH_TORCH = registerAmaranth("amaranth_torch", AmaranthCropBlock.Type.TORCH);
-    public static final Block AMARANTH_SUNDEW = registerAmaranth("amaranth_sundew", AmaranthCropBlock.Type.SUNDEW);
-    public static final Block AMARANTH_CREEPER = registerAmaranth("amaranth_creeper", AmaranthCropBlock.Type.CREEPER);
-    public static final Block AMARANTH_VIRIDIAN = registerAmaranth("amaranth_viridian", AmaranthCropBlock.Type.VIRIDIAN);
-    public static final Block AMARANTH_GRISELIN = registerAmaranth("amaranth_griselin", AmaranthCropBlock.Type.GRISELIN);
-    public static final Block AMARANTH_CERISE = registerAmaranth("amaranth_cerise", AmaranthCropBlock.Type.CERISE);
-    public static final Block AMARANTH_DARK_PASSION = registerAmaranth("amaranth_dark_passion", AmaranthCropBlock.Type.DARK_PASSION);
-    public static final Block AMARANTH_FIREBIRD = registerAmaranth("amaranth_firebird", AmaranthCropBlock.Type.FIREBIRD);
+
 
     public static final Block MINT = register("mint", new MintCropBlock(AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
     public static final Block WORMWOOD = register("wormwood", new WormwoodCropBlock(AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
@@ -222,18 +225,8 @@ public class WKBlocks {
         return Collections.unmodifiableList(ITEMS);
     }
 
-
     public static Map<String, Block> getTypeBlocks() {
         return TYPE_BLOCKS;
-    }
-
-    private static Block registerAmaranth(String path, AmaranthCropBlock.Type type) {
-        final Block amaranth = new AmaranthCropBlock(AbstractBlock.Settings.of(Material.PLANT)
-                .noCollision()
-                .ticksRandomly()
-                .breakInstantly()
-                .sounds(BlockSoundGroup.CROP), type);
-        return register(path, amaranth);
     }
 
     private static QuiltBlockSettings leavesSettings() {

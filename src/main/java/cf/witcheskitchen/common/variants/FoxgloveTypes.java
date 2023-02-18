@@ -3,40 +3,55 @@ package cf.witcheskitchen.common.variants;
 import java.util.Optional;
 
 public enum FoxgloveTypes {
-    NONE(""),
-    SMALT("smalt"),
-    TRANQUIL_EVENING("tranquil_evening"),
-    PURPUREA("purpurea"),
-    LOVELY_MORNING("lovely_morning"),
-    IANTHINE("ianthine"),
-    QUEENS_HAT("queens_hat"),
-    BLUSH("blush"),
-    ROYAL_BLANKET("royal_blanket"),
-    LOVE("love"),
-    BABYS_DRESS("babys_dress"),
-    STROLL("stroll"),
-    MAIDENS("maidens"),
-    MORNING_FIELD("morning_field"),
-    SIGHE_GOWN("sighe_gown"),
-    CALAMINE("calamine"),
-    NETHERINE("netherine"),
-    SUNGLOW("sunglow"),
-    SANDSTONE_TEMPLE("sandstone_temple"),
-    FIERY_FIELD("fiery_field"),
-    PASSION("passion"),
-    BASTARD_AMBER("bastard_amber"),
-    SUNDROP("sundrop"),
-    AURULENT("aurulent"),
-    IVORY("ivory"),
-    NIVEOUS("niveous"),
-    COWS_CREAM("cows_drwam"),
-    SIDHE_MIST("sidhe_mist"),
-    PURITY("purify");
+    COMMON("", 0xffffff),
+    SMALT("smalt", 0xffffff),
+    TRANQUIL_EVENING("tranquil_evening", 0xffffff),
+    PURPUREA("purpurea", 0xffffff),
+    LOVELY_MORNING("lovely_morning", 0xffffff),
+    IANTHINE("ianthine", 0xffffff),
+    QUEENS_HAT("queens_hat", 0xffffff),
+    BLUSH("blush", 0xffffff),
+    ROYAL_BLANKET("royal_blanket", 0xffffff),
+    LOVE("love", 0xffffff),
+    BABYS_DRESS("babys_dress", 0xffffff),
+    STROLL("stroll", 0xffffff),
+    MAIDENS("maidens", 0xffffff),
+    MORNING_FIELD("morning_field", 0xffffff),
+    SIGHE_GOWN("sighe_gown", 0xffffff),
+    CALAMINE("calamine", 0xffffff),
+    NETHERINE("netherine", 0xffffff),
+    SUNGLOW("sunglow", 0xffffff),
+    SANDSTONE_TEMPLE("sandstone_temple", 0xffffff),
+    FIERY_FIELD("fiery_field", 0xffffff),
+    PASSION("passion", 0xffffff),
+    BASTARD_AMBER("bastard_amber", 0xffffff),
+    SUNDROP("sundrop", 0xffffff),
+    AURULENT("aurulent", 0xffffff),
+    IVORY("ivory", 0xffffff),
+    NIVEOUS("niveous", 0xffffff),
+    COWS_CREAM("cows_drwam", 0xffffff),
+    SIDHE_MIST("sidhe_mist", 0xffffff),
+    PURITY("purify", 0xffffff);
 
-    FoxgloveTypes(String string) {
+    private final int color;
+    private final String type;
 
+    FoxgloveTypes(String type, int color) {
+        this.type = type;
+        this.color = color;
     }
 
+    public String getName(){
+        return "foxglove";
+    }
+
+    public String getType(){
+        return type;
+    }
+
+    public int getColor() {
+        return color;
+    }
     public Optional<FoxgloveTypes> next(FoxgloveTypes v){
         FoxgloveTypes[] variants = FoxgloveTypes.values();
         int index = v.ordinal();

@@ -3,13 +3,30 @@ package cf.witcheskitchen.common.variants;
 import java.util.Optional;
 
 public enum CamelliaTypes {
-    NONE(""),
-    BUTTERCREAM("buttercream"),
-    BISQUE("bisque"),
-    FLINT("flint"),
-    DEEP_LOVE("deep_love");
+    COMMON("", 0xffffff),
+    BUTTERCREAM("buttercream", 0xffffff),
+    BISQUE("bisque", 0xffffff),
+    FLINT("flint", 0xffffff),
+    DEEP_LOVE("deep_love", 0xffffff);
 
-    CamelliaTypes(String s) {
+    private final int color;
+    private final String type;
+
+    CamelliaTypes(String type, int color) {
+        this.type = type;
+        this.color = color;
+    }
+
+    public String getName(){
+        return "camellia";
+    }
+
+    public String getType(){
+        return type;
+    }
+
+    public int getColor() {
+        return color;
     }
 
     public Optional<CamelliaTypes> next(CamelliaTypes v){

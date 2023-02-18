@@ -1,5 +1,6 @@
 package cf.witcheskitchen.common.item;
 
+import cf.witcheskitchen.WitchesKitchenConfig;
 import cf.witcheskitchen.common.registry.WKBlocks;
 import cf.witcheskitchen.common.util.TypeHelper;
 import cf.witcheskitchen.common.variants.BelladonnaTypes;
@@ -16,6 +17,7 @@ import net.minecraft.item.ItemUsageContext;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
@@ -26,6 +28,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+import org.quiltmc.loader.api.QuiltLoader;
 
 import java.util.List;
 import java.util.Optional;
@@ -39,7 +42,6 @@ public class WKSeedItem extends AliasedBlockItem {
     @Nullable
     @Override
     protected BlockState getPlacementState(ItemPlacementContext context) {
-        //BlockState blockState = this.getBlock().getPlacementState(context);
         ItemStack itemStack = context.getStack();
         if(itemStack.getNbt() != null && itemStack.getNbt().contains("Variant")){
             Optional<Block> blockState = TypeHelper.getBlockFromNbt(itemStack.getNbt());
@@ -48,15 +50,20 @@ public class WKSeedItem extends AliasedBlockItem {
         return null;
     }
 
+    //TODO remove
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        ItemStack itemStack = user.getMainHandStack();
-        if(!itemStack.hasNbt()){
-            NbtCompound nbtCompound = new NbtCompound();
-            TypeHelper.toNbt(nbtCompound, BelladonnaTypes.GLOW.getFullName(), BelladonnaTypes.GLOW.getColor());
-            itemStack.getOrCreateNbt().copyFrom(nbtCompound);
-        }else{
-            System.out.println(itemStack.getNbt());
+        if(QuiltLoader.isDevelopmentEnvironment()){
+            if(user.isSneaking()){
+                ItemStack itemStack = user.getMainHandStack();
+                if(!itemStack.hasNbt()){
+                    NbtCompound nbtCompound = new NbtCompound();
+                    TypeHelper.toNbt(nbtCompound, BelladonnaTypes.GLOW.getName(), BelladonnaTypes.GLOW.getType(), BelladonnaTypes.GLOW.getColor());
+                    itemStack.getOrCreateNbt().copyFrom(nbtCompound);
+                }else{
+                    System.out.println(itemStack.getNbt());
+                }
+            }
         }
         return super.use(world, user, hand);
     }
@@ -74,16 +81,9 @@ public class WKSeedItem extends AliasedBlockItem {
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        NbtList nbtList = stack.getOrCreateNbt().getList("Variant", NbtElement.COMPOUND_TYPE);
-        if(!nbtList.isEmpty()){
-            String name = nbtList.getCompound(0).getString("Name");
-            if(name.contains("_")){
-                name = name.substring(name.lastIndexOf("_") + 1);
-            }
-            String formatName = name.substring(0, 1).toUpperCase() + name.substring(1);
-            NbtCompound colorNbt = nbtList.getCompound(1);
-            int color = colorNbt.getInt("Color");
-            tooltip.add(Text.translatable(formatName).setStyle(Style.EMPTY.withColor(color)));
+        MutableText text = TypeHelper.getTypeText(stack);
+        if(text != null){
+            tooltip.add(text);
         }
         super.appendTooltip(stack, world, tooltip, context);
     }

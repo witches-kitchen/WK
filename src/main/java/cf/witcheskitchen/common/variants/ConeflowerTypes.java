@@ -3,24 +3,41 @@ package cf.witcheskitchen.common.variants;
 import java.util.Optional;
 
 public enum ConeflowerTypes {
-    NONE(""),
-    DANCING_LADIES("dancing_ladies"),
-    VIOLET("violet"),
-    QUEENS_DESIRE("queens_desire"),
-    ROSE_DRESS("rose_dress"),
-    SUITOR("suitor"),
-    NETHER("nether"),
-    LADYS_WISH("ladys_wish"),
-    SUNGLOW("sunglow"),
-    FLAME("flame"),
-    GILDED("gilded"),
-    MORNING_MIST("morning_mist"),
-    FLEECE("fleece"),
-    COMPANY("company"),
-    MASQUERADE("masquerade"),
-    PARTY_BLEND("party_blend");
+    COMMON("", 0xffffff),
+    DANCING_LADIES("dancing_ladies", 0xffffff),
+    VIOLET("violet", 0xffffff),
+    QUEENS_DESIRE("queens_desire", 0xffffff),
+    ROSE_DRESS("rose_dress", 0xffffff),
+    SUITOR("suitor", 0xffffff),
+    NETHER("nether", 0xffffff),
+    LADYS_WISH("ladys_wish", 0xffffff),
+    SUNGLOW("sunglow", 0xffffff),
+    FLAME("flame", 0xffffff),
+    GILDED("gilded", 0xffffff),
+    MORNING_MIST("morning_mist", 0xffffff),
+    FLEECE("fleece", 0xffffff),
+    COMPANY("company", 0xffffff),
+    MASQUERADE("masquerade", 0xffffff),
+    PARTY_BLEND("party_blend", 0xffffff);
 
-    ConeflowerTypes(String s) {
+    private final int color;
+    private final String type;
+
+    ConeflowerTypes(String type, int color) {
+        this.type = type;
+        this.color = color;
+    }
+
+    public String getName(){
+        return "coneflowerCOMMON";
+    }
+
+    public String getType(){
+        return type;
+    }
+
+    public int getColor() {
+        return color;
     }
 
     public Optional<ConeflowerTypes> next(ConeflowerTypes v){

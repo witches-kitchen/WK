@@ -160,8 +160,6 @@ public class WKLanguageProvider extends FabricLanguageProvider {
         //ITEMS
         builder.add(WKItems.BELLADONNA_BLOSSOM, "Belladonna Blossom");
         builder.add(WKItems.BELLADONNA_SEEDS, "Belladonna Seeds");
-        builder.add(WKItems.BELLADONNA_GLOW_SEEDS, "Belladonna Glow Seeds");
-        builder.add(WKItems.BELLADONNA_NOCTURNAL_SEEDS, "Belladonna Nocturnal Seeds");
         builder.add(WKItems.DOLLOP_OF_FROSTING, "Dollop of Frosting");
         builder.add(WKItems.CU_SITH_SPAWN_EGG, "Cu-Sith Spawn Egg");
         builder.add(WKItems.FERRET_SPAWN_EGG, "Ferret Spawn Egg");

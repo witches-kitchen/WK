@@ -38,7 +38,7 @@ public class BelladonnaCropBlock extends WKTallCropBlock {
         super.onBreak(world, pos, state, player);
         ItemStack itemStack = getSeedsItem().asItem().getDefaultStack();
         NbtCompound nbtCompound = new NbtCompound();
-        TypeHelper.toNbt(nbtCompound, type.getFullName(), type.getColor());
+        TypeHelper.toNbt(nbtCompound, type.getName(), type.getType(), type.getColor());
         itemStack.writeNbt(nbtCompound);
         ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), itemStack);
     }
@@ -46,11 +46,7 @@ public class BelladonnaCropBlock extends WKTallCropBlock {
     @ClientOnly
     @Override
     protected ItemConvertible getSeedsItem() {
-        return switch (this.type) {
-            case COMMON -> WKItems.BELLADONNA_SEEDS;
-            case GLOW -> WKItems.BELLADONNA_GLOW_SEEDS;
-            case NOCTURNAL -> WKItems.BELLADONNA_NOCTURNAL_SEEDS;
-        };
+        return  WKItems.BELLADONNA_SEEDS;
     }
 
     @Override

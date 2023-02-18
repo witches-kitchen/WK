@@ -3,9 +3,26 @@ package cf.witcheskitchen.common.variants;
 import java.util.Optional;
 
 public enum StJohnsWortTypes {
-    NONE("");
+    COMMON("", 0xffffff);
 
-    StJohnsWortTypes(String s) {
+    private final int color;
+    private final String type;
+
+    StJohnsWortTypes(String type, int color) {
+        this.type = type;
+        this.color = color;
+    }
+
+    public String getName(){
+        return "st_johns_wort";
+    }
+
+    public String getType(){
+        return type;
+    }
+
+    public int getColor() {
+        return color;
     }
 
     public Optional<StJohnsWortTypes> next(StJohnsWortTypes v){

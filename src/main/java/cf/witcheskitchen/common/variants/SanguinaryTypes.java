@@ -3,14 +3,31 @@ package cf.witcheskitchen.common.variants;
 import java.util.Optional;
 
 public enum SanguinaryTypes {
-    NONE(""),
-    MEADOW("meadow"),
-    BLUSHING("blushing"),
-    SUNSET("sunset"),
-    MADDER("madder"),
-    AUREOLIN("aureolin");
+    COMMON("", 0xffffff),
+    MEADOW("meadow", 0xffffff),
+    BLUSHING("blushing", 0xffffff),
+    SUNSET("sunset", 0xffffff),
+    MADDER("madder", 0xffffff),
+    AUREOLIN("aureolin", 0xffffff);
 
-    SanguinaryTypes(String s) {
+    private final int color;
+    private final String type;
+
+    SanguinaryTypes(String type, int color) {
+        this.type = type;
+        this.color = color;
+    }
+
+    public String getName(){
+        return "sanguinary";
+    }
+
+    public String getType(){
+        return type;
+    }
+
+    public int getColor() {
+        return color;
     }
 
     public Optional<SanguinaryTypes> next(SanguinaryTypes v){

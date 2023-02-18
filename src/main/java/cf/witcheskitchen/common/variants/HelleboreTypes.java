@@ -3,19 +3,36 @@ package cf.witcheskitchen.common.variants;
 import java.util.Optional;
 
 public enum HelleboreTypes {
-    NONE(""),
-    MORNING_TEA("morning_tea"),
-    CASANOVA("casanova"),
-    BLUSHING("blushing"),
-    CELADON("celadon"),
-    FURY("fury"),
-    ANGEL("angel"),
-    TWILIGHT("twilight"),
-    GRIMM("grimm"),
-    NOCTURNE("nocturne");
+    COMMON("", 0xffffff),
+    MORNING_TEA("morning_tea", 0xffffff),
+    CASANOVA("casanova", 0xffffff),
+    BLUSHING("blushing", 0xffffff),
+    CELADON("celadon", 0xffffff),
+    FURY("fury", 0xffffff),
+    ANGEL("angel", 0xffffff),
+    TWILIGHT("twilight", 0xffffff),
+    GRIMM("grimm", 0xffffff),
+    NOCTURNE("nocturne", 0xffffff);
 
 
-    HelleboreTypes(String s) {
+    private final int color;
+    private final String type;
+
+    HelleboreTypes(String type, int color) {
+        this.type = type;
+        this.color = color;
+    }
+
+    public String getName(){
+        return "hellebore";
+    }
+
+    public String getType(){
+        return type;
+    }
+
+    public int getColor() {
+        return color;
     }
 
     public Optional<HelleboreTypes> next(HelleboreTypes v){

@@ -3,11 +3,27 @@ package cf.witcheskitchen.common.variants;
 import java.util.Optional;
 
 public enum WormwoodTypes {
-    NONE("");
+    COMMON("", 0xffffff);
 
-    WormwoodTypes(String s) {
+    private final int color;
+    private final String type;
+
+    WormwoodTypes(String type, int color) {
+        this.type = type;
+        this.color = color;
     }
 
+    public String getName(){
+        return "wormwood";
+    }
+
+    public String getType(){
+        return type;
+    }
+
+    public int getColor() {
+        return color;
+    }
     static Optional<WormwoodTypes> next(WormwoodTypes v){
         WormwoodTypes[] variants = WormwoodTypes.values();
         int index = v.ordinal();

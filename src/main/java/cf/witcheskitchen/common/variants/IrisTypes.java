@@ -3,12 +3,29 @@ package cf.witcheskitchen.common.variants;
 import java.util.Optional;
 
 public enum IrisTypes {
-    NONE(""),
-    OCEAN("ocean"),
-    DEEP_SEA("deep_sea"),
-    BLEEDING_HEART("bleeding_heart");
+    COMMON("", 0xffffff),
+    OCEAN("ocean", 0xffffff),
+    DEEP_SEA("deep_sea", 0xffffff),
+    BLEEDING_HEART("bleeding_heart", 0xffffff);
 
-    IrisTypes(String s) {
+    private final int color;
+    private final String type;
+
+    IrisTypes(String type, int color) {
+        this.type = type;
+        this.color = color;
+    }
+
+    public String getName(){
+        return "iris";
+    }
+
+    public String getType(){
+        return type;
+    }
+
+    public int getColor() {
+        return color;
     }
 
     public Optional<IrisTypes> next(IrisTypes v){

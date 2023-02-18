@@ -3,9 +3,26 @@ package cf.witcheskitchen.common.variants;
 import java.util.Optional;
 
 public enum GingerTypes {
-    NONE("");
+    COMMON("", 0xffffff);
 
-    GingerTypes(String s) {
+    private final int color;
+    private final String type;
+
+    GingerTypes(String type, int color) {
+        this.type = type;
+        this.color = color;
+    }
+
+    public String getName(){
+        return "ginger";
+    }
+
+    public String getType(){
+        return type;
+    }
+
+    public int getColor() {
+        return color;
     }
 
     public Optional<GingerTypes> next(GingerTypes v){

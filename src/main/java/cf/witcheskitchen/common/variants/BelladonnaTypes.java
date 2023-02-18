@@ -3,25 +3,24 @@ package cf.witcheskitchen.common.variants;
 import java.util.Optional;
 
 public enum BelladonnaTypes {
-    COMMON("", 0xff2660),
-    GLOW("glow", 0xff2660),
-    NOCTURNAL("nocturne", 0xff2660);
+    COMMON("", 0xffffff),
+    GLOW("glow", 0xffffff),
+    NOCTURNAL("nocturne", 0xffffff);
 
     private final int color;
-    private final String name;
+    private final String type;
 
-    BelladonnaTypes(String name, int color) {
-        this.name = name;
+    BelladonnaTypes(String type, int color) {
+        this.type = type;
         this.color = color;
     }
 
-    public String getFullName(){
-        String id = "belladonna";
-        return this.name.isEmpty() ? "" : id + "_" + this.name;
+    public String getName(){
+        return "belladonna";
     }
 
-    public String getName(){
-        return name;
+    public String getType(){
+        return type;
     }
 
     public int getColor() {
