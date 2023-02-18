@@ -55,7 +55,7 @@ public class TypeHelper {
 
     public static MutableText getTypeText(ItemStack stack){
         NbtList nbtList = stack.getOrCreateNbt().getList("Variant", NbtElement.COMPOUND_TYPE);
-        if(!nbtList.isEmpty()){
+        if(!nbtList.isEmpty() && !nbtList.getCompound(1).isEmpty() && !nbtList.getCompound(2).isEmpty()){
             String name = nbtList.getCompound(1).getString("Type");
             String formatName = name.substring(0, 1).toUpperCase() + name.substring(1);
             NbtCompound colorNbt = nbtList.getCompound(2);

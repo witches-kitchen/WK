@@ -83,32 +83,32 @@ public class WKItems {
      */
 
     private static Item registerSeed(String id, Block block) {
-        return register(id, settings -> new WKSeedItem(block, settings), WKCreativeTabs.SEED_TAB);
+        return register(id, settings -> new WKSeedItem(block, settings), WitchesKitchen.SEED_TAB);
     }
 
     /**
      * Use me for registering items!
      */
     private static Item registerItem(String id) {
-        return register(id, Item::new, WKCreativeTabs.SEED_TAB);
+        return register(id, Item::new, WitchesKitchen.SEED_TAB);
     }
 
     /**
      * Use me for registering foodstuffs!
      */
     private static <T extends Item> T registerFoodStuffs(String id, Function<QuiltItemSettings, T> factory) {
-        return register(id, factory, WKCreativeTabs.SEED_TAB);
+        return register(id, factory, WitchesKitchen.SEED_TAB);
     }
 
     private static Item register(String id) {
-        return register(id, Item::new, WKCreativeTabs.SEED_TAB);
+        return register(id, Item::new, WitchesKitchen.SEED_TAB);
     }
 
     /**
      * Use me for registering spawn eggs!
      */
     private static <T extends Item> T registerSpawnEgg(String id, Function<QuiltItemSettings, T> factory) {
-        return register(id, factory, WKCreativeTabs.GENERAL_TAB);
+        return register(id, factory, WitchesKitchen.GENERAL_TAB);
     }
 
     private static <T extends Item> T register(String id, Function<QuiltItemSettings, T> factory, ItemGroup tab) {
@@ -123,7 +123,7 @@ public class WKItems {
         return new QuiltItemSettings().group(tab);
     }
 
-    public static void register() {
+    public static void init() {
         ITEMS.forEach(entry -> Registry.register(Registry.ITEM, entry.id(), entry.object()));
         CompostingChanceRegistry compostingChanceRegistry = CompostingChanceRegistry.INSTANCE;
         compostingChanceRegistry.add(AMARANTH_SPRIG, 0.65f);

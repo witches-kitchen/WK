@@ -3,9 +3,12 @@ package cf.witcheskitchen;
 import cf.witcheskitchen.common.registry.*;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.registry.OxidizableBlocksRegistry;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
+import org.quiltmc.qsl.item.group.api.QuiltItemGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,15 +16,19 @@ public class WitchesKitchen implements ModInitializer {
 
     public static final String MODID = "witcheskitchen";
     public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
+    public static final ItemGroup GENERAL_TAB = QuiltItemGroup.builder(new Identifier(MODID, MODID)).icon(() -> new ItemStack(WKBlocks.IRON_WITCHES_OVEN.asItem())).build();
+    public static final ItemGroup SEED_TAB = QuiltItemGroup.builder(new Identifier(MODID, MODID)).icon(() -> new ItemStack(WKItems.BELLADONNA_SEEDS)).build();
+    public static final ItemGroup GINGER_TAB = QuiltItemGroup.builder(new Identifier(MODID, MODID)).icon(() -> new ItemStack(WKBlocks.GINGERBREAD_BLOCK.asItem())).build();
+
+
 
     @Override
     public void onInitialize(ModContainer mod) {
         WitchesKitchenConfig.init(MODID, WitchesKitchenConfig.class);
-        WKCreativeTabs.register();
         WKPacketTypes.register(EnvType.SERVER);
-        WKBlocks.register();
+        WKBlocks.init();
         registerOxidizableBlocks();
-        WKItems.register();
+        WKItems.init();
         WKPotions.register();
         WKFoodComponents.register();
         WKTags.register();

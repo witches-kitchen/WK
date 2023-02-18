@@ -1,5 +1,6 @@
 package cf.witcheskitchen.datagen;
 
+import cf.witcheskitchen.WitchesKitchen;
 import cf.witcheskitchen.common.registry.*;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
@@ -12,8 +13,8 @@ public class WKLanguageProvider extends FabricLanguageProvider {
     @Override
     public void generateTranslations(TranslationBuilder builder) {
         //GROUPS
-        builder.add(WKCreativeTabs.GENERAL_TAB, "Witches' Kitchen General");
-        builder.add(WKCreativeTabs.SEED_TAB, "Witches' Kitchen Seeds");
+        builder.add(WitchesKitchen.GENERAL_TAB, "Witches' Kitchen General");
+        builder.add(WitchesKitchen.SEED_TAB, "Witches' Kitchen Seeds");
 
         //BLOCKS
         builder.add(WKBlocks.RAW_GINGERBREAD_BLOCK, "Raw Gingerbread Block");
