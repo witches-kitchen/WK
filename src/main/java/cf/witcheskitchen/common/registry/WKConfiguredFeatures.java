@@ -1,7 +1,7 @@
 package cf.witcheskitchen.common.registry;
 
-import cf.witcheskitchen.WK;
-import cf.witcheskitchen.WKConfig;
+import cf.witcheskitchen.WitchesKitchen;
+import cf.witcheskitchen.WitchesKitchenConfig;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
 import cf.witcheskitchen.common.generator.SumacFoliagePlacer;
 import cf.witcheskitchen.mixin.FoliagePlacerTypeInvoker;
@@ -100,7 +100,7 @@ public class WKConfiguredFeatures {
                     new TwoLayersFeatureSize(1, 0, 1)).ignoreVines().build()));
 
     static <T extends ConfiguredFeature<TreeFeatureConfig, ?>> T register(final String name, final T configuredFeature) {
-        final Identifier id = WK.id(name);
+        final Identifier id = WitchesKitchen.id(name);
         if (BuiltinRegistries.PLACED_FEATURE.containsId(id)) {
             throw new IllegalStateException("Placed Feature ID: \"" + id + "\" already exists in the Placed Features registry!");
         }
@@ -117,8 +117,8 @@ public class WKConfiguredFeatures {
             final RegistryKey<ConfiguredFeature<?, ?>> key = RegistryKey.of(Registry.CONFIGURED_FEATURE_KEY, feature.id());
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, key.getValue(), feature.object());
         });
-        if (WKConfig.debugMode) {
-            WK.LOGGER.info("Witches Kitchen Base Generation: Successfully Loaded");
+        if (WitchesKitchenConfig.debugMode) {
+            WitchesKitchen.LOGGER.info("Witches Kitchen Base Generation: Successfully Loaded");
         }
     }
 }

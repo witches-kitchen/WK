@@ -1,6 +1,6 @@
 package cf.witcheskitchen.client.network.packet;
 
-import cf.witcheskitchen.WK;
+import cf.witcheskitchen.WitchesKitchen;
 import cf.witcheskitchen.api.event.network.S2CPacketRegistryListener;
 import cf.witcheskitchen.common.registry.WKParticleTypes;
 import net.minecraft.client.MinecraftClient;
@@ -17,7 +17,7 @@ import org.quiltmc.qsl.networking.api.ServerPlayNetworking;
 
 public class SplashParticlePacketHandler implements S2CPacketRegistryListener {
 
-    private static final Identifier SPLASH_PARTICLE_CHANNEL = new Identifier(WK.MODID, "splash_particle");
+    private static final Identifier SPLASH_PARTICLE_CHANNEL = new Identifier(WitchesKitchen.MODID, "splash_particle");
 
     public static void send(ServerPlayerEntity player, BlockPos pos, double r, double g, double b) {
         send(player, pos, r, g, b, 0, 0, 0, (byte) 1);

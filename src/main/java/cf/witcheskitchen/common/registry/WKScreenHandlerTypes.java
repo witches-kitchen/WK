@@ -1,7 +1,7 @@
 package cf.witcheskitchen.common.registry;
 
-import cf.witcheskitchen.WK;
-import cf.witcheskitchen.WKConfig;
+import cf.witcheskitchen.WitchesKitchen;
+import cf.witcheskitchen.WitchesKitchenConfig;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
 import cf.witcheskitchen.client.gui.screen.handler.BrewingBarrelScreenHandler;
 import cf.witcheskitchen.client.gui.screen.handler.WitchesOvenScreenHandler;
@@ -20,15 +20,15 @@ public class WKScreenHandlerTypes {
     private static final List<ObjectDefinition<ScreenHandlerType<?>>> SCREEN_HANDLER_TYPES = new ArrayList<>();
 
     static {
-        if (WKConfig.debugMode) {
-            WK.LOGGER.info("Witches Kitchen Base Screen Handlers: Successfully Loaded");
+        if (WitchesKitchenConfig.debugMode) {
+            WitchesKitchen.LOGGER.info("Witches Kitchen Base Screen Handlers: Successfully Loaded");
         }
     }
 
     static <T extends ScreenHandler> ScreenHandlerType<T> register(final String name, final ScreenHandlerType.Factory<T> factory) {
         Validate.isTrue(factory != null);
         final ScreenHandlerType<T> handler = new ScreenHandlerType<>(factory);
-        final Identifier id = WK.id(name);
+        final Identifier id = WitchesKitchen.id(name);
         SCREEN_HANDLER_TYPES.add(new ObjectDefinition<>(id, handler));
         return handler;
     }

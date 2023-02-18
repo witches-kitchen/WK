@@ -1,7 +1,7 @@
 package cf.witcheskitchen.common.registry;
 
-import cf.witcheskitchen.WK;
-import cf.witcheskitchen.WKConfig;
+import cf.witcheskitchen.WitchesKitchen;
+import cf.witcheskitchen.WitchesKitchenConfig;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
 import cf.witcheskitchen.common.recipe.BarrelFermentingRecipe;
 import cf.witcheskitchen.common.recipe.CauldronBrewingRecipe;
@@ -29,14 +29,14 @@ public class WKRecipeTypes {
     public static final RecipeType<CauldronBrewingRecipe> CAULDRON_BREWING_RECIPE_TYPE = register("cauldron_brewing");
 
     private static <T extends Recipe<?>> RecipeSerializer<T> register(String name, RecipeSerializer<T> serializer) {
-        final Identifier id = WK.id(name);
+        final Identifier id = WitchesKitchen.id(name);
         final ObjectDefinition<RecipeSerializer<?>> definition = new ObjectDefinition<>(id, serializer);
         RECIPE_SERIALIZERS.add(definition);
         return serializer;
     }
 
     private static <T extends Recipe<?>> RecipeType<T> register(String name) {
-        final Identifier id = WK.id(name);
+        final Identifier id = WitchesKitchen.id(name);
         final RecipeType<T> type = new RecipeType<>() {
             @Override
             public String toString() {
@@ -63,8 +63,8 @@ public class WKRecipeTypes {
         for (ObjectDefinition<RecipeType<?>> entry : RECIPE_TYPES) {
             Registry.register(Registry.RECIPE_TYPE, entry.id(), entry.object());
         }
-        if (WKConfig.debugMode) {
-            WK.LOGGER.info("Witches Kitchen Base Custom Recipes: Successfully Loaded");
+        if (WitchesKitchenConfig.debugMode) {
+            WitchesKitchen.LOGGER.info("Witches Kitchen Base Custom Recipes: Successfully Loaded");
         }
     }
 }

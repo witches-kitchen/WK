@@ -1,7 +1,7 @@
 package cf.witcheskitchen.common.registry;
 
-import cf.witcheskitchen.WK;
-import cf.witcheskitchen.WKConfig;
+import cf.witcheskitchen.WitchesKitchen;
+import cf.witcheskitchen.WitchesKitchenConfig;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
 import cf.witcheskitchen.common.statuseffect.*;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
@@ -42,7 +42,7 @@ public class WKStatusEffects {
 
     static <T extends StatusEffect> T create(String name, T effect) {
         Validate.isTrue(effect != null);
-        final Identifier id = WK.id(name);
+        final Identifier id = WitchesKitchen.id(name);
         final ObjectDefinition<StatusEffect> def = new ObjectDefinition<>(id, effect);
         STATUS_EFFECTS.add(def);
         return effect;
@@ -50,8 +50,8 @@ public class WKStatusEffects {
 
     public static void register() {
         STATUS_EFFECTS.forEach(entry -> Registry.register(Registry.STATUS_EFFECT, entry.id(), entry.object()));
-        if (WKConfig.debugMode) {
-            WK.LOGGER.info("Witches Kitchen Base Potions: Successfully Loaded");
+        if (WitchesKitchenConfig.debugMode) {
+            WitchesKitchen.LOGGER.info("Witches Kitchen Base Potions: Successfully Loaded");
         }
     }
 }

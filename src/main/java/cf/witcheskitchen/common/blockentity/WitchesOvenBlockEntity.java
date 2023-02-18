@@ -1,6 +1,6 @@
 package cf.witcheskitchen.common.blockentity;
 
-import cf.witcheskitchen.WK;
+import cf.witcheskitchen.WitchesKitchen;
 import cf.witcheskitchen.api.block.entity.IExperienceHandler;
 import cf.witcheskitchen.api.block.entity.WKBlockEntity;
 import cf.witcheskitchen.api.block.entity.WKBlockEntityWithInventory;
@@ -265,7 +265,7 @@ public class WitchesOvenBlockEntity extends WKBlockEntityWithInventory implement
                     if (this.passiveProgress[i] >= this.maxProgress) {
                         final var passiveRecipe = this.getCampfireRecipeFor(world, foodAt);
                         if (passiveRecipe == null) {
-                            WK.LOGGER.error("Attempted to craft a null passive recipe from Witches' Oven. This must be fixed");
+                            WitchesKitchen.LOGGER.error("Attempted to craft a null passive recipe from Witches' Oven. This must be fixed");
                             return;
                         }
                         final ItemStack output = passiveRecipe.craft(this.passiveInventory);
@@ -391,7 +391,7 @@ public class WitchesOvenBlockEntity extends WKBlockEntityWithInventory implement
         } else if (recipe instanceof OvenCookingRecipe ovenRecipe) {
             return ovenRecipe.getOutputs();
         } else {
-            WK.LOGGER.error("Unknown recipe type was passed in for Witches' Oven");
+            WitchesKitchen.LOGGER.error("Unknown recipe type was passed in for Witches' Oven");
             return DefaultedList.of();
         }
     }

@@ -1,7 +1,7 @@
 package cf.witcheskitchen.common.registry;
 
-import cf.witcheskitchen.WK;
-import cf.witcheskitchen.WKConfig;
+import cf.witcheskitchen.WitchesKitchen;
+import cf.witcheskitchen.WitchesKitchenConfig;
 import cf.witcheskitchen.api.event.network.C2SPacketRegistryListener;
 import cf.witcheskitchen.api.event.network.S2CPacketRegistryListener;
 import cf.witcheskitchen.client.network.packet.ParticlePacketHandler;
@@ -25,8 +25,8 @@ public class WKPacketTypes {
     public static final S2CPacketRegistryListener SPLASH_PARTICLE_HANDLER = registerClientPacket(new SplashParticlePacketHandler());
 
     static {
-        if (WKConfig.debugMode) {
-            WK.LOGGER.info("Witches Kitchen Base Packet Handlers: Successfully Loaded");
+        if (WitchesKitchenConfig.debugMode) {
+            WitchesKitchen.LOGGER.info("Witches Kitchen Base Packet Handlers: Successfully Loaded");
         }
     }
 

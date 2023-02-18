@@ -2,23 +2,22 @@ package cf.witcheskitchen.common.crop;
 
 import cf.witcheskitchen.api.crop.WKTallCropBlock;
 import cf.witcheskitchen.common.registry.WKItems;
+import cf.witcheskitchen.common.variants.AmaranthTypes;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.state.property.IntProperty;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 public class AmaranthCropBlock extends WKTallCropBlock {
     public static final int MAX_AGE = 6;
-    private final Type type;
+    private final AmaranthTypes type;
 
     public AmaranthCropBlock(Settings settings) {
-        this(settings, Type.COMMON);
+        this(settings, AmaranthTypes.COMMON);
     }
 
-
-
-    public AmaranthCropBlock(Settings settings, Type rarity) {
+    public AmaranthCropBlock(Settings settings, AmaranthTypes type) {
         super(settings);
-        this.type = rarity;
+        this.type = type;
     }
 
     @Override
@@ -29,18 +28,7 @@ public class AmaranthCropBlock extends WKTallCropBlock {
     @ClientOnly
     @Override
     protected ItemConvertible getSeedsItem() {
-        return switch (this.type) {
-            case COMMON -> WKItems.AMARANTH_SEEDS;
-            case SWEETBERRY -> WKItems.AMARANTH_SWEETBERRY_SEEDS;
-            case TORCH -> WKItems.AMARANTH_TORCH_SEEDS;
-            case SUNDEW -> WKItems.AMARANTH_SUNDEW_SEEDS;
-            case CREEPER -> WKItems.AMARANTH_CREEPER_SEEDS;
-            case VIRIDIAN -> WKItems.AMARANTH_VIRIDIAN_SEEDS;
-            case GRISELIN -> WKItems.AMARANTH_GRISELIN_SEEDS;
-            case CERISE -> WKItems.AMARANTH_CERISE_SEEDS;
-            case DARK_PASSION -> WKItems.AMARANTH_DARK_PASSION_SEEDS;
-            case FIREBIRD -> WKItems.AMARANTH_FIREBIRD_SEEDS;
-        };
+        return  WKItems.AMARANTH_SEEDS;
     }
 
     @Override
@@ -51,18 +39,5 @@ public class AmaranthCropBlock extends WKTallCropBlock {
     @Override
     public int doubleBlockAge() {
         return 2;
-    }
-
-    public enum Type {
-        COMMON,
-        SWEETBERRY,
-        TORCH,
-        SUNDEW,
-        CREEPER,
-        VIRIDIAN,
-        GRISELIN,
-        CERISE,
-        DARK_PASSION,
-        FIREBIRD
     }
 }

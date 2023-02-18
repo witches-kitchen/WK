@@ -1,0 +1,45 @@
+{
+  "criteria": {
+    "has_item": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "witcheskitchen:dollop_of_frosting"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "witcheskitchen:frosting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "witcheskitchen.advancements.witcheskitchen.root.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "witcheskitchen:dollop_of_frosting"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "witcheskitchen.advancements.witcheskitchen.root.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_item"
+    ],
+    [
+      "has_the_recipe"
+    ]
+  ]
+}

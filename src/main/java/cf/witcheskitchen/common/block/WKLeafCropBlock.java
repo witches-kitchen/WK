@@ -1,9 +1,11 @@
 package cf.witcheskitchen.common.block;
 
+import cf.witcheskitchen.api.crop.WKCropBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.ShapeContext;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
@@ -106,6 +108,11 @@ public class WKLeafCropBlock extends WKCropBlock {
     @Override
     public IntProperty getAgeProperty() {
         return AGE;
+    }
+
+    @Override
+    protected ItemConvertible getSeedsItem() {
+        return null;
     }
 
     @Override

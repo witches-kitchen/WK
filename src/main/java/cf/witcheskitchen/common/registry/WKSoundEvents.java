@@ -1,7 +1,7 @@
 package cf.witcheskitchen.common.registry;
 
-import cf.witcheskitchen.WK;
-import cf.witcheskitchen.WKConfig;
+import cf.witcheskitchen.WitchesKitchen;
+import cf.witcheskitchen.WitchesKitchenConfig;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
@@ -28,8 +28,8 @@ public class WKSoundEvents {
     public static final SoundEvent BROOM_USE_EVENT = register("broom_mount1");
 
     static {
-        if (WKConfig.debugMode) {
-            WK.LOGGER.info("Witches Kitchen Base Sounds: Successfully Loaded");
+        if (WitchesKitchenConfig.debugMode) {
+            WitchesKitchen.LOGGER.info("Witches Kitchen Base Sounds: Successfully Loaded");
         }
     }
 
@@ -38,7 +38,7 @@ public class WKSoundEvents {
     }
 
     private static SoundEvent register(String name) {
-        final Identifier id = WK.id(name);
+        final Identifier id = WitchesKitchen.id(name);
         final SoundEvent soundEvent = new SoundEvent(id);
         final ObjectDefinition<SoundEvent> def = new ObjectDefinition<>(id, soundEvent);
         SOUND_EVENTS.add(def);

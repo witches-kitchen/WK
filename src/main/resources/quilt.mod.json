@@ -8,7 +8,8 @@
       "name": "Witches' Kitchen",
       "description": "A cottagecore-themed magic mod. Addons are planned!",
       "authors": {
-        "Me!": "DanikingRD"
+        "DanikingRD": "Author",
+        "MrSterner": "Author"
       },
       "contact": {
         "homepage": "https://github.com/witches-kitchen/WK",
@@ -20,8 +21,8 @@
     },
     "intermediate_mappings": "net.fabricmc:intermediary",
     "entrypoints": {
-      "init": "cf.witcheskitchen.WK",
-      "client_init": "cf.witcheskitchen.client.WKClient",
+      "init": "cf.witcheskitchen.WitchesKitchen",
+      "client_init": "cf.witcheskitchen.client.WitchesKitchenClient",
       "rei_client": "cf.witcheskitchen.integration.client.rei.WKREIPlugin",
       "modmenu": "cf.witcheskitchen.integration.client.WKModMenu",
       "fabric-datagen" : "cf.witcheskitchen.datagen.WKDatagen"

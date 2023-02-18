@@ -1,4 +1,4 @@
-Version 0.1 (2022-07-28)
+Version 0.1 (2023-02-17)
 ==============================
 
 * Most of the mod blocks are already registered, including:
@@ -6,8 +6,8 @@ Version 0.1 (2022-07-28)
     * Leaf blocks
     * Seeds
     * Plants
-    * Witches' Ovens (Stable)
-    * Brewing Barrels (Stable)
+    * Witches' Ovens
+    * Brewing Barrels
     * Saplings
     * Decoration blocks
 
@@ -16,7 +16,6 @@ Version 0.1 (2022-07-28)
 * As for now, these are the required dependencies to run the mod:
     * Java >= 17
     * Quilted Fabric API >= 2.0.0 (includes Fapi and QSL).
-    * Cloth Config >= 7.0.73
     * Trinkets >= 3.4.0
     * Geckolib >= 3.1.6
 
@@ -40,7 +39,6 @@ There is also plans for addons so stay tuned for all the news!
 * Some blocks or items may not have the display name
 * There is still lot of content to add.
 * Documentation is incomplete.
-* Performance is sometimes below intended target.
 * API is subject to extensive change and reorganization.
 
 

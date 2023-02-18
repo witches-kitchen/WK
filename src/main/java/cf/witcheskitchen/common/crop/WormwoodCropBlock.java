@@ -2,21 +2,22 @@ package cf.witcheskitchen.common.crop;
 
 import cf.witcheskitchen.api.crop.WKTallCropBlock;
 import cf.witcheskitchen.common.registry.WKItems;
+import cf.witcheskitchen.common.variants.WormwoodTypes;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.state.property.IntProperty;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 public class WormwoodCropBlock extends WKTallCropBlock {
     public static final int MAX_AGE = 7;
-    private final Type type;
+    private final WormwoodTypes type;
 
     public WormwoodCropBlock(Settings settings) {
-        this(settings, Type.COMMON);
+        this(settings, WormwoodTypes.COMMON);
     }
 
-    public WormwoodCropBlock(Settings settings, Type rarity) {
+    public WormwoodCropBlock(Settings settings, WormwoodTypes type) {
         super(settings);
-        this.type = rarity;
+        this.type = type;
     }
 
     @Override
@@ -27,9 +28,7 @@ public class WormwoodCropBlock extends WKTallCropBlock {
     @ClientOnly
     @Override
     protected ItemConvertible getSeedsItem() {
-        return switch (this.type) {
-            case COMMON -> WKItems.WORMWOOD_SEEDS;
-        };
+        return  WKItems.WORMWOOD_SEEDS;
     }
 
     @Override
@@ -40,9 +39,5 @@ public class WormwoodCropBlock extends WKTallCropBlock {
     @Override
     public int doubleBlockAge() {
         return 3;
-    }
-
-    public enum Type {
-        COMMON,
     }
 }

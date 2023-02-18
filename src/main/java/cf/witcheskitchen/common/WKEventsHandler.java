@@ -1,6 +1,6 @@
 package cf.witcheskitchen.common;
 
-import cf.witcheskitchen.WK;
+import cf.witcheskitchen.WitchesKitchen;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.fabricmc.fabric.api.loot.v2.LootTableSource;
 import net.minecraft.block.Blocks;
@@ -24,7 +24,7 @@ public class WKEventsHandler {
         public void modifyLootTable(ResourceManager resourceManager, LootManager lootManager, Identifier id, LootTable.Builder tableBuilder, LootTableSource source) {
             final Identifier grassLootTable = Blocks.GRASS.getLootTableId();
             final Identifier tallGrassLootTable = Blocks.TALL_GRASS.getLootTableId();
-            final Identifier seedsAddition = WK.id("listener/seeds");
+            final Identifier seedsAddition = WitchesKitchen.id("listener/seeds");
             if (id.equals(grassLootTable) || id.equals(tallGrassLootTable)) {
                 // Adds a new entry for grass and tall grass loot tables
                 tableBuilder.pool(LootPool.builder().with(LootTableEntry.builder(seedsAddition).weight(1)).build());

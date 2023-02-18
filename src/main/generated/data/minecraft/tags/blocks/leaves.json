@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "witcheskitchen:blackthorn_leaves",
+    "witcheskitchen:elder_leaves",
+    "witcheskitchen:hawthorn_leaves",
+    "witcheskitchen:juniper_leaves",
+    "witcheskitchen:rowan_leaves",
+    "witcheskitchen:sumac_leaves"
+  ]
+}

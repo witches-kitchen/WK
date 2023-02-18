@@ -1,7 +1,7 @@
 package cf.witcheskitchen.api.client.screen;
 
 
-import cf.witcheskitchen.WK;
+import cf.witcheskitchen.WitchesKitchen;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
@@ -10,7 +10,7 @@ import net.minecraft.util.Identifier;
 
 public final class ScreenBuilder {
 
-    private static final Identifier GUI_ELEMENTS = new Identifier(WK.MODID, "textures/gui/elements.png");
+    private static final Identifier GUI_ELEMENTS = new Identifier(WitchesKitchen.MODID, "textures/gui/elements.png");
     private static final int SLOT_U = 237;
     private static final int SLOT_V = 1;
     private static final int OUTPUT_SLOT_U = 150;
