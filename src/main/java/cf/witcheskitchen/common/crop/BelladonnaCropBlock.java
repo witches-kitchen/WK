@@ -43,6 +43,7 @@ public class BelladonnaCropBlock extends WKTallCropBlock {
         ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), itemStack);
     }
 
+    //TODO make this nbt supported to get type seeds
     @ClientOnly
     @Override
     protected ItemConvertible getSeedsItem() {

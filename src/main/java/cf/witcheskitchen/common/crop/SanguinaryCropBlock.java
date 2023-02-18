@@ -2,22 +2,22 @@ package cf.witcheskitchen.common.crop;
 
 import cf.witcheskitchen.api.crop.WKCropBlock;
 import cf.witcheskitchen.common.registry.WKItems;
-import cf.witcheskitchen.common.variants.MintTypes;
+import cf.witcheskitchen.common.variants.SanguinaryTypes;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.state.property.IntProperty;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
 
-public class MintCropBlock extends WKCropBlock {
-    public static final int MAX_AGE = 5;
-    private final MintTypes type;
+public class SanguinaryCropBlock extends WKCropBlock {
+    public static final int MAX_AGE = 6;
+    private final SanguinaryTypes type;
 
-    public MintCropBlock(Settings settings) {
-        this(settings, MintTypes.COMMON);
+    public SanguinaryCropBlock(Settings settings) {
+        this(settings, SanguinaryTypes.COMMON);
     }
 
-    public MintCropBlock(Settings settings, MintTypes type) {
+    public SanguinaryCropBlock(Settings settings, SanguinaryTypes rarity) {
         super(settings);
-        this.type = type;
+        this.type = rarity;
     }
 
     @Override
@@ -28,7 +28,7 @@ public class MintCropBlock extends WKCropBlock {
     @ClientOnly
     @Override
     protected ItemConvertible getSeedsItem() {
-        return  WKItems.MINT_SPRIG;
+        return  WKItems.AMARANTH_SEEDS;
     }
 
     @Override

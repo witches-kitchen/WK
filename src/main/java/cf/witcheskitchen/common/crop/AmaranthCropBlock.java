@@ -15,9 +15,9 @@ public class AmaranthCropBlock extends WKTallCropBlock {
         this(settings, AmaranthTypes.COMMON);
     }
 
-    public AmaranthCropBlock(Settings settings, AmaranthTypes rarity) {
+    public AmaranthCropBlock(Settings settings, AmaranthTypes type) {
         super(settings);
-        this.type = rarity;
+        this.type = type;
     }
 
     @Override
