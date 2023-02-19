@@ -114,7 +114,6 @@ public class RitualRecipe implements Recipe<Inventory> {
             for (int i = 0; i < buf.readInt(); i++) {
                 var size = RitualCircle.getSize(buf.readString());
                 var type = RitualCircle.getType(buf.readString());
-                WitchesKitchen.LOGGER.info("RITUAL: " + size + " : " + type);
                 RitualCircle ritualCircle = new RitualCircle(size, type);
                 list.set(i, ritualCircle);
             }
