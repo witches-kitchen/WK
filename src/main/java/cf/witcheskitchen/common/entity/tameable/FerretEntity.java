@@ -7,8 +7,10 @@ import cf.witcheskitchen.common.registry.WKEntityTypes;
 import cf.witcheskitchen.common.registry.WKSoundEvents;
 import com.mojang.serialization.Dynamic;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.brain.Brain;
+import net.minecraft.entity.ai.brain.MemoryModuleType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -21,6 +23,7 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
+import net.minecraft.entity.vehicle.BoatEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -112,6 +115,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable {
     protected void initDataTracker() {
         super.initDataTracker();
         this.dataTracker.startTracking(NIGHT, false);
+        this.dataTracker.startTracking(IS_ATTACKING, false);
     }
 
     @Override
@@ -250,11 +254,20 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable {
         } else {
             Entity entity = source.getAttacker();
             this.setSitting(false);
+            if(entity instanceof LivingEntity l){
+                this.getBrain().remember(MemoryModuleType.ANGRY_AT, l.getUuid(), 20 * 10);
+            }
             if (entity != null && !(entity instanceof PlayerEntity) && !(entity instanceof PersistentProjectileEntity)) {
                 amount = (amount + 1.0F) / 2.0F;
             }
             return super.damage(source, amount);
         }
+    }
+
+    @Override
+    public boolean startRiding(Entity entity, boolean force) {
+        return super.startRiding(entity, force);
+
     }
 
     @Override
@@ -319,14 +332,19 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable {
             builder.addAnimation("sit", ILoopType.EDefaultLoopTypes.LOOP);
             event.getController().setAnimation(builder);
             return PlayState.CONTINUE;
-        } else if (event.isMoving() && !isAttacking()) {
+        } else if (event.isMoving() && !this.dataTracker.get(IS_ATTACKING)) {
             builder.addAnimation("run", ILoopType.EDefaultLoopTypes.LOOP);
-        } else if (this.isAttacking()) {
+        } else if (this.dataTracker.get(IS_ATTACKING)) {
             builder.addAnimation("gore", ILoopType.EDefaultLoopTypes.LOOP);
         } else {
             builder.addAnimation("idle", ILoopType.EDefaultLoopTypes.LOOP);
         }
         event.getController().setAnimation(builder);
         return PlayState.CONTINUE;
+    }
+
+    @Override
+    protected void initGoals() {
+
     }
 }

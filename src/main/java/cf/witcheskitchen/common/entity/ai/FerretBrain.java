@@ -1,8 +1,8 @@
 package cf.witcheskitchen.common.entity.ai;
 
 import cf.witcheskitchen.common.entity.ai.task.DontMoveTask;
+import cf.witcheskitchen.common.entity.ai.task.FerretMeleeAttackTask;
 import cf.witcheskitchen.common.entity.ai.task.FollowOwnerTask;
-import cf.witcheskitchen.common.entity.ai.task.GeckoMeleeAttackTask;
 import cf.witcheskitchen.common.entity.tameable.FerretEntity;
 import cf.witcheskitchen.common.registry.WKMemoryModuleTypes;
 import cf.witcheskitchen.common.registry.WKSensorTypes;
@@ -19,6 +19,7 @@ import net.minecraft.entity.ai.brain.sensor.Sensor;
 import net.minecraft.entity.ai.brain.sensor.SensorType;
 import net.minecraft.entity.ai.brain.task.*;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.passive.AxolotlBrain;
 
 import java.util.List;
 import java.util.Optional;
@@ -54,7 +55,6 @@ public class FerretBrain {
 
     public FerretBrain() {
     }
-
 
     public static Brain<?> create(FerretEntity ferretEntity, Dynamic<?> dynamic) {
         Brain.Profile<FerretEntity> profile = Brain.createProfile(MEMORIES, SENSORS);
@@ -112,15 +112,11 @@ public class FerretBrain {
                 ImmutableList.of(
                         new RangedApproachTask(1.0F),
                         new FollowMobTask(mob -> isTarget(ferretEntity, mob), (float)ferretEntity.getAttributeValue(EntityAttributes.GENERIC_FOLLOW_RANGE)),
-                        new GeckoMeleeAttackTask(ENTITY_PREDICATE::test, 10, (int) (20 * 1.5), 15)
+                        new FerretMeleeAttackTask(20)
                 ),
                 MemoryModuleType.ATTACK_TARGET
         );
     }
-
-    private static final Predicate<Entity> ENTITY_PREDICATE = entity -> {
-        return true;
-    };
 
     /**
      * This is what lets you switch activities. It should be in reverse order of the importance of the activity.
