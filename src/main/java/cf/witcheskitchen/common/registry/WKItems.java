@@ -35,7 +35,7 @@ public interface WKItems {
     Item ELDER_BLOSSOM = registerItem("elder_blossom");
     Item CONEFLOWER_BLOSSOM = registerItem("coneflower_blossom");
     Item SANGUINARY_BLOSSOM = registerItem("sanguinary_blossom");
-    Item SAINT_JOHNS_WORT_BLOSSOM = registerItem("saint_johns_wort_blossom");
+    Item ST_JOHNS_WORT_BLOSSOM = registerItem("st_johns_wort_blossom");
     Item IRIS_BLOSSOM = registerItem("iris_blossom");
     Item CHAMOMILE_BLOSSOM = registerItem("chamomile_blossom");
     Item GINGER_RHIZOME = registerItem("ginger_rhizome");
@@ -142,7 +142,7 @@ public interface WKItems {
         compostingChanceRegistry.add(ELDER_BLOSSOM, 0.45f);
         compostingChanceRegistry.add(CONEFLOWER_BLOSSOM, 0.45f);
         compostingChanceRegistry.add(SANGUINARY_BLOSSOM, 0.45f);
-        compostingChanceRegistry.add(SAINT_JOHNS_WORT_BLOSSOM, 0.45f);
+        compostingChanceRegistry.add(ST_JOHNS_WORT_BLOSSOM, 0.45f);
         compostingChanceRegistry.add(IRIS_BLOSSOM, 0.45f);
         compostingChanceRegistry.add(CHAMOMILE_BLOSSOM, 0.45f);
         compostingChanceRegistry.add(GINGER_RHIZOME, 0.45f);

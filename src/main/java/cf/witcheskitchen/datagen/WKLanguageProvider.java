@@ -173,7 +173,7 @@ public class WKLanguageProvider extends FabricLanguageProvider {
         builder.add(WKItems.BRIAR_HIPS, "Briar Hips");
         builder.add(WKItems.ELDER_BLOSSOM, "Elder Blossom");
         builder.add(WKItems.CONEFLOWER_BLOSSOM, "Coneflower Blossom");
-        builder.add(WKItems.SAINT_JOHNS_WORT_BLOSSOM, "St Johns Wort Blossom");
+        builder.add(WKItems.ST_JOHNS_WORT_BLOSSOM, "St Johns Wort Blossom");
         builder.add(WKItems.IRIS_BLOSSOM, "Iris Blossom");
         builder.add(WKItems.CHAMOMILE_BLOSSOM, "Chamomile Blossom");
         builder.add(WKItems.GINGER_RHIZOME, "Ginger Rhizome");
