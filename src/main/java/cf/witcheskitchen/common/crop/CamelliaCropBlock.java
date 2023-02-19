@@ -4,6 +4,7 @@ import cf.witcheskitchen.api.crop.WKTallCropBlock;
 import cf.witcheskitchen.common.registry.WKItems;
 import cf.witcheskitchen.common.variants.AmaranthTypes;
 import cf.witcheskitchen.common.variants.CamelliaTypes;
+import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.state.property.IntProperty;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
@@ -16,9 +17,10 @@ public class CamelliaCropBlock extends WKTallCropBlock {
         this(settings, CamelliaTypes.COMMON);
     }
 
-    public CamelliaCropBlock(Settings settings, CamelliaTypes rarity) {
+    public CamelliaCropBlock(Settings settings, CamelliaTypes type) {
         super(settings);
-        this.type = rarity;
+        this.type = type;
+        this.setDefaultState(this.getDefaultState().with(getAgeProperty(), 0).with(HALF, DoubleBlockHalf.LOWER));
     }
 
     @Override

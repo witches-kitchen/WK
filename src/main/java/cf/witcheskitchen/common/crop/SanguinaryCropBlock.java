@@ -3,6 +3,7 @@ package cf.witcheskitchen.common.crop;
 import cf.witcheskitchen.api.crop.WKCropBlock;
 import cf.witcheskitchen.common.registry.WKItems;
 import cf.witcheskitchen.common.variants.SanguinaryTypes;
+import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.state.property.IntProperty;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
@@ -18,6 +19,7 @@ public class SanguinaryCropBlock extends WKCropBlock {
     public SanguinaryCropBlock(Settings settings, SanguinaryTypes rarity) {
         super(settings);
         this.type = rarity;
+        this.setDefaultState(this.getDefaultState().with(getAgeProperty(), 0));
     }
 
     @Override

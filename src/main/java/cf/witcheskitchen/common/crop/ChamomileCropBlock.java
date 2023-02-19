@@ -5,6 +5,7 @@ import cf.witcheskitchen.api.crop.WKTallCropBlock;
 import cf.witcheskitchen.common.registry.WKItems;
 import cf.witcheskitchen.common.variants.ChamomileTypes;
 import cf.witcheskitchen.common.variants.SanguinaryTypes;
+import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.state.property.IntProperty;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
@@ -20,6 +21,7 @@ public class ChamomileCropBlock extends WKCropBlock {
     public ChamomileCropBlock(Settings settings, ChamomileTypes rarity) {
         super(settings);
         this.type = rarity;
+        this.setDefaultState(this.getDefaultState().with(getAgeProperty(), 0));
     }
 
     @Override
