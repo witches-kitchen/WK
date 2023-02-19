@@ -1,7 +1,5 @@
 package cf.witcheskitchen.client.registry;
 
-import cf.witcheskitchen.WitchesKitchen;
-import cf.witcheskitchen.WitchesKitchenConfig;
 import cf.witcheskitchen.client.render.ChurchGrimRender;
 import cf.witcheskitchen.client.render.CuSithRender;
 import cf.witcheskitchen.client.render.FerretRender;

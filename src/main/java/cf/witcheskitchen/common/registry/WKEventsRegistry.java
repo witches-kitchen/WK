@@ -1,7 +1,5 @@
 package cf.witcheskitchen.common.registry;
 
-import cf.witcheskitchen.WitchesKitchen;
-import cf.witcheskitchen.WitchesKitchenConfig;
 import cf.witcheskitchen.api.event.network.MagicSparkleParticleEvent;
 import cf.witcheskitchen.client.render.blockentity.WitchesCauldronBlockEntityRender;
 import cf.witcheskitchen.common.WKEventsHandler;

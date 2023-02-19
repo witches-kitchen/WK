@@ -8,14 +8,14 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemConvertible;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.state.property.IntProperty;
-import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.World;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
+
+import java.util.Optional;
 
 public class BelladonnaCropBlock extends WKTallCropBlock {
     public static final int MAX_AGE = 6;
@@ -42,15 +42,15 @@ public class BelladonnaCropBlock extends WKTallCropBlock {
         this.setDefaultState(this.getDefaultState().with(AGE, 0).with(HALF, DoubleBlockHalf.LOWER));
     }
 
-    //TODO make this but in WKLootTables with a builder
     @Override
     public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+        Optional<BelladonnaTypes> nextType = type.next(type);
+        if(nextType.isPresent()){
+            NbtCompound nbtCompound = new NbtCompound();
+            TypeHelper.toNbt(nbtCompound, nextType.get().getName(), nextType.get().getType(), nextType.get().getColor());
+            getNextSeed(world, pos, nbtCompound);
+        }
         super.onBreak(world, pos, state, player);
-        ItemStack itemStack = getSeedsItem().asItem().getDefaultStack();
-        NbtCompound nbtCompound = new NbtCompound();
-        TypeHelper.toNbt(nbtCompound, type.getName(), type.getType(), type.getColor());
-        itemStack.writeNbt(nbtCompound);
-        ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), itemStack);
     }
 
     //TODO make this nbt supported to get type seeds

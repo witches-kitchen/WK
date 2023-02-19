@@ -1,18 +1,11 @@
 package cf.witcheskitchen.common.recipe;
 
-import cf.witcheskitchen.WitchesKitchen;
 import cf.witcheskitchen.api.ritual.RitualCircle;
 import cf.witcheskitchen.common.registry.WKRecipeTypes;
 import cf.witcheskitchen.common.util.RecipeUtils;
 import com.google.gson.JsonObject;
-import com.mojang.serialization.Dynamic;
-import com.mojang.serialization.JsonOps;
 import net.minecraft.inventory.Inventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
@@ -21,16 +14,12 @@ import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.NotNull;
-import org.quiltmc.qsl.recipe.api.serializer.QuiltRecipeSerializer;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class RitualRecipe implements Recipe<Inventory> {
     public final Identifier id;

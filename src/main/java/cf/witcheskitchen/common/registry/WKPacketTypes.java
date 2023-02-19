@@ -1,7 +1,5 @@
 package cf.witcheskitchen.common.registry;
 
-import cf.witcheskitchen.WitchesKitchen;
-import cf.witcheskitchen.WitchesKitchenConfig;
 import cf.witcheskitchen.api.event.network.C2SPacketRegistryListener;
 import cf.witcheskitchen.api.event.network.S2CPacketRegistryListener;
 import cf.witcheskitchen.client.network.packet.ParticlePacketHandler;

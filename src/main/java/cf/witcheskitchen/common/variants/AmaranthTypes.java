@@ -23,7 +23,7 @@ public enum AmaranthTypes {
     }
 
     public String getName(){
-        return "amatanth";
+        return "amaranth";
     }
 
     public String getType(){

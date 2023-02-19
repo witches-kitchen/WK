@@ -1,18 +1,10 @@
 package cf.witcheskitchen.datagen;
 
-import cf.witcheskitchen.common.crop.AmaranthCropBlock;
-import cf.witcheskitchen.common.registry.WKBlocks;
-import it.unimi.dsi.fastutil.ints.Int2ObjectFunction;
-import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.data.client.ItemModelGenerator;
 import net.minecraft.data.client.model.*;
-import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.state.property.Property;
 import net.minecraft.util.Identifier;

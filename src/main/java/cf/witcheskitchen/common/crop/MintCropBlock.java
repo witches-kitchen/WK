@@ -3,7 +3,6 @@ package cf.witcheskitchen.common.crop;
 import cf.witcheskitchen.api.crop.WKCropBlock;
 import cf.witcheskitchen.common.registry.WKItems;
 import cf.witcheskitchen.common.variants.MintTypes;
-import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.state.property.IntProperty;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
