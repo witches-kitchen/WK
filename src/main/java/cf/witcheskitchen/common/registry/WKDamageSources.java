@@ -12,7 +12,7 @@ public interface WKDamageSources {
     DamageSource PUNCHING_BLACKTHORN = new BlackthornDamageSource("punching_blackthorn");
 
     // Used to control in which order static constructors are called
-    static void register() {
+    static void init() {
 
     }
 

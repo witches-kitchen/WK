@@ -33,7 +33,7 @@ public interface WKParticleTypes {
         return Collections.unmodifiableList(PARTICLE_TYPES);
     }
 
-    static void register() {
+    static void init() {
         PARTICLE_TYPES.forEach(entry -> Registry.register(Registry.PARTICLE_TYPE, entry.id(), entry.object()));
     }
 }

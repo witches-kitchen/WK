@@ -48,7 +48,7 @@ public interface WKStatusEffects {
         return effect;
     }
 
-    static void register() {
+    static void init() {
         STATUS_EFFECTS.forEach(entry -> Registry.register(Registry.STATUS_EFFECT, entry.id(), entry.object()));
     }
 }

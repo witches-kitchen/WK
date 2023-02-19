@@ -25,23 +25,23 @@ public class WitchesKitchen implements ModInitializer {
     @Override
     public void onInitialize(ModContainer mod) {
         WitchesKitchenConfig.init(MODID, WitchesKitchenConfig.class);
-        WKPacketTypes.register(EnvType.SERVER);
+        WKPacketTypes.init(EnvType.SERVER);
         WKBlocks.init();
         registerOxidizableBlocks();
         WKItems.init();
-        WKPotions.register();
-        WKFoodComponents.register();
-        WKTags.register();
-        WKBlockEntityTypes.register();
-        WKRecipeTypes.register();
-        WKScreenHandlerTypes.register();
-        WKParticleTypes.register();
-        WKConfiguredFeatures.register();
-        WKEventsRegistry.register(EnvType.SERVER);
-        WKStatusEffects.register();
-        WKSoundEvents.register();
-        WKEntityTypes.register();
-        WKDamageSources.register();
+        WKPotions.init();
+        WKFoodComponents.init();
+        WKTags.init();
+        WKBlockEntityTypes.init();
+        WKRecipeTypes.init();
+        WKScreenHandlerTypes.init();
+        WKParticleTypes.init();
+        WKConfiguredFeatures.init();
+        WKEventsRegistry.init(EnvType.SERVER);
+        WKStatusEffects.init();
+        WKSoundEvents.init();
+        WKEntityTypes.init();
+        WKDamageSources.init();
     }
 
     private static void registerOxidizableBlocks() {

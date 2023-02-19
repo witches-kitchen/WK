@@ -29,11 +29,11 @@ public class WitchesKitchenClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient(ModContainer mod) {
-        WKPacketTypes.register(EnvType.CLIENT);
+        WKPacketTypes.init(EnvType.CLIENT);
         ParticleFactoryRegistry.getInstance().register(WKParticleTypes.BUBBLE, BubbleParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(WKParticleTypes.SPLASH, WKSplashParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(WKParticleTypes.MAGIC_SPARKLE, MagicSparkleParticle.Factory::new);
-        WKEventsRegistry.registerClient();
+        WKEventsRegistry.initClient();
         BlockEntityRendererFactories.register(WKBlockEntityTypes.WITCHES_OVEN, (ctx) -> new WitchesOvenBlockEntityRender());
         BlockEntityRendererFactories.register(WKBlockEntityTypes.WITCHES_CAULDRON, (ctx) -> new WitchesCauldronBlockEntityRender());
         BlockEntityRendererFactories.register(WKBlockEntityTypes.BREWING_BARREL, (ctx) -> new BrewingBarrelBlockEntityRender());

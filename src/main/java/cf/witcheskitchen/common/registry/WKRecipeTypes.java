@@ -59,7 +59,7 @@ public interface WKRecipeTypes {
         return Collections.unmodifiableList(RECIPE_TYPES);
     }
 
-    static void register() {
+    static void init() {
         RECIPE_SERIALIZERS.forEach(entry -> Registry.register(Registry.RECIPE_SERIALIZER, entry.id(), entry.object()));
         RECIPE_TYPES.forEach(entry -> Registry.register(Registry.RECIPE_TYPE, entry.id(), entry.object()));
     }

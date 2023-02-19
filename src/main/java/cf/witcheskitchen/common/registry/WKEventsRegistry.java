@@ -10,7 +10,7 @@ import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 
 public interface WKEventsRegistry {
 
-    static void register(EnvType type) {
+    static void init(EnvType type) {
         switch (type) {
             case SERVER -> {
                 LootTableEvents.MODIFY.register(new WKEventsHandler.LootTablesListener());
@@ -22,7 +22,7 @@ public interface WKEventsRegistry {
     }
 
     // used for client events
-    static void registerClient() {
+    static void initClient() {
 
     }
 }

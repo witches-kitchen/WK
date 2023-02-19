@@ -34,7 +34,7 @@ public interface WKPacketTypes {
         return handler;
     }
 
-    static void register(EnvType side) {
+    static void init(EnvType side) {
         switch (side) {
             case SERVER ->
                     SERVER_PACKETS.keySet().forEach(id -> ServerPlayNetworking.registerGlobalReceiver(id, SERVER_PACKETS.get(id)::handle));

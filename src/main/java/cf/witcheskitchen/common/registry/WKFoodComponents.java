@@ -22,7 +22,7 @@ public interface WKFoodComponents {
     FoodComponent TEA_LEAF = new FoodComponent.Builder().hunger(1).saturationModifier(0.3f).snack().alwaysEdible().statusEffect(new StatusEffectInstance(StatusEffects.HASTE, 100), 0.35F).statusEffect(new StatusEffectInstance(StatusEffects.SPEED, 100), 0.35F).build();
 
     // Used to control in which order static constructors are called
-    static void register() {
+    static void init() {
 
     }
 }

@@ -39,7 +39,7 @@ public interface WKBlockEntityTypes {
         return Collections.unmodifiableList(BLOCK_ENTITY_TYPES);
     }
 
-    static void register() {
+    static void init() {
         BLOCK_ENTITY_TYPES.forEach(type -> Registry.register(Registry.BLOCK_ENTITY_TYPE, type.id(), type.object()));
     }
 }

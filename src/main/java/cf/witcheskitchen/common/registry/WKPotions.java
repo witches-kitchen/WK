@@ -34,7 +34,7 @@ public interface WKPotions {
         return new StatusEffectInstance(effect, duration, amplifier);
     }
 
-    static void register() {
+    static void init() {
         POTIONS.forEach(entry -> Registry.register(Registry.POTION, entry.id(), entry.object()));
     }
 

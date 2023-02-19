@@ -112,7 +112,7 @@ public interface WKConfiguredFeatures {
         return Collections.unmodifiableList(CONFIGURED_FEATURES);
     }
 
-    static void register() {
+    static void init() {
         CONFIGURED_FEATURES.forEach(feature -> {
             final RegistryKey<ConfiguredFeature<?, ?>> key = RegistryKey.of(Registry.CONFIGURED_FEATURE_KEY, feature.id());
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, key.getValue(), feature.object());

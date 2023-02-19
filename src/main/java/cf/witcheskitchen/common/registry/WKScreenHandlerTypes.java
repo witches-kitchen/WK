@@ -34,7 +34,7 @@ public interface WKScreenHandlerTypes {
         return Collections.unmodifiableList(SCREEN_HANDLER_TYPES);
     }
 
-    static void register() {
+    static void init() {
         SCREEN_HANDLER_TYPES.forEach(entry -> Registry.register(Registry.SCREEN_HANDLER, entry.id(), entry.object()));
     }
 }

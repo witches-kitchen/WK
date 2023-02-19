@@ -48,7 +48,7 @@ public interface WKEntityTypes {
         return type;
     }
 
-    static void register() {
+    static void init() {
         ENTITY_TYPES.forEach(entity -> Registry.register(Registry.ENTITY_TYPE, entity.id(), entity.object()));
     }
 }

@@ -39,7 +39,7 @@ public interface WKSoundEvents {
         return soundEvent;
     }
 
-    static void register() {
+    static void init() {
         SOUND_EVENTS.forEach(entry -> Registry.register(Registry.SOUND_EVENT, entry.id(), entry.object()));
     }
 }
