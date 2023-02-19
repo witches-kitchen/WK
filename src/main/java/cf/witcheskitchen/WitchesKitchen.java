@@ -16,9 +16,9 @@ public class WitchesKitchen implements ModInitializer {
 
     public static final String MODID = "witcheskitchen";
     public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
-    public static final ItemGroup GENERAL_TAB = QuiltItemGroup.builder(new Identifier(MODID, MODID)).icon(() -> new ItemStack(WKBlocks.IRON_WITCHES_OVEN.asItem())).build();
-    public static final ItemGroup SEED_TAB = QuiltItemGroup.builder(new Identifier(MODID, MODID)).icon(() -> new ItemStack(WKItems.BELLADONNA_SEEDS)).build();
-    public static final ItemGroup GINGER_TAB = QuiltItemGroup.builder(new Identifier(MODID, MODID)).icon(() -> new ItemStack(WKBlocks.GINGERBREAD_BLOCK.asItem())).build();
+    public static final ItemGroup GENERAL_TAB = QuiltItemGroup.builder(new Identifier(MODID, "general")).icon(() -> new ItemStack(WKBlocks.IRON_WITCHES_OVEN.asItem())).build();
+    public static final ItemGroup SEED_TAB = QuiltItemGroup.builder(new Identifier(MODID, "seeds")).icon(() -> new ItemStack(WKItems.BELLADONNA_SEEDS)).build();
+    public static final ItemGroup GINGER_TAB = QuiltItemGroup.builder(new Identifier(MODID, "ginger")).icon(() -> new ItemStack(WKBlocks.GINGERBREAD_BLOCK.asItem())).build();
 
 
 

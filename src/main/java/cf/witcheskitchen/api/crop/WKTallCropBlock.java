@@ -86,18 +86,6 @@ public abstract class WKTallCropBlock extends WKCropBlock {
      */
     public abstract int doubleBlockAge();
 
-    /**
-     * Checks that the block below and this are the same
-     * to see if this is the upper part of the plant.
-     *
-     * @param world World
-     * @param pos   BlockPos
-     * @return whether this is the upper state
-     */
-    protected boolean isUpperState(World world, BlockPos pos) {
-        return world.getBlockState(pos.down()).getBlock() == this;
-    }
-
     public EnumProperty<DoubleBlockHalf> getHalfProperty() {
         return HALF;
     }

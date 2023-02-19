@@ -15,9 +15,5 @@ public class RenderRegistry {
         EntityRendererRegistry.register(WKEntityTypes.CUSITH, CuSithRender::new);
         EntityRendererRegistry.register(WKEntityTypes.FERRET, FerretRender::new);
         EntityRendererRegistry.register(WKEntityTypes.CHURCH_GRIM, ChurchGrimRender::new);
-
-        if (WitchesKitchenConfig.debugMode) {
-            WitchesKitchen.LOGGER.info("Witches Kitchen Base Renderer: Successfully Loaded");
-        }
     }
 }

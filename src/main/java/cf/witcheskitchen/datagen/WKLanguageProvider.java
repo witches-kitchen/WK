@@ -15,6 +15,7 @@ public class WKLanguageProvider extends FabricLanguageProvider {
         //GROUPS
         builder.add(WitchesKitchen.GENERAL_TAB, "Witches' Kitchen General");
         builder.add(WitchesKitchen.SEED_TAB, "Witches' Kitchen Seeds");
+        builder.add(WitchesKitchen.GINGER_TAB, "Witches' Kitchen Gingerbread");
 
         //BLOCKS
         builder.add(WKBlocks.RAW_GINGERBREAD_BLOCK, "Raw Gingerbread Block");

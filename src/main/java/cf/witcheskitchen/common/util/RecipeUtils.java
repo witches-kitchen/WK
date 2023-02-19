@@ -1,5 +1,6 @@
 package cf.witcheskitchen.common.util;
 
+import cf.witcheskitchen.api.ritual.RitualCircle;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -19,15 +20,13 @@ import net.minecraft.util.registry.Registry;
 import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.EnumSet;
-import java.util.Set;
+import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collector;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -199,6 +198,30 @@ public final class RecipeUtils {
         public Set<Characteristics> characteristics() {
             return CH_ID;
         }
+    }
+
+    public static @NotNull Set<RitualCircle> deserializeCircles(JsonArray array){
+        if (!array.isEmpty()) {
+            return arrayStream(array.getAsJsonArray()).map(entry -> deserializeCircle(entry.getAsJsonObject())).collect(Collectors.toSet());
+        }
+        return Set.of();
+    }
+
+    public static @NotNull RitualCircle deserializeCircle(JsonObject object) {
+        String sizeId = JsonHelper.getString(object, "size");
+        String typeId = JsonHelper.getString(object, "type");
+        return new RitualCircle(RitualCircle.getSize(sizeId), RitualCircle.getType(typeId));
+    }
+
+    public static DefaultedList<Ingredient> getIngredients(JsonArray json) {
+        DefaultedList<Ingredient> ingredients = DefaultedList.of();
+        for (int i = 0; i < json.size(); i++) {
+            Ingredient ingredient = Ingredient.fromJson(json.get(i));
+            if (!ingredient.isEmpty()) {
+                ingredients.add(ingredient);
+            }
+        }
+        return ingredients;
     }
 
 }

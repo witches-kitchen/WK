@@ -14,29 +14,26 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class WKParticleTypes {
+public interface WKParticleTypes {
 
-    private static final List<ObjectDefinition<ParticleType<?>>> PARTICLE_TYPES = new ArrayList<>();
+    List<ObjectDefinition<ParticleType<?>>> PARTICLE_TYPES = new ArrayList<>();
 
-    public static final ParticleType<DefaultParticleType> BUBBLE = create("bubble", FabricParticleTypes.simple());
-    public static final ParticleType<DefaultParticleType> SPLASH = create("splash", FabricParticleTypes.simple());
-    public static final ParticleType<DefaultParticleType> MAGIC_SPARKLE = create("magic_sparkle", FabricParticleTypes.simple());
+    ParticleType<DefaultParticleType> BUBBLE = create("bubble", FabricParticleTypes.simple());
+    ParticleType<DefaultParticleType> SPLASH = create("splash", FabricParticleTypes.simple());
+    ParticleType<DefaultParticleType> MAGIC_SPARKLE = create("magic_sparkle", FabricParticleTypes.simple());
 
-    private static <T extends ParticleEffect> ParticleType<T> create(final String name, final ParticleType<T> type) {
+    static <T extends ParticleEffect> ParticleType<T> create(final String name, final ParticleType<T> type) {
         final Identifier id = WitchesKitchen.id(name);
         final ObjectDefinition<ParticleType<?>> definition = new ObjectDefinition<>(id, type);
         PARTICLE_TYPES.add(definition);
         return type;
     }
 
-    public static List<ObjectDefinition<ParticleType<?>>> getParticleTypes() {
+    static List<ObjectDefinition<ParticleType<?>>> getParticleTypes() {
         return Collections.unmodifiableList(PARTICLE_TYPES);
     }
 
-    public static void register() {
+    static void register() {
         PARTICLE_TYPES.forEach(entry -> Registry.register(Registry.PARTICLE_TYPE, entry.id(), entry.object()));
-        if (WitchesKitchenConfig.debugMode) {
-            WitchesKitchen.LOGGER.info("Witches Kitchen Base Custom Particles: Successfully Loaded");
-        }
     }
 }

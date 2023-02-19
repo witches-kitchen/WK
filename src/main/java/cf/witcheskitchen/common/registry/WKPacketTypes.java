@@ -14,33 +14,27 @@ import org.quiltmc.qsl.networking.api.client.ClientPlayNetworking;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class WKPacketTypes {
+public interface WKPacketTypes {
 
     // Packets that are sent by the client and received by the server
-    private static final Map<Identifier, C2SPacketRegistryListener> SERVER_PACKETS = new LinkedHashMap<>();
+    Map<Identifier, C2SPacketRegistryListener> SERVER_PACKETS = new LinkedHashMap<>();
     // Packets that are sent by the server and received by the client
-    private static final Map<Identifier, S2CPacketRegistryListener> CLIENT_PACKETS = new LinkedHashMap<>();
+    Map<Identifier, S2CPacketRegistryListener> CLIENT_PACKETS = new LinkedHashMap<>();
 
-    public static final S2CPacketRegistryListener PARTICLE_PACKET_HANDLER = registerClientPacket(new ParticlePacketHandler());
-    public static final S2CPacketRegistryListener SPLASH_PARTICLE_HANDLER = registerClientPacket(new SplashParticlePacketHandler());
+    S2CPacketRegistryListener PARTICLE_PACKET_HANDLER = registerClientPacket(new ParticlePacketHandler());
+    S2CPacketRegistryListener SPLASH_PARTICLE_HANDLER = registerClientPacket(new SplashParticlePacketHandler());
 
-    static {
-        if (WitchesKitchenConfig.debugMode) {
-            WitchesKitchen.LOGGER.info("Witches Kitchen Base Packet Handlers: Successfully Loaded");
-        }
-    }
-
-    private static <T extends C2SPacketRegistryListener> T registerServerPacket(T handler) {
+    static <T extends C2SPacketRegistryListener> T registerServerPacket(T handler) {
         SERVER_PACKETS.put(handler.getChannelId(), handler);
         return handler;
     }
 
-    private static <T extends S2CPacketRegistryListener> T registerClientPacket(T handler) {
+    static <T extends S2CPacketRegistryListener> T registerClientPacket(T handler) {
         CLIENT_PACKETS.put(handler.getChannelId(), handler);
         return handler;
     }
 
-    public static void register(EnvType side) {
+    static void register(EnvType side) {
         switch (side) {
             case SERVER ->
                     SERVER_PACKETS.keySet().forEach(id -> ServerPlayNetworking.registerGlobalReceiver(id, SERVER_PACKETS.get(id)::handle));

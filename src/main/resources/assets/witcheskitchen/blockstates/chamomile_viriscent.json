@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "witcheskitchen:block/chamomile_stage0"
+    },
+    "age=1": {
+      "model": "witcheskitchen:block/chamomile_stage1"
+    },
+    "age=2": {
+      "model": "witcheskitchen:block/chamomile_stage2"
+    },
+    "age=3": {
+      "model": "witcheskitchen:block/chamomile_stage3"
+    },
+    "age=4": {
+      "model": "witcheskitchen:block/chamomile_stage4_b"
+    }
+  }
+}
