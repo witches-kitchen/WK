@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/cross",
-  "textures": {
-    "cross": "witcheskitchen:block/belladonna_nocturnal_bottom_stage6"
-  }
-}

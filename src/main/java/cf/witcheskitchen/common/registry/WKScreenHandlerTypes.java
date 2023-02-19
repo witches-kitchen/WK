@@ -1,7 +1,6 @@
 package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WitchesKitchen;
-import cf.witcheskitchen.WitchesKitchenConfig;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
 import cf.witcheskitchen.client.gui.screen.handler.BrewingBarrelScreenHandler;
 import cf.witcheskitchen.client.gui.screen.handler.WitchesOvenScreenHandler;
@@ -15,15 +14,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class WKScreenHandlerTypes {
+public interface WKScreenHandlerTypes {
 
-    private static final List<ObjectDefinition<ScreenHandlerType<?>>> SCREEN_HANDLER_TYPES = new ArrayList<>();
+    List<ObjectDefinition<ScreenHandlerType<?>>> SCREEN_HANDLER_TYPES = new ArrayList<>();
 
-    static {
-        if (WitchesKitchenConfig.debugMode) {
-            WitchesKitchen.LOGGER.info("Witches Kitchen Base Screen Handlers: Successfully Loaded");
-        }
-    }
+    ScreenHandlerType<WitchesOvenScreenHandler> WITCHES_OVEN = register("witches_oven", WitchesOvenScreenHandler::new);
+    ScreenHandlerType<BrewingBarrelScreenHandler> BREWING_BARREL = register("brewing_barrel", BrewingBarrelScreenHandler::new);
 
     static <T extends ScreenHandler> ScreenHandlerType<T> register(final String name, final ScreenHandlerType.Factory<T> factory) {
         Validate.isTrue(factory != null);
@@ -33,18 +29,11 @@ public class WKScreenHandlerTypes {
         return handler;
     }
 
-    public static List<ObjectDefinition<ScreenHandlerType<?>>> getScreenHandlers() {
+    static List<ObjectDefinition<ScreenHandlerType<?>>> getScreenHandlers() {
         return Collections.unmodifiableList(SCREEN_HANDLER_TYPES);
     }
 
-    public static void register() {
+    static void init() {
         SCREEN_HANDLER_TYPES.forEach(entry -> Registry.register(Registry.SCREEN_HANDLER, entry.id(), entry.object()));
     }
-
-    public static final ScreenHandlerType<WitchesOvenScreenHandler> WITCHES_OVEN = register("witches_oven", WitchesOvenScreenHandler::new);
-
-
-    public static final ScreenHandlerType<BrewingBarrelScreenHandler> BREWING_BARREL = register("brewing_barrel", BrewingBarrelScreenHandler::new);
-
-
 }

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "witcheskitchen:block/wormwood_lower_stage2"
+  }
+}

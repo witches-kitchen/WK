@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "witcheskitchen:block/iris_lower_stage4_d"
+  }
+}

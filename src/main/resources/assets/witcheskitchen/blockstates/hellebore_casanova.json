@@ -1,0 +1,25 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "witcheskitchen:block/hellebore_stage0"
+    },
+    "age=1": {
+      "model": "witcheskitchen:block/hellebore_stage1"
+    },
+    "age=2": {
+      "model": "witcheskitchen:block/hellebore_stage2"
+    },
+    "age=3": {
+      "model": "witcheskitchen:block/hellebore_stage3"
+    },
+    "age=4": {
+      "model": "witcheskitchen:block/hellebore_stage4"
+    },
+    "age=5": {
+      "model": "witcheskitchen:block/hellebore_stage5"
+    },
+    "age=6": {
+      "model": "witcheskitchen:block/hellebore_stage6_c"
+    }
+  }
+}

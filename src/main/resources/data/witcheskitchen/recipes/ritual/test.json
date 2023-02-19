@@ -1,0 +1,29 @@
+{
+  "type": "witcheskitchen:ritual",
+  "inputs": [
+    {
+      "item": "dirt"
+    },
+    {
+      "item": "stick"
+    }
+  ],
+  "outputs": [
+    {
+      "item": "grass"
+    },
+    {
+      "item": "apple"
+    }
+  ],
+  "circles": [
+    {
+      "size": "small",
+      "type": "chalk"
+    },
+    {
+      "size": "medium",
+      "type": "chalk"
+    }
+  ]
+}

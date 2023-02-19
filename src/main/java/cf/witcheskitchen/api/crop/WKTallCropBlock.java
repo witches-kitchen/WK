@@ -12,10 +12,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.random.RandomGenerator;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
-import net.minecraft.world.WorldEvents;
-import net.minecraft.world.WorldView;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.world.*;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -50,7 +48,6 @@ import org.jetbrains.annotations.Nullable;
  * </p>
  */
 public abstract class WKTallCropBlock extends WKCropBlock {
-
     /**
      * A property that specifies whether a double height block is the upper or lower half.
      */
@@ -78,6 +75,30 @@ public abstract class WKTallCropBlock extends WKCropBlock {
         }
     }
 
+    @Override
+    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        if(state.get(HALF) == DoubleBlockHalf.UPPER){
+            if(state.get(getAgeProperty()) >= doubleBlockAge()){
+                return getUpperShape()[state.get(getAgeProperty()) - doubleBlockAge() - 1];
+            }
+        }else{
+            return getLowerShape()[state.get(getAgeProperty())];
+        }
+        return Block.createCuboidShape(0,0,0,16,16,16);
+    }
+
+    /**
+     * Override this to change shape
+     * @return
+     */
+    public abstract VoxelShape[] getLowerShape();
+
+    /**
+     * Override this to change shape
+     * @return
+     */
+    public abstract VoxelShape[] getUpperShape();
+
     /**
      * Age where the plant is going to begin
      * using a second block (upper part).
@@ -85,18 +106,6 @@ public abstract class WKTallCropBlock extends WKCropBlock {
      * @return Integer
      */
     public abstract int doubleBlockAge();
-
-    /**
-     * Checks that the block below and this are the same
-     * to see if this is the upper part of the plant.
-     *
-     * @param world World
-     * @param pos   BlockPos
-     * @return whether this is the upper state
-     */
-    protected boolean isUpperState(World world, BlockPos pos) {
-        return world.getBlockState(pos.down()).getBlock() == this;
-    }
 
     public EnumProperty<DoubleBlockHalf> getHalfProperty() {
         return HALF;

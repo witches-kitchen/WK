@@ -1,5 +1,6 @@
 package cf.witcheskitchen.datagen;
 
+import cf.witcheskitchen.WitchesKitchen;
 import cf.witcheskitchen.common.registry.*;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
@@ -12,8 +13,9 @@ public class WKLanguageProvider extends FabricLanguageProvider {
     @Override
     public void generateTranslations(TranslationBuilder builder) {
         //GROUPS
-        builder.add(WKCreativeTabs.GENERAL_TAB, "Witches' Kitchen General");
-        builder.add(WKCreativeTabs.SEED_TAB, "Witches' Kitchen Seeds");
+        builder.add(WitchesKitchen.GENERAL_TAB, "Witches' Kitchen General");
+        builder.add(WitchesKitchen.SEED_TAB, "Witches' Kitchen Seeds");
+        builder.add(WitchesKitchen.GINGER_TAB, "Witches' Kitchen Gingerbread");
 
         //BLOCKS
         builder.add(WKBlocks.RAW_GINGERBREAD_BLOCK, "Raw Gingerbread Block");
@@ -159,12 +161,48 @@ public class WKLanguageProvider extends FabricLanguageProvider {
 
         //ITEMS
         builder.add(WKItems.BELLADONNA_BLOSSOM, "Belladonna Blossom");
-        builder.add(WKItems.BELLADONNA_SEEDS, "Belladonna Seeds");
+        builder.add(WKItems.AMARANTH_SPRIG, "Amaranth Spring");
+        builder.add(WKItems.MINT_SPRIG, "Mint Spring");
+        builder.add(WKItems.WORMWOOD_SPRIG, "Wormwood Spring");
+        builder.add(WKItems.ROWAN_BERRIES, "Rowan Berries");
+        builder.add(WKItems.SLOE_BERRIES, "Sloe Blossom");
+        builder.add(WKItems.JUNIPER_BERRIES, "Juniper Berries");
+        builder.add(WKItems.BLACKBERRY, "Blackberry");
+        builder.add(WKItems.HAWTHORN_BERRIES, "Hawthorn Berries");
+        builder.add(WKItems.SUMAC_BERRIES, "Sumac Berries");
+        builder.add(WKItems.BRIAR_HIPS, "Briar Hips");
+        builder.add(WKItems.ELDER_BLOSSOM, "Elder Blossom");
+        builder.add(WKItems.CONEFLOWER_BLOSSOM, "Coneflower Blossom");
+        builder.add(WKItems.ST_JOHNS_WORT_BLOSSOM, "St Johns Wort Blossom");
+        builder.add(WKItems.IRIS_BLOSSOM, "Iris Blossom");
+        builder.add(WKItems.CHAMOMILE_BLOSSOM, "Chamomile Blossom");
+        builder.add(WKItems.GINGER_RHIZOME, "Ginger Rhizome");
+        builder.add(WKItems.TEA_LEAF, "Tea Leaf");
+        builder.add(WKItems.HELLEBORE_BLOSSOM, "Hellebore Blossom");
+        builder.add(WKItems.FOXGLOVE_BLOSSOM, "Foxglove Blossom");
+        //builder.add(WKItems.AMARANTH_COOKIES, "Amaranth Cookies");
+        builder.add(WKItems.HEART_OF_INNOCENCE, "Heart of Innocence");
+
+
         builder.add(WKItems.DOLLOP_OF_FROSTING, "Dollop of Frosting");
         builder.add(WKItems.CU_SITH_SPAWN_EGG, "Cu-Sith Spawn Egg");
         builder.add(WKItems.FERRET_SPAWN_EGG, "Ferret Spawn Egg");
         builder.add(WKItems.CHOCOLATE_RUM_BALLS, "Chocolate Rum Balls");
         builder.add(WKItems.SUPER_BOOZE, "Super Booze");
+
+        //SEEDS
+        builder.add(WKItems.BELLADONNA_SEEDS, "Belladonna Seeds");
+        builder.add(WKItems.AMARANTH_SEEDS, "Amaranth Seeds");
+        builder.add(WKItems.ST_JOHNS_WORT_SEEDS, "St Johns Wort Seeds");
+        builder.add(WKItems.BRIAR_SEEDS, "Briar Seeds");
+        builder.add(WKItems.CAMELLIA_SEEDS, "Camellia Seeds");
+        builder.add(WKItems.CHAMOMILE_SEEDS, "Chamomile Seeds");
+        builder.add(WKItems.CONEFLOWER_SEEDS, "Coneflower Seeds");
+        builder.add(WKItems.FOXGLOVE_SEEDS, "Foxglove Seeds");
+        builder.add(WKItems.HELLEBORE_SEEDS, "Hellebore Seeds");
+        builder.add(WKItems.IRIS_SEEDS, "Iris Seeds");
+        builder.add(WKItems.SANGUINARY_SEEDS, "Sanguinary Seeds");
+        builder.add(WKItems.WORMWOOD_SEEDS, "Wormwood Seeds");
 
         //POTIONS
         builder.add( "item.minecraft.potion.effect.rum", "Rum Potion");

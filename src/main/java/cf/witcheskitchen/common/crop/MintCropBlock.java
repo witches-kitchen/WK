@@ -8,7 +8,7 @@ import net.minecraft.state.property.IntProperty;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 public class MintCropBlock extends WKCropBlock {
-    public static final int MAX_AGE = 5;
+    public static final int MAX_AGE = 4;
     private final MintTypes type;
 
     public MintCropBlock(Settings settings) {
@@ -18,6 +18,7 @@ public class MintCropBlock extends WKCropBlock {
     public MintCropBlock(Settings settings, MintTypes type) {
         super(settings);
         this.type = type;
+        this.setDefaultState(this.getDefaultState().with(getAgeProperty(), 0));
     }
 
     @Override

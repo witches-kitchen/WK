@@ -1,0 +1,46 @@
+{
+  "variants": {
+    "half=lower,age=0": {
+      "model": "witcheskitchen:block/coneflower_lower_stage0"
+    },
+    "half=upper,age=0": {
+      "model": "minecraft:block/air"
+    },
+    "half=lower,age=1": {
+      "model": "witcheskitchen:block/coneflower_lower_stage1"
+    },
+    "half=upper,age=1": {
+      "model": "minecraft:block/air"
+    },
+    "half=lower,age=2": {
+      "model": "witcheskitchen:block/coneflower_lower_stage2"
+    },
+    "half=upper,age=2": {
+      "model": "minecraft:block/air"
+    },
+    "half=lower,age=3": {
+      "model": "witcheskitchen:block/coneflower_lower_stage3"
+    },
+    "half=upper,age=3": {
+      "model": "witcheskitchen:block/coneflower_upper_stage3"
+    },
+    "half=lower,age=4": {
+      "model": "witcheskitchen:block/coneflower_lower_stage4"
+    },
+    "half=upper,age=4": {
+      "model": "witcheskitchen:block/coneflower_upper_stage4"
+    },
+    "half=lower,age=5": {
+      "model": "witcheskitchen:block/coneflower_lower_stage5"
+    },
+    "half=upper,age=5": {
+      "model": "witcheskitchen:block/coneflower_upper_stage5"
+    },
+    "half=lower,age=6": {
+      "model": "witcheskitchen:block/coneflower_lower_stage6"
+    },
+    "half=upper,age=6": {
+      "model": "witcheskitchen:block/coneflower_upper_stage6_m"
+    }
+  }
+}

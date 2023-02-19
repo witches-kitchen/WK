@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "witcheskitchen:block/sanguinary_stage0"
+    },
+    "age=1": {
+      "model": "witcheskitchen:block/sanguinary_stage1"
+    },
+    "age=2": {
+      "model": "witcheskitchen:block/sanguinary_stage2"
+    },
+    "age=3": {
+      "model": "witcheskitchen:block/sanguinary_stage3"
+    },
+    "age=4": {
+      "model": "witcheskitchen:block/sanguinary_stage4_d"
+    }
+  }
+}

@@ -9,9 +9,11 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
+import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.random.RandomGenerator;
@@ -263,5 +265,9 @@ public abstract class WKCropBlock extends CropBlock {
         return super.canPlaceAt(state, world, pos);
     }
 
-
+    public void getNextSeed(World world, BlockPos pos, NbtCompound nbtCompound){
+            ItemStack itemStack2 = getSeedsItem().asItem().getDefaultStack();
+            itemStack2.getOrCreateNbt().copyFrom(nbtCompound);
+            ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), itemStack2);
+    }
 }

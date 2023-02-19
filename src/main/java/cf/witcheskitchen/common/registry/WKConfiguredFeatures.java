@@ -1,7 +1,6 @@
 package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WitchesKitchen;
-import cf.witcheskitchen.WitchesKitchenConfig;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
 import cf.witcheskitchen.common.generator.SumacFoliagePlacer;
 import cf.witcheskitchen.mixin.FoliagePlacerTypeInvoker;
@@ -35,11 +34,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.OptionalInt;
 
-public class WKConfiguredFeatures {
+public interface WKConfiguredFeatures {
 
-    public static final FoliagePlacerType<SumacFoliagePlacer> SUMAC_FOLIAGE_PLACER = FoliagePlacerTypeInvoker.callRegister("sumac_foliage_placer", SumacFoliagePlacer.CODEC);
-    private static final List<ObjectDefinition<ConfiguredFeature<TreeFeatureConfig, ?>>> CONFIGURED_FEATURES = new ArrayList<>();
-    public static final ConfiguredFeature<TreeFeatureConfig, ?> BLACKTHORN_TREE = register("blackthorn_tree",
+    FoliagePlacerType<SumacFoliagePlacer> SUMAC_FOLIAGE_PLACER = FoliagePlacerTypeInvoker.callRegister("sumac_foliage_placer", SumacFoliagePlacer.CODEC);
+    List<ObjectDefinition<ConfiguredFeature<TreeFeatureConfig, ?>>> CONFIGURED_FEATURES = new ArrayList<>();
+   ConfiguredFeature<TreeFeatureConfig, ?> BLACKTHORN_TREE = register("blackthorn_tree",
             new ConfiguredFeature<>(Feature.TREE, new TreeFeatureConfig.Builder(
                     SimpleBlockStateProvider.of(WKBlocks.BLACKTHORN_LOG),
                     new StraightTrunkPlacer(4, 2, 0),
@@ -47,35 +46,35 @@ public class WKConfiguredFeatures {
                     new BlobFoliagePlacer(ConstantIntProvider.create(2), ConstantIntProvider.create(0), 3),
                     new TwoLayersFeatureSize(1, 0, 1)).ignoreVines().build()));
 
-    public static final ConfiguredFeature<TreeFeatureConfig, ?> ELDER_TREE = register("elder_tree",
+    ConfiguredFeature<TreeFeatureConfig, ?> ELDER_TREE = register("elder_tree",
             new ConfiguredFeature<>(Feature.TREE, new TreeFeatureConfig.Builder(
                     SimpleBlockStateProvider.of(WKBlocks.ELDER_LOG),
                     new StraightTrunkPlacer(8, 4, 0),
                     new WeightedBlockStateProvider(DataPool.<BlockState>builder().add(WKBlocks.ELDER_LEAVES.getDefaultState(), 3).add(WKBlocks.ELDER_LEAVES_COLORED.getDefaultState(), 2)),
                     new BlobFoliagePlacer(ConstantIntProvider.create(2), ConstantIntProvider.create(0), 3),
                     new TwoLayersFeatureSize(1, 0, 1)).ignoreVines().build()));
-    public static final ConfiguredFeature<TreeFeatureConfig, ?> ELDER_ELDER_TREE = register("elder_elder_tree",
+    ConfiguredFeature<TreeFeatureConfig, ?> ELDER_ELDER_TREE = register("elder_elder_tree",
             new ConfiguredFeature<>(Feature.TREE, new TreeFeatureConfig.Builder(
                     SimpleBlockStateProvider.of(WKBlocks.ELDER_LOG),
                     new GiantTrunkPlacer(13, 2, 14),
                     new WeightedBlockStateProvider(DataPool.<BlockState>builder().add(WKBlocks.ELDER_LEAVES.getDefaultState(), 3).add(WKBlocks.ELDER_LEAVES_COLORED.getDefaultState(), 2)),
                     new MegaPineFoliagePlacer(ConstantIntProvider.create(0), ConstantIntProvider.create(0), UniformIntProvider.create(13, 17)),
                     new TwoLayersFeatureSize(1, 1, 2)).decorators(ImmutableList.of(new AlterGroundTreeDecorator(BlockStateProvider.of(Blocks.PODZOL)))).build()));
-    public static final ConfiguredFeature<TreeFeatureConfig, ?> HAWTHORN_TREE = register("hawthorn_tree",
+    ConfiguredFeature<TreeFeatureConfig, ?> HAWTHORN_TREE = register("hawthorn_tree",
             new ConfiguredFeature<>(Feature.TREE, new TreeFeatureConfig.Builder(
                     SimpleBlockStateProvider.of(WKBlocks.HAWTHORN_LOG),
                     new BendingTrunkPlacer(5, 2, 0, 3, UniformIntProvider.create(1, 2)),
                     new WeightedBlockStateProvider(DataPool.<BlockState>builder().add(WKBlocks.HAWTHORN_LEAVES.getDefaultState(), 3).add(WKBlocks.HAWTHORN_LEAVES_COLORED.getDefaultState(), 1)),
                     new RandomSpreadFoliagePlacer(ConstantIntProvider.create(3), ConstantIntProvider.create(0), ConstantIntProvider.create(2), 50),
                     new TwoLayersFeatureSize(1, 0, 1)).ignoreVines().build()));
-    public static final ConfiguredFeature<TreeFeatureConfig, ?> JUNIPER_TREE = register("juniper_tree",
+    ConfiguredFeature<TreeFeatureConfig, ?> JUNIPER_TREE = register("juniper_tree",
             new ConfiguredFeature<>(Feature.TREE, new TreeFeatureConfig.Builder(
                     SimpleBlockStateProvider.of(WKBlocks.JUNIPER_LOG.getDefaultState()),
                     new StraightTrunkPlacer(4, 8, 0),
                     BlockStateProvider.of(WKBlocks.JUNIPER_LEAVES),
                     new BlobFoliagePlacer(ConstantIntProvider.create(2), ConstantIntProvider.create(0), 3),
                     new TwoLayersFeatureSize(2, 0, 1)).ignoreVines().build()));
-    public static final ConfiguredFeature<TreeFeatureConfig, ?> ROWAN_TREE = register("rowan_tree",
+    ConfiguredFeature<TreeFeatureConfig, ?> ROWAN_TREE = register("rowan_tree",
             new ConfiguredFeature<>(Feature.TREE, new TreeFeatureConfig.Builder(
                     SimpleBlockStateProvider.of(WKBlocks.ROWAN_LOG.getDefaultState()),
                     new StraightTrunkPlacer(4, 2, 0),
@@ -83,7 +82,7 @@ public class WKConfiguredFeatures {
                     new BlobFoliagePlacer(ConstantIntProvider.create(2), ConstantIntProvider.create(0), 3),
                     new TwoLayersFeatureSize(2, 0, 2)).ignoreVines().build()));
 
-    public static final ConfiguredFeature<TreeFeatureConfig, ?> ELDER_ROWAN = register("elder_rowan",
+    ConfiguredFeature<TreeFeatureConfig, ?> ELDER_ROWAN = register("elder_rowan",
             new ConfiguredFeature<>(Feature.TREE, new TreeFeatureConfig.Builder(
                     BlockStateProvider.of(WKBlocks.ROWAN_LOG),
                     new DarkOakTrunkPlacer(6, 2, 1),
@@ -91,7 +90,7 @@ public class WKConfiguredFeatures {
                     new DarkOakFoliagePlacer(ConstantIntProvider.create(0), ConstantIntProvider.create(0)),
                     new ThreeLayersFeatureSize(1, 1, 0, 1, 2, OptionalInt.empty())).ignoreVines().build()));
 
-    public static final ConfiguredFeature<TreeFeatureConfig, ?> SUMAC_TREE = register("sumac_tree",
+    ConfiguredFeature<TreeFeatureConfig, ?> SUMAC_TREE = register("sumac_tree",
             new ConfiguredFeature<>(Feature.TREE, new TreeFeatureConfig.Builder(
                     SimpleBlockStateProvider.of(WKBlocks.SUMAC_LOG),
                     new StraightTrunkPlacer(5, 2, 2),
@@ -108,18 +107,15 @@ public class WKConfiguredFeatures {
         return configuredFeature;
     }
 
-    public static List<ObjectDefinition<ConfiguredFeature<TreeFeatureConfig, ?>>> getConfiguredFeatures() {
+    static List<ObjectDefinition<ConfiguredFeature<TreeFeatureConfig, ?>>> getConfiguredFeatures() {
         return Collections.unmodifiableList(CONFIGURED_FEATURES);
     }
 
-    public static void register() {
+    static void init() {
         CONFIGURED_FEATURES.forEach(feature -> {
             final RegistryKey<ConfiguredFeature<?, ?>> key = RegistryKey.of(Registry.CONFIGURED_FEATURE_KEY, feature.id());
             Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, key.getValue(), feature.object());
         });
-        if (WitchesKitchenConfig.debugMode) {
-            WitchesKitchen.LOGGER.info("Witches Kitchen Base Generation: Successfully Loaded");
-        }
     }
 }
 

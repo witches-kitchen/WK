@@ -5,7 +5,7 @@ import java.util.Optional;
 public enum BelladonnaTypes {
     COMMON("", 0xffffff),
     GLOW("glow", 0xffffff),
-    NOCTURNAL("nocturne", 0xffffff);
+    NOCTURNAL("nocturnal", 0xffffff);
 
     private final int color;
     private final String type;

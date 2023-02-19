@@ -1,28 +1,20 @@
 package cf.witcheskitchen.common.registry;
 
-import cf.witcheskitchen.WitchesKitchen;
-import cf.witcheskitchen.WitchesKitchenConfig;
 import net.minecraft.entity.damage.DamageSource;
 
-public class WKDamageSources {
+public interface WKDamageSources {
 
-    public static final DamageSource ON_OVEN = new WKFireDamageSource("on_oven");
-    public static final DamageSource HOLY = new WKHolyDamageSource("holy");
-    public static final DamageSource HUGGING_BLACKTHORN = new BlackthornDamageSource("hugging_blackthorn");
-    public static final DamageSource PUNCHING_BLACKTHORN = new BlackthornDamageSource("punching_blackthorn");
-
-    static {
-        if (WitchesKitchenConfig.debugMode) {
-            WitchesKitchen.LOGGER.info("Witches Kitchen Base Damage Sources: Successfully Loaded");
-        }
-    }
+    DamageSource ON_OVEN = new WKFireDamageSource("on_oven");
+    DamageSource HOLY = new WKHolyDamageSource("holy");
+    DamageSource HUGGING_BLACKTHORN = new BlackthornDamageSource("hugging_blackthorn");
+    DamageSource PUNCHING_BLACKTHORN = new BlackthornDamageSource("punching_blackthorn");
 
     // Used to control in which order static constructors are called
-    public static void register() {
+    static void init() {
 
     }
 
-    private static class WKFireDamageSource extends DamageSource {
+     class WKFireDamageSource extends DamageSource {
 
         protected WKFireDamageSource(String name) {
             super(name);
@@ -31,7 +23,7 @@ public class WKDamageSources {
         }
     }
 
-    private static class WKHolyDamageSource extends DamageSource {
+     class WKHolyDamageSource extends DamageSource {
 
         protected WKHolyDamageSource(String name) {
             super(name);
@@ -42,7 +34,7 @@ public class WKDamageSources {
         }
     }
 
-    static class BlackthornDamageSource extends DamageSource {
+    class BlackthornDamageSource extends DamageSource {
         public BlackthornDamageSource(String name) {
             super(name);
         }
