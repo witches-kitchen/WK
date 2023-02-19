@@ -11,7 +11,6 @@ import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 public class AmaranthCropBlock extends WKTallCropBlock {
     public static final int MAX_AGE = 6;
-    public static final IntProperty AGE = IntProperty.of("age", 0 , 6);
     private final AmaranthTypes type;
 
     public AmaranthCropBlock(Settings settings) {
@@ -21,12 +20,12 @@ public class AmaranthCropBlock extends WKTallCropBlock {
     public AmaranthCropBlock(Settings settings, AmaranthTypes type) {
         super(settings);
         this.type = type;
-        this.setDefaultState(this.getDefaultState().with(AGE, 0).with(HALF, DoubleBlockHalf.LOWER));
+        this.setDefaultState(this.getDefaultState().with(getAgeProperty(), 0).with(HALF, DoubleBlockHalf.LOWER));
     }
 
     @Override
     public IntProperty getAgeProperty() {
-        return AGE;
+        return IntProperty.of("age", 0 , MAX_AGE);
     }
 
     @ClientOnly
