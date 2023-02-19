@@ -28,7 +28,7 @@
       "model": "witcheskitchen:block/amaranth_lower_stage4"
     },
     "half=upper,age=4": {
-      "model": "witcheskitchen:block/amaranth_upper_stage4"
+      "model": "minecraft:block/air"
     },
     "half=lower,age=5": {
       "model": "witcheskitchen:block/amaranth_lower_stage5"

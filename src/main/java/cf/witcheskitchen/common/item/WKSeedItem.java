@@ -46,26 +46,10 @@ public class WKSeedItem extends AliasedBlockItem {
         if(itemStack.getNbt() != null && itemStack.getNbt().contains("Variant")){
             Optional<Block> blockState = TypeHelper.getBlockFromNbt(itemStack.getNbt());
             return blockState.isPresent() && this.canPlace(context, blockState.get().getDefaultState()) ? blockState.get().getDefaultState() : null;
+        }else{
+            BlockState blockState = this.getBlock().getPlacementState(context);
+            return blockState != null && this.canPlace(context, blockState) ? blockState : null;
         }
-        return null;
-    }
-
-    //TODO remove
-    @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        if(QuiltLoader.isDevelopmentEnvironment()){
-            if(user.isSneaking()){
-                ItemStack itemStack = user.getMainHandStack();
-                if(!itemStack.hasNbt()){
-                    NbtCompound nbtCompound = new NbtCompound();
-                    TypeHelper.toNbt(nbtCompound, BelladonnaTypes.GLOW.getName(), BelladonnaTypes.GLOW.getType(), BelladonnaTypes.GLOW.getColor());
-                    itemStack.getOrCreateNbt().copyFrom(nbtCompound);
-                }else{
-                    System.out.println(itemStack.getNbt());
-                }
-            }
-        }
-        return super.use(world, user, hand);
     }
 
     @Override

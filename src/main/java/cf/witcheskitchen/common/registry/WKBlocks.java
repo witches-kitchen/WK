@@ -163,8 +163,17 @@ public interface WKBlocks {
     Block OXIDIZED_COPPER_WITCHES_OVEN = register("oxidized_copper_witches_oven", new CopperWitchesOvenBlock(QuiltBlockSettings.copy(Blocks.OXIDIZED_COPPER).luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0), Oxidizable.OxidizationLevel.OXIDIZED),true);
     Block WAXED_OXIDIZED_COPPER_WITCHES_OVEN = register("waxed_oxidized_copper_witches_oven", new WitchesOvenBlock(QuiltBlockSettings.copy(OXIDIZED_COPPER_WITCHES_OVEN)),true);
     Block GLYPH = register("glyph", new GlyphBlock(AbstractBlock.Settings.of(Material.STONE).breakInstantly()), false);
-
     Block IRON_WITCHES_CAULDRON = register("iron_witches_cauldron", new WitchesCauldronBlock(QuiltBlockSettings.copy(Blocks.CAULDRON).luminance(state -> state.get(WitchesCauldronBlock.LIT) ? 13 : 0)),true);
+    Block OAK_BREWING_BARREL = registerBarrel("oak_brewing_barrel");
+    Block SPRUCE_BREWING_BARREL = registerBarrel("spruce_brewing_barrel");
+    Block BIRCH_BREWING_BARREL = registerBarrel("birch_brewing_barrel");
+    Block JUNGLE_BREWING_BARREL = registerBarrel("jungle_brewing_barrel");
+    Block ACACIA_BREWING_BARREL = registerBarrel("acacia_brewing_barrel");
+    Block DARK_OAK_BREWING_BARREL = registerBarrel("dark_oak_brewing_barrel");
+    Block CRIMSON_BREWING_BARREL = registerBarrel("crimson_brewing_barrel");
+    Block WARPED_BREWING_BARREL = registerBarrel("warped_brewing_barrel");
+
+    //Sapling
     Block BLACKTHORN_SAPLING = registerSapling("blackthorn_sapling", WKConfiguredFeatures.BLACKTHORN_TREE);
     Block POTTED_BLACKTHORN_SAPLING = registerPottedSapling("potted_blackthorn_sapling");
     Block POTTED_ELDER_SAPLING = registerPottedSapling("potted_elder_sapling");
@@ -177,14 +186,7 @@ public interface WKBlocks {
     Block JUNIPER_SAPLING = registerSapling("juniper_sapling", WKConfiguredFeatures.JUNIPER_TREE);
     Block ROWAN_SAPLING = registerSapling("rowan_sapling", WKConfiguredFeatures.ROWAN_TREE);
     Block SUMAC_SAPLING = registerSapling("sumac_sapling", WKConfiguredFeatures.SUMAC_TREE);
-    Block OAK_BREWING_BARREL = registerBarrel("oak_brewing_barrel");
-    Block SPRUCE_BREWING_BARREL = registerBarrel("spruce_brewing_barrel");
-    Block BIRCH_BREWING_BARREL = registerBarrel("birch_brewing_barrel");
-    Block JUNGLE_BREWING_BARREL = registerBarrel("jungle_brewing_barrel");
-    Block ACACIA_BREWING_BARREL = registerBarrel("acacia_brewing_barrel");
-    Block DARK_OAK_BREWING_BARREL = registerBarrel("dark_oak_brewing_barrel");
-    Block CRIMSON_BREWING_BARREL = registerBarrel("crimson_brewing_barrel");
-    Block WARPED_BREWING_BARREL = registerBarrel("warped_brewing_barrel");
+
     //Crops
     Block AMARANTH = registerWithType("amaranth", new AmaranthCropBlock(AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
     Block AMARANTH_SWEETBERRY = registerWithType("amaranth_sweetberry", new AmaranthCropBlock(QuiltBlockSettings.copyOf(AMARANTH), AmaranthTypes.SWEETBERRY));

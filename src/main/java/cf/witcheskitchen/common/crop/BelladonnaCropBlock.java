@@ -13,17 +13,27 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.World;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 public class BelladonnaCropBlock extends WKTallCropBlock {
-
     public static final int MAX_AGE = 6;
     public static final IntProperty AGE = IntProperty.of("age", 0, MAX_AGE);
     private final BelladonnaTypes type;
 
     public BelladonnaCropBlock(Settings settings) {
         this(settings, BelladonnaTypes.COMMON);
+    }
+
+    @Override
+    public VoxelShape[] getLowerShape() {
+        return AmaranthCropBlock.LOWER_AGE_TO_SHAPE;
+    }
+
+    @Override
+    public VoxelShape[] getUpperShape() {
+        return AmaranthCropBlock.UPPER_AGE_TO_SHAPE;
     }
 
     public BelladonnaCropBlock(Settings settings, BelladonnaTypes type) {

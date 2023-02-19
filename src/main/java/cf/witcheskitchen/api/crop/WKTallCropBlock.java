@@ -12,10 +12,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.random.RandomGenerator;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
-import net.minecraft.world.WorldEvents;
-import net.minecraft.world.WorldView;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.world.*;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -50,7 +48,6 @@ import org.jetbrains.annotations.Nullable;
  * </p>
  */
 public abstract class WKTallCropBlock extends WKCropBlock {
-
     /**
      * A property that specifies whether a double height block is the upper or lower half.
      */
@@ -77,6 +74,30 @@ public abstract class WKTallCropBlock extends WKCropBlock {
             world.syncWorldEvent(player, WorldEvents.BLOCK_BROKEN, blockPos, Block.getRawIdFromState(blockState));
         }
     }
+
+    @Override
+    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        if(state.get(HALF) == DoubleBlockHalf.UPPER){
+            if(state.get(getAgeProperty()) >= doubleBlockAge()){
+                return getUpperShape()[state.get(getAgeProperty()) - doubleBlockAge() - 1];
+            }
+        }else{
+            return getLowerShape()[state.get(getAgeProperty())];
+        }
+        return Block.createCuboidShape(0,0,0,16,16,16);
+    }
+
+    /**
+     * Override this to change shape
+     * @return
+     */
+    public abstract VoxelShape[] getLowerShape();
+
+    /**
+     * Override this to change shape
+     * @return
+     */
+    public abstract VoxelShape[] getUpperShape();
 
     /**
      * Age where the plant is going to begin

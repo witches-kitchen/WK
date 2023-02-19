@@ -9,7 +9,7 @@ import net.minecraft.state.property.IntProperty;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 public class SanguinaryCropBlock extends WKCropBlock {
-    public static final int MAX_AGE = 6;
+    public static final int MAX_AGE = 4;
     private final SanguinaryTypes type;
 
     public SanguinaryCropBlock(Settings settings) {

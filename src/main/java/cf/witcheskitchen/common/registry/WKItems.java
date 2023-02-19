@@ -23,7 +23,7 @@ public interface WKItems {
     List<ObjectDefinition<Item>> ITEMS = new ArrayList<>();
     // Flowers
     Item BELLADONNA_BLOSSOM = registerItem("belladonna_blossom");
-    Item AMARANTH_SPRIG = registerFoodStuffs("amaranth_sprig", settings -> new Item(settings.food(WKFoodComponents.AMARANTH_GRAIN)));
+    Item AMARANTH_SPRIG = registerFoodStuffs("amaranth_spring", settings -> new Item(settings.food(WKFoodComponents.AMARANTH_GRAIN)));
     Item MINT_SPRIG = registerFoodStuffs("mint_sprig", settings -> new Item(settings.food(WKFoodComponents.MINT_LEAF)));
     Item WORMWOOD_SPRIG = registerItem("wormwood_sprig");
     Item ROWAN_BERRIES = registerFoodStuffs("rowan_berries", settings -> new Item(settings.food(WKFoodComponents.BERRIES)));
@@ -45,23 +45,23 @@ public interface WKItems {
     Item FOXGLOVE_BLOSSOM = registerItem("foxglove_blossom");
 
     //Foodstuffs
-    Item AMARANTH_COOKIES = registerFoodStuffs("amaranth_cookies", settings -> new Item(settings.food(WKFoodComponents.COOKIES)));
+    //Item AMARANTH_COOKIES = registerFoodStuffs("amaranth_cookies", settings -> new Item(settings.food(WKFoodComponents.COOKIES)));
 
     //Materials
     Item HEART_OF_INNOCENCE = registerItem("heart_of_innocence");
 
     Item AMARANTH_SEEDS = registerSeed("amaranth_seeds", WKBlocks.AMARANTH);
     Item BELLADONNA_SEEDS = registerSeed("belladonna_seeds", WKBlocks.BELLADONNA);
-    Item ST_JOHNS_WORT_SEEDS = registerItem("st_john_wort_seeds");
-    Item BRIAR_SEEDS = registerItem("briar_seeds");
-    Item CAMELLIA_SEEDS = registerItem("camellia_seeds");
-    Item CHAMOMILE_SEEDS = registerItem("chamomile_seeds");
-    Item CONEFLOWER_SEEDS = registerItem("coneflower_seeds");
-    Item FOXGLOVE_SEEDS = registerItem("foxglove_seeds");
-    Item HELLEBORE_SEEDS = registerItem("hellebore_seeds");
-    Item IRIS_SEEDS = registerItem("iris_seeds");
-    Item SANGUINARY_SEEDS = registerItem("sanguinary_seeds");
-    Item WORMWOOD_SEEDS = registerItem("wormwood_seeds");
+    Item ST_JOHNS_WORT_SEEDS = register("st_john_wort_seeds");
+    Item BRIAR_SEEDS = register("briar_seeds");
+    Item CAMELLIA_SEEDS = register("camellia_seeds");
+    Item CHAMOMILE_SEEDS = registerSeed("chamomile_seeds", WKBlocks.CHAMOMILE);
+    Item CONEFLOWER_SEEDS = registerSeed("coneflower_seeds", WKBlocks.CONEFLOWER);
+    Item FOXGLOVE_SEEDS = registerSeed("foxglove_seeds", WKBlocks.FOXGLOVE);
+    Item HELLEBORE_SEEDS = registerSeed("hellebore_seeds", WKBlocks.HELLEBORE);
+    Item IRIS_SEEDS = registerSeed("iris_seeds", WKBlocks.IRIS);
+    Item SANGUINARY_SEEDS = registerSeed("sanguinary_seeds", WKBlocks.SANGUINARY);
+    Item WORMWOOD_SEEDS = registerSeed("wormwood_seeds", WKBlocks.WORMWOOD);
 
     Item DOLLOP_OF_FROSTING = registerFoodStuffs("dollop_of_frosting", settings -> new Item(settings.food(WKFoodComponents.FROSTING)));
     Item CHOCOLATE_RUM_BALLS = registerFoodStuffs("chocolate_rum_balls", settings -> new Item(settings.food(WKFoodComponents.RUM_BALLS)));

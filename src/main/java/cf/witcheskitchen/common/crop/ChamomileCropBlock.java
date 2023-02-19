@@ -11,7 +11,7 @@ import net.minecraft.state.property.IntProperty;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 public class ChamomileCropBlock extends WKCropBlock {
-    public static final int MAX_AGE = 6;
+    public static final int MAX_AGE = 4;
     private final ChamomileTypes type;
 
     public ChamomileCropBlock(Settings settings) {

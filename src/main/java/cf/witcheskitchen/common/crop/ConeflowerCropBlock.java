@@ -7,6 +7,7 @@ import cf.witcheskitchen.common.variants.ConeflowerTypes;
 import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.state.property.IntProperty;
+import net.minecraft.util.shape.VoxelShape;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 public class ConeflowerCropBlock extends WKTallCropBlock {
@@ -21,6 +22,16 @@ public class ConeflowerCropBlock extends WKTallCropBlock {
         super(settings);
         this.type = rarity;
         this.setDefaultState(this.getDefaultState().with(getAgeProperty(), 0).with(HALF, DoubleBlockHalf.LOWER));
+    }
+
+    @Override
+    public VoxelShape[] getLowerShape() {
+        return AmaranthCropBlock.LOWER_AGE_TO_SHAPE;
+    }
+
+    @Override
+    public VoxelShape[] getUpperShape() {
+        return AmaranthCropBlock.UPPER_AGE_TO_SHAPE;
     }
 
     @Override
