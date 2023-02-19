@@ -20,14 +20,12 @@ public class WitchesKitchen implements ModInitializer {
     public static final ItemGroup SEED_TAB = QuiltItemGroup.builder(new Identifier(MODID, "seeds")).icon(() -> new ItemStack(WKItems.BELLADONNA_SEEDS)).build();
     public static final ItemGroup GINGER_TAB = QuiltItemGroup.builder(new Identifier(MODID, "ginger")).icon(() -> new ItemStack(WKBlocks.GINGERBREAD_BLOCK.asItem())).build();
 
-
-
     @Override
     public void onInitialize(ModContainer mod) {
         WitchesKitchenConfig.init(MODID, WitchesKitchenConfig.class);
         WKPacketTypes.init(EnvType.SERVER);
         WKBlocks.init();
-        registerOxidizableBlocks();
+        WKOxidizable.init();
         WKItems.init();
         WKPotions.init();
         WKFoodComponents.init();
@@ -42,16 +40,8 @@ public class WitchesKitchen implements ModInitializer {
         WKSoundEvents.init();
         WKEntityTypes.init();
         WKDamageSources.init();
-    }
-
-    private static void registerOxidizableBlocks() {
-        OxidizableBlocksRegistry.registerOxidizableBlockPair(WKBlocks.COPPER_WITCHES_OVEN, WKBlocks.EXPOSED_COPPER_WITCHES_OVEN);
-        OxidizableBlocksRegistry.registerOxidizableBlockPair(WKBlocks.EXPOSED_COPPER_WITCHES_OVEN, WKBlocks.WEATHERED_COPPER_WITCHES_OVEN);
-        OxidizableBlocksRegistry.registerOxidizableBlockPair(WKBlocks.WEATHERED_COPPER_WITCHES_OVEN, WKBlocks.OXIDIZED_COPPER_WITCHES_OVEN);
-        OxidizableBlocksRegistry.registerWaxableBlockPair(WKBlocks.COPPER_WITCHES_OVEN, WKBlocks.WAXED_COPPER_WITCHES_OVEN);
-        OxidizableBlocksRegistry.registerWaxableBlockPair(WKBlocks.EXPOSED_COPPER_WITCHES_OVEN, WKBlocks.WAXED_EXPOSED_COPPER_WITCHES_OVEN);
-        OxidizableBlocksRegistry.registerWaxableBlockPair(WKBlocks.WEATHERED_COPPER_WITCHES_OVEN, WKBlocks.WAXED_WEATHERED_COPPER_WITCHES_OVEN);
-        OxidizableBlocksRegistry.registerWaxableBlockPair(WKBlocks.OXIDIZED_COPPER_WITCHES_OVEN, WKBlocks.WAXED_OXIDIZED_COPPER_WITCHES_OVEN);
+        WKMemoryModuleTypes.init();
+        WKSensorTypes.init();
     }
 
     public static Identifier id(String name){

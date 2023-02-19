@@ -2,11 +2,13 @@ package cf.witcheskitchen.common.entity.tameable;
 
 import cf.witcheskitchen.api.WKApi;
 import cf.witcheskitchen.api.WKTameableEntity;
+import cf.witcheskitchen.common.entity.ai.FerretBrain;
 import cf.witcheskitchen.common.registry.WKEntityTypes;
 import cf.witcheskitchen.common.registry.WKSoundEvents;
+import com.mojang.serialization.Dynamic;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.ai.brain.Brain;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -14,16 +16,9 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.Angerable;
-import net.minecraft.entity.mob.CreeperEntity;
-import net.minecraft.entity.mob.GhastEntity;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.passive.HorseBaseEntity;
-import net.minecraft.entity.passive.PassiveEntity;
-import net.minecraft.entity.passive.TameableEntity;
+import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.fluid.Fluid;
@@ -61,24 +56,10 @@ import java.util.SplittableRandom;
 import java.util.UUID;
 import java.util.function.Predicate;
 
-public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnimationTickable, Angerable {
+public class FerretEntity extends WKTameableEntity implements IAnimatable {
 
     public static final TrackedData<Boolean> NIGHT = DataTracker.registerData(FerretEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-    private static final UniformIntProvider ANGER_TIME_RANGE = TimeHelper.betweenSeconds(20, 39);
-    private static final TrackedData<Integer> ANGER_TIME = DataTracker.registerData(FerretEntity.class, TrackedDataHandlerRegistry.INTEGER);
-
-
-    // ---------- Client-side data trackers ---------- //
-
-
-    /**
-     * Tracks whether this entity is sitting.
-     */
-    private static final TrackedData<Boolean> SITTING = DataTracker.registerData(FerretEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-    /**
-     * Tracks whether this entity is attacking another one.
-     */
-    private static final TrackedData<Boolean> ATTACKING = DataTracker.registerData(FerretEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    public static final TrackedData<Boolean> IS_ATTACKING = DataTracker.registerData(FerretEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
     /**
      * Item for taming a ferret entity
@@ -105,8 +86,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
     };
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
-    @Nullable
-    private UUID targetUuid;
+
 
     public FerretEntity(EntityType<? extends TameableEntity> entityType, World world) {
         super(entityType, world);
@@ -128,72 +108,29 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
 
-    //Todo: Custom goal where ferrets and other tameables from this mod flee greater demons, which are defined by a tag.
-    @Override
-    protected void initGoals() {
-        this.goalSelector.add(0, new SwimGoal(this));
-        this.goalSelector.add(2, new SitGoal(this));
-        this.goalSelector.add(4, new PounceAtTargetGoal(this, 0.4F));
-        this.goalSelector.add(5, new MeleeAttackGoal(this, 1.0, true));
-        this.goalSelector.add(5, new UntamedTargetGoal<>(this, AnimalEntity.class, false, UNTAMED_TARGET_PREDICATE));
-        this.goalSelector.add(6, new FollowOwnerGoal(this, 1.0, 10.0F, 2.0F, false));
-        this.goalSelector.add(8, new WanderAroundFarGoal(this, 1.0));
-        this.goalSelector.add(10, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
-        this.goalSelector.add(10, new LookAroundGoal(this));
-        this.targetSelector.add(1, new TrackOwnerAttackerGoal(this));
-        this.targetSelector.add(2, new AttackWithOwnerGoal(this));
-        this.targetSelector.add(3, (new RevengeGoal(this)).setGroupRevenge());
-    }
-
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
         this.dataTracker.startTracking(NIGHT, false);
-        this.dataTracker.startTracking(ANGER_TIME, 0);
-        this.dataTracker.startTracking(SITTING, false);
-        this.dataTracker.startTracking(ATTACKING, false);
     }
 
     @Override
-    public boolean tryAttack(Entity target) {
-        if (target instanceof LivingEntity living) {
-            living.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 100, 1));
-        }
-        return target.damage(DamageSource.mob(this), 3.0F);
+    protected void mobTick() {
+        this.world.getProfiler().push("ferretBrain");
+        this.getBrain().tick((ServerWorld)this.world, this);
+        this.world.getProfiler().pop();
+        FerretBrain.updateActivities(this);
+        super.mobTick();
     }
 
-
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (this.isSitting()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("sit", ILoopType.EDefaultLoopTypes.LOOP));
-            return PlayState.CONTINUE;
-        } else if (event.isMoving() && !isAttacking()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("run", ILoopType.EDefaultLoopTypes.LOOP));
-            return PlayState.CONTINUE;
-        } else if (this.isAttacking()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("gore", ILoopType.EDefaultLoopTypes.LOOP));
-            return PlayState.CONTINUE;
-        } else {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", ILoopType.EDefaultLoopTypes.LOOP));
-            return PlayState.CONTINUE;
-        }
-    }
 
     @Override
-    public boolean canAttackWithOwner(LivingEntity target, LivingEntity owner) {
-        if (!(target instanceof CreeperEntity) && !(target instanceof GhastEntity)) {
-            if (target instanceof FerretEntity ferretEntity) {
-                return !ferretEntity.isTamed() || ferretEntity.getOwner() != owner;
-            } else if (target instanceof PlayerEntity && owner instanceof PlayerEntity && !((PlayerEntity) owner).shouldDamagePlayer((PlayerEntity) target)) {
-                return false;
-            } else if (target instanceof HorseBaseEntity && ((HorseBaseEntity) target).isTame()) {
-                return false;
-            } else {
-                return !(target instanceof TameableEntity) || !((TameableEntity) target).isTamed();
-            }
-        } else {
-            return false;
-        }
+    protected Brain<?> deserializeBrain(Dynamic<?> dynamic) {
+        return FerretBrain.create(this, dynamic);
+    }
+
+    public Brain<FerretEntity> getBrain() {
+        return (Brain<FerretEntity>) super.getBrain();
     }
 
     @Override
@@ -211,7 +148,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
                         super.setOwner(player);
                         this.navigation.recalculatePath();
                         this.setTarget(null);
-                        setSit(true);
+                        setSitting(true);
                         this.world.sendEntityStatus(this, (byte) 7);
                     } else {
                         this.world.sendEntityStatus(this, (byte) 6);
@@ -221,7 +158,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
             }
         }
         if (isTamed() && !this.world.isClient() && hand == Hand.MAIN_HAND) {
-            setSit(!isSitting());
+            setSitting(!isSitting());
             return ActionResult.SUCCESS;
         }
         if (stack.isOf(TAMING_INGREDIENT)) {
@@ -263,7 +200,6 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         }
     }
 
-
     @Override
     protected void swimUpward(TagKey<Fluid> fluid) {
         super.swimUpward(fluid);
@@ -277,21 +213,18 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         this.dataTracker.set(VARIANT, variant);
     }
 
-
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
         nbt.putBoolean("Sleep", this.isSleeping());
         nbt.putInt("Variant", this.getVariant());
-        this.writeAngerToNbt(nbt);
     }
 
     @Override
-    public void readCustomDataFromNbt(NbtCompound tag) {
-        super.readCustomDataFromNbt(tag);
-        this.setSleeping(tag.getBoolean("Sleep"));
-        this.setVariant(tag.getInt("Variant"));
-        this.readAngerFromNbt(this.world, tag);
+    public void readCustomDataFromNbt(NbtCompound nbt) {
+        super.readCustomDataFromNbt(nbt);
+        this.setSleeping(nbt.getBoolean("Sleep"));
+        this.setVariant(nbt.getInt("Variant"));
     }
 
     @Override
@@ -320,7 +253,6 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
             if (entity != null && !(entity instanceof PlayerEntity) && !(entity instanceof PersistentProjectileEntity)) {
                 amount = (amount + 1.0F) / 2.0F;
             }
-
             return super.damage(source, amount);
         }
     }
@@ -330,120 +262,14 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         return true;
     }
 
-
     @Override
     public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
         return false;
     }
 
-    //FIXME: For some reason, this makes ferrets float
-    //@Override
-    //public void tickMovement() {
-    //    this.setSleeping(this.world.isNight());
-    //}
-
-    @Override
-    public int tickTimer() {
-        return age;
-    }
-
-    @Override
-    public int getAngerTime() {
-        return this.dataTracker.get(ANGER_TIME);
-    }
-
-    @Override
-    public void setAngerTime(int ticks) {
-        this.dataTracker.set(ANGER_TIME, ticks);
-    }
-
-    @Nullable
-    @Override
-    public UUID getAngryAt() {
-        return this.targetUuid;
-    }
-
-    @Override
-    public void setAngryAt(@Nullable UUID uuid) {
-        this.targetUuid = uuid;
-    }
-
-    @Override
-    public void chooseRandomAngerTime() {
-        this.setAngerTime(ANGER_TIME_RANGE.get(this.random));
-    }
-
-
-    /**
-     * <p>
-     * Updates the {@link #SITTING} value of the ferret.
-     * </p>
-     * <p>
-     * It also updates the sitting value of the server.
-     * </p>
-     * <p>
-     * This function should be used whenever you want to
-     * update the ferret sit state in both client and server.
-     * </p>
-     */
-    public void setSit(boolean sitting) {
-        this.dataTracker.set(SITTING, sitting);
-        super.setSitting(sitting);
-    }
-
-    /**
-     * <p>
-     * Updates the {@link #ATTACKING} value of the ferret.
-     * </p>
-     * <p>
-     * It also updates the attacking value of the server.
-     * </p>
-     * <p>
-     * This function should be used whenever you want to
-     * update the ferret attacking state in both client and server.
-     * </p>
-     */
-    public void setAttacking(boolean attacking) {
-        this.dataTracker.set(ATTACKING, attacking);
-        super.setAttacking(attacking);
-    }
-
-    /**
-     * Overrides the {@link TameableEntity#isSitting()}
-     * to rather keep track of the {@link #SITTING} property which is
-     * relevant for updating the animations.
-     */
-    @Override
-    public boolean isSitting() {
-        return this.dataTracker.get(SITTING);
-    }
-
-    /**
-     * Overrides the {@link TameableEntity#isAttacking()}
-     * to rather keep track of the {@link #ATTACKING} property which is
-     * relevant for updating the animations.
-     */
-    @Override
-    public boolean isAttacking() {
-        return this.dataTracker.get(ATTACKING);
-    }
-
-    public boolean isSleeping() {
-        return this.dataTracker.get(NIGHT);
-    }
-
-    public void setSleeping(boolean sleeping) {
-        this.dataTracker.set(NIGHT, sleeping);
-    }
-
     @Override
     public int getVariants() {
         return 12;
-    }
-
-    @Override
-    public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(this, "controller", 0, this::predicate));
     }
 
     @Override
@@ -456,13 +282,11 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         return true;
     }
 
-
     @Override
     public AnimationFactory getFactory() {
         return this.factory;
     }
 
-    // Handle ferret sounds
     @Override
     protected SoundEvent getAmbientSound() {
         if (this.isTamed()) {
@@ -484,4 +308,25 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, IAnim
         this.playSound(SoundEvents.ENTITY_WOLF_STEP, 0.35F, 0.57F);
     }
 
+    @Override
+    public void registerControllers(AnimationData data) {
+        data.addAnimationController(new AnimationController<>(this, "controller", 0, this::predicate));
+    }
+
+    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+        AnimationBuilder builder = new AnimationBuilder();
+        if (this.isSitting()) {
+            builder.addAnimation("sit", ILoopType.EDefaultLoopTypes.LOOP);
+            event.getController().setAnimation(builder);
+            return PlayState.CONTINUE;
+        } else if (event.isMoving() && !isAttacking()) {
+            builder.addAnimation("run", ILoopType.EDefaultLoopTypes.LOOP);
+        } else if (this.isAttacking()) {
+            builder.addAnimation("gore", ILoopType.EDefaultLoopTypes.LOOP);
+        } else {
+            builder.addAnimation("idle", ILoopType.EDefaultLoopTypes.LOOP);
+        }
+        event.getController().setAnimation(builder);
+        return PlayState.CONTINUE;
+    }
 }
