@@ -51,9 +51,9 @@ public interface WKItems {
 
     Item AMARANTH_SEEDS = registerSeed("amaranth_seeds", WKBlocks.AMARANTH);
     Item BELLADONNA_SEEDS = registerSeed("belladonna_seeds", WKBlocks.BELLADONNA);
-    Item ST_JOHNS_WORT_SEEDS = register("st_john_wort_seeds");
+    Item ST_JOHNS_WORT_SEEDS = register("st_johns_wort_seeds");
     Item BRIAR_SEEDS = register("briar_seeds");
-    Item CAMELLIA_SEEDS = register("camellia_seeds");
+    Item CAMELLIA_SEEDS = registerSeed("camellia_seeds", WKBlocks.CAMELLIA);
     Item CHAMOMILE_SEEDS = registerSeed("chamomile_seeds", WKBlocks.CHAMOMILE);
     Item CONEFLOWER_SEEDS = registerSeed("coneflower_seeds", WKBlocks.CONEFLOWER);
     Item FOXGLOVE_SEEDS = registerSeed("foxglove_seeds", WKBlocks.FOXGLOVE);
@@ -65,9 +65,9 @@ public interface WKItems {
     Item DOLLOP_OF_FROSTING = registerFoodStuffs("dollop_of_frosting", settings -> new Item(settings.food(WKFoodComponents.FROSTING)));
     Item CHOCOLATE_RUM_BALLS = registerFoodStuffs("chocolate_rum_balls", settings -> new Item(settings.food(WKFoodComponents.RUM_BALLS)));
     Item SUPER_BOOZE = registerFoodStuffs("super_booze", settings -> new Item(new Item.Settings().food(WKFoodComponents.SUPER_BOOZE)));
-    //Todo: Convert to usage of hex triplets fully
-    Item CU_SITH_SPAWN_EGG = registerSpawnEgg("cu_sith_spawn_egg", settings -> new SpawnEggItem(WKEntityTypes.CUSITH, 3421236, 3497531, settings));
-    Item FERRET_SPAWN_EGG = registerSpawnEgg("ferret_spawn_egg", settings -> new SpawnEggItem(WKEntityTypes.FERRET, 9985082, 2631205, settings));
+
+    Item CU_SITH_SPAWN_EGG = registerSpawnEgg("cu_sith_spawn_egg", settings -> new SpawnEggItem(WKEntityTypes.CUSITH, 0x343434, 0x355E3B, settings));
+    Item FERRET_SPAWN_EGG = registerSpawnEgg("ferret_spawn_egg", settings -> new SpawnEggItem(WKEntityTypes.FERRET, 0x985C3A, 0x282625, settings));
     Item CHURCH_GRIM_SPAWN_EGG = registerSpawnEgg("church_grim_spawn_egg", settings -> new SpawnEggItem(WKEntityTypes.CHURCH_GRIM, 0xFFFAFA, 0x36454F, settings));
 
     /**
