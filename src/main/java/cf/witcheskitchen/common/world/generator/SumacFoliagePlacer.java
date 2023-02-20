@@ -3,7 +3,6 @@ package cf.witcheskitchen.common.world.generator;
 
 //this will all need to be reworked to better suit our needs
 
-import cf.witcheskitchen.datagen.worldgen.WKConfiguredFeatures;
 import cf.witcheskitchen.datagen.worldgen.WKFoliagePlacers;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

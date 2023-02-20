@@ -2,21 +2,17 @@ package cf.witcheskitchen.common.entity.ai.sensor;
 
 import cf.witcheskitchen.api.WKTameableEntity;
 import cf.witcheskitchen.common.registry.WKMemoryModuleTypes;
-import com.google.common.collect.ImmutableSet;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.brain.Brain;
 import net.minecraft.entity.ai.brain.MemoryModuleType;
-import net.minecraft.entity.ai.brain.sensor.Sensor;
 import net.minecraft.entity.ai.brain.sensor.SensorType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Box;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
-import net.tslat.smartbrainlib.api.core.sensor.PredicateSensor;
 
 import java.util.List;
-import java.util.Set;
 
 public class TamableSensor<E extends WKTameableEntity> extends ExtendedSensor<E> {
     @Override

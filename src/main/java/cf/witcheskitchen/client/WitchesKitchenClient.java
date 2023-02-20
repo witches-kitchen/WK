@@ -13,8 +13,6 @@ import cf.witcheskitchen.common.registry.*;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.color.world.FoliageColors;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
@@ -46,9 +44,7 @@ public class WitchesKitchenClient implements ClientModInitializer {
         RenderRegistry.register();
     }
 
-    //allows for color map modification of leaves based on biome
     public void registerColorProvider() {
-
         ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> pos != null && world != null ? BiomeColors.getFoliageColor(world, pos) :
                 FoliageColors.getDefaultColor(),
                 WKBlocks.BLACKTHORN_LEAVES,
@@ -61,6 +57,5 @@ public class WitchesKitchenClient implements ClientModInitializer {
                 WKBlocks.SUMAC_LEAVES,
                 WKBlocks.JUNIPER_LEAVES
         );
-
     }
 }

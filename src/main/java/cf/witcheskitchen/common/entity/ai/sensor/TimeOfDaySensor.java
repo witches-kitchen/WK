@@ -2,11 +2,9 @@ package cf.witcheskitchen.common.entity.ai.sensor;
 
 import cf.witcheskitchen.common.registry.WKMemoryModuleTypes;
 import cf.witcheskitchen.common.registry.WKSensorTypes;
-import com.google.common.collect.ImmutableSet;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.brain.MemoryModuleType;
-import net.minecraft.entity.ai.brain.sensor.Sensor;
 import net.minecraft.entity.ai.brain.sensor.SensorType;
 import net.minecraft.server.world.ServerWorld;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
@@ -14,7 +12,6 @@ import net.tslat.smartbrainlib.api.core.sensor.PredicateSensor;
 import net.tslat.smartbrainlib.util.BrainUtils;
 
 import java.util.List;
-import java.util.Set;
 
 public class TimeOfDaySensor <E extends LivingEntity> extends PredicateSensor<E, E> {
     private static final List<MemoryModuleType<?>> MEMORIES = ObjectArrayList.of(WKMemoryModuleTypes.IS_NIGHT);

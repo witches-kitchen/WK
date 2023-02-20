@@ -5,7 +5,6 @@ import cf.witcheskitchen.datagen.worldgen.WKConfiguredFeatures;
 import cf.witcheskitchen.datagen.worldgen.WKFoliagePlacers;
 import cf.witcheskitchen.datagen.worldgen.WKPlacedFeatures;
 import net.fabricmc.api.EnvType;
-import net.fabricmc.fabric.api.registry.OxidizableBlocksRegistry;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;

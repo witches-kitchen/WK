@@ -3,8 +3,6 @@ package cf.witcheskitchen.datagen.worldgen;
 import cf.witcheskitchen.WitchesKitchen;
 import cf.witcheskitchen.common.registry.WKBlocks;
 import cf.witcheskitchen.common.registry.WKTags;
-import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBiomeTags;
-import net.minecraft.tag.BiomeTags;
 import net.minecraft.tag.TagKey;
 import net.minecraft.util.Holder;
 import net.minecraft.world.biome.Biome;
@@ -15,7 +13,6 @@ import net.minecraft.world.gen.feature.util.PlacedFeatureUtil;
 import org.quiltmc.qsl.worldgen.biome.api.*;
 
 import java.util.List;
-import java.util.function.Predicate;
 
 public interface WKPlacedFeatures {
 

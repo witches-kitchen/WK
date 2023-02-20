@@ -6,11 +6,8 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.server.ServerConfigHandler;
 import net.minecraft.world.World;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
-
-import java.util.UUID;
 
 //Todo: Revamp texture variants and their code
 public abstract class WKTameableEntity extends TameableEntity {
