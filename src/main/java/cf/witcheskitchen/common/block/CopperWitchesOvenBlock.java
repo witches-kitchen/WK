@@ -6,6 +6,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.HoneycombItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -35,9 +36,9 @@ public class CopperWitchesOvenBlock extends WitchesOvenBlock implements Oxidizab
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        final ItemStack stack = player.getStackInHand(hand);
+        ItemStack stack = player.getStackInHand(hand);
         // Allow axe item interaction from Oxidizable
-        if (stack.getItem() instanceof HoneycombItem || stack.getItem() instanceof AxeItem) {
+        if (stack.isOf(Items.HONEYCOMB) || stack.getItem() instanceof AxeItem) {
             return ActionResult.PASS;
         }
         return super.onUse(state, world, pos, player, hand, hit);

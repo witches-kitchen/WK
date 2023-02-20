@@ -25,7 +25,6 @@ public class WitchesKitchen implements ModInitializer {
         WitchesKitchenConfig.init(MODID, WitchesKitchenConfig.class);
         WKPacketTypes.init(EnvType.SERVER);
         WKBlocks.init();
-        WKOxidizable.init();
         WKItems.init();
         WKPotions.init();
         WKFoodComponents.init();

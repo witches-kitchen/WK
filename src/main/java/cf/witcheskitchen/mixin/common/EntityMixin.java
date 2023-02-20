@@ -15,8 +15,9 @@ public class EntityMixin {
     private void wk$ferretVehicleOffset(Args args){
         Entity entity = (Entity) (Object) this;
         if(entity instanceof LivingEntity livingEntity){
-            if(livingEntity.hasPassengers() && livingEntity.getFirstPassenger() instanceof FerretEntity ferret){
-                args.set(2, (double) args.get(2) - 1);
+            if(livingEntity.hasPassengers() && livingEntity.getFirstPassenger() instanceof FerretEntity){
+                double height = entity.getHeight();
+                args.set(2, (double) args.get(2) - height + 0.3d);
             }
         }
     }

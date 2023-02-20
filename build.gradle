@@ -35,12 +35,8 @@ repositories {
         url = "https://maven.terraformersmc.com/"
     }
     maven {
-        name = "Ladysnake Mods"
-        url = "https://ladysnake.jfrog.io/artifactory/mods"
-        content {
-            includeGroup 'io.github.ladysnake'
-            includeGroupByRegex '(dev|io\\.github)\\.onyxstudios\\..*'
-        }
+        name = 'Ladysnake Mods, CCA(Trinkets)'
+        url = 'https://ladysnake.jfrog.io/artifactory/mods'
     }
     maven {
         name = "REI"
@@ -51,27 +47,8 @@ repositories {
         url = "https://www.cursemaven.com"
     }
     maven {
-        name = "Nexus Repository Manager"
-        url = "https://oss.sonatype.org/content/repositories/snapshots"
-    }
-    maven {
-        name = "impersonate"
-        url = "https://oss.sonatype.org/content/repositories/snapshots"
-    }
-    maven {
-        name = "appleskin"
-        url = "https://maven.ryanliptak.com/"
-    }
-    maven {
         name = "jitpack"
         url = "https://jitpack.io"
-    }
-    maven {
-        name = "reach entity attributes"
-        url = "https://maven.jamieswhiteshirt.com/libs-release"
-        content {
-            includeGroup "com.jamieswhiteshirt"
-        }
     }
     maven {
         name = "Quilt"
@@ -80,9 +57,6 @@ repositories {
     maven {
         name = "Modrinth"
         url = "https://api.modrinth.com/maven"
-        content {
-            includeGroup "maven.modrinth"
-        }
     }
 }
 
@@ -112,17 +86,11 @@ dependencies {
     //REI
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"
 
-    //Appleskin
-    modCompileOnly("squeek.appleskin:appleskin-fabric:${appleskin_version}:api") {
-        exclude(group: "net.fabricmc.fabric-api")
-        transitive = false
-    }
-
     //MidnightLib
     modImplementation include("maven.modrinth:midnightlib:$midnightlib_version")
 
     //SmartBrain
-    modImplementation("curse.maven:smartbrainlib-661293:${project.brain_version}")
+    modImplementation include("curse.maven:smartbrainlib-661293:${project.brain_version}")
 }
 
 processResources {
