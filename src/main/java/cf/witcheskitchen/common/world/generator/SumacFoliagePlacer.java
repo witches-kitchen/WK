@@ -3,7 +3,8 @@ package cf.witcheskitchen.common.world.generator;
 
 //this will all need to be reworked to better suit our needs
 
-import cf.witcheskitchen.common.registry.WKConfiguredFeatures;
+import cf.witcheskitchen.datagen.worldgen.WKConfiguredFeatures;
+import cf.witcheskitchen.datagen.worldgen.WKFoliagePlacers;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.block.BlockState;
@@ -17,9 +18,7 @@ import net.minecraft.world.gen.foliage.FoliagePlacerType;
 
 import java.util.function.BiConsumer;
 
-public class SumacFoliagePlacer
-        extends FoliagePlacer {
-
+public class SumacFoliagePlacer extends FoliagePlacer {
 
     public static final Codec<SumacFoliagePlacer> CODEC = RecordCodecBuilder.create(instance -> SumacFoliagePlacer.fillFoliagePlacerFields(instance).apply(instance, SumacFoliagePlacer::new));
 
@@ -29,7 +28,7 @@ public class SumacFoliagePlacer
 
     @Override
     protected FoliagePlacerType<?> getType() {
-        return WKConfiguredFeatures.SUMAC_FOLIAGE_PLACER;
+        return WKFoliagePlacers.SUMAC_FOLIAGE_PLACER;
     }
 
     @Override

@@ -8,6 +8,7 @@ import net.minecraft.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
+import net.minecraft.world.biome.Biome;
 
 public interface WKTags {
 
@@ -32,21 +33,14 @@ public interface WKTags {
     TagKey<Item> TEA_BLACKLIST = register(Registry.ITEM_KEY, "tea_blacklist");
     TagKey<Item> VALID_BREW_ITEM = register(Registry.ITEM_KEY, "valid_brew_item");
     TagKey<Item> RESETS_CAULDRON = register(Registry.ITEM_KEY, "resets_cauldron");
-    //Seeds
-    TagKey<Item> SEED_AMARANTH = register(Registry.ITEM_KEY, "seeds/seed_amaranth");
-    TagKey<Item> SEED_BELLADONNA = register(Registry.ITEM_KEY, "seeds/seed_belladonna");
-    TagKey<Item> SEED_IRIS = register(Registry.ITEM_KEY, "seeds/seed_iris");
-    TagKey<Item> SEED_GINGER = register(Registry.ITEM_KEY, "seeds/seed_ginger");
-    TagKey<Item> SEED_CAMELLIA = register(Registry.ITEM_KEY, "seeds/seed_camellia");
-    TagKey<Item> SEED_ST_JOHNS_WORT = register(Registry.ITEM_KEY, "seeds/seed_st_johns_wort");
-    TagKey<Item> SEED_SANGUINARY = register(Registry.ITEM_KEY, "seeds/seed_sanguinary");
-    TagKey<Item> SEED_WORMWOOD = register(Registry.ITEM_KEY, "seeds/seed_wormwood");
-    TagKey<Item> SEED_FOXGLOVE = register(Registry.ITEM_KEY, "seeds/seed_foxglove");
-    TagKey<Item> SEED_CONEFLOWER = register(Registry.ITEM_KEY, "seeds/seed_coneflower");
-    TagKey<Item> SEED_CHAMOMILE = register(Registry.ITEM_KEY, "seeds/seed_chamomile");
-    TagKey<Item> SEED_BRIAR = register(Registry.ITEM_KEY, "seeds/seed_briar");
-    TagKey<Item> SEED_MINT = register(Registry.ITEM_KEY, "seeds/seed_mint");
-    TagKey<Item> SEED_BLACKBERRY = register(Registry.ITEM_KEY, "seeds/seed_blackberry");
+
+    //Biome
+    TagKey<Biome> HAS_BLACKTHORN = register(Registry.BIOME_KEY, "has_blackthorn");
+    TagKey<Biome> HAS_ELDER = register(Registry.BIOME_KEY, "has_elder");
+    TagKey<Biome> HAS_HAWTHORN = register(Registry.BIOME_KEY, "has_hawthorn");
+    TagKey<Biome> HAS_JUNIPER = register(Registry.BIOME_KEY, "has_juniper");
+    TagKey<Biome> HAS_ROWAN = register(Registry.BIOME_KEY, "has_rowan");
+    TagKey<Biome> HAS_SUMAC = register(Registry.BIOME_KEY, "has_sumac");
 
     static <T> TagKey<T> register(final RegistryKey<? extends Registry<T>> key, final String path) {
         final Identifier resourceLoc = WitchesKitchen.id(path);

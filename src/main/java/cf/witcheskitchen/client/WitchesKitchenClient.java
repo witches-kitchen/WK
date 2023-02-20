@@ -14,11 +14,13 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.color.world.FoliageColors;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
+import net.minecraft.item.BlockItem;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
 import org.quiltmc.qsl.base.api.entrypoint.client.ClientModInitializer;
@@ -46,9 +48,19 @@ public class WitchesKitchenClient implements ClientModInitializer {
 
     //allows for color map modification of leaves based on biome
     public void registerColorProvider() {
-        ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) ->
-                world != null && pos != null
-                        ? BiomeColors.getFoliageColor(world, pos)
-                        : FoliageColors.getDefaultColor(), WKBlocks.LEAF_BLOCKS.toArray(new Block[]{}));
+
+        ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> pos != null && world != null ? BiomeColors.getFoliageColor(world, pos) :
+                FoliageColors.getDefaultColor(),
+                WKBlocks.BLACKTHORN_LEAVES,
+                WKBlocks.SUMAC_LEAVES,
+                WKBlocks.JUNIPER_LEAVES
+        );
+
+        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> ColorProviderRegistry.BLOCK.get(((BlockItem) stack.getItem()).getBlock()).getColor(((BlockItem) stack.getItem()).getBlock().getDefaultState(), null, null, tintIndex),
+                WKBlocks.BLACKTHORN_LEAVES,
+                WKBlocks.SUMAC_LEAVES,
+                WKBlocks.JUNIPER_LEAVES
+        );
+
     }
 }

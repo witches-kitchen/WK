@@ -7,6 +7,7 @@ import cf.witcheskitchen.common.block.sapling.WKSaplingBlock;
 import cf.witcheskitchen.common.block.crop.*;
 import cf.witcheskitchen.common.world.generator.WKSaplingGenerator;
 import cf.witcheskitchen.common.block.crop.variants.*;
+import cf.witcheskitchen.datagen.worldgen.WKConfiguredFeatures;
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
 import net.minecraft.block.*;
 import net.minecraft.entity.EntityType;
@@ -29,7 +30,6 @@ import java.util.function.Function;
 
 public interface WKBlocks {
 
-    ArrayList<Block> LEAF_BLOCKS = new ArrayList<>();
     List<ObjectDefinition<Block>> BLOCKS = new ArrayList<>();
     List<ObjectDefinition<Item>> ITEMS = new ArrayList<>();
     Map<String, Block> TYPE_BLOCKS = new LinkedHashMap<>();
@@ -144,10 +144,8 @@ public interface WKBlocks {
     Block JUNIPER_SLAB = registerSlab("juniper_slab");
     Block ROWAN_SLAB = registerSlab("rowan_slab");
     Block ELDER_LEAVES = registerLeaf("elder_leaves");
-    Block ELDER_LEAVES_COLORED = registerLeaf("elder_leaves_colored");
     Block SUMAC_LEAVES = registerLeaf("sumac_leaves");
     Block HAWTHORN_LEAVES = registerLeaf("hawthorn_leaves");
-    Block HAWTHORN_LEAVES_COLORED = registerLeaf("hawthorn_leaves_colored");
     Block BLACKTHORN_LEAVES = register("blackthorn_leaves", new BlackthornLeavesBlock(leavesSettings()),true);
     Block JUNIPER_LEAVES = registerLeaf("juniper_leaves");
     Block ROWAN_LEAVES = registerLeaf("rowan_leaves");
@@ -174,18 +172,18 @@ public interface WKBlocks {
     Block WARPED_BREWING_BARREL = registerBarrel("warped_brewing_barrel");
 
     //Sapling
-    Block BLACKTHORN_SAPLING = registerSapling("blackthorn_sapling", WKConfiguredFeatures.BLACKTHORN_TREE);
+    Block BLACKTHORN_SAPLING = registerSapling("blackthorn_sapling", WKConfiguredFeatures.BLACKTHORN_TREE.value());
     Block POTTED_BLACKTHORN_SAPLING = registerPottedSapling("potted_blackthorn_sapling");
     Block POTTED_ELDER_SAPLING = registerPottedSapling("potted_elder_sapling");
     Block POTTED_HAWTHORN_SAPLING = registerPottedSapling("potted_hawthorn_sapling");
     Block POTTED_JUNIPER_SAPLING = registerPottedSapling("potted_juniper_sapling");
     Block POTTED_ROWAN_SAPLING = registerPottedSapling("potted_rowan_sapling");
     Block POTTED_SUMAC_SAPLING = registerPottedSapling("potted_sumac_sapling");
-    Block ELDER_SAPLING = registerSapling("elder_sapling", WKConfiguredFeatures.ELDER_TREE);
-    Block HAWTHORN_SAPLING = registerSapling("hawthorn_sapling", WKConfiguredFeatures.HAWTHORN_TREE);
-    Block JUNIPER_SAPLING = registerSapling("juniper_sapling", WKConfiguredFeatures.JUNIPER_TREE);
-    Block ROWAN_SAPLING = registerSapling("rowan_sapling", WKConfiguredFeatures.ROWAN_TREE);
-    Block SUMAC_SAPLING = registerSapling("sumac_sapling", WKConfiguredFeatures.SUMAC_TREE);
+    Block ELDER_SAPLING = registerSapling("elder_sapling", WKConfiguredFeatures.ELDER_TREE.value());
+    Block HAWTHORN_SAPLING = registerSapling("hawthorn_sapling", WKConfiguredFeatures.HAWTHORN_TREE.value());
+    Block JUNIPER_SAPLING = registerSapling("juniper_sapling", WKConfiguredFeatures.JUNIPER_TREE.value());
+    Block ROWAN_SAPLING = registerSapling("rowan_sapling", WKConfiguredFeatures.ROWAN_TREE.value());
+    Block SUMAC_SAPLING = registerSapling("sumac_sapling", WKConfiguredFeatures.SUMAC_TREE.value());
 
     //Crops
     Block AMARANTH = registerWithType("amaranth", new AmaranthCropBlock(AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
@@ -423,8 +421,6 @@ public interface WKBlocks {
         validBlockCompost.add(JUNIPER_LEAVES, 0.3f);
         validBlockCompost.add(ROWAN_LEAVES, 0.3f);
         validBlockCompost.add(SUMAC_LEAVES, 0.3f);
-        validBlockCompost.add(ELDER_LEAVES_COLORED, 0.3f);
-        validBlockCompost.add(HAWTHORN_LEAVES_COLORED, 0.3f);
         validBlockCompost.add(BLACKTHORN_SAPLING, 0.3f);
         validBlockCompost.add(ELDER_SAPLING, 0.3f);
         validBlockCompost.add(HAWTHORN_SAPLING, 0.3f);

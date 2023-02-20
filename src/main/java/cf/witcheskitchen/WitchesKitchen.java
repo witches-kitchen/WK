@@ -1,6 +1,9 @@
 package cf.witcheskitchen;
 
 import cf.witcheskitchen.common.registry.*;
+import cf.witcheskitchen.datagen.worldgen.WKConfiguredFeatures;
+import cf.witcheskitchen.datagen.worldgen.WKFoliagePlacers;
+import cf.witcheskitchen.datagen.worldgen.WKPlacedFeatures;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.registry.OxidizableBlocksRegistry;
 import net.minecraft.item.ItemGroup;
@@ -33,7 +36,9 @@ public class WitchesKitchen implements ModInitializer {
         WKRecipeTypes.init();
         WKScreenHandlerTypes.init();
         WKParticleTypes.init();
+        WKFoliagePlacers.init();
         WKConfiguredFeatures.init();
+        WKPlacedFeatures.init();
         WKEventsRegistry.init(EnvType.SERVER);
         WKStatusEffects.init();
         WKSoundEvents.init();

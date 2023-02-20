@@ -1,7 +1,7 @@
 {
   "parent": "block/leaves",
   "textures": {
-    "particle": "witcheskitchen:block/trees/hawthorn_leaves",
-    "all": "witcheskitchen:block/trees/hawthorn_leaves"
+    "particle": "witcheskitchen:block/trees/hawthorn_leaves_colored",
+    "all": "witcheskitchen:block/trees/hawthorn_leaves_colored"
   }
 } 

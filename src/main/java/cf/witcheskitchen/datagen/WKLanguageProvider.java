@@ -88,7 +88,6 @@ public class WKLanguageProvider extends FabricLanguageProvider {
         builder.add(WKBlocks.BLACKTHORN_LEAVES, "Blackthorn Leaves");
         builder.add(WKBlocks.ELDER_LEAVES, "Elder Leaves");
 
-        builder.add(WKBlocks.ELDER_LEAVES_COLORED, "Elder Leaves Colored");
         builder.add(WKBlocks.HAWTHORN_LOG, "Hawthorn Log");
         builder.add(WKBlocks.JUNIPER_LOG, "Juniper Log");
         builder.add(WKBlocks.HAWTHORN_PLANKS, "Hawthorn Planks");
@@ -98,7 +97,6 @@ public class WKLanguageProvider extends FabricLanguageProvider {
         builder.add(WKBlocks.HAWTHORN_SLAB, "Hawthorn Slab");
         builder.add(WKBlocks.JUNIPER_SLAB, "Juniper Slab");
         builder.add(WKBlocks.HAWTHORN_LEAVES, "Hawthorn Leaves");
-        builder.add(WKBlocks.HAWTHORN_LEAVES_COLORED, "Hawthorn Leaves Colored");
 
         builder.add(WKBlocks.JUNIPER_LEAVES, "Juniper Leaves");
         builder.add(WKBlocks.ROWAN_LOG, "Rowan Log");
