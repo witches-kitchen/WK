@@ -7,14 +7,12 @@ import net.minecraft.entity.ai.brain.MemoryModuleState;
 import net.minecraft.entity.ai.brain.MemoryModuleType;
 import net.minecraft.entity.ai.brain.task.LookTargetUtil;
 import net.minecraft.entity.ai.brain.task.Task;
-import net.minecraft.entity.passive.ParrotEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 
 public class FerretMeleeAttackTask extends Task<FerretEntity> {
     private final int interval;
     private LivingEntity target;
+    private int coolDown = 0;
 
     public FerretMeleeAttackTask(int interval) {
         super(ImmutableMap.of(
@@ -45,6 +43,14 @@ public class FerretMeleeAttackTask extends Task<FerretEntity> {
         super.run(world, ferret, time);
     }
 
+    @Override
+    protected void keepRunning(ServerWorld world, FerretEntity ferret, long time) {
+        if(coolDown % 20 == 0 && target != null){
+            ferret.tryAttack(target);
+        }
+        coolDown++;
+        super.keepRunning(world, ferret, time);
+    }
 
     @Override
     protected void finishRunning(ServerWorld world, FerretEntity ferret, long time) {
