@@ -35,9 +35,9 @@ import java.util.OptionalInt;
 
 public interface WKConfiguredFeatures {
 
-    FoliagePlacerType<SumacFoliagePlacer> SUMAC_FOLIAGE_PLACER = FoliagePlacerTypeInvoker.callRegister("sumac_foliage_placer", SumacFoliagePlacer.CODEC);
+    FoliagePlacerType<SumacFoliagePlacer> SUMAC_FOLIAGE_PLACER = FoliagePlacerType.register("sumac_foliage_placer", SumacFoliagePlacer.CODEC);
     List<ObjectDefinition<ConfiguredFeature<TreeFeatureConfig, ?>>> CONFIGURED_FEATURES = new ArrayList<>();
-   ConfiguredFeature<TreeFeatureConfig, ?> BLACKTHORN_TREE = register("blackthorn_tree",
+    ConfiguredFeature<TreeFeatureConfig, ?> BLACKTHORN_TREE = register("blackthorn_tree",
             new ConfiguredFeature<>(Feature.TREE, new TreeFeatureConfig.Builder(
                     SimpleBlockStateProvider.of(WKBlocks.BLACKTHORN_LOG),
                     new StraightTrunkPlacer(4, 2, 0),
