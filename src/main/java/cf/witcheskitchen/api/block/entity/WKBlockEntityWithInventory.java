@@ -1,6 +1,6 @@
 package cf.witcheskitchen.api.block.entity;
 
-import cf.witcheskitchen.common.util.InventoryManager;
+import cf.witcheskitchen.api.util.InventoryManager;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;

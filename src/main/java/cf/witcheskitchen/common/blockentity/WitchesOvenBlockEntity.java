@@ -9,7 +9,7 @@ import cf.witcheskitchen.common.block.WitchesOvenBlock;
 import cf.witcheskitchen.common.recipe.OvenCookingRecipe;
 import cf.witcheskitchen.common.registry.WKBlockEntityTypes;
 import cf.witcheskitchen.common.registry.WKRecipeTypes;
-import cf.witcheskitchen.common.util.InventoryManager;
+import cf.witcheskitchen.api.util.InventoryManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CampfireBlock;

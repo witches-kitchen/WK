@@ -2,7 +2,7 @@ package cf.witcheskitchen.common.recipe;
 
 import cf.witcheskitchen.api.ritual.RitualCircle;
 import cf.witcheskitchen.common.registry.WKRecipeTypes;
-import cf.witcheskitchen.common.util.RecipeUtils;
+import cf.witcheskitchen.api.util.RecipeUtils;
 import com.google.gson.JsonObject;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;

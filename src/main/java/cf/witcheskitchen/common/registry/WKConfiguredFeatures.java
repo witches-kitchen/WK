@@ -2,8 +2,7 @@ package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WitchesKitchen;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
-import cf.witcheskitchen.common.generator.SumacFoliagePlacer;
-import cf.witcheskitchen.mixin.FoliagePlacerTypeInvoker;
+import cf.witcheskitchen.common.world.generator.SumacFoliagePlacer;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;

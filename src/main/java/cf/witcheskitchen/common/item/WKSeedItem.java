@@ -1,6 +1,6 @@
 package cf.witcheskitchen.common.item;
 
-import cf.witcheskitchen.common.util.TypeHelper;
+import cf.witcheskitchen.api.util.TypeHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FarmlandBlock;
