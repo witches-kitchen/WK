@@ -13,19 +13,4 @@ public class FerretRender extends GeoEntityRenderer<FerretEntity> {
         super(ctx, new FerretEntityModel());
         this.shadowRadius = 0.33f;
     }
-
-    @Override
-    public void render(FerretEntity ferret, float entityYaw, float partialTick, MatrixStack matrices, VertexConsumerProvider bufferSource, int packedLight) {
-        matrices.push();
-
-        if(ferret.getVehicle() != null) {
-            Entity vehicle = ferret.getVehicle();
-            double height = vehicle.getHeight();
-            double width = vehicle.getWidth();
-            matrices.translate(width/2,- height / 2,width/2);
-        }
-
-        matrices.pop();
-        super.render(ferret, entityYaw, partialTick, matrices, bufferSource, packedLight);
-    }
 }

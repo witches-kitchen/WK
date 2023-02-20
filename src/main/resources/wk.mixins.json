@@ -9,6 +9,7 @@
     "FoliagePlacerTypeInvoker",
     "SaplingBlockInvoker",
     "SimpleBlockStateProviderInvoker",
+    "common.EntityMixin",
     "fluid.BottleItemMixin",
     "fluid.BucketItemMixin",
     "fluid.PotionItemMixin",

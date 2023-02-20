@@ -120,6 +120,9 @@ dependencies {
 
     //MidnightLib
     modImplementation include("maven.modrinth:midnightlib:$midnightlib_version")
+
+    //SmartBrain
+    modImplementation("curse.maven:smartbrainlib-661293:${project.brain_version}")
 }
 
 processResources {

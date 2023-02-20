@@ -1,6 +1,5 @@
 package cf.witcheskitchen.api;
 
-import cf.witcheskitchen.common.entity.tameable.FerretEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
