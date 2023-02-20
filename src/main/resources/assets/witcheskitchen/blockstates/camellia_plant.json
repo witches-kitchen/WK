@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "witcheskitchen:block/camellia_lower_stage7_a"
+    },
+    "half=upper": {
+      "model": "witcheskitchen:block/camellia_upper_stage7_a"
+    }
+  }
+}

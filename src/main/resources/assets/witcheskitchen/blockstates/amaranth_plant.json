@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "witcheskitchen:block/amaranth_lower_stage6_a"
+    },
+    "half=upper": {
+      "model": "witcheskitchen:block/amaranth_upper_stage6_a"
+    }
+  }
+}

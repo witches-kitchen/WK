@@ -1,4 +1,4 @@
-package cf.witcheskitchen.api.crop;
+package cf.witcheskitchen.api.block.crop;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

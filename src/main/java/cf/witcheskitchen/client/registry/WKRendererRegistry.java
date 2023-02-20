@@ -8,8 +8,8 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 @ClientOnly
-public class RenderRegistry {
-    public static void register() {
+public interface WKRendererRegistry {
+    static void init() {
         EntityRendererRegistry.register(WKEntityTypes.CUSITH, CuSithRender::new);
         EntityRendererRegistry.register(WKEntityTypes.FERRET, FerretRender::new);
         EntityRendererRegistry.register(WKEntityTypes.CHURCH_GRIM, ChurchGrimRender::new);

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "witcheskitchen:block/belladonna_lower_stage6_a"
+    },
+    "half=upper": {
+      "model": "witcheskitchen:block/belladonna_upper_stage6_a"
+    }
+  }
+}

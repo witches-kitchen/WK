@@ -1,6 +1,6 @@
 package cf.witcheskitchen.common.block.crop;
 
-import cf.witcheskitchen.api.crop.WKTallCropBlock;
+import cf.witcheskitchen.api.block.crop.WKTallCropBlock;
 import cf.witcheskitchen.common.registry.WKItems;
 import cf.witcheskitchen.common.block.crop.variants.WormwoodTypes;
 import net.minecraft.block.Block;

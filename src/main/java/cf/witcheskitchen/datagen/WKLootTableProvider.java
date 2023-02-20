@@ -2,16 +2,25 @@ package cf.witcheskitchen.datagen;
 
 import cf.witcheskitchen.common.registry.WKBlockEntityTypes;
 import cf.witcheskitchen.common.registry.WKBlocks;
+import cf.witcheskitchen.common.registry.WKItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.ShulkerBoxBlock;
+import net.minecraft.enchantment.Enchantments;
+import net.minecraft.item.ItemConvertible;
+import net.minecraft.item.Items;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
+import net.minecraft.loot.condition.BlockStatePropertyLootCondition;
+import net.minecraft.loot.condition.LootCondition;
+import net.minecraft.loot.condition.RandomChanceLootCondition;
 import net.minecraft.loot.context.LootContextTypes;
 import net.minecraft.loot.entry.DynamicEntry;
 import net.minecraft.loot.entry.ItemEntry;
+import net.minecraft.loot.function.ApplyBonusLootFunction;
 import net.minecraft.loot.function.CopyNameLootFunction;
 import net.minecraft.loot.function.CopyNbtLootFunction;
 import net.minecraft.loot.function.SetContentsLootFunction;
@@ -118,6 +127,20 @@ public class WKLootTableProvider {
             this.addDrop(WKBlocks.STRIPPED_JUNIPER_LOG);
             this.addDrop(WKBlocks.STRIPPED_ROWAN_LOG);
             this.addDrop(WKBlocks.STRIPPED_SUMAC_LOG);
+
+            this.addPlantDrop(WKBlocks.AMARANTH_PLANT, WKItems.AMARANTH_SEEDS);
+            this.addPlantDrop(WKBlocks.BELLADONNA_PLANT, WKItems.BELLADONNA_SEEDS);
+            this.addPlantDrop(WKBlocks.CHAMOMILE_PLANT, WKItems.CHAMOMILE_SEEDS);
+            this.addPlantDrop(WKBlocks.CONEFLOWER, WKItems.CONEFLOWER_SEEDS);
+            this.addPlantDrop(WKBlocks.FOXGLOVE_PLANT, WKItems.FOXGLOVE_SEEDS);
+            this.addPlantDrop(WKBlocks.HELLEBORE_PLANT, WKItems.HELLEBORE_SEEDS);
+            this.addPlantDrop(WKBlocks.IRIS_PLANT, WKItems.IRIS_SEEDS);
+            this.addPlantDrop(WKBlocks.SANGUINARY_PLANT, WKItems.SANGUINARY_SEEDS);
+        }
+
+        public void addPlantDrop(Block block, ItemConvertible drop){
+            LootCondition.Builder builder = BlockStatePropertyLootCondition.builder(block);
+            this.addDrop(block, applyExplosionDecay(drop, LootTable.builder().pool(LootPool.builder().with(ItemEntry.builder(drop))).pool(LootPool.builder().conditionally(builder).with(ItemEntry.builder(drop).apply(ApplyBonusLootFunction.binomialWithBonusCount(Enchantments.FORTUNE, 0.5714286F, 3))))));
         }
     }
 

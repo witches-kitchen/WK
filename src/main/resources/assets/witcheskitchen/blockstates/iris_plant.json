@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "witcheskitchen:block/iris_lower_stage4_a"
+    },
+    "half=upper": {
+      "model": "witcheskitchen:block/iris_upper_stage4_a"
+    }
+  }
+}

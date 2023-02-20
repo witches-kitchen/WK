@@ -153,6 +153,15 @@ public class WKLanguageProvider extends FabricLanguageProvider {
         builder.add(WKBlocks.BELLADONNA_GLOW, "Belladonna Glow");
         builder.add(WKBlocks.BELLADONNA_NOCTURNAL, "Belladonna Nocturnal");
 
+        builder.add(WKBlocks.AMARANTH_PLANT, "Amaranth");
+        builder.add(WKBlocks.BELLADONNA_PLANT, "Belladonna");
+        builder.add(WKBlocks.CHAMOMILE_PLANT, "Chamomile");
+        builder.add(WKBlocks.CONEFLOWER_PLANT, "Coneflower");
+        builder.add(WKBlocks.FOXGLOVE_PLANT, "Foxglove");
+        builder.add(WKBlocks.HELLEBORE_PLANT, "Hellebore");
+        builder.add(WKBlocks.IRIS_PLANT, "Iris");
+        builder.add(WKBlocks.SANGUINARY_PLANT, "Sanguinary");
+
         //ENTITY TYPES
         builder.add(WKEntityTypes.CUSITH, "Cu-Sith");
         builder.add(WKEntityTypes.FERRET, "Ferret");

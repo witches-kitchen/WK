@@ -1,6 +1,6 @@
 package cf.witcheskitchen.common.block.crop;
 
-import cf.witcheskitchen.api.crop.WKCropBlock;
+import cf.witcheskitchen.api.block.crop.WKCropBlock;
 import cf.witcheskitchen.common.registry.WKItems;
 import cf.witcheskitchen.common.block.crop.variants.MintTypes;
 import net.minecraft.item.ItemConvertible;

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "witcheskitchen:block/coneflower_lower_stage6"
+    },
+    "half=upper": {
+      "model": "witcheskitchen:block/coneflower_upper_stage6_a"
+    }
+  }
+}
