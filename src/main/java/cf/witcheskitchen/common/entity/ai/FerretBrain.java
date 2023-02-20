@@ -1,5 +1,6 @@
 package cf.witcheskitchen.common.entity.ai;
 
+import cf.witcheskitchen.api.WKApi;
 import cf.witcheskitchen.common.entity.ai.sensor.TamableSensor;
 import cf.witcheskitchen.common.entity.ai.sensor.TimeOfDaySensor;
 import cf.witcheskitchen.common.entity.ai.task.DontMoveTask;
@@ -88,13 +89,10 @@ public class FerretBrain {
         if(optional.isPresent() && Sensor.testAttackableTargetPredicateIgnoreVisibility(ferretEntity, optional.get())){
             return optional;
         }
-        if (brain.hasMemoryModule(MemoryModuleType.NEAREST_VISIBLE_TARGETABLE_PLAYER)) {
-            return brain.getOptionalMemory(MemoryModuleType.NEAREST_VISIBLE_TARGETABLE_PLAYER);
-        }
         if (brain.hasMemoryModule(MemoryModuleType.VISIBLE_MOBS)) {
             Optional<VisibleLivingEntitiesCache> visibleLivingEntitiesCache = ferretEntity.getBrain().getOptionalMemory(MemoryModuleType.VISIBLE_MOBS);
             if(visibleLivingEntitiesCache.isPresent()){
-                return visibleLivingEntitiesCache.get().m_yzezovsk(entity -> entity.getType() != WKEntityTypes.FERRET && !entity.isSubmergedInWater());
+                return visibleLivingEntitiesCache.get().m_yzezovsk(UNTAMED_TARGET_PREDICATE);
             }
         }
         return Optional.empty();
@@ -109,4 +107,14 @@ public class FerretBrain {
     public static boolean isTarget(FerretEntity ferretEntity, LivingEntity entity) {
         return ferretEntity.getBrain().getOptionalMemory(MemoryModuleType.ATTACK_TARGET).filter(targetedEntity -> targetedEntity == entity).isPresent();
     }
+
+    private static final Predicate<LivingEntity> UNTAMED_TARGET_PREDICATE = entity -> {
+        final EntityType<?> entityType = entity.getType();
+        return entityType == EntityType.RABBIT || entityType == EntityType.CHICKEN;
+    };
+
+    private static final Predicate<LivingEntity> FLEE_SUPERNATURAL = (entity) -> {
+        EntityType<?> entityType = entity.getType();
+        return entityType == WKEntityTypes.CUSITH || WKApi.isGreaterDemon(entity);
+    };
 }

@@ -30,6 +30,8 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.Angerable;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.mob.PiglinBrain;
+import net.minecraft.entity.mob.PiglinEntity;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
@@ -85,6 +87,8 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, Smart
     public static final TrackedData<Integer> TARGET_ID = DataTracker.registerData(FerretEntity.class, TrackedDataHandlerRegistry.INTEGER);
     public static final TrackedData<Boolean> NIGHT = DataTracker.registerData(FerretEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
+    public static final Ingredient BREEDING_INGREDIENTS = Ingredient.ofItems(Items.RABBIT, Items.COOKED_RABBIT, Items.CHICKEN, Items.COOKED_CHICKEN, Items.EGG, Items.RABBIT_FOOT, Items.TURTLE_EGG);
+    public static final Item TAMING_INGREDIENT = Items.EGG;
 
     public FerretEntity(EntityType<? extends TameableEntity> entityType, World world) {
         super(entityType, world);
@@ -173,15 +177,96 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, Smart
         this.setVariant(nbt.getInt("Variant"));
     }
 
+
+    @Override
+    public ActionResult interactMob(PlayerEntity player, Hand hand) {
+        final ItemStack stack = player.getStackInHand(hand);
+        if (!isTamed() && stack.isOf(TAMING_INGREDIENT)) {
+            if (world.isClient()) {
+                return ActionResult.CONSUME;
+            } else {
+                if (!player.isCreative()) {
+                    stack.decrement(1);
+                }
+                if (!world.isClient()) {
+                    if (this.random.nextInt(3) == 0) {
+                        super.setOwner(player);
+                        this.navigation.recalculatePath();
+                        this.setTarget(null);
+                        setSitting(true);
+                        this.world.sendEntityStatus(this, (byte) 7);
+                    } else {
+                        this.world.sendEntityStatus(this, (byte) 6);
+                    }
+                }
+                return ActionResult.SUCCESS;
+            }
+        }
+        if (isTamed() && !this.world.isClient() && hand == Hand.MAIN_HAND) {
+            setSitting(!isSitting());
+            return ActionResult.SUCCESS;
+        }
+        if (stack.isOf(TAMING_INGREDIENT)) {
+            return ActionResult.PASS;
+        }
+        return super.interactMob(player, hand);
+    }
+
     @Override
     public int getVariants() {
         return 12;
     }
 
+    @Override
+    public boolean damage(DamageSource source, float amount) {
+        boolean bl = super.damage(source, amount);
+        if (this.world.isClient) {
+            return false;
+        } else {
+            if (bl && source.getAttacker() instanceof LivingEntity l) {
+                this.getBrain().remember(MemoryModuleType.ANGRY_AT, l.getUuid(), 20 * 10);
+            }
+
+            return bl;
+        }
+    }
+
+    @Override
+    public boolean canBreedWith(AnimalEntity other) {
+        if (!this.isTamed()) {
+            return false;
+        } else if (!(other instanceof FerretEntity ferretEntity)) {
+            return false;
+        } else {
+            return ferretEntity.isTamed() && super.canBreedWith(other);
+        }
+    }
+
     @Nullable
     @Override
     public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
-        return null;
+        FerretEntity ferretEntity = WKEntityTypes.FERRET.create(world);
+        UUID uUID = this.getOwnerUuid();
+        if (uUID != null && ferretEntity != null) {
+            ferretEntity.setOwnerUuid(uUID);
+            ferretEntity.setTamed(true);
+        }
+        return ferretEntity;
+    }
+
+    @Override
+    public boolean canBeLeashedBy(PlayerEntity player) {
+        return true;
+    }
+
+    @Override
+    public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
+        return false;
+    }
+
+    @Override
+    public boolean isBreedingItem(ItemStack stack) {
+        return BREEDING_INGREDIENTS.test(stack);
     }
 
     @Override
@@ -209,6 +294,27 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, Smart
         }
         event.getController().setAnimation(builder);
         return PlayState.CONTINUE;
+    }
+
+    @Override
+    protected SoundEvent getAmbientSound() {
+        if (this.isTamed()) {
+            if (this.isInLove()) {
+                return WKSoundEvents.FERRET_CHIRP_EVENT;
+            }
+        }
+        return WKSoundEvents.FERRET_IDLE_EVENT;
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getHurtSound(DamageSource source) {
+        return SoundEvents.ENTITY_FOX_HURT;
+    }
+
+    @Override
+    protected void playStepSound(BlockPos pos, BlockState state) {
+        this.playSound(SoundEvents.ENTITY_WOLF_STEP, 0.35F, 0.57F);
     }
 
     @Override
