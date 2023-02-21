@@ -1,6 +1,7 @@
 {
 	"parent": "witcheskitchen:block/teapot",
 	"textures": {
-		"1": "witcheskitchen:block/stations/teapot_cast_iron"
+		"1": "witcheskitchen:block/stations/teapot_cast_iron",
+		"particle": "witcheskitchen:block/stations/teapot_cast_iron"
 	}
 }

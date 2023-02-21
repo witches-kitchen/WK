@@ -12,7 +12,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
-import org.apache.commons.io.IOUtils;
 import org.quiltmc.qsl.recipe.api.serializer.QuiltRecipeSerializer;
 
 public class TeaRecipe implements Recipe<Inventory> {

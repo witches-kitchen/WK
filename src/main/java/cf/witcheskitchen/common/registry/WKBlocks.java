@@ -14,23 +14,18 @@ import cf.witcheskitchen.common.block.crop.types.*;
 import cf.witcheskitchen.datagen.worldgen.WKConfiguredFeatures;
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
 import net.minecraft.block.*;
-import net.minecraft.entity.EntityType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Holder;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.TreeFeatureConfig;
 import org.quiltmc.qsl.block.extensions.api.QuiltBlockSettings;
-import org.quiltmc.qsl.item.setting.api.QuiltItemSettings;
 
 import java.util.*;
-import java.util.function.BiFunction;
-import java.util.function.Function;
 
 public interface WKBlocks {
 
@@ -38,37 +33,37 @@ public interface WKBlocks {
     List<ObjectDefinition<Item>> ITEMS = new ArrayList<>();
     Map<String, Block> TYPE_BLOCKS = new LinkedHashMap<>();
 
-    static AbstractBlock.Settings getCropSettings(){
-        return AbstractBlock.Settings.of(Material.PLANT).noCollision().breakInstantly().sounds(BlockSoundGroup.CROP);
+    static QuiltBlockSettings getCropSettings(){
+        return QuiltBlockSettings.of(Material.PLANT).noCollision().breakInstantly().sounds(BlockSoundGroup.CROP);
     }
 
-    Block SALT_BLOCK = register("salt", Material.DECORATION, settings -> new SaltBlock(settings.noCollision().breakInstantly()));
+    Block SALT_BLOCK = register("salt", new SaltBlock(QuiltBlockSettings.of(Material.DECORATION).noCollision().breakInstantly()), true);
 
     Block RAW_GINGERBREAD_BLOCK = registerGingerBread("raw_gingerbread_block");
     Block RAW_CHISELED_GINGERBREAD_BLOCK = registerGingerBread("raw_chiseled_gingerbread_block");
     Block GINGERBREAD_BEVELED_BLOCK = registerGingerBread("gingerbread_beveled_block");
     Block GINGERBREAD_BLOCK = registerGingerBread("gingerbread_block");
-    Block RAW_GINGERBREAD_BLOCK_STAIRS = registerGingerTab("raw_gingerbread_block_stairs", Material.CAKE, settings -> new StairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
-    Block RAW_CHISELED_GINGERBREAD_BLOCK_STAIRS = registerGingerTab("raw_chiseled_gingerbread_block_stairs", Material.CAKE, settings -> new StairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
-    Block GINGERBREAD_BEVELED_BLOCK_STAIRS = registerGingerTab("gingerbread_beveled_block_stairs", Material.CAKE, settings -> new StairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
-    Block GINGERBREAD_BLOCK_STAIRS = registerGingerTab("gingerbread_block_stairs", Material.CAKE, settings -> new StairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
-    Block RAW_GINGERBREAD_BEVELED_BLOCK_STAIRS = registerGingerTab("raw_gingerbread_beveled_block_stairs", Material.CAKE, settings -> new StairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
-    Block FROSTED_GINGERBREAD_BLOCK_STAIRS = registerGingerTab("frosted_gingerbread_block_stairs", Material.CAKE, settings -> new StairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
-    Block FROSTED_BEVELED_GINGERBREAD_BLOCK_STAIRS = registerGingerTab("frosted_beveled_gingerbread_block_stairs", Material.CAKE, settings -> new StairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
-    Block CHISELED_GINGERBREAD_BLOCK_STAIRS = registerGingerTab("chiseled_gingerbread_block_stairs", Material.CAKE, settings -> new StairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
-    Block RAW_GINGERBREAD_TILED_BLOCK_STAIRS = registerGingerTab("raw_gingerbread_tiled_block_stairs", Material.CAKE, settings -> new StairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
-    Block GINGERBREAD_TILED_BLOCK_STAIRS = registerGingerTab("gingerbread_tiled_block_stairs", Material.CAKE, settings -> new StairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
-    Block FROSTING_BLOCK_STAIRS = registerGingerTab("frosting_block_stairs", Material.CAKE, settings -> new StairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
-    Block FROSTED_GINGERBREAD_TILED_BLOCK_STAIRS = registerGingerTab("frosted_gingerbread_tiled_block_stairs", Material.CAKE, settings -> new StairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
-    Block FROSTED_BEVELED_GINGERBREAD_BLOCK_YELLOW_STAIRS = registerGingerTab("frosted_beveled_gingerbread_block_yellow_stairs", Material.CAKE, settings -> new StairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
-    Block FROSTED_BEVELED_GINGERBREAD_BLOCK_RED_STAIRS = registerGingerTab("frosted_beveled_gingerbread_block_red_stairs", Material.CAKE, settings -> new StairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
-    Block FROSTED_BEVELED_GINGERBREAD_BLOCK_PURPLE_STAIRS = registerGingerTab("frosted_beveled_gingerbread_block_purple_stairs", Material.CAKE, settings -> new StairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
-    Block FROSTED_BEVELED_GINGERBREAD_BLOCK_GREEN_STAIRS = registerGingerTab("frosted_beveled_gingerbread_block_green_stairs", Material.CAKE, settings -> new StairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
-    Block FROSTED_TILED_GINGERBREAD_BLOCK_YELLOW_STAIRS = registerGingerTab("frosted_tiled_gingerbread_block_yellow_stairs", Material.CAKE, settings -> new StairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
-    Block FROSTED_TILED_GINGERBREAD_BLOCK_RED_STAIRS = registerGingerTab("frosted_tiled_gingerbread_block_red_stairs", Material.CAKE, settings -> new StairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
-    Block FROSTED_TILED_GINGERBREAD_BLOCK_PURPLE_STAIRS = registerGingerTab("frosted_tiled_gingerbread_block_purple_stairs", Material.CAKE, settings -> new StairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
-    Block FROSTED_TILED_GINGERBREAD_BLOCK_GREEN_STAIRS = registerGingerTab("frosted_tiled_gingerbread_block_green_stairs", Material.CAKE, settings -> new StairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
-    Block FROSTED_TILED_GINGERBREAD_BLOCK_VARIANT_STAIRS = registerGingerTab("frosted_tiled_gingerbread_block_variant_stairs", Material.CAKE, settings -> new StairsBlock(GINGERBREAD_BLOCK.getDefaultState(), settings));
+    Block RAW_GINGERBREAD_BLOCK_STAIRS = registerGingerBread("raw_gingerbread_block_stairs", new StairsBlock(GINGERBREAD_BLOCK.getDefaultState(), gingerSettings()));
+    Block RAW_CHISELED_GINGERBREAD_BLOCK_STAIRS = registerGingerBread("raw_chiseled_gingerbread_block_stairs", new StairsBlock(GINGERBREAD_BLOCK.getDefaultState(), gingerSettings()));
+    Block GINGERBREAD_BEVELED_BLOCK_STAIRS = registerGingerBread("gingerbread_beveled_block_stairs", new StairsBlock(GINGERBREAD_BLOCK.getDefaultState(), gingerSettings()));
+    Block GINGERBREAD_BLOCK_STAIRS = registerGingerBread("gingerbread_block_stairs", new StairsBlock(GINGERBREAD_BLOCK.getDefaultState(), gingerSettings()));
+    Block RAW_GINGERBREAD_BEVELED_BLOCK_STAIRS = registerGingerBread("raw_gingerbread_beveled_block_stairs", new StairsBlock(GINGERBREAD_BLOCK.getDefaultState(), gingerSettings()));
+    Block FROSTED_GINGERBREAD_BLOCK_STAIRS = registerGingerBread("frosted_gingerbread_block_stairs", new StairsBlock(GINGERBREAD_BLOCK.getDefaultState(), gingerSettings()));
+    Block FROSTED_BEVELED_GINGERBREAD_BLOCK_STAIRS = registerGingerBread("frosted_beveled_gingerbread_block_stairs", new StairsBlock(GINGERBREAD_BLOCK.getDefaultState(), gingerSettings()));
+    Block CHISELED_GINGERBREAD_BLOCK_STAIRS = registerGingerBread("chiseled_gingerbread_block_stairs", new StairsBlock(GINGERBREAD_BLOCK.getDefaultState(), gingerSettings()));
+    Block RAW_GINGERBREAD_TILED_BLOCK_STAIRS = registerGingerBread("raw_gingerbread_tiled_block_stairs", new StairsBlock(GINGERBREAD_BLOCK.getDefaultState(), gingerSettings()));
+    Block GINGERBREAD_TILED_BLOCK_STAIRS = registerGingerBread("gingerbread_tiled_block_stairs", new StairsBlock(GINGERBREAD_BLOCK.getDefaultState(), gingerSettings()));
+    Block FROSTING_BLOCK_STAIRS = registerGingerBread("frosting_block_stairs", new StairsBlock(GINGERBREAD_BLOCK.getDefaultState(), gingerSettings()));
+    Block FROSTED_GINGERBREAD_TILED_BLOCK_STAIRS = registerGingerBread("frosted_gingerbread_tiled_block_stairs", new StairsBlock(GINGERBREAD_BLOCK.getDefaultState(), gingerSettings()));
+    Block FROSTED_BEVELED_GINGERBREAD_BLOCK_YELLOW_STAIRS = registerGingerBread("frosted_beveled_gingerbread_block_yellow_stairs", new StairsBlock(GINGERBREAD_BLOCK.getDefaultState(), gingerSettings()));
+    Block FROSTED_BEVELED_GINGERBREAD_BLOCK_RED_STAIRS = registerGingerBread("frosted_beveled_gingerbread_block_red_stairs", new StairsBlock(GINGERBREAD_BLOCK.getDefaultState(), gingerSettings()));
+    Block FROSTED_BEVELED_GINGERBREAD_BLOCK_PURPLE_STAIRS = registerGingerBread("frosted_beveled_gingerbread_block_purple_stairs", new StairsBlock(GINGERBREAD_BLOCK.getDefaultState(), gingerSettings()));
+    Block FROSTED_BEVELED_GINGERBREAD_BLOCK_GREEN_STAIRS = registerGingerBread("frosted_beveled_gingerbread_block_green_stairs", new StairsBlock(GINGERBREAD_BLOCK.getDefaultState(), gingerSettings()));
+    Block FROSTED_TILED_GINGERBREAD_BLOCK_YELLOW_STAIRS = registerGingerBread("frosted_tiled_gingerbread_block_yellow_stairs", new StairsBlock(GINGERBREAD_BLOCK.getDefaultState(), gingerSettings()));
+    Block FROSTED_TILED_GINGERBREAD_BLOCK_RED_STAIRS = registerGingerBread("frosted_tiled_gingerbread_block_red_stairs", new StairsBlock(GINGERBREAD_BLOCK.getDefaultState(), gingerSettings()));
+    Block FROSTED_TILED_GINGERBREAD_BLOCK_PURPLE_STAIRS = registerGingerBread("frosted_tiled_gingerbread_block_purple_stairs", new StairsBlock(GINGERBREAD_BLOCK.getDefaultState(), gingerSettings()));
+    Block FROSTED_TILED_GINGERBREAD_BLOCK_GREEN_STAIRS = registerGingerBread("frosted_tiled_gingerbread_block_green_stairs", new StairsBlock(GINGERBREAD_BLOCK.getDefaultState(), gingerSettings()));
+    Block FROSTED_TILED_GINGERBREAD_BLOCK_VARIANT_STAIRS = registerGingerBread("frosted_tiled_gingerbread_block_variant_stairs", new StairsBlock(GINGERBREAD_BLOCK.getDefaultState(), gingerSettings()));
     Block RAW_GINGERBREAD_BEVELED_BLOCK = registerGingerBread("raw_gingerbread_beveled_block");
     Block FROSTED_GINGERBREAD_BLOCK = registerGingerBread("frosted_gingerbread_block");
     Block FROSTED_BEVELED_GINGERBREAD_BLOCK = registerGingerBread("frosted_beveled_gingerbread_block");
@@ -108,30 +103,30 @@ public interface WKBlocks {
     Block FROSTED_TILED_GINGERBREAD_BLOCK_GREEN_SLAB = register("frosted_tiled_gingerbread_block_green_slab", new SlabBlock(QuiltBlockSettings.copyOf(Blocks.CAKE)), WitchesKitchen.GINGER_TAB, true);
     Block FROSTED_TILED_GINGERBREAD_BLOCK_VARIANT_SLAB = register("frosted_tiled_gingerbread_block_variant_slab", new SlabBlock(QuiltBlockSettings.copyOf(Blocks.CAKE)), WitchesKitchen.GINGER_TAB, true);
 
-    Block ELDER_PLANKS = register("elder_planks", Material.WOOD);
+    Block ELDER_PLANKS = register("elder_planks", new Block(plankSettings()), true);
     Block ELDER_STAIRS = registerWoodenStair("elder_stairs", ELDER_PLANKS);
-    Block SUMAC_PLANKS = register("sumac_planks", Material.WOOD);
+    Block SUMAC_PLANKS = register("sumac_planks", new Block(plankSettings()), true);
     Block SUMAC_STAIRS = registerWoodenStair("sumac_stairs", SUMAC_PLANKS);
-    Block HAWTHORN_PLANKS = register("hawthorn_planks", Material.WOOD);
+    Block HAWTHORN_PLANKS = register("hawthorn_planks", new Block(plankSettings()), true);
     Block HAWTHORN_STAIRS = registerWoodenStair("hawthorn_stairs", HAWTHORN_PLANKS);
-    Block BLACKTHORN_PLANKS = register("blackthorn_planks", Material.WOOD);
+    Block BLACKTHORN_PLANKS = register("blackthorn_planks", new Block(plankSettings()), true);
     Block BLACKTHORN_STAIRS = registerWoodenStair("blackthorn_stairs", BLACKTHORN_PLANKS);
-    Block JUNIPER_PLANKS = register("juniper_planks", Material.WOOD);
+    Block JUNIPER_PLANKS = register("juniper_planks", new Block(plankSettings()), true);
     Block JUNIPER_STAIRS = registerWoodenStair("juniper_stairs", JUNIPER_PLANKS);
-    Block ROWAN_PLANKS = register("rowan_planks", Material.WOOD);
+    Block ROWAN_PLANKS = register("rowan_planks", new Block(plankSettings()), true);
     Block ROWAN_STAIRS = registerWoodenStair("rowan_stairs", ROWAN_PLANKS);
-    Block ELDER_LOG = registerLog("elder_log", MapColor.PALE_YELLOW, MapColor.OAK_TAN);
-    Block SUMAC_LOG = registerLog("sumac_log", MapColor.DEEPSLATE_GRAY, MapColor.DARK_DULL_PINK);
-    Block HAWTHORN_LOG = registerLog("hawthorn_log", MapColor.PALE_YELLOW, MapColor.DIRT_BROWN);
-    Block BLACKTHORN_LOG = register("blackthorn_log", new BlackthornPillarBlock(logSettings(MapColor.TERRACOTTA_BROWN, MapColor.TERRACOTTA_BLACK)),true);
-    Block JUNIPER_LOG = registerLog("juniper_log", MapColor.DIRT_BROWN, MapColor.DEEPSLATE_GRAY);
-    Block ROWAN_LOG = registerLog("rowan_log", MapColor.TERRACOTTA_BLACK, MapColor.BROWN);
-    Block STRIPPED_BLACKTHORN_LOG = registerLog("stripped_blackthorn_log", MapColor.TERRACOTTA_BROWN, MapColor.TERRACOTTA_BLACK);
-    Block STRIPPED_ELDER_LOG = registerLog("stripped_elder_log", MapColor.PALE_YELLOW, MapColor.OAK_TAN);
-    Block STRIPPED_HAWTHORN_LOG = registerLog("stripped_hawthorn_log", MapColor.PALE_YELLOW, MapColor.DIRT_BROWN);
-    Block STRIPPED_JUNIPER_LOG = registerLog("stripped_juniper_log", MapColor.DIRT_BROWN, MapColor.DEEPSLATE_GRAY);
-    Block STRIPPED_ROWAN_LOG = registerLog("stripped_rowan_log", MapColor.TERRACOTTA_BLACK, MapColor.BROWN);
-    Block STRIPPED_SUMAC_LOG = registerLog("stripped_sumac_log", MapColor.DEEPSLATE_GRAY, MapColor.DARK_DULL_PINK);
+    Block ELDER_LOG = registerLog("elder_log");
+    Block SUMAC_LOG = registerLog("sumac_log");
+    Block HAWTHORN_LOG = registerLog("hawthorn_log");
+    Block BLACKTHORN_LOG = register("blackthorn_log", new BlackthornPillarBlock(logSettings()),true);
+    Block JUNIPER_LOG = registerLog("juniper_log");
+    Block ROWAN_LOG = registerLog("rowan_log");
+    Block STRIPPED_BLACKTHORN_LOG = registerLog("stripped_blackthorn_log");
+    Block STRIPPED_ELDER_LOG = registerLog("stripped_elder_log");
+    Block STRIPPED_HAWTHORN_LOG = registerLog("stripped_hawthorn_log");
+    Block STRIPPED_JUNIPER_LOG = registerLog("stripped_juniper_log");
+    Block STRIPPED_ROWAN_LOG = registerLog("stripped_rowan_log");
+    Block STRIPPED_SUMAC_LOG = registerLog("stripped_sumac_log");
     Block BLACKTHORN_WOOD = registerWood("blackthorn_wood", MapColor.TERRACOTTA_BLACK);
     Block STRIPPED_BLACKTHORN_WOOD = registerWood("stripped_blackthorn_wood", MapColor.TERRACOTTA_BLACK);
     Block ELDER_WOOD = registerWood("elder_wood", MapColor.OAK_TAN);
@@ -169,7 +164,7 @@ public interface WKBlocks {
     Block WAXED_OXIDIZED_COPPER_TEAPOT = register("waxed_oxidized_copper_teapot", new TeapotBlock(QuiltBlockSettings.copyOf(Blocks.COPPER_BLOCK).nonOpaque()),true);
 
 
-    Block IRON_WITCHES_OVEN = register("iron_witches_oven", new WitchesOvenBlock(AbstractBlock.Settings.of(Material.METAL).strength(4.0F, 5.0F).requiresTool().nonOpaque().luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0)),true);
+    Block IRON_WITCHES_OVEN = register("iron_witches_oven", new WitchesOvenBlock(QuiltBlockSettings.of(Material.METAL).strength(4.0F, 5.0F).requiresTool().nonOpaque().luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0)),true);
     Block COPPER_WITCHES_OVEN = register("copper_witches_oven", new CopperWitchesOvenBlock(QuiltBlockSettings.copyOf(Blocks.COPPER_BLOCK).luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0), Oxidizable.OxidizationLevel.UNAFFECTED),true);
     Block WAXED_COPPER_WITCHES_OVEN = register("waxed_copper_witches_oven", new WitchesOvenBlock(QuiltBlockSettings.copy(COPPER_WITCHES_OVEN)),true);
     Block EXPOSED_COPPER_WITCHES_OVEN = register("exposed_copper_witches_oven", new CopperWitchesOvenBlock(QuiltBlockSettings.copy(Blocks.EXPOSED_COPPER).luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0), Oxidizable.OxidizationLevel.EXPOSED),true);
@@ -178,7 +173,7 @@ public interface WKBlocks {
     Block WAXED_WEATHERED_COPPER_WITCHES_OVEN = register("waxed_weathered_copper_witches_oven", new WitchesOvenBlock(QuiltBlockSettings.copy(WEATHERED_COPPER_WITCHES_OVEN)),true);
     Block OXIDIZED_COPPER_WITCHES_OVEN = register("oxidized_copper_witches_oven", new CopperWitchesOvenBlock(QuiltBlockSettings.copy(Blocks.OXIDIZED_COPPER).luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0), Oxidizable.OxidizationLevel.OXIDIZED),true);
     Block WAXED_OXIDIZED_COPPER_WITCHES_OVEN = register("waxed_oxidized_copper_witches_oven", new WitchesOvenBlock(QuiltBlockSettings.copy(OXIDIZED_COPPER_WITCHES_OVEN)),true);
-    Block GLYPH = register("glyph", new GlyphBlock(AbstractBlock.Settings.of(Material.STONE).breakInstantly()), false);
+    Block GLYPH = register("glyph", new GlyphBlock(QuiltBlockSettings.of(Material.STONE).breakInstantly()), false);
     Block IRON_WITCHES_CAULDRON = register("iron_witches_cauldron", new WitchesCauldronBlock(QuiltBlockSettings.copy(Blocks.CAULDRON).luminance(state -> state.get(WitchesCauldronBlock.LIT) ? 13 : 0)),true);
     Block OAK_BREWING_BARREL = registerBarrel("oak_brewing_barrel");
     Block SPRUCE_BREWING_BARREL = registerBarrel("spruce_brewing_barrel");
@@ -204,7 +199,7 @@ public interface WKBlocks {
     Block POTTED_SUMAC_SAPLING = registerPottedSapling("potted_sumac_sapling", SUMAC_SAPLING);
 
     //Crops
-    WKTallCropBlock AMARANTH = registerWithType("amaranth", new AmaranthCropBlock(AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
+    WKTallCropBlock AMARANTH = registerWithType("amaranth", new AmaranthCropBlock(QuiltBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
     WKTallCropBlock AMARANTH_SWEETBERRY = registerWithType("amaranth_sweetberry", new AmaranthCropBlock(QuiltBlockSettings.copyOf(AMARANTH), AmaranthTypes.SWEETBERRY));
     WKTallCropBlock AMARANTH_TORCH = registerWithType("amaranth_torch", new AmaranthCropBlock(QuiltBlockSettings.copyOf(AMARANTH), AmaranthTypes.TORCH));
     WKTallCropBlock AMARANTH_SUNDEW = registerWithType("amaranth_sundew", new AmaranthCropBlock(QuiltBlockSettings.copyOf(AMARANTH), AmaranthTypes.SUNDEW));
@@ -215,22 +210,22 @@ public interface WKBlocks {
     WKTallCropBlock AMARANTH_DARK_PASSION = registerWithType("amaranth_dark_passion", new AmaranthCropBlock(QuiltBlockSettings.copyOf(AMARANTH), AmaranthTypes.DARK_PASSION));
     WKTallCropBlock AMARANTH_FIREBIRD = registerWithType("amaranth_firebird", new AmaranthCropBlock(QuiltBlockSettings.copyOf(AMARANTH), AmaranthTypes.FIREBIRD));
 
-    WKTallCropBlock BELLADONNA = registerWithType("belladonna", new BelladonnaCropBlock(AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
+    WKTallCropBlock BELLADONNA = registerWithType("belladonna", new BelladonnaCropBlock(QuiltBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
     WKTallCropBlock BELLADONNA_GLOW = registerWithType("belladonna_glow", new BelladonnaCropBlock(QuiltBlockSettings.copyOf(BELLADONNA), BelladonnaTypes.GLOW));
     WKTallCropBlock BELLADONNA_NOCTURNAL = registerWithType("belladonna_nocturnal", new BelladonnaCropBlock(QuiltBlockSettings.copyOf(BELLADONNA), BelladonnaTypes.NOCTURNAL));
 
-    WKTallCropBlock CAMELLIA = registerWithType("camellia", new CamelliaCropBlock(AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
+    WKTallCropBlock CAMELLIA = registerWithType("camellia", new CamelliaCropBlock(QuiltBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
     WKTallCropBlock CAMELLIA_BUTTERCREAM = registerWithType("camellia_buttercream", new CamelliaCropBlock(QuiltBlockSettings.copyOf(CAMELLIA), CamelliaTypes.BUTTERCREAM));
     WKTallCropBlock CAMELLIA_BISQUE = registerWithType("camellia_bisque", new CamelliaCropBlock(QuiltBlockSettings.copyOf(CAMELLIA), CamelliaTypes.BISQUE));
     WKTallCropBlock CAMELLIA_FLINT = registerWithType("camellia_flint", new CamelliaCropBlock(QuiltBlockSettings.copyOf(CAMELLIA), CamelliaTypes.FLINT));
     WKTallCropBlock CAMELLIA_DEEP_LOVE = registerWithType("camellia_deep_love", new CamelliaCropBlock(QuiltBlockSettings.copyOf(CAMELLIA), CamelliaTypes.DEEP_LOVE));
 
-    WKCropBlock CHAMOMILE = registerWithType("chamomile", new ChamomileCropBlock(AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
+    WKCropBlock CHAMOMILE = registerWithType("chamomile", new ChamomileCropBlock(QuiltBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
     WKCropBlock CHAMOMILE_VIRESCENT = registerWithType("chamomile_virescent", new ChamomileCropBlock(QuiltBlockSettings.copyOf(CHAMOMILE), ChamomileTypes.VIRESCENT));
     WKCropBlock CHAMOMILE_STARLETT = registerWithType("chamomile_starlett", new ChamomileCropBlock(QuiltBlockSettings.copyOf(CHAMOMILE), ChamomileTypes.STARLETT));
     WKCropBlock CHAMOMILE_DYEWORKS = registerWithType("chamomile_dyeworks", new ChamomileCropBlock(QuiltBlockSettings.copyOf(CHAMOMILE), ChamomileTypes.DYEWORKS));
 
-    WKTallCropBlock CONEFLOWER = registerWithType("coneflower", new ConeflowerCropBlock(AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
+    WKTallCropBlock CONEFLOWER = registerWithType("coneflower", new ConeflowerCropBlock(QuiltBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
     WKTallCropBlock CONEFLOWER_DANCING_LADIES = registerWithType("coneflower_dancing_ladies", new ConeflowerCropBlock(QuiltBlockSettings.copyOf(CONEFLOWER), ConeflowerTypes.DANCING_LADIES));
     WKTallCropBlock CONEFLOWER_VIOLET = registerWithType("coneflower_violet", new ConeflowerCropBlock(QuiltBlockSettings.copyOf(CONEFLOWER), ConeflowerTypes.VIOLET));
     WKTallCropBlock CONEFLOWER_QUEENS_DESIRE = registerWithType("coneflower_queens_desire", new ConeflowerCropBlock(QuiltBlockSettings.copyOf(CONEFLOWER), ConeflowerTypes.QUEENS_DESIRE));
@@ -247,7 +242,7 @@ public interface WKBlocks {
     WKTallCropBlock CONEFLOWER_MASQUERADE = registerWithType("coneflower_masquerade", new ConeflowerCropBlock(QuiltBlockSettings.copyOf(CONEFLOWER), ConeflowerTypes.MASQUERADE));
     WKTallCropBlock CONEFLOWER_PARTY_BLEND = registerWithType("coneflower_party_blend", new ConeflowerCropBlock(QuiltBlockSettings.copyOf(CONEFLOWER), ConeflowerTypes.PARTY_BLEND));
 
-    WKTallCropBlock FOXGLOVE = registerWithType("foxglove", new FoxgloveCropBlock(AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
+    WKTallCropBlock FOXGLOVE = registerWithType("foxglove", new FoxgloveCropBlock(QuiltBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
     WKTallCropBlock FOXGLOVE_SMALT = registerWithType("foxglove_smalt", new FoxgloveCropBlock(QuiltBlockSettings.copyOf(FOXGLOVE), FoxgloveTypes.SMALT));
     WKTallCropBlock FOXGLOVE_TRANQUIL_EVENING = registerWithType("foxglove_tranquil_evening", new FoxgloveCropBlock(QuiltBlockSettings.copyOf(FOXGLOVE), FoxgloveTypes.TRANQUIL_EVENING));
     WKTallCropBlock FOXGLOVE_PURPUREA = registerWithType("foxglove_purpurea", new FoxgloveCropBlock(QuiltBlockSettings.copyOf(FOXGLOVE), FoxgloveTypes.PURPUREA));
@@ -277,7 +272,7 @@ public interface WKBlocks {
     WKTallCropBlock FOXGLOVE_SIGHE_MIST = registerWithType("foxglove_sighe_mist", new FoxgloveCropBlock(QuiltBlockSettings.copyOf(FOXGLOVE), FoxgloveTypes.SIGHE_MIST));
     WKTallCropBlock FOXGLOVE_PURITY = registerWithType("foxglove_purity", new FoxgloveCropBlock(QuiltBlockSettings.copyOf(FOXGLOVE), FoxgloveTypes.PURITY));
 
-    WKCropBlock HELLEBORE = registerWithType("hellebore", new HelleboreCropBlock(AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
+    WKCropBlock HELLEBORE = registerWithType("hellebore", new HelleboreCropBlock(QuiltBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
     WKCropBlock HELLEBORE_MORNING_TEA = registerWithType("hellebore_morning_tea", new HelleboreCropBlock(QuiltBlockSettings.copyOf(HELLEBORE), HelleboreTypes.MORNING_TEA));
     WKCropBlock HELLEBORE_MORNING_CASANOVA = registerWithType("hellebore_casanova", new HelleboreCropBlock(QuiltBlockSettings.copyOf(HELLEBORE), HelleboreTypes.CASANOVA));
     WKCropBlock HELLEBORE_MORNING_BLUSHING = registerWithType("hellebore_blushing", new HelleboreCropBlock(QuiltBlockSettings.copyOf(HELLEBORE), HelleboreTypes.BLUSHING));
@@ -288,12 +283,12 @@ public interface WKBlocks {
     WKCropBlock HELLEBORE_MORNING_GRIMM = registerWithType("hellebore_grimm", new HelleboreCropBlock(QuiltBlockSettings.copyOf(HELLEBORE), HelleboreTypes.GRIMM));
     WKCropBlock HELLEBORE_MORNING_NOCTURNE = registerWithType("hellebore_nocturne", new HelleboreCropBlock(QuiltBlockSettings.copyOf(HELLEBORE), HelleboreTypes.NOCTURNE));
 
-    WKTallCropBlock IRIS = registerWithType("iris", new IrisCropBlock(AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
+    WKTallCropBlock IRIS = registerWithType("iris", new IrisCropBlock(QuiltBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
     WKTallCropBlock IRIS_OCEAN = registerWithType("iris_ocean", new IrisCropBlock(QuiltBlockSettings.copyOf(IRIS), IrisTypes.OCEAN));
     WKTallCropBlock IRIS_DEEP_SEA = registerWithType("iris_deep_sea", new IrisCropBlock(QuiltBlockSettings.copyOf(IRIS), IrisTypes.DEEP_SEA));
     WKTallCropBlock IRIS_BLEEDING_HEART = registerWithType("iris_bleeding_heart", new IrisCropBlock(QuiltBlockSettings.copyOf(IRIS), IrisTypes.BLEEDING_HEART));
 
-    WKCropBlock SANGUINARY = registerWithType("sanguinary", new SanguinaryCropBlock(AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
+    WKCropBlock SANGUINARY = registerWithType("sanguinary", new SanguinaryCropBlock(QuiltBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
     WKCropBlock SANGUINARY_MEADOW = registerWithType("sanguinary_meadow", new SanguinaryCropBlock(QuiltBlockSettings.copyOf(SANGUINARY), SanguinaryTypes.MEADOW));
     WKCropBlock SANGUINARY_BLUSHING = registerWithType("sanguinary_blushing", new SanguinaryCropBlock(QuiltBlockSettings.copyOf(SANGUINARY), SanguinaryTypes.BLUSHING));
     WKCropBlock SANGUINARY_SUNSET = registerWithType("sanguinary_sunset", new SanguinaryCropBlock(QuiltBlockSettings.copyOf(SANGUINARY), SanguinaryTypes.SUNSET));
@@ -301,8 +296,8 @@ public interface WKBlocks {
     WKCropBlock SANGUINARY_AUREOLIN = registerWithType("sanguinary_aureolin", new SanguinaryCropBlock(QuiltBlockSettings.copyOf(SANGUINARY), SanguinaryTypes.AUREOLIN));
 
 
-    Block MINT = register("mint", new MintCropBlock(AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)),false);
-    Block WORMWOOD = register("wormwood", new WormwoodCropBlock(AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)), false);
+    Block MINT = register("mint", new MintCropBlock(QuiltBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)),false);
+    Block WORMWOOD = register("wormwood", new WormwoodCropBlock(QuiltBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)), false);
 
     //Plants
     Block AMARANTH_PLANT = register("amaranth_plant", new WildTallPlantCropBlock(getCropSettings(), AMARANTH, 0), false);
@@ -338,13 +333,34 @@ public interface WKBlocks {
                 .ticksRandomly()
                 .sounds(BlockSoundGroup.GRASS)
                 .nonOpaque()
-                .allowsSpawning((state, world, pos, type) -> type == EntityType.OCELOT || type == EntityType.PARROT)
-                .suffocates((state, world, pos) -> false)
-                .blockVision((state, world, pos) -> false);
+                .allowsSpawning(Blocks::canSpawnOnLeaves)
+                .suffocates(Blocks::never)
+                .blockVision(Blocks::never);
     }
 
+    static QuiltBlockSettings plankSettings() {
+        return QuiltBlockSettings.copyOf(Blocks.OAK_PLANKS).strength(2.0f);
+    }
+
+    static QuiltBlockSettings logSettings() {
+        return QuiltBlockSettings.copyOf(Blocks.OAK_LOG).strength(2.0f);
+    }
+
+    static QuiltBlockSettings gingerSettings() {
+        return QuiltBlockSettings.of(Material.CAKE).strength(2.0f);
+    }
+
+    static <T extends Block> T registerGingerBread(String id, T Block){
+        return register(id, Block, WitchesKitchen.GINGER_TAB, true);
+    }
+
+    static Block registerGingerBread(String id){
+        return register(id, new Block(gingerSettings()), WitchesKitchen.GINGER_TAB, true);
+    }
+
+
     static Block registerBarrel(String path) {
-        return register(path, Material.WOOD, settings -> new BrewingBarrelBlock(settings.nonOpaque().strength(2.5F)));
+        return register(path, new BrewingBarrelBlock(QuiltBlockSettings.of(Material.WOOD).nonOpaque().strength(2.5F)), true);
     }
 
     static Block registerPottedSapling(String path, Block block) {
@@ -364,12 +380,7 @@ public interface WKBlocks {
     }
 
     static Block registerLeaf(String path) {
-        final LeavesBlock leaf = new LeavesBlock(leavesSettings());
-        return register(path, leaf, true);
-    }
-
-    static Block registerSlab(String path) {
-        return register(path, Material.WOOD, SlabBlock::new);
+        return register(path, new LeavesBlock(leavesSettings()), true);
     }
 
     static Block registerWood(String path, MapColor color) {
@@ -377,49 +388,26 @@ public interface WKBlocks {
         return register(path, wood, true);
     }
 
-    static AbstractBlock.Settings logSettings(MapColor topMapColor, MapColor sideMapColor) {
-        return QuiltBlockSettings.of(Material.WOOD, state -> state.get(PillarBlock.AXIS) == Direction.Axis.Y ? topMapColor : sideMapColor).strength(2.0f).sounds(BlockSoundGroup.WOOD).ticksRandomly();
+    static PillarBlock registerLog(String path) {
+        return register(path, new PillarBlock(logSettings()), true);
     }
 
-    static PillarBlock registerLog(String path, MapColor topMapColor, MapColor sideMapColor) {
-        final PillarBlock log = new PillarBlock(logSettings(topMapColor, sideMapColor));
-        return register(path, log, true);
+    static Block registerSlab(String path) {
+        return register(path, new SlabBlock(QuiltBlockSettings.of(Material.WOOD)), true);
     }
 
     static Block registerWoodenStair(String path, Block block) {
-        return register(path, Material.WOOD, settings -> new StairsBlock(block.getDefaultState(), settings));
-    }
-
-    static Block registerGingerBread(String path) {
-        return register(path, Material.CAKE, Block::new, BlockItem::new, WitchesKitchen.GINGER_TAB);
-    }
-
-
-
-    static Block register(String path, Material material) {
-        return register(path, material, Block::new, BlockItem::new, WitchesKitchen.GENERAL_TAB);
-    }
-
-    static <T extends Block> T registerGingerTab(String path, Material material, Function<QuiltBlockSettings, T> blockFactory) {
-        return register(path, material, blockFactory, BlockItem::new, WitchesKitchen.GINGER_TAB);
-    }
-
-    static <T extends Block> T register(String path, Material material, Function<QuiltBlockSettings, T> blockFactory) {
-        return register(path, material, blockFactory, BlockItem::new, WitchesKitchen.GENERAL_TAB);
+        return register(path, new StairsBlock(block.getDefaultState(), QuiltBlockSettings.of(Material.WOOD)), true);
     }
 
     static <T extends Block> T registerWithType(String name, T block) {
         TYPE_BLOCKS.put(name, block);
-        final Identifier id = WitchesKitchen.id(name);
-        BLOCKS.add(new ObjectDefinition<>(id, block));
+        BLOCKS.add(new ObjectDefinition<>(WitchesKitchen.id(name), block));
         return block;
     }
 
     static <T extends Block> T register(String path, T block, ItemGroup group, boolean createItem) {
         final Identifier id = WitchesKitchen.id(path);
-        if (block == null) {
-            throw new IllegalArgumentException("Block with id " + path + " returned null");
-        }
         BLOCKS.add(new ObjectDefinition<>(id, block));
         if(createItem){
             ITEMS.add(new ObjectDefinition<>(id, new BlockItem(block, new Item.Settings().group(group))));
@@ -429,20 +417,6 @@ public interface WKBlocks {
 
     static <T extends Block> T register(String path, T block, boolean createItem) {
         return register(path, block, WitchesKitchen.GENERAL_TAB, createItem);
-    }
-
-    static <T extends Block, E extends Item> T register(String path, Material material, Function<QuiltBlockSettings, T> blockFactory, BiFunction<T, QuiltItemSettings, E> itemFactory, ItemGroup tab) {
-        final Identifier id = WitchesKitchen.id(path);
-        final T block = blockFactory.apply(QuiltBlockSettings.of(material));
-        BLOCKS.add(new ObjectDefinition<>(id, block));
-        if (itemFactory != null) {
-            final E item = itemFactory.apply(block, new QuiltItemSettings().group(tab));
-            if (item == null) {
-                throw new IllegalArgumentException("BlockItem factory for " + id + " returned null");
-            }
-            ITEMS.add(new ObjectDefinition<>(id, item));
-        }
-        return block;
     }
 
     static void init() {

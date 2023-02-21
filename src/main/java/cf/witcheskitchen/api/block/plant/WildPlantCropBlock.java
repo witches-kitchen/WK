@@ -1,7 +1,6 @@
 package cf.witcheskitchen.api.block.plant;
 
 import cf.witcheskitchen.api.block.crop.WKCropBlock;
-import cf.witcheskitchen.api.block.crop.WKTallCropBlock;
 import net.minecraft.block.PlantBlock;
 
 public class WildPlantCropBlock extends PlantBlock {
