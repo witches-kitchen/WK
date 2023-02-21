@@ -11,6 +11,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.World;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
+import org.quiltmc.loader.api.minecraft.DedicatedServerOnly;
 
 public class WKBlockEntity extends BlockEntity implements BlockEntityTicker<WKBlockEntity> {
     public boolean needsSync;
@@ -50,15 +51,20 @@ public class WKBlockEntity extends BlockEntity implements BlockEntityTicker<WKBl
 
     }
 
-    // Server-side Tick
+
     @Override
     public void tick(World world, BlockPos blockPos, BlockState blockState, WKBlockEntity blockEntity) {
 
     }
 
+    // Server-side Tick
+    public void onServerTick(World world, BlockPos blockPos, BlockState blockState, WKBlockEntity blockEntity) {
+
+    }
+
     // Client-side Tick
     @ClientOnly
-    public void onClientTick(World world, BlockPos pos, BlockState state, RandomGenerator random) {
+    public void onClientTick(World world, BlockPos pos, BlockState state, WKBlockEntity blockEntity) {
 
     }
 }

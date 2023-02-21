@@ -47,7 +47,7 @@ public class TeapotBlockEntity extends WKBlockEntityWithInventory {
 
     @Override
     public void tick(World world, BlockPos blockPos, BlockState blockState, WKBlockEntity blockEntity) {
-        if(world.getBlockState(pos.down()).getBlock() instanceof WitchesOvenBlock wo && wo.getDefaultState().get(WitchesOvenBlock.LIT)){
+        if(world.getBlockState(pos.down()).getBlock() instanceof WitchesOvenBlock wo && world.getBlockState(pos.down()).get(WitchesOvenBlock.LIT)){
             if(teaRecipe == null){
                 teaRecipe = world.getRecipeManager().listAllOfType(WKRecipeTypes.TEA_RECIPE_TYPE).stream().filter(recipe -> recipe.input.test(this.manager.getStack(0))).findFirst().orElse(null);
             }else{

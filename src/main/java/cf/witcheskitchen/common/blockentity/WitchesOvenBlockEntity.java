@@ -308,12 +308,12 @@ public class WitchesOvenBlockEntity extends WKBlockEntityWithInventory implement
      * Spawns passive cooking some particles
      */
     @Override
-    public void onClientTick(World world, BlockPos pos, BlockState state, RandomGenerator random) {
-        super.onClientTick(world, pos, state, random);
+    public void onClientTick(World world, BlockPos pos, BlockState state, WKBlockEntity wkBlockEntity) {
+        super.onClientTick(world, pos, state, wkBlockEntity);
         int facing = state.get(CampfireBlock.FACING).getHorizontal();
         for (int j = 0; j < this.passiveInventory.size(); ++j) {
             if (state.get(WitchesOvenBlock.PASSIVE_LIT)) {
-                if (!this.passiveInventory.getStack(j).isEmpty() && random.nextFloat() < 0.2F) {
+                if (!this.passiveInventory.getStack(j).isEmpty() && world.random.nextFloat() < 0.2F) {
                     final Direction direction = Direction.fromHorizontal(Math.floorMod(j + facing, 4));
                     float offset = 0.23F;
                     double d = (double) pos.getX() + 0.5D - (double) ((float) direction.getOffsetX() * offset) + (double) ((float) direction.rotateYClockwise().getOffsetX() * offset);

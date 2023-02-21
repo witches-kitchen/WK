@@ -136,7 +136,7 @@ public class WitchesCauldronBlockEntity extends WKBlockEntityWithInventory imple
 
     @Override
     @ClientOnly
-    public void onClientTick(World world, BlockPos pos, BlockState state, RandomGenerator random) {
+    public void onClientTick(World world, BlockPos pos, BlockState state, WKBlockEntity wkBlockEntity) {
         if (state.get(WitchesCauldronBlock.LIT)) {
             WitchesCauldronBlockEntity.lavaTick(world, pos, true);
         }
