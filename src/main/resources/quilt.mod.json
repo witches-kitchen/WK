@@ -25,7 +25,8 @@
       "client_init": "cf.witcheskitchen.client.WitchesKitchenClient",
       "rei_client": "cf.witcheskitchen.integration.client.rei.WKREIPlugin",
       "modmenu": "cf.witcheskitchen.integration.client.WKModMenu",
-      "fabric-datagen" : "cf.witcheskitchen.datagen.WKDatagen"
+      "fabric-datagen" : "cf.witcheskitchen.datagen.WKDatagen",
+      "cardinal-components-entity": "cf.witcheskitchen.common.component.WKComponents"
     },
     "depends": [
       {
@@ -51,5 +52,8 @@
     ]
   },
   "access_widener": "wk.accesswidener",
-  "mixin": "wk.mixins.json"
+  "mixin": "wk.mixins.json",
+  "cardinal-components": [
+    "witcheskitchen:player"
+  ]
 }

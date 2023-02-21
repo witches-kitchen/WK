@@ -2,28 +2,42 @@ package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WitchesKitchen;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
-import cf.witcheskitchen.common.item.WKSeedItem;
-import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
+import cf.witcheskitchen.common.item.ChalkItem;
+import cf.witcheskitchen.common.item.CurseBundleItem;
+import cf.witcheskitchen.common.item.TaglockItem;
 import net.minecraft.item.AliasedBlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.SpawnEggItem;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import org.quiltmc.qsl.block.extensions.api.QuiltBlockSettings;
 import org.quiltmc.qsl.item.setting.api.QuiltItemSettings;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Function;
 
 public interface WKItems {
 
     List<ObjectDefinition<Item>> ITEMS = new ArrayList<>();
-    // Flowers
+
+    Item CHALK = register("chalk", new ChalkItem(settings(WitchesKitchen.GENERAL_TAB)));
+    Item ENCHANTED_CHALK = register("enchanted_chalk", new ChalkItem(settings(WitchesKitchen.GENERAL_TAB)));
+    Item BONE_NEEDLE = register("bone_needle");
+    Item TAGLOCK = register("taglock", new TaglockItem(settings(WitchesKitchen.GENERAL_TAB)));
+
+    Item CALEFACTION_BUNDLE = register("calefaction_bundle", new CurseBundleItem(settings(WitchesKitchen.GENERAL_TAB), 2));
+    Item CURSE_OF_MIDAS_BUNDLE = register("curse_of_midas_bundle", new CurseBundleItem(settings(WitchesKitchen.GENERAL_TAB), 1));
+    Item FEAR_BUNDLE = register("fear_bundle", new CurseBundleItem(settings(WitchesKitchen.GENERAL_TAB), 1));
+    Item FIELD_GEISTER_HEX_BUNDLE = register("field_geister_hex_bundle", new CurseBundleItem(settings(WitchesKitchen.GENERAL_TAB), 1));
+    Item HUNGRY_POCKETS_BUNDLE = register("hungry_pockets_bundle", new CurseBundleItem(settings(WitchesKitchen.GENERAL_TAB), 1));
+    Item INEPTITUDE_BUNDLE = register("ineptitude_bundle", new CurseBundleItem(settings(WitchesKitchen.GENERAL_TAB), 1));
+    Item MISPLACEMENT_BUNDLE = register("misplacement_bundle", new CurseBundleItem(settings(WitchesKitchen.GENERAL_TAB), 1));
+    Item NULLARDOR_BUNDLE = register("nullardor_bundle", new CurseBundleItem(settings(WitchesKitchen.GENERAL_TAB), 1));
+    Item PARANOIA_BUNDLE = register("paranoia_bundle", new CurseBundleItem(settings(WitchesKitchen.GENERAL_TAB), 3));
+    Item PERUNS_JEST_BUNDLE = register("peruns_jest_bundle", new CurseBundleItem(settings(WitchesKitchen.GENERAL_TAB), 1));
+
+
+    //Flowers
     Item BELLADONNA_BLOSSOM = register("belladonna_blossom");
     Item AMARANTH_SPRIG = register("amaranth_sprig", new Item(settings(WitchesKitchen.FOOD_TAB).food(WKFoodComponents.AMARANTH_GRAIN)));
     Item MINT_SPRIG = register("mint_sprig", new Item(settings(WitchesKitchen.FOOD_TAB).food(WKFoodComponents.MINT_LEAF)));
@@ -47,7 +61,6 @@ public interface WKItems {
     Item FOXGLOVE_BLOSSOM = register("foxglove_blossom");
 
     //Foodstuffs
-    //Item AMARANTH_COOKIES = registerFoodStuffs("amaranth_cookies", new Item(settings.food(WKFoodComponents.COOKIES)));
     Item BLACKBERRY_TEA = register("blackberry_tea", new Item(settings(WitchesKitchen.FOOD_TAB).food(WKFoodComponents.TEA)));
     Item CHAMOMILE_TEA = register("chamomile_tea", new Item(settings(WitchesKitchen.FOOD_TAB).food(WKFoodComponents.TEA)));
     Item DOGROSE_TEA = register("dogrose_tea", new Item(settings(WitchesKitchen.FOOD_TAB).food(WKFoodComponents.TEA)));
@@ -59,7 +72,6 @@ public interface WKItems {
     Item MINT_TEA = register("mint_tea", new Item(settings(WitchesKitchen.FOOD_TAB).food(WKFoodComponents.TEA)));
     Item SUMAC_TEA = register("sumac_tea", new Item(settings(WitchesKitchen.FOOD_TAB).food(WKFoodComponents.TEA)));
     Item YARROW_TEA = register("yarrow_tea", new Item(settings(WitchesKitchen.FOOD_TAB).food(WKFoodComponents.TEA)));
-
 
     //Materials
     Item HEART_OF_INNOCENCE = register("heart_of_innocence");

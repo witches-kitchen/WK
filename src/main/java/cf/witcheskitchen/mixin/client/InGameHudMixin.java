@@ -1,6 +1,6 @@
 package cf.witcheskitchen.mixin.client;
 
-import cf.witcheskitchen.common.item.WKSeedItem;
+import cf.witcheskitchen.api.item.WKSeedItem;
 import cf.witcheskitchen.api.util.TypeHelper;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.hud.InGameHud;

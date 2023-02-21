@@ -1,6 +1,6 @@
 package cf.witcheskitchen.mixin.potion;
 
-import cf.witcheskitchen.api.AlcoholEffect;
+import cf.witcheskitchen.api.interfaces.AlcoholEffect;
 import cf.witcheskitchen.common.registry.WKStatusEffects;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;

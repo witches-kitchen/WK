@@ -91,6 +91,10 @@ dependencies {
 
     //SmartBrain
     modImplementation include("curse.maven:smartbrainlib-661293:${project.brain_version}")
+
+    //CCA
+    modImplementation include("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cca_version}")
+    modImplementation include("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cca_version}")
 }
 
 processResources {

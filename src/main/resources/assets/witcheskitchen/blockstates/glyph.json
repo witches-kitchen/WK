@@ -1,0 +1,154 @@
+{
+  "variants": {
+    "type=0,facing=north": {
+      "model": "bewitchment:block/glyph_00"
+    },
+    "type=1,facing=north": {
+      "model": "bewitchment:block/glyph_01"
+    },
+    "type=2,facing=north": {
+      "model": "bewitchment:block/glyph_02"
+    },
+    "type=3,facing=north": {
+      "model": "bewitchment:block/glyph_03"
+    },
+    "type=4,facing=north": {
+      "model": "bewitchment:block/glyph_04"
+    },
+    "type=5,facing=north": {
+      "model": "bewitchment:block/glyph_05"
+    },
+    "type=6,facing=north": {
+      "model": "bewitchment:block/glyph_06"
+    },
+    "type=7,facing=north": {
+      "model": "bewitchment:block/glyph_07"
+    },
+    "type=8,facing=north": {
+      "model": "bewitchment:block/glyph_08"
+    },
+    "type=9,facing=north": {
+      "model": "bewitchment:block/glyph_09"
+    },
+    "type=0,facing=south": {
+      "model": "bewitchment:block/glyph_00",
+      "y": 180
+    },
+    "type=1,facing=south": {
+      "model": "bewitchment:block/glyph_01",
+      "y": 180
+    },
+    "type=2,facing=south": {
+      "model": "bewitchment:block/glyph_02",
+      "y": 180
+    },
+    "type=3,facing=south": {
+      "model": "bewitchment:block/glyph_03",
+      "y": 180
+    },
+    "type=4,facing=south": {
+      "model": "bewitchment:block/glyph_04",
+      "y": 180
+    },
+    "type=5,facing=south": {
+      "model": "bewitchment:block/glyph_05",
+      "y": 180
+    },
+    "type=6,facing=south": {
+      "model": "bewitchment:block/glyph_06",
+      "y": 180
+    },
+    "type=7,facing=south": {
+      "model": "bewitchment:block/glyph_07",
+      "y": 180
+    },
+    "type=8,facing=south": {
+      "model": "bewitchment:block/glyph_08",
+      "y": 180
+    },
+    "type=9,facing=south": {
+      "model": "bewitchment:block/glyph_09",
+      "y": 180
+    },
+    "type=0,facing=east": {
+      "model": "bewitchment:block/glyph_00",
+      "y": 90
+    },
+    "type=1,facing=east": {
+      "model": "bewitchment:block/glyph_01",
+      "y": 90
+    },
+    "type=2,facing=east": {
+      "model": "bewitchment:block/glyph_02",
+      "y": 90
+    },
+    "type=3,facing=east": {
+      "model": "bewitchment:block/glyph_03",
+      "y": 90
+    },
+    "type=4,facing=east": {
+      "model": "bewitchment:block/glyph_04",
+      "y": 90
+    },
+    "type=5,facing=east": {
+      "model": "bewitchment:block/glyph_05",
+      "y": 90
+    },
+    "type=6,facing=east": {
+      "model": "bewitchment:block/glyph_06",
+      "y": 90
+    },
+    "type=7,facing=east": {
+      "model": "bewitchment:block/glyph_07",
+      "y": 90
+    },
+    "type=8,facing=east": {
+      "model": "bewitchment:block/glyph_08",
+      "y": 90
+    },
+    "type=9,facing=east": {
+      "model": "bewitchment:block/glyph_09",
+      "y": 90
+    },
+    "type=0,facing=west": {
+      "model": "bewitchment:block/glyph_00",
+      "y": 270
+    },
+    "type=1,facing=west": {
+      "model": "bewitchment:block/glyph_01",
+      "y": 270
+    },
+    "type=2,facing=west": {
+      "model": "bewitchment:block/glyph_02",
+      "y": 270
+    },
+    "type=3,facing=west": {
+      "model": "bewitchment:block/glyph_03",
+      "y": 270
+    },
+    "type=4,facing=west": {
+      "model": "bewitchment:block/glyph_04",
+      "y": 270
+    },
+    "type=5,facing=west": {
+      "model": "bewitchment:block/glyph_05",
+      "y": 270
+    },
+    "type=6,facing=west": {
+      "model": "bewitchment:block/glyph_06",
+      "y": 270
+    },
+    "type=7,facing=west": {
+      "model": "bewitchment:block/glyph_07",
+      "y": 270
+    },
+    "type=8,facing=west": {
+      "model": "bewitchment:block/glyph_08",
+      "y": 270
+    },
+    "type=9,facing=west": {
+      "model": "bewitchment:block/glyph_09",
+      "y": 270
+    }
+  }
+}

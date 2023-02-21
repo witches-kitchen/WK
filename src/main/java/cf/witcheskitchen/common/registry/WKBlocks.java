@@ -12,7 +12,6 @@ import cf.witcheskitchen.common.block.crop.*;
 import cf.witcheskitchen.common.world.generator.WKSaplingGenerator;
 import cf.witcheskitchen.common.block.crop.types.*;
 import cf.witcheskitchen.datagen.worldgen.WKConfiguredFeatures;
-import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
 import net.minecraft.block.*;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -173,7 +172,7 @@ public interface WKBlocks {
     Block WAXED_WEATHERED_COPPER_WITCHES_OVEN = register("waxed_weathered_copper_witches_oven", new WitchesOvenBlock(QuiltBlockSettings.copy(WEATHERED_COPPER_WITCHES_OVEN)),true);
     Block OXIDIZED_COPPER_WITCHES_OVEN = register("oxidized_copper_witches_oven", new CopperWitchesOvenBlock(QuiltBlockSettings.copy(Blocks.OXIDIZED_COPPER).luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0), Oxidizable.OxidizationLevel.OXIDIZED),true);
     Block WAXED_OXIDIZED_COPPER_WITCHES_OVEN = register("waxed_oxidized_copper_witches_oven", new WitchesOvenBlock(QuiltBlockSettings.copy(OXIDIZED_COPPER_WITCHES_OVEN)),true);
-    Block GLYPH = register("glyph", new GlyphBlock(QuiltBlockSettings.of(Material.STONE).breakInstantly()), false);
+    Block GLYPH = register("glyph", new GlyphBlock(QuiltBlockSettings.of(Material.DECORATION).breakInstantly().noCollision()), false);
     Block IRON_WITCHES_CAULDRON = register("iron_witches_cauldron", new WitchesCauldronBlock(QuiltBlockSettings.copy(Blocks.CAULDRON).luminance(state -> state.get(WitchesCauldronBlock.LIT) ? 13 : 0)),true);
     Block OAK_BREWING_BARREL = registerBarrel("oak_brewing_barrel");
     Block SPRUCE_BREWING_BARREL = registerBarrel("spruce_brewing_barrel");

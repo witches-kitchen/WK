@@ -1,4 +1,4 @@
-package cf.witcheskitchen.api;
+package cf.witcheskitchen.api.interfaces;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;

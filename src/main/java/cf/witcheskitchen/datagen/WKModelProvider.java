@@ -105,6 +105,21 @@ public class WKModelProvider extends FabricModelProvider {
         generator.register(WKItems.SUMAC_TEA, Models.GENERATED);
         generator.register(WKItems.YARROW_TEA, Models.GENERATED);
 
+        generator.register(WKItems.BONE_NEEDLE, Models.GENERATED);
+        generator.register(WKItems.TAGLOCK, Models.GENERATED);
+        generator.register(WKItems.ENCHANTED_CHALK, Models.GENERATED);
+        generator.register(WKItems.CHALK, Models.GENERATED);
+
+        generator.register(WKItems.CALEFACTION_BUNDLE, Models.GENERATED);
+        generator.register(WKItems.CURSE_OF_MIDAS_BUNDLE, Models.GENERATED);
+        generator.register(WKItems.FEAR_BUNDLE, Models.GENERATED);
+        generator.register(WKItems.FIELD_GEISTER_HEX_BUNDLE, Models.GENERATED);
+        generator.register(WKItems.HUNGRY_POCKETS_BUNDLE, Models.GENERATED);
+        generator.register(WKItems.INEPTITUDE_BUNDLE, Models.GENERATED);
+        generator.register(WKItems.MISPLACEMENT_BUNDLE, Models.GENERATED);
+        generator.register(WKItems.NULLARDOR_BUNDLE, Models.GENERATED);
+        generator.register(WKItems.PARANOIA_BUNDLE, Models.GENERATED);
+        generator.register(WKItems.PERUNS_JEST_BUNDLE, Models.GENERATED);
     }
 
     public final void registerTallCrops(BlockStateModelGenerator generator, Block crop, Property<Integer> ageProperty, int... ageTextureIndices) {

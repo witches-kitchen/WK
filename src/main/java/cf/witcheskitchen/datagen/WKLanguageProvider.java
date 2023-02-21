@@ -243,6 +243,22 @@ public class WKLanguageProvider extends FabricLanguageProvider {
         builder.add(WKItems.CHOCOLATE_RUM_BALLS, "Chocolate Rum Balls");
         builder.add(WKItems.SUPER_BOOZE, "Super Booze");
 
+        builder.add(WKItems.BONE_NEEDLE, "Bone Needle");
+        builder.add(WKItems.CHALK, "Chalk");
+        builder.add(WKItems.ENCHANTED_CHALK, "Enchanted Chalk");
+        builder.add(WKItems.TAGLOCK, "Taglock");
+
+        builder.add(WKItems.CALEFACTION_BUNDLE, "Calefaction Bundle");
+        builder.add(WKItems.FEAR_BUNDLE, "Fear Bundle");
+        builder.add(WKItems.CURSE_OF_MIDAS_BUNDLE, "Curse of Midas Bundle");
+        builder.add(WKItems.FIELD_GEISTER_HEX_BUNDLE, "Field Geister Hex Bundle");
+        builder.add(WKItems.HUNGRY_POCKETS_BUNDLE, "Hungry Pockets Bundle");
+        builder.add(WKItems.INEPTITUDE_BUNDLE, "Ineptitude Bundle");
+        builder.add(WKItems.MISPLACEMENT_BUNDLE, "Misplacement Bundle");
+        builder.add(WKItems.NULLARDOR_BUNDLE, "Nullador Bundle");
+        builder.add(WKItems.PARANOIA_BUNDLE, "Paranoia Bundle");
+        builder.add(WKItems.PERUNS_JEST_BUNDLE, "Peruns Jest Bundle");
+
         //SEEDS
         builder.add(WKItems.BELLADONNA_SEEDS, "Belladonna Seeds");
         builder.add(WKItems.AMARANTH_SEEDS, "Amaranth Seeds");

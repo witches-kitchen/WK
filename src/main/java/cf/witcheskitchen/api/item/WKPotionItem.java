@@ -1,4 +1,4 @@
-package cf.witcheskitchen.common.item;
+package cf.witcheskitchen.api.item;
 
 import net.minecraft.item.PotionItem;
 
