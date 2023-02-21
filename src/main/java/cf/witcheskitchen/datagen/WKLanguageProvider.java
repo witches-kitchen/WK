@@ -52,6 +52,8 @@ public class WKLanguageProvider extends FabricLanguageProvider {
         builder.add(WKBlocks.CHISELED_GINGERBREAD_BLOCK_SLAB, "Chiseled Gingerbread Slab");
         builder.add(WKBlocks.RAW_GINGERBREAD_TILED_BLOCK_SLAB, "Tiled Raw Gingerbread Slab");
         builder.add(WKBlocks.GINGERBREAD_TILED_BLOCK_SLAB, "Tiled Gingerbread Slab");
+        builder.add(WKBlocks.FROSTED_GINGERBREAD_TILED_BLOCK_SLAB, "Frosted Tiled Gingerbread Slab");
+        builder.add(WKBlocks.GINGERBREAD_BLOCK, "Gingerbread Block");
 
         builder.add(WKBlocks.RAW_CHISELED_GINGERBREAD_BLOCK_STAIRS, "Chiseled Raw Gingerbread Stairs");
         builder.add(WKBlocks.RAW_GINGERBREAD_BEVELED_BLOCK_STAIRS, "Beveled Raw Gingerbread Stairs");
@@ -63,6 +65,7 @@ public class WKLanguageProvider extends FabricLanguageProvider {
         builder.add(WKBlocks.CHISELED_GINGERBREAD_BLOCK_STAIRS, "Chiseled Gingerbread Stairs");
         builder.add(WKBlocks.RAW_GINGERBREAD_TILED_BLOCK_STAIRS, "Tiled Raw Gingerbread Stairs");
         builder.add(WKBlocks.GINGERBREAD_TILED_BLOCK_STAIRS, "Tiled Gingerbread Stairs");
+        builder.add(WKBlocks.RAW_GINGERBREAD_BLOCK_STAIRS, "Raw Gingerbread Stairs");
 
         builder.add(WKBlocks.FROSTED_BEVELED_GINGERBREAD_BLOCK_YELLOW_SLAB, "Frosted Yellow Beveled Gingerbread Slab");
         builder.add(WKBlocks.FROSTED_BEVELED_GINGERBREAD_BLOCK_RED_SLAB, "Frosted Red Beveled Gingerbread Slab");

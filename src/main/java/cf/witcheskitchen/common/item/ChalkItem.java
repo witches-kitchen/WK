@@ -1,5 +1,6 @@
 package cf.witcheskitchen.common.item;
 
+import cf.witcheskitchen.common.block.GlyphBlock;
 import cf.witcheskitchen.common.registry.WKBlocks;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.Block;
@@ -25,10 +26,11 @@ import org.quiltmc.loader.api.minecraft.ClientOnly;
 import java.util.List;
 
 public class ChalkItem extends Item {
-    private final Block glyphType = WKBlocks.GLYPH;
+    private final GlyphBlock glyphType;
 
     public ChalkItem(Settings settings) {
         super(settings);
+        this.glyphType = (GlyphBlock) WKBlocks.GLYPH;
     }
 
     @Override
@@ -36,13 +38,13 @@ public class ChalkItem extends Item {
         World world = context.getWorld();
         BlockPos pos = context.getBlockPos();
         ItemPlacementContext placementContext = new ItemPlacementContext(context);
+        BlockState state = glyphType.getPlacementState(placementContext);
         if (!world.getBlockState(pos).canReplace(placementContext)) {
             pos = pos.offset(context.getSide());
         }
         if (!world.getBlockState(pos).canReplace(placementContext)) {
             return ActionResult.PASS;
         }
-        BlockState state = glyphType.getPlacementState(placementContext);
         if (state != null && state.canPlaceAt(world, pos)) {
             if(!world.isClient()){
                 PlayerEntity player = context.getPlayer();

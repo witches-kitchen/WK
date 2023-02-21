@@ -36,8 +36,6 @@ public interface WKBlocks {
         return QuiltBlockSettings.of(Material.PLANT).noCollision().breakInstantly().sounds(BlockSoundGroup.CROP);
     }
 
-    Block SALT_BLOCK = register("salt", new SaltBlock(QuiltBlockSettings.of(Material.DECORATION).noCollision().breakInstantly()), true);
-
     Block RAW_GINGERBREAD_BLOCK = registerGingerBread("raw_gingerbread_block");
     Block RAW_CHISELED_GINGERBREAD_BLOCK = registerGingerBread("raw_chiseled_gingerbread_block");
     Block GINGERBREAD_BEVELED_BLOCK = registerGingerBread("gingerbread_beveled_block");
@@ -172,7 +170,7 @@ public interface WKBlocks {
     Block WAXED_WEATHERED_COPPER_WITCHES_OVEN = register("waxed_weathered_copper_witches_oven", new WitchesOvenBlock(QuiltBlockSettings.copy(WEATHERED_COPPER_WITCHES_OVEN)),true);
     Block OXIDIZED_COPPER_WITCHES_OVEN = register("oxidized_copper_witches_oven", new CopperWitchesOvenBlock(QuiltBlockSettings.copy(Blocks.OXIDIZED_COPPER).luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0), Oxidizable.OxidizationLevel.OXIDIZED),true);
     Block WAXED_OXIDIZED_COPPER_WITCHES_OVEN = register("waxed_oxidized_copper_witches_oven", new WitchesOvenBlock(QuiltBlockSettings.copy(OXIDIZED_COPPER_WITCHES_OVEN)),true);
-    Block GLYPH = register("glyph", new GlyphBlock(QuiltBlockSettings.of(Material.DECORATION).breakInstantly().noCollision()), false);
+    Block GLYPH = register("glyph", new GlyphBlock(QuiltBlockSettings.of(Material.DECORATION).breakInstantly()), false);
     Block IRON_WITCHES_CAULDRON = register("iron_witches_cauldron", new WitchesCauldronBlock(QuiltBlockSettings.copy(Blocks.CAULDRON).luminance(state -> state.get(WitchesCauldronBlock.LIT) ? 13 : 0)),true);
     Block OAK_BREWING_BARREL = registerBarrel("oak_brewing_barrel");
     Block SPRUCE_BREWING_BARREL = registerBarrel("spruce_brewing_barrel");
@@ -307,6 +305,8 @@ public interface WKBlocks {
     Block HELLEBORE_PLANT = register("hellebore_plant", new WildPlantCropBlock(getCropSettings(), HELLEBORE), false);
     Block IRIS_PLANT = register("iris_plant", new WildTallPlantCropBlock(getCropSettings(), IRIS, 2), false);
     Block SANGUINARY_PLANT = register("sanguinary_plant", new WildPlantCropBlock(getCropSettings(), SANGUINARY), false);
+
+    Block SALT_BLOCK = register("salt", new SaltBlock(QuiltBlockSettings.of(Material.DECORATION).noCollision().breakInstantly()), true);
 
     /**
      * Returns an <a href="Collection.html#unmodview">read-only view</a> of the WitchesKitchen's Blocks
