@@ -171,6 +171,7 @@ public interface WKBlocks {
     Block OXIDIZED_COPPER_WITCHES_OVEN = register("oxidized_copper_witches_oven", new CopperWitchesOvenBlock(QuiltBlockSettings.copy(Blocks.OXIDIZED_COPPER).luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0), Oxidizable.OxidizationLevel.OXIDIZED),true);
     Block WAXED_OXIDIZED_COPPER_WITCHES_OVEN = register("waxed_oxidized_copper_witches_oven", new WitchesOvenBlock(QuiltBlockSettings.copy(OXIDIZED_COPPER_WITCHES_OVEN)),true);
     Block GLYPH = register("glyph", new GlyphBlock(QuiltBlockSettings.of(Material.DECORATION).breakInstantly()), false);
+    Block ENCHANTED_GLYPH = register("enchanted_glyph", new GlyphBlock(QuiltBlockSettings.of(Material.DECORATION).breakInstantly()), false);
     Block IRON_WITCHES_CAULDRON = register("iron_witches_cauldron", new WitchesCauldronBlock(QuiltBlockSettings.copy(Blocks.CAULDRON).luminance(state -> state.get(WitchesCauldronBlock.LIT) ? 13 : 0)),true);
     Block OAK_BREWING_BARREL = registerBarrel("oak_brewing_barrel");
     Block SPRUCE_BREWING_BARREL = registerBarrel("spruce_brewing_barrel");

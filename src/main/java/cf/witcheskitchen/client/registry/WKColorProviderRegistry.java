@@ -19,5 +19,7 @@ public interface WKColorProviderRegistry {
                 WKBlocks.SUMAC_LEAVES,
                 WKBlocks.JUNIPER_LEAVES
         );
+
+        ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> 0xD8EAB4, WKBlocks.ENCHANTED_GLYPH);
     }
 }

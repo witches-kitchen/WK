@@ -18,6 +18,9 @@ public class WKLanguageProvider extends FabricLanguageProvider {
         builder.add(WitchesKitchen.FOOD_TAB, "Witches' Kitchen Food");
 
         //BLOCKS
+        builder.add(WKBlocks.GLYPH, "Glyph");
+        builder.add(WKBlocks.ENCHANTED_GLYPH, "Glyph");
+
         builder.add(WKBlocks.RAW_GINGERBREAD_BLOCK, "Raw Gingerbread Block");
 
         builder.add(WKBlocks.RAW_CHISELED_GINGERBREAD_BLOCK, "Chiseled Raw Gingerbread Block");
