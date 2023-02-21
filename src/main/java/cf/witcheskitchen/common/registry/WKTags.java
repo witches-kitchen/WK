@@ -23,7 +23,6 @@ public interface WKTags {
     TagKey<EntityType<?>> SILVER_IMMUNE = register(Registry.ENTITY_TYPE_KEY, "silver_immune");
     TagKey<EntityType<?>> RIGHT_HAND_WITCH_SUMMON = register(Registry.ENTITY_TYPE_KEY, "right_hand_witch_summon");
     TagKey<EntityType<?>> LEFT_HAND_WITCH_SUMMON = register(Registry.ENTITY_TYPE_KEY, "left_hand_witch_summon");
-    TagKey<EntityType<?>> IS_CERVID = register(Registry.ENTITY_TYPE_KEY, "is_cervid");
     // Block
     TagKey<Block> HEATS_CAULDRON = register(Registry.BLOCK_KEY, "heats_cauldron");
     //Item

@@ -14,7 +14,6 @@ public class WKLanguageProvider extends FabricLanguageProvider {
     public void generateTranslations(TranslationBuilder builder) {
         //GROUPS
         builder.add(WitchesKitchen.GENERAL_TAB, "Witches' Kitchen General");
-        builder.add(WitchesKitchen.SEED_TAB, "Witches' Kitchen Seeds");
         builder.add(WitchesKitchen.GINGER_TAB, "Witches' Kitchen Gingerbread");
         builder.add(WitchesKitchen.FOOD_TAB, "Witches' Kitchen Food");
 
@@ -204,9 +203,9 @@ public class WKLanguageProvider extends FabricLanguageProvider {
 
         //ITEMS
         builder.add(WKItems.BELLADONNA_BLOSSOM, "Belladonna Blossom");
-        builder.add(WKItems.AMARANTH_SPRIG, "Amaranth Spring");
-        builder.add(WKItems.MINT_SPRIG, "Mint Spring");
-        builder.add(WKItems.WORMWOOD_SPRIG, "Wormwood Spring");
+        builder.add(WKItems.AMARANTH_SPRIG, "Amaranth Sprig");
+        builder.add(WKItems.MINT_SPRIG, "Mint Sprig");
+        builder.add(WKItems.WORMWOOD_SPRIG, "Wormwood Sprig");
         builder.add(WKItems.ROWAN_BERRIES, "Rowan Berries");
         builder.add(WKItems.SLOE_BERRIES, "Sloe Blossom");
         builder.add(WKItems.JUNIPER_BERRIES, "Juniper Berries");

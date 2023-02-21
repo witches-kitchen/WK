@@ -103,11 +103,7 @@ public final class ItemUtil {
         boolean shouldAdd = false;
         ItemStack stack = player.getStackInHand(hand);
         if (stack.getCount() == 1) {
-            if (player.isCreative()) {
-                shouldAdd = true;
-            } else {
-                player.setStackInHand(hand, toAdd);
-            }
+            player.setStackInHand(hand, toAdd);
         } else {
             stack.decrement(1);
             shouldAdd = true;

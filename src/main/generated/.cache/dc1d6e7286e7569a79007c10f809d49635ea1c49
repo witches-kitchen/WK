@@ -1,4 +1,4 @@
-// 1.19.2	2023-02-21T02:07:27.863533722	Block Loot Tables
+// 1.19.2	2023-02-21T17:20:56.382597564	Block Loot Tables
 010d7e47cbcc09595952f99c1bd11d89f896e131 data/witcheskitchen/loot_tables/blocks/elder_sapling.json
 00235f285136af345e1f36d898575d68a461b22c data/witcheskitchen/loot_tables/blocks/sanguinary_plant.json
 221dc1a766c3fbd8f54a7cc8f12b523e73e1f94e data/witcheskitchen/loot_tables/blocks/stripped_juniper_log.json
@@ -32,7 +32,7 @@ bcc60c20e37774b89d551b5cdf5b39e0d561e835 data/witcheskitchen/loot_tables/blocks/
 5acc29ece237e6cdfec42ed76ed9e2023e6ec663 data/witcheskitchen/loot_tables/blocks/sumac_log.json
 5da911f7de3ea470189a8840178a4ce93dd95b75 data/witcheskitchen/loot_tables/blocks/sumac_sapling.json
 bf79654da502968e6d53011d5739a96d9276a8da data/witcheskitchen/loot_tables/blocks/chamomile_plant.json
-a90074c841c24ac477400aed52b96fb4245030bb data/witcheskitchen/loot_tables/blocks/amaranth_plant.json
+d1a4d452ba6e50d720eda70959962b96d0fd412b data/witcheskitchen/loot_tables/blocks/amaranth_plant.json
 da6a24755ce83c7474f1bc240f8c78d9f13caf66 data/witcheskitchen/loot_tables/blocks/sumac_planks.json
 a5bb55c828ff5e3dd306368d8e79bd9793a10023 data/witcheskitchen/loot_tables/blocks/blackthorn_sapling.json
 0112009408479439fa20e048cbdcc12bfef2fd4c data/witcheskitchen/loot_tables/blocks/stripped_blackthorn_wood.json

@@ -96,7 +96,7 @@ public class TeapotBlockEntity extends WKBlockEntityWithInventory {
                 }else if(stack.isOf(Items.POTION) && PotionUtil.getPotion(stack) == Potions.WATER){
                     fillKettle(player);
                 }else{
-                    TeaRecipe teaRecipe = world.getRecipeManager().listAllOfType(WKRecipeTypes.TEA_RECIPE_TYPE).stream().filter(recipe -> recipe.input.test(stack)).findFirst().orElse(null);;
+                    TeaRecipe teaRecipe = world.getRecipeManager().listAllOfType(WKRecipeTypes.TEA_RECIPE_TYPE).stream().filter(recipe -> recipe.input.test(stack)).findFirst().orElse(null);
                     if(teaRecipe != null){
                         tryAddIngredientToTeaPot(stack, world);
                     }

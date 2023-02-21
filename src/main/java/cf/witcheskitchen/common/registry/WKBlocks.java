@@ -407,7 +407,7 @@ public interface WKBlocks {
     }
 
     static <T extends Block> T register(String path, T block, ItemGroup group, boolean createItem) {
-        final Identifier id = WitchesKitchen.id(path);
+        Identifier id = WitchesKitchen.id(path);
         BLOCKS.add(new ObjectDefinition<>(id, block));
         if(createItem){
             ITEMS.add(new ObjectDefinition<>(id, new BlockItem(block, new Item.Settings().group(group))));
@@ -422,18 +422,5 @@ public interface WKBlocks {
     static void init() {
         BLOCKS.forEach(entry -> Registry.register(Registry.BLOCK, entry.id(), entry.object()));
         ITEMS.forEach(entry -> Registry.register(Registry.ITEM, entry.id(), entry.object()));
-        CompostingChanceRegistry validBlockCompost = CompostingChanceRegistry.INSTANCE;
-        validBlockCompost.add(BLACKTHORN_LEAVES, 0.3f);
-        validBlockCompost.add(ELDER_LEAVES, 0.3f);
-        validBlockCompost.add(HAWTHORN_LEAVES, 0.3f);
-        validBlockCompost.add(JUNIPER_LEAVES, 0.3f);
-        validBlockCompost.add(ROWAN_LEAVES, 0.3f);
-        validBlockCompost.add(SUMAC_LEAVES, 0.3f);
-        validBlockCompost.add(BLACKTHORN_SAPLING, 0.3f);
-        validBlockCompost.add(ELDER_SAPLING, 0.3f);
-        validBlockCompost.add(HAWTHORN_SAPLING, 0.3f);
-        validBlockCompost.add(JUNIPER_SAPLING, 0.3f);
-        validBlockCompost.add(ROWAN_SAPLING, 0.3f);
-        validBlockCompost.add(SUMAC_SAPLING, 0.3f);
     }
 }
