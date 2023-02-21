@@ -1,6 +1,7 @@
 package cf.witcheskitchen.common.block;
 
 import cf.witcheskitchen.api.block.WKBlock;
+import cf.witcheskitchen.api.util.Utils;
 import cf.witcheskitchen.common.blockentity.WitchesOvenBlockEntity;
 import cf.witcheskitchen.common.registry.WKDamageSources;
 import net.minecraft.block.*;
@@ -62,7 +63,7 @@ public class WitchesOvenBlock extends WKBlock implements Waterloggable {
 
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return SHAPE;
+        return Utils.rotateShape(Direction.NORTH, state.get(FACING), SHAPE);
     }
 
     @Override
