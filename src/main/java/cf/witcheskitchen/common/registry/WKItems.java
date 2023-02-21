@@ -45,6 +45,18 @@ public interface WKItems {
 
     //Foodstuffs
     //Item AMARANTH_COOKIES = registerFoodStuffs("amaranth_cookies", settings -> new Item(settings.food(WKFoodComponents.COOKIES)));
+    Item BLACKBERRY_TEA = registerFoodStuffs("blackberry_tea", settings -> new Item(settings.food(WKFoodComponents.TEA)));
+    Item CHAMOMILE_TEA = registerFoodStuffs("chamomile_tea", settings -> new Item(settings.food(WKFoodComponents.TEA)));
+    Item DOGROSE_TEA = registerFoodStuffs("dogrose_tea", settings -> new Item(settings.food(WKFoodComponents.TEA)));
+    Item ECHINACEA_TEA = registerFoodStuffs("echinacea_tea", settings -> new Item(settings.food(WKFoodComponents.TEA)));
+    Item ELDER_TEA = registerFoodStuffs("elder_tea", settings -> new Item(settings.food(WKFoodComponents.TEA)));
+    Item GINGER_TEA = registerFoodStuffs("ginger_tea", settings -> new Item(settings.food(WKFoodComponents.TEA)));
+    Item HAWTHORN_TEA = registerFoodStuffs("hawthorn_tea", settings -> new Item(settings.food(WKFoodComponents.TEA)));
+    Item ST_JOHNS_WORT_TEA = registerFoodStuffs("st_johns_wort_tea", settings -> new Item(settings.food(WKFoodComponents.TEA)));
+    Item MINT_TEA = registerFoodStuffs("mint_tea", settings -> new Item(settings.food(WKFoodComponents.TEA)));
+    Item SUMAC_TEA = registerFoodStuffs("sumac_tea", settings -> new Item(settings.food(WKFoodComponents.TEA)));
+    Item YARROW_TEA = registerFoodStuffs("yarrow_tea", settings -> new Item(settings.food(WKFoodComponents.TEA)));
+
 
     //Materials
     Item HEART_OF_INNOCENCE = registerItem("heart_of_innocence");
@@ -96,7 +108,7 @@ public interface WKItems {
      * Use me for registering foodstuffs!
      */
     static <T extends Item> T registerFoodStuffs(String id, Function<QuiltItemSettings, T> factory) {
-        return register(id, factory, WitchesKitchen.SEED_TAB);
+        return register(id, factory, WitchesKitchen.FOOD_TAB);
     }
 
     static Item register(String id) {

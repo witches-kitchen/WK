@@ -42,6 +42,16 @@
         }
       ],
       "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "witcheskitchen:amaranth_spring"
+        }
+      ],
+      "rolls": 1.0
     }
   ]
 }

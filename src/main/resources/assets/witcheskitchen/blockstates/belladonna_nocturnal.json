@@ -31,7 +31,7 @@
       "model": "witcheskitchen:block/belladonna_upper_stage4"
     },
     "half=lower,age=5": {
-      "model": "witcheskitchen:block/belladonna_bottom_stage5"
+      "model": "witcheskitchen:block/belladonna_lower_stage5"
     },
     "half=upper,age=5": {
       "model": "witcheskitchen:block/belladonna_upper_stage5"

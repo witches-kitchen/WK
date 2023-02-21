@@ -99,4 +99,23 @@ public final class ItemUtil {
         }
     }
 
+    public static void addItemToInventoryAndConsume(PlayerEntity player, Hand hand, ItemStack toAdd) {
+        boolean shouldAdd = false;
+        ItemStack stack = player.getStackInHand(hand);
+        if (stack.getCount() == 1) {
+            if (player.isCreative()) {
+                shouldAdd = true;
+            } else {
+                player.setStackInHand(hand, toAdd);
+            }
+        } else {
+            stack.decrement(1);
+            shouldAdd = true;
+        }
+        if (shouldAdd) {
+            if (!player.getInventory().insertStack(toAdd)) {
+                player.dropItem(toAdd, false, true);
+            }
+        }
+    }
 }

@@ -10,7 +10,7 @@ import cf.witcheskitchen.common.block.*;
 import cf.witcheskitchen.common.block.sapling.WKSaplingBlock;
 import cf.witcheskitchen.common.block.crop.*;
 import cf.witcheskitchen.common.world.generator.WKSaplingGenerator;
-import cf.witcheskitchen.common.block.crop.variants.*;
+import cf.witcheskitchen.common.block.crop.types.*;
 import cf.witcheskitchen.datagen.worldgen.WKConfiguredFeatures;
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
 import net.minecraft.block.*;
@@ -86,27 +86,27 @@ public interface WKBlocks {
     Block FROSTED_TILED_GINGERBREAD_BLOCK_PURPLE = registerGingerBread("frosted_tiled_gingerbread_block_purple");
     Block FROSTED_TILED_GINGERBREAD_BLOCK_GREEN = registerGingerBread("frosted_tiled_gingerbread_block_green");
     Block FROSTED_TILED_GINGERBREAD_BLOCK_VARIANT = registerGingerBread("frosted_tiled_gingerbread_block_variant");
-    Block RAW_GINGERBREAD_BLOCK_SLAB = registerGingerBread("raw_gingerbread_block_slab");
-    Block RAW_CHISELED_GINGERBREAD_BLOCK_SLAB = registerGingerBread("raw_chiseled_gingerbread_block_slab");
-    Block GINGERBREAD_BEVELED_BLOCK_SLAB = registerGingerBread("gingerbread_beveled_block_slab");
-    Block GINGERBREAD_BLOCK_SLAB = registerGingerBread("gingerbread_block_slab");
-    Block RAW_GINGERBREAD_BEVELED_BLOCK_SLAB = registerGingerBread("raw_gingerbread_beveled_block_slab");
-    Block FROSTED_GINGERBREAD_BLOCK_SLAB = registerGingerBread("frosted_gingerbread_block_slab");
-    Block FROSTED_BEVELED_GINGERBREAD_BLOCK_SLAB = registerGingerBread("frosted_beveled_gingerbread_block_slab");
-    Block CHISELED_GINGERBREAD_BLOCK_SLAB = registerGingerBread("chiseled_gingerbread_block_slab");
-    Block RAW_GINGERBREAD_TILED_BLOCK_SLAB = registerGingerBread("raw_gingerbread_tiled_block_slab");
-    Block GINGERBREAD_TILED_BLOCK_SLAB = registerGingerBread("gingerbread_tiled_block_slab");
-    Block FROSTING_BLOCK_SLAB = registerGingerBread("frosting_block_slab");
-    Block FROSTED_GINGERBREAD_TILED_BLOCK_SLAB = registerGingerBread("frosted_gingerbread_tiled_block_slab");
-    Block FROSTED_BEVELED_GINGERBREAD_BLOCK_YELLOW_SLAB = registerGingerBread("frosted_beveled_gingerbread_block_yellow_slab");
-    Block FROSTED_BEVELED_GINGERBREAD_BLOCK_RED_SLAB = registerGingerBread("frosted_beveled_gingerbread_block_red_slab");
-    Block FROSTED_BEVELED_GINGERBREAD_BLOCK_PURPLE_SLAB = registerGingerBread("frosted_beveled_gingerbread_block_purple_slab");
-    Block FROSTED_BEVELED_GINGERBREAD_BLOCK_GREEN_SLAB = registerGingerBread("frosted_beveled_gingerbread_block_green_slab");
-    Block FROSTED_TILED_GINGERBREAD_BLOCK_YELLOW_SLAB = registerGingerBread("frosted_tiled_gingerbread_block_yellow_slab");
-    Block FROSTED_TILED_GINGERBREAD_BLOCK_RED_SLAB = registerGingerBread("frosted_tiled_gingerbread_block_red_slab");
-    Block FROSTED_TILED_GINGERBREAD_BLOCK_PURPLE_SLAB = registerGingerBread("frosted_tiled_gingerbread_block_purple_slab");
-    Block FROSTED_TILED_GINGERBREAD_BLOCK_GREEN_SLAB = registerGingerBread("frosted_tiled_gingerbread_block_green_slab");
-    Block FROSTED_TILED_GINGERBREAD_BLOCK_VARIANT_SLAB = registerGingerBread("frosted_tiled_gingerbread_block_variant_slab");
+    Block RAW_GINGERBREAD_BLOCK_SLAB = register("raw_gingerbread_block_slab", new SlabBlock(QuiltBlockSettings.copyOf(Blocks.CAKE)), WitchesKitchen.GINGER_TAB, true);
+    Block RAW_CHISELED_GINGERBREAD_BLOCK_SLAB = register("raw_chiseled_gingerbread_block_slab", new SlabBlock(QuiltBlockSettings.copyOf(Blocks.CAKE)), WitchesKitchen.GINGER_TAB, true);
+    Block GINGERBREAD_BEVELED_BLOCK_SLAB = register("gingerbread_beveled_block_slab", new SlabBlock(QuiltBlockSettings.copyOf(Blocks.CAKE)), WitchesKitchen.GINGER_TAB, true);
+    Block GINGERBREAD_BLOCK_SLAB = register("gingerbread_block_slab", new SlabBlock(QuiltBlockSettings.copyOf(Blocks.CAKE)), WitchesKitchen.GINGER_TAB, true);
+    Block RAW_GINGERBREAD_BEVELED_BLOCK_SLAB = register("raw_gingerbread_beveled_block_slab", new SlabBlock(QuiltBlockSettings.copyOf(Blocks.CAKE)), WitchesKitchen.GINGER_TAB, true);
+    Block FROSTED_GINGERBREAD_BLOCK_SLAB = register("frosted_gingerbread_block_slab", new SlabBlock(QuiltBlockSettings.copyOf(Blocks.CAKE)), WitchesKitchen.GINGER_TAB, true);
+    Block FROSTED_BEVELED_GINGERBREAD_BLOCK_SLAB = register("frosted_beveled_gingerbread_block_slab", new SlabBlock(QuiltBlockSettings.copyOf(Blocks.CAKE)), WitchesKitchen.GINGER_TAB, true);
+    Block CHISELED_GINGERBREAD_BLOCK_SLAB = register("chiseled_gingerbread_block_slab", new SlabBlock(QuiltBlockSettings.copyOf(Blocks.CAKE)), WitchesKitchen.GINGER_TAB, true);
+    Block RAW_GINGERBREAD_TILED_BLOCK_SLAB = register("raw_gingerbread_tiled_block_slab", new SlabBlock(QuiltBlockSettings.copyOf(Blocks.CAKE)), WitchesKitchen.GINGER_TAB, true);
+    Block GINGERBREAD_TILED_BLOCK_SLAB = register("gingerbread_tiled_block_slab", new SlabBlock(QuiltBlockSettings.copyOf(Blocks.CAKE)), WitchesKitchen.GINGER_TAB, true);
+    Block FROSTING_BLOCK_SLAB = register("frosting_block_slab", new SlabBlock(QuiltBlockSettings.copyOf(Blocks.CAKE)), WitchesKitchen.GINGER_TAB, true);
+    Block FROSTED_GINGERBREAD_TILED_BLOCK_SLAB = register("frosted_gingerbread_tiled_block_slab", new SlabBlock(QuiltBlockSettings.copyOf(Blocks.CAKE)), WitchesKitchen.GINGER_TAB, true);
+    Block FROSTED_BEVELED_GINGERBREAD_BLOCK_YELLOW_SLAB = register("frosted_beveled_gingerbread_block_yellow_slab", new SlabBlock(QuiltBlockSettings.copyOf(Blocks.CAKE)), WitchesKitchen.GINGER_TAB, true);
+    Block FROSTED_BEVELED_GINGERBREAD_BLOCK_RED_SLAB = register("frosted_beveled_gingerbread_block_red_slab", new SlabBlock(QuiltBlockSettings.copyOf(Blocks.CAKE)), WitchesKitchen.GINGER_TAB, true);
+    Block FROSTED_BEVELED_GINGERBREAD_BLOCK_PURPLE_SLAB = register("frosted_beveled_gingerbread_block_purple_slab", new SlabBlock(QuiltBlockSettings.copyOf(Blocks.CAKE)), WitchesKitchen.GINGER_TAB, true);
+    Block FROSTED_BEVELED_GINGERBREAD_BLOCK_GREEN_SLAB = register("frosted_beveled_gingerbread_block_green_slab", new SlabBlock(QuiltBlockSettings.copyOf(Blocks.CAKE)), WitchesKitchen.GINGER_TAB, true);
+    Block FROSTED_TILED_GINGERBREAD_BLOCK_YELLOW_SLAB = register("frosted_tiled_gingerbread_block_yellow_slab", new SlabBlock(QuiltBlockSettings.copyOf(Blocks.CAKE)), WitchesKitchen.GINGER_TAB, true);
+    Block FROSTED_TILED_GINGERBREAD_BLOCK_RED_SLAB = register("frosted_tiled_gingerbread_block_red_slab", new SlabBlock(QuiltBlockSettings.copyOf(Blocks.CAKE)), WitchesKitchen.GINGER_TAB, true);
+    Block FROSTED_TILED_GINGERBREAD_BLOCK_PURPLE_SLAB = register("frosted_tiled_gingerbread_block_purple_slab", new SlabBlock(QuiltBlockSettings.copyOf(Blocks.CAKE)), WitchesKitchen.GINGER_TAB, true);
+    Block FROSTED_TILED_GINGERBREAD_BLOCK_GREEN_SLAB = register("frosted_tiled_gingerbread_block_green_slab", new SlabBlock(QuiltBlockSettings.copyOf(Blocks.CAKE)), WitchesKitchen.GINGER_TAB, true);
+    Block FROSTED_TILED_GINGERBREAD_BLOCK_VARIANT_SLAB = register("frosted_tiled_gingerbread_block_variant_slab", new SlabBlock(QuiltBlockSettings.copyOf(Blocks.CAKE)), WitchesKitchen.GINGER_TAB, true);
 
     Block ELDER_PLANKS = register("elder_planks", Material.WOOD);
     Block ELDER_STAIRS = registerWoodenStair("elder_stairs", ELDER_PLANKS);
@@ -157,7 +157,18 @@ public interface WKBlocks {
     Block JUNIPER_LEAVES = registerLeaf("juniper_leaves");
     Block ROWAN_LEAVES = registerLeaf("rowan_leaves");
     //Tile Entities
-    Block TEAPOT = register("teapot", new TeapotBlock(QuiltBlockSettings.copyOf(Blocks.AMETHYST_BLOCK)),true);
+    Block TEAPOT = register("teapot", new TeapotBlock(QuiltBlockSettings.copyOf(Blocks.TERRACOTTA).nonOpaque()),true);
+    Block CAST_IRON_TEAPOT = register("cast_iron_teapot", new TeapotBlock(QuiltBlockSettings.copyOf(Blocks.IRON_BLOCK).nonOpaque()),true);
+    Block COPPER_TEAPOT = register("copper_teapot", new CopperTeapotBlock(QuiltBlockSettings.copyOf(Blocks.COPPER_BLOCK).nonOpaque(), Oxidizable.OxidizationLevel.UNAFFECTED),true);
+    Block WAXED_COPPER_TEAPOT = register("waxed_copper_teapot", new TeapotBlock(QuiltBlockSettings.copyOf(Blocks.COPPER_BLOCK).nonOpaque()),true);
+    Block EXPOSED_COPPER_TEAPOT = register("exposed_copper_teapot", new CopperTeapotBlock(QuiltBlockSettings.copyOf(Blocks.EXPOSED_COPPER).nonOpaque(), Oxidizable.OxidizationLevel.EXPOSED),true);
+    Block WAXED_EXPOSED_COPPER_TEAPOT = register("waxed_exposed_copper_teapot", new TeapotBlock(QuiltBlockSettings.copyOf(Blocks.COPPER_BLOCK).nonOpaque()),true);
+    Block WEATHERED_COPPER_TEAPOT = register("weathered_copper_teapot", new CopperTeapotBlock(QuiltBlockSettings.copyOf(Blocks.WEATHERED_COPPER).nonOpaque(), Oxidizable.OxidizationLevel.WEATHERED),true);
+    Block WAXED_WEATHERED_COPPER_TEAPOT = register("waxed_weathered_copper_teapot", new TeapotBlock(QuiltBlockSettings.copyOf(Blocks.COPPER_BLOCK).nonOpaque()),true);
+    Block OXIDIZED_COPPER_TEAPOT = register("oxidized_copper_teapot", new CopperTeapotBlock(QuiltBlockSettings.copyOf(Blocks.OXIDIZED_COPPER).nonOpaque(), Oxidizable.OxidizationLevel.OXIDIZED),true);
+    Block WAXED_OXIDIZED_COPPER_TEAPOT = register("waxed_oxidized_copper_teapot", new TeapotBlock(QuiltBlockSettings.copyOf(Blocks.COPPER_BLOCK).nonOpaque()),true);
+
+
     Block IRON_WITCHES_OVEN = register("iron_witches_oven", new WitchesOvenBlock(AbstractBlock.Settings.of(Material.METAL).strength(4.0F, 5.0F).requiresTool().nonOpaque().luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0)),true);
     Block COPPER_WITCHES_OVEN = register("copper_witches_oven", new CopperWitchesOvenBlock(QuiltBlockSettings.copyOf(Blocks.COPPER_BLOCK).luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0), Oxidizable.OxidizationLevel.UNAFFECTED),true);
     Block WAXED_COPPER_WITCHES_OVEN = register("waxed_copper_witches_oven", new WitchesOvenBlock(QuiltBlockSettings.copy(COPPER_WITCHES_OVEN)),true);
@@ -180,17 +191,17 @@ public interface WKBlocks {
 
     //Sapling
     Block BLACKTHORN_SAPLING = registerSapling("blackthorn_sapling", WKConfiguredFeatures.BLACKTHORN_TREE.value());
-    Block POTTED_BLACKTHORN_SAPLING = registerPottedSapling("potted_blackthorn_sapling");
-    Block POTTED_ELDER_SAPLING = registerPottedSapling("potted_elder_sapling");
-    Block POTTED_HAWTHORN_SAPLING = registerPottedSapling("potted_hawthorn_sapling");
-    Block POTTED_JUNIPER_SAPLING = registerPottedSapling("potted_juniper_sapling");
-    Block POTTED_ROWAN_SAPLING = registerPottedSapling("potted_rowan_sapling");
-    Block POTTED_SUMAC_SAPLING = registerPottedSapling("potted_sumac_sapling");
     Block ELDER_SAPLING = registerSapling("elder_sapling", WKConfiguredFeatures.ELDER_TREE.value());
     Block HAWTHORN_SAPLING = registerSapling("hawthorn_sapling", WKConfiguredFeatures.HAWTHORN_TREE.value());
     Block JUNIPER_SAPLING = registerSapling("juniper_sapling", WKConfiguredFeatures.JUNIPER_TREE.value());
     Block ROWAN_SAPLING = registerSapling("rowan_sapling", WKConfiguredFeatures.ROWAN_TREE.value());
     Block SUMAC_SAPLING = registerSapling("sumac_sapling", WKConfiguredFeatures.SUMAC_TREE.value());
+    Block POTTED_BLACKTHORN_SAPLING = registerPottedSapling("potted_blackthorn_sapling", BLACKTHORN_SAPLING);
+    Block POTTED_ELDER_SAPLING = registerPottedSapling("potted_elder_sapling", ELDER_SAPLING);
+    Block POTTED_HAWTHORN_SAPLING = registerPottedSapling("potted_hawthorn_sapling", HAWTHORN_SAPLING);
+    Block POTTED_JUNIPER_SAPLING = registerPottedSapling("potted_juniper_sapling", JUNIPER_SAPLING);
+    Block POTTED_ROWAN_SAPLING = registerPottedSapling("potted_rowan_sapling", ROWAN_SAPLING);
+    Block POTTED_SUMAC_SAPLING = registerPottedSapling("potted_sumac_sapling", SUMAC_SAPLING);
 
     //Crops
     WKTallCropBlock AMARANTH = registerWithType("amaranth", new AmaranthCropBlock(AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
@@ -248,7 +259,7 @@ public interface WKBlocks {
     WKTallCropBlock FOXGLOVE_LOVE = registerWithType("foxglove_love", new FoxgloveCropBlock(QuiltBlockSettings.copyOf(FOXGLOVE), FoxgloveTypes.LOVE));
     WKTallCropBlock FOXGLOVE_BABYS_DRESS = registerWithType("foxglove_babys_dress", new FoxgloveCropBlock(QuiltBlockSettings.copyOf(FOXGLOVE), FoxgloveTypes.BABYS_DRESS));
     WKTallCropBlock FOXGLOVE_STROLL = registerWithType("foxglove_stroll", new FoxgloveCropBlock(QuiltBlockSettings.copyOf(FOXGLOVE), FoxgloveTypes.STROLL));
-    WKTallCropBlock FOXGLOVE_MAIDENS = registerWithType("foxglove_maidens", new FoxgloveCropBlock(QuiltBlockSettings.copyOf(FOXGLOVE), FoxgloveTypes.MAIDENS));
+    WKTallCropBlock FOXGLOVE_MAIDENS_PINK = registerWithType("foxglove_maidens_pink", new FoxgloveCropBlock(QuiltBlockSettings.copyOf(FOXGLOVE), FoxgloveTypes.MAIDENS));
     WKTallCropBlock FOXGLOVE_MORNING_FIELD = registerWithType("foxglove_morning_field", new FoxgloveCropBlock(QuiltBlockSettings.copyOf(FOXGLOVE), FoxgloveTypes.MORNING_FIELD));
     WKTallCropBlock FOXGLOVE_SIGHE_GOWN = registerWithType("foxglove_sighe_gown", new FoxgloveCropBlock(QuiltBlockSettings.copyOf(FOXGLOVE), FoxgloveTypes.SIGHE_GOWN));
     WKTallCropBlock FOXGLOVE_CALAMINE = registerWithType("foxglove_calamine", new FoxgloveCropBlock(QuiltBlockSettings.copyOf(FOXGLOVE), FoxgloveTypes.CALAMINE));
@@ -262,9 +273,9 @@ public interface WKBlocks {
     WKTallCropBlock FOXGLOVE_AURULENT = registerWithType("foxglove_aurulent", new FoxgloveCropBlock(QuiltBlockSettings.copyOf(FOXGLOVE), FoxgloveTypes.AURULENT));
     WKTallCropBlock FOXGLOVE_IVORY = registerWithType("foxglove_ivory", new FoxgloveCropBlock(QuiltBlockSettings.copyOf(FOXGLOVE), FoxgloveTypes.IVORY));
     WKTallCropBlock FOXGLOVE_NIVEOUS = registerWithType("foxglove_niveous", new FoxgloveCropBlock(QuiltBlockSettings.copyOf(FOXGLOVE), FoxgloveTypes.NIVEOUS));
-    WKTallCropBlock FOXGLOVE_COWS_CREAM = registerWithType("foxglove_cows_drwam", new FoxgloveCropBlock(QuiltBlockSettings.copyOf(FOXGLOVE), FoxgloveTypes.COWS_CREAM));
-    WKTallCropBlock FOXGLOVE_SIDHE_MIST = registerWithType("foxglove_sidhe_mist", new FoxgloveCropBlock(QuiltBlockSettings.copyOf(FOXGLOVE), FoxgloveTypes.SIDHE_MIST));
-    WKTallCropBlock FOXGLOVE_PURITY = registerWithType("foxglove_purify", new FoxgloveCropBlock(QuiltBlockSettings.copyOf(FOXGLOVE), FoxgloveTypes.PURITY));
+    WKTallCropBlock FOXGLOVE_COWS_CREAM = registerWithType("foxglove_cows_cream", new FoxgloveCropBlock(QuiltBlockSettings.copyOf(FOXGLOVE), FoxgloveTypes.COWS_CREAM));
+    WKTallCropBlock FOXGLOVE_SIGHE_MIST = registerWithType("foxglove_sighe_mist", new FoxgloveCropBlock(QuiltBlockSettings.copyOf(FOXGLOVE), FoxgloveTypes.SIGHE_MIST));
+    WKTallCropBlock FOXGLOVE_PURITY = registerWithType("foxglove_purity", new FoxgloveCropBlock(QuiltBlockSettings.copyOf(FOXGLOVE), FoxgloveTypes.PURITY));
 
     WKCropBlock HELLEBORE = registerWithType("hellebore", new HelleboreCropBlock(AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
     WKCropBlock HELLEBORE_MORNING_TEA = registerWithType("hellebore_morning_tea", new HelleboreCropBlock(QuiltBlockSettings.copyOf(HELLEBORE), HelleboreTypes.MORNING_TEA));
@@ -301,7 +312,7 @@ public interface WKBlocks {
     Block FOXGLOVE_PLANT = register("foxglove_plant", new WildTallPlantCropBlock(getCropSettings(), FOXGLOVE, 2), false);
     Block HELLEBORE_PLANT = register("hellebore_plant", new WildPlantCropBlock(getCropSettings(), HELLEBORE), false);
     Block IRIS_PLANT = register("iris_plant", new WildTallPlantCropBlock(getCropSettings(), IRIS, 2), false);
-    Block SANGUINARY_PLANT = register("sanguinary_plant", new WildPlantCropBlock(getCropSettings(), SANGUINARY), true);
+    Block SANGUINARY_PLANT = register("sanguinary_plant", new WildPlantCropBlock(getCropSettings(), SANGUINARY), false);
 
     /**
      * Returns an <a href="Collection.html#unmodview">read-only view</a> of the WitchesKitchen's Blocks
@@ -336,8 +347,8 @@ public interface WKBlocks {
         return register(path, Material.WOOD, settings -> new BrewingBarrelBlock(settings.nonOpaque().strength(2.5F)));
     }
 
-    static Block registerPottedSapling(String path) {
-        final Block pottedSapling = new FlowerPotBlock(BLACKTHORN_SAPLING, QuiltBlockSettings.of(Material.DECORATION).breakInstantly().nonOpaque());
+    static Block registerPottedSapling(String path, Block block) {
+        final Block pottedSapling = new FlowerPotBlock(block, QuiltBlockSettings.of(Material.DECORATION).breakInstantly().nonOpaque());
         BLOCKS.add(new ObjectDefinition<>(WitchesKitchen.id(path), pottedSapling));
         return pottedSapling;
     }
@@ -383,6 +394,8 @@ public interface WKBlocks {
         return register(path, Material.CAKE, Block::new, BlockItem::new, WitchesKitchen.GINGER_TAB);
     }
 
+
+
     static Block register(String path, Material material) {
         return register(path, material, Block::new, BlockItem::new, WitchesKitchen.GENERAL_TAB);
     }
@@ -402,16 +415,20 @@ public interface WKBlocks {
         return block;
     }
 
-    static <T extends Block> T register(String path, T block, boolean createItem) {
+    static <T extends Block> T register(String path, T block, ItemGroup group, boolean createItem) {
         final Identifier id = WitchesKitchen.id(path);
         if (block == null) {
             throw new IllegalArgumentException("Block with id " + path + " returned null");
         }
         BLOCKS.add(new ObjectDefinition<>(id, block));
         if(createItem){
-            ITEMS.add(new ObjectDefinition<>(id, new BlockItem(block, new Item.Settings().group(WitchesKitchen.GENERAL_TAB))));
+            ITEMS.add(new ObjectDefinition<>(id, new BlockItem(block, new Item.Settings().group(group))));
         }
         return block;
+    }
+
+    static <T extends Block> T register(String path, T block, boolean createItem) {
+        return register(path, block, WitchesKitchen.GENERAL_TAB, createItem);
     }
 
     static <T extends Block, E extends Item> T register(String path, Material material, Function<QuiltBlockSettings, T> blockFactory, BiFunction<T, QuiltItemSettings, E> itemFactory, ItemGroup tab) {

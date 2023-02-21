@@ -3,7 +3,7 @@ package cf.witcheskitchen.common.block.crop;
 import cf.witcheskitchen.api.block.crop.WKTallCropBlock;
 import cf.witcheskitchen.common.registry.WKItems;
 import cf.witcheskitchen.api.util.TypeHelper;
-import cf.witcheskitchen.common.block.crop.variants.FoxgloveTypes;
+import cf.witcheskitchen.common.block.crop.types.FoxgloveTypes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.enums.DoubleBlockHalf;

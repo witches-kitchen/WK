@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "witcheskitchen:block/raw_gingerbread_beveled_block_slab"
+    },
+    "type=double": {
+      "model": "witcheskitchen:block/raw_gingerbread_beveled_block"
+    },
+    "type=top": {
+      "model": "witcheskitchen:block/raw_gingerbread_beveled_block_slab_top"
+    }
+  }
+}

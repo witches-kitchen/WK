@@ -16,6 +16,7 @@ public class WKLanguageProvider extends FabricLanguageProvider {
         builder.add(WitchesKitchen.GENERAL_TAB, "Witches' Kitchen General");
         builder.add(WitchesKitchen.SEED_TAB, "Witches' Kitchen Seeds");
         builder.add(WitchesKitchen.GINGER_TAB, "Witches' Kitchen Gingerbread");
+        builder.add(WitchesKitchen.FOOD_TAB, "Witches' Kitchen Food");
 
         //BLOCKS
         builder.add(WKBlocks.RAW_GINGERBREAD_BLOCK, "Raw Gingerbread Block");
@@ -53,6 +54,17 @@ public class WKLanguageProvider extends FabricLanguageProvider {
         builder.add(WKBlocks.RAW_GINGERBREAD_TILED_BLOCK_SLAB, "Tiled Raw Gingerbread Slab");
         builder.add(WKBlocks.GINGERBREAD_TILED_BLOCK_SLAB, "Tiled Gingerbread Slab");
 
+        builder.add(WKBlocks.RAW_CHISELED_GINGERBREAD_BLOCK_STAIRS, "Chiseled Raw Gingerbread Stairs");
+        builder.add(WKBlocks.RAW_GINGERBREAD_BEVELED_BLOCK_STAIRS, "Beveled Raw Gingerbread Stairs");
+        builder.add(WKBlocks.GINGERBREAD_BEVELED_BLOCK_STAIRS, "Beveled Gingerbread Stairs");
+        builder.add(WKBlocks.GINGERBREAD_BLOCK_STAIRS, "Gingerbread Stairs");
+        builder.add(WKBlocks.FROSTING_BLOCK_STAIRS, "Frosting Stairs");
+        builder.add(WKBlocks.FROSTED_GINGERBREAD_BLOCK_STAIRS, "Frosted Gingerbread Stairs");
+        builder.add(WKBlocks.FROSTED_BEVELED_GINGERBREAD_BLOCK_STAIRS, "Frosted Beveled Gingerbread Stairs");
+        builder.add(WKBlocks.CHISELED_GINGERBREAD_BLOCK_STAIRS, "Chiseled Gingerbread Stairs");
+        builder.add(WKBlocks.RAW_GINGERBREAD_TILED_BLOCK_STAIRS, "Tiled Raw Gingerbread Stairs");
+        builder.add(WKBlocks.GINGERBREAD_TILED_BLOCK_STAIRS, "Tiled Gingerbread Stairs");
+
         builder.add(WKBlocks.FROSTED_BEVELED_GINGERBREAD_BLOCK_YELLOW_SLAB, "Frosted Yellow Beveled Gingerbread Slab");
         builder.add(WKBlocks.FROSTED_BEVELED_GINGERBREAD_BLOCK_RED_SLAB, "Frosted Red Beveled Gingerbread Slab");
         builder.add(WKBlocks.FROSTED_BEVELED_GINGERBREAD_BLOCK_GREEN_SLAB, "Frosted Green Beveled Gingerbread Slab");
@@ -62,6 +74,17 @@ public class WKLanguageProvider extends FabricLanguageProvider {
         builder.add(WKBlocks.FROSTED_TILED_GINGERBREAD_BLOCK_PURPLE_SLAB, "Frosted Purple Tiled Gingerbread Slab");
         builder.add(WKBlocks.FROSTED_TILED_GINGERBREAD_BLOCK_GREEN_SLAB, "Frosted Green Tiled Gingerbread Slab");
         builder.add(WKBlocks.FROSTED_TILED_GINGERBREAD_BLOCK_VARIANT_SLAB, "Frosted Tiled Gingerbread Variant Slab");
+
+        builder.add(WKBlocks.FROSTED_BEVELED_GINGERBREAD_BLOCK_YELLOW_STAIRS, "Frosted Yellow Beveled Gingerbread Stairs");
+        builder.add(WKBlocks.FROSTED_BEVELED_GINGERBREAD_BLOCK_RED_STAIRS, "Frosted Red Beveled Gingerbread Stairs");
+        builder.add(WKBlocks.FROSTED_BEVELED_GINGERBREAD_BLOCK_GREEN_STAIRS, "Frosted Green Beveled Gingerbread Stairs");
+        builder.add(WKBlocks.FROSTED_BEVELED_GINGERBREAD_BLOCK_PURPLE_STAIRS, "Frosted Purple Beveled Gingerbread Stairs");
+        builder.add(WKBlocks.FROSTED_TILED_GINGERBREAD_BLOCK_YELLOW_STAIRS, "Frosted Yellow Tiled Gingerbread Stairs");
+        builder.add(WKBlocks.FROSTED_TILED_GINGERBREAD_BLOCK_RED_STAIRS, "Frosted Red Tiled Gingerbread Stairs");
+        builder.add(WKBlocks.FROSTED_TILED_GINGERBREAD_BLOCK_PURPLE_STAIRS, "Frosted Purple Tiled Gingerbread Stairs");
+        builder.add(WKBlocks.FROSTED_TILED_GINGERBREAD_BLOCK_GREEN_STAIRS, "Frosted Green Tiled Gingerbread Stairs");
+        builder.add(WKBlocks.FROSTED_TILED_GINGERBREAD_BLOCK_VARIANT_STAIRS, "Frosted Tiled Gingerbread Variant Stairs");
+
         builder.add(WKBlocks.SALT_BLOCK, "Salt");
 
         builder.add(WKBlocks.BLACKTHORN_LOG, "Blackthorn Log");
@@ -140,6 +163,19 @@ public class WKLanguageProvider extends FabricLanguageProvider {
         builder.add(WKBlocks.WAXED_WEATHERED_COPPER_WITCHES_OVEN, "Waxed Weathered Copper Witches' Oven");
         builder.add(WKBlocks.WAXED_OXIDIZED_COPPER_WITCHES_OVEN, "Waxed Oxidized Copper Witches' Oven");
         builder.add(WKBlocks.IRON_WITCHES_CAULDRON, "Iron Witches' Cauldron");
+
+        builder.add(WKBlocks.TEAPOT, "Teapot");
+        builder.add(WKBlocks.WEATHERED_COPPER_TEAPOT, "Weathered Copper Teapot");
+        builder.add(WKBlocks.OXIDIZED_COPPER_TEAPOT, "Oxidized Copper Teapot");
+        builder.add(WKBlocks.WAXED_COPPER_TEAPOT, "Waxed Copper Teapot");
+        builder.add(WKBlocks.COPPER_TEAPOT, "Copper Teapot");
+        builder.add(WKBlocks.WAXED_EXPOSED_COPPER_TEAPOT, "Waxed Exposed Copper Teapot");
+        builder.add(WKBlocks.EXPOSED_COPPER_TEAPOT, "Exposed Copper Teapot");
+        builder.add(WKBlocks.WAXED_WEATHERED_COPPER_TEAPOT, "Waxed Weathered Copper Teapot");
+        builder.add(WKBlocks.WAXED_OXIDIZED_COPPER_TEAPOT, "Waxed Oxidized Copper Teapot");
+        builder.add(WKBlocks.CAST_IRON_TEAPOT, "Cast Iron Teapot");
+
+
         builder.add(WKBlocks.OAK_BREWING_BARREL, "Oak Brewing Barrel");
         builder.add(WKBlocks.SPRUCE_BREWING_BARREL, "Spruce Brewing Barrel");
         builder.add(WKBlocks.BIRCH_BREWING_BARREL, "Birch Brewing Barrel");
@@ -187,9 +223,20 @@ public class WKLanguageProvider extends FabricLanguageProvider {
         builder.add(WKItems.TEA_LEAF, "Tea Leaf");
         builder.add(WKItems.HELLEBORE_BLOSSOM, "Hellebore Blossom");
         builder.add(WKItems.FOXGLOVE_BLOSSOM, "Foxglove Blossom");
-        //builder.add(WKItems.AMARANTH_COOKIES, "Amaranth Cookies");
+        builder.add(WKItems.SANGUINARY_BLOSSOM, "Sanguinary Blossom");
         builder.add(WKItems.HEART_OF_INNOCENCE, "Heart of Innocence");
 
+        builder.add(WKItems.BLACKBERRY_TEA, "Blackberry Tea");
+        builder.add(WKItems.CHAMOMILE_TEA, "Chamomile Tea");
+        builder.add(WKItems.DOGROSE_TEA, "Dogrose Tea");
+        builder.add(WKItems.ECHINACEA_TEA, "Echinacea Tea");
+        builder.add(WKItems.ELDER_TEA, "Elder Tea");
+        builder.add(WKItems.GINGER_TEA, "Ginger Tea");
+        builder.add(WKItems.HAWTHORN_TEA, "Hawthorn Tea");
+        builder.add(WKItems.MINT_TEA, "Mint Tea");
+        builder.add(WKItems.ST_JOHNS_WORT_TEA, "St Johns Wort Tea");
+        builder.add(WKItems.SUMAC_TEA, "Sumac Tea");
+        builder.add(WKItems.YARROW_TEA, "Yarrow Tea");
 
         builder.add(WKItems.DOLLOP_OF_FROSTING, "Dollop of Frosting");
         builder.add(WKItems.CU_SITH_SPAWN_EGG, "Cu-Sith Spawn Egg");

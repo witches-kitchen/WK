@@ -3,7 +3,7 @@ package cf.witcheskitchen.common.block.crop;
 import cf.witcheskitchen.api.block.crop.WKCropBlock;
 import cf.witcheskitchen.common.registry.WKItems;
 import cf.witcheskitchen.api.util.TypeHelper;
-import cf.witcheskitchen.common.block.crop.variants.HelleboreTypes;
+import cf.witcheskitchen.common.block.crop.types.HelleboreTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemConvertible;

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "witcheskitchen:block/teapot",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "witcheskitchen:block/teapot"
+    },
+    "facing=south": {
+      "model": "witcheskitchen:block/teapot",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "witcheskitchen:block/teapot",
+      "y": 270
+    }
+  }
+}

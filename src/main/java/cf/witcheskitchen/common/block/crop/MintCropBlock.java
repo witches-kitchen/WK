@@ -2,7 +2,7 @@ package cf.witcheskitchen.common.block.crop;
 
 import cf.witcheskitchen.api.block.crop.WKCropBlock;
 import cf.witcheskitchen.common.registry.WKItems;
-import cf.witcheskitchen.common.block.crop.variants.MintTypes;
+import cf.witcheskitchen.common.block.crop.types.MintTypes;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.state.property.IntProperty;
 import org.quiltmc.loader.api.minecraft.ClientOnly;

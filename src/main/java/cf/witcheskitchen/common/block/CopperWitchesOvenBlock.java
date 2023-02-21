@@ -15,7 +15,6 @@ import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.World;
 
 public class CopperWitchesOvenBlock extends WitchesOvenBlock implements Oxidizable {
-
     private final Oxidizable.OxidizationLevel oxidizationLevel;
 
     public CopperWitchesOvenBlock(Settings settings, Oxidizable.OxidizationLevel oxidizationLevel) {

@@ -65,6 +65,18 @@ public class WKLootTableProvider {
 
             cauldronDrops(WKBlocks.IRON_WITCHES_CAULDRON);
 
+            teaDrops(WKBlocks.TEAPOT);
+            teaDrops(WKBlocks.CAST_IRON_TEAPOT);
+
+            teaDrops(WKBlocks.COPPER_TEAPOT);
+            teaDrops(WKBlocks.EXPOSED_COPPER_TEAPOT);
+            teaDrops(WKBlocks.WEATHERED_COPPER_TEAPOT);
+            teaDrops(WKBlocks.OXIDIZED_COPPER_TEAPOT);
+            teaDrops(WKBlocks.WAXED_COPPER_TEAPOT);
+            teaDrops(WKBlocks.WAXED_EXPOSED_COPPER_TEAPOT);
+            teaDrops(WKBlocks.WAXED_WEATHERED_COPPER_TEAPOT);
+            teaDrops(WKBlocks.WAXED_OXIDIZED_COPPER_TEAPOT);
+
             this.addDrop(WKBlocks.BLACKTHORN_SAPLING);
             this.addDrop(WKBlocks.ELDER_SAPLING);
             this.addDrop(WKBlocks.HAWTHORN_SAPLING);
@@ -128,19 +140,19 @@ public class WKLootTableProvider {
             this.addDrop(WKBlocks.STRIPPED_ROWAN_LOG);
             this.addDrop(WKBlocks.STRIPPED_SUMAC_LOG);
 
-            this.addPlantDrop(WKBlocks.AMARANTH_PLANT, WKItems.AMARANTH_SEEDS);
-            this.addPlantDrop(WKBlocks.BELLADONNA_PLANT, WKItems.BELLADONNA_SEEDS);
-            this.addPlantDrop(WKBlocks.CHAMOMILE_PLANT, WKItems.CHAMOMILE_SEEDS);
-            this.addPlantDrop(WKBlocks.CONEFLOWER, WKItems.CONEFLOWER_SEEDS);
-            this.addPlantDrop(WKBlocks.FOXGLOVE_PLANT, WKItems.FOXGLOVE_SEEDS);
-            this.addPlantDrop(WKBlocks.HELLEBORE_PLANT, WKItems.HELLEBORE_SEEDS);
-            this.addPlantDrop(WKBlocks.IRIS_PLANT, WKItems.IRIS_SEEDS);
-            this.addPlantDrop(WKBlocks.SANGUINARY_PLANT, WKItems.SANGUINARY_SEEDS);
+            this.addPlantDrop(WKBlocks.AMARANTH_PLANT, WKItems.AMARANTH_SPRIG , WKItems.AMARANTH_SEEDS);
+            this.addPlantDrop(WKBlocks.BELLADONNA_PLANT, WKItems.BELLADONNA_BLOSSOM, WKItems.BELLADONNA_SEEDS);
+            this.addPlantDrop(WKBlocks.CHAMOMILE_PLANT, WKItems.CHAMOMILE_BLOSSOM ,WKItems.CHAMOMILE_SEEDS);
+            this.addPlantDrop(WKBlocks.CONEFLOWER, WKItems.CONEFLOWER_BLOSSOM, WKItems.CONEFLOWER_SEEDS);
+            this.addPlantDrop(WKBlocks.FOXGLOVE_PLANT, WKItems.FOXGLOVE_BLOSSOM, WKItems.FOXGLOVE_SEEDS);
+            this.addPlantDrop(WKBlocks.HELLEBORE_PLANT, WKItems.HELLEBORE_BLOSSOM, WKItems.HELLEBORE_SEEDS);
+            this.addPlantDrop(WKBlocks.IRIS_PLANT, WKItems.IRIS_BLOSSOM, WKItems.IRIS_SEEDS);
+            this.addPlantDrop(WKBlocks.SANGUINARY_PLANT, WKItems.SANGUINARY_BLOSSOM, WKItems.SANGUINARY_SEEDS);
         }
 
-        public void addPlantDrop(Block block, ItemConvertible drop){
+        public void addPlantDrop(Block block, ItemConvertible drop, ItemConvertible seed){
             LootCondition.Builder builder = BlockStatePropertyLootCondition.builder(block);
-            this.addDrop(block, applyExplosionDecay(drop, LootTable.builder().pool(LootPool.builder().with(ItemEntry.builder(drop))).pool(LootPool.builder().conditionally(builder).with(ItemEntry.builder(drop).apply(ApplyBonusLootFunction.binomialWithBonusCount(Enchantments.FORTUNE, 0.5714286F, 3))))));
+            this.addDrop(block, applyExplosionDecay(seed, LootTable.builder().pool(LootPool.builder().with(ItemEntry.builder(seed))).pool(LootPool.builder().conditionally(builder).with(ItemEntry.builder(seed).apply(ApplyBonusLootFunction.binomialWithBonusCount(Enchantments.FORTUNE, 0.5714286F, 3))))).pool(LootPool.builder().with(ItemEntry.builder(drop))));
         }
     }
 
@@ -180,6 +192,21 @@ public class WKLootTableProvider {
                                                 .withOperation("LootTableSeed", "BlockEntityTag.LootTableSeed")
                                         )
                                         .apply(SetContentsLootFunction.builder(WKBlockEntityTypes.WITCHES_OVEN).withEntry(DynamicEntry.builder(ShulkerBoxBlock.CONTENTS)))
+                                )
+                )
+        );
+    }
+
+    public static LootTable.Builder teaDrops(Block drop) {
+        return LootTable.builder().pool(addSurvivesExplosionCondition(drop,
+                        LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0F))
+                                .with(ItemEntry.builder(drop).apply(CopyNameLootFunction.builder(CopyNameLootFunction.Source.BLOCK_ENTITY))
+                                        .apply(CopyNbtLootFunction.builder(ContextLootNbtProvider.BLOCK_ENTITY)
+                                                .withOperation("Lock", "BlockEntityTag.Lock")
+                                                .withOperation("LootTable", "BlockEntityTag.LootTable")
+                                                .withOperation("LootTableSeed", "BlockEntityTag.LootTableSeed")
+                                        )
+                                        .apply(SetContentsLootFunction.builder(WKBlockEntityTypes.TEAPOT).withEntry(DynamicEntry.builder(ShulkerBoxBlock.CONTENTS)))
                                 )
                 )
         );

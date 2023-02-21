@@ -1,0 +1,6 @@
+{
+	"parent": "witcheskitchen:block/teapot",
+	"textures": {
+		"1": "witcheskitchen:block/stations/teapot_weathered"
+	}
+}

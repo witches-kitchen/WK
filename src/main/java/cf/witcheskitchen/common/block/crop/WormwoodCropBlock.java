@@ -2,7 +2,7 @@ package cf.witcheskitchen.common.block.crop;
 
 import cf.witcheskitchen.api.block.crop.WKTallCropBlock;
 import cf.witcheskitchen.common.registry.WKItems;
-import cf.witcheskitchen.common.block.crop.variants.WormwoodTypes;
+import cf.witcheskitchen.common.block.crop.types.WormwoodTypes;
 import net.minecraft.block.Block;
 import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.item.ItemConvertible;

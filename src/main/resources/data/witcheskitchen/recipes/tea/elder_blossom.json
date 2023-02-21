@@ -1,0 +1,10 @@
+{
+  "type": "witcheskitchen:tea",
+  "ingredient": {
+    "item": "witcheskitchen:elder_blossom"
+  },
+  "result": {
+    "item": "witcheskitchen:elder_tea"
+  },
+  "effect": "resistance"
+}

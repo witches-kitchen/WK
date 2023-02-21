@@ -2,10 +2,7 @@ package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WitchesKitchen;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
-import cf.witcheskitchen.common.recipe.BarrelFermentingRecipe;
-import cf.witcheskitchen.common.recipe.CauldronBrewingRecipe;
-import cf.witcheskitchen.common.recipe.OvenCookingRecipe;
-import cf.witcheskitchen.common.recipe.RitualRecipe;
+import cf.witcheskitchen.common.recipe.*;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
@@ -24,11 +21,14 @@ public interface WKRecipeTypes {
     RecipeSerializer<BarrelFermentingRecipe> BARREL_FERMENTING_RECIPE_SERIALIZER = register("fermenting", new BarrelFermentingRecipe.Serializer());
     RecipeSerializer<CauldronBrewingRecipe> CAULDRON_BREWING_RECIPE_SERIALIZER = register("cauldron_brewing", new CauldronBrewingRecipe.Serializer());
     RecipeSerializer<RitualRecipe> RITUAL_RECIPE_SERIALIZER = register("ritual", new RitualRecipe.Serializer());
+    RecipeSerializer<TeaRecipe> TEA_RECIPE_SERIALIZER = register("tea", new TeaRecipe.Serializer());
+
 
     RecipeType<OvenCookingRecipe> WITCHES_OVEN_COOKING_RECIPE_TYPE = register("oven_cooking");
     RecipeType<BarrelFermentingRecipe> BARREL_FERMENTING_RECIPE_TYPE = register("fermenting");
     RecipeType<CauldronBrewingRecipe> CAULDRON_BREWING_RECIPE_TYPE = register("cauldron_brewing");
     RecipeType<RitualRecipe> RITUAL_RECIPE_TYPE = register("ritual");
+    RecipeType<TeaRecipe> TEA_RECIPE_TYPE = register("tea");
 
     static <T extends Recipe<?>> RecipeSerializer<T> register(String name, RecipeSerializer<T> serializer) {
         final Identifier id = WitchesKitchen.id(name);
