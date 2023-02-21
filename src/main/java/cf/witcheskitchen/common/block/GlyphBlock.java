@@ -1,7 +1,9 @@
 package cf.witcheskitchen.common.block;
 
+import cf.witcheskitchen.api.block.WKBlock;
 import cf.witcheskitchen.api.block.WKBlockWithEntity;
 import cf.witcheskitchen.common.blockentity.GlyphBlockEntity;
+import cf.witcheskitchen.common.registry.WKBlocks;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.ItemPlacementContext;
@@ -20,12 +22,12 @@ import org.jetbrains.annotations.Nullable;
 public class GlyphBlock extends WKBlockWithEntity {
     private static final IntProperty GLYPH = IntProperty.of("type", 0, 9);
     private static final BooleanProperty ACTIVE = BooleanProperty.of("active");
-    private final VoxelShape SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 1.0, 0.125, 1.0);
+    private final VoxelShape SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 0.125, 16.0);
     public static final DirectionProperty FACING = DirectionProperty.of("facing", Direction.Type.HORIZONTAL);
 
-    public GlyphBlock(AbstractBlock.Settings settings) {
+    public GlyphBlock(Settings settings) {
         super(settings);
-        this.setDefaultState(this.stateManager.getDefaultState().with(ACTIVE, false).with(FACING, Direction.NORTH).with(GLYPH, 0));
+        this.setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.NORTH).with(GLYPH, 0));
     }
 
     @Nullable
@@ -37,12 +39,12 @@ public class GlyphBlock extends WKBlockWithEntity {
     @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return state.get(ACTIVE) ? new GlyphBlockEntity(pos, state) : null;
+        return state.getBlock() == WKBlocks.ENCHANTED_GLYPH ? new GlyphBlockEntity(pos, state) : null;
     }
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(ACTIVE, FACING, GLYPH);
+        builder.add(FACING, GLYPH);
         super.appendProperties(builder);
     }
 

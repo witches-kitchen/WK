@@ -2,6 +2,7 @@ package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WitchesKitchen;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
+import cf.witcheskitchen.common.block.GlyphBlock;
 import cf.witcheskitchen.common.item.ChalkItem;
 import cf.witcheskitchen.common.item.CurseBundleItem;
 import cf.witcheskitchen.common.item.TaglockItem;
@@ -20,8 +21,8 @@ public interface WKItems {
 
     List<ObjectDefinition<Item>> ITEMS = new ArrayList<>();
 
-    Item CHALK = register("chalk", new ChalkItem(settings(WitchesKitchen.GENERAL_TAB)));
-    Item ENCHANTED_CHALK = register("enchanted_chalk", new ChalkItem(settings(WitchesKitchen.GENERAL_TAB)));
+    Item CHALK = register("chalk", new ChalkItem(settings(WitchesKitchen.GENERAL_TAB), WKBlocks.GLYPH));
+    Item ENCHANTED_CHALK = register("enchanted_chalk", new ChalkItem(settings(WitchesKitchen.GENERAL_TAB), WKBlocks.ENCHANTED_GLYPH));
     Item BONE_NEEDLE = register("bone_needle");
     Item TAGLOCK = register("taglock", new TaglockItem(settings(WitchesKitchen.GENERAL_TAB)));
 

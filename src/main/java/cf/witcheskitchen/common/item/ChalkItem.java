@@ -28,9 +28,9 @@ import java.util.List;
 public class ChalkItem extends Item {
     private final GlyphBlock glyphType;
 
-    public ChalkItem(Settings settings) {
+    public ChalkItem(Settings settings, Block block) {
         super(settings);
-        this.glyphType = (GlyphBlock) WKBlocks.GLYPH;
+        this.glyphType = (GlyphBlock) block;
     }
 
     @Override
