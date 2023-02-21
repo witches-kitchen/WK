@@ -2,6 +2,9 @@ package cf.witcheskitchen.api.util;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import org.quiltmc.qsl.networking.api.PlayerLookup;
 
 import java.util.function.Consumer;
@@ -27,4 +30,7 @@ public final class PacketHelper {
         PlayerLookup.tracking(trackedEntity).forEach(packet);
     }
 
+    public static void sendToAllTracking(ServerWorld world, BlockPos pos, Consumer<? super ServerPlayerEntity> packet) {
+        PlayerLookup.tracking(world, world.getWorldChunk(pos).getPos()).forEach(packet);
+    }
 }
