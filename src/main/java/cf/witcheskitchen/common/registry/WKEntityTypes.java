@@ -31,7 +31,7 @@ public interface WKEntityTypes {
     EntityType<FerretEntity> FERRET = create("ferret", FerretEntity.createAttributes(), QuiltEntityTypeBuilder.create(SpawnGroup.CREATURE, FerretEntity::new)
             .setDimensions(EntityDimensions.changing(1.0f, 1.0f))
             .build());
-    EntityType<HedgehogEntity> HEDGEHOG = create("hedgehog", FerretEntity.createAttributes(), QuiltEntityTypeBuilder.create(SpawnGroup.CREATURE, HedgehogEntity::new)
+    EntityType<HedgehogEntity> HEDGEHOG = create("hedgehog", HedgehogEntity.createAttributes(), QuiltEntityTypeBuilder.create(SpawnGroup.CREATURE, HedgehogEntity::new)
             .setDimensions(EntityDimensions.changing(0.25f, 0.25f))
             .build());
 
