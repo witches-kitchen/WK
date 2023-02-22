@@ -265,6 +265,23 @@ public class WKLanguageProvider extends FabricLanguageProvider {
         builder.add(WKItems.PARANOIA_BUNDLE, "Paranoia Bundle");
         builder.add(WKItems.PERUNS_JEST_BUNDLE, "Peruns Jest Bundle");
 
+        builder.add(WKItems.ABSINTHE, "Absinthe");
+        builder.add(WKItems.BLACKBERRY_LIQUEUR, "Blackberry Liqueur");
+        builder.add(WKItems.BRINJEVEC, "Brinjevec");
+        builder.add(WKItems.HOLUNDERSEKT, "Holdundersekt");
+        builder.add(WKItems.RUM, "Rum");
+        builder.add(WKItems.TRAVARICA, "Travarica");
+        builder.add(WKItems.JUNIPER_MEAD, "Juniper Mead");
+
+        builder.add(WKItems.GROUND_PORK, "Ground Pork");
+        builder.add(WKItems.GROUND_MUTTON, "Ground Mutton");
+        builder.add(WKItems.GROUND_BEEF, "Ground Beef");
+        builder.add(WKItems.DEMONIC_STEW, "Demonic Stew");
+        builder.add(WKItems.MEATY_STEW, "Meaty Stew");
+        builder.add(WKItems.VEGETABLE_STEW, "Vegetable Stew");
+        builder.add(WKItems.HEART_PIE, "Heart Pie");
+        builder.add(WKItems.ROOTS_PLATTER, "Roots Platter");
+
         //SEEDS
         builder.add(WKItems.BELLADONNA_SEEDS, "Belladonna Seeds");
         builder.add(WKItems.AMARANTH_SEEDS, "Amaranth Seeds");

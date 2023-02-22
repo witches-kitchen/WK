@@ -47,14 +47,8 @@ public class ChalkItem extends Item {
         }
         if (state != null && state.canPlaceAt(world, pos)) {
             if(!world.isClient()){
-                PlayerEntity player = context.getPlayer();
-                ItemStack stack = context.getStack();
                 world.playSound(null, pos, state.getSoundGroup().getPlaceSound(), SoundCategory.BLOCKS, 1, MathHelper.nextFloat(world.random, 0.8f, 1.2f));
                 world.setBlockState(pos, state);
-                if (player instanceof ServerPlayerEntity serverPlayer) {
-                    Criteria.PLACED_BLOCK.trigger(serverPlayer, pos, stack);
-                    stack.damage(1, player, stackUser -> stackUser.sendToolBreakStatus(context.getHand()));
-                }
             }
             return ActionResult.success(true);
         }

@@ -6,10 +6,7 @@ import cf.witcheskitchen.common.block.GlyphBlock;
 import cf.witcheskitchen.common.item.ChalkItem;
 import cf.witcheskitchen.common.item.CurseBundleItem;
 import cf.witcheskitchen.common.item.TaglockItem;
-import net.minecraft.item.AliasedBlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.SpawnEggItem;
+import net.minecraft.item.*;
 import net.minecraft.util.registry.Registry;
 import org.quiltmc.qsl.item.setting.api.QuiltItemSettings;
 
@@ -73,6 +70,25 @@ public interface WKItems {
     Item MINT_TEA = register("mint_tea", new Item(settings(WitchesKitchen.FOOD_TAB).food(WKFoodComponents.TEA)));
     Item SUMAC_TEA = register("sumac_tea", new Item(settings(WitchesKitchen.FOOD_TAB).food(WKFoodComponents.TEA)));
     Item YARROW_TEA = register("yarrow_tea", new Item(settings(WitchesKitchen.FOOD_TAB).food(WKFoodComponents.TEA)));
+
+    Item ABSINTHE = register("absinthe", new Item(settings(WitchesKitchen.FOOD_TAB).food(WKFoodComponents.SUPER_STRONG_ALCOHOL)));
+    Item BLACKBERRY_LIQUEUR = register("blackberry_liqueur", new Item(settings(WitchesKitchen.FOOD_TAB).food(WKFoodComponents.AVERAGE_ALCOHOL)));
+    Item BRINJEVEC = register("brinjevec", new Item(settings(WitchesKitchen.FOOD_TAB).food(WKFoodComponents.STRONG_ALCOHOL)));
+    Item HOLUNDERSEKT = register("holundersekt", new Item(settings(WitchesKitchen.FOOD_TAB).food(WKFoodComponents.STRONG_ALCOHOL)));
+    Item JUNIPER_MEAD = register("juniper_mead", new Item(settings(WitchesKitchen.FOOD_TAB).food(WKFoodComponents.STRONG_ALCOHOL)));
+    Item RUM = register("rum", new Item(settings(WitchesKitchen.FOOD_TAB).food(WKFoodComponents.STRONG_ALCOHOL)));
+    Item TRAVARICA = register("travarica", new Item(settings(WitchesKitchen.FOOD_TAB).food(WKFoodComponents.STRONG_ALCOHOL)));
+
+    Item GROUND_BEEF = register("ground_beef", new Item(settings(WitchesKitchen.FOOD_TAB).food(FoodComponents.BEEF)));
+    Item GROUND_PORK = register("ground_pork", new Item(settings(WitchesKitchen.FOOD_TAB).food(FoodComponents.PORKCHOP)));
+    Item GROUND_MUTTON = register("ground_mutton", new Item(settings(WitchesKitchen.FOOD_TAB).food(FoodComponents.BEEF)));
+
+    Item HEART_PIE = register("heart_pie", new Item(settings(WitchesKitchen.FOOD_TAB).food(FoodComponents.PUMPKIN_PIE)));
+    Item ROOTS_PLATTER = register("roots_platter", new Item(settings(WitchesKitchen.FOOD_TAB).food(FoodComponents.BEETROOT_SOUP)));
+
+    Item DEMONIC_STEW = register("demonic_stew", new Item(settings(WitchesKitchen.FOOD_TAB).food(FoodComponents.RABBIT_STEW)));
+    Item MEATY_STEW = register("meaty_stew", new Item(settings(WitchesKitchen.FOOD_TAB).food(FoodComponents.RABBIT_STEW)));
+    Item VEGETABLE_STEW = register("vegetable_stew", new Item(settings(WitchesKitchen.FOOD_TAB).food(FoodComponents.BEETROOT_SOUP)));
 
     //Materials
     Item HEART_OF_INNOCENCE = register("heart_of_innocence");
