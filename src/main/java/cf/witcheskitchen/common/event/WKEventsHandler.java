@@ -1,15 +1,23 @@
 package cf.witcheskitchen.common.event;
 
 import cf.witcheskitchen.WitchesKitchen;
+import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.fabricmc.fabric.api.loot.v2.LootTableSource;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.loot.LootManager;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
 import net.minecraft.loot.entry.LootTableEntry;
 import net.minecraft.resource.ResourceManager;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.hit.EntityHitResult;
+import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 public class WKEventsHandler {
     /**
@@ -29,6 +37,13 @@ public class WKEventsHandler {
                 // Adds a new entry for grass and tall grass loot tables
                 tableBuilder.pool(LootPool.builder().with(LootTableEntry.builder(seedsAddition).weight(1)).build());
             }
+        }
+    }
+
+    public static class UseEntity implements UseEntityCallback {
+        @Override
+        public ActionResult interact(PlayerEntity player, World world, Hand hand, Entity entity, @Nullable EntityHitResult hitResult) {
+            return null;
         }
     }
 }
