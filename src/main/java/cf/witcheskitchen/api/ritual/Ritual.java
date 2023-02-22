@@ -64,7 +64,7 @@ public class Ritual {
         }
     }
 
-    //TODO test this
+    //TODO test this, and maybe add option for {pos} to be taglock owners pos instead of ritual center pos
     public void runCommand(MinecraftServer minecraftServer, RitualRecipe recipe, BlockPos blockPos){
         if (minecraftServer != null && !recipe.command.isEmpty()) {
             String posString = blockPos.getX() + " " + blockPos.getY() + " " + blockPos.getZ();

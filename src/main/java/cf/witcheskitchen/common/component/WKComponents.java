@@ -11,7 +11,7 @@ import dev.onyxstudios.cca.api.v3.entity.RespawnCopyStrategy;
 import net.minecraft.entity.player.PlayerEntity;
 
 public class WKComponents implements EntityComponentInitializer {
-    public static final ComponentKey<WKPlayerComponent> PLAYER_COMPONENT = ComponentRegistry.getOrCreate(WitchesKitchen.id("curse"), WKPlayerComponent.class);
+    public static final ComponentKey<WKPlayerComponent> PLAYER_COMPONENT = ComponentRegistry.getOrCreate(WitchesKitchen.id("player"), WKPlayerComponent.class);
     public static final ComponentKey<WKCurseComponent> CURSE_COMPONENT = ComponentRegistry.getOrCreate(WitchesKitchen.id("curse"), WKCurseComponent.class);
 
 

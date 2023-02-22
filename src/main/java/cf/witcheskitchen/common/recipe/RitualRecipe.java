@@ -8,6 +8,7 @@ import cf.witcheskitchen.api.util.RecipeUtils;
 import cf.witcheskitchen.common.registry.WKRegistries;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
@@ -121,10 +122,10 @@ public class RitualRecipe implements Recipe<Inventory> {
         @Override
         public RitualRecipe read(Identifier id, JsonObject json) {
             //Rite
-            Ritual rite = WKRegistries.RITUAL.get(new Identifier(JsonHelper.getString(json, "rite")));
+            Ritual rite = WKRegistries.RITUAL.get(new Identifier(JsonHelper.getString(json, "ritual")));
 
             //Environmental Energy
-            String energy = JsonHelper.getString(json, "environment");
+            String energy = JsonHelper.getString(json, "environment", "low");
 
             //Inputs
             DefaultedList<Ingredient> inputs = RecipeUtils.getIngredients(JsonHelper.getArray(json, "inputs"));
@@ -135,13 +136,16 @@ public class RitualRecipe implements Recipe<Inventory> {
             //Circles
             var circleArray = JsonHelper.getArray(json, "circles");
             Set<RitualCircle> circles = RecipeUtils.deserializeCircles(circleArray);
+            if (circleArray.isEmpty()) {
+                throw new JsonParseException("No circles");
+            }
 
             //Sacrifices
             var sacrificeArray = JsonHelper.getArray(json, "sacrifices");
             List<EntityType<?>> sacrifices = RecipeUtils.deserializeEntityTypes(sacrificeArray);
 
             //Duration
-            int duration = JsonHelper.getInt(json, "duration");
+            int duration = JsonHelper.getInt(json, "duration", 0);
 
             //Command
             JsonArray commandArray = JsonHelper.getArray(json , "commands");
