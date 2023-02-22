@@ -78,17 +78,16 @@ public interface WKItems {
     Item JUNIPER_MEAD = register("juniper_mead", new Item(settings(WitchesKitchen.FOOD_TAB).food(WKFoodComponents.STRONG_ALCOHOL)));
     Item RUM = register("rum", new Item(settings(WitchesKitchen.FOOD_TAB).food(WKFoodComponents.STRONG_ALCOHOL)));
     Item TRAVARICA = register("travarica", new Item(settings(WitchesKitchen.FOOD_TAB).food(WKFoodComponents.STRONG_ALCOHOL)));
-
     Item GROUND_BEEF = register("ground_beef", new Item(settings(WitchesKitchen.FOOD_TAB).food(FoodComponents.BEEF)));
     Item GROUND_PORK = register("ground_pork", new Item(settings(WitchesKitchen.FOOD_TAB).food(FoodComponents.PORKCHOP)));
     Item GROUND_MUTTON = register("ground_mutton", new Item(settings(WitchesKitchen.FOOD_TAB).food(FoodComponents.BEEF)));
-
     Item HEART_PIE = register("heart_pie", new Item(settings(WitchesKitchen.FOOD_TAB).food(FoodComponents.PUMPKIN_PIE)));
     Item ROOTS_PLATTER = register("roots_platter", new Item(settings(WitchesKitchen.FOOD_TAB).food(FoodComponents.BEETROOT_SOUP)));
-
     Item DEMONIC_STEW = register("demonic_stew", new Item(settings(WitchesKitchen.FOOD_TAB).food(FoodComponents.RABBIT_STEW)));
     Item MEATY_STEW = register("meaty_stew", new Item(settings(WitchesKitchen.FOOD_TAB).food(FoodComponents.RABBIT_STEW)));
     Item VEGETABLE_STEW = register("vegetable_stew", new Item(settings(WitchesKitchen.FOOD_TAB).food(FoodComponents.BEETROOT_SOUP)));
+
+    Item VEGETABLE = register("vegetable", new Item(settings(WitchesKitchen.FOOD_TAB).food(FoodComponents.BEETROOT_SOUP)));
 
     //Materials
     Item HEART_OF_INNOCENCE = register("heart_of_innocence");
@@ -113,6 +112,7 @@ public interface WKItems {
     Item CU_SITH_SPAWN_EGG = register("cu_sith_spawn_egg", new SpawnEggItem(WKEntityTypes.CUSITH, 0x343434, 0x355E3B, settings(WitchesKitchen.GENERAL_TAB)));
     Item FERRET_SPAWN_EGG = register("ferret_spawn_egg", new SpawnEggItem(WKEntityTypes.FERRET, 0x985C3A, 0x282625, settings(WitchesKitchen.GENERAL_TAB)));
     Item CHURCH_GRIM_SPAWN_EGG = register("church_grim_spawn_egg", new SpawnEggItem(WKEntityTypes.CHURCH_GRIM, 0xFFFAFA, 0x36454F, settings(WitchesKitchen.GENERAL_TAB)));
+    Item HEDGEHOG_SPAWN_EGG = register("hedgehog_spawn_egg", new SpawnEggItem(WKEntityTypes.HEDGEHOG, 0xB4AEAA, 0x282625, settings(WitchesKitchen.GENERAL_TAB)));
 
 
     static List<ObjectDefinition<Item>> getItems() {

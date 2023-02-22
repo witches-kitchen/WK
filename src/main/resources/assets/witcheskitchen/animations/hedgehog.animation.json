@@ -1,0 +1,264 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"rolled": {
+			"loop": true,
+			"bones": {
+				"hedgehog": {
+					"rotation": {
+						"vector": [-127.5, 0, 0]
+					},
+					"position": {
+						"vector": [0, -5, 0]
+					}
+				},
+				"hindbody": {
+					"rotation": {
+						"vector": [-77.5, 0, 0]
+					},
+					"position": {
+						"vector": [0, -0.5, 0.5]
+					},
+					"scale": {
+						"vector": [1.01, 1, 1]
+					}
+				},
+				"leg1": {
+					"rotation": {
+						"vector": [85, 0, 0]
+					}
+				},
+				"leg2": {
+					"rotation": {
+						"vector": [-40, 0, 0]
+					}
+				},
+				"head": {
+					"rotation": {
+						"vector": [97.5, 0, 0]
+					},
+					"position": {
+						"vector": [0, -2, 0]
+					}
+				},
+				"leg3": {
+					"rotation": {
+						"vector": [90, 0, 0]
+					}
+				},
+				"leg4": {
+					"rotation": {
+						"vector": [-40, 0, 0]
+					}
+				}
+			}
+		},
+		"scared": {
+			"loop": true,
+			"bones": {
+				"hedgehog": {
+					"rotation": {
+						"vector": [55, 0, 0]
+					},
+					"position": {
+						"vector": [0, 2, -1]
+					}
+				},
+				"hindbody": {
+					"rotation": {
+						"vector": [-102.5, 0, 0]
+					},
+					"position": {
+						"vector": [0, -0.5, 0.5]
+					},
+					"scale": {
+						"vector": [1.01, 1, 1]
+					}
+				},
+				"leg1": {
+					"rotation": {
+						"vector": [85, 0, 0]
+					}
+				},
+				"leg2": {
+					"rotation": {
+						"vector": [-30, 0, 0]
+					}
+				},
+				"head": {
+					"rotation": {
+						"vector": [130, 0, 0]
+					},
+					"position": {
+						"vector": [0, -2, 0]
+					}
+				},
+				"leg3": {
+					"rotation": {
+						"vector": [90, 0, 0]
+					}
+				},
+				"leg4": {
+					"rotation": {
+						"vector": [-37.5, 0, 0]
+					}
+				}
+			}
+		},
+		"walk": {
+			"loop": true,
+			"animation_length": 0.56,
+			"bones": {
+				"forebody": {
+					"rotation": {
+						"0.0": {
+							"vector": [2.5, 0, 0]
+						},
+						"0.28": {
+							"vector": [0, 0, 0]
+						},
+						"0.56": {
+							"vector": [2.5, 0, 0]
+						}
+					}
+				},
+				"leg1": {
+					"rotation": {
+						"0.0": {
+							"vector": [-20, 0, 0]
+						},
+						"0.28": {
+							"vector": [20, 0, 0]
+						},
+						"0.56": {
+							"vector": [-20, 0, 0]
+						}
+					}
+				},
+				"leg3": {
+					"rotation": {
+						"0.0": {
+							"vector": [27.5, 0, 0]
+						},
+						"0.28": {
+							"vector": [-15, 0, 0]
+						},
+						"0.56": {
+							"vector": [27.5, 0, 0]
+						}
+					}
+				},
+				"head": {
+					"rotation": {
+						"0.0": {
+							"vector": [-5, 0, 0]
+						},
+						"0.28": {
+							"vector": [0, 0, 0]
+						},
+						"0.56": {
+							"vector": [-5, 0, 0]
+						}
+					}
+				},
+				"ears": {
+					"rotation": {
+						"0.0": {
+							"vector": [-5, 0, 0]
+						},
+						"0.28": {
+							"vector": [5, 0, 0]
+						},
+						"0.56": {
+							"vector": [-5, 0, 0]
+						}
+					}
+				},
+				"hindbody": {
+					"rotation": {
+						"0.0": {
+							"vector": [-2.5, 0, 0]
+						},
+						"0.28": {
+							"vector": [0, 0, 0]
+						},
+						"0.56": {
+							"vector": [-2.5, 0, 0]
+						}
+					}
+				},
+				"leg2": {
+					"rotation": {
+						"0.0": {
+							"vector": [20, 0, 0]
+						},
+						"0.28": {
+							"vector": [-22.5, 0, 0]
+						},
+						"0.56": {
+							"vector": [20, 0, 0]
+						}
+					}
+				},
+				"leg4": {
+					"rotation": {
+						"0.0": {
+							"vector": [-27.5, 0, 0]
+						},
+						"0.28": {
+							"vector": [22.5, 0, 0]
+						},
+						"0.56": {
+							"vector": [-27.5, 0, 0]
+						}
+					}
+				}
+			}
+		},
+		"loaf": {
+			"loop": true,
+			"bones": {
+				"hedgehog": {
+					"position": {
+						"vector": [0, -1, 0]
+					},
+					"scale": {
+						"vector": [1.1, 0.9, 1]
+					}
+				},
+				"leg1": {
+					"rotation": {
+						"vector": [75, 0, 0]
+					},
+					"position": {
+						"vector": [0, 0, 0]
+					}
+				},
+				"leg3": {
+					"rotation": {
+						"vector": [75, 0, 0]
+					}
+				},
+				"head": {
+					"rotation": {
+						"vector": [-12.5, 0, 0]
+					},
+					"scale": {
+						"vector": [0.9, 1.1, 1]
+					}
+				},
+				"leg2": {
+					"rotation": {
+						"vector": [-75, 0, 0]
+					}
+				},
+				"leg4": {
+					"rotation": {
+						"vector": [-75, 0, 0]
+					}
+				}
+			}
+		}
+	},
+	"geckolib_format_version": 2
+}

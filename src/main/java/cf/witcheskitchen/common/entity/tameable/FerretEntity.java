@@ -79,7 +79,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, Smart
     @Nullable
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
-        int var = new SplittableRandom().nextInt(0, 13);
+        int var = new SplittableRandom().nextInt(1, 13);
         this.setVariant(var);
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
@@ -124,26 +124,16 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, Smart
         return this.world.getEntityById(this.getDataTracker().get(TARGET_ID)) instanceof LivingEntity livingEntity ? livingEntity : null;
     }
 
-    public int getVariant() {
-        return MathHelper.clamp(this.dataTracker.get(VARIANT), 1, 13);
-    }
-
-    public void setVariant(int variant) {
-        this.dataTracker.set(VARIANT, variant);
-    }
-
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
         nbt.putBoolean("Sleep", this.isSleeping());
-        nbt.putInt("Variant", this.getVariant());
     }
 
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
         this.setSleeping(nbt.getBoolean("Sleep"));
-        this.setVariant(nbt.getInt("Variant"));
     }
 
 

@@ -5,6 +5,7 @@ import cf.witcheskitchen.api.registry.ObjectDefinition;
 import cf.witcheskitchen.common.entity.hostile.CuSithEntity;
 import cf.witcheskitchen.common.entity.neutral.ChurchGrimEntity;
 import cf.witcheskitchen.common.entity.tameable.FerretEntity;
+import cf.witcheskitchen.common.entity.tameable.HedgehogEntity;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -30,6 +31,10 @@ public interface WKEntityTypes {
     EntityType<FerretEntity> FERRET = create("ferret", FerretEntity.createAttributes(), QuiltEntityTypeBuilder.create(SpawnGroup.CREATURE, FerretEntity::new)
             .setDimensions(EntityDimensions.changing(1.0f, 1.0f))
             .build());
+    EntityType<HedgehogEntity> HEDGEHOG = create("hedgehog", FerretEntity.createAttributes(), QuiltEntityTypeBuilder.create(SpawnGroup.CREATURE, HedgehogEntity::new)
+            .setDimensions(EntityDimensions.changing(0.25f, 0.25f))
+            .build());
+
     EntityType<ChurchGrimEntity> CHURCH_GRIM = create("church_grim", ChurchGrimEntity.createAttributes(), QuiltEntityTypeBuilder.create(SpawnGroup.CREATURE, ChurchGrimEntity::new)
             .setDimensions(EntityDimensions.changing(1.0f, 1.0f))
             .build());

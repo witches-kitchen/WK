@@ -6,6 +6,7 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
 
@@ -36,13 +37,19 @@ public abstract class WKTameableEntity extends TameableEntity {
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
         nbt.putByte("Flags", dataTracker.get(POSE_FLAGS));
+        nbt.putInt("Variant", this.getVariant());
     }
 
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
         dataTracker.set(POSE_FLAGS, nbt.getByte("Flags"));
+        this.setVariant(nbt.getInt("Variant"));
     }
+    public void setVariant(int variant) {
+        this.dataTracker.set(VARIANT, variant);
+    }
+
 
     protected void setPoseFlag(int index, boolean value) {
         byte b = this.dataTracker.get(POSE_FLAGS);
@@ -86,4 +93,8 @@ public abstract class WKTameableEntity extends TameableEntity {
      * Please be sane with it.
      */
     public abstract int getVariants();
+
+    public int getVariant() {
+        return MathHelper.clamp(this.dataTracker.get(VARIANT), 1, getVariants());
+    }
 }
