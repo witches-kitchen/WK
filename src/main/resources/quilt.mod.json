@@ -54,6 +54,7 @@
   "access_widener": "wk.accesswidener",
   "mixin": "wk.mixins.json",
   "cardinal-components": [
+    "witcheskitchen:curse",
     "witcheskitchen:player"
   ]
 }

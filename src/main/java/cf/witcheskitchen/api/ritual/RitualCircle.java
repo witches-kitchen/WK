@@ -2,6 +2,7 @@ package cf.witcheskitchen.api.ritual;
 
 import cf.witcheskitchen.common.registry.WKBlocks;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import org.jetbrains.annotations.Nullable;
 
 public class RitualCircle {
@@ -44,7 +45,9 @@ public class RitualCircle {
         }
     }
     public enum Type{
-        chalk(WKBlocks.GLYPH);
+        chalk(WKBlocks.GLYPH),
+        salt(WKBlocks.SALT_BLOCK),
+        candle(Blocks.CANDLE);
 
         Type(Block glyph) {
         }

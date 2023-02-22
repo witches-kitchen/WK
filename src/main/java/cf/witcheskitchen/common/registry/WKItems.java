@@ -87,15 +87,13 @@ public interface WKItems {
     Item MEATY_STEW = register("meaty_stew", new Item(settings(WitchesKitchen.FOOD_TAB).food(FoodComponents.RABBIT_STEW)));
     Item VEGETABLE_STEW = register("vegetable_stew", new Item(settings(WitchesKitchen.FOOD_TAB).food(FoodComponents.BEETROOT_SOUP)));
 
-    Item VEGETABLE = register("vegetable", new Item(settings(WitchesKitchen.FOOD_TAB).food(FoodComponents.BEETROOT_SOUP)));
-
     //Materials
     Item HEART_OF_INNOCENCE = register("heart_of_innocence");
 
     Item AMARANTH_SEEDS = register("amaranth_seeds", new AliasedBlockItem(WKBlocks.AMARANTH, settings(WitchesKitchen.FOOD_TAB)));
     Item BELLADONNA_SEEDS = register("belladonna_seeds", new AliasedBlockItem(WKBlocks.BELLADONNA, settings(WitchesKitchen.FOOD_TAB)));
-    Item ST_JOHNS_WORT_SEEDS = register("st_johns_wort_seeds");
-    Item BRIAR_SEEDS = register("briar_seeds");
+    Item ST_JOHNS_WORT_SEEDS = register("st_johns_wort_seeds");//TODO
+    Item BRIAR_SEEDS = register("briar_seeds");//TODO
     Item CAMELLIA_SEEDS = register("camellia_seeds", new AliasedBlockItem(WKBlocks.CAMELLIA, settings(WitchesKitchen.FOOD_TAB)));
     Item CHAMOMILE_SEEDS = register("chamomile_seeds", new AliasedBlockItem(WKBlocks.CHAMOMILE, settings(WitchesKitchen.FOOD_TAB)));
     Item CONEFLOWER_SEEDS = register("coneflower_seeds", new AliasedBlockItem(WKBlocks.CONEFLOWER, settings(WitchesKitchen.FOOD_TAB)));

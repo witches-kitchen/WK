@@ -1,8 +1,10 @@
 package cf.witcheskitchen.common.recipe;
 
 import cf.witcheskitchen.api.ritual.RitualCircle;
+import cf.witcheskitchen.api.ritual.Ritual;
 import cf.witcheskitchen.common.registry.WKRecipeTypes;
 import cf.witcheskitchen.api.util.RecipeUtils;
+import cf.witcheskitchen.common.registry.WKRegistries;
 import com.google.gson.JsonObject;
 import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.Inventory;
@@ -29,32 +31,36 @@ import java.util.stream.IntStream;
 
 public class RitualRecipe implements Recipe<Inventory> {
     public final Identifier id;
+    public final Ritual rite;
     public final Set<RitualCircle> circleSet;
     public final DefaultedList<Ingredient> inputs;
     public final List<ItemStack> outputs;
     public final List<EntityType<?>> sacrifices;
+    public final int duration;
 
-    public RitualRecipe(Identifier id, Set<RitualCircle> circleSet, @Nullable DefaultedList<Ingredient> inputs, @Nullable List<ItemStack> outputs, @Nullable List<EntityType<?>> sacrifices) {
+    public RitualRecipe(Identifier id, Ritual rite, Set<RitualCircle> circleSet, @Nullable DefaultedList<Ingredient> inputs, @Nullable List<ItemStack> outputs, @Nullable List<EntityType<?>> sacrifices, int duration) {
         this.id = id;
+        this.rite = rite;
         this.circleSet = circleSet;
         this.outputs = outputs;
         this.inputs = inputs;
         this.sacrifices = sacrifices;
+        this.duration = duration;
     }
 
     @Override
     public boolean matches(Inventory inventory, World world) {
-        return false;
+        return matches(inventory, inputs, sacrifices);
     }
 
     @Override
     public ItemStack craft(Inventory inventory) {
-        return null;
+        return ItemStack.EMPTY;
     }
 
     @Override
     public boolean fits(int width, int height) {
-        return false;
+        return true;
     }
 
     @Override
@@ -77,12 +83,40 @@ public class RitualRecipe implements Recipe<Inventory> {
         return WKRecipeTypes.RITUAL_RECIPE_TYPE;
     }
 
-
+    public static boolean matches(Inventory inv, DefaultedList<Ingredient> input, List<EntityType<?>> sacrifices) {
+        List<ItemStack> checklist = new ArrayList<>();
+        for (int i = 0; i < inv.size(); i++) {
+            ItemStack stack = inv.getStack(i);
+            if (!stack.isEmpty()) {
+                checklist.add(stack);
+            }
+        }
+        if (input.size() != checklist.size()) {
+            return false;
+        }
+        for (Ingredient ingredient : input) {
+            boolean found = false;
+            for (ItemStack stack : checklist) {
+                if (ingredient.test(stack)) {
+                    found = true;
+                    checklist.remove(stack);
+                    break;
+                }
+            }
+            if (!found) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     public static class Serializer implements QuiltRecipeSerializer<RitualRecipe> {
 
         @Override
         public RitualRecipe read(Identifier id, JsonObject json) {
+            //Rite
+            Ritual rite = WKRegistries.RITUAL.get(new Identifier(JsonHelper.getString(json, "rite")));
+
             //Inputs
             DefaultedList<Ingredient> inputs = RecipeUtils.getIngredients(JsonHelper.getArray(json, "inputs"));
 
@@ -97,12 +131,17 @@ public class RitualRecipe implements Recipe<Inventory> {
             var sacrificeArray = JsonHelper.getArray(json, "sacrifices");
             List<EntityType<?>> sacrifices = RecipeUtils.deserializeEntityTypes(sacrificeArray);
 
+            //Duration
+            int duration = JsonHelper.getInt(json, "duration");
 
-            return new RitualRecipe(id, circles, inputs, outputs, sacrifices);
+            return new RitualRecipe(id, rite, circles, inputs, outputs, sacrifices, duration);
         }
 
         @Override
         public RitualRecipe read(Identifier id, PacketByteBuf buf) {
+            //Rite
+            Ritual rite = WKRegistries.RITUAL.get(new Identifier(buf.readString()));
+
             //Inputs
             DefaultedList<Ingredient> inputs = DefaultedList.ofSize(buf.readVarInt(), Ingredient.EMPTY);
             inputs.replaceAll(ignored -> Ingredient.fromPacket(buf));
@@ -125,7 +164,10 @@ public class RitualRecipe implements Recipe<Inventory> {
             int sacrificeSize = buf.readInt();
             List<EntityType<?>> sacrificeList = IntStream.range(0, sacrificeSize).mapToObj(i -> Registry.ENTITY_TYPE.get(new Identifier(buf.readString()))).collect(Collectors.toList());
 
-            return new RitualRecipe(id, circles, inputs, outputs, sacrificeList);
+            //Duration
+            int duration = buf.readInt();
+
+            return new RitualRecipe(id, rite, circles, inputs, outputs, sacrificeList, duration);
         }
 
         @Override
@@ -151,6 +193,9 @@ public class RitualRecipe implements Recipe<Inventory> {
             for(EntityType<?> entityType : recipe.sacrifices){
                 buf.writeString(Registry.ENTITY_TYPE.getId(entityType).toString());
             }
+
+            //Duration
+            buf.writeInt(recipe.duration);
         }
 
         @Override

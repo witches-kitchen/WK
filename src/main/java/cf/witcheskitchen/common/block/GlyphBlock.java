@@ -3,18 +3,24 @@ package cf.witcheskitchen.common.block;
 import cf.witcheskitchen.api.block.WKBlock;
 import cf.witcheskitchen.api.block.WKBlockWithEntity;
 import cf.witcheskitchen.common.blockentity.GlyphBlockEntity;
+import cf.witcheskitchen.common.blockentity.TeapotBlockEntity;
 import cf.witcheskitchen.common.registry.WKBlocks;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.IntProperty;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
@@ -28,6 +34,14 @@ public class GlyphBlock extends WKBlockWithEntity {
     public GlyphBlock(Settings settings) {
         super(settings);
         this.setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.NORTH).with(GLYPH, 0));
+    }
+
+    @Override
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+        if(world.getBlockEntity(pos) instanceof GlyphBlockEntity be){
+            be.onUse(world, state, pos, player, hit);
+        }
+        return super.onUse(state, world, pos, player, hand, hit);
     }
 
     @Nullable
