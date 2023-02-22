@@ -17,20 +17,9 @@ import java.util.Set;
 import java.util.UUID;
 
 public class Ritual {
-    public final UUID playerUuid;
-    public final Box boundingBox;
-    public final Set<RitualCircle> circles;
-    public final long id;
-    public String command;
 
-    public BlockPos ritualPos;
-    public PlayerEntity activator;
+    public Ritual(){
 
-    public Ritual(UUID uuid, long id, Box boundingBox, Set<RitualCircle> circles){
-        this.playerUuid = uuid;
-        this.boundingBox = boundingBox;
-        this.circles = circles;
-        this.id = id;
     }
 
     public void tick(World world, BlockPos blockPos, BlockState blockState, RitualRecipe ritualRecipe) {
@@ -38,7 +27,7 @@ public class Ritual {
         MinecraftServer minecraftServer = world.getServer();
         for(CommandType commandType : ritualRecipe.command){
             if(commandType.type.equals("tick")){
-                runCommand(minecraftServer, ritualRecipe, blockPos);
+                runCommand(minecraftServer, blockPos, commandType.command);
             }
         }
 
@@ -49,7 +38,7 @@ public class Ritual {
         MinecraftServer minecraftServer = world.getServer();
         for(CommandType commandType : ritualRecipe.command){
             if(commandType.type.equals("start")){
-                runCommand(minecraftServer, ritualRecipe, blockPos);
+                runCommand(minecraftServer, blockPos, commandType.command);
             }
         }
     }
@@ -59,16 +48,16 @@ public class Ritual {
         MinecraftServer minecraftServer = world.getServer();
         for(CommandType commandType : ritualRecipe.command){
             if(commandType.type.equals("end")){
-                runCommand(minecraftServer, ritualRecipe, blockPos);
+                runCommand(minecraftServer, blockPos, commandType.command);
             }
         }
     }
 
     //TODO test this, and maybe add option for {pos} to be taglock owners pos instead of ritual center pos
-    public void runCommand(MinecraftServer minecraftServer, RitualRecipe recipe, BlockPos blockPos){
-        if (minecraftServer != null && !recipe.command.isEmpty()) {
+    public void runCommand(MinecraftServer minecraftServer, BlockPos blockPos, String command){
+        if (minecraftServer != null && !command.isEmpty()) {
             String posString = blockPos.getX() + " " + blockPos.getY() + " " + blockPos.getZ();
-            String parsedCommand = this.command.replaceAll("\\{pos}", posString);
+            String parsedCommand = command.replaceAll("\\{pos}", posString);
             ServerCommandSource commandSource = minecraftServer.getCommandSource();
             CommandManager commandManager = minecraftServer.getCommandManager();
             ParseResults<ServerCommandSource> parseResults = commandManager.getDispatcher().parse(parsedCommand, commandSource);

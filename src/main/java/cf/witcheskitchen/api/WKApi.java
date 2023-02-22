@@ -1,10 +1,17 @@
 package cf.witcheskitchen.api;
 
+import cf.witcheskitchen.common.item.TaglockItem;
 import cf.witcheskitchen.common.registry.WKTags;
 import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.*;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.UUID;
 
 public class WKApi {
 
@@ -88,45 +95,30 @@ public class WKApi {
         return livingEntity.getType().isIn(WKTags.LEFT_HAND_WITCH_SUMMON);
     }
 
-    /**
-     * This allows one to blacklist a mob from being taglocked
-     */
-    public static boolean isTaglockBlacklisted(LivingEntity livingEntity) {
-        return livingEntity.getType().isIn(WKTags.TAGLOCK_BLACKLIST);
+    @Nullable
+    public static LivingEntity getTaglockEntity(World world, ItemStack taglock) {
+        if (world instanceof ServerWorld && taglock.getItem() instanceof TaglockItem && hasTaglock(taglock)) {
+            UUID uuid = getTaglockUUID(taglock);
+            if(uuid != null){
+                for (ServerWorld serverWorld : world.getServer().getWorlds()) {
+                    if (serverWorld.getEntity(uuid) instanceof LivingEntity livingEntity) {
+                        return livingEntity;
+                    }
+                }
+            }
+        }
+        return null;
     }
 
-    /**
-     * This allows one to blacklist an item from being used in ovens
-     */
-    public static boolean isOvenBlacklisted(Item item) {
-        return item.getDefaultStack().isIn((WKTags.OVEN_BLACKLIST));
+    public static boolean hasTaglock(ItemStack stack) {
+        return stack.hasNbt() && stack.getOrCreateNbt().contains("Uuid");
     }
 
-    /**
-     * This allows one to blacklist an item from being used in cauldrons
-     */
-    public static boolean isCauldronBlacklisted(Item item) {
-        return item.getDefaultStack().isIn((WKTags.CAULDRON_BLACKLIST));
-    }
-
-    /**
-     * This allows one to blacklist an item from being used in tea pots
-     */
-    public static boolean isTeaBlacklisted(Item item) {
-        return item.getDefaultStack().isIn(WKTags.TEA_BLACKLIST);
-    }
-
-    /**
-     * This allows one to blacklist an item from being used in fermenting barrels
-     */
-    public static boolean isBarrelBlacklisted(Item item) {
-        return item.getDefaultStack().isIn(WKTags.BARREL_BLACKLIST);
-    }
-
-    /**
-     * This allows one to add items to cauldrons for brewing
-     */
-    public static boolean isValidBrewingItem(Item item) {
-        return item.getDefaultStack().isIn(WKTags.VALID_BREW_ITEM);
+    @Nullable
+    public static UUID getTaglockUUID(ItemStack stack) {
+        if (hasTaglock(stack)) {
+            return stack.getOrCreateNbt().getUuid("Uuid");
+        }
+        return null;
     }
 }
