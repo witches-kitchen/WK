@@ -1,9 +1,7 @@
 package cf.witcheskitchen.common.block;
 
-import cf.witcheskitchen.api.block.WKBlock;
 import cf.witcheskitchen.api.block.WKBlockWithEntity;
 import cf.witcheskitchen.common.blockentity.GlyphBlockEntity;
-import cf.witcheskitchen.common.blockentity.TeapotBlockEntity;
 import cf.witcheskitchen.common.registry.WKBlocks;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;

@@ -1,10 +1,12 @@
 package cf.witcheskitchen.common.recipe;
 
+import cf.witcheskitchen.api.CommandType;
 import cf.witcheskitchen.api.ritual.RitualCircle;
 import cf.witcheskitchen.api.ritual.Ritual;
 import cf.witcheskitchen.common.registry.WKRecipeTypes;
 import cf.witcheskitchen.api.util.RecipeUtils;
 import cf.witcheskitchen.common.registry.WKRegistries;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.Inventory;
@@ -37,8 +39,10 @@ public class RitualRecipe implements Recipe<Inventory> {
     public final List<ItemStack> outputs;
     public final List<EntityType<?>> sacrifices;
     public final int duration;
+    public final Set<CommandType> command;
+    public final String energy;
 
-    public RitualRecipe(Identifier id, Ritual rite, Set<RitualCircle> circleSet, @Nullable DefaultedList<Ingredient> inputs, @Nullable List<ItemStack> outputs, @Nullable List<EntityType<?>> sacrifices, int duration) {
+    public RitualRecipe(Identifier id, Ritual rite, String energy, Set<RitualCircle> circleSet, @Nullable DefaultedList<Ingredient> inputs, @Nullable List<ItemStack> outputs, @Nullable List<EntityType<?>> sacrifices, int duration, Set<CommandType> command) {
         this.id = id;
         this.rite = rite;
         this.circleSet = circleSet;
@@ -46,6 +50,8 @@ public class RitualRecipe implements Recipe<Inventory> {
         this.inputs = inputs;
         this.sacrifices = sacrifices;
         this.duration = duration;
+        this.command = command;
+        this.energy = energy;
     }
 
     @Override
@@ -117,6 +123,9 @@ public class RitualRecipe implements Recipe<Inventory> {
             //Rite
             Ritual rite = WKRegistries.RITUAL.get(new Identifier(JsonHelper.getString(json, "rite")));
 
+            //Environmental Energy
+            String energy = JsonHelper.getString(json, "environment");
+
             //Inputs
             DefaultedList<Ingredient> inputs = RecipeUtils.getIngredients(JsonHelper.getArray(json, "inputs"));
 
@@ -134,13 +143,20 @@ public class RitualRecipe implements Recipe<Inventory> {
             //Duration
             int duration = JsonHelper.getInt(json, "duration");
 
-            return new RitualRecipe(id, rite, circles, inputs, outputs, sacrifices, duration);
+            //Command
+            JsonArray commandArray = JsonHelper.getArray(json , "commands");
+            Set<CommandType> commands = RecipeUtils.deserializeCommands(commandArray);
+
+            return new RitualRecipe(id, rite, energy, circles, inputs, outputs, sacrifices, duration, commands);
         }
 
         @Override
         public RitualRecipe read(Identifier id, PacketByteBuf buf) {
             //Rite
             Ritual rite = WKRegistries.RITUAL.get(new Identifier(buf.readString()));
+
+            //Environmental energy
+            String energy = buf.readString();
 
             //Inputs
             DefaultedList<Ingredient> inputs = DefaultedList.ofSize(buf.readVarInt(), Ingredient.EMPTY);
@@ -167,11 +183,23 @@ public class RitualRecipe implements Recipe<Inventory> {
             //Duration
             int duration = buf.readInt();
 
-            return new RitualRecipe(id, rite, circles, inputs, outputs, sacrificeList, duration);
+            //Commands
+            Set<CommandType> commandTypeSet = new HashSet<>();
+            for(int i = 0; i < buf.readInt(); i++){
+                commandTypeSet.add(new CommandType(buf.readString(), buf.readString()));
+            }
+
+            return new RitualRecipe(id, rite, energy, circles, inputs, outputs, sacrificeList, duration, commandTypeSet);
         }
 
         @Override
         public void write(PacketByteBuf buf, RitualRecipe recipe) {
+            //Rite
+            buf.writeString(WKRegistries.RITUAL.getId(recipe.rite).toString());
+
+            //Energy
+            buf.writeString(recipe.energy);
+
             //Inputs
             buf.writeVarInt(recipe.inputs.size());
             for (Ingredient ingredient : recipe.inputs) {
@@ -196,6 +224,13 @@ public class RitualRecipe implements Recipe<Inventory> {
 
             //Duration
             buf.writeInt(recipe.duration);
+
+            //Commands
+            buf.writeVarInt(recipe.command.size());
+            for(CommandType commandType : recipe.command){
+                buf.writeString(commandType.getCommand());
+                buf.writeString(commandType.getType());
+            }
         }
 
         @Override

@@ -1,7 +1,6 @@
 package cf.witcheskitchen.common.entity.tameable;
 
 import cf.witcheskitchen.api.WKTameableEntity;
-import cf.witcheskitchen.common.entity.ai.FerretBrain;
 import cf.witcheskitchen.common.entity.ai.HedgehogBrain;
 import cf.witcheskitchen.common.registry.WKEntityTypes;
 import net.minecraft.entity.EntityData;
@@ -11,7 +10,6 @@ import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;

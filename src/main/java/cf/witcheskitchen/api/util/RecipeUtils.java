@@ -1,5 +1,6 @@
 package cf.witcheskitchen.api.util;
 
+import cf.witcheskitchen.api.CommandType;
 import cf.witcheskitchen.api.ritual.RitualCircle;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -12,7 +13,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtHelper;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.util.Identifier;
@@ -239,4 +239,16 @@ public final class RecipeUtils {
         return ingredients;
     }
 
+    public static Set<CommandType> deserializeCommands(JsonArray array){
+        if (!array.isEmpty()) {
+            return arrayStream(array.getAsJsonArray()).map(entry -> deserializeCommand(entry.getAsJsonObject())).collect(Collectors.toSet());
+        }
+        return Set.of();
+    }
+
+    public static @NotNull CommandType deserializeCommand(JsonObject object) {
+        String command = JsonHelper.getString(object, "command");
+        String type = JsonHelper.getString(object, "type");
+        return new CommandType(command, type);
+    }
 }

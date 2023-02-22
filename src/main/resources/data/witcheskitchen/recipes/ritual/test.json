@@ -1,5 +1,6 @@
 {
   "type": "witcheskitchen:ritual",
+  "ritual": "witcheskitchen:test",
   "inputs": [
     {
       "item": "dirt"
@@ -30,5 +31,12 @@
     {
       "entity": "minecraft:cow"
     }
-  ]
+  ],
+  "commands": [
+    {
+      "command" : "execute at {pos} run setBlock ~ ~2 ~ dirt",
+      "type": "tick"
+    }
+  ],
+  "environment": "low"
 }

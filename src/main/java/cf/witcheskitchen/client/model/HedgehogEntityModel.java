@@ -1,7 +1,6 @@
 package cf.witcheskitchen.client.model;
 
 import cf.witcheskitchen.WitchesKitchen;
-import cf.witcheskitchen.common.entity.tameable.FerretEntity;
 import cf.witcheskitchen.common.entity.tameable.HedgehogEntity;
 import net.minecraft.util.Identifier;
 import software.bernie.geckolib3.model.AnimatedGeoModel;

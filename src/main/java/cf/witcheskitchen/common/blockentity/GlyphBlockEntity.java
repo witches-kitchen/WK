@@ -24,6 +24,7 @@ public class GlyphBlockEntity extends WKBlockEntityWithInventory {
     public int progress = 0;
     public RitualRecipe ritualRecipe = null;
 
+
     public GlyphBlockEntity(BlockPos pos, BlockState state) {
         super(WKBlockEntityTypes.GLYPH, pos, state, 9);
     }
@@ -40,9 +41,9 @@ public class GlyphBlockEntity extends WKBlockEntityWithInventory {
             if(progress > 0){
                 Ritual rite = ritualRecipe.rite;
                 if(progress < ritualRecipe.duration){
-                    rite.tick(world, blockPos, blockState);
+                    rite.tick(world, blockPos, blockState, ritualRecipe);
                 }else{
-                    rite.onEnd(world, pos);
+                    rite.onEnd(world, pos, ritualRecipe);
                     resetRitual();
                 }
             }
@@ -62,12 +63,23 @@ public class GlyphBlockEntity extends WKBlockEntityWithInventory {
             if(ritualRecipeNoCircleCheck != null){
                 Set<RitualCircle> circle = ritualRecipeNoCircleCheck.circleSet;
                 if(checkValidCircle(world, pos, circle)){
-                    ritualRecipe = ritualRecipeNoCircleCheck;
-                    Ritual rite = ritualRecipe.rite;
-                    rite.onStart(world, pos, player);
+                    if(checkValidSacrifices(ritualRecipeNoCircleCheck, world)){
+                        this.manager.clear();
+                        ritualRecipe = ritualRecipeNoCircleCheck;
+                        Ritual rite = ritualRecipe.rite;
+                        rite.onStart(world, pos, player, ritualRecipe);
+                    }
                 }
             }
         }
+    }
+
+    private boolean checkValidSacrifices(RitualRecipe ritual, World world) {
+        if(ritual.sacrifices.isEmpty()){
+            return true;
+        }
+        //TODO
+        return false;
     }
 
     private boolean checkValidCircle(World world, BlockPos pos, Set<RitualCircle> circleSet) {
