@@ -65,8 +65,6 @@ public class BrewingBarrelBlockEntity extends WKBlockEntityWithInventory impleme
         };
     }
 
-
-
     @Override
     public void tick(World world, BlockPos pos, BlockState state, WKBlockEntity blockEntity) {
         super.tick(world, pos, state, blockEntity);

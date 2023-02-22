@@ -259,5 +259,8 @@
   "rei.witcheskitchen.fermenting": "Fermenting",
   "rei.witcheskitchen.oven_cooking": "Witches' Oven Cooking",
   "screen.title.witcheskitchen.brewing_barrel": "Brewing Barrel",
-  "screen.title.witcheskitchen.witches_oven": "Witches' Oven"
+  "screen.title.witcheskitchen.witches_oven": "Witches' Oven",
+  "tooltip.witcheskitchen.bundle.potency": "Potency",
+  "tooltip.witcheskitchen.enchanted_glyph": "Enchanted Glyph",
+  "tooltip.witcheskitchen.glyph": "Glyph"
 }

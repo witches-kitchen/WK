@@ -30,11 +30,11 @@ import net.minecraft.world.World;
 import java.util.stream.Collectors;
 
 public class TeapotBlockEntity extends WKBlockEntityWithInventory {
-    private static final int MAX_DURATION = 20 * 60 * 20; //20min
+    public static final int MAX_DURATION = 20 * 60 * 20; //20min
     public static final int UNOBTAINABLE_OUTPUT = MAX_DURATION / 10;
-    private final int TIME_TO_BREW = 20 * 10;
+    public static final int TIME_TO_BREW = 20 * 10;
     public int progress = 0;
-    private int effectTimer = 0;
+    public int effectTimer = 0;
     public TeaRecipe teaRecipe = null;
     public StatusEffect effect = null;
     public boolean hasWater = false;
@@ -47,7 +47,7 @@ public class TeapotBlockEntity extends WKBlockEntityWithInventory {
 
     @Override
     public void tick(World world, BlockPos blockPos, BlockState blockState, WKBlockEntity blockEntity) {
-        if(world.getBlockState(pos.down()).getBlock() instanceof WitchesOvenBlock wo && world.getBlockState(pos.down()).get(WitchesOvenBlock.LIT)){
+        if(world.getBlockState(pos.down()).getBlock() instanceof WitchesOvenBlock && world.getBlockState(pos.down()).get(WitchesOvenBlock.LIT)){
             if(teaRecipe == null){
                 teaRecipe = world.getRecipeManager().listAllOfType(WKRecipeTypes.TEA_RECIPE_TYPE).stream().filter(recipe -> recipe.input.test(this.manager.getStack(0))).findFirst().orElse(null);
             }else{
@@ -139,6 +139,7 @@ public class TeapotBlockEntity extends WKBlockEntityWithInventory {
         this.effect = null;
         this.progress = 0;
         this.effectTimer = 0;
+        this.teaRecipe = null;
         this.markDirty();
     }
 

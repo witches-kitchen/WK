@@ -60,8 +60,8 @@ public class ChalkItem extends Item {
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         if(glyphType != null){
             String name = Registry.BLOCK.getId(glyphType).getPath();
-            String formatName = name.substring(0, 1).toUpperCase() + name.substring(1);
-            tooltip.add(Text.translatable(formatName).setStyle(Style.EMPTY.withColor(0xffffff)));
+            int rgb = glyphType == WKBlocks.ENCHANTED_GLYPH ? 0xD8EAB4 : 0xffffff;
+            tooltip.add(Text.translatable("tooltip.witcheskitchen."+name).setStyle(Style.EMPTY.withColor(rgb)));
         }
     }
 }

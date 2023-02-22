@@ -17,6 +17,11 @@ public class WKLanguageProvider extends FabricLanguageProvider {
         builder.add(WitchesKitchen.GINGER_TAB, "Witches' Kitchen Gingerbread");
         builder.add(WitchesKitchen.FOOD_TAB, "Witches' Kitchen Food");
 
+        //Tooltip
+        builder.add("tooltip.witcheskitchen.glyph", "Glyph");
+        builder.add("tooltip.witcheskitchen.enchanted_glyph", "Enchanted Glyph");
+        builder.add("tooltip.witcheskitchen.bundle.potency", "Potency");
+
         //BLOCKS
         builder.add(WKBlocks.GLYPH, "Glyph");
         builder.add(WKBlocks.ENCHANTED_GLYPH, "Glyph");

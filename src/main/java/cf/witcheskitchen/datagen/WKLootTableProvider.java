@@ -74,33 +74,33 @@ public class WKLootTableProvider {
             teaDrops(WKBlocks.WAXED_WEATHERED_COPPER_TEAPOT);
             teaDrops(WKBlocks.WAXED_OXIDIZED_COPPER_TEAPOT);
 
-            this.addDrop(WKBlocks.BLACKTHORN_SAPLING);
-            this.addDrop(WKBlocks.ELDER_SAPLING);
-            this.addDrop(WKBlocks.HAWTHORN_SAPLING);
-            this.addDrop(WKBlocks.JUNIPER_SAPLING);
-            this.addDrop(WKBlocks.ROWAN_SAPLING);
-            this.addDrop(WKBlocks.SUMAC_SAPLING);
+            addDrop(WKBlocks.BLACKTHORN_SAPLING);
+            addDrop(WKBlocks.ELDER_SAPLING);
+            addDrop(WKBlocks.HAWTHORN_SAPLING);
+            addDrop(WKBlocks.JUNIPER_SAPLING);
+            addDrop(WKBlocks.ROWAN_SAPLING);
+            addDrop(WKBlocks.SUMAC_SAPLING);
 
-            this.addDrop(WKBlocks.BLACKTHORN_LOG);
-            this.addDrop(WKBlocks.ELDER_LOG);
-            this.addDrop(WKBlocks.HAWTHORN_LOG);
-            this.addDrop(WKBlocks.JUNIPER_LOG);
-            this.addDrop(WKBlocks.ROWAN_LOG);
-            this.addDrop(WKBlocks.SUMAC_LOG);
+            addDrop(WKBlocks.BLACKTHORN_LOG);
+            addDrop(WKBlocks.ELDER_LOG);
+            addDrop(WKBlocks.HAWTHORN_LOG);
+            addDrop(WKBlocks.JUNIPER_LOG);
+            addDrop(WKBlocks.ROWAN_LOG);
+            addDrop(WKBlocks.SUMAC_LOG);
 
-            this.addDrop(WKBlocks.BLACKTHORN_PLANKS);
-            this.addDrop(WKBlocks.ELDER_PLANKS);
-            this.addDrop(WKBlocks.HAWTHORN_PLANKS);
-            this.addDrop(WKBlocks.JUNIPER_PLANKS);
-            this.addDrop(WKBlocks.ROWAN_PLANKS);
-            this.addDrop(WKBlocks.SUMAC_PLANKS);
+            addDrop(WKBlocks.BLACKTHORN_PLANKS);
+            addDrop(WKBlocks.ELDER_PLANKS);
+            addDrop(WKBlocks.HAWTHORN_PLANKS);
+            addDrop(WKBlocks.JUNIPER_PLANKS);
+            addDrop(WKBlocks.ROWAN_PLANKS);
+            addDrop(WKBlocks.SUMAC_PLANKS);
 
-            this.addDrop(WKBlocks.BLACKTHORN_WOOD);
-            this.addDrop(WKBlocks.ELDER_WOOD);
-            this.addDrop(WKBlocks.HAWTHORN_WOOD);
-            this.addDrop(WKBlocks.JUNIPER_WOOD);
-            this.addDrop(WKBlocks.ROWAN_WOOD);
-            this.addDrop(WKBlocks.SUMAC_WOOD);
+            addDrop(WKBlocks.BLACKTHORN_WOOD);
+            addDrop(WKBlocks.ELDER_WOOD);
+            addDrop(WKBlocks.HAWTHORN_WOOD);
+            addDrop(WKBlocks.JUNIPER_WOOD);
+            addDrop(WKBlocks.ROWAN_WOOD);
+            addDrop(WKBlocks.SUMAC_WOOD);
 
             leavesDrop(WKBlocks.BLACKTHORN_LEAVES, WKBlocks.BLACKTHORN_SAPLING, SAPLING_DROP_CHANCE);
             leavesDrop(WKBlocks.ELDER_LEAVES, WKBlocks.ELDER_SAPLING, SAPLING_DROP_CHANCE);
@@ -116,35 +116,35 @@ public class WKLootTableProvider {
             slabDrops(WKBlocks.ROWAN_SLAB);
             slabDrops(WKBlocks.SUMAC_SLAB);
 
-            slabDrops(WKBlocks.BLACKTHORN_STAIRS);
-            slabDrops(WKBlocks.ELDER_STAIRS);
-            slabDrops(WKBlocks.HAWTHORN_STAIRS);
-            slabDrops(WKBlocks.JUNIPER_STAIRS);
-            slabDrops(WKBlocks.ROWAN_STAIRS);
-            slabDrops(WKBlocks.SUMAC_STAIRS);
+            addDrop(WKBlocks.BLACKTHORN_STAIRS);
+            addDrop(WKBlocks.ELDER_STAIRS);
+            addDrop(WKBlocks.HAWTHORN_STAIRS);
+            addDrop(WKBlocks.JUNIPER_STAIRS);
+            addDrop(WKBlocks.ROWAN_STAIRS);
+            addDrop(WKBlocks.SUMAC_STAIRS);
 
-            this.addDrop(WKBlocks.STRIPPED_BLACKTHORN_WOOD);
-            this.addDrop(WKBlocks.STRIPPED_ELDER_WOOD);
-            this.addDrop(WKBlocks.STRIPPED_HAWTHORN_WOOD);
-            this.addDrop(WKBlocks.STRIPPED_JUNIPER_WOOD);
-            this.addDrop(WKBlocks.STRIPPED_ROWAN_WOOD);
-            this.addDrop(WKBlocks.STRIPPED_SUMAC_WOOD);
+            addDrop(WKBlocks.STRIPPED_BLACKTHORN_WOOD);
+            addDrop(WKBlocks.STRIPPED_ELDER_WOOD);
+            addDrop(WKBlocks.STRIPPED_HAWTHORN_WOOD);
+            addDrop(WKBlocks.STRIPPED_JUNIPER_WOOD);
+            addDrop(WKBlocks.STRIPPED_ROWAN_WOOD);
+            addDrop(WKBlocks.STRIPPED_SUMAC_WOOD);
 
-            this.addDrop(WKBlocks.STRIPPED_BLACKTHORN_LOG);
-            this.addDrop(WKBlocks.STRIPPED_ELDER_LOG);
-            this.addDrop(WKBlocks.STRIPPED_HAWTHORN_LOG);
-            this.addDrop(WKBlocks.STRIPPED_JUNIPER_LOG);
-            this.addDrop(WKBlocks.STRIPPED_ROWAN_LOG);
-            this.addDrop(WKBlocks.STRIPPED_SUMAC_LOG);
+            addDrop(WKBlocks.STRIPPED_BLACKTHORN_LOG);
+            addDrop(WKBlocks.STRIPPED_ELDER_LOG);
+            addDrop(WKBlocks.STRIPPED_HAWTHORN_LOG);
+            addDrop(WKBlocks.STRIPPED_JUNIPER_LOG);
+            addDrop(WKBlocks.STRIPPED_ROWAN_LOG);
+            addDrop(WKBlocks.STRIPPED_SUMAC_LOG);
 
-            this.addPlantDrop(WKBlocks.AMARANTH_PLANT, WKItems.AMARANTH_SPRIG , WKItems.AMARANTH_SEEDS);
-            this.addPlantDrop(WKBlocks.BELLADONNA_PLANT, WKItems.BELLADONNA_BLOSSOM, WKItems.BELLADONNA_SEEDS);
-            this.addPlantDrop(WKBlocks.CHAMOMILE_PLANT, WKItems.CHAMOMILE_BLOSSOM ,WKItems.CHAMOMILE_SEEDS);
-            this.addPlantDrop(WKBlocks.CONEFLOWER, WKItems.CONEFLOWER_BLOSSOM, WKItems.CONEFLOWER_SEEDS);
-            this.addPlantDrop(WKBlocks.FOXGLOVE_PLANT, WKItems.FOXGLOVE_BLOSSOM, WKItems.FOXGLOVE_SEEDS);
-            this.addPlantDrop(WKBlocks.HELLEBORE_PLANT, WKItems.HELLEBORE_BLOSSOM, WKItems.HELLEBORE_SEEDS);
-            this.addPlantDrop(WKBlocks.IRIS_PLANT, WKItems.IRIS_BLOSSOM, WKItems.IRIS_SEEDS);
-            this.addPlantDrop(WKBlocks.SANGUINARY_PLANT, WKItems.SANGUINARY_BLOSSOM, WKItems.SANGUINARY_SEEDS);
+            addPlantDrop(WKBlocks.AMARANTH_PLANT, WKItems.AMARANTH_SPRIG , WKItems.AMARANTH_SEEDS);
+            addPlantDrop(WKBlocks.BELLADONNA_PLANT, WKItems.BELLADONNA_BLOSSOM, WKItems.BELLADONNA_SEEDS);
+            addPlantDrop(WKBlocks.CHAMOMILE_PLANT, WKItems.CHAMOMILE_BLOSSOM ,WKItems.CHAMOMILE_SEEDS);
+            addPlantDrop(WKBlocks.CONEFLOWER, WKItems.CONEFLOWER_BLOSSOM, WKItems.CONEFLOWER_SEEDS);
+            addPlantDrop(WKBlocks.FOXGLOVE_PLANT, WKItems.FOXGLOVE_BLOSSOM, WKItems.FOXGLOVE_SEEDS);
+            addPlantDrop(WKBlocks.HELLEBORE_PLANT, WKItems.HELLEBORE_BLOSSOM, WKItems.HELLEBORE_SEEDS);
+            addPlantDrop(WKBlocks.IRIS_PLANT, WKItems.IRIS_BLOSSOM, WKItems.IRIS_SEEDS);
+            addPlantDrop(WKBlocks.SANGUINARY_PLANT, WKItems.SANGUINARY_BLOSSOM, WKItems.SANGUINARY_SEEDS);
         }
 
         public void addPlantDrop(Block block, ItemConvertible drop, ItemConvertible seed){
