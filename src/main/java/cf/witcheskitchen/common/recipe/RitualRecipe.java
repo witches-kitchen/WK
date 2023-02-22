@@ -4,6 +4,7 @@ import cf.witcheskitchen.api.ritual.RitualCircle;
 import cf.witcheskitchen.common.registry.WKRecipeTypes;
 import cf.witcheskitchen.api.util.RecipeUtils;
 import com.google.gson.JsonObject;
+import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
@@ -14,25 +15,31 @@ import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 import org.quiltmc.qsl.recipe.api.serializer.QuiltRecipeSerializer;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class RitualRecipe implements Recipe<Inventory> {
     public final Identifier id;
     public final Set<RitualCircle> circleSet;
     public final DefaultedList<Ingredient> inputs;
     public final List<ItemStack> outputs;
+    public final List<EntityType<?>> sacrifices;
 
-    public RitualRecipe(Identifier id, Set<RitualCircle> circleSet, DefaultedList<Ingredient> inputs, List<ItemStack> outputs) {
+    public RitualRecipe(Identifier id, Set<RitualCircle> circleSet, @Nullable DefaultedList<Ingredient> inputs, @Nullable List<ItemStack> outputs, @Nullable List<EntityType<?>> sacrifices) {
         this.id = id;
         this.circleSet = circleSet;
         this.outputs = outputs;
         this.inputs = inputs;
+        this.sacrifices = sacrifices;
     }
 
     @Override
@@ -86,7 +93,12 @@ public class RitualRecipe implements Recipe<Inventory> {
             var circleArray = JsonHelper.getArray(json, "circles");
             Set<RitualCircle> circles = RecipeUtils.deserializeCircles(circleArray);
 
-            return new RitualRecipe(id, circles, inputs, outputs);
+            //Sacrifices
+            var sacrificeArray = JsonHelper.getArray(json, "sacrifices");
+            List<EntityType<?>> sacrifices = RecipeUtils.deserializeEntityTypes(sacrificeArray);
+
+
+            return new RitualRecipe(id, circles, inputs, outputs, sacrifices);
         }
 
         @Override
@@ -109,8 +121,11 @@ public class RitualRecipe implements Recipe<Inventory> {
             }
             Set<RitualCircle> circles = new HashSet<>(list);
 
+            //Sacrifices
+            int sacrificeSize = buf.readInt();
+            List<EntityType<?>> sacrificeList = IntStream.range(0, sacrificeSize).mapToObj(i -> Registry.ENTITY_TYPE.get(new Identifier(buf.readString()))).collect(Collectors.toList());
 
-            return new RitualRecipe(id, circles, inputs, outputs);
+            return new RitualRecipe(id, circles, inputs, outputs, sacrificeList);
         }
 
         @Override
@@ -130,6 +145,11 @@ public class RitualRecipe implements Recipe<Inventory> {
             for(RitualCircle circle : recipe.circleSet){
                 buf.writeString(circle.getSize());
                 buf.writeString(circle.getType());
+            }
+            //Sacrifices
+            buf.writeInt(recipe.sacrifices.size());
+            for(EntityType<?> entityType : recipe.sacrifices){
+                buf.writeString(Registry.ENTITY_TYPE.getId(entityType).toString());
             }
         }
 

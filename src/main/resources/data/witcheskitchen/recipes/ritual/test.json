@@ -25,5 +25,10 @@
       "size": "medium",
       "type": "chalk"
     }
+  ],
+  "sacrifices": [
+    {
+      "entity": "minecraft:cow"
+    }
   ]
 }

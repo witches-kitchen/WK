@@ -6,11 +6,13 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mojang.serialization.Dynamic;
 import com.mojang.serialization.JsonOps;
+import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtHelper;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.util.Identifier;
@@ -111,6 +113,14 @@ public final class RecipeUtils {
         }
     }
 
+    public static List<EntityType<?>> deserializeEntityTypes(JsonArray array){
+        if (array.isJsonArray()) {
+            return arrayStream(array.getAsJsonArray()).map(entry -> deserializeEntityType(entry.getAsJsonObject())).collect(DefaultedListCollector.toList());
+        } else {
+            return DefaultedList.copyOf(deserializeEntityType(array.getAsJsonObject()));
+        }
+    }
+
     /**
      * Deserializes an array of {@link Ingredient} from a JsonArray.
      *
@@ -155,6 +165,11 @@ public final class RecipeUtils {
             stack.setNbt(tag);
         }
         return stack;
+    }
+
+    public static @NotNull EntityType<?> deserializeEntityType(JsonObject object) {
+        final Identifier id = new Identifier(JsonHelper.getString(object, "entity"));
+        return Registry.ENTITY_TYPE.get(id);
     }
 
     /**
