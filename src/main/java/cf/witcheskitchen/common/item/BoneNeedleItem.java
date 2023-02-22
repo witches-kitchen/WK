@@ -14,6 +14,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class BoneNeedleItem extends Item {
@@ -55,10 +56,11 @@ public class BoneNeedleItem extends Item {
     private boolean successfulSneak(PlayerEntity player, LivingEntity target) {
         double delta = Math.abs((target.headYaw + 90.0f) % 360.0f - (player.headYaw + 90.0f) % 360.0f);
         double chance = player.isInvisible() ? 0.5 : 0.1;
-        if (360.0 - delta % 360.0 < 45 || delta % 360.0 < 45){
-            chance += player.isSneaking() ? 0.5 : 0.25;
+        double lightLevelPenalty = 0.25 * (player.world.getLightLevel(player.getBlockPos()) / 15d);
+        if (360.0 - delta % 360.0 < 90 || delta % 360.0 < 90){
+            chance += player.isSneaking() ? 0.45 : 0.25;
         }
-        return player.getRandom().nextDouble() < chance;
+        return player.getRandom().nextDouble() < (chance - lightLevelPenalty);
     }
 
     public ItemStack writeNbtTaglock(ItemStack stack, Entity entity){
