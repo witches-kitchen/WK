@@ -1,6 +1,6 @@
 package cf.witcheskitchen.common.entity.neutral;
 
-import cf.witcheskitchen.api.WKTameableEntity;
+import cf.witcheskitchen.api.entity.WKTameableEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;

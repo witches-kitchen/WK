@@ -1,4 +1,4 @@
-package cf.witcheskitchen.api;
+package cf.witcheskitchen.api.entity;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.JumpingMount;

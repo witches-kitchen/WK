@@ -1,11 +1,11 @@
 package cf.witcheskitchen.api;
 
+import cf.witcheskitchen.api.entity.WKCreatureTypeEnum;
 import cf.witcheskitchen.common.item.TaglockItem;
 import cf.witcheskitchen.common.registry.WKTags;
 import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.*;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;

@@ -1,6 +1,6 @@
 package cf.witcheskitchen.common.entity.tameable;
 
-import cf.witcheskitchen.api.WKTameableEntity;
+import cf.witcheskitchen.api.entity.WKTameableEntity;
 import cf.witcheskitchen.common.entity.ai.FerretBrain;
 import cf.witcheskitchen.common.registry.WKEntityTypes;
 import cf.witcheskitchen.common.registry.WKSoundEvents;

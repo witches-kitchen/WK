@@ -1,6 +1,6 @@
 package cf.witcheskitchen.common.entity.ai.sensor;
 
-import cf.witcheskitchen.api.WKTameableEntity;
+import cf.witcheskitchen.api.entity.WKTameableEntity;
 import cf.witcheskitchen.common.registry.WKMemoryModuleTypes;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.entity.LivingEntity;

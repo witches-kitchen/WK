@@ -1,6 +1,6 @@
 package cf.witcheskitchen.common.entity.hostile;
 
-import cf.witcheskitchen.api.WKHostileEntity;
+import cf.witcheskitchen.api.entity.WKHostileEntity;
 import cf.witcheskitchen.common.entity.tameable.FerretEntity;
 import cf.witcheskitchen.common.registry.WKSoundEvents;
 import cf.witcheskitchen.common.registry.WKStatusEffects;

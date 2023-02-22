@@ -1,7 +1,7 @@
 package cf.witcheskitchen.common.entity.ai.task;
 
 
-import cf.witcheskitchen.api.WKTameableEntity;
+import cf.witcheskitchen.api.entity.WKTameableEntity;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.entity.ai.brain.Brain;
 import net.minecraft.entity.ai.brain.MemoryModuleState;

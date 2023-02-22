@@ -41,7 +41,7 @@ public class GlyphBlockEntity extends WKBlockEntityWithInventory {
             if(progress > 0){
                 Ritual rite = ritualRecipe.rite;
                 if(progress < ritualRecipe.duration){
-                    rite.tick(world, blockPos, blockState, ritualRecipe);
+                    rite.tick(world, blockPos, ritualRecipe);
                 }else{
                     rite.onEnd(world, pos, ritualRecipe);
                     resetRitual();

@@ -22,7 +22,7 @@ public class Ritual {
 
     }
 
-    public void tick(World world, BlockPos blockPos, BlockState blockState, RitualRecipe ritualRecipe) {
+    public void tick(World world, BlockPos blockPos, RitualRecipe ritualRecipe) {
         RitualEvent.TICK.invoker().tick(this, world, blockPos);
         MinecraftServer minecraftServer = world.getServer();
         for(CommandType commandType : ritualRecipe.command){
