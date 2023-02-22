@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 
 public class BoneNeedleItem extends Item {
     public BoneNeedleItem(Settings settings) {
-        super(settings);
+        super(settings.maxDamage(16));
     }
 
     @Override
@@ -42,6 +42,7 @@ public class BoneNeedleItem extends Item {
                         return ActionResult.CONSUME;
                     }else{
                         //if fail
+                        stack.damage(1, player, stackUser -> stackUser.sendToolBreakStatus(hand));
                         world.playSound(null, entity.getBlockPos(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 0.75f,1);
                     }
                 }
