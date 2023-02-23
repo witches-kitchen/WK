@@ -1,4 +1,4 @@
-package cf.witcheskitchen.datagen;
+package cf.witcheskitchen.data;
 
 import cf.witcheskitchen.common.registry.WKBlocks;
 import cf.witcheskitchen.common.registry.WKEntityTypes;

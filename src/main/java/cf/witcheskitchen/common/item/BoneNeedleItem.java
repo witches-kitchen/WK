@@ -34,7 +34,7 @@ public class BoneNeedleItem extends Item {
             World world = player.world;
             if(hand == Hand.MAIN_HAND){
                 if(!world.isClient()){
-                    if((!(entity instanceof PlayerEntity)) || successfulSneak(player, entity)){
+                    if((!(entity instanceof PlayerEntity)) || successfulTaglocking(player, entity)){
                         if (entity instanceof MobEntity mob) {
                             mob.setPersistent();
                         }
@@ -53,7 +53,7 @@ public class BoneNeedleItem extends Item {
         return ActionResult.FAIL;
     }
 
-    private boolean successfulSneak(PlayerEntity player, LivingEntity target) {
+    private boolean successfulTaglocking(PlayerEntity player, LivingEntity target) {
         double delta = Math.abs((target.headYaw + 90.0f) % 360.0f - (player.headYaw + 90.0f) % 360.0f);
         double chance = player.isInvisible() ? 0.5 : 0.1;
         double lightLevelPenalty = 0.25 * (player.world.getLightLevel(player.getBlockPos()) / 15d);

@@ -1,4 +1,4 @@
-package cf.witcheskitchen.datagen;
+package cf.witcheskitchen.data;
 
 import cf.witcheskitchen.common.registry.WKBlocks;
 import cf.witcheskitchen.common.registry.WKItems;
@@ -136,6 +136,8 @@ public class WKModelProvider extends FabricModelProvider {
         generator.register(WKItems.MEATY_STEW, Models.GENERATED);
         generator.register(WKItems.VEGETABLE_STEW, Models.GENERATED);
         generator.register(WKItems.ROOTS_PLATTER, Models.GENERATED);
+
+        generator.register(WKItems.WAYSTONE, Models.GENERATED);
     }
 
     public final void registerTallCrops(BlockStateModelGenerator generator, Block crop, Property<Integer> ageProperty, int... ageTextureIndices) {

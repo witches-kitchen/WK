@@ -1,4 +1,4 @@
-package cf.witcheskitchen.datagen.worldgen;
+package cf.witcheskitchen.data.worldgen;
 
 import cf.witcheskitchen.common.world.generator.SumacFoliagePlacer;
 import net.minecraft.world.gen.foliage.FoliagePlacerType;

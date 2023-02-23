@@ -1,4 +1,4 @@
-package cf.witcheskitchen.datagen.worldgen;
+package cf.witcheskitchen.data.worldgen;
 
 import cf.witcheskitchen.WitchesKitchen;
 import cf.witcheskitchen.common.registry.WKBlocks;

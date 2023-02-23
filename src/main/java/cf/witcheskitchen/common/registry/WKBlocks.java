@@ -11,7 +11,7 @@ import cf.witcheskitchen.common.block.sapling.WKSaplingBlock;
 import cf.witcheskitchen.common.block.crop.*;
 import cf.witcheskitchen.common.world.generator.WKSaplingGenerator;
 import cf.witcheskitchen.common.block.crop.types.*;
-import cf.witcheskitchen.datagen.worldgen.WKConfiguredFeatures;
+import cf.witcheskitchen.data.worldgen.WKConfiguredFeatures;
 import net.minecraft.block.*;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;

@@ -3,7 +3,7 @@ package cf.witcheskitchen.common.world.generator;
 
 //this will all need to be reworked to better suit our needs
 
-import cf.witcheskitchen.datagen.worldgen.WKFoliagePlacers;
+import cf.witcheskitchen.data.worldgen.WKFoliagePlacers;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.block.BlockState;

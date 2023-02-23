@@ -1,4 +1,4 @@
-package cf.witcheskitchen.datagen;
+package cf.witcheskitchen.data;
 
 import cf.witcheskitchen.WitchesKitchen;
 import cf.witcheskitchen.common.registry.*;
@@ -21,6 +21,8 @@ public class WKLanguageProvider extends FabricLanguageProvider {
         builder.add("tooltip.witcheskitchen.glyph", "Glyph");
         builder.add("tooltip.witcheskitchen.enchanted_glyph", "Enchanted Glyph");
         builder.add("tooltip.witcheskitchen.bundle.potency", "Potency");
+        builder.add("tooltip.witcheskitchen.blockpos", "Position: ");
+        builder.add("tooltip.witcheskitchen.dimension", "Dimension: ");
 
         //BLOCKS
         builder.add(WKBlocks.GLYPH, "Glyph");
@@ -302,6 +304,8 @@ public class WKLanguageProvider extends FabricLanguageProvider {
         builder.add(WKItems.IRIS_SEEDS, "Iris Seeds");
         builder.add(WKItems.SANGUINARY_SEEDS, "Sanguinary Seeds");
         builder.add(WKItems.WORMWOOD_SEEDS, "Wormwood Seeds");
+
+        builder.add(WKItems.WAYSTONE, "Waystone");
 
         //POTIONS
         builder.add( "item.minecraft.potion.effect.rum", "Rum Potion");
