@@ -2,7 +2,7 @@ package cf.witcheskitchen.common.block.crop;
 
 import cf.witcheskitchen.api.block.crop.WKTallCropBlock;
 import cf.witcheskitchen.common.registry.WKItems;
-import cf.witcheskitchen.api.util.TypeHelper;
+import cf.witcheskitchen.api.util.SeedTypeHelper;
 import cf.witcheskitchen.common.block.crop.types.FoxgloveTypes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -39,7 +39,7 @@ public class FoxgloveCropBlock extends WKTallCropBlock {
         Optional<FoxgloveTypes> nextType = type.next(type);
         if(nextType.isPresent()){
             NbtCompound nbtCompound = new NbtCompound();
-            TypeHelper.toNbt(nbtCompound, nextType.get().getName(), nextType.get().getType(), nextType.get().getColor());
+            SeedTypeHelper.toNbt(nbtCompound, nextType.get().getName(), nextType.get().getType(), nextType.get().getColor());
             getNextSeed(world, pos, nbtCompound);
         }
         super.onBreak(world, pos, state, player);

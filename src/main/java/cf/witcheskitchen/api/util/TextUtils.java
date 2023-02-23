@@ -5,7 +5,15 @@ import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 
 public class TextUtils {
-    public static Text formattedFromString(String first, String second, int nameColor, int valueColor) {
+    /**
+     * stylized two strings with different colors on the same line of Text
+     * @param first string to be stylized
+     * @param second string to be stylized
+     * @param nameColor color of first string
+     * @param valueColor color fo second string
+     * @return Text styled to "first: second"
+     */
+    public static Text formattedFromTwoStrings(String first, String second, int nameColor, int valueColor) {
         final MutableText name = styledText(first, nameColor);
         final MutableText value = styledText(second, valueColor);
 
@@ -16,6 +24,11 @@ public class TextUtils {
         return Text.literal(string.toString()).setStyle(Style.EMPTY.withColor(color));
     }
 
+    /**
+     * turns "a_fun, string.minecraft:stick" to "A Fun, String Minecraft:stick"
+     * @param string string to be formatted
+     * @return formatted string
+     */
     public static String capitalizeString(String string) {
         char[] chars = string.toLowerCase().toCharArray();
         boolean found = false;

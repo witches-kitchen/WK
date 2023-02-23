@@ -1,6 +1,7 @@
 package cf.witcheskitchen.common.entity.ai;
 
 import cf.witcheskitchen.api.WKApi;
+import cf.witcheskitchen.api.util.BrainUtils;
 import cf.witcheskitchen.common.entity.ai.sensor.TamableSensor;
 import cf.witcheskitchen.common.entity.ai.sensor.TimeOfDaySensor;
 import cf.witcheskitchen.common.entity.ai.task.DontMoveTask;
@@ -70,7 +71,7 @@ public class FerretBrain {
     public static BrainActivityGroup<FerretEntity> getFightTasks(FerretEntity ferret) {
         return BrainActivityGroup.fightTasks(
                 new RangedApproachTask(1.0F),
-                new FollowMobTask(mob -> FerretBrain.isTarget(ferret, mob), (float)ferret.getAttributeValue(EntityAttributes.GENERIC_FOLLOW_RANGE)),
+                new FollowMobTask(mob -> BrainUtils.isTarget(ferret, mob), (float)ferret.getAttributeValue(EntityAttributes.GENERIC_FOLLOW_RANGE)),
                 new FerretMeleeAttackTask(20)
         );
     }
@@ -88,16 +89,6 @@ public class FerretBrain {
             }
         }
         return Optional.empty();
-    }
-
-    /**
-     * Check if an entity is a target
-     * @param ferretEntity the ferret
-     * @param entity the potential target
-     * @return if entity is target
-     */
-    public static boolean isTarget(FerretEntity ferretEntity, LivingEntity entity) {
-        return ferretEntity.getBrain().getOptionalMemory(MemoryModuleType.ATTACK_TARGET).filter(targetedEntity -> targetedEntity == entity).isPresent();
     }
 
     private static final Predicate<LivingEntity> UNTAMED_TARGET_PREDICATE = entity -> {

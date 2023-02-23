@@ -1,6 +1,6 @@
 package cf.witcheskitchen.api.item;
 
-import cf.witcheskitchen.api.util.TypeHelper;
+import cf.witcheskitchen.api.util.SeedTypeHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FarmlandBlock;
@@ -31,7 +31,7 @@ public class WKSeedItem extends AliasedBlockItem {
     protected BlockState getPlacementState(ItemPlacementContext context) {
         ItemStack itemStack = context.getStack();
         if(itemStack.getNbt() != null && itemStack.getNbt().contains("Variant")){
-            Optional<Block> blockState = TypeHelper.getBlockFromNbt(itemStack.getNbt());
+            Optional<Block> blockState = SeedTypeHelper.getBlockFromNbt(itemStack.getNbt());
             if(blockState.isPresent() && this.canPlace(context, blockState.get().getDefaultState())){
                 return blockState.get().getDefaultState();
             }
@@ -53,7 +53,7 @@ public class WKSeedItem extends AliasedBlockItem {
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        MutableText text = TypeHelper.getTypeText(stack);
+        MutableText text = SeedTypeHelper.getSeedTypeText(stack);
         if(text != null){
             tooltip.add(text);
         }

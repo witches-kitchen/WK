@@ -49,8 +49,8 @@ public class WaystoneItem extends Item {
             String formattedDim = TextUtils.capitalizeString(dimension.substring(dimension.indexOf(":") + 1));
             BlockPos pos = BlockPos.fromLong(stack.getNbt().getLong("BlockPos"));
 
-            tooltip.add(TextUtils.formattedFromString("Dimension", formattedDim, 0xFFAA00, color));
-            tooltip.add(TextUtils.formattedFromString("Position", pos.getX() + " " + pos.getY() + " " + pos.getZ(), 0xFFAA00, 0x55FFFF));
+            tooltip.add(TextUtils.formattedFromTwoStrings("Dimension", formattedDim, 0xFFAA00, color));
+            tooltip.add(TextUtils.formattedFromTwoStrings("Position", pos.getX() + " " + pos.getY() + " " + pos.getZ(), 0xFFAA00, 0x55FFFF));
         }
     }
 }
