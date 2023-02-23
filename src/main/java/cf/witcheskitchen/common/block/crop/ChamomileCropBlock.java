@@ -7,6 +7,7 @@ import cf.witcheskitchen.common.block.crop.types.ChamomileTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemConvertible;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.math.BlockPos;
@@ -47,8 +48,12 @@ public class ChamomileCropBlock extends WKCropBlock {
 
     @ClientOnly
     @Override
-    protected ItemConvertible getSeedsItem() {
-        return  WKItems.CHAMOMILE_SEEDS;
+    protected ItemStack getSeedsItemStack() {
+        NbtCompound nbt = new NbtCompound();
+        SeedTypeHelper.toNbt(nbt, type.getName(), type.getType(), type.getColor());
+        ItemStack seed = new ItemStack(WKItems.CHAMOMILE_SEEDS);
+        seed.getOrCreateNbt().copyFrom(nbt);
+        return seed;
     }
 
     @Override

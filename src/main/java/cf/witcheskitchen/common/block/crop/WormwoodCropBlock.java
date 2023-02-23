@@ -1,11 +1,14 @@
 package cf.witcheskitchen.common.block.crop;
 
 import cf.witcheskitchen.api.block.crop.WKTallCropBlock;
+import cf.witcheskitchen.api.util.SeedTypeHelper;
 import cf.witcheskitchen.common.registry.WKItems;
 import cf.witcheskitchen.common.block.crop.types.WormwoodTypes;
 import net.minecraft.block.Block;
 import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.item.ItemConvertible;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.shape.VoxelShape;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
@@ -43,8 +46,12 @@ public class WormwoodCropBlock extends WKTallCropBlock {
 
     @ClientOnly
     @Override
-    protected ItemConvertible getSeedsItem() {
-        return  WKItems.WORMWOOD_SEEDS;
+    protected ItemStack getSeedsItemStack() {
+        NbtCompound nbt = new NbtCompound();
+        SeedTypeHelper.toNbt(nbt, type.getName(), type.getType(), type.getColor());
+        ItemStack seed = new ItemStack(WKItems.WORMWOOD_SEEDS);
+        seed.getOrCreateNbt().copyFrom(nbt);
+        return seed;
     }
 
     @Override

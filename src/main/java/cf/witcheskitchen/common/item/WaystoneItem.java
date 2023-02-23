@@ -28,9 +28,6 @@ public class WaystoneItem extends Item {
             stack.getOrCreateNbt().putLong("BlockPos", context.getBlockPos().offset(context.getSide()).asLong());
             stack.getOrCreateNbt().putString("Dimension", context.getWorld().getRegistryKey().getValue().toString());
         }
-        for(Pair<String, Integer> dimData : DimColorReloadListener.COLOR_DATA){
-            System.out.println(dimData.getFirst() +" : " + dimData.getSecond());
-        }
         return super.useOnBlock(context);
     }
 
@@ -40,7 +37,6 @@ public class WaystoneItem extends Item {
             String dimension = stack.getOrCreateNbt().getString("Dimension");
             int color = 0xffffff;
             for(Pair<String, Integer> dimData : DimColorReloadListener.COLOR_DATA){
-                System.out.println(dimData.getFirst() + " : " + dimension);
                 if(dimData.getFirst().equals(dimension)){
                     color = dimData.getSecond();
                 }

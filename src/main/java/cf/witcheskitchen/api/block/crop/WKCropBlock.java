@@ -104,13 +104,6 @@ public abstract class WKCropBlock extends CropBlock {
     @Override
     public abstract IntProperty getAgeProperty();
 
-    /**
-     * This is the item that is spawned when the player
-     * hits the mouse middle button.
-     * Triggered on {@link MinecraftClient#doItemPick()}.
-     */
-    @Override
-    protected abstract ItemConvertible getSeedsItem();
 
     /**
      * Builds the IntProperty.
@@ -264,6 +257,23 @@ public abstract class WKCropBlock extends CropBlock {
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
         return super.canPlaceAt(state, world, pos);
     }
+
+    /**
+     * This is the item that is spawned when the player
+     * hits the mouse middle button.
+     * Triggered on {@link MinecraftClient#doItemPick()}.
+     */
+    @Override
+    protected ItemConvertible getSeedsItem(){
+        return getSeedsItemStack().getItem();
+    };
+
+    @Override
+    public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
+        return getSeedsItemStack();
+    }
+
+    protected abstract ItemStack getSeedsItemStack();
 
     public void getNextSeed(World world, BlockPos pos, NbtCompound nbtCompound){
             ItemStack itemStack2 = getSeedsItem().asItem().getDefaultStack();

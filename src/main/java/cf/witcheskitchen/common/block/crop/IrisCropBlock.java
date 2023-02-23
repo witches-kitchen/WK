@@ -8,6 +8,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemConvertible;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.math.BlockPos;
@@ -61,8 +62,12 @@ public class IrisCropBlock extends WKTallCropBlock {
 
     @ClientOnly
     @Override
-    protected ItemConvertible getSeedsItem() {
-        return  WKItems.IRIS_SEEDS;
+    protected ItemStack getSeedsItemStack() {
+        NbtCompound nbt = new NbtCompound();
+        SeedTypeHelper.toNbt(nbt, type.getName(), type.getType(), type.getColor());
+        ItemStack seed = new ItemStack(WKItems.IRIS_SEEDS);
+        seed.getOrCreateNbt().copyFrom(nbt);
+        return seed;
     }
 
     @Override

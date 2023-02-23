@@ -10,6 +10,7 @@ import net.minecraft.block.CropBlock;
 import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemConvertible;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.property.IntProperty;
@@ -112,8 +113,12 @@ public class CamelliaCropBlock extends WKTallCropBlock {
 
     @ClientOnly
     @Override
-    protected ItemConvertible getSeedsItem() {
-        return  WKItems.CAMELLIA_SEEDS;
+    protected ItemStack getSeedsItemStack() {
+        NbtCompound nbt = new NbtCompound();
+        SeedTypeHelper.toNbt(nbt, type.getName(), type.getType(), type.getColor());
+        ItemStack seed = new ItemStack(WKItems.CAMELLIA_SEEDS);
+        seed.getOrCreateNbt().copyFrom(nbt);
+        return seed;
     }
 
     @Override
