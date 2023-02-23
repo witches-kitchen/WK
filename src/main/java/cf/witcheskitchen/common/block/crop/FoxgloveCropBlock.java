@@ -39,6 +39,7 @@ public class FoxgloveCropBlock extends WKTallCropBlock {
     public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         Optional<FoxgloveTypes> nextType = type.next(type);
         if(nextType.isPresent()){
+            System.out.println(type.getType() + " : " + nextType.get().getType());
             NbtCompound nbtCompound = new NbtCompound();
             SeedTypeHelper.toNbt(nbtCompound, nextType.get().getName(), nextType.get().getType(), nextType.get().getColor());
             getNextSeed(world, pos, nbtCompound);
@@ -78,7 +79,7 @@ public class FoxgloveCropBlock extends WKTallCropBlock {
 
     @Override
     public int doubleBlockAge() {
-        return 2;
+        return 4;
     }
 
     static {
@@ -94,6 +95,7 @@ public class FoxgloveCropBlock extends WKTallCropBlock {
                 Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 4.0, 16.0),
                 Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 8.0, 16.0),
                 Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 10.0, 16.0),
+                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0),
                 Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0)
         };
     }

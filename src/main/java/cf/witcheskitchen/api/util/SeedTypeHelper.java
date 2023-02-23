@@ -10,6 +10,7 @@ import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 
+import javax.sql.rowset.spi.SyncResolver;
 import java.util.Map;
 import java.util.Optional;
 

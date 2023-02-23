@@ -78,7 +78,7 @@ public abstract class WKTallCropBlock extends WKCropBlock {
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         if(state.get(HALF) == DoubleBlockHalf.UPPER){
-            if(state.get(getAgeProperty()) >= doubleBlockAge()){
+            if(state.get(getAgeProperty()) > doubleBlockAge()){
                 return getUpperShape()[state.get(getAgeProperty()) - doubleBlockAge() - 1];
             }
         }else{

@@ -1,6 +1,7 @@
 package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WitchesKitchen;
+import cf.witcheskitchen.api.item.WKSeedItem;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
 import cf.witcheskitchen.common.item.*;
 import net.minecraft.item.*;
@@ -88,18 +89,18 @@ public interface WKItems {
     //Materials
     Item HEART_OF_INNOCENCE = register("heart_of_innocence");
 
-    Item AMARANTH_SEEDS = register("amaranth_seeds", new AliasedBlockItem(WKBlocks.AMARANTH, settings(WitchesKitchen.FOOD_TAB)));
-    Item BELLADONNA_SEEDS = register("belladonna_seeds", new AliasedBlockItem(WKBlocks.BELLADONNA, settings(WitchesKitchen.FOOD_TAB)));
+    Item AMARANTH_SEEDS = register("amaranth_seeds", new WKSeedItem(WKBlocks.AMARANTH, settings(WitchesKitchen.FOOD_TAB)));
+    Item BELLADONNA_SEEDS = register("belladonna_seeds", new WKSeedItem(WKBlocks.BELLADONNA, settings(WitchesKitchen.FOOD_TAB)));
     Item ST_JOHNS_WORT_SEEDS = register("st_johns_wort_seeds");//TODO
     Item BRIAR_SEEDS = register("briar_seeds");//TODO
-    Item CAMELLIA_SEEDS = register("camellia_seeds", new AliasedBlockItem(WKBlocks.CAMELLIA, settings(WitchesKitchen.FOOD_TAB)));
-    Item CHAMOMILE_SEEDS = register("chamomile_seeds", new AliasedBlockItem(WKBlocks.CHAMOMILE, settings(WitchesKitchen.FOOD_TAB)));
-    Item CONEFLOWER_SEEDS = register("coneflower_seeds", new AliasedBlockItem(WKBlocks.CONEFLOWER, settings(WitchesKitchen.FOOD_TAB)));
-    Item FOXGLOVE_SEEDS = register("foxglove_seeds", new AliasedBlockItem(WKBlocks.FOXGLOVE, settings(WitchesKitchen.FOOD_TAB)));
-    Item HELLEBORE_SEEDS = register("hellebore_seeds", new AliasedBlockItem(WKBlocks.HELLEBORE, settings(WitchesKitchen.FOOD_TAB)));
-    Item IRIS_SEEDS = register("iris_seeds",new AliasedBlockItem(WKBlocks.IRIS, settings(WitchesKitchen.FOOD_TAB)));
-    Item SANGUINARY_SEEDS = register("sanguinary_seeds", new AliasedBlockItem(WKBlocks.SANGUINARY, settings(WitchesKitchen.FOOD_TAB)));
-    Item WORMWOOD_SEEDS = register("wormwood_seeds", new AliasedBlockItem(WKBlocks.WORMWOOD, settings(WitchesKitchen.FOOD_TAB)));
+    Item CAMELLIA_SEEDS = register("camellia_seeds", new WKSeedItem(WKBlocks.CAMELLIA, settings(WitchesKitchen.FOOD_TAB)));
+    Item CHAMOMILE_SEEDS = register("chamomile_seeds", new WKSeedItem(WKBlocks.CHAMOMILE, settings(WitchesKitchen.FOOD_TAB)));
+    Item CONEFLOWER_SEEDS = register("coneflower_seeds", new WKSeedItem(WKBlocks.CONEFLOWER, settings(WitchesKitchen.FOOD_TAB)));
+    Item FOXGLOVE_SEEDS = register("foxglove_seeds", new WKSeedItem(WKBlocks.FOXGLOVE, settings(WitchesKitchen.FOOD_TAB)));
+    Item HELLEBORE_SEEDS = register("hellebore_seeds", new WKSeedItem(WKBlocks.HELLEBORE, settings(WitchesKitchen.FOOD_TAB)));
+    Item IRIS_SEEDS = register("iris_seeds",new WKSeedItem(WKBlocks.IRIS, settings(WitchesKitchen.FOOD_TAB)));
+    Item SANGUINARY_SEEDS = register("sanguinary_seeds", new WKSeedItem(WKBlocks.SANGUINARY, settings(WitchesKitchen.FOOD_TAB)));
+    Item WORMWOOD_SEEDS = register("wormwood_seeds", new WKSeedItem(WKBlocks.WORMWOOD, settings(WitchesKitchen.FOOD_TAB)));
 
     Item DOLLOP_OF_FROSTING = register("dollop_of_frosting", new Item(settings(WitchesKitchen.FOOD_TAB).food(WKFoodComponents.FROSTING)));
     Item CHOCOLATE_RUM_BALLS = register("chocolate_rum_balls", new Item(settings(WitchesKitchen.FOOD_TAB).food(WKFoodComponents.RUM_BALLS)));

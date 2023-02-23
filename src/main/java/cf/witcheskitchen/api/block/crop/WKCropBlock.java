@@ -276,7 +276,7 @@ public abstract class WKCropBlock extends CropBlock {
     protected abstract ItemStack getSeedsItemStack();
 
     public void getNextSeed(World world, BlockPos pos, NbtCompound nbtCompound){
-            ItemStack itemStack2 = getSeedsItem().asItem().getDefaultStack();
+            ItemStack itemStack2 = getSeedsItemStack();
             itemStack2.getOrCreateNbt().copyFrom(nbtCompound);
             ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), itemStack2);
     }

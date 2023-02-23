@@ -30,7 +30,7 @@ public class WKSeedItem extends AliasedBlockItem {
     @Override
     protected BlockState getPlacementState(ItemPlacementContext context) {
         ItemStack itemStack = context.getStack();
-        if(itemStack.getNbt() != null && itemStack.getNbt().contains("Variant")){
+        if(itemStack.hasNbt() && itemStack.getNbt().contains("Variant")){
             Optional<Block> blockState = SeedTypeHelper.getBlockFromNbt(itemStack.getNbt());
             if(blockState.isPresent() && this.canPlace(context, blockState.get().getDefaultState())){
                 return blockState.get().getDefaultState();
