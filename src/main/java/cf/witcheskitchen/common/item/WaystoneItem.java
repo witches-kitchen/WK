@@ -3,20 +3,35 @@ package cf.witcheskitchen.common.item;
 import cf.witcheskitchen.api.util.TextUtils;
 import cf.witcheskitchen.data.DimColorReloadListener;
 import com.mojang.datafixers.util.Pair;
+import net.fabricmc.fabric.api.dimension.v1.FabricDimensions;
+import net.minecraft.block.EndPortalBlock;
+import net.minecraft.block.NetherPortalBlock;
 import net.minecraft.client.item.TooltipContext;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.HoneyBottleItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryKey;
+import net.minecraft.world.TeleportTarget;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+import org.quiltmc.qsl.worldgen.dimension.api.QuiltDimensions;
 
 import java.util.List;
 import java.util.Set;
 
 public class WaystoneItem extends Item {
+    private static final int MAX_USE_TIME = 40;
     public WaystoneItem(Settings settings) {
         super(settings);
     }
@@ -24,11 +39,59 @@ public class WaystoneItem extends Item {
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
         ItemStack stack = context.getStack();
-        if(!context.getWorld().isClient()){
-            stack.getOrCreateNbt().putLong("BlockPos", context.getBlockPos().offset(context.getSide()).asLong());
-            stack.getOrCreateNbt().putString("Dimension", context.getWorld().getRegistryKey().getValue().toString());
+        if((context.getWorld() instanceof ServerWorld serverWorld)){
+            bindBlockPosition(serverWorld, context.getBlockPos().offset(context.getSide()), stack);
         }
         return super.useOnBlock(context);
+    }
+
+    @Override
+    public ActionResult useOnEntity(ItemStack stack, PlayerEntity user, LivingEntity entity, Hand hand) {
+        if(!user.world.isClient()){
+            bindEntityPosition(entity, stack);
+        }
+        return super.useOnEntity(stack, user, entity, hand);
+    }
+
+    public void teleportToWaystoneLocation(World world, ItemStack waystone, Entity entity){
+        if(world instanceof ServerWorld serverWorld){
+            BlockPos blockPos = getPosFromWaystone(waystone);
+            ServerWorld toWorld = getDimFromWaystone(serverWorld, waystone);
+            if(blockPos != null){
+                QuiltDimensions.teleport(entity, toWorld != null ? toWorld : serverWorld, new TeleportTarget(new Vec3d(blockPos.getX(), blockPos.getY(), blockPos.getZ()), entity.getVelocity(), entity.getYaw(), entity.getPitch()));
+            }
+        }
+    }
+
+    public void bindBlockPosition(World world, BlockPos pos, ItemStack stack){
+        stack.getOrCreateNbt().putLong("BlockPos", pos.asLong());
+        stack.getOrCreateNbt().putString("Dimension", world.getRegistryKey().getValue().toString());
+    }
+
+    @Deprecated(forRemoval = true)
+    public void bindEntityPosition(LivingEntity entity, ItemStack stack){
+        stack.getOrCreateNbt().putUuid("Entity", entity.getUuid());
+    }
+
+    @Nullable
+    public BlockPos getPosFromWaystone(ItemStack stack){
+        if(stack.hasNbt()){
+            if(stack.getOrCreateNbt().contains("BlockPos")){
+                return BlockPos.fromLong(stack.getNbt().getLong("BlockPos"));
+            }
+        }
+        return null;
+    }
+
+    @Nullable
+    public ServerWorld getDimFromWaystone(ServerWorld serverWorld, ItemStack stack){
+        MinecraftServer minecraftServer = serverWorld.getServer();
+        if(stack.getOrCreateNbt().contains("Dimension")){
+            String dimension = stack.getOrCreateNbt().getString("Dimension");
+            RegistryKey<World> registryKey = RegistryKey.of(Registry.WORLD_KEY, new Identifier(dimension));
+            return minecraftServer.getWorld(registryKey);
+        }
+        return null;
     }
 
     @Override

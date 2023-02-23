@@ -1,0 +1,14 @@
+{
+  "overrides": [
+    {
+      "predicate": {
+        "bound": 1
+      },
+      "model": "witcheskitchen:item/waystone_bound"
+    }
+  ],
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "witcheskitchen:item/waystone_unbound"
+  }
+}

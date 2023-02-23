@@ -25,7 +25,7 @@
       "client_init": "cf.witcheskitchen.client.WitchesKitchenClient",
       "rei_client": "cf.witcheskitchen.integration.client.rei.WKREIPlugin",
       "modmenu": "cf.witcheskitchen.integration.client.WKModMenu",
-      "fabric-datagen" : "cf.witcheskitchen.datagen.WKDatagen",
+      "fabric-datagen" : "cf.witcheskitchen.data.WKDatagen",
       "cardinal-components-entity": "cf.witcheskitchen.common.component.WKComponents"
     },
     "depends": [

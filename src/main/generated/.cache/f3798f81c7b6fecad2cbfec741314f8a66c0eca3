@@ -1,4 +1,4 @@
-// 1.19.2	2023-02-22T23:42:02.595629591	Models
+// 1.19.2	2023-02-23T14:20:16.295273082	Models
 9943ad4de539c907163a66f2c4d6ccd3ad8f3a3d assets/witcheskitchen/models/block/frosted_beveled_gingerbread_block_yellow_slab.json
 7e126c5930dc0fdeea94a4bb34d5f7211398087a assets/witcheskitchen/models/block/raw_gingerbread_beveled_block.json
 bd84e032ca1fb994e9c4b0d4b92e400a4d324f27 assets/witcheskitchen/blockstates/frosting_block_stairs.json
@@ -297,7 +297,6 @@ eff82f1cf525a803776380b5507f46cb169d9753 assets/witcheskitchen/models/block/ging
 85b9060572609e86ef85b92513ef043ab11b482f assets/witcheskitchen/models/item/ineptitude_bundle.json
 b7d08890318995d75716ca8507485ff7e3f0ea84 assets/witcheskitchen/blockstates/sumac_sapling.json
 79629cd13e3cca3633427c6742a8155df31228c8 assets/witcheskitchen/models/item/frosted_beveled_gingerbread_block_stairs.json
-beea7e254a4fa929e95b3871d363c28127824896 assets/witcheskitchen/models/item/waystone.json
 35c9a2ac600b6ed1c54602a5bf41ef2d6b81d23e assets/witcheskitchen/models/block/frosted_tiled_gingerbread_block_green_stairs_outer.json
 503266e68c80e99defbc46c4e1bb7cb8d956c188 assets/witcheskitchen/models/item/chiseled_gingerbread_block_slab.json
 8532cb8bb1de52befcbb130b39a089764be67300 assets/witcheskitchen/models/block/raw_gingerbread_beveled_block_stairs_inner.json

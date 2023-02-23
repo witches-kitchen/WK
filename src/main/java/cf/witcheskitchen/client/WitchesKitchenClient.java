@@ -13,6 +13,7 @@ import cf.witcheskitchen.data.DimColorReloadListener;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
+import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
@@ -36,6 +37,14 @@ public class WitchesKitchenClient implements ClientModInitializer {
         HandledScreens.register(WKScreenHandlerTypes.BREWING_BARREL, BrewingBarrelScreen::new);
 
         WKBlocks.getBlocks().forEach(entry -> BlockRenderLayerMap.put(RenderLayer.getCutout(), entry.object()));//TODO eyo what is this, bad code, fix this
+
+        ModelPredicateProviderRegistry.register(WKItems.WAYSTONE, new Identifier("bound"), ((itemStack, clientWorld, livingEntity, i) -> {
+            if(itemStack.getOrCreateNbt().contains("BlockPos")){
+                return 1.0f;
+            }else {
+                return 0.0f;
+            }
+        }));
 
         WKColorProviderRegistry.init();
         WKRendererRegistry.init();
