@@ -50,14 +50,14 @@ public class WitchesKitchen implements ModInitializer {
         WKMemoryModuleTypes.init();
         WKSensorTypes.init();
 
-        ResourceLoader.get(ResourceType.SERVER_DATA).registerReloader(new DimColorReloadListenerFabricImpl());
+        ResourceLoader.get(ResourceType.SERVER_DATA).registerReloader(new DimColorResourceReloader());
     }
 
     public static Identifier id(String name){
         return new Identifier(MODID, name);
     }
 
-    public static class DimColorReloadListenerFabricImpl extends DimColorReloadListener implements IdentifiableResourceReloader {
+    public static class DimColorResourceReloader extends DimColorReloadListener implements IdentifiableResourceReloader {
         @Override
         public Identifier getQuiltId() {
             return new Identifier(MODID, "dimension_color");
