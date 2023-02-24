@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "witcheskitchen:block/blackthorn_slab"
+    },
+    "type=double": {
+      "model": "witcheskitchen:block/blackthorn_planks"
+    },
+    "type=top": {
+      "model": "witcheskitchen:block/blackthorn_slab_top"
+    }
+  }
+}

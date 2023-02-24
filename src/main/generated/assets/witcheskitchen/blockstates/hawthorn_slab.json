@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "witcheskitchen:block/hawthorn_slab"
+    },
+    "type=double": {
+      "model": "witcheskitchen:block/hawthorn_planks"
+    },
+    "type=top": {
+      "model": "witcheskitchen:block/hawthorn_slab_top"
+    }
+  }
+}

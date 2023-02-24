@@ -52,7 +52,7 @@ public interface WKItems {
     Item ST_JOHNS_WORT_BLOSSOM = register("st_johns_wort_blossom");
     Item IRIS_BLOSSOM = register("iris_blossom");
     Item CHAMOMILE_BLOSSOM = register("chamomile_blossom");
-    Item GINGER_RHIZOME = register("ginger_rhizome");
+    Item GINGER_ROOTS = register("ginger_roots");
     Item TEA_LEAF = register("tea_leaf", new Item(settings(WitchesKitchen.FOOD_TAB).food(WKFoodComponents.TEA_LEAF)));
     Item HELLEBORE_BLOSSOM = register("hellebore_blossom");
     Item FOXGLOVE_BLOSSOM = register("foxglove_blossom");

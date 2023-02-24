@@ -187,6 +187,40 @@ public class WKLanguageProvider extends FabricLanguageProvider {
         builder.add(WKBlocks.WAXED_OXIDIZED_COPPER_TEAPOT, "Waxed Oxidized Copper Teapot");
         builder.add(WKBlocks.CAST_IRON_TEAPOT, "Cast Iron Teapot");
 
+        builder.add(WKBlocks.BLACKTHORN_PRESSURE_PLATE, "Blackthorn Pressure Plate");
+        builder.add(WKBlocks.ELDER_PRESSURE_PLATE, "Elder Pressure Plate");
+        builder.add(WKBlocks.HAWTHORN_PRESSURE_PLATE, "Hawthorn Pressure Plate");
+        builder.add(WKBlocks.JUNIPER_PRESSURE_PLATE, "Juniper Pressure Plate");
+        builder.add(WKBlocks.ROWAN_PRESSURE_PLATE, "Rowan Pressure Plate");
+        builder.add(WKBlocks.SUMAC_PRESSURE_PLATE, "Sumac Pressure Plate");
+
+        builder.add(WKBlocks.BLACKTHORN_FENCE, "Blackthorn Fence");
+        builder.add(WKBlocks.ELDER_FENCE, "Elder Fence");
+        builder.add(WKBlocks.HAWTHORN_FENCE, "Hawthorn Fence");
+        builder.add(WKBlocks.JUNIPER_FENCE, "Juniper Fence");
+        builder.add(WKBlocks.ROWAN_FENCE, "Rowan Fence");
+        builder.add(WKBlocks.SUMAC_FENCE, "Sumac Fence");
+
+        builder.add(WKBlocks.BLACKTHORN_DOOR, "Blackthorn Door");
+        builder.add(WKBlocks.ELDER_DOOR, "Elder Door");
+        builder.add(WKBlocks.HAWTHORN_DOOR, "Hawthorn Door");
+        builder.add(WKBlocks.JUNIPER_DOOR, "Juniper Door");
+        builder.add(WKBlocks.ROWAN_DOOR, "Rowan Door");
+        builder.add(WKBlocks.SUMAC_DOOR, "Sumac Door");
+
+        builder.add(WKBlocks.BLACKTHORN_FENCE_GATE, "Blackthorn Fence Gate");
+        builder.add(WKBlocks.ELDER_FENCE_GATE, "Elder Fence Gate");
+        builder.add(WKBlocks.HAWTHORN_FENCE_GATE, "Hawthorn Fence Gate");
+        builder.add(WKBlocks.JUNIPER_FENCE_GATE, "Juniper Fence Gate");
+        builder.add(WKBlocks.ROWAN_FENCE_GATE, "Rowan Fence Gate");
+        builder.add(WKBlocks.SUMAC_FENCE_GATE, "Sumac Fence Gate");
+
+        builder.add(WKBlocks.BLACKTHORN_BUTTON, "Blackthorn Button");
+        builder.add(WKBlocks.ELDER_BUTTON, "Elder Button");
+        builder.add(WKBlocks.HAWTHORN_BUTTON, "Hawthorn Button");
+        builder.add(WKBlocks.JUNIPER_BUTTON, "Juniper Button");
+        builder.add(WKBlocks.ROWAN_BUTTON, "Rowan Button");
+        builder.add(WKBlocks.SUMAC_BUTTON, "Sumac Button");
 
         builder.add(WKBlocks.OAK_BREWING_BARREL, "Oak Brewing Barrel");
         builder.add(WKBlocks.SPRUCE_BREWING_BARREL, "Spruce Brewing Barrel");
@@ -231,7 +265,7 @@ public class WKLanguageProvider extends FabricLanguageProvider {
         builder.add(WKItems.ST_JOHNS_WORT_BLOSSOM, "St Johns Wort Blossom");
         builder.add(WKItems.IRIS_BLOSSOM, "Iris Blossom");
         builder.add(WKItems.CHAMOMILE_BLOSSOM, "Chamomile Blossom");
-        builder.add(WKItems.GINGER_RHIZOME, "Ginger Rhizome");
+        builder.add(WKItems.GINGER_ROOTS, "Ginger Roots");
         builder.add(WKItems.TEA_LEAF, "Tea Leaf");
         builder.add(WKItems.HELLEBORE_BLOSSOM, "Hellebore Blossom");
         builder.add(WKItems.FOXGLOVE_BLOSSOM, "Foxglove Blossom");

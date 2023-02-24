@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/button_pressed",
+  "textures": {
+    "texture": "witcheskitchen:block/sumac_planks"
+  }
+}

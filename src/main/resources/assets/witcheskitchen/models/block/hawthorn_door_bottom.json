@@ -1,7 +1,0 @@
-{
-  "parent": "block/door_bottom",
-  "textures": {
-    "bottom": "witcheskitchen:block/trees/hawthorn_door_bottom",
-    "top": "witcheskitchen:block/trees/hawthorn_door_top"
-  }
-}

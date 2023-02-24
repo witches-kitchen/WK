@@ -17,6 +17,7 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Holder;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -148,6 +149,45 @@ public interface WKBlocks {
     Block BLACKTHORN_LEAVES = register("blackthorn_leaves", new BlackthornLeavesBlock(leavesSettings()),true);
     Block JUNIPER_LEAVES = registerLeaf("juniper_leaves");
     Block ROWAN_LEAVES = registerLeaf("rowan_leaves");
+
+    Block BLACKTHORN_DOOR = register("blackthorn_door", new DoorBlock(plankSettings()), true);
+    Block ELDER_DOOR = register("elder_door", new DoorBlock(plankSettings()), true);
+    Block HAWTHORN_DOOR = register("hawthorn_door", new DoorBlock(plankSettings()), true);
+    Block JUNIPER_DOOR = register("juniper_door", new DoorBlock(plankSettings()), true);
+    Block ROWAN_DOOR = register("rowan_door", new DoorBlock(plankSettings()), true);
+    Block SUMAC_DOOR = register("sumac_door", new DoorBlock(plankSettings()), true);
+
+    Block BLACKTHORN_FENCE = register("blackthorn_fence", new FenceBlock(plankSettings()), true);
+    Block ELDER_FENCE = register("elder_fence", new FenceBlock(plankSettings()), true);
+    Block HAWTHORN_FENCE = register("hawthorn_fence", new FenceBlock(plankSettings()), true);
+    Block JUNIPER_FENCE = register("juniper_fence", new FenceBlock(plankSettings()), true);
+    Block ROWAN_FENCE = register("rowan_fence", new FenceBlock(plankSettings()), true);
+    Block SUMAC_FENCE = register("sumac_fence", new FenceBlock(plankSettings()), true);
+
+    Block BLACKTHORN_FENCE_GATE = register("blackthorn_fence_gate", new FenceGateBlock(plankSettings()), true);
+    Block ELDER_FENCE_GATE = register("elder_fence_gate", new FenceGateBlock(plankSettings()), true);
+    Block HAWTHORN_FENCE_GATE = register("hawthorn_fence_gate", new FenceGateBlock(plankSettings()), true);
+    Block JUNIPER_FENCE_GATE = register("juniper_fence_gate", new FenceGateBlock(plankSettings()), true);
+    Block ROWAN_FENCE_GATE = register("rowan_fence_gate", new FenceGateBlock(plankSettings()), true);
+    Block SUMAC_FENCE_GATE = register("sumac_fence_gate", new FenceGateBlock(plankSettings()), true);
+
+    Block BLACKTHORN_PRESSURE_PLATE = register("blackthorn_pressure_plate", new PressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING, plankSettings()), true);
+    Block ELDER_PRESSURE_PLATE = register("elder_pressure_plate", new PressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING,plankSettings()), true);
+    Block HAWTHORN_PRESSURE_PLATE = register("hawthorn_pressure_plate", new PressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING,plankSettings()), true);
+    Block JUNIPER_PRESSURE_PLATE = register("juniper_pressure_plate", new PressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING,plankSettings()), true);
+    Block ROWAN_PRESSURE_PLATE = register("rowan_pressure_plate", new PressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING,plankSettings()), true);
+    Block SUMAC_PRESSURE_PLATE = register("sumac_pressure_plate", new PressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING,plankSettings()), true);
+
+    Block BLACKTHORN_BUTTON = register("blackthorn_button", new WoodenButtonBlock(plankSettings()), true);
+    Block ELDER_BUTTON = register("elder_button", new WoodenButtonBlock(plankSettings()), true);
+    Block HAWTHORN_BUTTON = register("hawthorn_button", new WoodenButtonBlock(plankSettings()), true);
+    Block JUNIPER_BUTTON = register("juniper_button", new WoodenButtonBlock(plankSettings()), true);
+    Block ROWAN_BUTTON = register("rowan_button", new WoodenButtonBlock(plankSettings()), true);
+    Block SUMAC_BUTTON = register("sumac_button", new WoodenButtonBlock(plankSettings()), true);
+
+
+
+
     //Tile Entities
     Block TEAPOT = register("teapot", new TeapotBlock(QuiltBlockSettings.copyOf(Blocks.TERRACOTTA).nonOpaque()),true);
     Block CAST_IRON_TEAPOT = register("cast_iron_teapot", new TeapotBlock(QuiltBlockSettings.copyOf(Blocks.IRON_BLOCK).nonOpaque()),true);

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "witcheskitchen:block/elder_planks",
+    "side": "witcheskitchen:block/elder_planks",
+    "top": "witcheskitchen:block/elder_planks"
+  }
+}

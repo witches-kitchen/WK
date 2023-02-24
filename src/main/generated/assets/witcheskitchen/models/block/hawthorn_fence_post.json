@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/fence_post",
+  "textures": {
+    "texture": "witcheskitchen:block/hawthorn_planks"
+  }
+}

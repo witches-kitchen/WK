@@ -1,8 +1,0 @@
-{
-  "parent": "block/slab_top",
-  "textures": {
-    "bottom": "witcheskitchen:block/trees/hawthorn_planks",
-    "top": "witcheskitchen:block/trees/hawthorn_planks",
-    "side": "witcheskitchen:block/trees/hawthorn_planks"
-  }
-}
