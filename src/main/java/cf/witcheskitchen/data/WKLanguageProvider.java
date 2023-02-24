@@ -1,21 +1,22 @@
 package cf.witcheskitchen.data;
 
 import cf.witcheskitchen.WitchesKitchen;
+import cf.witcheskitchen.common.event.WKItemGroupEvents;
 import cf.witcheskitchen.common.registry.*;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 
 public class WKLanguageProvider extends FabricLanguageProvider {
-    protected WKLanguageProvider(FabricDataGenerator dataGenerator) {
-        super(dataGenerator);
+    protected WKLanguageProvider(FabricDataOutput output) {
+        super(output);
     }
 
     @Override
     public void generateTranslations(TranslationBuilder builder) {
         //GROUPS
-        builder.add(WitchesKitchen.GENERAL_TAB, "Witches' Kitchen General");
-        builder.add(WitchesKitchen.GINGER_TAB, "Witches' Kitchen Gingerbread");
-        builder.add(WitchesKitchen.FOOD_TAB, "Witches' Kitchen Food");
+        builder.add(WKItemGroupEvents.GENERAL_TAB, "Witches' Kitchen General");
+        builder.add(WKItemGroupEvents.FOOD_TAB, "Witches' Kitchen Food");
 
         //Tooltip
         builder.add("tooltip.witcheskitchen.glyph", "Glyph");
@@ -27,75 +28,6 @@ public class WKLanguageProvider extends FabricLanguageProvider {
         //BLOCKS
         builder.add(WKBlocks.GLYPH, "Glyph");
         builder.add(WKBlocks.ENCHANTED_GLYPH, "Glyph");
-
-        builder.add(WKBlocks.RAW_GINGERBREAD_BLOCK, "Raw Gingerbread Block");
-
-        builder.add(WKBlocks.RAW_CHISELED_GINGERBREAD_BLOCK, "Chiseled Raw Gingerbread Block");
-        builder.add(WKBlocks.RAW_GINGERBREAD_BEVELED_BLOCK, "Beveled Raw Gingerbread Block");
-        builder.add(WKBlocks.GINGERBREAD_BEVELED_BLOCK, "Beveled Ginger Block");
-        builder.add(WKBlocks.FROSTING_BLOCK, "Frosting Block");
-        builder.add(WKBlocks.FROSTED_GINGERBREAD_BLOCK, "Frosted Gingerbread Block");
-        builder.add(WKBlocks.FROSTED_BEVELED_GINGERBREAD_BLOCK, "Beveled Frosted Gingerbread Block");
-        builder.add(WKBlocks.CHISELED_GINGERBREAD_BLOCK, "Chiseled Gingerbread Block");
-        builder.add(WKBlocks.RAW_GINGERBREAD_TILED_BLOCK, "Tiled Raw Gingerbread Block");
-        builder.add(WKBlocks.GINGERBREAD_TILED_BLOCK, "Tiled Gingerbread Block");
-        builder.add(WKBlocks.FROSTED_GINGERBREAD_TILED_BLOCK, "Frosted Tiled Gingerbread Block");
-
-        builder.add(WKBlocks.FROSTED_BEVELED_GINGERBREAD_BLOCK_YELLOW, "Frosted Yellow Beveled Gingerbread Block");
-        builder.add(WKBlocks.FROSTED_BEVELED_GINGERBREAD_BLOCK_RED, "Frosted Red Beveled Gingerbread Block");
-        builder.add(WKBlocks.FROSTED_BEVELED_GINGERBREAD_BLOCK_GREEN, "Frosted Green Beveled Gingerbread Block");
-        builder.add(WKBlocks.FROSTED_BEVELED_GINGERBREAD_BLOCK_PURPLE, "Frosted Purple Beveled Gingerbread Block");
-        builder.add(WKBlocks.FROSTED_TILED_GINGERBREAD_BLOCK_YELLOW, "Frosted Yellow Tiled Gingerbread Block");
-        builder.add(WKBlocks.FROSTED_TILED_GINGERBREAD_BLOCK_RED, "Frosted Red Tiled Gingerbread Block");
-        builder.add(WKBlocks.FROSTED_TILED_GINGERBREAD_BLOCK_GREEN, "Frosted Green Tiled Gingerbread Block");
-        builder.add(WKBlocks.FROSTED_TILED_GINGERBREAD_BLOCK_PURPLE, "Frosted Purple Tiled Gingerbread Block");
-        builder.add(WKBlocks.FROSTED_TILED_GINGERBREAD_BLOCK_VARIANT, "Frosted Tiled Gingerbread Block Variant");
-        builder.add(WKBlocks.RAW_GINGERBREAD_BLOCK_SLAB, "Raw Gingerbread Slab");
-
-        builder.add(WKBlocks.RAW_CHISELED_GINGERBREAD_BLOCK_SLAB, "Chiseled Raw Gingerbread Slab");
-        builder.add(WKBlocks.RAW_GINGERBREAD_BEVELED_BLOCK_SLAB, "Beveled Raw Gingerbread Slab");
-        builder.add(WKBlocks.GINGERBREAD_BEVELED_BLOCK_SLAB, "Beveled Gingerbread Slab");
-        builder.add(WKBlocks.GINGERBREAD_BLOCK_SLAB, "Gingerbread Slab");
-        builder.add(WKBlocks.FROSTING_BLOCK_SLAB, "Frosting Slab");
-        builder.add(WKBlocks.FROSTED_GINGERBREAD_BLOCK_SLAB, "Frosted Gingerbread Slab");
-        builder.add(WKBlocks.FROSTED_BEVELED_GINGERBREAD_BLOCK_SLAB, "Frosted Beveled Gingerbread Slab");
-        builder.add(WKBlocks.CHISELED_GINGERBREAD_BLOCK_SLAB, "Chiseled Gingerbread Slab");
-        builder.add(WKBlocks.RAW_GINGERBREAD_TILED_BLOCK_SLAB, "Tiled Raw Gingerbread Slab");
-        builder.add(WKBlocks.GINGERBREAD_TILED_BLOCK_SLAB, "Tiled Gingerbread Slab");
-        builder.add(WKBlocks.FROSTED_GINGERBREAD_TILED_BLOCK_SLAB, "Frosted Tiled Gingerbread Slab");
-        builder.add(WKBlocks.GINGERBREAD_BLOCK, "Gingerbread Block");
-
-        builder.add(WKBlocks.RAW_CHISELED_GINGERBREAD_BLOCK_STAIRS, "Chiseled Raw Gingerbread Stairs");
-        builder.add(WKBlocks.RAW_GINGERBREAD_BEVELED_BLOCK_STAIRS, "Beveled Raw Gingerbread Stairs");
-        builder.add(WKBlocks.GINGERBREAD_BEVELED_BLOCK_STAIRS, "Beveled Gingerbread Stairs");
-        builder.add(WKBlocks.GINGERBREAD_BLOCK_STAIRS, "Gingerbread Stairs");
-        builder.add(WKBlocks.FROSTING_BLOCK_STAIRS, "Frosting Stairs");
-        builder.add(WKBlocks.FROSTED_GINGERBREAD_BLOCK_STAIRS, "Frosted Gingerbread Stairs");
-        builder.add(WKBlocks.FROSTED_BEVELED_GINGERBREAD_BLOCK_STAIRS, "Frosted Beveled Gingerbread Stairs");
-        builder.add(WKBlocks.CHISELED_GINGERBREAD_BLOCK_STAIRS, "Chiseled Gingerbread Stairs");
-        builder.add(WKBlocks.RAW_GINGERBREAD_TILED_BLOCK_STAIRS, "Tiled Raw Gingerbread Stairs");
-        builder.add(WKBlocks.GINGERBREAD_TILED_BLOCK_STAIRS, "Tiled Gingerbread Stairs");
-        builder.add(WKBlocks.RAW_GINGERBREAD_BLOCK_STAIRS, "Raw Gingerbread Stairs");
-
-        builder.add(WKBlocks.FROSTED_BEVELED_GINGERBREAD_BLOCK_YELLOW_SLAB, "Frosted Yellow Beveled Gingerbread Slab");
-        builder.add(WKBlocks.FROSTED_BEVELED_GINGERBREAD_BLOCK_RED_SLAB, "Frosted Red Beveled Gingerbread Slab");
-        builder.add(WKBlocks.FROSTED_BEVELED_GINGERBREAD_BLOCK_GREEN_SLAB, "Frosted Green Beveled Gingerbread Slab");
-        builder.add(WKBlocks.FROSTED_BEVELED_GINGERBREAD_BLOCK_PURPLE_SLAB, "Frosted Purple Beveled Gingerbread Slab");
-        builder.add(WKBlocks.FROSTED_TILED_GINGERBREAD_BLOCK_YELLOW_SLAB, "Frosted Yellow Tiled Gingerbread Slab");
-        builder.add(WKBlocks.FROSTED_TILED_GINGERBREAD_BLOCK_RED_SLAB, "Frosted Red Tiled Gingerbread Slab");
-        builder.add(WKBlocks.FROSTED_TILED_GINGERBREAD_BLOCK_PURPLE_SLAB, "Frosted Purple Tiled Gingerbread Slab");
-        builder.add(WKBlocks.FROSTED_TILED_GINGERBREAD_BLOCK_GREEN_SLAB, "Frosted Green Tiled Gingerbread Slab");
-        builder.add(WKBlocks.FROSTED_TILED_GINGERBREAD_BLOCK_VARIANT_SLAB, "Frosted Tiled Gingerbread Variant Slab");
-
-        builder.add(WKBlocks.FROSTED_BEVELED_GINGERBREAD_BLOCK_YELLOW_STAIRS, "Frosted Yellow Beveled Gingerbread Stairs");
-        builder.add(WKBlocks.FROSTED_BEVELED_GINGERBREAD_BLOCK_RED_STAIRS, "Frosted Red Beveled Gingerbread Stairs");
-        builder.add(WKBlocks.FROSTED_BEVELED_GINGERBREAD_BLOCK_GREEN_STAIRS, "Frosted Green Beveled Gingerbread Stairs");
-        builder.add(WKBlocks.FROSTED_BEVELED_GINGERBREAD_BLOCK_PURPLE_STAIRS, "Frosted Purple Beveled Gingerbread Stairs");
-        builder.add(WKBlocks.FROSTED_TILED_GINGERBREAD_BLOCK_YELLOW_STAIRS, "Frosted Yellow Tiled Gingerbread Stairs");
-        builder.add(WKBlocks.FROSTED_TILED_GINGERBREAD_BLOCK_RED_STAIRS, "Frosted Red Tiled Gingerbread Stairs");
-        builder.add(WKBlocks.FROSTED_TILED_GINGERBREAD_BLOCK_PURPLE_STAIRS, "Frosted Purple Tiled Gingerbread Stairs");
-        builder.add(WKBlocks.FROSTED_TILED_GINGERBREAD_BLOCK_GREEN_STAIRS, "Frosted Green Tiled Gingerbread Stairs");
-        builder.add(WKBlocks.FROSTED_TILED_GINGERBREAD_BLOCK_VARIANT_STAIRS, "Frosted Tiled Gingerbread Variant Stairs");
 
         builder.add(WKBlocks.SALT_BLOCK, "Salt");
 
@@ -144,6 +76,41 @@ public class WKLanguageProvider extends FabricLanguageProvider {
         builder.add(WKBlocks.SUMAC_SLAB, "Sumac Slab");
         builder.add(WKBlocks.ROWAN_LEAVES, "Rowan Leaves");
         builder.add(WKBlocks.SUMAC_LEAVES, "Sumac Leaves");
+
+        builder.add(WKBlocks.BLACKTHORN_PRESSURE_PLATE, "Blackthorn Pressure Plate");
+        builder.add(WKBlocks.ELDER_PRESSURE_PLATE, "Elder Pressure Plate");
+        builder.add(WKBlocks.HAWTHORN_PRESSURE_PLATE, "Hawthorn Pressure Plate");
+        builder.add(WKBlocks.JUNIPER_PRESSURE_PLATE, "Juniper Pressure Plate");
+        builder.add(WKBlocks.ROWAN_PRESSURE_PLATE, "Rowan Pressure Plate");
+        builder.add(WKBlocks.SUMAC_PRESSURE_PLATE, "Sumac Pressure Plate");
+
+        builder.add(WKBlocks.BLACKTHORN_FENCE, "Blackthorn Fence");
+        builder.add(WKBlocks.ELDER_FENCE, "Elder Fence");
+        builder.add(WKBlocks.HAWTHORN_FENCE, "Hawthorn Fence");
+        builder.add(WKBlocks.JUNIPER_FENCE, "Juniper Fence");
+        builder.add(WKBlocks.ROWAN_FENCE, "Rowan Fence");
+        builder.add(WKBlocks.SUMAC_FENCE, "Sumac Fence");
+
+        builder.add(WKBlocks.BLACKTHORN_DOOR, "Blackthorn Door");
+        builder.add(WKBlocks.ELDER_DOOR, "Elder Door");
+        builder.add(WKBlocks.HAWTHORN_DOOR, "Hawthorn Door");
+        builder.add(WKBlocks.JUNIPER_DOOR, "Juniper Door");
+        builder.add(WKBlocks.ROWAN_DOOR, "Rowan Door");
+        builder.add(WKBlocks.SUMAC_DOOR, "Sumac Door");
+
+        builder.add(WKBlocks.BLACKTHORN_FENCE_GATE, "Blackthorn Fence Gate");
+        builder.add(WKBlocks.ELDER_FENCE_GATE, "Elder Fence Gate");
+        builder.add(WKBlocks.HAWTHORN_FENCE_GATE, "Hawthorn Fence Gate");
+        builder.add(WKBlocks.JUNIPER_FENCE_GATE, "Juniper Fence Gate");
+        builder.add(WKBlocks.ROWAN_FENCE_GATE, "Rowan Fence Gate");
+        builder.add(WKBlocks.SUMAC_FENCE_GATE, "Sumac Fence Gate");
+
+        builder.add(WKBlocks.BLACKTHORN_BUTTON, "Blackthorn Button");
+        builder.add(WKBlocks.ELDER_BUTTON, "Elder Button");
+        builder.add(WKBlocks.HAWTHORN_BUTTON, "Hawthorn Button");
+        builder.add(WKBlocks.JUNIPER_BUTTON, "Juniper Button");
+        builder.add(WKBlocks.ROWAN_BUTTON, "Rowan Button");
+        builder.add(WKBlocks.SUMAC_BUTTON, "Sumac Button");
 
         builder.add(WKBlocks.BLACKTHORN_WOOD, "Blackthorn Wood");
         builder.add(WKBlocks.ELDER_WOOD, "Elder Wood");
@@ -220,7 +187,7 @@ public class WKLanguageProvider extends FabricLanguageProvider {
         builder.add(WKItems.MINT_SPRIG, "Mint Sprig");
         builder.add(WKItems.WORMWOOD_SPRIG, "Wormwood Sprig");
         builder.add(WKItems.ROWAN_BERRIES, "Rowan Berries");
-        builder.add(WKItems.SLOE_BERRIES, "Sloe Blossom");
+        builder.add(WKItems.SLOE_BERRIES, "Sloe Berries");
         builder.add(WKItems.JUNIPER_BERRIES, "Juniper Berries");
         builder.add(WKItems.BLACKBERRY, "Blackberry");
         builder.add(WKItems.HAWTHORN_BERRIES, "Hawthorn Berries");
@@ -231,7 +198,7 @@ public class WKLanguageProvider extends FabricLanguageProvider {
         builder.add(WKItems.ST_JOHNS_WORT_BLOSSOM, "St Johns Wort Blossom");
         builder.add(WKItems.IRIS_BLOSSOM, "Iris Blossom");
         builder.add(WKItems.CHAMOMILE_BLOSSOM, "Chamomile Blossom");
-        builder.add(WKItems.GINGER_RHIZOME, "Ginger Rhizome");
+        builder.add(WKItems.GINGER_ROOTS, "Ginger Roots");
         builder.add(WKItems.TEA_LEAF, "Tea Leaf");
         builder.add(WKItems.HELLEBORE_BLOSSOM, "Hellebore Blossom");
         builder.add(WKItems.FOXGLOVE_BLOSSOM, "Foxglove Blossom");

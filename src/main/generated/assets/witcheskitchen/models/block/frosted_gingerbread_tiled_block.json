@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "all": "witcheskitchen:block/frosted_gingerbread_tiled_block"
-  }
-}

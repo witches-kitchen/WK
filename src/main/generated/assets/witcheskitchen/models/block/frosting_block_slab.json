@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/slab",
-  "textures": {
-    "bottom": "witcheskitchen:block/frosting_block",
-    "side": "witcheskitchen:block/frosting_block",
-    "top": "witcheskitchen:block/frosting_block"
-  }
-}

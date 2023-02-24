@@ -8,12 +8,12 @@ import net.minecraft.client.world.ClientWorld;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleType;
+import net.minecraft.registry.Registries;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.Nullable;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
 import org.quiltmc.qsl.networking.api.PacketByteBufs;
@@ -46,13 +46,13 @@ public class ParticlePacketHandler implements S2CPacketRegistryListener {
         final byte range = buf.readByte();
         client.execute(() -> {
             final ClientWorld world = client.world;
-            final ParticleType<?> particle = Registry.PARTICLE_TYPE.get(particleId);
+            final ParticleType<?> particle = Registries.PARTICLE_TYPE.get(particleId);
             if (world != null) {
                 for (int i = 0; i < range; i++) {
                     world.addParticle((ParticleEffect) particle, pos.getX() + 0.5D, pos.getY() + 1.0D, pos.getZ() + 0.5D, 0.5D, 0.5D, 0.5D);
                 }
                 if (!soundId.toString().isEmpty()) {
-                    final SoundEvent soundEvent = Registry.SOUND_EVENT.get(soundId);
+                    final SoundEvent soundEvent = Registries.SOUND_EVENT.get(soundId);
                     world.playSound(pos, soundEvent, SoundCategory.NEUTRAL, 1.0F, 1.0F, false);
                 }
             }

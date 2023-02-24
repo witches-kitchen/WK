@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/slab",
-  "textures": {
-    "bottom": "witcheskitchen:block/frosted_beveled_gingerbread_block_red",
-    "side": "witcheskitchen:block/frosted_beveled_gingerbread_block_red",
-    "top": "witcheskitchen:block/frosted_beveled_gingerbread_block_red"
-  }
-}

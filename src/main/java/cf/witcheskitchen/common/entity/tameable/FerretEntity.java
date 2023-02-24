@@ -36,25 +36,24 @@ import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.SmartBrainProvider;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 import software.bernie.geckolib3.core.builder.ILoopType;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.List;
 import java.util.SplittableRandom;
 import java.util.UUID;
 
-public class FerretEntity extends WKTameableEntity implements IAnimatable, SmartBrainOwner<FerretEntity> {
+public class FerretEntity extends WKTameableEntity implements GeoEntity, SmartBrainOwner<FerretEntity> {
 
     public static final TrackedData<Integer> TARGET_ID = DataTracker.registerData(FerretEntity.class, TrackedDataHandlerRegistry.INTEGER);
     public static final TrackedData<Boolean> NIGHT = DataTracker.registerData(FerretEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     public static final Ingredient BREEDING_INGREDIENTS = Ingredient.ofItems(Items.RABBIT, Items.COOKED_RABBIT, Items.CHICKEN, Items.COOKED_CHICKEN, Items.EGG, Items.RABBIT_FOOT, Items.TURTLE_EGG);
     public static final Item TAMING_INGREDIENT = Items.EGG;
 
@@ -228,33 +227,6 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, Smart
     }
 
     @Override
-    public AnimationFactory getFactory() {
-        return this.factory;
-    }
-
-    @Override
-    public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(this, "controller", 0, this::predicate));
-    }
-
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        AnimationBuilder builder = new AnimationBuilder();
-        if (this.isSitting()) {
-            builder.addAnimation("sit", ILoopType.EDefaultLoopTypes.LOOP);
-            event.getController().setAnimation(builder);
-            return PlayState.CONTINUE;
-        } else if (this.dataTracker.get(TARGET_ID) != 0 && this.hasVehicle()) {
-            builder.addAnimation("gore", ILoopType.EDefaultLoopTypes.LOOP);
-        } else if (event.isMoving()) {
-            builder.addAnimation("run", ILoopType.EDefaultLoopTypes.LOOP);
-        } else {
-            builder.addAnimation("idle", ILoopType.EDefaultLoopTypes.LOOP);
-        }
-        event.getController().setAnimation(builder);
-        return PlayState.CONTINUE;
-    }
-
-    @Override
     protected SoundEvent getAmbientSound() {
         if (this.isTamed()) {
             if (this.isInLove()) {
@@ -287,7 +259,7 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, Smart
 
     @Override
     public BrainActivityGroup<FerretEntity> getIdleTasks() {
-        return FerretBrain.getIdleTasks();
+        return FerretBrain.getIdleTasks(this);
     }
 
     @Override
@@ -297,4 +269,26 @@ public class FerretEntity extends WKTameableEntity implements IAnimatable, Smart
 
     @Override
     protected final void initGoals() {}
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controller) {
+        controller.add(DefaultAnimations.genericIdleController(this)).add(new AnimationController<FerretEntity>(this, "body", 0, this::predicate));
+    }
+
+    private PlayState predicate(AnimationState<FerretEntity> state) {
+        if (this.isSitting()) {
+            state.setAnimation(RawAnimation.begin().then("sit", Animation.LoopType.LOOP));
+            return PlayState.CONTINUE;
+        } else if (this.dataTracker.get(TARGET_ID) != 0 && this.hasVehicle()) {
+            state.setAnimation(RawAnimation.begin().then("gore", Animation.LoopType.LOOP));
+        } else if (state.isMoving()) {
+            state.setAnimation(RawAnimation.begin().then("run", Animation.LoopType.LOOP));
+        }
+        return PlayState.STOP;
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
+    }
 }

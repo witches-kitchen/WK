@@ -7,8 +7,9 @@ import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectType;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import org.apache.commons.lang3.Validate;
 
 import java.util.ArrayList;
@@ -48,6 +49,6 @@ public interface WKStatusEffects {
     }
 
     static void init() {
-        STATUS_EFFECTS.forEach(entry -> Registry.register(Registry.STATUS_EFFECT, entry.id(), entry.object()));
+        STATUS_EFFECTS.forEach(entry -> Registry.register(Registries.STATUS_EFFECT, entry.id(), entry.object()));
     }
 }

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "witcheskitchen:block/blackthorn_log",
+    "side": "witcheskitchen:block/blackthorn_log"
+  }
+}

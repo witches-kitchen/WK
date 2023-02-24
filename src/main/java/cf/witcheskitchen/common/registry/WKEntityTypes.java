@@ -12,7 +12,8 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.DefaultAttributeRegistry;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import org.quiltmc.qsl.entity.api.QuiltEntityTypeBuilder;
 
 import java.util.ArrayList;
@@ -51,6 +52,6 @@ public interface WKEntityTypes {
     }
 
     static void init() {
-        ENTITY_TYPES.forEach(entity -> Registry.register(Registry.ENTITY_TYPE, entity.id(), entity.object()));
+        ENTITY_TYPES.forEach(entity -> Registry.register(Registries.ENTITY_TYPE, entity.id(), entity.object()));
     }
 }

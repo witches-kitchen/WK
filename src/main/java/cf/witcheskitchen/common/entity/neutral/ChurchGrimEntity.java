@@ -14,29 +14,33 @@ import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.tag.TagKey;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.util.GeckoLibUtil;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.SplittableRandom;
 import java.util.UUID;
 
 //Todo: This once structures are in
-public class ChurchGrimEntity extends WKTameableEntity implements IAnimatable, Angerable, Tameable {
+public class ChurchGrimEntity extends WKTameableEntity implements GeoEntity, Angerable, Tameable {
     private final int VARIANTS = 8;
     //Add a string or something here for a variant that is a white, short-haired dog and can appear if one is named Max
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     public ChurchGrimEntity(EntityType<? extends TameableEntity> entityType, World world) {
         super(entityType, world);
@@ -158,11 +162,6 @@ public class ChurchGrimEntity extends WKTameableEntity implements IAnimatable, A
     }
 
     @Override
-    public AnimationFactory getFactory() {
-        return this.factory;
-    }
-
-    @Override
     public void chooseRandomAngerTime() {
 
     }
@@ -198,8 +197,14 @@ public class ChurchGrimEntity extends WKTameableEntity implements IAnimatable, A
         return EntityGroup.UNDEAD;
     }
 
-    @Override
-    public void registerControllers(AnimationData animationData) {
 
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controller) {
+        controller.add(DefaultAnimations.genericIdleController(this));
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
     }
 }

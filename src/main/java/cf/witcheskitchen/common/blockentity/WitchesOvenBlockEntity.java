@@ -519,7 +519,7 @@ public class WitchesOvenBlockEntity extends WKBlockEntityWithInventory implement
     // Syncs the inventory
     // with the client
     @Override
-    public NbtCompound toInitialChunkDataNbt() {
+    public NbtCompound toSyncedNbt() {
         final NbtCompound data = new NbtCompound();
         writeNbt(data);
         return data;

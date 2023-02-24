@@ -8,6 +8,7 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.PassiveEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.InventoryChangedListener;
 import net.minecraft.server.world.ServerWorld;
@@ -37,7 +38,7 @@ public abstract class WKMountEntity extends AnimalEntity implements InventoryCha
     }
 
     @Override
-    public boolean canJump() {
+    public boolean canJump(PlayerEntity playerEntity) {
         return false;
     }
 

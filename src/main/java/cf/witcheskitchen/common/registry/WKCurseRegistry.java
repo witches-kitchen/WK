@@ -3,7 +3,7 @@ package cf.witcheskitchen.common.registry;
 import cf.witcheskitchen.WitchesKitchen;
 import cf.witcheskitchen.common.curses.Curse;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registry;
 
 import java.util.ArrayList;
 import java.util.List;

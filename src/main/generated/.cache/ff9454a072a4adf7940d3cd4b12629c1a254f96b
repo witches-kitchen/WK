@@ -1,0 +1,9 @@
+// 1.19.3	2023-02-24T00:54:58.696625065	Witches' Kitchen/Tags for minecraft:block
+37bae11d0becfc51e539e837f7df027e31e4dd71 data/minecraft/tags/blocks/mineable/pickaxe.json
+e9c3b84775d3456109b48e37838ea7b4b10cc4e5 data/minecraft/tags/blocks/saplings.json
+6cc552db9368f0ec816064b30a2dd8e23abff2a2 data/minecraft/tags/blocks/mineable/axe.json
+bc592bdff21f88ed7882b1f5c33c7ccb576a71ab data/minecraft/tags/blocks/planks.json
+d2866a43532180c6b7b683b21d8868ecc390eb9b data/witcheskitchen/tags/blocks/heats_cauldron.json
+2276f4976b6dc864a2d4796dda50b5d420d4bad0 data/minecraft/tags/blocks/logs.json
+a4531a94257ab3d3fab6932dc8b1bc62392fefc4 data/minecraft/tags/blocks/leaves.json
+2276f4976b6dc864a2d4796dda50b5d420d4bad0 data/minecraft/tags/blocks/logs_that_burn.json

@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/cube_column",
-  "textures": {
-    "end": "witcheskitchen:block/trees/elder_log",
-    "side": "witcheskitchen:/block/trees/elder_log"
-  }
-}
-

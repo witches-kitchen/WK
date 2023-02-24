@@ -9,8 +9,8 @@ import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.math.Axis;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3f;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 @ClientOnly
@@ -30,8 +30,8 @@ public class WitchesOvenBlockEntityRender implements BlockEntityRenderer<Witches
             matrices.translate(0.5D, 1.02, 0.5D);
             final Direction dir = Direction.fromHorizontal((i + facing.getHorizontal()) % 4);
             final float rotation = -dir.asRotation();
-            matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(rotation));
-            matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90.0F));
+            matrices.multiply(Axis.Y_POSITIVE.rotationDegrees(rotation));
+            matrices.multiply(Axis.X_POSITIVE.rotationDegrees(90.0F));
             matrices.translate(-0.20D, -0.20D, 0.0D);
             matrices.scale(0.375F, 0.375F, 0.375F);
             MinecraftClient.getInstance().getItemRenderer().renderItem(food, ModelTransformation.Mode.FIXED, light, overlay, matrices, vertexConsumers, pos + i);

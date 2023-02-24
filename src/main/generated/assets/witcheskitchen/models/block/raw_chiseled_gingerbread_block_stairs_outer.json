@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/outer_stairs",
-  "textures": {
-    "bottom": "witcheskitchen:block/raw_chiseled_gingerbread_block",
-    "side": "witcheskitchen:block/raw_chiseled_gingerbread_block",
-    "top": "witcheskitchen:block/raw_chiseled_gingerbread_block"
-  }
-}

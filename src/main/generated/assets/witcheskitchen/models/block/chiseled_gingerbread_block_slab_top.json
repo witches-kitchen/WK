@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/slab_top",
-  "textures": {
-    "bottom": "witcheskitchen:block/chiseled_gingerbread_block",
-    "side": "witcheskitchen:block/chiseled_gingerbread_block",
-    "top": "witcheskitchen:block/chiseled_gingerbread_block"
-  }
-}

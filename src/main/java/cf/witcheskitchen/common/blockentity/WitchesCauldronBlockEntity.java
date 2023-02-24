@@ -22,12 +22,12 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.Registries;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
@@ -96,7 +96,7 @@ public class WitchesCauldronBlockEntity extends WKBlockEntityWithInventory imple
 
         if (world.getBlockState(pos).get(WitchesCauldronBlock.LIT)) {
             this.manager.clear();
-            PacketHelper.sendToAllTracking(entity, serverPlayer -> ParticlePacketHandler.send(serverPlayer, this.getPos(), Registry.PARTICLE_TYPE.getId(ParticleTypes.LAVA), Registry.SOUND_EVENT.getId(SoundEvents.BLOCK_LAVA_EXTINGUISH), (byte) 3));
+            PacketHelper.sendToAllTracking(entity, serverPlayer -> ParticlePacketHandler.send(serverPlayer, this.getPos(), Registries.PARTICLE_TYPE.getId(ParticleTypes.LAVA), Registries.SOUND_EVENT.getId(SoundEvents.BLOCK_LAVA_EXTINGUISH), (byte) 3));
             entity.kill();
         }
     }
@@ -225,8 +225,8 @@ public class WitchesCauldronBlockEntity extends WKBlockEntityWithInventory imple
     }
 
     @Override
-    public NbtCompound toInitialChunkDataNbt() {
-        final NbtCompound data = super.toInitialChunkDataNbt();
+    public NbtCompound toSyncedNbt() {
+        final NbtCompound data = super.toSyncedNbt();
         writeNbt(data);
         return data;
     }

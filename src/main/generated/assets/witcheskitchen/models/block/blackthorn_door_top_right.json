@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_top_right",
+  "textures": {
+    "bottom": "witcheskitchen:block/blackthorn_door_bottom",
+    "top": "witcheskitchen:block/blackthorn_door_top"
+  }
+}

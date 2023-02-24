@@ -5,22 +5,26 @@ import cf.witcheskitchen.common.registry.WKEntityTypes;
 import cf.witcheskitchen.common.registry.WKItems;
 import cf.witcheskitchen.common.registry.WKTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Items;
-import net.minecraft.tag.BlockTags;
-import net.minecraft.tag.ItemTags;
+import net.minecraft.registry.HolderLookup;
+import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.registry.tag.ItemTags;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.concurrent.CompletableFuture;
 
 public class WKTagProvider {
     public static class WKBlockTags extends FabricTagProvider.BlockTagProvider {
-        public WKBlockTags(FabricDataGenerator dataGenerator) {
-            super(dataGenerator);
+        public WKBlockTags(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+            super(output, registriesFuture);
         }
 
         @Override
-        protected void generateTags() {
+        protected void configure(HolderLookup.Provider arg) {
             //WK
             getOrCreateTagBuilder(WKTags.HEATS_CAULDRON).add(Blocks.FIRE, Blocks.SOUL_FIRE, Blocks.MAGMA_BLOCK, Blocks.LAVA, Blocks.CAMPFIRE, Blocks.SOUL_CAMPFIRE);
 
@@ -36,12 +40,12 @@ public class WKTagProvider {
     }
 
     public static class WKItemTags extends FabricTagProvider.ItemTagProvider {
-        public WKItemTags(FabricDataGenerator dataGenerator, @Nullable BlockTagProvider blockTagProvider) {
-            super(dataGenerator, blockTagProvider);
+        public WKItemTags(FabricDataOutput dataOutput, CompletableFuture<HolderLookup.Provider> completableFuture) {
+            super(dataOutput, completableFuture, new WKTagProvider.WKBlockTags(dataOutput, completableFuture));
         }
 
         @Override
-        protected void generateTags() {
+        protected void configure(HolderLookup.Provider arg) {
             //WK
             getOrCreateTagBuilder(WKTags.BARREL_BLACKLIST).add(Items.AIR);
             getOrCreateTagBuilder(WKTags.OVEN_BLACKLIST).add(Items.AIR);
@@ -60,12 +64,12 @@ public class WKTagProvider {
     }
 
     public static class WKEntityTypeTags extends FabricTagProvider.EntityTypeTagProvider {
-        public WKEntityTypeTags(FabricDataGenerator dataGenerator) {
-            super(dataGenerator);
+        public WKEntityTypeTags(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> completableFuture) {
+            super(output, completableFuture);
         }
 
         @Override
-        protected void generateTags() {
+        protected void configure(HolderLookup.Provider arg) {
             //WK
             getOrCreateTagBuilder(WKTags.GHOST).add(WKEntityTypes.CUSITH, WKEntityTypes.CHURCH_GRIM);
             getOrCreateTagBuilder(WKTags.GREATER_DEMON);

@@ -7,8 +7,9 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.Registry;
 import org.quiltmc.qsl.block.entity.api.QuiltBlockEntityTypeBuilder;
 
 import java.util.ArrayList;
@@ -37,6 +38,6 @@ public interface WKBlockEntityTypes {
     }
 
     static void init() {
-        BLOCK_ENTITY_TYPES.forEach(type -> Registry.register(Registry.BLOCK_ENTITY_TYPE, type.id(), type.object()));
+        BLOCK_ENTITY_TYPES.forEach(type -> Registry.register(Registries.BLOCK_ENTITY_TYPE, type.id(), type.object()));
     }
 }

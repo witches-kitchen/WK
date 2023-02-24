@@ -8,9 +8,9 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.*;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.quiltmc.qsl.recipe.api.serializer.QuiltRecipeSerializer;
 
@@ -75,7 +75,7 @@ public class TeaRecipe implements Recipe<Inventory> {
         @Override
         public TeaRecipe read(Identifier id, JsonObject json) {
             Ingredient input = Ingredient.fromJson(JsonHelper.getObject(json, "ingredient"));
-            StatusEffect effect = Registry.STATUS_EFFECT.get(new Identifier(JsonHelper.getString(json, "effect")));
+            StatusEffect effect = Registries.STATUS_EFFECT.get(new Identifier(JsonHelper.getString(json, "effect")));
             ItemStack output = ShapedRecipe.outputFromJson(JsonHelper.getObject(json, "result"));
             return new TeaRecipe(id, input, output, effect);
         }
@@ -83,7 +83,7 @@ public class TeaRecipe implements Recipe<Inventory> {
         @Override
         public TeaRecipe read(Identifier id, PacketByteBuf buf) {
             Ingredient input = Ingredient.fromPacket(buf);
-            StatusEffect effect = Registry.STATUS_EFFECT.get(new Identifier(buf.readString()));
+            StatusEffect effect = Registries.STATUS_EFFECT.get(new Identifier(buf.readString()));
             ItemStack output = buf.readItemStack();
             return new TeaRecipe(id, input, output, effect);
         }
@@ -92,7 +92,7 @@ public class TeaRecipe implements Recipe<Inventory> {
         public void write(PacketByteBuf buf, TeaRecipe recipe) {
             recipe.getInput().write(buf);
             buf.writeItemStack(recipe.getOutput());
-            buf.writeString(Registry.STATUS_EFFECT.getId(recipe.getEffect()).toString());
+            buf.writeString(Registries.STATUS_EFFECT.getId(recipe.getEffect()).toString());
         }
 
         @Override

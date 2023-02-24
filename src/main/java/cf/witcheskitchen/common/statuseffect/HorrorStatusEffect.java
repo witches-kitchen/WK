@@ -128,7 +128,7 @@ public class HorrorStatusEffect extends StatusEffect {
                     }
                 }
                 case 9 -> {
-                    world.playSound(null, pos, SoundEvents.AMBIENT_CAVE, SoundCategory.HOSTILE, 1, 1);
+                    world.playSound(null, pos, SoundEvents.AMBIENT_CAVE.value(), SoundCategory.HOSTILE, 1, 1);
                     if (amplifier == 0) {
                         timer = 650;
                     }

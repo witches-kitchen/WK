@@ -17,10 +17,10 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.quiltmc.qsl.recipe.api.serializer.QuiltRecipeSerializer;
@@ -122,7 +122,8 @@ public class RitualRecipe implements Recipe<Inventory> {
         @Override
         public RitualRecipe read(Identifier id, JsonObject json) {
             //Rite
-            Ritual rite = WKRegistries.RITUAL.get(new Identifier(JsonHelper.getString(json, "ritual")));
+            Identifier ritualId = new Identifier(JsonHelper.getString(json, "ritual"));
+            Ritual rite = WKRegistries.RITUAL.get(ritualId);
 
             //Environmental Energy
             String energy = JsonHelper.getString(json, "environment", "low");
@@ -182,7 +183,7 @@ public class RitualRecipe implements Recipe<Inventory> {
 
             //Sacrifices
             int sacrificeSize = buf.readInt();
-            List<EntityType<?>> sacrificeList = IntStream.range(0, sacrificeSize).mapToObj(i -> Registry.ENTITY_TYPE.get(new Identifier(buf.readString()))).collect(Collectors.toList());
+            List<EntityType<?>> sacrificeList = IntStream.range(0, sacrificeSize).mapToObj(i -> Registries.ENTITY_TYPE.get(new Identifier(buf.readString()))).collect(Collectors.toList());
 
             //Duration
             int duration = buf.readInt();
@@ -223,7 +224,7 @@ public class RitualRecipe implements Recipe<Inventory> {
             //Sacrifices
             buf.writeInt(recipe.sacrifices.size());
             for(EntityType<?> entityType : recipe.sacrifices){
-                buf.writeString(Registry.ENTITY_TYPE.getId(entityType).toString());
+                buf.writeString(Registries.ENTITY_TYPE.getId(entityType).toString());
             }
 
             //Duration

@@ -15,10 +15,10 @@ import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.recipe.Ingredient;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.registry.Registry;
 import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.NotNull;
 
@@ -151,7 +151,7 @@ public final class RecipeUtils {
      */
     public static @NotNull ItemStack deserializeStack(JsonObject object) {
         final Identifier id = new Identifier(JsonHelper.getString(object, "item"));
-        final Item item = Registry.ITEM.get(id);
+        final Item item = Registries.ITEM.get(id);
         if (Items.AIR == item) {
             throw new IllegalStateException("Invalid item: " + item);
         }
@@ -169,7 +169,7 @@ public final class RecipeUtils {
 
     public static @NotNull EntityType<?> deserializeEntityType(JsonObject object) {
         final Identifier id = new Identifier(JsonHelper.getString(object, "entity"));
-        return Registry.ENTITY_TYPE.get(id);
+        return Registries.ENTITY_TYPE.get(id);
     }
 
     /**

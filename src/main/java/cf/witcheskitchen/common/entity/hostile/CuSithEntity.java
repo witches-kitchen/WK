@@ -17,32 +17,31 @@ import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.tag.TagKey;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.builder.ILoopType;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.Random;
 import java.util.SplittableRandom;
 
-public class CuSithEntity extends WKHostileEntity implements IAnimatable {
+public class CuSithEntity extends WKHostileEntity implements GeoEntity {
     public static final int EYE_VARIANTS = 7;
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
+    private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
 
     public CuSithEntity(EntityType<? extends HostileEntity> entityType, World world) {
@@ -114,11 +113,6 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
     }
 
     @Override
-    public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController(this, "controller", 0, this::predicate));
-    }
-
-    @Override
     public void tick() {
         super.tick();
         if (!world.isClient && !hasCustomName() && world.isDay() && !world.isRaining() && !world.isThundering() && world.isSkyVisibleAllowingSea(getBlockPos())) {
@@ -146,24 +140,6 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
         this.addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 4000, 1, true, true), this);
         this.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 4000, 1, true, true), this);
         this.addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 250, 1, true, true), this);
-    }
-
-    //Todo: Redo logic for howl animation
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (event.isMoving()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("run", ILoopType.EDefaultLoopTypes.LOOP));
-            return PlayState.CONTINUE;
-        }
-        if (!event.isMoving()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", ILoopType.EDefaultLoopTypes.LOOP));
-            return PlayState.CONTINUE;
-        }
-        return PlayState.CONTINUE;
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return this.factory;
     }
 
     @Override
@@ -230,5 +206,24 @@ public class CuSithEntity extends WKHostileEntity implements IAnimatable {
     @Override
     public boolean canBreatheInWater() {
         return true;
+    }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(DefaultAnimations.genericIdleController(this), new AnimationController<>(this, "move", 20, this::legTransform));
+    }
+
+    private PlayState legTransform(AnimationState<CuSithEntity> state) {
+        if(state.isMoving()){
+            state.setAnimation(RawAnimation.begin().then("run", Animation.LoopType.LOOP));
+            return PlayState.CONTINUE;
+        }
+        return PlayState.STOP;
+    }
+
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
     }
 }

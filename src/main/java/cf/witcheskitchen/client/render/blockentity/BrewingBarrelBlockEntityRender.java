@@ -8,8 +8,8 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.Axis;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3f;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 @ClientOnly
@@ -30,11 +30,11 @@ public class BrewingBarrelBlockEntityRender implements BlockEntityRenderer<Brewi
             case EAST -> {
                 offsetX -= 1.0;
                 offsetZ += 1.05;
-                matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(90));
+                matrices.multiply(Axis.Y_POSITIVE.rotationDegrees(90));
             }
             case WEST -> {
                 offsetX -= 1.0;
-                matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(90));
+                matrices.multiply(Axis.Y_POSITIVE.rotationDegrees(90));
             }
             default -> {
             }

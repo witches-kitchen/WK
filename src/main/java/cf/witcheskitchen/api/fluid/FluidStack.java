@@ -4,8 +4,8 @@ package cf.witcheskitchen.api.fluid;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -112,7 +112,7 @@ public final class FluidStack implements Comparable<FluidStack> {
         if (nbt == null) {
             return FluidStack.EMPTY;
         }
-        final Fluid fluid = Registry.FLUID.get(new Identifier(nbt.getString(FLUID_KEY)));
+        final Fluid fluid = Registries.FLUID.get(new Identifier(nbt.getString(FLUID_KEY)));
         final int amount = nbt.getInt("Amount");
         final FluidStack stack = new FluidStack(fluid, amount);
         if (nbt.contains(INTERNAL_NBT_DATA)) {
@@ -129,7 +129,7 @@ public final class FluidStack implements Comparable<FluidStack> {
      * @see <a href="#nbt-operations">Fluid Stack NBT Operations</a>
      */
     public NbtCompound writeToNbt(NbtCompound nbt) {
-        nbt.putString(FLUID_KEY, Registry.FLUID.getId(this.fluid).toString());
+        nbt.putString(FLUID_KEY, Registries.FLUID.getId(this.fluid).toString());
         nbt.putInt(AMOUNT_KEY, this.amount);
         if (this.data != null && !this.data.isEmpty()) {
             nbt.put(INTERNAL_NBT_DATA, this.data);

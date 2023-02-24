@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/stairs",
-  "textures": {
-    "bottom": "witcheskitchen:block/frosted_gingerbread_block",
-    "side": "witcheskitchen:block/frosted_gingerbread_block",
-    "top": "witcheskitchen:block/frosted_gingerbread_block"
-  }
-}

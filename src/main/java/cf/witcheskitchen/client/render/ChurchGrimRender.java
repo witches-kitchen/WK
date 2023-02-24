@@ -3,7 +3,7 @@ package cf.witcheskitchen.client.render;
 import cf.witcheskitchen.client.model.ChurchGrimModel;
 import cf.witcheskitchen.common.entity.neutral.ChurchGrimEntity;
 import net.minecraft.client.render.entity.EntityRendererFactory;
-import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
+import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 public class ChurchGrimRender extends GeoEntityRenderer<ChurchGrimEntity> {
     public ChurchGrimRender(EntityRendererFactory.Context ctx) {

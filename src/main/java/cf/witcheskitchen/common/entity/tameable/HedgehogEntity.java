@@ -22,22 +22,23 @@ import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.SmartBrainProvider;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.builder.ILoopType;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.List;
 import java.util.SplittableRandom;
 import java.util.UUID;
 
-public class HedgehogEntity extends WKTameableEntity implements IAnimatable, SmartBrainOwner<HedgehogEntity> {
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
+public class HedgehogEntity extends WKTameableEntity implements GeoEntity, SmartBrainOwner<HedgehogEntity> {
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     public HedgehogEntity(EntityType<? extends TameableEntity> entityType, World world) {
         super(entityType, world);
@@ -108,27 +109,23 @@ public class HedgehogEntity extends WKTameableEntity implements IAnimatable, Sma
     }
 
     @Override
-    public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(this, "controller", 0, this::predicate));
+    public void registerControllers(AnimatableManager.ControllerRegistrar controller) {
+        controller.add(DefaultAnimations.genericIdleController(this)).add(new AnimationController<HedgehogEntity>(this, "move", 0, this::predicate));
     }
 
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        AnimationBuilder builder = new AnimationBuilder();
-        if (this.isSitting()) {
-            builder.addAnimation("loaf", ILoopType.EDefaultLoopTypes.LOOP);
-            event.getController().setAnimation(builder);
+    private PlayState predicate(AnimationState<HedgehogEntity> state) {
+        if(this.isSitting()){
+            state.setAnimation(RawAnimation.begin().thenLoop("loaf"));
             return PlayState.CONTINUE;
-        } else if (event.isMoving()) {
-            builder.addAnimation("walk", ILoopType.EDefaultLoopTypes.LOOP);
-        } else {
-            builder.addAnimation("idle", ILoopType.EDefaultLoopTypes.LOOP);
+        }else if(state.isMoving()){
+            state.setAnimation(RawAnimation.begin().thenLoop("walk"));
+            return PlayState.CONTINUE;
         }
-        event.getController().setAnimation(builder);
-        return PlayState.CONTINUE;
+        return PlayState.STOP;
     }
 
     @Override
-    public AnimationFactory getFactory() {
-        return factory;
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
     }
 }

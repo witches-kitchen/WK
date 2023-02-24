@@ -2,9 +2,10 @@ package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WitchesKitchen;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,13 +33,13 @@ public interface WKSoundEvents {
 
     private static SoundEvent register(String name) {
         final Identifier id = WitchesKitchen.id(name);
-        final SoundEvent soundEvent = new SoundEvent(id);
+        final SoundEvent soundEvent = SoundEvent.createVariableRangeEvent(id);
         final ObjectDefinition<SoundEvent> def = new ObjectDefinition<>(id, soundEvent);
         SOUND_EVENTS.add(def);
         return soundEvent;
     }
 
     static void init() {
-        SOUND_EVENTS.forEach(entry -> Registry.register(Registry.SOUND_EVENT, entry.id(), entry.object()));
+        SOUND_EVENTS.forEach(entry -> Registry.register(Registries.SOUND_EVENT, entry.id(), entry.object()));
     }
 }

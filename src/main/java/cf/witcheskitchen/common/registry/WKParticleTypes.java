@@ -6,8 +6,9 @@ import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleType;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,6 +34,6 @@ public interface WKParticleTypes {
     }
 
     static void init() {
-        PARTICLE_TYPES.forEach(entry -> Registry.register(Registry.PARTICLE_TYPE, entry.id(), entry.object()));
+        PARTICLE_TYPES.forEach(entry -> Registry.register(Registries.PARTICLE_TYPE, entry.id(), entry.object()));
     }
 }

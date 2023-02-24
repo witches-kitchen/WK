@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "witcheskitchen:block/sumac_slab"
+    },
+    "type=double": {
+      "model": "witcheskitchen:block/sumac_planks"
+    },
+    "type=top": {
+      "model": "witcheskitchen:block/sumac_slab_top"
+    }
+  }
+}

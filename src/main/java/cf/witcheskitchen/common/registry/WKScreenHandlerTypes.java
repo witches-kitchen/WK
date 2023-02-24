@@ -4,10 +4,11 @@ import cf.witcheskitchen.WitchesKitchen;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
 import cf.witcheskitchen.client.gui.screen.handler.BrewingBarrelScreenHandler;
 import cf.witcheskitchen.client.gui.screen.handler.WitchesOvenScreenHandler;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import org.apache.commons.lang3.Validate;
 
 import java.util.ArrayList;
@@ -34,6 +35,6 @@ public interface WKScreenHandlerTypes {
     }
 
     static void init() {
-        SCREEN_HANDLER_TYPES.forEach(entry -> Registry.register(Registry.SCREEN_HANDLER, entry.id(), entry.object()));
+        SCREEN_HANDLER_TYPES.forEach(entry -> Registry.register(Registries.SCREEN_HANDLER_TYPE, entry.id(), entry.object()));
     }
 }

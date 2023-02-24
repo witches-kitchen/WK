@@ -9,6 +9,10 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.entity.ai.brain.MemoryModuleType;
 import net.minecraft.entity.ai.brain.task.*;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
+import net.tslat.smartbrainlib.api.core.behaviour.OneRandomBehaviour;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.Idle;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.target.SetPlayerLookTarget;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.target.SetRandomLookTarget;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 
 import java.util.List;
@@ -29,12 +33,9 @@ public class HedgehogBrain {
 
     public static BrainActivityGroup<HedgehogEntity> getIdleTasks() {
         return BrainActivityGroup.idleTasks(
-                GoToRememberedPositionTask.toBlock(MemoryModuleType.NEAREST_REPELLENT, 1.0F, 8, true),
-                new RandomTask<>(ImmutableList.of(
-                        Pair.of(new StrollTask(0.6F), 2),
-                        Pair.of(new GoTowardsLookTarget(0.6F, 3), 2),
-                        Pair.of(new WaitTask(30, 60), 1)
-                )),
+                new OneRandomBehaviour<>(
+                       new SetPlayerLookTarget<>()),
+                new Idle<>(),
                 new FollowOwnerTask()
         );
     }

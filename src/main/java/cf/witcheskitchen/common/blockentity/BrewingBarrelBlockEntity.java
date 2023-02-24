@@ -267,7 +267,7 @@ public class BrewingBarrelBlockEntity extends WKBlockEntityWithInventory impleme
     }
 
     @Override
-    public NbtCompound toInitialChunkDataNbt() {
+    public NbtCompound toSyncedNbt() {
         final NbtCompound data = new NbtCompound();
         writeNbt(data);
         return data;

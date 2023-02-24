@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "witcheskitchen:block/rowan_slab"
+    },
+    "type=double": {
+      "model": "witcheskitchen:block/rowan_planks"
+    },
+    "type=top": {
+      "model": "witcheskitchen:block/rowan_slab_top"
+    }
+  }
+}

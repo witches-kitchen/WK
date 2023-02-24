@@ -4,6 +4,7 @@ import cf.witcheskitchen.api.WKApi;
 import cf.witcheskitchen.api.util.BrainUtils;
 import cf.witcheskitchen.common.entity.ai.sensor.TamableSensor;
 import cf.witcheskitchen.common.entity.ai.sensor.TimeOfDaySensor;
+import cf.witcheskitchen.common.entity.ai.task.AnimatableMeleeAttack;
 import cf.witcheskitchen.common.entity.ai.task.DontMoveTask;
 import cf.witcheskitchen.common.entity.ai.task.FerretMeleeAttackTask;
 import cf.witcheskitchen.common.entity.ai.task.FollowOwnerTask;
@@ -20,7 +21,17 @@ import net.minecraft.entity.ai.brain.VisibleLivingEntitiesCache;
 import net.minecraft.entity.ai.brain.sensor.Sensor;
 import net.minecraft.entity.ai.brain.task.*;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.mob.PiglinBrain;
+import net.minecraft.unmapped.C_rcqaryar;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
+import net.tslat.smartbrainlib.api.core.behaviour.FirstApplicableBehaviour;
+import net.tslat.smartbrainlib.api.core.behaviour.OneRandomBehaviour;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.Idle;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetRandomWalkTarget;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.target.InvalidateAttackTarget;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.target.SetPlayerLookTarget;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.target.SetRandomLookTarget;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.target.TargetOrRetaliate;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.HurtBySensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyLivingEntitySensor;
@@ -51,28 +62,27 @@ public class FerretBrain {
                 new DontMoveTask(),
                 new StayAboveWaterTask(0.6f),
                 new LookAroundTask(45, 90),
-                new WanderAroundTask(),
-                new UpdateAttackTargetTask<>(FerretBrain::getAttackTarget)
+                new WanderAroundTask()
         );
     }
 
-    public static BrainActivityGroup<FerretEntity> getIdleTasks() {
+    public static BrainActivityGroup<FerretEntity> getIdleTasks(FerretEntity ferret) {
         return BrainActivityGroup.idleTasks(
-                GoToRememberedPositionTask.toBlock(MemoryModuleType.NEAREST_REPELLENT, 1.0F, 8, true),
-                new RandomTask<>(ImmutableList.of(
-                        Pair.of(new StrollTask(0.6F), 2),
-                        Pair.of(new GoTowardsLookTarget(0.6F, 3), 2),
-                        Pair.of(new WaitTask(30, 60), 1)
-                )),
-                new FollowOwnerTask()
+                new FirstApplicableBehaviour<>(
+                        //new TargetOrRetaliate<>().startCondition(e -> getAttackTarget(ferret).isPresent()),
+                        new SetPlayerLookTarget<>()),
+                        //new SetRandomLookTarget<>()),
+                new OneRandomBehaviour<>(
+                        new SetRandomWalkTarget<>().speedModifier(0.6f),
+                        new Idle<>()
+            )
         );
     }
 
     public static BrainActivityGroup<FerretEntity> getFightTasks(FerretEntity ferret) {
         return BrainActivityGroup.fightTasks(
-                new RangedApproachTask(1.0F),
-                new FollowMobTask(mob -> BrainUtils.isTarget(ferret, mob), (float)ferret.getAttributeValue(EntityAttributes.GENERIC_FOLLOW_RANGE)),
-                new FerretMeleeAttackTask(20)
+                new InvalidateAttackTarget<>(),
+                new AnimatableMeleeAttack<>(20)
         );
     }
 

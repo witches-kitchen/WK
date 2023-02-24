@@ -3,8 +3,6 @@ package cf.witcheskitchen.common.item;
 import cf.witcheskitchen.api.util.TextUtils;
 import cf.witcheskitchen.data.DimColorReloadListener;
 import com.mojang.datafixers.util.Pair;
-import net.fabricmc.fabric.api.dimension.v1.FabricDimensions;
-import net.minecraft.block.EndPortalBlock;
 import net.minecraft.block.NetherPortalBlock;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
@@ -14,14 +12,15 @@ import net.minecraft.item.HoneyBottleItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.TeleportTarget;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -88,7 +87,7 @@ public class WaystoneItem extends Item {
         MinecraftServer minecraftServer = serverWorld.getServer();
         if(stack.getOrCreateNbt().contains("Dimension")){
             String dimension = stack.getOrCreateNbt().getString("Dimension");
-            RegistryKey<World> registryKey = RegistryKey.of(Registry.WORLD_KEY, new Identifier(dimension));
+            RegistryKey<World> registryKey = RegistryKey.of(RegistryKeys.WORLD, new Identifier(dimension));
             return minecraftServer.getWorld(registryKey);
         }
         return null;

@@ -18,13 +18,13 @@ import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.potion.Potions;
+import net.minecraft.registry.Registries;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
 import java.util.stream.Collectors;
@@ -145,7 +145,7 @@ public class TeapotBlockEntity extends WKBlockEntityWithInventory {
 
     static StatusEffect getPotionEffectById(int id) {
         StatusEffect statusEffect = StatusEffect.byRawId(id);
-        return Registry.STATUS_EFFECT.stream().collect(Collectors.toSet()).contains(statusEffect) ? statusEffect : null;
+        return Registries.STATUS_EFFECT.stream().collect(Collectors.toSet()).contains(statusEffect) ? statusEffect : null;
     }
 
     @Override

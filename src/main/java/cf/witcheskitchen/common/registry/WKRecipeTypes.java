@@ -6,8 +6,9 @@ import cf.witcheskitchen.common.recipe.*;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -59,7 +60,7 @@ public interface WKRecipeTypes {
     }
 
     static void init() {
-        RECIPE_SERIALIZERS.forEach(entry -> Registry.register(Registry.RECIPE_SERIALIZER, entry.id(), entry.object()));
-        RECIPE_TYPES.forEach(entry -> Registry.register(Registry.RECIPE_TYPE, entry.id(), entry.object()));
+        RECIPE_SERIALIZERS.forEach(entry -> Registry.register(Registries.RECIPE_SERIALIZER, entry.id(), entry.object()));
+        RECIPE_TYPES.forEach(entry -> Registry.register(Registries.RECIPE_TYPE, entry.id(), entry.object()));
     }
 }

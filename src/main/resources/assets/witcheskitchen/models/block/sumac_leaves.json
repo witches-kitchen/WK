@@ -1,7 +1,0 @@
-{
-  "parent": "block/leaves",
-  "textures": {
-    "particle": "witcheskitchen:block/trees/sumac_leaves",
-    "all": "witcheskitchen:block/trees/sumac_leaves"
-  }
-} 
