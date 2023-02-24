@@ -36,6 +36,7 @@ public class WitchesKitchen implements ModInitializer {
         WKFoodComponents.init();
         WKTags.init();
         WKBlockEntityTypes.init();
+        WKRitualRegistry.init();
         WKRecipeTypes.init();
         WKScreenHandlerTypes.init();
         WKParticleTypes.init();
