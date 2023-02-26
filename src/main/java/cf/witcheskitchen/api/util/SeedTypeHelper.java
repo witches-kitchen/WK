@@ -60,7 +60,7 @@ public class SeedTypeHelper {
         NbtList nbtList = stack.getOrCreateNbt().getList("Variant", NbtElement.COMPOUND_TYPE);
         if(!nbtList.isEmpty() && !nbtList.getCompound(1).isEmpty() && !nbtList.getCompound(2).isEmpty()){
             String name = nbtList.getCompound(1).getString("Type");
-            String formatName = name.substring(0, 1).toUpperCase() + name.substring(1);
+            String formatName = TextUtils.capitalizeString(name);
             NbtCompound colorNbt = nbtList.getCompound(2);
             int color = colorNbt.getInt("Color");
             return Text.translatable(formatName).setStyle(Style.EMPTY.withColor(color));

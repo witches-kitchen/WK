@@ -7,6 +7,8 @@ import cf.witcheskitchen.data.worldgen.WKConfiguredFeatures;
 import cf.witcheskitchen.data.worldgen.WKFoliagePlacers;
 import cf.witcheskitchen.data.worldgen.WKPlacedFeatures;
 import net.fabricmc.api.EnvType;
+import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
+import net.fabricmc.fabric.api.registry.OxidizableBlocksRegistry;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.resource.ResourceType;
@@ -26,9 +28,6 @@ public class WitchesKitchen implements ModInitializer {
 
     public static final String MODID = "witcheskitchen";
     public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
-    //public static final ItemGroup GENERAL_TAB = QuiltItemGroup.builder(new Identifier(MODID, "general")).icon(() -> new ItemStack(WKBlocks.IRON_WITCHES_OVEN.asItem())).build();
-    //public static final ItemGroup FOOD_TAB = QuiltItemGroup.builder(new Identifier(MODID, "food")).icon(() -> new ItemStack(WKItems.ELDER_TEA)).build();
-    //public static final ItemGroup GINGER_TAB = QuiltItemGroup.builder(new Identifier(MODID, "ginger")).icon(() -> new ItemStack(WKBlocks.GINGERBREAD_BLOCK.asItem())).build();
 
     @Override
     public void onInitialize(ModContainer mod) {
