@@ -4,11 +4,8 @@ import cf.witcheskitchen.api.event.network.MagicSparkleParticleEvent;
 import cf.witcheskitchen.client.event.WKClientEventsHandler;
 import cf.witcheskitchen.client.render.blockentity.WitchesCauldronBlockEntityRender;
 import cf.witcheskitchen.common.event.WKEventsHandler;
-import cf.witcheskitchen.common.event.WKItemGroupEvents;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
-import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 
 public interface WKEventsRegistry {

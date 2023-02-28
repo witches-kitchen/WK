@@ -2,7 +2,6 @@ package cf.witcheskitchen.data;
 
 import cf.witcheskitchen.WitchesKitchen;
 import cf.witcheskitchen.common.registry.WKItems;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider;
 import net.minecraft.advancement.Advancement;

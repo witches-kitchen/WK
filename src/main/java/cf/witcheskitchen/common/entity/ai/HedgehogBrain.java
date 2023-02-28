@@ -3,16 +3,12 @@ package cf.witcheskitchen.common.entity.ai;
 import cf.witcheskitchen.common.entity.ai.task.DontMoveTask;
 import cf.witcheskitchen.common.entity.ai.task.FollowOwnerTask;
 import cf.witcheskitchen.common.entity.tameable.HedgehogEntity;
-import com.google.common.collect.ImmutableList;
-import com.mojang.datafixers.util.Pair;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.entity.ai.brain.MemoryModuleType;
 import net.minecraft.entity.ai.brain.task.*;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.OneRandomBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.Idle;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.target.SetPlayerLookTarget;
-import net.tslat.smartbrainlib.api.core.behaviour.custom.target.SetRandomLookTarget;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 
 import java.util.List;

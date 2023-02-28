@@ -3,16 +3,13 @@ package cf.witcheskitchen.common.item;
 import cf.witcheskitchen.api.util.TextUtils;
 import cf.witcheskitchen.data.DimColorReloadListener;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.block.NetherPortalBlock;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.HoneyBottleItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
-import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.MinecraftServer;
@@ -27,7 +24,6 @@ import org.jetbrains.annotations.Nullable;
 import org.quiltmc.qsl.worldgen.dimension.api.QuiltDimensions;
 
 import java.util.List;
-import java.util.Set;
 
 public class WaystoneItem extends Item {
     private static final int MAX_USE_TIME = 40;

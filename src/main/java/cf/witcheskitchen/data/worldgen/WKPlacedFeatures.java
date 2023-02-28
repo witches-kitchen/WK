@@ -13,11 +13,8 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.decorator.RarityFilterPlacementModifier;
 import net.minecraft.world.gen.feature.*;
-import net.minecraft.world.gen.feature.util.PlacedFeatureUtil;
 import org.quiltmc.qsl.registry.api.event.DynamicRegistryManagerSetupContext;
 import org.quiltmc.qsl.worldgen.biome.api.*;
-
-import java.util.List;
 
 public interface WKPlacedFeatures {
 

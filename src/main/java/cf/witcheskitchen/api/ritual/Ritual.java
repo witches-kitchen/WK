@@ -4,17 +4,12 @@ import cf.witcheskitchen.api.CommandType;
 import cf.witcheskitchen.api.event.RitualEvent;
 import cf.witcheskitchen.common.recipe.RitualRecipe;
 import com.mojang.brigadier.ParseResults;
-import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
-
-import java.util.Set;
-import java.util.UUID;
 
 public class Ritual {
 

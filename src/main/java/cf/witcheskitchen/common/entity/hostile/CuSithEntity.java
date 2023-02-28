@@ -34,7 +34,6 @@ import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInst
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
-import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.Random;
 import java.util.SplittableRandom;
@@ -65,7 +64,7 @@ public class CuSithEntity extends WKHostileEntity implements GeoEntity {
         return false;
     }
 
-    @Override //this adds basic ai
+    @Override
     protected void initGoals() {
         super.initGoals();
         this.goalSelector.add(0, new SwimGoal(this)); //need to make this the ability to walk on the body of water's floor.
@@ -182,7 +181,6 @@ public class CuSithEntity extends WKHostileEntity implements GeoEntity {
         return 7;
     }
 
-    //to-do: add subtitle info
     @Override
     protected SoundEvent getAmbientSound() {
         return WKSoundEvents.CUSITH_IDLE_EVENT;
@@ -200,7 +198,7 @@ public class CuSithEntity extends WKHostileEntity implements GeoEntity {
 
     @Override
     public boolean damage(DamageSource source, float amount) {
-        return !source.isFallingBlock();
+        return !source.isFallingBlock() && super.damage(source, amount);
     }
 
     @Override

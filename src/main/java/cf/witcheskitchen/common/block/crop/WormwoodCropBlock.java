@@ -6,7 +6,6 @@ import cf.witcheskitchen.common.registry.WKItems;
 import cf.witcheskitchen.common.block.crop.types.WormwoodTypes;
 import net.minecraft.block.Block;
 import net.minecraft.block.enums.DoubleBlockHalf;
-import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.state.property.IntProperty;

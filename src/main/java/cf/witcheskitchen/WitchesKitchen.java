@@ -7,8 +7,6 @@ import cf.witcheskitchen.data.worldgen.WKConfiguredFeatures;
 import cf.witcheskitchen.data.worldgen.WKFoliagePlacers;
 import cf.witcheskitchen.data.worldgen.WKPlacedFeatures;
 import net.fabricmc.api.EnvType;
-import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
-import net.fabricmc.fabric.api.registry.OxidizableBlocksRegistry;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.resource.ResourceType;

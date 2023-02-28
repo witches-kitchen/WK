@@ -20,7 +20,6 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
 
-import java.rmi.registry.Registry;
 import java.util.List;
 
 public class ChalkItem extends Item {

@@ -43,7 +43,6 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
-import software.bernie.geckolib3.core.builder.ILoopType;
 
 import java.util.List;
 import java.util.SplittableRandom;
@@ -272,7 +271,7 @@ public class FerretEntity extends WKTameableEntity implements GeoEntity, SmartBr
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controller) {
-        controller.add(DefaultAnimations.genericIdleController(this)).add(new AnimationController<FerretEntity>(this, "body", 0, this::predicate));
+        controller.add(DefaultAnimations.genericIdleController(this)).add(new AnimationController<>(this, "body", 0, this::predicate));
     }
 
     private PlayState predicate(AnimationState<FerretEntity> state) {

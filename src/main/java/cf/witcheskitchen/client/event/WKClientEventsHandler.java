@@ -2,18 +2,13 @@ package cf.witcheskitchen.client.event;
 
 import cf.witcheskitchen.WitchesKitchen;
 import cf.witcheskitchen.common.component.WKComponents;
-import cf.witcheskitchen.common.component.entity.WKPlayerComponent;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.client.gui.screen.ingame.BrewingStandScreen;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
-
-import java.util.Optional;
 
 public class WKClientEventsHandler {
 

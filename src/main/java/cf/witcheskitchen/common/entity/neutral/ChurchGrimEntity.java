@@ -29,9 +29,6 @@ import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import java.util.SplittableRandom;
 import java.util.UUID;
@@ -173,7 +170,7 @@ public class ChurchGrimEntity extends WKTameableEntity implements GeoEntity, Ang
 
     @Override
     public boolean damage(DamageSource source, float amount) {
-        return !source.isFallingBlock();
+        return !source.isFallingBlock() && super.damage(source, amount);
     }
 
     @Override

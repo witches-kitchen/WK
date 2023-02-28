@@ -9,7 +9,6 @@ import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 
-import static cf.witcheskitchen.common.registry.WKBlocks.SUMAC_BUTTON;
 import static cf.witcheskitchen.common.registry.WKItems.*;
 import static cf.witcheskitchen.common.registry.WKBlocks.*;
 
