@@ -5,15 +5,14 @@ import cf.witcheskitchen.api.block.entity.WKBlockEntityWithInventory;
 import cf.witcheskitchen.api.ritual.Ritual;
 import cf.witcheskitchen.api.ritual.RitualCircle;
 import cf.witcheskitchen.common.recipe.RitualRecipe;
-import cf.witcheskitchen.common.registry.WKBlockEntityTypes;
-import cf.witcheskitchen.common.registry.WKBlocks;
-import cf.witcheskitchen.common.registry.WKRecipeTypes;
+import cf.witcheskitchen.common.registry.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -23,6 +22,7 @@ import java.util.Set;
 public class GlyphBlockEntity extends WKBlockEntityWithInventory {
     public int progress = 0;
     public RitualRecipe ritualRecipe = null;
+    public Ritual ritual = null;
 
 
     public GlyphBlockEntity(BlockPos pos, BlockState state) {
@@ -39,11 +39,11 @@ public class GlyphBlockEntity extends WKBlockEntityWithInventory {
         if(ritualRecipe != null){
             progress++;
             if(progress > 0){
-                Ritual rite = ritualRecipe.rite;
+                ritual = ritualRecipe.rite;
                 if(progress < ritualRecipe.duration){
-                    rite.tick(world, blockPos, ritualRecipe);
+                    ritual.tick(world, blockPos, ritualRecipe);
                 }else{
-                    rite.onEnd(world, pos, ritualRecipe);
+                    ritual.onEnd(world, pos, ritualRecipe);
                     resetRitual();
                 }
             }
@@ -52,6 +52,7 @@ public class GlyphBlockEntity extends WKBlockEntityWithInventory {
 
     private void resetRitual() {
         ritualRecipe = null;
+        ritual = null;
         progress = 0;
     }
 
@@ -66,8 +67,8 @@ public class GlyphBlockEntity extends WKBlockEntityWithInventory {
                     if(checkValidSacrifices(ritualRecipeNoCircleCheck, world)){
                         this.manager.clear();
                         ritualRecipe = ritualRecipeNoCircleCheck;
-                        Ritual rite = ritualRecipe.rite;
-                        rite.onStart(world, pos, player, ritualRecipe);
+                        ritual = ritualRecipe.rite;
+                        ritual.onStart(world, pos, player, ritualRecipe);
                     }
                 }
             }
@@ -124,13 +125,13 @@ public class GlyphBlockEntity extends WKBlockEntityWithInventory {
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
         progress = nbt.getInt("Progress");
+        ritual = WKRegistries.RITUAL.get(new Identifier(nbt.getString("Ritual")));
     }
 
     @Override
     protected void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
         nbt.putInt("Progress", progress);
+        nbt.putString("Ritual", ritual.toString());
     }
-
-
 }

@@ -38,12 +38,13 @@ public class RitualRecipe implements Recipe<Inventory> {
     public final Set<RitualCircle> circleSet;
     public final DefaultedList<Ingredient> inputs;
     public final List<ItemStack> outputs;
+    public final List<EntityType<?>> summons;
     public final List<EntityType<?>> sacrifices;
     public final int duration;
     public final Set<CommandType> command;
     public final String energy;
 
-    public RitualRecipe(Identifier id, Ritual rite, String energy, Set<RitualCircle> circleSet, @Nullable DefaultedList<Ingredient> inputs, @Nullable List<ItemStack> outputs, @Nullable List<EntityType<?>> sacrifices, int duration, Set<CommandType> command) {
+    public RitualRecipe(Identifier id, Ritual rite, String energy, Set<RitualCircle> circleSet, @Nullable DefaultedList<Ingredient> inputs, @Nullable List<ItemStack> outputs, @Nullable List<EntityType<?>> sacrifices, @Nullable List<EntityType<?>> summons, int duration, Set<CommandType> command) {
         this.id = id;
         this.rite = rite;
         this.circleSet = circleSet;
@@ -53,6 +54,7 @@ public class RitualRecipe implements Recipe<Inventory> {
         this.duration = duration;
         this.command = command;
         this.energy = energy;
+        this.summons = summons;
     }
 
     @Override
@@ -145,6 +147,10 @@ public class RitualRecipe implements Recipe<Inventory> {
             var sacrificeArray = JsonHelper.getArray(json, "sacrifices");
             List<EntityType<?>> sacrifices = RecipeUtils.deserializeEntityTypes(sacrificeArray);
 
+            //Summons
+            var summonArray = JsonHelper.getArray(json, "summons");
+            List<EntityType<?>> summons = RecipeUtils.deserializeEntityTypes(summonArray);
+
             //Duration
             int duration = JsonHelper.getInt(json, "duration", 0);
 
@@ -152,7 +158,7 @@ public class RitualRecipe implements Recipe<Inventory> {
             JsonArray commandArray = JsonHelper.getArray(json , "commands");
             Set<CommandType> commands = RecipeUtils.deserializeCommands(commandArray);
 
-            return new RitualRecipe(id, rite, energy, circles, inputs, outputs, sacrifices, duration, commands);
+            return new RitualRecipe(id, rite, energy, circles, inputs, outputs, sacrifices, summons, duration, commands);
         }
 
         @Override
@@ -185,6 +191,10 @@ public class RitualRecipe implements Recipe<Inventory> {
             int sacrificeSize = buf.readInt();
             List<EntityType<?>> sacrificeList = IntStream.range(0, sacrificeSize).mapToObj(i -> Registries.ENTITY_TYPE.get(new Identifier(buf.readString()))).collect(Collectors.toList());
 
+            //Summons
+            int summonsSize = buf.readInt();
+            List<EntityType<?>> summons = IntStream.range(0, summonsSize).mapToObj(i -> Registries.ENTITY_TYPE.get(new Identifier(buf.readString()))).collect(Collectors.toList());
+
             //Duration
             int duration = buf.readInt();
 
@@ -194,7 +204,7 @@ public class RitualRecipe implements Recipe<Inventory> {
                 commandTypeSet.add(new CommandType(buf.readString(), buf.readString()));
             }
 
-            return new RitualRecipe(id, rite, energy, circles, inputs, outputs, sacrificeList, duration, commandTypeSet);
+            return new RitualRecipe(id, rite, energy, circles, inputs, outputs, sacrificeList, summons, duration, commandTypeSet);
         }
 
         @Override
@@ -224,6 +234,12 @@ public class RitualRecipe implements Recipe<Inventory> {
             //Sacrifices
             buf.writeInt(recipe.sacrifices.size());
             for(EntityType<?> entityType : recipe.sacrifices){
+                buf.writeString(Registries.ENTITY_TYPE.getId(entityType).toString());
+            }
+
+            //Summons
+            buf.writeInt(recipe.summons.size());
+            for(EntityType<?> entityType : recipe.summons){
                 buf.writeString(Registries.ENTITY_TYPE.getId(entityType).toString());
             }
 

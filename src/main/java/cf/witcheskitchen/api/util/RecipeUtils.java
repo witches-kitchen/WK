@@ -21,6 +21,7 @@ import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
 import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.function.BiConsumer;
@@ -167,7 +168,7 @@ public final class RecipeUtils {
         return stack;
     }
 
-    public static @NotNull EntityType<?> deserializeEntityType(JsonObject object) {
+    public static @Nullable EntityType<?> deserializeEntityType(JsonObject object) {
         final Identifier id = new Identifier(JsonHelper.getString(object, "entity"));
         return Registries.ENTITY_TYPE.get(id);
     }

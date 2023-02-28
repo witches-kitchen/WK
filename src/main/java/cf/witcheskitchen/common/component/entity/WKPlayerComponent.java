@@ -1,18 +1,21 @@
 package cf.witcheskitchen.common.component.entity;
 
+import cf.witcheskitchen.common.component.WKComponents;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
+import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.world.ServerWorld;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-public class WKPlayerComponent implements AutoSyncedComponent {
+public class WKPlayerComponent implements AutoSyncedComponent, ServerTickingComponent {
     private final PlayerEntity player;
 
     private static final EntityAttributeModifier SPEED_LOW = new EntityAttributeModifier(UUID.fromString("e4430625-eae6-472d-8d01-096e96bf3545"), "Speed Low", 0.04, EntityAttributeModifier.Operation.ADDITION);
@@ -36,18 +39,76 @@ public class WKPlayerComponent implements AutoSyncedComponent {
     private final Set<EntityAttributeModifier> ARMOR_THOUGHNESS_SET= new HashSet<>(List.of(ARMOR_TOUGHNESS_LOW, ARMOR_TOUGHNESS_MEDIUM, ARMOR_TOUGHNESS_HIGH));
     private final Set<EntityAttributeModifier> ATTACK_SET = new HashSet<>(List.of(ATTACK_LOW, ATTACK_MEDIUM, ATTACK_HIGH));
 
+    private int magic = 0;
+    private int magicCap = 0;
+    private long magicConsumed = 0;
+    private boolean isWitch = false;
+
     public WKPlayerComponent(PlayerEntity player) {
         this.player = player;
     }
 
+    public boolean getIsWitch(){
+        return isWitch;
+    }
+
+    public int getMagic(){
+        return magic;
+    }
+
+    public int getMagicCap(){
+        return magicCap;
+    }
+
+    public void setIsWitch(boolean isWitch){
+        this.isWitch = isWitch;
+        WKComponents.PLAYER_COMPONENT.sync(this);
+    }
+
+    public void modifyMagicCap(int amount){
+        magicCap = magicCap + amount;
+        WKComponents.PLAYER_COMPONENT.sync(this);
+    }
+
+    public void modifyMagic(int amount){
+        if(magic + amount >= magicCap){
+            magic = magicCap;
+        } else {
+            magic = Math.max(magic + amount, 0);
+        }
+        WKComponents.PLAYER_COMPONENT.sync(this);
+    }
+
+    @Override
+    public void serverTick() {
+        if(!getIsWitch())return;
+
+        ServerWorld serverWorld = (ServerWorld) player.world;
+        if(canRegenMagic() && serverWorld.getTime() % 20 == 0){
+            if(magic < magicCap){
+                magic++;
+            }
+        }
+    }
+
+    private boolean canRegenMagic() {
+        return true;
+    }
+
     @Override
     public void readFromNbt(NbtCompound nbt) {
-
+        magic = nbt.getInt("Magic");
+        magicCap = nbt.getInt("MagicCap");
+        magicConsumed = nbt.getLong("MagicConsumed");
+        isWitch = nbt.getBoolean("IsWitch");
     }
 
     @Override
     public void writeToNbt(NbtCompound nbt) {
-
+        nbt.putInt("Magic", magic);
+        nbt.putInt("MagicCap", magicCap);
+        nbt.putLong("MagicConsumed", magicConsumed);
+        nbt.putBoolean("IsWitch", isWitch);
     }
 
     public void addOrReplaceAttribute(EntityAttributeModifier attributeMod){

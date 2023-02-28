@@ -65,6 +65,7 @@ public class BoneNeedleItem extends Item {
 
     public ItemStack writeNbtTaglock(ItemStack stack, Entity entity){
         stack.getOrCreateNbt().putUuid("UUID", entity.getUuid());
+        stack.getOrCreateNbt().putString("Name", entity.getEntityName());
         return stack;
     }
 }
