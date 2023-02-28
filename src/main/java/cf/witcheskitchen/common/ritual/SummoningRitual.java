@@ -1,4 +1,4 @@
-package cf.witcheskitchen.common.rite;
+package cf.witcheskitchen.common.ritual;
 
 import cf.witcheskitchen.api.ritual.Ritual;
 import cf.witcheskitchen.common.recipe.RitualRecipe;

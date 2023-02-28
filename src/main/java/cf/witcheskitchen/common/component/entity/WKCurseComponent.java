@@ -1,7 +1,7 @@
 package cf.witcheskitchen.common.component.entity;
 
 import cf.witcheskitchen.api.util.CursePair;
-import cf.witcheskitchen.common.curses.Curse;
+import cf.witcheskitchen.common.curse.Curse;
 import cf.witcheskitchen.common.registry.WKRegistries;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;

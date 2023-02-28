@@ -1,7 +1,7 @@
 package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WitchesKitchen;
-import cf.witcheskitchen.common.curses.Curse;
+import cf.witcheskitchen.common.curse.Curse;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
 import net.minecraft.registry.Registry;
 

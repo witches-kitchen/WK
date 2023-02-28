@@ -6,17 +6,28 @@ import cf.witcheskitchen.api.ritual.Ritual;
 import cf.witcheskitchen.api.ritual.RitualCircle;
 import cf.witcheskitchen.common.recipe.RitualRecipe;
 import cf.witcheskitchen.common.registry.*;
+import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.TargetPredicate;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class GlyphBlockEntity extends WKBlockEntityWithInventory {
@@ -47,6 +58,7 @@ public class GlyphBlockEntity extends WKBlockEntityWithInventory {
                     resetRitual();
                 }
             }
+            markDirty();
         }
     }
 
@@ -76,11 +88,39 @@ public class GlyphBlockEntity extends WKBlockEntityWithInventory {
     }
 
     private boolean checkValidSacrifices(RitualRecipe ritual, World world) {
-        if(ritual.sacrifices.isEmpty()){
+        if(ritual.sacrifices != null && ritual.sacrifices.isEmpty()){
             return true;
         }
-        //TODO
+
+        int size = (ritual.circleSet.size() * 2) + 1;
+
+        List<LivingEntity> livingEntityList = world.getEntitiesByClass(LivingEntity.class, new Box(this.pos).expand(size), Entity::isAlive);
+        List<EntityType<?>> entityTypeList = Lists.newArrayList(livingEntityList.stream().map(Entity::getType).toList());
+        List<EntityType<?>> ritualSacrifices = ritual.sacrifices;
+
+        if (ritualSacrifices != null && new HashSet<>(entityTypeList).containsAll(ritualSacrifices)) {
+            for(EntityType<?> entityType : ritualSacrifices) {
+                LivingEntity foundEntity = getClosestEntity(livingEntityList, entityType, this.pos);
+                if (foundEntity != null){
+                    foundEntity.damage(DamageSource.MAGIC, Integer.MAX_VALUE);
+                }
+            }
+            return true;
+        }
         return false;
+    }
+
+    public <T extends LivingEntity> T getClosestEntity(List<? extends T> entityList, EntityType<?> type, BlockPos pos) {
+        double d = -1.0;
+        T livingEntity = null;
+        for(T livingEntity2 : entityList) {
+            double e = livingEntity2.squaredDistanceTo(pos.getX(), pos.getY(), pos.getZ());
+            if (livingEntity2.getType() == type && (d == -1.0 || e < d)) {
+                d = e;
+                livingEntity = livingEntity2;
+            }
+        }
+        return livingEntity;
     }
 
     private boolean checkValidCircle(World world, BlockPos pos, Set<RitualCircle> circleSet) {
@@ -115,10 +155,7 @@ public class GlyphBlockEntity extends WKBlockEntityWithInventory {
             return true;
         }else if(type.equals(RitualCircle.Type.salt) && block == WKBlocks.SALT_BLOCK){
             return true;
-        }else if(type.equals(RitualCircle.Type.candle) && block == Blocks.CANDLE){
-            return true;
-        }
-        return false;
+        }else return type.equals(RitualCircle.Type.candle) && block == Blocks.CANDLE;
     }
 
     @Override

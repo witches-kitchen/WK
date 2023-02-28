@@ -1,6 +1,6 @@
 package cf.witcheskitchen.api.util;
 
-import cf.witcheskitchen.common.curses.Curse;
+import cf.witcheskitchen.common.curse.Curse;
 
 public class CursePair {
     private Curse curse;

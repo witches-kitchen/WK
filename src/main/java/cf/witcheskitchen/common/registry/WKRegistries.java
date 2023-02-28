@@ -2,7 +2,7 @@ package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WitchesKitchen;
 import cf.witcheskitchen.api.ritual.Ritual;
-import cf.witcheskitchen.common.curses.Curse;
+import cf.witcheskitchen.common.curse.Curse;
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
 import net.minecraft.registry.Registry;
 

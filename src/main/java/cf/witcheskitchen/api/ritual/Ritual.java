@@ -30,7 +30,6 @@ public class Ritual {
                 runCommand(minecraftServer, blockPos, commandType.command);
             }
         }
-
     }
 
     public void onStart(World world, BlockPos blockPos, PlayerEntity player, RitualRecipe ritualRecipe) {

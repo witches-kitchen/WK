@@ -1,4 +1,4 @@
-package cf.witcheskitchen.common.curses;
+package cf.witcheskitchen.common.curse;
 
 import net.minecraft.entity.player.PlayerEntity;
 import org.jetbrains.annotations.NotNull;
