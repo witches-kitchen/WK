@@ -172,6 +172,11 @@ public class ChurchGrimEntity extends WKTameableEntity implements GeoEntity, Ang
     }
 
     @Override
+    public boolean damage(DamageSource source, float amount) {
+        return !source.isFallingBlock();
+    }
+
+    @Override
     public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
         return false;
     }
