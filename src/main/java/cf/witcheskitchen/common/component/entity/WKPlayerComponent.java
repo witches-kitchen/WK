@@ -21,7 +21,7 @@ public class WKPlayerComponent implements AutoSyncedComponent, ServerTickingComp
     private static final EntityAttributeModifier SPEED_LOW, SPEED_MEDIUM, SPEED_HIGH, ARMOR_LOW, ARMOR_MEDIUM, ARMOR_HIGH, ARMOR_TOUGHNESS_LOW, ARMOR_TOUGHNESS_MEDIUM, ARMOR_TOUGHNESS_HIGH, ATTACK_LOW, ATTACK_MEDIUM, ATTACK_HIGH;
     private final Set<EntityAttributeModifier> SPEED_SET = new HashSet<>(List.of(SPEED_LOW, SPEED_MEDIUM, SPEED_HIGH));
     private final Set<EntityAttributeModifier> ARMOR_SET = new HashSet<>(List.of(ARMOR_LOW, ARMOR_MEDIUM, ARMOR_HIGH));
-    private final Set<EntityAttributeModifier> ARMOR_THOUGHNESS_SET= new HashSet<>(List.of(ARMOR_TOUGHNESS_LOW, ARMOR_TOUGHNESS_MEDIUM, ARMOR_TOUGHNESS_HIGH));
+    private final Set<EntityAttributeModifier> ARMOR_THOUGHNESS_SET = new HashSet<>(List.of(ARMOR_TOUGHNESS_LOW, ARMOR_TOUGHNESS_MEDIUM, ARMOR_TOUGHNESS_HIGH));
     private final Set<EntityAttributeModifier> ATTACK_SET = new HashSet<>(List.of(ATTACK_LOW, ATTACK_MEDIUM, ATTACK_HIGH));
 
     private int magic = 0;
@@ -39,7 +39,7 @@ public class WKPlayerComponent implements AutoSyncedComponent, ServerTickingComp
         this.player = player;
     }
 
-    public boolean getIsWitch(){
+    public boolean isWitch(){
         return isWitch;
     }
 
@@ -51,7 +51,7 @@ public class WKPlayerComponent implements AutoSyncedComponent, ServerTickingComp
         return magicCap;
     }
 
-    public void setIsWitch(boolean isWitch){
+    public void isWitch(boolean isWitch){
         this.isWitch = isWitch;
         WKComponents.PLAYER_COMPONENT.sync(this);
     }
@@ -72,7 +72,7 @@ public class WKPlayerComponent implements AutoSyncedComponent, ServerTickingComp
 
     @Override
     public void serverTick() {
-        if(!getIsWitch())return;
+        if(!isWitch())return;
 
         ServerWorld serverWorld = (ServerWorld) player.world;
         if(canRegenMagic() && serverWorld.getTime() % 20 == 0){

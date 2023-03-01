@@ -29,7 +29,7 @@ public enum ConeflowerTypes {
     }
 
     public String getName(){
-        return "coneflowerCOMMON";
+        return "coneflower";
     }
 
     public String getType(){

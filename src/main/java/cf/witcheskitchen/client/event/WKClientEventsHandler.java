@@ -20,7 +20,7 @@ public class WKClientEventsHandler {
             ClientPlayerEntity player = client.player;
             if (player == null) return;
             WKComponents.PLAYER_COMPONENT.maybeGet(player).ifPresent(component -> {
-                if(!component.getIsWitch())return;
+                if(!component.isWitch())return;
 
                 int height = client.getWindow().getScaledHeight();
                 int width = client.getWindow().getScaledWidth();

@@ -1,4 +1,4 @@
-package cf.witcheskitchen.integration.client;
+package cf.witcheskitchen.client.integration;
 
 import cf.witcheskitchen.WitchesKitchen;
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;

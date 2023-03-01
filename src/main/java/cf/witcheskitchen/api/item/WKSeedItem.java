@@ -21,9 +21,10 @@ import java.util.List;
 import java.util.Optional;
 
 public class WKSeedItem extends AliasedBlockItem {
-
+    final Block block;
     public WKSeedItem(Block block, Settings settings) {
         super(block, settings);
+        this.block = block;
     }
 
     @Nullable
