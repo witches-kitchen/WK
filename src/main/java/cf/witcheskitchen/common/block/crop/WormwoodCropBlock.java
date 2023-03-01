@@ -1,6 +1,7 @@
 package cf.witcheskitchen.common.block.crop;
 
 import cf.witcheskitchen.api.block.crop.WKTallCropBlock;
+import cf.witcheskitchen.api.interfaces.CropVariants;
 import cf.witcheskitchen.api.util.SeedTypeHelper;
 import cf.witcheskitchen.common.registry.WKItems;
 import cf.witcheskitchen.common.block.crop.types.WormwoodTypes;
@@ -12,7 +13,7 @@ import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.shape.VoxelShape;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
 
-public class WormwoodCropBlock extends WKTallCropBlock {
+public class WormwoodCropBlock extends WKTallCropBlock implements CropVariants {
     public static final VoxelShape[] LOWER_AGE_TO_SHAPE;
     public static final VoxelShape[] UPPER_AGE_TO_SHAPE;
     public static final int MAX_AGE = 7;

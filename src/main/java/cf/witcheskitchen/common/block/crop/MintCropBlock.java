@@ -1,6 +1,7 @@
 package cf.witcheskitchen.common.block.crop;
 
 import cf.witcheskitchen.api.block.crop.WKCropBlock;
+import cf.witcheskitchen.api.interfaces.CropVariants;
 import cf.witcheskitchen.api.util.SeedTypeHelper;
 import cf.witcheskitchen.common.registry.WKItems;
 import cf.witcheskitchen.common.block.crop.types.MintTypes;
@@ -9,7 +10,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.state.property.IntProperty;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
 
-public class MintCropBlock extends WKCropBlock {
+public class MintCropBlock extends WKCropBlock implements CropVariants {
     public static final int MAX_AGE = 4;
     private final MintTypes type;
 

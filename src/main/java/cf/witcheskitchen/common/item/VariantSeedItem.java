@@ -1,4 +1,4 @@
-package cf.witcheskitchen.api.item;
+package cf.witcheskitchen.common.item;
 
 import cf.witcheskitchen.api.util.SeedTypeHelper;
 import net.minecraft.block.Block;
@@ -20,11 +20,10 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Optional;
 
-public class WKSeedItem extends AliasedBlockItem {
-    final Block block;
-    public WKSeedItem(Block block, Settings settings) {
+public class VariantSeedItem extends AliasedBlockItem {
+
+    public VariantSeedItem(Block block, Settings settings) {
         super(block, settings);
-        this.block = block;
     }
 
     @Nullable

@@ -1,6 +1,7 @@
 package cf.witcheskitchen.common.block.crop;
 
 import cf.witcheskitchen.api.block.crop.WKCropBlock;
+import cf.witcheskitchen.api.interfaces.CropVariants;
 import cf.witcheskitchen.common.registry.WKItems;
 import cf.witcheskitchen.api.util.SeedTypeHelper;
 import cf.witcheskitchen.common.block.crop.types.ChamomileTypes;
@@ -15,7 +16,7 @@ import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 import java.util.Optional;
 
-public class ChamomileCropBlock extends WKCropBlock {
+public class ChamomileCropBlock extends WKCropBlock implements CropVariants {
     public static final int MAX_AGE = 4;
     private final ChamomileTypes type;
 

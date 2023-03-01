@@ -1,6 +1,7 @@
 package cf.witcheskitchen.common.block.crop;
 
 import cf.witcheskitchen.api.block.crop.WKCropBlock;
+import cf.witcheskitchen.api.interfaces.CropVariants;
 import cf.witcheskitchen.common.registry.WKItems;
 import cf.witcheskitchen.api.util.SeedTypeHelper;
 import cf.witcheskitchen.common.block.crop.types.HelleboreTypes;
@@ -15,7 +16,7 @@ import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 import java.util.Optional;
 
-public class HelleboreCropBlock extends WKCropBlock {
+public class HelleboreCropBlock extends WKCropBlock implements CropVariants {
     public static final int MAX_AGE = 6;
     private final HelleboreTypes type;
 

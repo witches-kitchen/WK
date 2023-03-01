@@ -1,6 +1,7 @@
 package cf.witcheskitchen.common.block.crop;
 
 import cf.witcheskitchen.api.block.crop.WKTallCropBlock;
+import cf.witcheskitchen.api.interfaces.CropVariants;
 import cf.witcheskitchen.common.registry.WKItems;
 import cf.witcheskitchen.api.util.SeedTypeHelper;
 import cf.witcheskitchen.common.block.crop.types.CamelliaTypes;
@@ -24,7 +25,7 @@ import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 import java.util.Optional;
 
-public class CamelliaCropBlock extends WKTallCropBlock {
+public class CamelliaCropBlock extends WKTallCropBlock implements CropVariants {
     public static final VoxelShape[] LOWER_AGE_TO_SHAPE;
     public static final VoxelShape[] UPPER_AGE_TO_SHAPE;
     public static final int MAX_AGE = 7;

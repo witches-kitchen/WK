@@ -1,6 +1,7 @@
 package cf.witcheskitchen.common.block.crop;
 
 import cf.witcheskitchen.api.block.crop.WKTallCropBlock;
+import cf.witcheskitchen.api.interfaces.CropVariants;
 import cf.witcheskitchen.common.registry.WKItems;
 import cf.witcheskitchen.api.util.SeedTypeHelper;
 import cf.witcheskitchen.common.block.crop.types.BelladonnaTypes;
@@ -17,7 +18,7 @@ import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 import java.util.Optional;
 
-public class BelladonnaCropBlock extends WKTallCropBlock {
+public class BelladonnaCropBlock extends WKTallCropBlock implements CropVariants {
     public static final int MAX_AGE = 6;
     public static final IntProperty AGE = IntProperty.of("age", 0, MAX_AGE);
     private final BelladonnaTypes type;

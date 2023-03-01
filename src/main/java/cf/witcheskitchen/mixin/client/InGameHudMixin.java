@@ -1,6 +1,6 @@
 package cf.witcheskitchen.mixin.client;
 
-import cf.witcheskitchen.api.item.WKSeedItem;
+import cf.witcheskitchen.common.item.VariantSeedItem;
 import cf.witcheskitchen.api.util.SeedTypeHelper;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.hud.InGameHud;
@@ -25,7 +25,7 @@ public abstract class InGameHudMixin {
 
     @Inject(method = "renderHeldItemTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameHud;getTextRenderer()Lnet/minecraft/client/font/TextRenderer;", ordinal = 1), locals = LocalCapture.CAPTURE_FAILHARD)
     private void wk$renderTypeColor(MatrixStack matrices, CallbackInfo ci, MutableText mutableText, int i, int x, int y, int l){
-        if(this.currentStack.getItem() instanceof WKSeedItem){
+        if(this.currentStack.getItem() instanceof VariantSeedItem){
             MutableText text = SeedTypeHelper.getSeedTypeText(this.currentStack);
             if(text != null){
                 int io = this.getTextRenderer().getWidth(text);
