@@ -168,8 +168,9 @@ public class ChurchGrimEntity extends WKTameableEntity implements GeoEntity, Ang
         return true;
     }
 
+    @Override
     public boolean damage(DamageSource source, float amount) {
-        if (source.isFallingBlock() || source.isFire() || source.isFromFalling()) {
+        if (source.isFallingBlock() || source.isFire() || source.isFromFalling() || source.equals(DamageSource.LIGHTNING_BOLT)) {
             super.damage(source, amount);
         }
         return false;
