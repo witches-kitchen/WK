@@ -164,6 +164,11 @@ public class ChurchGrimEntity extends WKTameableEntity implements GeoEntity, Ang
     }
 
     @Override
+    public boolean isFireImmune() {
+        return true;
+    }
+
+    @Override
     public boolean canBreatheInWater() {
         return true;
     }

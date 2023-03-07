@@ -205,6 +205,11 @@ public class CuSithEntity extends WKHostileEntity implements GeoEntity {
     }
 
     @Override
+    public boolean isFireImmune() {
+        return true;
+    }
+
+    @Override
     public boolean isUndead() {
         return true;
     }
