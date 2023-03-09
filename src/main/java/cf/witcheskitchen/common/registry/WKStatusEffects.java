@@ -35,6 +35,8 @@ public interface WKStatusEffects {
     StatusEffect CORROSION = create("corrosion", new CorrosionStatusEffect(StatusEffectType.HARMFUL, 0x3FFF00)).addAttributeModifier(EntityAttributes.GENERIC_ARMOR, "e8506ffe-e2b4-4f19-8669-becb8e3eb666", -4D, EntityAttributeModifier.Operation.ADDITION).addAttributeModifier(EntityAttributes.GENERIC_ARMOR_TOUGHNESS, "1845f14c-5411-4380-8be7-85e81317523a", -2D, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
     StatusEffect REINFORCEMENT = create("reinforcement", new ReinforcementStatusEffect(StatusEffectType.BENEFICIAL, 0x4000FF)).addAttributeModifier(EntityAttributes.GENERIC_ARMOR, "52823351-ea91-4db3-958d-1b1ce3804dd6", 4D, EntityAttributeModifier.Operation.ADDITION).addAttributeModifier(EntityAttributes.GENERIC_ARMOR_TOUGHNESS, "ec255b60-8b01-450b-8538-17a8a28e4aaf", 2D, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
     StatusEffect FELIFORM = create("feliform", new FeliformStatusEffect(StatusEffectType.BENEFICIAL, 0x228B22));
+    //FIXME: Add back reach entity attributes!
+    //StatusEffect LONG_REACH = create("long_reach", new LongReachStatusEffect(StatusEffectType.BENEFICIAL, 0x964a6e).addAttributeModifier());
 
     static List<ObjectDefinition<StatusEffect>> getStatusEffects() {
         return Collections.unmodifiableList(STATUS_EFFECTS);
