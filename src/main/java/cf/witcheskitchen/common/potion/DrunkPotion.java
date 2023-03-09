@@ -7,9 +7,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.world.World;
 
-public class RumPotion extends Potion implements AlcoholEffect {
+public class DrunkPotion extends Potion implements AlcoholEffect {
 
-    public RumPotion(StatusEffectInstance... statusEffectInstances) {
+    public DrunkPotion(StatusEffectInstance... statusEffectInstances) {
         super(statusEffectInstances);
     }
 
