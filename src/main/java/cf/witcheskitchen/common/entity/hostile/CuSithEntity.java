@@ -198,10 +198,7 @@ public class CuSithEntity extends WKHostileEntity implements GeoEntity {
 
     @Override
     public boolean damage(DamageSource source, float amount) {
-        if (source.isFallingBlock() || source.isFire() || source.isFromFalling() || source.equals(DamageSource.LIGHTNING_BOLT)) {
-            super.damage(source, amount);
-        }
-        return false;
+        return !source.isFallingBlock() || !source.isFire() || !source.isFromFalling();
     }
 
     @Override
