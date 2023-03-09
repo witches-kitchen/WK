@@ -29,6 +29,12 @@ public interface WKTags {
 
     // Block
     TagKey<Block> HEATS_CAULDRON = register(RegistryKeys.BLOCK, "heats_cauldron");
+    TagKey<Block> WILL_OF_THE_BEAST_SOURCE = register(RegistryKeys.BLOCK, "will_of_the_beast_source");
+    TagKey<Block> ELDERS_GRACE_SOURCE = register(RegistryKeys.BLOCK, "elders_grace_source");
+    TagKey<Block> GODDESS_TEARS_SOURCE = register(RegistryKeys.BLOCK, "goddess_tears_source");
+    TagKey<Block> LICK_O_FLAME_SOURCE = register(RegistryKeys.BLOCK, "lick_o_flame_source");
+    TagKey<Block> GAIAS_BREATH_SOURCE = register(RegistryKeys.BLOCK, "gaias_breath_source");
+    TagKey<Block> DEATHS_KISS_SOURCE = register(RegistryKeys.BLOCK, "deaths_kiss_source");
 
     //Item
     TagKey<Item> CAULDRON_BLACKLIST = register(RegistryKeys.ITEM, "cauldron_blacklist");
