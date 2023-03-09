@@ -43,6 +43,7 @@ public interface WKTags {
     TagKey<Item> GODDESS_TEARS_SOURCE = register(RegistryKeys.ITEM, "goddess_tears_source");
     TagKey<Item> LICK_O_FLAME_SOURCE = register(RegistryKeys.ITEM, "lick_o_flame_source");
     TagKey<Item> GAIAS_BREATH_SOURCE = register(RegistryKeys.ITEM, "gaias_breath_source");
+    TagKey<Item> DEATHS_KISS_SOURCE = register(RegistryKeys.ITEM, "deaths_kiss_source");
 
     //Biome
     TagKey<Biome> HAS_BLACKTHORN = register(RegistryKeys.BIOME, "has_blackthorn");
