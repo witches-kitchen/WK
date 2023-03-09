@@ -13,11 +13,11 @@ public enum BriarTypes {
         this.color = color;
     }
 
-    public String getName(){
+    public String getName() {
         return "briar";
     }
 
-    public String getType(){
+    public String getType() {
         return type;
     }
 
@@ -25,10 +25,10 @@ public enum BriarTypes {
         return color;
     }
 
-    public Optional<BriarTypes> next(BriarTypes v){
+    public Optional<BriarTypes> next(BriarTypes v) {
         BriarTypes[] variants = BriarTypes.values();
         int index = v.ordinal();
-        if(variants.length == v.ordinal() + 1){
+        if (variants.length == v.ordinal() + 1) {
             return Optional.empty();
         }
         int nextIndex = index + 1;

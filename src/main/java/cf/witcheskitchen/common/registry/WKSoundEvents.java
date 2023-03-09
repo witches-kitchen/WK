@@ -14,9 +14,9 @@ import java.util.List;
 public interface WKSoundEvents {
     List<ObjectDefinition<SoundEvent>> SOUND_EVENTS = new ArrayList<>();
     // Cu-Sith 
-   SoundEvent CUSITH_IDLE_EVENT = register("cusith_ambient");
-   SoundEvent CUSITH_DEATH_EVENT = register("cusith_death");
-   SoundEvent CUSITH_HOWL_EVENT = register("cusith_howl");
+    SoundEvent CUSITH_IDLE_EVENT = register("cusith_ambient");
+    SoundEvent CUSITH_DEATH_EVENT = register("cusith_death");
+    SoundEvent CUSITH_HOWL_EVENT = register("cusith_howl");
     //Ferret
     SoundEvent FERRET_IDLE_EVENT = register("ferret_idle");
     SoundEvent FERRET_ATTACK_EVENT = register("ferret_attack");

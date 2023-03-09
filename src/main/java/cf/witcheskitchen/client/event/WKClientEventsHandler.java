@@ -20,7 +20,7 @@ public class WKClientEventsHandler {
             ClientPlayerEntity player = client.player;
             if (player == null) return;
             WKComponents.PLAYER_COMPONENT.maybeGet(player).ifPresent(component -> {
-                if(!component.isWitch())return;
+                if (!component.isWitch()) return;
 
                 int height = client.getWindow().getScaledHeight();
                 int width = client.getWindow().getScaledWidth();
@@ -35,11 +35,11 @@ public class WKClientEventsHandler {
                 RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
 
                 RenderSystem.setShaderTexture(0, getEmptyTexture());
-                drawTexture(matrixStack, 0,0, 0,0,20,42,20, 42);
+                drawTexture(matrixStack, 0, 0, 0, 0, 20, 42, 20, 42);
 
                 RenderSystem.setShaderTexture(0, getBarTexture());
                 int p = (magic * 42 / magicCap);
-                drawTexture(matrixStack, 0, 42 - p,0, - p, 20, p, 20, 42);
+                drawTexture(matrixStack, 0, 42 - p, 0, -p, 20, p, 20, 42);
                 //this.drawTexture(matrices, x, y - n, u, v - n, w, n);
                 RenderSystem.depthMask(true);
                 RenderSystem.disableBlend();

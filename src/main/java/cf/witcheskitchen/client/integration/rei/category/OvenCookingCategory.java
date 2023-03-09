@@ -1,8 +1,8 @@
 package cf.witcheskitchen.client.integration.rei.category;
 
-import cf.witcheskitchen.common.registry.WKBlocks;
 import cf.witcheskitchen.client.integration.rei.WKREIPlugin;
 import cf.witcheskitchen.client.integration.rei.display.OvenCookingDisplay;
+import cf.witcheskitchen.common.registry.WKBlocks;
 import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
 import me.shedaniel.rei.api.client.gui.Renderer;

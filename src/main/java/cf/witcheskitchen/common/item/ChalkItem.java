@@ -43,7 +43,7 @@ public class ChalkItem extends Item {
             return ActionResult.PASS;
         }
         if (state != null && state.canPlaceAt(world, pos)) {
-            if(!world.isClient()){
+            if (!world.isClient()) {
                 world.playSound(null, pos, state.getSoundGroup().getPlaceSound(), SoundCategory.BLOCKS, 1, MathHelper.nextFloat(world.random, 0.8f, 1.2f));
                 world.setBlockState(pos, state);
             }
@@ -55,10 +55,10 @@ public class ChalkItem extends Item {
     @ClientOnly
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        if(glyphType != null){
+        if (glyphType != null) {
             String name = Registries.BLOCK.getId(glyphType).getPath();
             int rgb = glyphType == WKBlocks.ENCHANTED_GLYPH ? 0xD8EAB4 : 0xffffff;
-            tooltip.add(Text.translatable("tooltip.witcheskitchen."+name).setStyle(Style.EMPTY.withColor(rgb)));
+            tooltip.add(Text.translatable("tooltip.witcheskitchen." + name).setStyle(Style.EMPTY.withColor(rgb)));
         }
     }
 }

@@ -7,10 +7,10 @@ import cf.witcheskitchen.api.block.plant.WildPlantCropBlock;
 import cf.witcheskitchen.api.block.plant.WildTallPlantCropBlock;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
 import cf.witcheskitchen.common.block.*;
-import cf.witcheskitchen.common.block.sapling.WKSaplingBlock;
 import cf.witcheskitchen.common.block.crop.*;
-import cf.witcheskitchen.common.world.generator.WKSaplingGenerator;
 import cf.witcheskitchen.common.block.crop.types.*;
+import cf.witcheskitchen.common.block.sapling.WKSaplingBlock;
+import cf.witcheskitchen.common.world.generator.WKSaplingGenerator;
 import cf.witcheskitchen.data.worldgen.WKConfiguredFeatures;
 import net.minecraft.block.*;
 import net.minecraft.item.BlockItem;
@@ -32,7 +32,7 @@ public interface WKBlocks {
     List<ObjectDefinition<Item>> ITEMS = new ArrayList<>();
     Map<String, Block> TYPE_BLOCKS = new LinkedHashMap<>();
 
-    static QuiltBlockSettings getCropSettings(){
+    static QuiltBlockSettings getCropSettings() {
         return QuiltBlockSettings.of(Material.PLANT).noCollision().breakInstantly().sounds(BlockSoundGroup.CROP);
     }
 
@@ -51,7 +51,7 @@ public interface WKBlocks {
     Block ELDER_LOG = registerLog("elder_log");
     Block SUMAC_LOG = registerLog("sumac_log");
     Block HAWTHORN_LOG = registerLog("hawthorn_log");
-    Block BLACKTHORN_LOG = register("blackthorn_log", new BlackthornPillarBlock(logSettings()),true);
+    Block BLACKTHORN_LOG = register("blackthorn_log", new BlackthornPillarBlock(logSettings()), true);
     Block JUNIPER_LOG = registerLog("juniper_log");
     Block ROWAN_LOG = registerLog("rowan_log");
     Block STRIPPED_BLACKTHORN_LOG = registerLog("stripped_blackthorn_log");
@@ -81,7 +81,7 @@ public interface WKBlocks {
     Block ELDER_LEAVES = registerLeaf("elder_leaves");
     Block SUMAC_LEAVES = registerLeaf("sumac_leaves");
     Block HAWTHORN_LEAVES = registerLeaf("hawthorn_leaves");
-    Block BLACKTHORN_LEAVES = register("blackthorn_leaves", new BlackthornLeavesBlock(leavesSettings()),true);
+    Block BLACKTHORN_LEAVES = register("blackthorn_leaves", new BlackthornLeavesBlock(leavesSettings()), true);
     Block JUNIPER_LEAVES = registerLeaf("juniper_leaves");
     Block ROWAN_LEAVES = registerLeaf("rowan_leaves");
 
@@ -107,45 +107,45 @@ public interface WKBlocks {
     Block SUMAC_FENCE_GATE = register("sumac_fence_gate", new FenceGateBlock(plankSettings(), SoundEvents.BLOCK_FENCE_GATE_CLOSE, SoundEvents.BLOCK_FENCE_GATE_OPEN), true);
 
     Block BLACKTHORN_PRESSURE_PLATE = register("blackthorn_pressure_plate", new PressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING, plankSettings(), SoundEvents.BLOCK_WOODEN_PRESSURE_PLATE_CLICK_OFF, SoundEvents.BLOCK_WOODEN_PRESSURE_PLATE_CLICK_ON), true);
-    Block ELDER_PRESSURE_PLATE = register("elder_pressure_plate", new PressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING,plankSettings(), SoundEvents.BLOCK_WOODEN_PRESSURE_PLATE_CLICK_OFF, SoundEvents.BLOCK_WOODEN_PRESSURE_PLATE_CLICK_ON), true);
-    Block HAWTHORN_PRESSURE_PLATE = register("hawthorn_pressure_plate", new PressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING,plankSettings(), SoundEvents.BLOCK_WOODEN_PRESSURE_PLATE_CLICK_OFF, SoundEvents.BLOCK_WOODEN_PRESSURE_PLATE_CLICK_ON), true);
-    Block JUNIPER_PRESSURE_PLATE = register("juniper_pressure_plate", new PressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING,plankSettings(), SoundEvents.BLOCK_WOODEN_PRESSURE_PLATE_CLICK_OFF, SoundEvents.BLOCK_WOODEN_PRESSURE_PLATE_CLICK_ON), true);
-    Block ROWAN_PRESSURE_PLATE = register("rowan_pressure_plate", new PressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING,plankSettings(), SoundEvents.BLOCK_WOODEN_PRESSURE_PLATE_CLICK_OFF, SoundEvents.BLOCK_WOODEN_PRESSURE_PLATE_CLICK_ON), true);
-    Block SUMAC_PRESSURE_PLATE = register("sumac_pressure_plate", new PressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING,plankSettings(), SoundEvents.BLOCK_WOODEN_PRESSURE_PLATE_CLICK_OFF, SoundEvents.BLOCK_WOODEN_PRESSURE_PLATE_CLICK_ON), true);
+    Block ELDER_PRESSURE_PLATE = register("elder_pressure_plate", new PressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING, plankSettings(), SoundEvents.BLOCK_WOODEN_PRESSURE_PLATE_CLICK_OFF, SoundEvents.BLOCK_WOODEN_PRESSURE_PLATE_CLICK_ON), true);
+    Block HAWTHORN_PRESSURE_PLATE = register("hawthorn_pressure_plate", new PressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING, plankSettings(), SoundEvents.BLOCK_WOODEN_PRESSURE_PLATE_CLICK_OFF, SoundEvents.BLOCK_WOODEN_PRESSURE_PLATE_CLICK_ON), true);
+    Block JUNIPER_PRESSURE_PLATE = register("juniper_pressure_plate", new PressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING, plankSettings(), SoundEvents.BLOCK_WOODEN_PRESSURE_PLATE_CLICK_OFF, SoundEvents.BLOCK_WOODEN_PRESSURE_PLATE_CLICK_ON), true);
+    Block ROWAN_PRESSURE_PLATE = register("rowan_pressure_plate", new PressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING, plankSettings(), SoundEvents.BLOCK_WOODEN_PRESSURE_PLATE_CLICK_OFF, SoundEvents.BLOCK_WOODEN_PRESSURE_PLATE_CLICK_ON), true);
+    Block SUMAC_PRESSURE_PLATE = register("sumac_pressure_plate", new PressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING, plankSettings(), SoundEvents.BLOCK_WOODEN_PRESSURE_PLATE_CLICK_OFF, SoundEvents.BLOCK_WOODEN_PRESSURE_PLATE_CLICK_ON), true);
 
     Block BLACKTHORN_BUTTON = register("blackthorn_button", new AbstractButtonBlock(plankSettings(), 30, true, SoundEvents.BLOCK_WOODEN_BUTTON_CLICK_OFF, SoundEvents.BLOCK_WOODEN_BUTTON_CLICK_ON), true);
-    Block ELDER_BUTTON = register("elder_button", new AbstractButtonBlock(plankSettings(),30, true, SoundEvents.BLOCK_WOODEN_BUTTON_CLICK_OFF, SoundEvents.BLOCK_WOODEN_BUTTON_CLICK_ON), true);
-    Block HAWTHORN_BUTTON = register("hawthorn_button", new AbstractButtonBlock(plankSettings(),30, true, SoundEvents.BLOCK_WOODEN_BUTTON_CLICK_OFF, SoundEvents.BLOCK_WOODEN_BUTTON_CLICK_ON), true);
-    Block JUNIPER_BUTTON = register("juniper_button", new AbstractButtonBlock(plankSettings(),30, true, SoundEvents.BLOCK_WOODEN_BUTTON_CLICK_OFF, SoundEvents.BLOCK_WOODEN_BUTTON_CLICK_ON), true);
-    Block ROWAN_BUTTON = register("rowan_button", new AbstractButtonBlock(plankSettings(),30, true, SoundEvents.BLOCK_WOODEN_BUTTON_CLICK_OFF, SoundEvents.BLOCK_WOODEN_BUTTON_CLICK_ON), true);
-    Block SUMAC_BUTTON = register("sumac_button", new AbstractButtonBlock(plankSettings(),30, true, SoundEvents.BLOCK_WOODEN_BUTTON_CLICK_OFF, SoundEvents.BLOCK_WOODEN_BUTTON_CLICK_ON), true);
+    Block ELDER_BUTTON = register("elder_button", new AbstractButtonBlock(plankSettings(), 30, true, SoundEvents.BLOCK_WOODEN_BUTTON_CLICK_OFF, SoundEvents.BLOCK_WOODEN_BUTTON_CLICK_ON), true);
+    Block HAWTHORN_BUTTON = register("hawthorn_button", new AbstractButtonBlock(plankSettings(), 30, true, SoundEvents.BLOCK_WOODEN_BUTTON_CLICK_OFF, SoundEvents.BLOCK_WOODEN_BUTTON_CLICK_ON), true);
+    Block JUNIPER_BUTTON = register("juniper_button", new AbstractButtonBlock(plankSettings(), 30, true, SoundEvents.BLOCK_WOODEN_BUTTON_CLICK_OFF, SoundEvents.BLOCK_WOODEN_BUTTON_CLICK_ON), true);
+    Block ROWAN_BUTTON = register("rowan_button", new AbstractButtonBlock(plankSettings(), 30, true, SoundEvents.BLOCK_WOODEN_BUTTON_CLICK_OFF, SoundEvents.BLOCK_WOODEN_BUTTON_CLICK_ON), true);
+    Block SUMAC_BUTTON = register("sumac_button", new AbstractButtonBlock(plankSettings(), 30, true, SoundEvents.BLOCK_WOODEN_BUTTON_CLICK_OFF, SoundEvents.BLOCK_WOODEN_BUTTON_CLICK_ON), true);
 
 
     //Tile Entities
-    Block TEAPOT = register("teapot", new TeapotBlock(QuiltBlockSettings.copyOf(Blocks.TERRACOTTA).nonOpaque()),true);
-    Block CAST_IRON_TEAPOT = register("cast_iron_teapot", new TeapotBlock(QuiltBlockSettings.copyOf(Blocks.IRON_BLOCK).nonOpaque()),true);
-    Block COPPER_TEAPOT = register("copper_teapot", new CopperTeapotBlock(QuiltBlockSettings.copyOf(Blocks.COPPER_BLOCK).nonOpaque(), Oxidizable.OxidizationLevel.UNAFFECTED),true);
-    Block WAXED_COPPER_TEAPOT = register("waxed_copper_teapot", new TeapotBlock(QuiltBlockSettings.copyOf(Blocks.COPPER_BLOCK).nonOpaque()),true);
-    Block EXPOSED_COPPER_TEAPOT = register("exposed_copper_teapot", new CopperTeapotBlock(QuiltBlockSettings.copyOf(Blocks.EXPOSED_COPPER).nonOpaque(), Oxidizable.OxidizationLevel.EXPOSED),true);
-    Block WAXED_EXPOSED_COPPER_TEAPOT = register("waxed_exposed_copper_teapot", new TeapotBlock(QuiltBlockSettings.copyOf(Blocks.COPPER_BLOCK).nonOpaque()),true);
-    Block WEATHERED_COPPER_TEAPOT = register("weathered_copper_teapot", new CopperTeapotBlock(QuiltBlockSettings.copyOf(Blocks.WEATHERED_COPPER).nonOpaque(), Oxidizable.OxidizationLevel.WEATHERED),true);
-    Block WAXED_WEATHERED_COPPER_TEAPOT = register("waxed_weathered_copper_teapot", new TeapotBlock(QuiltBlockSettings.copyOf(Blocks.COPPER_BLOCK).nonOpaque()),true);
-    Block OXIDIZED_COPPER_TEAPOT = register("oxidized_copper_teapot", new CopperTeapotBlock(QuiltBlockSettings.copyOf(Blocks.OXIDIZED_COPPER).nonOpaque(), Oxidizable.OxidizationLevel.OXIDIZED),true);
-    Block WAXED_OXIDIZED_COPPER_TEAPOT = register("waxed_oxidized_copper_teapot", new TeapotBlock(QuiltBlockSettings.copyOf(Blocks.COPPER_BLOCK).nonOpaque()),true);
+    Block TEAPOT = register("teapot", new TeapotBlock(QuiltBlockSettings.copyOf(Blocks.TERRACOTTA).nonOpaque()), true);
+    Block CAST_IRON_TEAPOT = register("cast_iron_teapot", new TeapotBlock(QuiltBlockSettings.copyOf(Blocks.IRON_BLOCK).nonOpaque()), true);
+    Block COPPER_TEAPOT = register("copper_teapot", new CopperTeapotBlock(QuiltBlockSettings.copyOf(Blocks.COPPER_BLOCK).nonOpaque(), Oxidizable.OxidizationLevel.UNAFFECTED), true);
+    Block WAXED_COPPER_TEAPOT = register("waxed_copper_teapot", new TeapotBlock(QuiltBlockSettings.copyOf(Blocks.COPPER_BLOCK).nonOpaque()), true);
+    Block EXPOSED_COPPER_TEAPOT = register("exposed_copper_teapot", new CopperTeapotBlock(QuiltBlockSettings.copyOf(Blocks.EXPOSED_COPPER).nonOpaque(), Oxidizable.OxidizationLevel.EXPOSED), true);
+    Block WAXED_EXPOSED_COPPER_TEAPOT = register("waxed_exposed_copper_teapot", new TeapotBlock(QuiltBlockSettings.copyOf(Blocks.COPPER_BLOCK).nonOpaque()), true);
+    Block WEATHERED_COPPER_TEAPOT = register("weathered_copper_teapot", new CopperTeapotBlock(QuiltBlockSettings.copyOf(Blocks.WEATHERED_COPPER).nonOpaque(), Oxidizable.OxidizationLevel.WEATHERED), true);
+    Block WAXED_WEATHERED_COPPER_TEAPOT = register("waxed_weathered_copper_teapot", new TeapotBlock(QuiltBlockSettings.copyOf(Blocks.COPPER_BLOCK).nonOpaque()), true);
+    Block OXIDIZED_COPPER_TEAPOT = register("oxidized_copper_teapot", new CopperTeapotBlock(QuiltBlockSettings.copyOf(Blocks.OXIDIZED_COPPER).nonOpaque(), Oxidizable.OxidizationLevel.OXIDIZED), true);
+    Block WAXED_OXIDIZED_COPPER_TEAPOT = register("waxed_oxidized_copper_teapot", new TeapotBlock(QuiltBlockSettings.copyOf(Blocks.COPPER_BLOCK).nonOpaque()), true);
 
 
-    Block IRON_WITCHES_OVEN = register("iron_witches_oven", new WitchesOvenBlock(QuiltBlockSettings.of(Material.METAL).strength(4.0F, 5.0F).requiresTool().nonOpaque().luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0)),true);
-    Block COPPER_WITCHES_OVEN = register("copper_witches_oven", new CopperWitchesOvenBlock(QuiltBlockSettings.copyOf(Blocks.COPPER_BLOCK).luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0), Oxidizable.OxidizationLevel.UNAFFECTED),true);
-    Block WAXED_COPPER_WITCHES_OVEN = register("waxed_copper_witches_oven", new WitchesOvenBlock(QuiltBlockSettings.copy(COPPER_WITCHES_OVEN)),true);
-    Block EXPOSED_COPPER_WITCHES_OVEN = register("exposed_copper_witches_oven", new CopperWitchesOvenBlock(QuiltBlockSettings.copy(Blocks.EXPOSED_COPPER).luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0), Oxidizable.OxidizationLevel.EXPOSED),true);
-    Block WAXED_EXPOSED_COPPER_WITCHES_OVEN = register("waxed_exposed_copper_witches_oven", new WitchesOvenBlock(QuiltBlockSettings.copy(EXPOSED_COPPER_WITCHES_OVEN)),true);
-    Block WEATHERED_COPPER_WITCHES_OVEN = register("weathered_copper_witches_oven", new CopperWitchesOvenBlock(QuiltBlockSettings.copy(Blocks.WEATHERED_COPPER).luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0), Oxidizable.OxidizationLevel.WEATHERED),true);
-    Block WAXED_WEATHERED_COPPER_WITCHES_OVEN = register("waxed_weathered_copper_witches_oven", new WitchesOvenBlock(QuiltBlockSettings.copy(WEATHERED_COPPER_WITCHES_OVEN)),true);
-    Block OXIDIZED_COPPER_WITCHES_OVEN = register("oxidized_copper_witches_oven", new CopperWitchesOvenBlock(QuiltBlockSettings.copy(Blocks.OXIDIZED_COPPER).luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0), Oxidizable.OxidizationLevel.OXIDIZED),true);
-    Block WAXED_OXIDIZED_COPPER_WITCHES_OVEN = register("waxed_oxidized_copper_witches_oven", new WitchesOvenBlock(QuiltBlockSettings.copy(OXIDIZED_COPPER_WITCHES_OVEN)),true);
+    Block IRON_WITCHES_OVEN = register("iron_witches_oven", new WitchesOvenBlock(QuiltBlockSettings.of(Material.METAL).strength(4.0F, 5.0F).requiresTool().nonOpaque().luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0)), true);
+    Block COPPER_WITCHES_OVEN = register("copper_witches_oven", new CopperWitchesOvenBlock(QuiltBlockSettings.copyOf(Blocks.COPPER_BLOCK).luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0), Oxidizable.OxidizationLevel.UNAFFECTED), true);
+    Block WAXED_COPPER_WITCHES_OVEN = register("waxed_copper_witches_oven", new WitchesOvenBlock(QuiltBlockSettings.copy(COPPER_WITCHES_OVEN)), true);
+    Block EXPOSED_COPPER_WITCHES_OVEN = register("exposed_copper_witches_oven", new CopperWitchesOvenBlock(QuiltBlockSettings.copy(Blocks.EXPOSED_COPPER).luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0), Oxidizable.OxidizationLevel.EXPOSED), true);
+    Block WAXED_EXPOSED_COPPER_WITCHES_OVEN = register("waxed_exposed_copper_witches_oven", new WitchesOvenBlock(QuiltBlockSettings.copy(EXPOSED_COPPER_WITCHES_OVEN)), true);
+    Block WEATHERED_COPPER_WITCHES_OVEN = register("weathered_copper_witches_oven", new CopperWitchesOvenBlock(QuiltBlockSettings.copy(Blocks.WEATHERED_COPPER).luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0), Oxidizable.OxidizationLevel.WEATHERED), true);
+    Block WAXED_WEATHERED_COPPER_WITCHES_OVEN = register("waxed_weathered_copper_witches_oven", new WitchesOvenBlock(QuiltBlockSettings.copy(WEATHERED_COPPER_WITCHES_OVEN)), true);
+    Block OXIDIZED_COPPER_WITCHES_OVEN = register("oxidized_copper_witches_oven", new CopperWitchesOvenBlock(QuiltBlockSettings.copy(Blocks.OXIDIZED_COPPER).luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0), Oxidizable.OxidizationLevel.OXIDIZED), true);
+    Block WAXED_OXIDIZED_COPPER_WITCHES_OVEN = register("waxed_oxidized_copper_witches_oven", new WitchesOvenBlock(QuiltBlockSettings.copy(OXIDIZED_COPPER_WITCHES_OVEN)), true);
     Block GLYPH = register("glyph", new GlyphBlock(QuiltBlockSettings.of(Material.DECORATION).noCollision().dropsNothing().strength(1, 0)), false);
     Block ENCHANTED_GLYPH = register("enchanted_glyph", new GlyphBlock(QuiltBlockSettings.copyOf(GLYPH)), false);
-    Block IRON_WITCHES_CAULDRON = register("iron_witches_cauldron", new WitchesCauldronBlock(QuiltBlockSettings.copy(Blocks.CAULDRON).luminance(state -> state.get(WitchesCauldronBlock.LIT) ? 13 : 0)),true);
+    Block IRON_WITCHES_CAULDRON = register("iron_witches_cauldron", new WitchesCauldronBlock(QuiltBlockSettings.copy(Blocks.CAULDRON).luminance(state -> state.get(WitchesCauldronBlock.LIT) ? 13 : 0)), true);
     Block OAK_BREWING_BARREL = registerBarrel("oak_brewing_barrel");
     Block SPRUCE_BREWING_BARREL = registerBarrel("spruce_brewing_barrel");
     Block BIRCH_BREWING_BARREL = registerBarrel("birch_brewing_barrel");
@@ -267,7 +267,7 @@ public interface WKBlocks {
     WKCropBlock SANGUINARY_AUREOLIN = registerWithType("sanguinary_aureolin", new SanguinaryCropBlock(QuiltBlockSettings.copyOf(SANGUINARY), SanguinaryTypes.AUREOLIN));
 
 
-    Block MINT = register("mint", new MintCropBlock(QuiltBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)),false);
+    Block MINT = register("mint", new MintCropBlock(QuiltBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)), false);
     Block WORMWOOD = register("wormwood", new WormwoodCropBlock(QuiltBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)), false);
 
     //Plants
@@ -369,7 +369,7 @@ public interface WKBlocks {
     static <T extends Block> T register(String path, T block, boolean createItem) {
         Identifier id = WitchesKitchen.id(path);
         BLOCKS.add(new ObjectDefinition<>(id, block));
-        if(createItem){
+        if (createItem) {
             ITEMS.add(new ObjectDefinition<>(id, new BlockItem(block, new Item.Settings())));
         }
         return block;

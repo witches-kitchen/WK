@@ -41,21 +41,22 @@ public enum FoxgloveTypes {
         this.color = color;
     }
 
-    public String getName(){
+    public String getName() {
         return "foxglove";
     }
 
-    public String getType(){
+    public String getType() {
         return type;
     }
 
     public int getColor() {
         return color;
     }
-    public Optional<FoxgloveTypes> next(FoxgloveTypes v){
+
+    public Optional<FoxgloveTypes> next(FoxgloveTypes v) {
         FoxgloveTypes[] variants = FoxgloveTypes.values();
         int index = v.ordinal();
-        if(variants.length == v.ordinal() + 1){
+        if (variants.length == v.ordinal() + 1) {
             return Optional.empty();
         }
         int nextIndex = index + 1;

@@ -29,7 +29,7 @@ public class TamableSensor<E extends WKTameableEntity> extends ExtendedSensor<E>
     protected void sense(ServerWorld world, WKTameableEntity entity) {
         Box box = entity.getBoundingBox().expand(this.getHorizontalExpansion(), this.getHeightExpansion(), this.getHorizontalExpansion());
         List<PlayerEntity> list = world.getEntitiesByClass(PlayerEntity.class, box, LivingEntity::isAlive);
-        if(entity.getOwner() instanceof PlayerEntity player && list.contains(player)){
+        if (entity.getOwner() instanceof PlayerEntity player && list.contains(player)) {
             Brain<?> brain = entity.getBrain();
             brain.remember(WKMemoryModuleTypes.OWNER_PLAYER, player);
         }

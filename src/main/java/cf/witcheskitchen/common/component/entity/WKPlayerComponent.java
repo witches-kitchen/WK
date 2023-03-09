@@ -39,30 +39,30 @@ public class WKPlayerComponent implements AutoSyncedComponent, ServerTickingComp
         this.player = player;
     }
 
-    public boolean isWitch(){
+    public boolean isWitch() {
         return isWitch;
     }
 
-    public int getMagic(){
+    public int getMagic() {
         return magic;
     }
 
-    public int getMagicCap(){
+    public int getMagicCap() {
         return magicCap;
     }
 
-    public void isWitch(boolean isWitch){
+    public void isWitch(boolean isWitch) {
         this.isWitch = isWitch;
         WKComponents.PLAYER_COMPONENT.sync(this);
     }
 
-    public void modifyMagicCap(int amount){
+    public void modifyMagicCap(int amount) {
         magicCap = magicCap + amount;
         WKComponents.PLAYER_COMPONENT.sync(this);
     }
 
-    public void modifyMagic(int amount){
-        if(magic + amount >= magicCap){
+    public void modifyMagic(int amount) {
+        if (magic + amount >= magicCap) {
             magic = magicCap;
         } else {
             magic = Math.max(magic + amount, 0);
@@ -72,11 +72,11 @@ public class WKPlayerComponent implements AutoSyncedComponent, ServerTickingComp
 
     @Override
     public void serverTick() {
-        if(!isWitch())return;
+        if (!isWitch()) return;
 
         ServerWorld serverWorld = (ServerWorld) player.world;
-        if(canRegenMagic() && serverWorld.getTime() % 20 == 0){
-            if(magic < magicCap){
+        if (canRegenMagic() && serverWorld.getTime() % 20 == 0) {
+            if (magic < magicCap) {
                 magic++;
                 WKComponents.PLAYER_COMPONENT.sync(this);
             }
@@ -103,10 +103,10 @@ public class WKPlayerComponent implements AutoSyncedComponent, ServerTickingComp
         nbt.putBoolean("IsWitch", isWitch);
     }
 
-    public void addOrReplaceAttribute(EntityAttributeModifier attributeMod){
+    public void addOrReplaceAttribute(EntityAttributeModifier attributeMod) {
         EntityAttributeInstance speed = player.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
-        if(speed != null && SPEED_SET.contains(attributeMod)){
-            for(EntityAttributeModifier mod : SPEED_SET){
+        if (speed != null && SPEED_SET.contains(attributeMod)) {
+            for (EntityAttributeModifier mod : SPEED_SET) {
                 if (speed.hasModifier(mod)) {
                     speed.removeModifier(mod);
                 }
@@ -115,8 +115,8 @@ public class WKPlayerComponent implements AutoSyncedComponent, ServerTickingComp
         }
 
         EntityAttributeInstance armor = player.getAttributeInstance(EntityAttributes.GENERIC_ARMOR);
-        if(armor != null && ARMOR_SET.contains(attributeMod)){
-            for(EntityAttributeModifier mod : ARMOR_SET){
+        if (armor != null && ARMOR_SET.contains(attributeMod)) {
+            for (EntityAttributeModifier mod : ARMOR_SET) {
                 if (armor.hasModifier(mod)) {
                     armor.removeModifier(mod);
                 }
@@ -125,8 +125,8 @@ public class WKPlayerComponent implements AutoSyncedComponent, ServerTickingComp
         }
 
         EntityAttributeInstance armorToughness = player.getAttributeInstance(EntityAttributes.GENERIC_ARMOR_TOUGHNESS);
-        if(armorToughness != null && ARMOR_THOUGHNESS_SET.contains(attributeMod)){
-            for(EntityAttributeModifier mod : ARMOR_THOUGHNESS_SET){
+        if (armorToughness != null && ARMOR_THOUGHNESS_SET.contains(attributeMod)) {
+            for (EntityAttributeModifier mod : ARMOR_THOUGHNESS_SET) {
                 if (armorToughness.hasModifier(mod)) {
                     armorToughness.removeModifier(mod);
                 }
@@ -135,8 +135,8 @@ public class WKPlayerComponent implements AutoSyncedComponent, ServerTickingComp
         }
 
         EntityAttributeInstance attack = player.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE);
-        if(attack != null && ATTACK_SET.contains(attributeMod)){
-            for(EntityAttributeModifier mod : ATTACK_SET){
+        if (attack != null && ATTACK_SET.contains(attributeMod)) {
+            for (EntityAttributeModifier mod : ATTACK_SET) {
                 if (attack.hasModifier(mod)) {
                     attack.removeModifier(mod);
                 }

@@ -11,6 +11,7 @@ import java.util.List;
 
 public class CurseBundleItem extends Item {
     public int levels;
+
     public CurseBundleItem(Settings settings, int levels) {
         super(settings);
         this.levels = levels;

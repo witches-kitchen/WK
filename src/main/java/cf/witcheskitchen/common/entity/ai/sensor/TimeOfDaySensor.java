@@ -13,10 +13,10 @@ import net.tslat.smartbrainlib.util.BrainUtils;
 
 import java.util.List;
 
-public class TimeOfDaySensor <E extends LivingEntity> extends PredicateSensor<E, E> {
+public class TimeOfDaySensor<E extends LivingEntity> extends PredicateSensor<E, E> {
     private static final List<MemoryModuleType<?>> MEMORIES = ObjectArrayList.of(WKMemoryModuleTypes.IS_NIGHT);
 
-    public TimeOfDaySensor(){
+    public TimeOfDaySensor() {
         super((entity2, entity) -> entity.world.isNight());
     }
 

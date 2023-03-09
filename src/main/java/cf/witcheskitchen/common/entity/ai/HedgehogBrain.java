@@ -4,7 +4,9 @@ import cf.witcheskitchen.common.entity.ai.task.DontMoveTask;
 import cf.witcheskitchen.common.entity.ai.task.FollowOwnerTask;
 import cf.witcheskitchen.common.entity.tameable.HedgehogEntity;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.entity.ai.brain.task.*;
+import net.minecraft.entity.ai.brain.task.LookAroundTask;
+import net.minecraft.entity.ai.brain.task.StayAboveWaterTask;
+import net.minecraft.entity.ai.brain.task.WanderAroundTask;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.OneRandomBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.Idle;
@@ -30,7 +32,7 @@ public class HedgehogBrain {
     public static BrainActivityGroup<HedgehogEntity> getIdleTasks() {
         return BrainActivityGroup.idleTasks(
                 new OneRandomBehaviour<>(
-                       new SetPlayerLookTarget<>()),
+                        new SetPlayerLookTarget<>()),
                 new Idle<>(),
                 new FollowOwnerTask()
         );

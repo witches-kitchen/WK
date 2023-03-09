@@ -9,7 +9,7 @@ import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 @ClientOnly
 public interface WKColorProviderRegistry {
-    static void init(){
+    static void init() {
         ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> pos != null && world != null ? BiomeColors.getFoliageColor(world, pos) : FoliageColors.getDefaultColor(),
                 WKBlocks.SUMAC_LEAVES,
                 WKBlocks.JUNIPER_LEAVES

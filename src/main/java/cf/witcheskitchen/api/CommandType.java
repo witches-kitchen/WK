@@ -4,7 +4,7 @@ public class CommandType {
     public String command;
     public String type;
 
-    public CommandType(String command, String type){
+    public CommandType(String command, String type) {
         this.command = command;
         this.type = type;
     }

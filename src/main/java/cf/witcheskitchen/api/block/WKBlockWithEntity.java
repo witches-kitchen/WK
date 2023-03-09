@@ -32,9 +32,9 @@ public abstract class WKBlockWithEntity extends Block implements BlockEntityProv
             if (world != null) {
                 if (blockEntity instanceof WKBlockEntity ticker) {
                     ticker.tick(tickerWorld, pos, tickerState, ticker);
-                    if(world.isClient()){
+                    if (world.isClient()) {
                         ticker.onClientTick(world, pos, state, ticker);
-                    }else{
+                    } else {
                         ticker.onServerTick(world, pos, state, ticker);
                     }
                 }

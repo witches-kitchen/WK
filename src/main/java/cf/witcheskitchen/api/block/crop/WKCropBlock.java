@@ -264,9 +264,9 @@ public abstract class WKCropBlock extends CropBlock {
      * Triggered on {@link MinecraftClient#doItemPick()}.
      */
     @Override
-    protected ItemConvertible getSeedsItem(){
+    protected ItemConvertible getSeedsItem() {
         return getSeedsItemStack().getItem();
-    };
+    }
 
     @Override
     public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
@@ -275,9 +275,9 @@ public abstract class WKCropBlock extends CropBlock {
 
     protected abstract ItemStack getSeedsItemStack();
 
-    public void getNextSeed(World world, BlockPos pos, NbtCompound nbtCompound){
-            ItemStack itemStack2 = getSeedsItemStack();
-            itemStack2.getOrCreateNbt().copyFrom(nbtCompound);
-            ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), itemStack2);
+    public void getNextSeed(World world, BlockPos pos, NbtCompound nbtCompound) {
+        ItemStack itemStack2 = getSeedsItemStack();
+        itemStack2.getOrCreateNbt().copyFrom(nbtCompound);
+        ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), itemStack2);
     }
 }

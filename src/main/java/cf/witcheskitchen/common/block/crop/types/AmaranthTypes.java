@@ -22,11 +22,11 @@ public enum AmaranthTypes {
         this.color = color;
     }
 
-    public String getName(){
+    public String getName() {
         return "amaranth";
     }
 
-    public String getType(){
+    public String getType() {
         return type;
     }
 
@@ -34,10 +34,10 @@ public enum AmaranthTypes {
         return color;
     }
 
-    public Optional<AmaranthTypes> next(AmaranthTypes v){
+    public Optional<AmaranthTypes> next(AmaranthTypes v) {
         AmaranthTypes[] variants = AmaranthTypes.values();
         int index = v.ordinal();
-        if(variants.length == v.ordinal() + 1){
+        if (variants.length == v.ordinal() + 1) {
             return Optional.empty();
         }
         int nextIndex = index + 1;

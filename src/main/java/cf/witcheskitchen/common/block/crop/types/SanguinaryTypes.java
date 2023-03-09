@@ -18,11 +18,11 @@ public enum SanguinaryTypes {
         this.color = color;
     }
 
-    public String getName(){
+    public String getName() {
         return "sanguinary";
     }
 
-    public String getType(){
+    public String getType() {
         return type;
     }
 
@@ -30,10 +30,10 @@ public enum SanguinaryTypes {
         return color;
     }
 
-    public Optional<SanguinaryTypes> next(SanguinaryTypes v){
+    public Optional<SanguinaryTypes> next(SanguinaryTypes v) {
         SanguinaryTypes[] variants = SanguinaryTypes.values();
         int index = v.ordinal();
-        if(variants.length == v.ordinal() + 1){
+        if (variants.length == v.ordinal() + 1) {
             return Optional.empty();
         }
         int nextIndex = index + 1;

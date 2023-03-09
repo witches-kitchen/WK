@@ -8,43 +8,44 @@ import org.jetbrains.annotations.Nullable;
 public class RitualCircle {
     public Size size;
     public Type type;
-    public static final byte[][] small = {{0, 1, 1, 1, 0}, {1, 0, 0, 0, 1}, {1, 0, 0, 0, 1}, {1, 0, 0, 0, 1}, {0, 1, 1, 1 ,0},};
+    public static final byte[][] small = {{0, 1, 1, 1, 0}, {1, 0, 0, 0, 1}, {1, 0, 0, 0, 1}, {1, 0, 0, 0, 1}, {0, 1, 1, 1, 0},};
     public static final byte[][] medium = {{0, 0, 1, 1, 1, 1, 1, 0, 0}, {0, 1, 0, 0, 0, 0, 0, 1, 0}, {1, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 1}, {0, 1, 0, 0, 0, 0, 0, 1, 0}, {0, 0, 1, 1, 1, 1, 1, 0, 0}};
     public static final byte[][] large = {{0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0}, {0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0}, {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0}, {0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0}, {0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0}};
 
-    public RitualCircle(Size size, Type type){
+    public RitualCircle(Size size, Type type) {
         this.size = size;
         this.type = type;
     }
 
-    public String getSize(){
+    public String getSize() {
         return size.name();
     }
 
-    public String getType(){
+    public String getType() {
         return type.name();
     }
 
     @Nullable
-    public static Size getSize(String string){
+    public static Size getSize(String string) {
         return Size.valueOf(string);
     }
 
     @Nullable
-    public static Type getType(String string){
+    public static Type getType(String string) {
         return Type.valueOf(string);
     }
 
-    public enum Size{
+    public enum Size {
         small(RitualCircle.small),
         medium(RitualCircle.medium),
         large(RitualCircle.large);
 
-        Size(byte[][] size){
+        Size(byte[][] size) {
 
         }
     }
-    public enum Type{
+
+    public enum Type {
         chalk(WKBlocks.GLYPH),
         salt(WKBlocks.SALT_BLOCK),
         candle(Blocks.CANDLE);

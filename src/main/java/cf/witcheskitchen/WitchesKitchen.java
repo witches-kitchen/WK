@@ -63,7 +63,7 @@ public class WitchesKitchen implements ModInitializer {
 
     }
 
-    public static Identifier id(String name){
+    public static Identifier id(String name) {
         return new Identifier(MODID, name);
     }
 

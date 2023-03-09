@@ -1,10 +1,11 @@
 package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WitchesKitchen;
-import cf.witcheskitchen.common.item.VariantSeedItem;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
 import cf.witcheskitchen.common.item.*;
-import net.minecraft.item.*;
+import net.minecraft.item.FoodComponents;
+import net.minecraft.item.Item;
+import net.minecraft.item.SpawnEggItem;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import org.quiltmc.qsl.item.setting.api.QuiltItemSettings;
@@ -99,7 +100,7 @@ public interface WKItems {
     Item CONEFLOWER_SEEDS = register("coneflower_seeds", new VariantSeedItem(WKBlocks.CONEFLOWER, settings()));
     Item FOXGLOVE_SEEDS = register("foxglove_seeds", new VariantSeedItem(WKBlocks.FOXGLOVE, settings()));
     Item HELLEBORE_SEEDS = register("hellebore_seeds", new VariantSeedItem(WKBlocks.HELLEBORE, settings()));
-    Item IRIS_SEEDS = register("iris_seeds",new VariantSeedItem(WKBlocks.IRIS, settings()));
+    Item IRIS_SEEDS = register("iris_seeds", new VariantSeedItem(WKBlocks.IRIS, settings()));
     Item SANGUINARY_SEEDS = register("sanguinary_seeds", new VariantSeedItem(WKBlocks.SANGUINARY, settings()));
     Item WORMWOOD_SEEDS = register("wormwood_seeds", new VariantSeedItem(WKBlocks.WORMWOOD, settings()));
 
@@ -121,10 +122,10 @@ public interface WKItems {
         return new QuiltItemSettings();
     }
 
-    static Item register(String string){
+    static Item register(String string) {
         return register(string, new Item(settings()));
     }
-    
+
     static <T extends Item> T register(String id, T item) {
         ObjectDefinition<Item> itemIdentifier = new ObjectDefinition<>(WitchesKitchen.id(id), item);
         ITEMS.add(itemIdentifier);

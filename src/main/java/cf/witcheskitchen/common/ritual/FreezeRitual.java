@@ -2,7 +2,6 @@ package cf.witcheskitchen.common.ritual;
 
 import cf.witcheskitchen.api.ritual.Ritual;
 import cf.witcheskitchen.common.recipe.RitualRecipe;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
@@ -18,7 +17,7 @@ public class FreezeRitual extends Ritual {
         double strength = ritualRecipe.circleSet.size() * 2;
         List<LivingEntity> list = world.getEntitiesByClass(LivingEntity.class, new Box(blockPos).expand(strength), livingEntity ->
                 livingEntity.squaredDistanceTo(blockPos.getX(), blockPos.getY(), blockPos.getZ()) < strength && !(livingEntity instanceof PlayerEntity));
-        for (LivingEntity entity : list){
+        for (LivingEntity entity : list) {
             //TODO disable movement
         }
 

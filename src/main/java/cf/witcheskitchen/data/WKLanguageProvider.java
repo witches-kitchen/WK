@@ -1,7 +1,10 @@
 package cf.witcheskitchen.data;
 
 import cf.witcheskitchen.common.event.WKItemGroupEvents;
-import cf.witcheskitchen.common.registry.*;
+import cf.witcheskitchen.common.registry.WKBlocks;
+import cf.witcheskitchen.common.registry.WKEntityTypes;
+import cf.witcheskitchen.common.registry.WKItems;
+import cf.witcheskitchen.common.registry.WKStatusEffects;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 
@@ -273,7 +276,7 @@ public class WKLanguageProvider extends FabricLanguageProvider {
         builder.add(WKItems.WAYSTONE, "Waystone");
 
         //POTIONS
-        builder.add( "item.minecraft.potion.effect.rum", "Rum Potion");
+        builder.add("item.minecraft.potion.effect.rum", "Rum Potion");
         builder.add("item.minecraft.splash_potion.effect.rum", "Rum Splash Potion");
         builder.add("item.minecraft.lingering_potion.effect.rum", "Rum Lingering Potion");
 

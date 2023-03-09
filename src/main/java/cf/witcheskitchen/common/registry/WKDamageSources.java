@@ -14,7 +14,7 @@ public interface WKDamageSources {
 
     }
 
-     class WKFireDamageSource extends DamageSource {
+    class WKFireDamageSource extends DamageSource {
 
         protected WKFireDamageSource(String name) {
             super(name);
@@ -23,7 +23,7 @@ public interface WKDamageSources {
         }
     }
 
-     class WKHolyDamageSource extends DamageSource {
+    class WKHolyDamageSource extends DamageSource {
 
         protected WKHolyDamageSource(String name) {
             super(name);

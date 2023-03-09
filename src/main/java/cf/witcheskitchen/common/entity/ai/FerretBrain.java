@@ -14,7 +14,10 @@ import net.minecraft.entity.ai.brain.Brain;
 import net.minecraft.entity.ai.brain.MemoryModuleType;
 import net.minecraft.entity.ai.brain.VisibleLivingEntitiesCache;
 import net.minecraft.entity.ai.brain.sensor.Sensor;
-import net.minecraft.entity.ai.brain.task.*;
+import net.minecraft.entity.ai.brain.task.LookAroundTask;
+import net.minecraft.entity.ai.brain.task.LookTargetUtil;
+import net.minecraft.entity.ai.brain.task.StayAboveWaterTask;
+import net.minecraft.entity.ai.brain.task.WanderAroundTask;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.FirstApplicableBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.OneRandomBehaviour;
@@ -61,11 +64,11 @@ public class FerretBrain {
                 new FirstApplicableBehaviour<>(
                         //new TargetOrRetaliate<>().startCondition(e -> getAttackTarget(ferret).isPresent()),
                         new SetPlayerLookTarget<>()),
-                        //new SetRandomLookTarget<>()),
+                //new SetRandomLookTarget<>()),
                 new OneRandomBehaviour<>(
                         new SetRandomWalkTarget<>().speedModifier(0.6f),
                         new Idle<>()
-            )
+                )
         );
     }
 
@@ -79,12 +82,12 @@ public class FerretBrain {
     public static Optional<? extends LivingEntity> getAttackTarget(FerretEntity ferretEntity) {
         Brain<?> brain = ferretEntity.getBrain();
         Optional<LivingEntity> optional = LookTargetUtil.getEntity(ferretEntity, MemoryModuleType.ANGRY_AT);
-        if(optional.isPresent() && Sensor.testAttackableTargetPredicateIgnoreVisibility(ferretEntity, optional.get())){
+        if (optional.isPresent() && Sensor.testAttackableTargetPredicateIgnoreVisibility(ferretEntity, optional.get())) {
             return optional;
         }
         if (brain.hasMemoryModule(MemoryModuleType.VISIBLE_MOBS)) {
             Optional<VisibleLivingEntitiesCache> visibleLivingEntitiesCache = ferretEntity.getBrain().getOptionalMemory(MemoryModuleType.VISIBLE_MOBS);
-            if(visibleLivingEntitiesCache.isPresent()){
+            if (visibleLivingEntitiesCache.isPresent()) {
                 return visibleLivingEntitiesCache.get().m_yzezovsk(UNTAMED_TARGET_PREDICATE);
             }
         }

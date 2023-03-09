@@ -44,25 +44,24 @@ public class TeapotBlockEntity extends WKBlockEntityWithInventory {
     }
 
 
-
     @Override
     public void tick(World world, BlockPos blockPos, BlockState blockState, WKBlockEntity blockEntity) {
-        if(world.getBlockState(pos.down()).getBlock() instanceof WitchesOvenBlock && world.getBlockState(pos.down()).get(WitchesOvenBlock.LIT)){
-            if(teaRecipe == null){
+        if (world.getBlockState(pos.down()).getBlock() instanceof WitchesOvenBlock && world.getBlockState(pos.down()).get(WitchesOvenBlock.LIT)) {
+            if (teaRecipe == null) {
                 teaRecipe = world.getRecipeManager().listAllOfType(WKRecipeTypes.TEA_RECIPE_TYPE).stream().filter(recipe -> recipe.input.test(this.manager.getStack(0))).findFirst().orElse(null);
-            }else{
-                if(hasWater){
-                    if(effect == null){
+            } else {
+                if (hasWater) {
+                    if (effect == null) {
                         effectTimer = 0;
                         progress++;
-                        if(progress >= UNOBTAINABLE_OUTPUT){
+                        if (progress >= UNOBTAINABLE_OUTPUT) {
                             effect = teaRecipe.getEffect();
                         }
-                    }else{
+                    } else {
                         progress = 0;
                         effectTimer++;
                         emitEffect(world, pos);
-                        if(effectTimer >= MAX_DURATION){
+                        if (effectTimer >= MAX_DURATION) {
                             effect = null;
                             this.manager.clear();
                         }
@@ -86,18 +85,18 @@ public class TeapotBlockEntity extends WKBlockEntityWithInventory {
     }
 
     public void onUse(World world, BlockState state, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-        if(player.getActiveHand() == Hand.MAIN_HAND){
+        if (player.getActiveHand() == Hand.MAIN_HAND) {
             ItemStack stack = player.getMainHandStack();
-            if(player.isSneaking()){
+            if (player.isSneaking()) {
                 emptyInventoryAndReset(world, true);
-            }else{
-                if(player.getMainHandStack().isOf(Items.GLASS_BOTTLE)){
+            } else {
+                if (player.getMainHandStack().isOf(Items.GLASS_BOTTLE)) {
                     tryFillBottle(player);
-                }else if(stack.isOf(Items.POTION) && PotionUtil.getPotion(stack) == Potions.WATER){
+                } else if (stack.isOf(Items.POTION) && PotionUtil.getPotion(stack) == Potions.WATER) {
                     fillKettle(player);
-                }else{
+                } else {
                     TeaRecipe teaRecipe = world.getRecipeManager().listAllOfType(WKRecipeTypes.TEA_RECIPE_TYPE).stream().filter(recipe -> recipe.input.test(stack)).findFirst().orElse(null);
-                    if(teaRecipe != null){
+                    if (teaRecipe != null) {
                         tryAddIngredientToTeaPot(stack, world);
                     }
                 }
@@ -106,14 +105,14 @@ public class TeapotBlockEntity extends WKBlockEntityWithInventory {
     }
 
     private void tryAddIngredientToTeaPot(ItemStack input, World world) {
-        if(manager.isEmpty()){
+        if (manager.isEmpty()) {
             manager.setStack(0, input.split(1));
             world.playSound(null, pos, SoundEvents.ENTITY_GENERIC_SPLASH, SoundCategory.BLOCKS, 1 / 3f, 1.5f);
         }
     }
 
     private void fillKettle(PlayerEntity player) {
-        if(!hasWater){
+        if (!hasWater) {
             ItemUtil.addItemToInventoryAndConsume(player, Hand.MAIN_HAND, new ItemStack(Items.GLASS_BOTTLE));
             player.world.playSound(null, pos, SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.BLOCKS, 1 / 3f, 1.0f);
             hasWater = true;
@@ -121,8 +120,8 @@ public class TeapotBlockEntity extends WKBlockEntityWithInventory {
     }
 
     private void tryFillBottle(PlayerEntity player) {
-        if(progress > TIME_TO_BREW && progress < UNOBTAINABLE_OUTPUT){
-            if(teaRecipe != null){
+        if (progress > TIME_TO_BREW && progress < UNOBTAINABLE_OUTPUT) {
+            if (teaRecipe != null) {
                 player.world.playSound(null, pos, SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.BLOCKS, 1 / 3f, 1.0F);
                 ItemUtil.addItemToInventoryAndConsume(player, Hand.MAIN_HAND, teaRecipe.getOutput());
                 emptyInventoryAndReset(world, false);
@@ -131,7 +130,7 @@ public class TeapotBlockEntity extends WKBlockEntityWithInventory {
     }
 
     private void emptyInventoryAndReset(World world, boolean sound) {
-        if(sound){
+        if (sound) {
             world.playSound(null, pos, SoundEvents.ENTITY_GENERIC_SPLASH, SoundCategory.BLOCKS, 1 / 3f, 1);
         }
         this.manager.clear();

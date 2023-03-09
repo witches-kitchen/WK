@@ -99,7 +99,7 @@ public class WKApi {
     public static LivingEntity getTaglockEntity(World world, ItemStack taglock) {
         if (world instanceof ServerWorld && taglock.getItem() instanceof TaglockItem && hasTaglock(taglock)) {
             UUID uuid = getTaglockUUID(taglock);
-            if(uuid != null){
+            if (uuid != null) {
                 for (ServerWorld serverWorld : world.getServer().getWorlds()) {
                     if (serverWorld.getEntity(uuid) instanceof LivingEntity livingEntity) {
                         return livingEntity;

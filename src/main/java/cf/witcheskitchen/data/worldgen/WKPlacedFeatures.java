@@ -12,13 +12,17 @@ import net.minecraft.registry.tag.TagKey;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.decorator.RarityFilterPlacementModifier;
-import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
+import net.minecraft.world.gen.feature.PlacedFeature;
+import net.minecraft.world.gen.feature.VegetationPlacedFeatures;
 import org.quiltmc.qsl.registry.api.event.DynamicRegistryManagerSetupContext;
-import org.quiltmc.qsl.worldgen.biome.api.*;
+import org.quiltmc.qsl.worldgen.biome.api.BiomeModification;
+import org.quiltmc.qsl.worldgen.biome.api.BiomeModifications;
+import org.quiltmc.qsl.worldgen.biome.api.ModificationPhase;
 
 public interface WKPlacedFeatures {
 
-    static void init(){
+    static void init() {
 
     }
 
@@ -30,7 +34,7 @@ public interface WKPlacedFeatures {
     RegistryKey<PlacedFeature> SUMAC = RegistryKey.of(RegistryKeys.PLACED_FEATURE, WitchesKitchen.id("sumac_tree"));
 
     static void init(Registry<ConfiguredFeature<?, ?>> configured, DynamicRegistryManagerSetupContext.RegistryMap registryMap) {
-        register(registryMap,"blackthorn_tree", configured.getHolder(WKConfiguredFeatures.CONFIGURED_FEATURE_KEYS.get(WKConfiguredFeatures.BLACKTHORN_TREE)).orElseThrow(), 10, WKBlocks.BLACKTHORN_SAPLING);
+        register(registryMap, "blackthorn_tree", configured.getHolder(WKConfiguredFeatures.CONFIGURED_FEATURE_KEYS.get(WKConfiguredFeatures.BLACKTHORN_TREE)).orElseThrow(), 10, WKBlocks.BLACKTHORN_SAPLING);
         register(registryMap, "elder_tree", configured.getHolder(WKConfiguredFeatures.CONFIGURED_FEATURE_KEYS.get(WKConfiguredFeatures.ELDER_TREE)).orElseThrow(), 10, WKBlocks.BLACKTHORN_SAPLING);
         register(registryMap, "hawthorn_tree", configured.getHolder(WKConfiguredFeatures.CONFIGURED_FEATURE_KEYS.get(WKConfiguredFeatures.HAWTHORN_TREE)).orElseThrow(), 10, WKBlocks.BLACKTHORN_SAPLING);
         register(registryMap, "juniper_tree", configured.getHolder(WKConfiguredFeatures.CONFIGURED_FEATURE_KEYS.get(WKConfiguredFeatures.JUNIPER_TREE)).orElseThrow(), 10, WKBlocks.BLACKTHORN_SAPLING);
@@ -47,11 +51,11 @@ public interface WKPlacedFeatures {
         addTree(biomeMod, WKTags.HAS_SUMAC, SUMAC);
     }
 
-    static void register(DynamicRegistryManagerSetupContext.RegistryMap registryMap, String id, Holder<ConfiguredFeature<?, ?>> feature, int rarity, Block sapling){
+    static void register(DynamicRegistryManagerSetupContext.RegistryMap registryMap, String id, Holder<ConfiguredFeature<?, ?>> feature, int rarity, Block sapling) {
         registryMap.register(RegistryKeys.PLACED_FEATURE, WitchesKitchen.id(id), new PlacedFeature(feature, VegetationPlacedFeatures.treePlacementModifiers(RarityFilterPlacementModifier.create(rarity), sapling)));
     }
 
-    static void addTree(BiomeModification biomeMod, TagKey<Biome> tag, RegistryKey<PlacedFeature> featureRegistryKey){
+    static void addTree(BiomeModification biomeMod, TagKey<Biome> tag, RegistryKey<PlacedFeature> featureRegistryKey) {
         biomeMod.add(ModificationPhase.ADDITIONS, b -> b.isIn(tag), context -> context.getGenerationSettings().addFeature(GenerationStep.Feature.TOP_LAYER_MODIFICATION, featureRegistryKey));
     }
 }

@@ -3,7 +3,10 @@ package cf.witcheskitchen.common.block;
 import cf.witcheskitchen.api.block.WKBlockWithEntity;
 import cf.witcheskitchen.common.blockentity.GlyphBlockEntity;
 import cf.witcheskitchen.common.registry.WKBlocks;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
@@ -36,7 +39,7 @@ public class GlyphBlock extends WKBlockWithEntity {
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if(world.getBlockEntity(pos) instanceof GlyphBlockEntity be){
+        if (world.getBlockEntity(pos) instanceof GlyphBlockEntity be) {
             be.onUse(world, state, pos, player, hit);
         }
         return super.onUse(state, world, pos, player, hand, hit);

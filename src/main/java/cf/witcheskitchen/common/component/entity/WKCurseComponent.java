@@ -15,7 +15,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class WKCurseComponent implements ServerTickingComponent, AutoSyncedComponent {
-    private Set<CursePair> curses = new HashSet<>();
+    private final Set<CursePair> curses = new HashSet<>();
     private final PlayerEntity player;
 
     public WKCurseComponent(PlayerEntity player) {
@@ -24,20 +24,20 @@ public class WKCurseComponent implements ServerTickingComponent, AutoSyncedCompo
 
     @Override
     public void serverTick() {
-        for(CursePair cursePair : getCurses()){
-            if(cursePair.getDuration() > 0){
+        for (CursePair cursePair : getCurses()) {
+            if (cursePair.getDuration() > 0) {
                 cursePair.getCurse().tick(player);
                 cursePair.setDuration(cursePair.getDuration() - 1);
-            }else{
+            } else {
                 removeCurse(cursePair.getCurse());
             }
         }
     }
 
     public void addCurse(Curse curse, int duration) {
-        if(hasCurse(curse)){
-            for(CursePair cursePair : getCurses()){
-                if(cursePair.getCurse() == curse){
+        if (hasCurse(curse)) {
+            for (CursePair cursePair : getCurses()) {
+                if (cursePair.getCurse() == curse) {
                     cursePair.setDuration(duration);
                     curse.onAdded(this.player);
                     return;
@@ -50,8 +50,8 @@ public class WKCurseComponent implements ServerTickingComponent, AutoSyncedCompo
 
     public void removeCurse(Curse curse) {
         if (hasCurse(curse)) {
-            for(CursePair cursePair : getCurses()){
-                if(cursePair.getCurse() == curse){
+            for (CursePair cursePair : getCurses()) {
+                if (cursePair.getCurse() == curse) {
                     cursePair.getCurse().onRemoved(this.player);
                     getCurses().remove(cursePair);
                 }

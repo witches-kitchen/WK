@@ -20,6 +20,7 @@ public interface WKFoodComponents {
     FoodComponent TEA_LEAF = new FoodComponent.Builder().hunger(1).saturationModifier(0.3f).snack().alwaysEdible().statusEffect(new StatusEffectInstance(StatusEffects.HASTE, 100), 0.35F).statusEffect(new StatusEffectInstance(StatusEffects.SPEED, 100), 0.35F).build();
 
     FoodComponent TEA = new FoodComponent.Builder().hunger(0).saturationModifier(0.5f).alwaysEdible().build();
+
     // Used to control in which order static constructors are called
     static void init() {
 

@@ -9,14 +9,14 @@ import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 
-import static cf.witcheskitchen.common.registry.WKItems.*;
 import static cf.witcheskitchen.common.registry.WKBlocks.*;
+import static cf.witcheskitchen.common.registry.WKItems.*;
 
 public class WKItemGroupEvents {
     public static final ItemGroup GENERAL_TAB = FabricItemGroup.builder(WitchesKitchen.id("general")).icon(() -> new ItemStack(WKBlocks.IRON_WITCHES_OVEN.asItem())).build();
-    public static final ItemGroup FOOD_TAB = FabricItemGroup.builder(WitchesKitchen.id( "food")).icon(() -> new ItemStack(WKItems.ELDER_TEA)).build();
+    public static final ItemGroup FOOD_TAB = FabricItemGroup.builder(WitchesKitchen.id("food")).icon(() -> new ItemStack(WKItems.ELDER_TEA)).build();
 
-    public static void init(){
+    public static void init() {
         ItemGroupEvents.modifyEntriesEvent(GENERAL_TAB).register(WKItemGroupEvents::generalGroup);
         ItemGroupEvents.modifyEntriesEvent(FOOD_TAB).register(WKItemGroupEvents::foodGroup);
     }
@@ -232,7 +232,6 @@ public class WKItemGroupEvents {
         e.addItem(MEATY_STEW);
         e.addItem(VEGETABLE_STEW);
     }
-
 
 
 }

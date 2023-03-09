@@ -1,8 +1,8 @@
 package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WitchesKitchen;
-import cf.witcheskitchen.common.curse.Curse;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
+import cf.witcheskitchen.common.curse.Curse;
 import net.minecraft.registry.Registry;
 
 import java.util.ArrayList;

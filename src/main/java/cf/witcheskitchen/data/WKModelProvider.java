@@ -129,6 +129,7 @@ public class WKModelProvider extends FabricModelProvider {
         blockStateModelGenerator.blockStateCollector.accept(createFenceBlockState(fenceBlock, post, side));
         blockStateModelGenerator.registerParentedItemModel(fenceBlock, inventory);
     }
+
     public void registerFenceGate(BlockStateModelGenerator blockStateModelGenerator, Block fencegateBlock, Block parentBlock) {
         Texture textureMap = Texture.all(parentBlock);
         Identifier fence_gate = Models.TEMPLATE_FENCE_GATE.upload(fencegateBlock, textureMap, blockStateModelGenerator.modelCollector);
@@ -247,9 +248,9 @@ public class WKModelProvider extends FabricModelProvider {
         } else {
             BlockStateVariantMap blockStateVariantMap = BlockStateVariantMap.create(ageProperty, Properties.DOUBLE_BLOCK_HALF)
                     .register((integer, half) -> {
-                                int i = ageTextureIndices[integer];
-                                Identifier identifier =  generator.createSubModel(crop,"_" + half + "_stage" + i, Models.CROP, Texture::crop);
-                                return BlockStateVariant.create().put(VariantSettings.MODEL, identifier);
+                        int i = ageTextureIndices[integer];
+                        Identifier identifier = generator.createSubModel(crop, "_" + half + "_stage" + i, Models.CROP, Texture::crop);
+                        return BlockStateVariant.create().put(VariantSettings.MODEL, identifier);
                     });
             generator.registerItemModel(crop.asItem());
             generator.blockStateCollector.accept(VariantsBlockStateSupplier.create(crop, BlockStateVariant.create().put(VariantSettings.MODEL, ModelIds.getBlockModelId(crop)))

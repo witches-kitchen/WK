@@ -17,7 +17,7 @@ public class TaglockItem extends Item {
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        if(stack.hasNbt() && stack.getOrCreateNbt().contains("Name")){
+        if (stack.hasNbt() && stack.getOrCreateNbt().contains("Name")) {
             tooltip.add(Text.literal(stack.getOrCreateNbt().getString("Name")).setStyle(Style.EMPTY.withColor(0xF90C19)));
         }
     }

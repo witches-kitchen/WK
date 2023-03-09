@@ -10,7 +10,10 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DataPool;
 import net.minecraft.util.math.intprovider.ConstantIntProvider;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
-import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.FeatureConfig;
+import net.minecraft.world.gen.feature.TreeFeatureConfig;
 import net.minecraft.world.gen.feature.size.TwoLayersFeatureSize;
 import net.minecraft.world.gen.foliage.BlobFoliagePlacer;
 import net.minecraft.world.gen.foliage.RandomSpreadFoliagePlacer;
@@ -80,13 +83,13 @@ public interface WKConfiguredFeatures {
 
     ConfiguredFeature<TreeFeatureConfig, ?> SUMAC_TREE = register("sumac_tree", new ConfiguredFeature<>(Feature.TREE,
             new TreeFeatureConfig.Builder(
-            BlockStateProvider.of(WKBlocks.SUMAC_LOG),
-            new StraightTrunkPlacer(5, 2, 2),
-            BlockStateProvider.of(WKBlocks.SUMAC_LEAVES),
-            new SumacFoliagePlacer(ConstantIntProvider.create(2),
-                    ConstantIntProvider.create(0)),
-            new TwoLayersFeatureSize(1, 1, 2))
-            .build()));
+                    BlockStateProvider.of(WKBlocks.SUMAC_LOG),
+                    new StraightTrunkPlacer(5, 2, 2),
+                    BlockStateProvider.of(WKBlocks.SUMAC_LEAVES),
+                    new SumacFoliagePlacer(ConstantIntProvider.create(2),
+                            ConstantIntProvider.create(0)),
+                    new TwoLayersFeatureSize(1, 1, 2))
+                    .build()));
 
     static <C extends FeatureConfig, E extends Feature<C>, F extends ConfiguredFeature<C, E>> F register(String id, F feature) {
         CONFIGURED_FEATURES.put(WitchesKitchen.id(id), feature);
@@ -94,7 +97,8 @@ public interface WKConfiguredFeatures {
     }
 
     static void init(Registry<ConfiguredFeature<?, ?>> configured) {
-        CONFIGURED_FEATURES.forEach((id, feature) -> {Registry.register(configured, id, feature);
+        CONFIGURED_FEATURES.forEach((id, feature) -> {
+            Registry.register(configured, id, feature);
             CONFIGURED_FEATURE_KEYS.put(feature, configured.getKey(feature).orElseThrow());
         });
     }

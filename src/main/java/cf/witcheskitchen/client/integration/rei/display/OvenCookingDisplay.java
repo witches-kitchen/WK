@@ -1,7 +1,7 @@
 package cf.witcheskitchen.client.integration.rei.display;
 
-import cf.witcheskitchen.common.recipe.OvenCookingRecipe;
 import cf.witcheskitchen.client.integration.rei.WKREIPlugin;
+import cf.witcheskitchen.common.recipe.OvenCookingRecipe;
 import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.Display;

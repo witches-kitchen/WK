@@ -10,7 +10,7 @@ public class Curse {
         this.level = level;
     }
 
-    public void tick(@NotNull PlayerEntity player){
+    public void tick(@NotNull PlayerEntity player) {
 
     }
 

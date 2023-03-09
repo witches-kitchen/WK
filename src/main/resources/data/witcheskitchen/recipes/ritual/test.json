@@ -33,11 +33,10 @@
     }
   ],
   "summons": [
-
   ],
   "commands": [
     {
-      "command" : "execute at {pos} run setBlock ~ ~2 ~ dirt",
+      "command": "execute at {pos} run setBlock ~ ~2 ~ dirt",
       "type": "tick"
     }
   ],

@@ -7,9 +7,10 @@ import net.minecraft.text.Text;
 public class TextUtils {
     /**
      * stylized two strings with different colors on the same line of Text
-     * @param first string to be stylized
-     * @param second string to be stylized
-     * @param nameColor color of first string
+     *
+     * @param first      string to be stylized
+     * @param second     string to be stylized
+     * @param nameColor  color of first string
      * @param valueColor color fo second string
      * @return Text styled to "first: second"
      */
@@ -26,6 +27,7 @@ public class TextUtils {
 
     /**
      * turns "a_fun, string.minecraft:stick" to "A Fun, String Minecraft:stick"
+     *
      * @param string string to be formatted
      * @return formatted string
      */
@@ -36,7 +38,7 @@ public class TextUtils {
             if (!found && Character.isLetter(chars[i])) {
                 chars[i] = Character.toUpperCase(chars[i]);
                 found = true;
-            } else if (Character.isWhitespace(chars[i]) || chars[i]=='.' || chars[i]=='\'' || chars[i]=='_') {
+            } else if (Character.isWhitespace(chars[i]) || chars[i] == '.' || chars[i] == '\'' || chars[i] == '_') {
                 chars[i] = ' ';
                 found = false;
             }

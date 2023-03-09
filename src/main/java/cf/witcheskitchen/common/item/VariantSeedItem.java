@@ -30,9 +30,9 @@ public class VariantSeedItem extends AliasedBlockItem {
     @Override
     protected BlockState getPlacementState(ItemPlacementContext context) {
         ItemStack itemStack = context.getStack();
-        if(itemStack.hasNbt() && itemStack.getNbt().contains("Variant")){
+        if (itemStack.hasNbt() && itemStack.getNbt().contains("Variant")) {
             Optional<Block> blockState = SeedTypeHelper.getBlockFromNbt(itemStack.getNbt());
-            if(blockState.isPresent() && this.canPlace(context, blockState.get().getDefaultState())){
+            if (blockState.isPresent() && this.canPlace(context, blockState.get().getDefaultState())) {
                 return blockState.get().getDefaultState();
             }
         }
@@ -54,7 +54,7 @@ public class VariantSeedItem extends AliasedBlockItem {
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         MutableText text = SeedTypeHelper.getSeedTypeText(stack);
-        if(text != null){
+        if (text != null) {
             tooltip.add(text);
         }
         super.appendTooltip(stack, world, tooltip, context);

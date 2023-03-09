@@ -31,8 +31,8 @@ import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.Random;
@@ -225,7 +225,7 @@ public class CuSithEntity extends WKHostileEntity implements GeoEntity {
     }
 
     private PlayState legTransform(AnimationState<CuSithEntity> state) {
-        if(state.isMoving()){
+        if (state.isMoving()) {
             state.setAnimation(RawAnimation.begin().then("run", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }

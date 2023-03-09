@@ -13,11 +13,11 @@ public enum GingerTypes {
         this.color = color;
     }
 
-    public String getName(){
+    public String getName() {
         return "ginger";
     }
 
-    public String getType(){
+    public String getType() {
         return type;
     }
 
@@ -25,10 +25,10 @@ public enum GingerTypes {
         return color;
     }
 
-    public Optional<GingerTypes> next(GingerTypes v){
+    public Optional<GingerTypes> next(GingerTypes v) {
         GingerTypes[] variants = GingerTypes.values();
         int index = v.ordinal();
-        if(variants.length == v.ordinal() + 1){
+        if (variants.length == v.ordinal() + 1) {
             return Optional.empty();
         }
         int nextIndex = index + 1;

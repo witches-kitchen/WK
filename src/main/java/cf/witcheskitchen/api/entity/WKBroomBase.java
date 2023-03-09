@@ -15,6 +15,7 @@ import net.minecraft.world.World;
 
 public abstract class WKBroomBase extends Entity {
     public final ItemStack stack;
+
     public WKBroomBase(EntityType<?> type, World world, ItemStack stack) {
         super(type, world);
         this.stack = stack;
@@ -25,9 +26,9 @@ public abstract class WKBroomBase extends Entity {
         if (player.shouldCancelInteraction()) {
             return ActionResult.PASS;
         } else if (!world.isClient) {
-            if(player.isSneaking() && player.getMainHandStack().isEmpty()){
+            if (player.isSneaking() && player.getMainHandStack().isEmpty()) {
                 return pickUpBroom(player);
-            }else{
+            } else {
                 return player.startRiding(this) ? ActionResult.CONSUME : ActionResult.PASS;
             }
 

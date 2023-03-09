@@ -16,11 +16,11 @@ public enum ChamomileTypes {
         this.color = color;
     }
 
-    public String getName(){
+    public String getName() {
         return "chamomile";
     }
 
-    public String getType(){
+    public String getType() {
         return type;
     }
 
@@ -28,10 +28,10 @@ public enum ChamomileTypes {
         return color;
     }
 
-    public Optional<ChamomileTypes> next(ChamomileTypes v){
+    public Optional<ChamomileTypes> next(ChamomileTypes v) {
         ChamomileTypes[] variants = ChamomileTypes.values();
         int index = v.ordinal();
-        if(variants.length == v.ordinal() + 1){
+        if (variants.length == v.ordinal() + 1) {
             return Optional.empty();
         }
         int nextIndex = index + 1;

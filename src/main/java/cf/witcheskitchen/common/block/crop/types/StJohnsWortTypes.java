@@ -13,11 +13,11 @@ public enum StJohnsWortTypes {
         this.color = color;
     }
 
-    public String getName(){
+    public String getName() {
         return "st_johns_wort";
     }
 
-    public String getType(){
+    public String getType() {
         return type;
     }
 
@@ -25,10 +25,10 @@ public enum StJohnsWortTypes {
         return color;
     }
 
-    public Optional<StJohnsWortTypes> next(StJohnsWortTypes v){
+    public Optional<StJohnsWortTypes> next(StJohnsWortTypes v) {
         StJohnsWortTypes[] variants = StJohnsWortTypes.values();
         int index = v.ordinal();
-        if(variants.length == v.ordinal() + 1){
+        if (variants.length == v.ordinal() + 1) {
             return Optional.empty();
         }
         int nextIndex = index + 1;

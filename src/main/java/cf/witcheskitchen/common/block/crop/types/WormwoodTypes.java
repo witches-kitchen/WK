@@ -13,21 +13,22 @@ public enum WormwoodTypes {
         this.color = color;
     }
 
-    public String getName(){
+    public String getName() {
         return "wormwood";
     }
 
-    public String getType(){
+    public String getType() {
         return type;
     }
 
     public int getColor() {
         return color;
     }
-    static Optional<WormwoodTypes> next(WormwoodTypes v){
+
+    static Optional<WormwoodTypes> next(WormwoodTypes v) {
         WormwoodTypes[] variants = WormwoodTypes.values();
         int index = v.ordinal();
-        if(variants.length == v.ordinal() + 1){
+        if (variants.length == v.ordinal() + 1) {
             return Optional.empty();
         }
         int nextIndex = index + 1;

@@ -16,11 +16,11 @@ public enum IrisTypes {
         this.color = color;
     }
 
-    public String getName(){
+    public String getName() {
         return "iris";
     }
 
-    public String getType(){
+    public String getType() {
         return type;
     }
 
@@ -28,10 +28,10 @@ public enum IrisTypes {
         return color;
     }
 
-    public Optional<IrisTypes> next(IrisTypes v){
+    public Optional<IrisTypes> next(IrisTypes v) {
         IrisTypes[] variants = IrisTypes.values();
         int index = v.ordinal();
-        if(variants.length == v.ordinal() + 1){
+        if (variants.length == v.ordinal() + 1) {
             return Optional.empty();
         }
         int nextIndex = index + 1;

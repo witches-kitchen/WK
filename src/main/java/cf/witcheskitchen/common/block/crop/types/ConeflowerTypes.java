@@ -28,11 +28,11 @@ public enum ConeflowerTypes {
         this.color = color;
     }
 
-    public String getName(){
+    public String getName() {
         return "coneflower";
     }
 
-    public String getType(){
+    public String getType() {
         return type;
     }
 
@@ -40,10 +40,10 @@ public enum ConeflowerTypes {
         return color;
     }
 
-    public Optional<ConeflowerTypes> next(ConeflowerTypes v){
+    public Optional<ConeflowerTypes> next(ConeflowerTypes v) {
         ConeflowerTypes[] variants = ConeflowerTypes.values();
         int index = v.ordinal();
-        if(variants.length == v.ordinal() + 1){
+        if (variants.length == v.ordinal() + 1) {
             return Optional.empty();
         }
         int nextIndex = index + 1;

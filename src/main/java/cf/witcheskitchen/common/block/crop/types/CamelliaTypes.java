@@ -17,11 +17,11 @@ public enum CamelliaTypes {
         this.color = color;
     }
 
-    public String getName(){
+    public String getName() {
         return "camellia";
     }
 
-    public String getType(){
+    public String getType() {
         return type;
     }
 
@@ -29,10 +29,10 @@ public enum CamelliaTypes {
         return color;
     }
 
-    public Optional<CamelliaTypes> next(CamelliaTypes v){
+    public Optional<CamelliaTypes> next(CamelliaTypes v) {
         CamelliaTypes[] variants = CamelliaTypes.values();
         int index = v.ordinal();
-        if(variants.length == v.ordinal() + 1){
+        if (variants.length == v.ordinal() + 1) {
             return Optional.empty();
         }
         int nextIndex = index + 1;

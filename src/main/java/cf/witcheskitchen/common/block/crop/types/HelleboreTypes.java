@@ -23,11 +23,11 @@ public enum HelleboreTypes {
         this.color = color;
     }
 
-    public String getName(){
+    public String getName() {
         return "hellebore";
     }
 
-    public String getType(){
+    public String getType() {
         return type;
     }
 
@@ -35,10 +35,10 @@ public enum HelleboreTypes {
         return color;
     }
 
-    public Optional<HelleboreTypes> next(HelleboreTypes v){
+    public Optional<HelleboreTypes> next(HelleboreTypes v) {
         HelleboreTypes[] variants = HelleboreTypes.values();
         int index = v.ordinal();
-        if(variants.length == v.ordinal() + 1){
+        if (variants.length == v.ordinal() + 1) {
             return Optional.empty();
         }
         int nextIndex = index + 1;

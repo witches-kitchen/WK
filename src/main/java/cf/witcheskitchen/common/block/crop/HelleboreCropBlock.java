@@ -2,9 +2,9 @@ package cf.witcheskitchen.common.block.crop;
 
 import cf.witcheskitchen.api.block.crop.WKCropBlock;
 import cf.witcheskitchen.api.interfaces.CropVariants;
-import cf.witcheskitchen.common.registry.WKItems;
 import cf.witcheskitchen.api.util.SeedTypeHelper;
 import cf.witcheskitchen.common.block.crop.types.HelleboreTypes;
+import cf.witcheskitchen.common.registry.WKItems;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -33,7 +33,7 @@ public class HelleboreCropBlock extends WKCropBlock implements CropVariants {
     @Override
     public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         Optional<HelleboreTypes> nextType = type.next(type);
-        if(nextType.isPresent()){
+        if (nextType.isPresent()) {
             NbtCompound nbtCompound = new NbtCompound();
             SeedTypeHelper.toNbt(nbtCompound, nextType.get().getName(), nextType.get().getType(), nextType.get().getColor());
             getNextSeed(world, pos, nbtCompound);

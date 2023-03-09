@@ -135,9 +135,9 @@ public class WKLootTableProvider {
             addDrop(WKBlocks.STRIPPED_ROWAN_LOG);
             addDrop(WKBlocks.STRIPPED_SUMAC_LOG);
 
-            addPlantDrop(WKBlocks.AMARANTH_PLANT, WKItems.AMARANTH_SPRIG , WKItems.AMARANTH_SEEDS);
+            addPlantDrop(WKBlocks.AMARANTH_PLANT, WKItems.AMARANTH_SPRIG, WKItems.AMARANTH_SEEDS);
             addPlantDrop(WKBlocks.BELLADONNA_PLANT, WKItems.BELLADONNA_BLOSSOM, WKItems.BELLADONNA_SEEDS);
-            addPlantDrop(WKBlocks.CHAMOMILE_PLANT, WKItems.CHAMOMILE_BLOSSOM ,WKItems.CHAMOMILE_SEEDS);
+            addPlantDrop(WKBlocks.CHAMOMILE_PLANT, WKItems.CHAMOMILE_BLOSSOM, WKItems.CHAMOMILE_SEEDS);
             addPlantDrop(WKBlocks.CONEFLOWER, WKItems.CONEFLOWER_BLOSSOM, WKItems.CONEFLOWER_SEEDS);
             addPlantDrop(WKBlocks.FOXGLOVE_PLANT, WKItems.FOXGLOVE_BLOSSOM, WKItems.FOXGLOVE_SEEDS);
             addPlantDrop(WKBlocks.HELLEBORE_PLANT, WKItems.HELLEBORE_BLOSSOM, WKItems.HELLEBORE_SEEDS);
@@ -150,7 +150,7 @@ public class WKLootTableProvider {
 
         }
 
-        public void addPlantDrop(Block block, ItemConvertible drop, ItemConvertible seed){
+        public void addPlantDrop(Block block, ItemConvertible drop, ItemConvertible seed) {
             LootCondition.Builder builder = BlockStatePropertyLootCondition.builder(block);
             this.add(block, applyExplosionDecay(
                     seed, LootTable.builder()
@@ -235,8 +235,6 @@ public class WKLootTableProvider {
 
         }
     }
-
-
 
 
 }

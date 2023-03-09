@@ -5,7 +5,10 @@ import cf.witcheskitchen.common.entity.ai.FerretBrain;
 import cf.witcheskitchen.common.registry.WKEntityTypes;
 import cf.witcheskitchen.common.registry.WKSoundEvents;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.*;
+import net.minecraft.entity.EntityData;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.brain.Brain;
 import net.minecraft.entity.ai.brain.MemoryModuleType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -15,7 +18,9 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.passive.*;
+import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.passive.PassiveEntity;
+import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -40,7 +45,6 @@ import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
-import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
@@ -84,7 +88,7 @@ public class FerretEntity extends WKTameableEntity implements GeoEntity, SmartBr
     @Override
     protected void mobTick() {
         tickBrain(this);
-        if(!this.getBrain().hasMemoryModule(MemoryModuleType.ATTACK_TARGET) && this.getDataTracker().get(TARGET_ID) != 0){
+        if (!this.getBrain().hasMemoryModule(MemoryModuleType.ATTACK_TARGET) && this.getDataTracker().get(TARGET_ID) != 0) {
             this.getDataTracker().set(TARGET_ID, 0);
             stopRiding();
         }
@@ -101,23 +105,23 @@ public class FerretEntity extends WKTameableEntity implements GeoEntity, SmartBr
     public void baseTick() {
         super.baseTick();
         LivingEntity target = getTargetFromData();
-        if(target != null && !this.hasVehicle() && !target.hasPassengers() && this.squaredDistanceTo(target) < 6){
+        if (target != null && !this.hasVehicle() && !target.hasPassengers() && this.squaredDistanceTo(target) < 6) {
             this.startRiding(target, true);
         }
     }
 
     @Override
     public void setTarget(@Nullable LivingEntity target) {
-        if(target != null){
+        if (target != null) {
             this.getDataTracker().set(TARGET_ID, target.getId());
-        }else{
+        } else {
             this.getDataTracker().set(TARGET_ID, 0);
         }
         super.setTarget(target);
     }
 
     @Nullable
-    public LivingEntity getTargetFromData(){
+    public LivingEntity getTargetFromData() {
         return this.world.getEntityById(this.getDataTracker().get(TARGET_ID)) instanceof LivingEntity livingEntity ? livingEntity : null;
     }
 
@@ -267,7 +271,8 @@ public class FerretEntity extends WKTameableEntity implements GeoEntity, SmartBr
     }
 
     @Override
-    protected final void initGoals() {}
+    protected final void initGoals() {
+    }
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controller) {

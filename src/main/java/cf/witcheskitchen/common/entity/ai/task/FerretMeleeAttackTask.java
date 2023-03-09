@@ -36,7 +36,7 @@ public class FerretMeleeAttackTask extends Task<FerretEntity> {
     @Override
     protected void run(ServerWorld world, FerretEntity ferret, long time) {
         this.target = this.getAttackTarget(ferret);
-        if (ferret.getVehicle() != target){
+        if (ferret.getVehicle() != target) {
             ferret.getDataTracker().set(FerretEntity.TARGET_ID, target.getId());
             ferret.tryAttack(target);
         }
@@ -45,7 +45,7 @@ public class FerretMeleeAttackTask extends Task<FerretEntity> {
 
     @Override
     protected void keepRunning(ServerWorld world, FerretEntity ferret, long time) {
-        if(coolDown % 20 == 0 && target != null){
+        if (coolDown % 20 == 0 && target != null) {
             ferret.tryAttack(target);
         }
         coolDown++;

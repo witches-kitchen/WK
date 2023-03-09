@@ -24,10 +24,10 @@ public class WildTallPlantCropBlock extends TallPlantBlock {
 
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        if(state.get(HALF) == DoubleBlockHalf.UPPER){
+        if (state.get(HALF) == DoubleBlockHalf.UPPER) {
             return UPPER_SHAPE[size];
         }
-        return Block.createCuboidShape(0,0,0,16,16,16);
+        return Block.createCuboidShape(0, 0, 0, 16, 16, 16);
     }
 
     static {

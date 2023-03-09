@@ -17,19 +17,20 @@ public class SeedTypeHelper {
 
     /**
      * Gets the block corresponding to the present nbt
+     *
      * @param nbt the nbt to test for a block
      * @return optional block depending on if the nbt was valid for a block to be returned
      */
-    public static Optional<Block> getBlockFromNbt(NbtCompound nbt){
+    public static Optional<Block> getBlockFromNbt(NbtCompound nbt) {
         NbtList nbtList = nbt.getList("Variant", NbtElement.COMPOUND_TYPE);
-        if(!nbtList.isEmpty()){
+        if (!nbtList.isEmpty()) {
             NbtCompound nameNbt = nbtList.getCompound(0);
             NbtCompound typeNbt = nbtList.getCompound(1);
             String fullName = nameNbt.getString("Name") + "_" + typeNbt.getString("Type");
             for (Map.Entry<String, Block> entry : WKBlocks.getTypeBlocks().entrySet()) {
                 String nameMap = entry.getKey();
                 Block blockMap = entry.getValue();
-                if(nameMap.contains(fullName)){
+                if (nameMap.contains(fullName)) {
                     return Optional.of(blockMap);
                 }
             }
@@ -37,7 +38,7 @@ public class SeedTypeHelper {
         return Optional.empty();
     }
 
-    public static NbtCompound toNbt(NbtCompound nbt, String plantName, String typeName, int variantColor){
+    public static NbtCompound toNbt(NbtCompound nbt, String plantName, String typeName, int variantColor) {
         NbtList list = new NbtList();
 
         NbtCompound name = new NbtCompound();
@@ -55,9 +56,9 @@ public class SeedTypeHelper {
         return nbt;
     }
 
-    public static MutableText getSeedTypeText(ItemStack stack){
+    public static MutableText getSeedTypeText(ItemStack stack) {
         NbtList nbtList = stack.getOrCreateNbt().getList("Variant", NbtElement.COMPOUND_TYPE);
-        if(!nbtList.isEmpty() && !nbtList.getCompound(1).isEmpty() && !nbtList.getCompound(2).isEmpty()){
+        if (!nbtList.isEmpty() && !nbtList.getCompound(1).isEmpty() && !nbtList.getCompound(2).isEmpty()) {
             String name = nbtList.getCompound(1).getString("Type");
             String formatName = TextUtils.capitalizeString(name);
             NbtCompound colorNbt = nbtList.getCompound(2);

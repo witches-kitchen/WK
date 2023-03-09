@@ -1,7 +1,7 @@
 package cf.witcheskitchen.common.recipe;
 
-import cf.witcheskitchen.common.registry.WKRecipeTypes;
 import cf.witcheskitchen.api.util.RecipeUtils;
+import cf.witcheskitchen.common.registry.WKRecipeTypes;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import net.minecraft.inventory.Inventory;

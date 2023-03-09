@@ -2,9 +2,9 @@ package cf.witcheskitchen.common.block.crop;
 
 import cf.witcheskitchen.api.block.crop.WKTallCropBlock;
 import cf.witcheskitchen.api.interfaces.CropVariants;
-import cf.witcheskitchen.common.registry.WKItems;
 import cf.witcheskitchen.api.util.SeedTypeHelper;
 import cf.witcheskitchen.common.block.crop.types.CamelliaTypes;
+import cf.witcheskitchen.common.registry.WKItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CropBlock;
@@ -44,7 +44,7 @@ public class CamelliaCropBlock extends WKTallCropBlock implements CropVariants {
     @Override
     public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         Optional<CamelliaTypes> nextType = type.next(type);
-        if(nextType.isPresent()){
+        if (nextType.isPresent()) {
             NbtCompound nbtCompound = new NbtCompound();
             SeedTypeHelper.toNbt(nbtCompound, nextType.get().getName(), nextType.get().getType(), nextType.get().getColor());
             getNextSeed(world, pos, nbtCompound);
@@ -84,11 +84,11 @@ public class CamelliaCropBlock extends WKTallCropBlock implements CropVariants {
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if(state.get(HALF) == DoubleBlockHalf.UPPER){
+        if (state.get(HALF) == DoubleBlockHalf.UPPER) {
             pos = pos.down();
         }
 
-        if(player.getMainHandStack().isEmpty() && state.get(getAgeProperty()) == MAX_AGE){
+        if (player.getMainHandStack().isEmpty() && state.get(getAgeProperty()) == MAX_AGE) {
             world.setBlockState(pos, this.withHalf(this.getAge(state) - 2, DoubleBlockHalf.LOWER), Block.NOTIFY_LISTENERS);
             world.setBlockState(pos.up(), this.withHalf(this.getAge(state) - 2, DoubleBlockHalf.UPPER), Block.NOTIFY_LISTENERS);
         }

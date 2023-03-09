@@ -71,7 +71,7 @@ public class TeapotBlock extends WKBlock implements Waterloggable {
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if(world.getBlockEntity(pos) instanceof TeapotBlockEntity be){
+        if (world.getBlockEntity(pos) instanceof TeapotBlockEntity be) {
             be.onUse(world, state, pos, player, hit);
         }
 
@@ -83,7 +83,7 @@ public class TeapotBlock extends WKBlock implements Waterloggable {
         if (!state.isOf(newState.getBlock())) {
             final BlockEntity entity = world.getBlockEntity(pos);
             if (entity instanceof TeapotBlockEntity teapotEntity) {
-                if(teapotEntity.progress < TeapotBlockEntity.UNOBTAINABLE_OUTPUT){
+                if (teapotEntity.progress < TeapotBlockEntity.UNOBTAINABLE_OUTPUT) {
                     ItemScatterer.spawn(world, pos, teapotEntity);
                 }
             }
@@ -98,21 +98,21 @@ public class TeapotBlock extends WKBlock implements Waterloggable {
             Direction.Axis axis = direction.getAxis();
             double g = 0.52;
             double h = random.nextDouble() * 0.6 - 0.3;
-            double i = axis == Direction.Axis.X ? (double)direction.getOffsetX() * g : h;
+            double i = axis == Direction.Axis.X ? (double) direction.getOffsetX() * g : h;
             double j = random.nextDouble() * 6.0 / 16.0;
-            double k = axis == Direction.Axis.Z ? (double)direction.getOffsetZ() * g : h;
+            double k = axis == Direction.Axis.Z ? (double) direction.getOffsetZ() * g : h;
 
-            if(be.effect != null){
+            if (be.effect != null) {
                 int color = be.effect.getColor();
                 float width = 0.25f;
-                double d = (double)(color >> 16 & 0xFF) / 255.0;
-                double e = (double)(color >> 8 & 0xFF) / 255.0;
-                double f = (double)(color >> 0 & 0xFF) / 255.0;
+                double d = (double) (color >> 16 & 0xFF) / 255.0;
+                double e = (double) (color >> 8 & 0xFF) / 255.0;
+                double f = (double) (color >> 0 & 0xFF) / 255.0;
                 world.addParticle(ParticleTypes.ENTITY_EFFECT, pos.getX() + 0.5 + MathHelper.nextDouble(world.random, -width, width), pos.getY() + 0.25, pos.getZ() + 0.5 + MathHelper.nextDouble(world.random, -width, width), d, e, f);
-            }else if(be.progress > 0){
-                double d = (double)pos.getX() + 0.5;
-                double e = (double)pos.getY() + 0.5f;
-                double f = (double)pos.getZ() + 0.5;
+            } else if (be.progress > 0) {
+                double d = (double) pos.getX() + 0.5;
+                double e = (double) pos.getY() + 0.5f;
+                double f = (double) pos.getZ() + 0.5;
                 if (random.nextDouble() < 0.2) {
                     world.playSound(d, e, f, SoundEvents.BLOCK_BUBBLE_COLUMN_BUBBLE_POP, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
                 }

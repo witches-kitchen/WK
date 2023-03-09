@@ -29,7 +29,7 @@ public interface WKBlockEntityTypes {
 
     static <E extends BlockEntity> BlockEntityType<E> register(final String path, BiFunction<BlockPos, BlockState, E> factory, Block... blocks) {
         final BlockEntityType<E> type = QuiltBlockEntityTypeBuilder.create(factory::apply, blocks).build();
-        BLOCK_ENTITY_TYPES.add(new ObjectDefinition<>( WitchesKitchen.id(path), type));
+        BLOCK_ENTITY_TYPES.add(new ObjectDefinition<>(WitchesKitchen.id(path), type));
         return type;
     }
 

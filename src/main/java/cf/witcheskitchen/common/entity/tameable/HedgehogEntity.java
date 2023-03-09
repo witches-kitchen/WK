@@ -113,10 +113,10 @@ public class HedgehogEntity extends WKTameableEntity implements GeoEntity, Smart
     }
 
     private PlayState predicate(AnimationState<HedgehogEntity> state) {
-        if(this.isSitting()){
+        if (this.isSitting()) {
             state.setAnimation(RawAnimation.begin().thenLoop("loaf"));
             return PlayState.CONTINUE;
-        }else if(state.isMoving()){
+        } else if (state.isMoving()) {
             state.setAnimation(RawAnimation.begin().thenLoop("walk"));
             return PlayState.CONTINUE;
         }

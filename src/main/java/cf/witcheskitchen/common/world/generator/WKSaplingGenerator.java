@@ -8,7 +8,6 @@ import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.TreeFeatureConfig;
 
 
-
 public class WKSaplingGenerator extends SaplingGenerator {
 
     private final ConfiguredFeature<TreeFeatureConfig, ?> tree;

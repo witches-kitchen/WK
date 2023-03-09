@@ -77,24 +77,26 @@ public abstract class WKTallCropBlock extends WKCropBlock {
 
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        if(state.get(HALF) == DoubleBlockHalf.UPPER){
-            if(state.get(getAgeProperty()) > doubleBlockAge()){
+        if (state.get(HALF) == DoubleBlockHalf.UPPER) {
+            if (state.get(getAgeProperty()) > doubleBlockAge()) {
                 return getUpperShape()[state.get(getAgeProperty()) - doubleBlockAge() - 1];
             }
-        }else{
+        } else {
             return getLowerShape()[state.get(getAgeProperty())];
         }
-        return Block.createCuboidShape(0,0,0,16,16,16);
+        return Block.createCuboidShape(0, 0, 0, 16, 16, 16);
     }
 
     /**
      * Override this to change shape
+     *
      * @return
      */
     public abstract VoxelShape[] getLowerShape();
 
     /**
      * Override this to change shape
+     *
      * @return
      */
     public abstract VoxelShape[] getUpperShape();

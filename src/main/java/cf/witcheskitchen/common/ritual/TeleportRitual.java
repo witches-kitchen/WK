@@ -19,7 +19,7 @@ public class TeleportRitual extends Ritual {
         List<Entity> list = world.getEntitiesByClass(Entity.class, new Box(blockPos).expand(strength), livingEntity ->
                 livingEntity.squaredDistanceTo(blockPos.getX(), blockPos.getY(), blockPos.getZ()) < strength);
 
-        for (Entity entity : list){
+        for (Entity entity : list) {
             entity.teleport(location.getX(), location.getY(), location.getZ());
         }
     }

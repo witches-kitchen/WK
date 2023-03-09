@@ -46,6 +46,7 @@ public abstract class WKTameableEntity extends TameableEntity {
         dataTracker.set(POSE_FLAGS, nbt.getByte("Flags"));
         this.setVariant(nbt.getInt("Variant"));
     }
+
     public void setVariant(int variant) {
         this.dataTracker.set(VARIANT, variant);
     }
@@ -74,7 +75,7 @@ public abstract class WKTameableEntity extends TameableEntity {
     }
 
     @Override
-    public boolean isSitting(){
+    public boolean isSitting() {
         return getPoseFlag(1);
     }
 

@@ -5,7 +5,10 @@ import cf.witcheskitchen.api.block.entity.WKBlockEntityWithInventory;
 import cf.witcheskitchen.api.ritual.Ritual;
 import cf.witcheskitchen.api.ritual.RitualCircle;
 import cf.witcheskitchen.common.recipe.RitualRecipe;
-import cf.witcheskitchen.common.registry.*;
+import cf.witcheskitchen.common.registry.WKBlockEntityTypes;
+import cf.witcheskitchen.common.registry.WKBlocks;
+import cf.witcheskitchen.common.registry.WKRecipeTypes;
+import cf.witcheskitchen.common.registry.WKRegistries;
 import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -44,13 +47,13 @@ public class GlyphBlockEntity extends WKBlockEntityWithInventory {
 
     @Override
     public void tick(World world, BlockPos blockPos, BlockState blockState, WKBlockEntity blockEntity) {
-        if(ritualRecipe != null){
+        if (ritualRecipe != null) {
             progress++;
-            if(progress > 0){
+            if (progress > 0) {
                 ritual = ritualRecipe.rite;
-                if(progress < ritualRecipe.duration){
+                if (progress < ritualRecipe.duration) {
                     ritual.tick(world, blockPos, ritualRecipe);
-                }else{
+                } else {
                     ritual.onEnd(world, pos, ritualRecipe);
                     resetRitual();
                 }
@@ -68,12 +71,12 @@ public class GlyphBlockEntity extends WKBlockEntityWithInventory {
     public void onUse(World world, BlockState state, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         ItemStack handStack = player.getMainHandStack();
 
-        if(handStack.isEmpty()){
+        if (handStack.isEmpty()) {
             RitualRecipe ritualRecipeNoCircleCheck = world.getRecipeManager().listAllOfType(WKRecipeTypes.RITUAL_RECIPE_TYPE).stream().filter(recipe -> recipe.matches(this.manager, world)).findFirst().orElse(null);
-            if(ritualRecipeNoCircleCheck != null){
+            if (ritualRecipeNoCircleCheck != null) {
                 Set<RitualCircle> circle = ritualRecipeNoCircleCheck.circleSet;
-                if(checkValidCircle(world, pos, circle)){
-                    if(checkValidSacrifices(ritualRecipeNoCircleCheck, world)){
+                if (checkValidCircle(world, pos, circle)) {
+                    if (checkValidSacrifices(ritualRecipeNoCircleCheck, world)) {
                         this.manager.clear();
                         ritualRecipe = ritualRecipeNoCircleCheck;
                         ritual = ritualRecipe.rite;
@@ -86,7 +89,7 @@ public class GlyphBlockEntity extends WKBlockEntityWithInventory {
     }
 
     private boolean checkValidSacrifices(RitualRecipe ritual, World world) {
-        if(ritual.sacrifices != null && ritual.sacrifices.isEmpty()){
+        if (ritual.sacrifices != null && ritual.sacrifices.isEmpty()) {
             return true;
         }
 
@@ -97,9 +100,9 @@ public class GlyphBlockEntity extends WKBlockEntityWithInventory {
         List<EntityType<?>> ritualSacrifices = ritual.sacrifices;
 
         if (ritualSacrifices != null && new HashSet<>(entityTypeList).containsAll(ritualSacrifices)) {
-            for(EntityType<?> entityType : ritualSacrifices) {
+            for (EntityType<?> entityType : ritualSacrifices) {
                 LivingEntity foundEntity = getClosestEntity(livingEntityList, entityType, this.pos);
-                if (foundEntity != null){
+                if (foundEntity != null) {
                     foundEntity.damage(DamageSource.MAGIC, Integer.MAX_VALUE);
                 }
             }
@@ -111,7 +114,7 @@ public class GlyphBlockEntity extends WKBlockEntityWithInventory {
     public <T extends LivingEntity> T getClosestEntity(List<? extends T> entityList, EntityType<?> type, BlockPos pos) {
         double d = -1.0;
         T livingEntity = null;
-        for(T livingEntity2 : entityList) {
+        for (T livingEntity2 : entityList) {
             double e = livingEntity2.squaredDistanceTo(pos.getX(), pos.getY(), pos.getZ());
             if (livingEntity2.getType() == type && (d == -1.0 || e < d)) {
                 d = e;
@@ -123,21 +126,21 @@ public class GlyphBlockEntity extends WKBlockEntityWithInventory {
 
     private boolean checkValidCircle(World world, BlockPos pos, Set<RitualCircle> circleSet) {
         BlockPos.Mutable mutable = new BlockPos.Mutable();
-        for(RitualCircle circle : circleSet){
-            if(circle.size == RitualCircle.Size.small){
+        for (RitualCircle circle : circleSet) {
+            if (circle.size == RitualCircle.Size.small) {
                 return checkValidCircle(world, circle, mutable, RitualCircle.small);
             }
-            if(circle.size == RitualCircle.Size.medium){
+            if (circle.size == RitualCircle.Size.medium) {
                 return checkValidCircle(world, circle, mutable, RitualCircle.medium);
             }
-            if(circle.size == RitualCircle.Size.large){
+            if (circle.size == RitualCircle.Size.large) {
                 return checkValidCircle(world, circle, mutable, RitualCircle.large);
             }
         }
         return false;
     }
 
-    private boolean checkValidCircle(World world, RitualCircle circle, BlockPos.Mutable mutable, byte[][] size){
+    private boolean checkValidCircle(World world, RitualCircle circle, BlockPos.Mutable mutable, byte[][] size) {
         for (int x = 0; x < size.length; x++) {
             for (int z = 0; z < size.length; z++) {
                 if (size[x][z] == 1 && !isValidGlyph(circle.type, world.getBlockState(mutable.set(pos.getX() + (x - size.length / 2), pos.getY(), pos.getZ() + (z - size.length / 2))).getBlock())) {
@@ -149,11 +152,11 @@ public class GlyphBlockEntity extends WKBlockEntityWithInventory {
     }
 
     private boolean isValidGlyph(RitualCircle.Type type, Block block) {
-        if(type.equals(RitualCircle.Type.chalk) && block == WKBlocks.GLYPH){
+        if (type.equals(RitualCircle.Type.chalk) && block == WKBlocks.GLYPH) {
             return true;
-        }else if(type.equals(RitualCircle.Type.salt) && block == WKBlocks.SALT_BLOCK){
+        } else if (type.equals(RitualCircle.Type.salt) && block == WKBlocks.SALT_BLOCK) {
             return true;
-        }else return type.equals(RitualCircle.Type.candle) && block == Blocks.CANDLE;
+        } else return type.equals(RitualCircle.Type.candle) && block == Blocks.CANDLE;
     }
 
     @Override

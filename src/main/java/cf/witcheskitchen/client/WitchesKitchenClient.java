@@ -34,9 +34,9 @@ public class WitchesKitchenClient implements ClientModInitializer {
         WKBlocks.getBlocks().forEach(entry -> BlockRenderLayerMap.put(RenderLayer.getCutout(), entry.object()));//TODO eyo what is this, bad code, fix this
 
         ModelPredicateProviderRegistry.register(WKItems.WAYSTONE, new Identifier("bound"), ((itemStack, clientWorld, livingEntity, i) -> {
-            if(itemStack.getOrCreateNbt().contains("BlockPos")){
+            if (itemStack.getOrCreateNbt().contains("BlockPos")) {
                 return 1.0f;
-            }else {
+            } else {
                 return 0.0f;
             }
         }));

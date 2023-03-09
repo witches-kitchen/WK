@@ -114,7 +114,7 @@ public final class RecipeUtils {
         }
     }
 
-    public static List<EntityType<?>> deserializeEntityTypes(JsonArray array){
+    public static List<EntityType<?>> deserializeEntityTypes(JsonArray array) {
         if (array.isJsonArray()) {
             return arrayStream(array.getAsJsonArray()).map(entry -> deserializeEntityType(entry.getAsJsonObject())).collect(DefaultedListCollector.toList());
         } else {
@@ -216,7 +216,7 @@ public final class RecipeUtils {
         }
     }
 
-    public static @NotNull Set<RitualCircle> deserializeCircles(JsonArray array){
+    public static @NotNull Set<RitualCircle> deserializeCircles(JsonArray array) {
         if (!array.isEmpty()) {
             return arrayStream(array.getAsJsonArray()).map(entry -> deserializeCircle(entry.getAsJsonObject())).collect(Collectors.toSet());
         }
@@ -240,7 +240,7 @@ public final class RecipeUtils {
         return ingredients;
     }
 
-    public static Set<CommandType> deserializeCommands(JsonArray array){
+    public static Set<CommandType> deserializeCommands(JsonArray array) {
         if (!array.isEmpty()) {
             return arrayStream(array.getAsJsonArray()).map(entry -> deserializeCommand(entry.getAsJsonObject())).collect(Collectors.toSet());
         }

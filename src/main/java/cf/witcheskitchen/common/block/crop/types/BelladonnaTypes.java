@@ -15,11 +15,11 @@ public enum BelladonnaTypes {
         this.color = color;
     }
 
-    public String getName(){
+    public String getName() {
         return "belladonna";
     }
 
-    public String getType(){
+    public String getType() {
         return type;
     }
 
@@ -27,10 +27,10 @@ public enum BelladonnaTypes {
         return color;
     }
 
-    public Optional<BelladonnaTypes> next(BelladonnaTypes v){
+    public Optional<BelladonnaTypes> next(BelladonnaTypes v) {
         BelladonnaTypes[] variants = BelladonnaTypes.values();
         int index = v.ordinal();
-        if(variants.length == v.ordinal() + 1){
+        if (variants.length == v.ordinal() + 1) {
             return Optional.empty();
         }
         int nextIndex = index + 1;

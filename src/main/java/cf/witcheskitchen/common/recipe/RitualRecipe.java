@@ -1,10 +1,10 @@
 package cf.witcheskitchen.common.recipe;
 
 import cf.witcheskitchen.api.CommandType;
-import cf.witcheskitchen.api.ritual.RitualCircle;
 import cf.witcheskitchen.api.ritual.Ritual;
-import cf.witcheskitchen.common.registry.WKRecipeTypes;
+import cf.witcheskitchen.api.ritual.RitualCircle;
 import cf.witcheskitchen.api.util.RecipeUtils;
+import cf.witcheskitchen.common.registry.WKRecipeTypes;
 import cf.witcheskitchen.common.registry.WKRegistries;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -155,7 +155,7 @@ public class RitualRecipe implements Recipe<Inventory> {
             int duration = JsonHelper.getInt(json, "duration", 0);
 
             //Command
-            JsonArray commandArray = JsonHelper.getArray(json , "commands");
+            JsonArray commandArray = JsonHelper.getArray(json, "commands");
             Set<CommandType> commands = RecipeUtils.deserializeCommands(commandArray);
 
             return new RitualRecipe(id, rite, energy, circles, inputs, outputs, sacrifices, summons, duration, commands);
@@ -200,7 +200,7 @@ public class RitualRecipe implements Recipe<Inventory> {
 
             //Commands
             Set<CommandType> commandTypeSet = new HashSet<>();
-            for(int i = 0; i < buf.readInt(); i++){
+            for (int i = 0; i < buf.readInt(); i++) {
                 commandTypeSet.add(new CommandType(buf.readString(), buf.readString()));
             }
 
@@ -227,19 +227,19 @@ public class RitualRecipe implements Recipe<Inventory> {
             }
             //Circles
             buf.writeVarInt(recipe.circleSet.size());
-            for(RitualCircle circle : recipe.circleSet){
+            for (RitualCircle circle : recipe.circleSet) {
                 buf.writeString(circle.getSize());
                 buf.writeString(circle.getType());
             }
             //Sacrifices
             buf.writeInt(recipe.sacrifices.size());
-            for(EntityType<?> entityType : recipe.sacrifices){
+            for (EntityType<?> entityType : recipe.sacrifices) {
                 buf.writeString(Registries.ENTITY_TYPE.getId(entityType).toString());
             }
 
             //Summons
             buf.writeInt(recipe.summons.size());
-            for(EntityType<?> entityType : recipe.summons){
+            for (EntityType<?> entityType : recipe.summons) {
                 buf.writeString(Registries.ENTITY_TYPE.getId(entityType).toString());
             }
 
@@ -248,7 +248,7 @@ public class RitualRecipe implements Recipe<Inventory> {
 
             //Commands
             buf.writeVarInt(recipe.command.size());
-            for(CommandType commandType : recipe.command){
+            for (CommandType commandType : recipe.command) {
                 buf.writeString(commandType.getCommand());
                 buf.writeString(commandType.getType());
             }
