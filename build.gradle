@@ -58,6 +58,12 @@ repositories {
         name = "Modrinth"
         url = "https://api.modrinth.com/maven"
     }
+    maven {
+        url "https://maven.jamieswhiteshirt.com/libs-release"
+        content {
+            includeGroup "com.jamieswhiteshirt"
+        }
+    }	
 }
 
 dependencies {
@@ -91,6 +97,8 @@ dependencies {
 
     //SmartBrain
     modImplementation include("curse.maven:smartbrainlib-661293:${project.brain_version}")
+	
+	modImplementation include("com.jamieswhiteshirt:reach-entity-attributes:2.3.1")
 
     //CCA
     modImplementation include("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cca_version}")
