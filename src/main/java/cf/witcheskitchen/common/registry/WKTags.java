@@ -37,6 +37,12 @@ public interface WKTags {
     TagKey<Item> TEA_BLACKLIST = register(RegistryKeys.ITEM, "tea_blacklist");
     TagKey<Item> VALID_BREW_ITEM = register(RegistryKeys.ITEM, "valid_brew_item");
     TagKey<Item> RESETS_CAULDRON = register(RegistryKeys.ITEM, "resets_cauldron");
+    TagKey<Item> WILL_OF_THE_BEAST_SOURCE = register(RegistryKeys.ITEM, "will_of_the_beast_source");
+    TagKey<Item> ELDERS_GRACE_SOURCE = register(RegistryKeys.ITEM, "elders_grace_source");
+    //todo: add the useless blue thing from konosuba
+    TagKey<Item> GODDESS_TEARS_SOURCE = register(RegistryKeys.ITEM, "goddess_tears_source");
+    TagKey<Item> LICK_O_FLAME_SOURCE = register(RegistryKeys.ITEM, "lick_o_flame_source");
+    TagKey<Item> GAIAS_BREATH_SOURCE = register(RegistryKeys.ITEM, "gaias_breath_source");
 
     //Biome
     TagKey<Biome> HAS_BLACKTHORN = register(RegistryKeys.BIOME, "has_blackthorn");
