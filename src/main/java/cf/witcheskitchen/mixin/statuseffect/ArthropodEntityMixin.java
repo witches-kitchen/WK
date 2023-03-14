@@ -1,8 +1,5 @@
 package cf.witcheskitchen.mixin.statuseffect;
 
-import cf.witcheskitchen.api.entity.WKCreatureTypeEnum;
-import net.minecraft.data.server.tag.TagsProvider;
-import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.FleeEntityGoal;
 import net.minecraft.entity.mob.*;

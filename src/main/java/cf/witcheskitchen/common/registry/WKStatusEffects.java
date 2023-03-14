@@ -37,6 +37,8 @@ public interface WKStatusEffects {
     StatusEffect REINFORCEMENT = create("reinforcement", new ReinforcementStatusEffect(StatusEffectType.BENEFICIAL, 0x4000FF)).addAttributeModifier(EntityAttributes.GENERIC_ARMOR, "52823351-ea91-4db3-958d-1b1ce3804dd6", 4D, EntityAttributeModifier.Operation.ADDITION).addAttributeModifier(EntityAttributes.GENERIC_ARMOR_TOUGHNESS, "ec255b60-8b01-450b-8538-17a8a28e4aaf", 2D, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
     StatusEffect FELIFORM = create("feliform", new FeliformStatusEffect(StatusEffectType.BENEFICIAL, 0x228B22));
     StatusEffect LONG_REACH = create("long_reach", new LongReachStatusEffect(StatusEffectType.BENEFICIAL, 0x964a6e).addAttributeModifier(ReachEntityAttributes.REACH, "03f26044-be99-11ed-afa1-0242ac120002", 5.5D, EntityAttributeModifier.Operation.ADDITION).addAttributeModifier(ReachEntityAttributes.ATTACK_RANGE, "8827ff04-be99-11ed-afa1-0242ac120002", 4.5D, EntityAttributeModifier.Operation.ADDITION));
+    //FIXME: Get Step Height Attribute into the workspace proper!
+    //StatusEffect LONG_STRIDE = create("long_stride", new LongStrideStatusEffect(StatusEffectType.BENEFICIAL, 0xB7410E)).addAttributeModifier();
 
     static List<ObjectDefinition<StatusEffect>> getStatusEffects() {
         return Collections.unmodifiableList(STATUS_EFFECTS);
