@@ -98,11 +98,16 @@ dependencies {
     //SmartBrain
     modImplementation include("curse.maven:smartbrainlib-661293:${project.brain_version}")
 
+    //Reach Entity Attributes
     modImplementation include("com.jamieswhiteshirt:reach-entity-attributes:2.3.1")
 
     //CCA
     modImplementation include("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cca_version}")
     modImplementation include("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cca_version}")
+
+    //Step Height Attribute
+    modImplementation "com.github.emilyploszaj:step-height-entity-attribute:${step_height_version}"
+    include "com.github.emilyploszaj:step-height-entity-attribute:${step_height_version}"
 
     //Sodium
     modRuntimeOnly("maven.modrinth:sodium:${project.sodium}")
