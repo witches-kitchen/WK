@@ -30,7 +30,7 @@ public interface WKStatusEffects {
     StatusEffect COOLDOWN = create("cooldown", new CooldownStatusEffect(StatusEffectType.NEUTRAL, 0x1F75FE));
     StatusEffect GROWTH = create("growth", new GrowthStatusEffect(StatusEffectType.BENEFICIAL, 0x4F7942));
     StatusEffect LOVE = create("love", new LoveStatusEffect(StatusEffectType.BENEFICIAL, 0xFFB7C5));
-    StatusEffect PARALYSIS = create("paralysis", new ParalysisStatusEffect(StatusEffectType.HARMFUL, 0xFADA5E));
+    StatusEffect PARALYSIS = create("paralysis", new ParalysisStatusEffect(StatusEffectType.HARMFUL, 0xFADA5E)).addAttributeModifier(ReachEntityAttributes.REACH, "76d02fc2-c274-11ed-afa1-0242ac120002", 0D, EntityAttributeModifier.Operation.ADDITION).addAttributeModifier(ReachEntityAttributes.ATTACK_RANGE, "7c45b0e4-c274-11ed-afa1-0242ac120002", 0D, EntityAttributeModifier.Operation.ADDITION);
     StatusEffect PHASING = create("phasing", new PhasingStatusEffect(StatusEffectType.NEUTRAL, 0x7851A9));
     StatusEffect SHADOWS = create("shadows", new PhasingStatusEffect(StatusEffectType.BENEFICIAL, 0x86608E));
     StatusEffect CORROSION = create("corrosion", new CorrosionStatusEffect(StatusEffectType.HARMFUL, 0x3FFF00)).addAttributeModifier(EntityAttributes.GENERIC_ARMOR, "e8506ffe-e2b4-4f19-8669-becb8e3eb666", -4D, EntityAttributeModifier.Operation.ADDITION).addAttributeModifier(EntityAttributes.GENERIC_ARMOR_TOUGHNESS, "1845f14c-5411-4380-8be7-85e81317523a", -2D, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
