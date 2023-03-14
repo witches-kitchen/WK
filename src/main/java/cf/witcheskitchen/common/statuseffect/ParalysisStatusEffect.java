@@ -35,6 +35,7 @@ public class ParalysisStatusEffect extends StatusEffect {
         BlockPos pos = entity.getBlockPos();
         World world = entity.getWorld();
         entity.setVelocity(0, 0, 0);
+        entity.getAttributeValue(J);
         if (entity.isSwimming()) {
             entity.damage(DamageSource.DROWN, 2f);
             entity.setAir(0);
