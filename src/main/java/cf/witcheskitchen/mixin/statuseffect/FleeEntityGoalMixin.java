@@ -31,19 +31,19 @@ public abstract class FleeEntityGoalMixin<T extends LivingEntity> extends Goal {
         if (this.mob instanceof CreeperEntity && this.targetEntity instanceof PlayerEntity player) {
             cir.setReturnValue(player.hasStatusEffect(WKStatusEffects.FELIFORM));
         }
-        else if (this.mob instanceof SilverfishEntity && this.targetEntity instanceof PlayerEntity player) {
+        if (this.mob instanceof SilverfishEntity && this.targetEntity instanceof PlayerEntity player) {
             cir.setReturnValue(player.hasStatusEffect(WKStatusEffects.BUG_SPRAY));
         }
-        else if (this.mob instanceof EndermiteEntity && this.targetEntity instanceof PlayerEntity player) {
+        if (this.mob instanceof EndermiteEntity && this.targetEntity instanceof PlayerEntity player) {
             cir.setReturnValue(player.hasStatusEffect(WKStatusEffects.BUG_SPRAY));
         }
-        else if (this.mob instanceof BeeEntity && this.targetEntity instanceof PlayerEntity player) {
+        if (this.mob instanceof BeeEntity && this.targetEntity instanceof PlayerEntity player) {
             cir.setReturnValue(player.hasStatusEffect(WKStatusEffects.BUG_SPRAY));
         }
-        else if (this.mob instanceof SpiderEntity && this.targetEntity instanceof PlayerEntity player) {
+        if (this.mob instanceof SpiderEntity && this.targetEntity instanceof PlayerEntity player) {
             cir.setReturnValue(player.hasStatusEffect(WKStatusEffects.BUG_SPRAY));
         }
-        else if (this.mob instanceof CaveSpiderEntity && this.targetEntity instanceof PlayerEntity player) {
+        if (this.mob instanceof CaveSpiderEntity && this.targetEntity instanceof PlayerEntity player) {
             cir.setReturnValue(player.hasStatusEffect(WKStatusEffects.BUG_SPRAY));
         }
     }
