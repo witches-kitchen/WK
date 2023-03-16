@@ -5,7 +5,7 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectType;
 
 public class BugSprayStatusEffect extends StatusEffect {
-    protected BugSprayStatusEffect(StatusEffectType type, int color) {
+    public BugSprayStatusEffect(StatusEffectType type, int color) {
         super(type, color);
     }
 
