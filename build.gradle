@@ -64,6 +64,10 @@ repositories {
             includeGroup "com.jamieswhiteshirt"
         }
     }
+    maven {
+        url "https://maven.florens.be/releases"
+    }
+
 }
 
 dependencies {
@@ -106,8 +110,8 @@ dependencies {
     modImplementation include("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cca_version}")
 
     //Step Height Attribute
-    //modImplementation "com.github.emilyploszaj:step-height-entity-attribute:v1.1.0"
-    //include "com.github.emilyploszaj:step-height-entity-attribute:v1.1.0"
+    //modImplementation include("com.github.emilyploszaj:step-height-entity-attribute:${project.step_height_version}")
+    modImplementation include("dev.emi:step-height-entity-attribute:${project.step_height_version}")
 
     //Sodium
     modRuntimeOnly("maven.modrinth:sodium:${project.sodium}")
