@@ -11,6 +11,7 @@
     "potion.PotionItemMixin",
     "statuseffect.ActiveTargetGoalMixin",
     "statuseffect.CreeperEntityMixin",
+    "statuseffect.ArthropodEntityMixin",
     "statuseffect.FleeEntityGoalMixin"
   ],
   "client": [
