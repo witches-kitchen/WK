@@ -25,6 +25,8 @@ public abstract class ActiveTargetGoalMixin<T extends LivingEntity> extends Trac
         super(mob, checkVisibility);
     }
 
+
+    //Todo: This bug with the bugs spray potion and arthropods
     @Inject(method = "canStart", at = @At("TAIL"), cancellable = true)
     private void canStart(CallbackInfoReturnable<Boolean> cir) {
         if (this.mob instanceof CreeperEntity) {
