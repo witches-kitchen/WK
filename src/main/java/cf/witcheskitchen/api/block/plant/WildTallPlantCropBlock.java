@@ -12,8 +12,18 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 
 public class WildTallPlantCropBlock extends TallPlantBlock {
-    private final int size;
     public static final VoxelShape[] UPPER_SHAPE;
+
+    static {
+        UPPER_SHAPE = new VoxelShape[]{
+                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 4.0, 16.0),
+                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 8.0, 16.0),
+                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 12.0, 16.0),
+                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0)
+        };
+    }
+
+    private final int size;
     public WKTallCropBlock wkTallCropBlock;
 
     public WildTallPlantCropBlock(Settings settings, WKTallCropBlock wkTallCropBlock, int sizeInQuartersStartFromZero) {
@@ -28,14 +38,5 @@ public class WildTallPlantCropBlock extends TallPlantBlock {
             return UPPER_SHAPE[size];
         }
         return Block.createCuboidShape(0, 0, 0, 16, 16, 16);
-    }
-
-    static {
-        UPPER_SHAPE = new VoxelShape[]{
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 4.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 8.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 12.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0)
-        };
     }
 }

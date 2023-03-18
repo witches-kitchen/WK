@@ -18,6 +18,13 @@ public class WKModelProvider extends FabricModelProvider {
         super(output);
     }
 
+    public static void registerSlab(BlockStateModelGenerator blockStateModelGenerator, Block slab, Block source) {
+        TexturedModel texturedModel = TexturedModel.CUBE_ALL.get(source);
+        BlockStateModelGenerator.BlockTexturePool pool = blockStateModelGenerator.new BlockTexturePool(texturedModel.getTexture());
+        pool.base(source, Models.CUBE_ALL);
+        pool.slab(slab);
+    }
+
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator generator) {
 
@@ -97,13 +104,6 @@ public class WKModelProvider extends FabricModelProvider {
         registerFenceGate(generator, WKBlocks.JUNIPER_FENCE_GATE, WKBlocks.JUNIPER_PLANKS);
         registerFenceGate(generator, WKBlocks.ROWAN_FENCE_GATE, WKBlocks.ROWAN_PLANKS);
         registerFenceGate(generator, WKBlocks.SUMAC_FENCE_GATE, WKBlocks.SUMAC_PLANKS);
-    }
-
-    public static void registerSlab(BlockStateModelGenerator blockStateModelGenerator, Block slab, Block source) {
-        TexturedModel texturedModel = TexturedModel.CUBE_ALL.get(source);
-        BlockStateModelGenerator.BlockTexturePool pool = blockStateModelGenerator.new BlockTexturePool(texturedModel.getTexture());
-        pool.base(source, Models.CUBE_ALL);
-        pool.slab(slab);
     }
 
     public void registerStairs(BlockStateModelGenerator blockStateModelGenerator, Block stairBlock, Block source) {

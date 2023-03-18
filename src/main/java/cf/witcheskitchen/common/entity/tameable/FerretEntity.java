@@ -56,18 +56,13 @@ public class FerretEntity extends WKTameableEntity implements GeoEntity, SmartBr
 
     public static final TrackedData<Integer> TARGET_ID = DataTracker.registerData(FerretEntity.class, TrackedDataHandlerRegistry.INTEGER);
     public static final TrackedData<Boolean> NIGHT = DataTracker.registerData(FerretEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     public static final Ingredient BREEDING_INGREDIENTS = Ingredient.ofItems(Items.RABBIT, Items.COOKED_RABBIT, Items.CHICKEN, Items.COOKED_CHICKEN, Items.EGG, Items.RABBIT_FOOT, Items.TURTLE_EGG);
     public static final Item TAMING_INGREDIENT = Items.EGG;
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     public FerretEntity(EntityType<? extends TameableEntity> entityType, World world) {
         super(entityType, world);
         this.setTamed(false);
-    }
-
-    @Override
-    protected Brain.Profile<?> createBrainProfile() {
-        return new SmartBrainProvider<>(this);
     }
 
     public static DefaultAttributeContainer.Builder createAttributes() {
@@ -75,6 +70,11 @@ public class FerretEntity extends WKTameableEntity implements GeoEntity, SmartBr
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.5)
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 6.0)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE);
+    }
+
+    @Override
+    protected Brain.Profile<?> createBrainProfile() {
+        return new SmartBrainProvider<>(this);
     }
 
     @Nullable

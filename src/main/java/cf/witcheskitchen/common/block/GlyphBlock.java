@@ -27,10 +27,10 @@ import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
 
 public class GlyphBlock extends WKBlockWithEntity {
+    public static final DirectionProperty FACING = DirectionProperty.of("facing", Direction.Type.HORIZONTAL);
     private static final IntProperty GLYPH = IntProperty.of("type", 0, 9);
     private static final BooleanProperty ACTIVE = BooleanProperty.of("active");
     private final VoxelShape SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 0.125, 16.0);
-    public static final DirectionProperty FACING = DirectionProperty.of("facing", Direction.Type.HORIZONTAL);
 
     public GlyphBlock(Settings settings) {
         super(settings);

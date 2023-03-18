@@ -18,13 +18,12 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 public abstract class InGameHudMixin {
 
     @Shadow
-    public abstract TextRenderer getTextRenderer();
-
-    @Shadow
     private int scaledWidth;
-
     @Shadow
     private ItemStack currentStack;
+
+    @Shadow
+    public abstract TextRenderer getTextRenderer();
 
     @Inject(method = "renderHeldItemTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameHud;getTextRenderer()Lnet/minecraft/client/font/TextRenderer;", ordinal = 1), locals = LocalCapture.CAPTURE_FAILHARD)
     private void wk$renderTypeColor(MatrixStack matrices, CallbackInfo ci, MutableText mutableText, int i, int x, int y, int l) {

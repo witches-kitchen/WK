@@ -17,10 +17,36 @@ public class WormwoodCropBlock extends WKTallCropBlock implements CropVariants {
     public static final VoxelShape[] LOWER_AGE_TO_SHAPE;
     public static final VoxelShape[] UPPER_AGE_TO_SHAPE;
     public static final int MAX_AGE = 7;
+
+    static {
+        LOWER_AGE_TO_SHAPE = new VoxelShape[]{
+                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
+                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 4.0, 16.0),
+                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 6.0, 16.0),
+                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 10.0, 16.0),
+                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 14.0, 16.0),
+                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0),
+                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0),
+                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0)
+        };
+        UPPER_AGE_TO_SHAPE = new VoxelShape[]{
+                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 1.0, 16.0),
+                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
+                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 3.0, 16.0),
+                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 4.0, 16.0)
+        };
+    }
+
     private final WormwoodTypes type;
 
     public WormwoodCropBlock(Settings settings) {
         this(settings, WormwoodTypes.COMMON);
+    }
+
+    public WormwoodCropBlock(Settings settings, WormwoodTypes type) {
+        super(settings);
+        this.type = type;
+        this.setDefaultState(this.getDefaultState().with(getAgeProperty(), 0).with(HALF, DoubleBlockHalf.LOWER));
     }
 
     @Override
@@ -31,12 +57,6 @@ public class WormwoodCropBlock extends WKTallCropBlock implements CropVariants {
     @Override
     public VoxelShape[] getUpperShape() {
         return UPPER_AGE_TO_SHAPE;
-    }
-
-    public WormwoodCropBlock(Settings settings, WormwoodTypes type) {
-        super(settings);
-        this.type = type;
-        this.setDefaultState(this.getDefaultState().with(getAgeProperty(), 0).with(HALF, DoubleBlockHalf.LOWER));
     }
 
     @Override
@@ -62,24 +82,5 @@ public class WormwoodCropBlock extends WKTallCropBlock implements CropVariants {
     @Override
     public int doubleBlockAge() {
         return 3;
-    }
-
-    static {
-        LOWER_AGE_TO_SHAPE = new VoxelShape[]{
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 4.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 6.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 10.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 14.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0)
-        };
-        UPPER_AGE_TO_SHAPE = new VoxelShape[]{
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 1.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 3.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 4.0, 16.0)
-        };
     }
 }

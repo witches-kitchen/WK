@@ -44,16 +44,16 @@ public class HedgehogEntity extends WKTameableEntity implements GeoEntity, Smart
         this.setTamed(false);
     }
 
-    @Override
-    protected Brain.Profile<?> createBrainProfile() {
-        return new SmartBrainProvider<>(this);
-    }
-
     public static DefaultAttributeContainer.Builder createAttributes() {
         return MobEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.25)
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 6.0)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE);
+    }
+
+    @Override
+    protected Brain.Profile<?> createBrainProfile() {
+        return new SmartBrainProvider<>(this);
     }
 
     @Override

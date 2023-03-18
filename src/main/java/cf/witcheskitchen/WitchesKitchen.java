@@ -27,6 +27,10 @@ public class WitchesKitchen implements ModInitializer {
     public static final String MODID = "witcheskitchen";
     public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
 
+    public static Identifier id(String name) {
+        return new Identifier(MODID, name);
+    }
+
     @Override
     public void onInitialize(ModContainer mod) {
         WitchesKitchenConfig.init(MODID, WitchesKitchenConfig.class);
@@ -61,10 +65,6 @@ public class WitchesKitchen implements ModInitializer {
             }, Set.of(RegistryKeys.PLACED_FEATURE, RegistryKeys.CONFIGURED_FEATURE));
         });
 
-    }
-
-    public static Identifier id(String name) {
-        return new Identifier(MODID, name);
     }
 
     public static class DimColorResourceReloader extends DimColorReloadListener implements IdentifiableResourceReloader {

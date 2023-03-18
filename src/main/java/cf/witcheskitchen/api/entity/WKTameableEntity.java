@@ -47,11 +47,6 @@ public abstract class WKTameableEntity extends TameableEntity {
         this.setVariant(nbt.getInt("Variant"));
     }
 
-    public void setVariant(int variant) {
-        this.dataTracker.set(VARIANT, variant);
-    }
-
-
     protected void setPoseFlag(int index, boolean value) {
         byte b = this.dataTracker.get(POSE_FLAGS);
         if (value) {
@@ -97,5 +92,9 @@ public abstract class WKTameableEntity extends TameableEntity {
 
     public int getVariant() {
         return MathHelper.clamp(this.dataTracker.get(VARIANT), 1, getVariants());
+    }
+
+    public void setVariant(int variant) {
+        this.dataTracker.set(VARIANT, variant);
     }
 }

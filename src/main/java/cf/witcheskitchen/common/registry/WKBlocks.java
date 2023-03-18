@@ -31,11 +31,6 @@ public interface WKBlocks {
     List<ObjectDefinition<Block>> BLOCKS = new ArrayList<>();
     List<ObjectDefinition<Item>> ITEMS = new ArrayList<>();
     Map<String, Block> TYPE_BLOCKS = new LinkedHashMap<>();
-
-    static QuiltBlockSettings getCropSettings() {
-        return QuiltBlockSettings.of(Material.PLANT).noCollision().breakInstantly().sounds(BlockSoundGroup.CROP);
-    }
-
     Block ELDER_PLANKS = register("elder_planks", new Block(plankSettings()), true);
     Block ELDER_STAIRS = registerWoodenStair("elder_stairs", ELDER_PLANKS);
     Block SUMAC_PLANKS = register("sumac_planks", new Block(plankSettings()), true);
@@ -84,43 +79,36 @@ public interface WKBlocks {
     Block BLACKTHORN_LEAVES = register("blackthorn_leaves", new BlackthornLeavesBlock(leavesSettings()), true);
     Block JUNIPER_LEAVES = registerLeaf("juniper_leaves");
     Block ROWAN_LEAVES = registerLeaf("rowan_leaves");
-
     Block BLACKTHORN_DOOR = register("blackthorn_door", new DoorBlock(plankSettings(), SoundEvents.BLOCK_WOODEN_DOOR_OPEN, SoundEvents.BLOCK_WOODEN_DOOR_CLOSE), true);
     Block ELDER_DOOR = register("elder_door", new DoorBlock(plankSettings(), SoundEvents.BLOCK_WOODEN_DOOR_OPEN, SoundEvents.BLOCK_WOODEN_DOOR_CLOSE), true);
     Block HAWTHORN_DOOR = register("hawthorn_door", new DoorBlock(plankSettings(), SoundEvents.BLOCK_WOODEN_DOOR_OPEN, SoundEvents.BLOCK_WOODEN_DOOR_CLOSE), true);
     Block JUNIPER_DOOR = register("juniper_door", new DoorBlock(plankSettings(), SoundEvents.BLOCK_WOODEN_DOOR_OPEN, SoundEvents.BLOCK_WOODEN_DOOR_CLOSE), true);
     Block ROWAN_DOOR = register("rowan_door", new DoorBlock(plankSettings(), SoundEvents.BLOCK_WOODEN_DOOR_OPEN, SoundEvents.BLOCK_WOODEN_DOOR_CLOSE), true);
     Block SUMAC_DOOR = register("sumac_door", new DoorBlock(plankSettings(), SoundEvents.BLOCK_WOODEN_DOOR_OPEN, SoundEvents.BLOCK_WOODEN_DOOR_CLOSE), true);
-
     Block BLACKTHORN_FENCE = register("blackthorn_fence", new FenceBlock(plankSettings()), true);
     Block ELDER_FENCE = register("elder_fence", new FenceBlock(plankSettings()), true);
     Block HAWTHORN_FENCE = register("hawthorn_fence", new FenceBlock(plankSettings()), true);
     Block JUNIPER_FENCE = register("juniper_fence", new FenceBlock(plankSettings()), true);
     Block ROWAN_FENCE = register("rowan_fence", new FenceBlock(plankSettings()), true);
     Block SUMAC_FENCE = register("sumac_fence", new FenceBlock(plankSettings()), true);
-
     Block BLACKTHORN_FENCE_GATE = register("blackthorn_fence_gate", new FenceGateBlock(plankSettings(), SoundEvents.BLOCK_FENCE_GATE_CLOSE, SoundEvents.BLOCK_FENCE_GATE_OPEN), true);
     Block ELDER_FENCE_GATE = register("elder_fence_gate", new FenceGateBlock(plankSettings(), SoundEvents.BLOCK_FENCE_GATE_CLOSE, SoundEvents.BLOCK_FENCE_GATE_OPEN), true);
     Block HAWTHORN_FENCE_GATE = register("hawthorn_fence_gate", new FenceGateBlock(plankSettings(), SoundEvents.BLOCK_FENCE_GATE_CLOSE, SoundEvents.BLOCK_FENCE_GATE_OPEN), true);
     Block JUNIPER_FENCE_GATE = register("juniper_fence_gate", new FenceGateBlock(plankSettings(), SoundEvents.BLOCK_FENCE_GATE_CLOSE, SoundEvents.BLOCK_FENCE_GATE_OPEN), true);
     Block ROWAN_FENCE_GATE = register("rowan_fence_gate", new FenceGateBlock(plankSettings(), SoundEvents.BLOCK_FENCE_GATE_CLOSE, SoundEvents.BLOCK_FENCE_GATE_OPEN), true);
     Block SUMAC_FENCE_GATE = register("sumac_fence_gate", new FenceGateBlock(plankSettings(), SoundEvents.BLOCK_FENCE_GATE_CLOSE, SoundEvents.BLOCK_FENCE_GATE_OPEN), true);
-
     Block BLACKTHORN_PRESSURE_PLATE = register("blackthorn_pressure_plate", new PressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING, plankSettings(), SoundEvents.BLOCK_WOODEN_PRESSURE_PLATE_CLICK_OFF, SoundEvents.BLOCK_WOODEN_PRESSURE_PLATE_CLICK_ON), true);
     Block ELDER_PRESSURE_PLATE = register("elder_pressure_plate", new PressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING, plankSettings(), SoundEvents.BLOCK_WOODEN_PRESSURE_PLATE_CLICK_OFF, SoundEvents.BLOCK_WOODEN_PRESSURE_PLATE_CLICK_ON), true);
     Block HAWTHORN_PRESSURE_PLATE = register("hawthorn_pressure_plate", new PressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING, plankSettings(), SoundEvents.BLOCK_WOODEN_PRESSURE_PLATE_CLICK_OFF, SoundEvents.BLOCK_WOODEN_PRESSURE_PLATE_CLICK_ON), true);
     Block JUNIPER_PRESSURE_PLATE = register("juniper_pressure_plate", new PressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING, plankSettings(), SoundEvents.BLOCK_WOODEN_PRESSURE_PLATE_CLICK_OFF, SoundEvents.BLOCK_WOODEN_PRESSURE_PLATE_CLICK_ON), true);
     Block ROWAN_PRESSURE_PLATE = register("rowan_pressure_plate", new PressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING, plankSettings(), SoundEvents.BLOCK_WOODEN_PRESSURE_PLATE_CLICK_OFF, SoundEvents.BLOCK_WOODEN_PRESSURE_PLATE_CLICK_ON), true);
     Block SUMAC_PRESSURE_PLATE = register("sumac_pressure_plate", new PressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING, plankSettings(), SoundEvents.BLOCK_WOODEN_PRESSURE_PLATE_CLICK_OFF, SoundEvents.BLOCK_WOODEN_PRESSURE_PLATE_CLICK_ON), true);
-
     Block BLACKTHORN_BUTTON = register("blackthorn_button", new AbstractButtonBlock(plankSettings(), 30, true, SoundEvents.BLOCK_WOODEN_BUTTON_CLICK_OFF, SoundEvents.BLOCK_WOODEN_BUTTON_CLICK_ON), true);
     Block ELDER_BUTTON = register("elder_button", new AbstractButtonBlock(plankSettings(), 30, true, SoundEvents.BLOCK_WOODEN_BUTTON_CLICK_OFF, SoundEvents.BLOCK_WOODEN_BUTTON_CLICK_ON), true);
     Block HAWTHORN_BUTTON = register("hawthorn_button", new AbstractButtonBlock(plankSettings(), 30, true, SoundEvents.BLOCK_WOODEN_BUTTON_CLICK_OFF, SoundEvents.BLOCK_WOODEN_BUTTON_CLICK_ON), true);
     Block JUNIPER_BUTTON = register("juniper_button", new AbstractButtonBlock(plankSettings(), 30, true, SoundEvents.BLOCK_WOODEN_BUTTON_CLICK_OFF, SoundEvents.BLOCK_WOODEN_BUTTON_CLICK_ON), true);
     Block ROWAN_BUTTON = register("rowan_button", new AbstractButtonBlock(plankSettings(), 30, true, SoundEvents.BLOCK_WOODEN_BUTTON_CLICK_OFF, SoundEvents.BLOCK_WOODEN_BUTTON_CLICK_ON), true);
     Block SUMAC_BUTTON = register("sumac_button", new AbstractButtonBlock(plankSettings(), 30, true, SoundEvents.BLOCK_WOODEN_BUTTON_CLICK_OFF, SoundEvents.BLOCK_WOODEN_BUTTON_CLICK_ON), true);
-
-
     //Tile Entities
     Block TEAPOT = register("teapot", new TeapotBlock(QuiltBlockSettings.copyOf(Blocks.TERRACOTTA).nonOpaque()), true);
     Block CAST_IRON_TEAPOT = register("cast_iron_teapot", new TeapotBlock(QuiltBlockSettings.copyOf(Blocks.IRON_BLOCK).nonOpaque()), true);
@@ -132,8 +120,6 @@ public interface WKBlocks {
     Block WAXED_WEATHERED_COPPER_TEAPOT = register("waxed_weathered_copper_teapot", new TeapotBlock(QuiltBlockSettings.copyOf(Blocks.COPPER_BLOCK).nonOpaque()), true);
     Block OXIDIZED_COPPER_TEAPOT = register("oxidized_copper_teapot", new CopperTeapotBlock(QuiltBlockSettings.copyOf(Blocks.OXIDIZED_COPPER).nonOpaque(), Oxidizable.OxidizationLevel.OXIDIZED), true);
     Block WAXED_OXIDIZED_COPPER_TEAPOT = register("waxed_oxidized_copper_teapot", new TeapotBlock(QuiltBlockSettings.copyOf(Blocks.COPPER_BLOCK).nonOpaque()), true);
-
-
     Block IRON_WITCHES_OVEN = register("iron_witches_oven", new WitchesOvenBlock(QuiltBlockSettings.of(Material.METAL).strength(4.0F, 5.0F).requiresTool().nonOpaque().luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0)), true);
     Block COPPER_WITCHES_OVEN = register("copper_witches_oven", new CopperWitchesOvenBlock(QuiltBlockSettings.copyOf(Blocks.COPPER_BLOCK).luminance(state -> state.get(WitchesOvenBlock.LIT) ? 13 : 0), Oxidizable.OxidizationLevel.UNAFFECTED), true);
     Block WAXED_COPPER_WITCHES_OVEN = register("waxed_copper_witches_oven", new WitchesOvenBlock(QuiltBlockSettings.copy(COPPER_WITCHES_OVEN)), true);
@@ -154,21 +140,19 @@ public interface WKBlocks {
     Block DARK_OAK_BREWING_BARREL = registerBarrel("dark_oak_brewing_barrel");
     Block CRIMSON_BREWING_BARREL = registerBarrel("crimson_brewing_barrel");
     Block WARPED_BREWING_BARREL = registerBarrel("warped_brewing_barrel");
-
     //Sapling
     Block BLACKTHORN_SAPLING = registerSapling("blackthorn_sapling", WKConfiguredFeatures.BLACKTHORN_TREE);
-    Block ELDER_SAPLING = registerSapling("elder_sapling", WKConfiguredFeatures.ELDER_TREE);
-    Block HAWTHORN_SAPLING = registerSapling("hawthorn_sapling", WKConfiguredFeatures.HAWTHORN_TREE);
-    Block JUNIPER_SAPLING = registerSapling("juniper_sapling", WKConfiguredFeatures.JUNIPER_TREE);
-    Block ROWAN_SAPLING = registerSapling("rowan_sapling", WKConfiguredFeatures.ROWAN_TREE);
-    Block SUMAC_SAPLING = registerSapling("sumac_sapling", WKConfiguredFeatures.SUMAC_TREE);
     Block POTTED_BLACKTHORN_SAPLING = registerPottedSapling("potted_blackthorn_sapling", BLACKTHORN_SAPLING);
+    Block ELDER_SAPLING = registerSapling("elder_sapling", WKConfiguredFeatures.ELDER_TREE);
     Block POTTED_ELDER_SAPLING = registerPottedSapling("potted_elder_sapling", ELDER_SAPLING);
+    Block HAWTHORN_SAPLING = registerSapling("hawthorn_sapling", WKConfiguredFeatures.HAWTHORN_TREE);
     Block POTTED_HAWTHORN_SAPLING = registerPottedSapling("potted_hawthorn_sapling", HAWTHORN_SAPLING);
+    Block JUNIPER_SAPLING = registerSapling("juniper_sapling", WKConfiguredFeatures.JUNIPER_TREE);
     Block POTTED_JUNIPER_SAPLING = registerPottedSapling("potted_juniper_sapling", JUNIPER_SAPLING);
+    Block ROWAN_SAPLING = registerSapling("rowan_sapling", WKConfiguredFeatures.ROWAN_TREE);
     Block POTTED_ROWAN_SAPLING = registerPottedSapling("potted_rowan_sapling", ROWAN_SAPLING);
+    Block SUMAC_SAPLING = registerSapling("sumac_sapling", WKConfiguredFeatures.SUMAC_TREE);
     Block POTTED_SUMAC_SAPLING = registerPottedSapling("potted_sumac_sapling", SUMAC_SAPLING);
-
     //Crops
     WKTallCropBlock AMARANTH = registerWithType("amaranth", new AmaranthCropBlock(QuiltBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
     WKTallCropBlock AMARANTH_SWEETBERRY = registerWithType("amaranth_sweetberry", new AmaranthCropBlock(QuiltBlockSettings.copyOf(AMARANTH), AmaranthTypes.SWEETBERRY));
@@ -180,22 +164,22 @@ public interface WKBlocks {
     WKTallCropBlock AMARANTH_CERISE = registerWithType("amaranth_cerise", new AmaranthCropBlock(QuiltBlockSettings.copyOf(AMARANTH), AmaranthTypes.CERISE));
     WKTallCropBlock AMARANTH_DARK_PASSION = registerWithType("amaranth_dark_passion", new AmaranthCropBlock(QuiltBlockSettings.copyOf(AMARANTH), AmaranthTypes.DARK_PASSION));
     WKTallCropBlock AMARANTH_FIREBIRD = registerWithType("amaranth_firebird", new AmaranthCropBlock(QuiltBlockSettings.copyOf(AMARANTH), AmaranthTypes.FIREBIRD));
-
+    //Plants
+    Block AMARANTH_PLANT = register("amaranth_plant", new WildTallPlantCropBlock(getCropSettings(), AMARANTH, 0), false);
     WKTallCropBlock BELLADONNA = registerWithType("belladonna", new BelladonnaCropBlock(QuiltBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
     WKTallCropBlock BELLADONNA_GLOW = registerWithType("belladonna_glow", new BelladonnaCropBlock(QuiltBlockSettings.copyOf(BELLADONNA), BelladonnaTypes.GLOW));
     WKTallCropBlock BELLADONNA_NOCTURNAL = registerWithType("belladonna_nocturnal", new BelladonnaCropBlock(QuiltBlockSettings.copyOf(BELLADONNA), BelladonnaTypes.NOCTURNAL));
-
+    Block BELLADONNA_PLANT = register("belladonna_plant", new WildTallPlantCropBlock(getCropSettings(), BELLADONNA, 0), false);
     WKTallCropBlock CAMELLIA = registerWithType("camellia", new CamelliaCropBlock(QuiltBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
     WKTallCropBlock CAMELLIA_BUTTERCREAM = registerWithType("camellia_buttercream", new CamelliaCropBlock(QuiltBlockSettings.copyOf(CAMELLIA), CamelliaTypes.BUTTERCREAM));
     WKTallCropBlock CAMELLIA_BISQUE = registerWithType("camellia_bisque", new CamelliaCropBlock(QuiltBlockSettings.copyOf(CAMELLIA), CamelliaTypes.BISQUE));
     WKTallCropBlock CAMELLIA_FLINT = registerWithType("camellia_flint", new CamelliaCropBlock(QuiltBlockSettings.copyOf(CAMELLIA), CamelliaTypes.FLINT));
     WKTallCropBlock CAMELLIA_DEEP_LOVE = registerWithType("camellia_deep_love", new CamelliaCropBlock(QuiltBlockSettings.copyOf(CAMELLIA), CamelliaTypes.DEEP_LOVE));
-
     WKCropBlock CHAMOMILE = registerWithType("chamomile", new ChamomileCropBlock(QuiltBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
     WKCropBlock CHAMOMILE_VIRESCENT = registerWithType("chamomile_virescent", new ChamomileCropBlock(QuiltBlockSettings.copyOf(CHAMOMILE), ChamomileTypes.VIRESCENT));
     WKCropBlock CHAMOMILE_STARLETT = registerWithType("chamomile_starlett", new ChamomileCropBlock(QuiltBlockSettings.copyOf(CHAMOMILE), ChamomileTypes.STARLETT));
     WKCropBlock CHAMOMILE_DYEWORKS = registerWithType("chamomile_dyeworks", new ChamomileCropBlock(QuiltBlockSettings.copyOf(CHAMOMILE), ChamomileTypes.DYEWORKS));
-
+    Block CHAMOMILE_PLANT = register("chamomile_plant", new WildPlantCropBlock(getCropSettings(), CHAMOMILE), false);
     WKTallCropBlock CONEFLOWER = registerWithType("coneflower", new ConeflowerCropBlock(QuiltBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
     WKTallCropBlock CONEFLOWER_DANCING_LADIES = registerWithType("coneflower_dancing_ladies", new ConeflowerCropBlock(QuiltBlockSettings.copyOf(CONEFLOWER), ConeflowerTypes.DANCING_LADIES));
     WKTallCropBlock CONEFLOWER_VIOLET = registerWithType("coneflower_violet", new ConeflowerCropBlock(QuiltBlockSettings.copyOf(CONEFLOWER), ConeflowerTypes.VIOLET));
@@ -212,7 +196,7 @@ public interface WKBlocks {
     WKTallCropBlock CONEFLOWER_COMPANY = registerWithType("coneflower_company", new ConeflowerCropBlock(QuiltBlockSettings.copyOf(CONEFLOWER), ConeflowerTypes.COMPANY));
     WKTallCropBlock CONEFLOWER_MASQUERADE = registerWithType("coneflower_masquerade", new ConeflowerCropBlock(QuiltBlockSettings.copyOf(CONEFLOWER), ConeflowerTypes.MASQUERADE));
     WKTallCropBlock CONEFLOWER_PARTY_BLEND = registerWithType("coneflower_party_blend", new ConeflowerCropBlock(QuiltBlockSettings.copyOf(CONEFLOWER), ConeflowerTypes.PARTY_BLEND));
-
+    Block CONEFLOWER_PLANT = register("coneflower_plant", new WildTallPlantCropBlock(getCropSettings(), CONEFLOWER, 3), false);
     WKTallCropBlock FOXGLOVE = registerWithType("foxglove", new FoxgloveCropBlock(QuiltBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
     WKTallCropBlock FOXGLOVE_SMALT = registerWithType("foxglove_smalt", new FoxgloveCropBlock(QuiltBlockSettings.copyOf(FOXGLOVE), FoxgloveTypes.SMALT));
     WKTallCropBlock FOXGLOVE_TRANQUIL_EVENING = registerWithType("foxglove_tranquil_evening", new FoxgloveCropBlock(QuiltBlockSettings.copyOf(FOXGLOVE), FoxgloveTypes.TRANQUIL_EVENING));
@@ -242,7 +226,7 @@ public interface WKBlocks {
     WKTallCropBlock FOXGLOVE_COWS_CREAM = registerWithType("foxglove_cows_cream", new FoxgloveCropBlock(QuiltBlockSettings.copyOf(FOXGLOVE), FoxgloveTypes.COWS_CREAM));
     WKTallCropBlock FOXGLOVE_SIGHE_MIST = registerWithType("foxglove_sighe_mist", new FoxgloveCropBlock(QuiltBlockSettings.copyOf(FOXGLOVE), FoxgloveTypes.SIGHE_MIST));
     WKTallCropBlock FOXGLOVE_PURITY = registerWithType("foxglove_purity", new FoxgloveCropBlock(QuiltBlockSettings.copyOf(FOXGLOVE), FoxgloveTypes.PURITY));
-
+    Block FOXGLOVE_PLANT = register("foxglove_plant", new WildTallPlantCropBlock(getCropSettings(), FOXGLOVE, 2), false);
     WKCropBlock HELLEBORE = registerWithType("hellebore", new HelleboreCropBlock(QuiltBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
     WKCropBlock HELLEBORE_MORNING_TEA = registerWithType("hellebore_morning_tea", new HelleboreCropBlock(QuiltBlockSettings.copyOf(HELLEBORE), HelleboreTypes.MORNING_TEA));
     WKCropBlock HELLEBORE_MORNING_CASANOVA = registerWithType("hellebore_casanova", new HelleboreCropBlock(QuiltBlockSettings.copyOf(HELLEBORE), HelleboreTypes.CASANOVA));
@@ -253,34 +237,26 @@ public interface WKBlocks {
     WKCropBlock HELLEBORE_MORNING_TWILIGHT = registerWithType("hellebore_twilight", new HelleboreCropBlock(QuiltBlockSettings.copyOf(HELLEBORE), HelleboreTypes.TWILIGHT));
     WKCropBlock HELLEBORE_MORNING_GRIMM = registerWithType("hellebore_grimm", new HelleboreCropBlock(QuiltBlockSettings.copyOf(HELLEBORE), HelleboreTypes.GRIMM));
     WKCropBlock HELLEBORE_MORNING_NOCTURNE = registerWithType("hellebore_nocturne", new HelleboreCropBlock(QuiltBlockSettings.copyOf(HELLEBORE), HelleboreTypes.NOCTURNE));
-
+    Block HELLEBORE_PLANT = register("hellebore_plant", new WildPlantCropBlock(getCropSettings(), HELLEBORE), false);
     WKTallCropBlock IRIS = registerWithType("iris", new IrisCropBlock(QuiltBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
     WKTallCropBlock IRIS_OCEAN = registerWithType("iris_ocean", new IrisCropBlock(QuiltBlockSettings.copyOf(IRIS), IrisTypes.OCEAN));
     WKTallCropBlock IRIS_DEEP_SEA = registerWithType("iris_deep_sea", new IrisCropBlock(QuiltBlockSettings.copyOf(IRIS), IrisTypes.DEEP_SEA));
     WKTallCropBlock IRIS_BLEEDING_HEART = registerWithType("iris_bleeding_heart", new IrisCropBlock(QuiltBlockSettings.copyOf(IRIS), IrisTypes.BLEEDING_HEART));
-
+    Block IRIS_PLANT = register("iris_plant", new WildTallPlantCropBlock(getCropSettings(), IRIS, 2), false);
     WKCropBlock SANGUINARY = registerWithType("sanguinary", new SanguinaryCropBlock(QuiltBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
     WKCropBlock SANGUINARY_MEADOW = registerWithType("sanguinary_meadow", new SanguinaryCropBlock(QuiltBlockSettings.copyOf(SANGUINARY), SanguinaryTypes.MEADOW));
     WKCropBlock SANGUINARY_BLUSHING = registerWithType("sanguinary_blushing", new SanguinaryCropBlock(QuiltBlockSettings.copyOf(SANGUINARY), SanguinaryTypes.BLUSHING));
     WKCropBlock SANGUINARY_SUNSET = registerWithType("sanguinary_sunset", new SanguinaryCropBlock(QuiltBlockSettings.copyOf(SANGUINARY), SanguinaryTypes.SUNSET));
     WKCropBlock SANGUINARY_MADDER = registerWithType("sanguinary_madder", new SanguinaryCropBlock(QuiltBlockSettings.copyOf(SANGUINARY), SanguinaryTypes.MADDER));
     WKCropBlock SANGUINARY_AUREOLIN = registerWithType("sanguinary_aureolin", new SanguinaryCropBlock(QuiltBlockSettings.copyOf(SANGUINARY), SanguinaryTypes.AUREOLIN));
-
-
+    Block SANGUINARY_PLANT = register("sanguinary_plant", new WildPlantCropBlock(getCropSettings(), SANGUINARY), false);
     Block MINT = register("mint", new MintCropBlock(QuiltBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)), false);
     Block WORMWOOD = register("wormwood", new WormwoodCropBlock(QuiltBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)), false);
-
-    //Plants
-    Block AMARANTH_PLANT = register("amaranth_plant", new WildTallPlantCropBlock(getCropSettings(), AMARANTH, 0), false);
-    Block BELLADONNA_PLANT = register("belladonna_plant", new WildTallPlantCropBlock(getCropSettings(), BELLADONNA, 0), false);
-    Block CHAMOMILE_PLANT = register("chamomile_plant", new WildPlantCropBlock(getCropSettings(), CHAMOMILE), false);
-    Block CONEFLOWER_PLANT = register("coneflower_plant", new WildTallPlantCropBlock(getCropSettings(), CONEFLOWER, 3), false);
-    Block FOXGLOVE_PLANT = register("foxglove_plant", new WildTallPlantCropBlock(getCropSettings(), FOXGLOVE, 2), false);
-    Block HELLEBORE_PLANT = register("hellebore_plant", new WildPlantCropBlock(getCropSettings(), HELLEBORE), false);
-    Block IRIS_PLANT = register("iris_plant", new WildTallPlantCropBlock(getCropSettings(), IRIS, 2), false);
-    Block SANGUINARY_PLANT = register("sanguinary_plant", new WildPlantCropBlock(getCropSettings(), SANGUINARY), false);
-
     Block SALT_BLOCK = register("salt", new SaltBlock(QuiltBlockSettings.of(Material.DECORATION).noCollision().breakInstantly()), true);
+
+    static QuiltBlockSettings getCropSettings() {
+        return QuiltBlockSettings.of(Material.PLANT).noCollision().breakInstantly().sounds(BlockSoundGroup.CROP);
+    }
 
     /**
      * Returns an <a href="Collection.html#unmodview">read-only view</a> of the WitchesKitchen's Blocks

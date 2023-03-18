@@ -27,6 +27,12 @@ public class BelladonnaCropBlock extends WKTallCropBlock implements CropVariants
         this(settings, BelladonnaTypes.COMMON);
     }
 
+    public BelladonnaCropBlock(Settings settings, BelladonnaTypes type) {
+        super(settings);
+        this.type = type;
+        this.setDefaultState(this.getDefaultState().with(AGE, 0).with(HALF, DoubleBlockHalf.LOWER));
+    }
+
     @Override
     public VoxelShape[] getLowerShape() {
         return AmaranthCropBlock.LOWER_AGE_TO_SHAPE;
@@ -35,12 +41,6 @@ public class BelladonnaCropBlock extends WKTallCropBlock implements CropVariants
     @Override
     public VoxelShape[] getUpperShape() {
         return AmaranthCropBlock.UPPER_AGE_TO_SHAPE;
-    }
-
-    public BelladonnaCropBlock(Settings settings, BelladonnaTypes type) {
-        super(settings);
-        this.type = type;
-        this.setDefaultState(this.getDefaultState().with(AGE, 0).with(HALF, DoubleBlockHalf.LOWER));
     }
 
     @Override

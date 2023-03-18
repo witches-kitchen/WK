@@ -173,6 +173,43 @@ public final class RecipeUtils {
         return Registries.ENTITY_TYPE.get(id);
     }
 
+    public static @NotNull Set<RitualCircle> deserializeCircles(JsonArray array) {
+        if (!array.isEmpty()) {
+            return arrayStream(array.getAsJsonArray()).map(entry -> deserializeCircle(entry.getAsJsonObject())).collect(Collectors.toSet());
+        }
+        return Set.of();
+    }
+
+    public static @NotNull RitualCircle deserializeCircle(JsonObject object) {
+        String sizeId = JsonHelper.getString(object, "size");
+        String typeId = JsonHelper.getString(object, "type");
+        return new RitualCircle(RitualCircle.getSize(sizeId), RitualCircle.getType(typeId));
+    }
+
+    public static DefaultedList<Ingredient> getIngredients(JsonArray json) {
+        DefaultedList<Ingredient> ingredients = DefaultedList.of();
+        for (int i = 0; i < json.size(); i++) {
+            Ingredient ingredient = Ingredient.fromJson(json.get(i));
+            if (!ingredient.isEmpty()) {
+                ingredients.add(ingredient);
+            }
+        }
+        return ingredients;
+    }
+
+    public static Set<CommandType> deserializeCommands(JsonArray array) {
+        if (!array.isEmpty()) {
+            return arrayStream(array.getAsJsonArray()).map(entry -> deserializeCommand(entry.getAsJsonObject())).collect(Collectors.toSet());
+        }
+        return Set.of();
+    }
+
+    public static @NotNull CommandType deserializeCommand(JsonObject object) {
+        String command = JsonHelper.getString(object, "command");
+        String type = JsonHelper.getString(object, "type");
+        return new CommandType(command, type);
+    }
+
     /**
      * We need this collector to "collect" into a "DefaultedList"
      * A Collector is specified by four functions that work together to accumulate entries into a mutable result container.
@@ -214,42 +251,5 @@ public final class RecipeUtils {
         public Set<Characteristics> characteristics() {
             return CH_ID;
         }
-    }
-
-    public static @NotNull Set<RitualCircle> deserializeCircles(JsonArray array) {
-        if (!array.isEmpty()) {
-            return arrayStream(array.getAsJsonArray()).map(entry -> deserializeCircle(entry.getAsJsonObject())).collect(Collectors.toSet());
-        }
-        return Set.of();
-    }
-
-    public static @NotNull RitualCircle deserializeCircle(JsonObject object) {
-        String sizeId = JsonHelper.getString(object, "size");
-        String typeId = JsonHelper.getString(object, "type");
-        return new RitualCircle(RitualCircle.getSize(sizeId), RitualCircle.getType(typeId));
-    }
-
-    public static DefaultedList<Ingredient> getIngredients(JsonArray json) {
-        DefaultedList<Ingredient> ingredients = DefaultedList.of();
-        for (int i = 0; i < json.size(); i++) {
-            Ingredient ingredient = Ingredient.fromJson(json.get(i));
-            if (!ingredient.isEmpty()) {
-                ingredients.add(ingredient);
-            }
-        }
-        return ingredients;
-    }
-
-    public static Set<CommandType> deserializeCommands(JsonArray array) {
-        if (!array.isEmpty()) {
-            return arrayStream(array.getAsJsonArray()).map(entry -> deserializeCommand(entry.getAsJsonObject())).collect(Collectors.toSet());
-        }
-        return Set.of();
-    }
-
-    public static @NotNull CommandType deserializeCommand(JsonObject object) {
-        String command = JsonHelper.getString(object, "command");
-        String type = JsonHelper.getString(object, "type");
-        return new CommandType(command, type);
     }
 }

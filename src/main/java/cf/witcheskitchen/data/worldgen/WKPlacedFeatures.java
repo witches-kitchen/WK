@@ -22,16 +22,16 @@ import org.quiltmc.qsl.worldgen.biome.api.ModificationPhase;
 
 public interface WKPlacedFeatures {
 
-    static void init() {
-
-    }
-
     RegistryKey<PlacedFeature> BLACKTHORN = RegistryKey.of(RegistryKeys.PLACED_FEATURE, WitchesKitchen.id("blackthorn_tree"));
     RegistryKey<PlacedFeature> ELDER = RegistryKey.of(RegistryKeys.PLACED_FEATURE, WitchesKitchen.id("elder_tree"));
     RegistryKey<PlacedFeature> HAWTHORN = RegistryKey.of(RegistryKeys.PLACED_FEATURE, WitchesKitchen.id("hawthorn_tree"));
     RegistryKey<PlacedFeature> JUNIPER = RegistryKey.of(RegistryKeys.PLACED_FEATURE, WitchesKitchen.id("juniper_tree"));
     RegistryKey<PlacedFeature> ROWAN = RegistryKey.of(RegistryKeys.PLACED_FEATURE, WitchesKitchen.id("rowan_tree"));
     RegistryKey<PlacedFeature> SUMAC = RegistryKey.of(RegistryKeys.PLACED_FEATURE, WitchesKitchen.id("sumac_tree"));
+
+    static void init() {
+
+    }
 
     static void init(Registry<ConfiguredFeature<?, ?>> configured, DynamicRegistryManagerSetupContext.RegistryMap registryMap) {
         register(registryMap, "blackthorn_tree", configured.getHolder(WKConfiguredFeatures.CONFIGURED_FEATURE_KEYS.get(WKConfiguredFeatures.BLACKTHORN_TREE)).orElseThrow(), 10, WKBlocks.BLACKTHORN_SAPLING);

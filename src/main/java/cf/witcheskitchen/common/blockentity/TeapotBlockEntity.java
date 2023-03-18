@@ -43,6 +43,10 @@ public class TeapotBlockEntity extends WKBlockEntityWithInventory {
         super(WKBlockEntityTypes.TEAPOT, pos, state, 1);
     }
 
+    static StatusEffect getPotionEffectById(int id) {
+        StatusEffect statusEffect = StatusEffect.byRawId(id);
+        return Registries.STATUS_EFFECT.stream().collect(Collectors.toSet()).contains(statusEffect) ? statusEffect : null;
+    }
 
     @Override
     public void tick(World world, BlockPos blockPos, BlockState blockState, WKBlockEntity blockEntity) {
@@ -72,7 +76,6 @@ public class TeapotBlockEntity extends WKBlockEntityWithInventory {
             super.tick(world, blockPos, blockState, blockEntity);
         }
     }
-
 
     private void emitEffect(World world, BlockPos pos) {
         if (world.getTime() % 80L == 0L) {
@@ -140,11 +143,6 @@ public class TeapotBlockEntity extends WKBlockEntityWithInventory {
         this.effectTimer = 0;
         this.teaRecipe = null;
         this.markDirty();
-    }
-
-    static StatusEffect getPotionEffectById(int id) {
-        StatusEffect statusEffect = StatusEffect.byRawId(id);
-        return Registries.STATUS_EFFECT.stream().collect(Collectors.toSet()).contains(statusEffect) ? statusEffect : null;
     }
 
     @Override

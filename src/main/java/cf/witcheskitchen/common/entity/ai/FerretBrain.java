@@ -36,6 +36,15 @@ import java.util.function.Predicate;
 
 public class FerretBrain {
 
+    private static final Predicate<LivingEntity> UNTAMED_TARGET_PREDICATE = entity -> {
+        final EntityType<?> entityType = entity.getType();
+        return entityType == EntityType.RABBIT || entityType == EntityType.CHICKEN;
+    };
+    private static final Predicate<LivingEntity> FLEE_SUPERNATURAL = (entity) -> {
+        EntityType<?> entityType = entity.getType();
+        return entityType == WKEntityTypes.CUSITH || WKApi.isGreaterDemon(entity);
+    };
+
     public FerretBrain() {
     }
 
@@ -93,14 +102,4 @@ public class FerretBrain {
         }
         return Optional.empty();
     }
-
-    private static final Predicate<LivingEntity> UNTAMED_TARGET_PREDICATE = entity -> {
-        final EntityType<?> entityType = entity.getType();
-        return entityType == EntityType.RABBIT || entityType == EntityType.CHICKEN;
-    };
-
-    private static final Predicate<LivingEntity> FLEE_SUPERNATURAL = (entity) -> {
-        EntityType<?> entityType = entity.getType();
-        return entityType == WKEntityTypes.CUSITH || WKApi.isGreaterDemon(entity);
-    };
 }

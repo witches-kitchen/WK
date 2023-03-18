@@ -23,6 +23,25 @@ public class FoxgloveCropBlock extends WKTallCropBlock implements CropVariants {
     public static final VoxelShape[] LOWER_AGE_TO_SHAPE;
     public static final VoxelShape[] UPPER_AGE_TO_SHAPE;
     public static final int MAX_AGE = 5;
+
+    static {
+        LOWER_AGE_TO_SHAPE = new VoxelShape[]{
+                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
+                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 6.0, 16.0),
+                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 10.0, 16.0),
+                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 12.0, 16.0),
+                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0),
+                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0)
+        };
+        UPPER_AGE_TO_SHAPE = new VoxelShape[]{
+                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 4.0, 16.0),
+                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 8.0, 16.0),
+                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 10.0, 16.0),
+                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0),
+                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0)
+        };
+    }
+
     private final FoxgloveTypes type;
 
     public FoxgloveCropBlock(Settings settings) {
@@ -80,23 +99,5 @@ public class FoxgloveCropBlock extends WKTallCropBlock implements CropVariants {
     @Override
     public int doubleBlockAge() {
         return 4;
-    }
-
-    static {
-        LOWER_AGE_TO_SHAPE = new VoxelShape[]{
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 6.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 10.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 12.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0)
-        };
-        UPPER_AGE_TO_SHAPE = new VoxelShape[]{
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 4.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 8.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 10.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0)
-        };
     }
 }
