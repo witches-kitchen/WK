@@ -4,6 +4,7 @@ import cf.witcheskitchen.WitchesKitchen;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
 import cf.witcheskitchen.common.statuseffect.*;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
+import dev.emi.stepheightentityattribute.StepHeightEntityAttributeMain;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffect;
@@ -38,8 +39,7 @@ public interface WKStatusEffects {
     StatusEffect FELIFORM = create("feliform", new FeliformStatusEffect(StatusEffectType.BENEFICIAL, 0x228B22));
     StatusEffect BUG_SPRAY = create("bug_spray", new BugSprayStatusEffect(StatusEffectType.BENEFICIAL, 0x32CD32));
     StatusEffect LONG_REACH = create("long_reach", new LongReachStatusEffect(StatusEffectType.BENEFICIAL, 0x964a6e).addAttributeModifier(ReachEntityAttributes.REACH, "03f26044-be99-11ed-afa1-0242ac120002", 5.5D, EntityAttributeModifier.Operation.ADDITION).addAttributeModifier(ReachEntityAttributes.ATTACK_RANGE, "8827ff04-be99-11ed-afa1-0242ac120002", 4.5D, EntityAttributeModifier.Operation.ADDITION));
-    //FIXME: Get Step Height Attribute into the workspace proper!
-    //StatusEffect LONG_STRIDE = create("long_stride", new LongStrideStatusEffect(StatusEffectType.BENEFICIAL, 0xB7410E)).addAttributeModifier();
+    StatusEffect LONG_STRIDE = create("long_stride", new LongStrideStatusEffect(StatusEffectType.BENEFICIAL, 0xB7410E)).addAttributeModifier(StepHeightEntityAttributeMain.STEP_HEIGHT, "aac36d3e-bf87-4675-8763-53933a74ebfb", 1.25D, EntityAttributeModifier.Operation.ADDITION);
 
     static List<ObjectDefinition<StatusEffect>> getStatusEffects() {
         return Collections.unmodifiableList(STATUS_EFFECTS);
