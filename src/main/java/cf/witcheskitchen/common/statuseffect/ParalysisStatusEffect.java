@@ -28,13 +28,14 @@ public class ParalysisStatusEffect extends StatusEffect {
     public boolean isBeneficial() {
         return false;
     }
-
-    //Todo: Make paralysis potions cause the player to sink if they are in water
+    
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
         BlockPos pos = entity.getBlockPos();
         World world = entity.getWorld();
         entity.setVelocity(0, 0, 0);
+        entity.setSprinting(false);
+        entity.setMovementSpeed(0);
         if (entity.isSwimming()) {
             entity.damage(DamageSource.DROWN, 2f);
             entity.setAir(0);
