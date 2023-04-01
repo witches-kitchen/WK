@@ -20,6 +20,7 @@ public class FreezeRitual extends Ritual {
         for (LivingEntity entity : list) {
             entity.setVelocity(0, 0, 0);
             entity.setMovementSpeed(0);
+            entity.setSprinting(false);
         }
 
     }
