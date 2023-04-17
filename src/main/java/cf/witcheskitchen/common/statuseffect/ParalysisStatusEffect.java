@@ -28,7 +28,7 @@ public class ParalysisStatusEffect extends StatusEffect {
     public boolean isBeneficial() {
         return false;
     }
-    
+
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
         BlockPos pos = entity.getBlockPos();
