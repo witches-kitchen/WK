@@ -25,15 +25,17 @@ public interface WKScreenHandlerTypes {
         final Identifier id = WitchesKitchen.id(name);
         SCREEN_HANDLER_TYPES.add(new ObjectDefinition<>(id, handler));
         return handler;
-    }    ScreenHandlerType<WitchesOvenScreenHandler> WITCHES_OVEN = register("witches_oven", WitchesOvenScreenHandler::new);
+    }
 
     static List<ObjectDefinition<ScreenHandlerType<?>>> getScreenHandlers() {
         return Collections.unmodifiableList(SCREEN_HANDLER_TYPES);
-    }    ScreenHandlerType<BrewingBarrelScreenHandler> BREWING_BARREL = register("brewing_barrel", BrewingBarrelScreenHandler::new);
+    }    ScreenHandlerType<WitchesOvenScreenHandler> WITCHES_OVEN = register("witches_oven", WitchesOvenScreenHandler::new);
 
     static void init() {
         SCREEN_HANDLER_TYPES.forEach(entry -> Registry.register(Registries.SCREEN_HANDLER_TYPE, entry.id(), entry.object()));
     }
+
+    ScreenHandlerType<BrewingBarrelScreenHandler> BREWING_BARREL = register("brewing_barrel", BrewingBarrelScreenHandler::new);
 
 
 

@@ -21,7 +21,9 @@ import java.util.List;
 @Mixin(MobEntity.class)
 public abstract class ArthropodEntityMixin extends LivingEntity {
 
-    @Shadow @Final protected GoalSelector goalSelector;
+    @Shadow
+    @Final
+    protected GoalSelector goalSelector;
 
     protected ArthropodEntityMixin(EntityType<? extends PathAwareEntity> entityType, World world) {
         super(entityType, world);
