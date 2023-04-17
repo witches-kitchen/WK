@@ -42,7 +42,7 @@ public class FerretBrain {
     };
     private static final Predicate<LivingEntity> FLEE_SUPERNATURAL = (entity) -> {
         EntityType<?> entityType = entity.getType();
-        return entityType == WKEntityTypes.CUSITH || WKApi.isGreaterDemon(entity);
+        return entityType == WKEntityTypes.CUSITH || entityType == WKEntityTypes.ROGGENWOLF || WKApi.isGreaterDemon(entity);
     };
 
     public FerretBrain() {

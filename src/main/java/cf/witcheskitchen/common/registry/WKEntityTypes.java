@@ -3,6 +3,7 @@ package cf.witcheskitchen.common.registry;
 import cf.witcheskitchen.WitchesKitchen;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
 import cf.witcheskitchen.common.entity.hostile.CuSithEntity;
+import cf.witcheskitchen.common.entity.hostile.RoggenwolfEntity;
 import cf.witcheskitchen.common.entity.neutral.ChurchGrimEntity;
 import cf.witcheskitchen.common.entity.tameable.FerretEntity;
 import cf.witcheskitchen.common.entity.tameable.HedgehogEntity;
@@ -39,6 +40,11 @@ public interface WKEntityTypes {
     EntityType<ChurchGrimEntity> CHURCH_GRIM = create("church_grim", ChurchGrimEntity.createAttributes(), QuiltEntityTypeBuilder.create(SpawnGroup.CREATURE, ChurchGrimEntity::new)
             .setDimensions(EntityDimensions.changing(1.0f, 1.0f))
             .build());
+
+    EntityType<RoggenwolfEntity> ROGGENWOLF = create("roggenwolf", RoggenwolfEntity.createAttributes(), QuiltEntityTypeBuilder.create(SpawnGroup.CREATURE, RoggenwolfEntity::new)
+            .setDimensions(EntityDimensions.changing(1.0f, 1.0f))
+            .build());
+
 
     static List<ObjectDefinition<EntityType<?>>> getEntityTypes() {
         return Collections.unmodifiableList(ENTITY_TYPES);
