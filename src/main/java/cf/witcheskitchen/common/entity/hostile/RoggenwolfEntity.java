@@ -5,8 +5,10 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
@@ -36,6 +38,11 @@ public class RoggenwolfEntity extends WKHostileEntity implements GeoEntity {
     @Override
     public boolean isFireImmune() {
         return false;
+    }
+
+    @Override
+    public boolean canBreatheInWater() {
+        return true;
     }
 
     @Override
