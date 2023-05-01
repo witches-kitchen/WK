@@ -1,6 +1,8 @@
 package cf.witcheskitchen.common.entity.hostile;
 
+import cf.witcheskitchen.api.entity.WKCreatureTypeEnum;
 import cf.witcheskitchen.api.entity.WKHostileEntity;
+import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -43,6 +45,39 @@ public class RoggenwolfEntity extends WKHostileEntity implements GeoEntity {
     @Override
     public boolean canBreatheInWater() {
         return true;
+    }
+
+    @Override
+    public boolean isPushable() {
+        return true;
+    }
+
+    @Override
+    public boolean damage(DamageSource source, float amount) {
+        if (source.isFallingBlock()) {
+            return false;
+        }
+        return super.damage(source, amount);
+    }
+
+    @Override
+    public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
+        return false;
+    }
+
+    @Nullable
+    @Override
+    public DamageSource getRecentDamageSource() {
+        if (isOnFire()) {
+            setOnFireFor(15);
+            this.applyDamage(DamageSource.ON_FIRE, 500);
+        }
+        return super.getRecentDamageSource();
+    }
+
+    @Override
+    public EntityGroup getGroup() {
+        return WKCreatureTypeEnum.DEMONIC;
     }
 
     @Override
