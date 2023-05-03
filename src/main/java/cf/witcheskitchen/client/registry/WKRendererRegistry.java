@@ -1,9 +1,6 @@
 package cf.witcheskitchen.client.registry;
 
-import cf.witcheskitchen.client.render.ChurchGrimRender;
-import cf.witcheskitchen.client.render.CuSithRender;
-import cf.witcheskitchen.client.render.FerretRender;
-import cf.witcheskitchen.client.render.HedgehogRender;
+import cf.witcheskitchen.client.render.*;
 import cf.witcheskitchen.client.render.blockentity.BrewingBarrelBlockEntityRender;
 import cf.witcheskitchen.client.render.blockentity.WitchesCauldronBlockEntityRender;
 import cf.witcheskitchen.client.render.blockentity.WitchesOvenBlockEntityRender;
@@ -21,6 +18,7 @@ public interface WKRendererRegistry {
         BlockEntityRendererFactories.register(WKBlockEntityTypes.BREWING_BARREL, (ctx) -> new BrewingBarrelBlockEntityRender());
 
         EntityRendererRegistry.register(WKEntityTypes.CUSITH, CuSithRender::new);
+        EntityRendererRegistry.register(WKEntityTypes.ROGGENWOLF, RoggenwolfRender::new);
         EntityRendererRegistry.register(WKEntityTypes.FERRET, FerretRender::new);
         EntityRendererRegistry.register(WKEntityTypes.CHURCH_GRIM, ChurchGrimRender::new);
         EntityRendererRegistry.register(WKEntityTypes.HEDGEHOG, HedgehogRender::new);

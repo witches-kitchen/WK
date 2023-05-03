@@ -2,18 +2,22 @@ package cf.witcheskitchen.common.entity.hostile;
 
 import cf.witcheskitchen.api.entity.WKCreatureTypeEnum;
 import cf.witcheskitchen.api.entity.WKHostileEntity;
-import net.minecraft.entity.EntityGroup;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
+
+import java.util.SplittableRandom;
 
 public class RoggenwolfEntity extends WKHostileEntity implements GeoEntity {
     public RoggenwolfEntity(EntityType<? extends HostileEntity> entityType, World world) {
@@ -27,9 +31,25 @@ public class RoggenwolfEntity extends WKHostileEntity implements GeoEntity {
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 3.5D).add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 0.35D);
     }
 
+    @Nullable
+    @Override
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
+        int var = new SplittableRandom().nextInt(1, 7);
+        this.setVariant(var);
+        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+    }
+
     @Override
     public int getVariants() {
-        return 0;
+        return 6;
+    }
+
+    public int getVariant() {
+        return MathHelper.clamp(this.dataTracker.get(VARIANT), 1, 7);
+    }
+    
+    public void setVariant(int variant) {
+        this.dataTracker.set(VARIANT, variant);
     }
 
     @Override

@@ -2,7 +2,6 @@ package cf.witcheskitchen.client.model;
 
 import cf.witcheskitchen.WitchesKitchen;
 import cf.witcheskitchen.common.entity.hostile.RoggenwolfEntity;
-import cf.witcheskitchen.common.entity.neutral.ChurchGrimEntity;
 import net.minecraft.util.Identifier;
 import software.bernie.geckolib.model.DefaultedEntityGeoModel;
 
@@ -13,6 +12,6 @@ public class RoggenwolfModel extends DefaultedEntityGeoModel<RoggenwolfEntity> {
 
     @Override
     public Identifier getTextureResource(RoggenwolfEntity object) {
-        return new Identifier(WitchesKitchen.MODID, "textures/entity/roggenwolf_" + object.getVariant() + ".png");
+        return new Identifier(WitchesKitchen.MODID, "textures/entity/roggenwolf_" + object.getVariant()  + ".png");
     }
 }

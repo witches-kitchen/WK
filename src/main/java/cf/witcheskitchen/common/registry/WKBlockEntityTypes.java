@@ -29,14 +29,15 @@ public interface WKBlockEntityTypes {
 
     static List<ObjectDefinition<BlockEntityType<?>>> getEntityTypes() {
         return Collections.unmodifiableList(BLOCK_ENTITY_TYPES);
-    }    BlockEntityType<BrewingBarrelBlockEntity> BREWING_BARREL = register("brewing_barrel", BrewingBarrelBlockEntity::new, WKBlocks.OAK_BREWING_BARREL, WKBlocks.SPRUCE_BREWING_BARREL, WKBlocks.BIRCH_BREWING_BARREL, WKBlocks.JUNGLE_BREWING_BARREL, WKBlocks.ACACIA_BREWING_BARREL, WKBlocks.DARK_OAK_BREWING_BARREL, WKBlocks.CRIMSON_BREWING_BARREL, WKBlocks.WARPED_BREWING_BARREL);
+    }
 
     static void init() {
         BLOCK_ENTITY_TYPES.forEach(type -> Registry.register(Registries.BLOCK_ENTITY_TYPE, type.id(), type.object()));
-    }
+    }    BlockEntityType<BrewingBarrelBlockEntity> BREWING_BARREL = register("brewing_barrel", BrewingBarrelBlockEntity::new, WKBlocks.OAK_BREWING_BARREL, WKBlocks.SPRUCE_BREWING_BARREL, WKBlocks.BIRCH_BREWING_BARREL, WKBlocks.JUNGLE_BREWING_BARREL, WKBlocks.ACACIA_BREWING_BARREL, WKBlocks.DARK_OAK_BREWING_BARREL, WKBlocks.CRIMSON_BREWING_BARREL, WKBlocks.WARPED_BREWING_BARREL);
+
+
 
     BlockEntityType<WitchesCauldronBlockEntity> WITCHES_CAULDRON = register("witches_cauldron", WitchesCauldronBlockEntity::new, WKBlocks.IRON_WITCHES_CAULDRON);
-
 
 
     BlockEntityType<TeapotBlockEntity> TEAPOT = register("teapot", TeapotBlockEntity::new, WKBlocks.TEAPOT, WKBlocks.COPPER_TEAPOT, WKBlocks.WAXED_COPPER_TEAPOT, WKBlocks.EXPOSED_COPPER_TEAPOT, WKBlocks.WAXED_EXPOSED_COPPER_TEAPOT, WKBlocks.WEATHERED_COPPER_TEAPOT, WKBlocks.WAXED_WEATHERED_COPPER_TEAPOT, WKBlocks.OXIDIZED_COPPER_TEAPOT, WKBlocks.WAXED_OXIDIZED_COPPER_TEAPOT);
