@@ -12,6 +12,6 @@ public class RoggenwolfModel extends DefaultedEntityGeoModel<RoggenwolfEntity> {
 
     @Override
     public Identifier getTextureResource(RoggenwolfEntity object) {
-        return new Identifier(WitchesKitchen.MODID, "textures/entity/roggenwolf_" + object.getVariant()  + ".png");
+        return new Identifier(WitchesKitchen.MODID, "textures/entity/roggenwolf_" + object.getVariant() + ".png");
     }
 }
