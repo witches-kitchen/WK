@@ -223,6 +223,7 @@ public class WKLanguageProvider extends FabricLanguageProvider {
         builder.add(WKItems.FERRET_SPAWN_EGG, "Ferret Spawn Egg");
         builder.add(WKItems.CHURCH_GRIM_SPAWN_EGG, "Church Grim Spawn Egg");
         builder.add(WKItems.HEDGEHOG_SPAWN_EGG, "Hedgehog Spawn Egg");
+        builder.add(WKItems.ROGGENWOLF_SPAWN_EGG, "Roggenwolf Spawn Egg");
         builder.add(WKItems.CHOCOLATE_RUM_BALLS, "Chocolate Rum Balls");
         builder.add(WKItems.SUPER_BOOZE, "Super Booze");
 

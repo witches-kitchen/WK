@@ -190,6 +190,7 @@ public class WKItemGroupEvents {
         e.addItem(CHURCH_GRIM_SPAWN_EGG);
         e.addItem(FERRET_SPAWN_EGG);
         e.addItem(HEDGEHOG_SPAWN_EGG);
+        e.addItem(ROGGENWOLF_SPAWN_EGG);
     }
 
     private static void foodGroup(FabricItemGroupEntries e) {

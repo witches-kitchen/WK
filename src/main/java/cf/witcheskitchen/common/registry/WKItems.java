@@ -113,6 +113,8 @@ public interface WKItems {
     Item CHURCH_GRIM_SPAWN_EGG = register("church_grim_spawn_egg", new SpawnEggItem(WKEntityTypes.CHURCH_GRIM, 0xFFFAFA, 0x36454F, settings()));
     Item HEDGEHOG_SPAWN_EGG = register("hedgehog_spawn_egg", new SpawnEggItem(WKEntityTypes.HEDGEHOG, 0xB4AEAA, 0x282625, settings()));
 
+    Item ROGGENWOLF_SPAWN_EGG = register("roggenwolf_spawn_egg", new SpawnEggItem(WKEntityTypes.ROGGENWOLF, 0xFADA5E, 0xDADD98, settings()));
+
 
     static List<ObjectDefinition<Item>> getItems() {
         return Collections.unmodifiableList(ITEMS);

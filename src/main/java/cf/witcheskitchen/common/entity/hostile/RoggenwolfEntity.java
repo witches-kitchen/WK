@@ -47,7 +47,7 @@ public class RoggenwolfEntity extends WKHostileEntity implements GeoEntity {
     public int getVariant() {
         return MathHelper.clamp(this.dataTracker.get(VARIANT), 1, 7);
     }
-    
+
     public void setVariant(int variant) {
         this.dataTracker.set(VARIANT, variant);
     }
