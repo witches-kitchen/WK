@@ -58,6 +58,11 @@ public class RoggenwolfEntity extends WKHostileEntity implements GeoEntity {
     }
 
     @Override
+    public boolean shouldRender(double distance) {
+        return true;
+    }
+
+    @Override
     public boolean isFireImmune() {
         return false;
     }
