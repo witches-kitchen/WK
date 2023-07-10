@@ -33,3 +33,4 @@ bin/
 
 # Eclipse JDT LS
 workspace/
+*.bak
