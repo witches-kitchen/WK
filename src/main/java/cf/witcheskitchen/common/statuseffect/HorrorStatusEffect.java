@@ -37,7 +37,8 @@ public class HorrorStatusEffect extends StatusEffect {
         World world = entity.getWorld();
         BlockPos pos = entity.getBlockPos();
         if (!entity.hasStatusEffect(StatusEffects.BLINDNESS)) {
-            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 6000, 3));
+            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
+            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
         }
         int i = rand.nextInt(100);
         if (timer > 0) timer--;
