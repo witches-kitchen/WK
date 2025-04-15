@@ -29,7 +29,7 @@ repositories {
         url = "https://www.curseforge.com/api/maven/"
     }
     maven {
-        url 'https://libs.azuredoom.com:4443/mods'
+        url 'https://maven.azuredoom.com/mods'
     }
     maven {
         url = "https://api.modrinth.com/maven"
