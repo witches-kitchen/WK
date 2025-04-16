@@ -50,10 +50,12 @@ public class HorrorStatusEffect extends StatusEffect {
                     world.playSound(null, pos, SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.HOSTILE, 1, 1);
                     if (amplifier == 0) {
                         timer = 650;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
                     }
                     if (amplifier >= 1) {
                         timer = 350;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
                     }
                 }
@@ -62,10 +64,12 @@ public class HorrorStatusEffect extends StatusEffect {
                     world.playSound(null, pos, SoundEvents.ENTITY_ENDERMAN_AMBIENT, SoundCategory.HOSTILE, 1, 1);
                     if (amplifier == 0) {
                         timer = 650;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
                     }
                     if (amplifier >= 1) {
                         timer = 350;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
                     }
                 }
@@ -73,10 +77,12 @@ public class HorrorStatusEffect extends StatusEffect {
                     world.playSound(null, pos, SoundEvents.ENTITY_POLAR_BEAR_WARNING, SoundCategory.HOSTILE, 1, 1);
                     if (amplifier == 0) {
                         timer = 650;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
                     }
                     if (amplifier >= 1) {
                         timer = 350;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
                     }
                 }
@@ -85,10 +91,12 @@ public class HorrorStatusEffect extends StatusEffect {
                     world.playSound(null, pos, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.HOSTILE, 1, 1);
                     if (amplifier == 0) {
                         timer = 650;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
                     }
                     if (amplifier >= 1) {
                         timer = 350;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
                     }
                 }
@@ -96,10 +104,12 @@ public class HorrorStatusEffect extends StatusEffect {
                     world.playSound(null, pos, SoundEvents.ENTITY_CREEPER_PRIMED, SoundCategory.HOSTILE, 1, 1);
                     if (amplifier == 0) {
                         timer = 650;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
                     }
                     if (amplifier >= 1) {
                         timer = 350;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
                     }
                 }
@@ -107,10 +117,12 @@ public class HorrorStatusEffect extends StatusEffect {
                     world.playSound(null, pos, SoundEvents.ENTITY_PHANTOM_SWOOP, SoundCategory.HOSTILE, 1, 1);
                     if (amplifier == 0) {
                         timer = 650;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
                     }
                     if (amplifier >= 1) {
                         timer = 350;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
                     }
                 }
@@ -118,10 +130,12 @@ public class HorrorStatusEffect extends StatusEffect {
                     world.playSound(null, pos, SoundEvents.ENTITY_ENDER_DRAGON_GROWL, SoundCategory.HOSTILE, 1, 1);
                     if (amplifier == 0) {
                         timer = 650;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
                     }
                     if (amplifier >= 1) {
                         timer = 350;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
                     }
                 }
@@ -129,10 +143,12 @@ public class HorrorStatusEffect extends StatusEffect {
                     world.playSound(null, pos, SoundEvents.ENTITY_LIGHTNING_BOLT_THUNDER, SoundCategory.HOSTILE, 1, 1);
                     if (amplifier == 0) {
                         timer = 650;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
                     }
                     if (amplifier >= 1) {
                         timer = 350;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
                     }
                 }
@@ -140,10 +156,12 @@ public class HorrorStatusEffect extends StatusEffect {
                     world.playSound(null, pos, SoundEvents.ENTITY_PIGLIN_BRUTE_ANGRY, SoundCategory.HOSTILE, 1, 1);
                     if (amplifier == 0) {
                         timer = 650;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
                     }
                     if (amplifier >= 1) {
                         timer = 350;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
                     }
                 }
@@ -151,10 +169,12 @@ public class HorrorStatusEffect extends StatusEffect {
                     world.playSound(null, pos, SoundEvents.AMBIENT_CAVE.value(), SoundCategory.HOSTILE, 1, 1);
                     if (amplifier == 0) {
                         timer = 650;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
                     }
                     if (amplifier >= 1) {
                         timer = 350;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
                     }
                 }
@@ -163,10 +183,12 @@ public class HorrorStatusEffect extends StatusEffect {
                     world.playSound(null, pos, SoundEvents.ITEM_CROSSBOW_LOADING_START.value(), SoundCategory.HOSTILE, 1, 1);
                     if (amplifier == 0) {
                         timer = 650;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
                     }
                     if (amplifier >= 1) {
                         timer = 350;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
                     }
                 }
@@ -174,10 +196,12 @@ public class HorrorStatusEffect extends StatusEffect {
                     world.playSound(null, pos, SoundEvents.ENTITY_WITHER_SKELETON_AMBIENT, SoundCategory.HOSTILE, 1, 1);
                     if (amplifier == 0) {
                         timer = 650;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
                     }
                     if (amplifier >= 1) {
                         timer = 350;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
                     }
                 }
@@ -185,10 +209,12 @@ public class HorrorStatusEffect extends StatusEffect {
                     world.playSound(null, pos, SoundEvents.ENTITY_GENERIC_EXPLODE.value(), SoundCategory.HOSTILE, 1, 1);
                     if (amplifier == 0) {
                         timer = 650;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
                     }
                     if (amplifier >= 1) {
                         timer = 350;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
                     }
                 }
@@ -196,10 +222,12 @@ public class HorrorStatusEffect extends StatusEffect {
                     world.playSound(null, pos, SoundEvents.ENTITY_STRAY_AMBIENT, SoundCategory.HOSTILE, 1, 1);
                     if (amplifier == 0) {
                         timer = 650;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
                     }
                     if (amplifier >= 1) {
                         timer = 350;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
                     }
                 }
@@ -207,10 +235,12 @@ public class HorrorStatusEffect extends StatusEffect {
                     world.playSound(null, pos, SoundEvents.ITEM_HONEY_BOTTLE_DRINK, SoundCategory.HOSTILE, 1, 1);
                     if (amplifier == 0) {
                         timer = 650;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
                     }
                     if (amplifier >= 1) {
                         timer = 350;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
                     }
                 }
@@ -218,10 +248,12 @@ public class HorrorStatusEffect extends StatusEffect {
                     world.playSound(null, pos, SoundEvents.BLOCK_STONE_BREAK, SoundCategory.HOSTILE, 1, 1);
                     if (amplifier == 0) {
                         timer = 650;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
                     }
                     if (amplifier >= 1) {
                         timer = 350;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
                     }
                 }
@@ -229,10 +261,12 @@ public class HorrorStatusEffect extends StatusEffect {
                     world.playSound(null, pos, WKSoundEvents.CUSITH_IDLE_EVENT, SoundCategory.HOSTILE, 1, 1);
                     if (amplifier == 0) {
                         timer = 650;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
                     }
                     if (amplifier >= 1) {
                         timer = 350;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
                     }
                 }
@@ -240,10 +274,12 @@ public class HorrorStatusEffect extends StatusEffect {
                     world.playSound(null, pos, WKSoundEvents.CUSITH_HOWL_EVENT, SoundCategory.HOSTILE, 1, 1);
                     if (amplifier == 0) {
                         timer = 650;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
                     }
                     if (amplifier >= 1) {
                         timer = 350;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
                     }
                 }
@@ -251,10 +287,12 @@ public class HorrorStatusEffect extends StatusEffect {
                     world.playSound(null, pos, SoundEvents.ENTITY_BEE_LOOP_AGGRESSIVE, SoundCategory.HOSTILE, 1, 1);
                     if (amplifier == 0) {
                         timer = 650;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
                     }
                     if (amplifier >= 1) {
                         timer = 350;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
                     }
                 }
@@ -263,10 +301,12 @@ public class HorrorStatusEffect extends StatusEffect {
                     world.playSound(null, pos, SoundEvents.ENTITY_WARDEN_LISTENING_ANGRY, SoundCategory.HOSTILE, 1, 1);
                     if (amplifier == 0) {
                         timer = 650;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
                     }
                     if (amplifier >= 1) {
                         timer = 350;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
                     }
                 }
@@ -275,10 +315,12 @@ public class HorrorStatusEffect extends StatusEffect {
                     world.playSound(null, pos, SoundEvents.BLOCK_WOODEN_DOOR_OPEN, SoundCategory.HOSTILE, 1, 1);
                     if (amplifier == 0) {
                         timer = 650;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
                     }
                     if (amplifier >= 1) {
                         timer = 350;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
                     }
                 }
@@ -286,10 +328,12 @@ public class HorrorStatusEffect extends StatusEffect {
                     world.playSound(null, pos, SoundEvents.ENTITY_ZOMBIE_AMBIENT, SoundCategory.HOSTILE, 1, 1);
                     if (amplifier == 0) {
                         timer = 650;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
                     }
                     if (amplifier >= 1) {
                         timer = 350;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
                     }
                 }
