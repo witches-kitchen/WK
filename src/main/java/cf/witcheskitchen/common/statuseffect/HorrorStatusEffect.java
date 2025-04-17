@@ -32,6 +32,7 @@ public class HorrorStatusEffect extends StatusEffect {
     }
 
     //Todo: Make sure only the victim can hear these sounds.
+    //Todo: It would appear this potion cannot apply properly.
     @Override
     public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
         Random rand = entity.getRandom();
@@ -44,7 +45,7 @@ public class HorrorStatusEffect extends StatusEffect {
         int i = rand.nextInt(100);
         if (timer > 0) timer--;
         if (i < 5 && timer == 0) {
-            switch (rand.nextInt(23)) {
+            switch (rand.nextInt(24)) {
                 case 0 -> {
                     world.playSound(null, pos, SoundEvents.BLOCK_WOODEN_BUTTON_CLICK_ON, SoundCategory.HOSTILE, 1, 1);
                     world.playSound(null, pos, SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.HOSTILE, 1, 1);
@@ -232,7 +233,7 @@ public class HorrorStatusEffect extends StatusEffect {
                     }
                 }
                 case 14 -> {
-                    world.playSound(null, pos, SoundEvents.ITEM_HONEY_BOTTLE_DRINK, SoundCategory.HOSTILE, 1, 1);
+                    world.playSound(null, pos, SoundEvents.BLOCK_CREAKING_HEART_IDLE, SoundCategory.HOSTILE, 1, 1);
                     if (amplifier == 0) {
                         timer = 650;
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
@@ -326,6 +327,19 @@ public class HorrorStatusEffect extends StatusEffect {
                 }
                 case 21 -> {
                     world.playSound(null, pos, SoundEvents.ENTITY_CREAKING_AMBIENT, SoundCategory.HOSTILE, 1, 1);
+                    if (amplifier == 0) {
+                        timer = 650;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
+                    }
+                    if (amplifier >= 1) {
+                        timer = 350;
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
+                        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 9000, 3));
+                    }
+                }
+                case 22 -> {
+                    world.playSound(null, pos, WKSoundEvents.HALLUCINATION_BREATH, SoundCategory.HOSTILE, 1, 1);
                     if (amplifier == 0) {
                         timer = 650;
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));

@@ -42,6 +42,13 @@
       "witcheskitchen:ferret_fight1"
     ]
   },
+  "hallucination_breath": {
+    "sounds": [
+      "witcheskitchen:hallucination_breath1",
+      "witcheskitchen:hallucination_breath2",
+      "witcheskitchen:hallucination_breath3"
+    ]
+  },
   "bubble": {
     "sounds": [
       "witcheskitchen:bubble"
