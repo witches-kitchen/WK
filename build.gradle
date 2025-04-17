@@ -141,7 +141,7 @@ dependencies {
     modCompileOnlyApi "dev.emi:emi-fabric:${emi_version}:api"
     include modImplementation("io.github.ladysnake:PlayerAbilityLib:${pal_version}")
     include modApi("me.lucko:fabric-permissions-api:${fabric_permissions_api_version}")
-    modImplementation "mod.azure.azurelib:azurelib-fabric-${minecraft_version}:${azurelib_version}"
+    //modImplementation "mod.azure.azurelib:azurelib-fabric-${minecraft_version}:${azurelib_version}"
     modImplementation "net.tslat.smartbrainlib:SmartBrainLib-fabric-${minecraft_version}:${smartbrainlib_version}"
 }
 
