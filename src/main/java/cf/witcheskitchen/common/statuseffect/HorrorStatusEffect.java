@@ -325,7 +325,7 @@ public class HorrorStatusEffect extends StatusEffect {
                     }
                 }
                 case 21 -> {
-                    world.playSound(null, pos, SoundEvents, SoundCategory.HOSTILE, 1, 1);
+                    world.playSound(null, pos, SoundEvents.ENTITY_CREAKING_AMBIENT, SoundCategory.HOSTILE, 1, 1);
                     if (amplifier == 0) {
                         timer = 650;
                         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));
