@@ -133,8 +133,8 @@ dependencies {
         // required for making REI integration work
         exclude(group: "net.fabricmc.fabric-api")
     }
-    modCompileOnlyApi("mezz.jei:jei-${mc_version}-common-api-intermediary:${jei_version}")
-    modCompileOnlyApi("mezz.jei:jei-${mc_version}-fabric-api:${jei_version}")
+    //modCompileOnlyApi("mezz.jei:jei-${mc_version}-common-api-intermediary:${jei_version}")
+    //modCompileOnlyApi("mezz.jei:jei-${mc_version}-fabric-api:${jei_version}")
     // TODO: JEI cannot be used in dev runtime due to an issue where the common libs it transitively depends on do not remap to Yarn.
     //       The only fix is for either JEI to fix it or for us to switch to Mojmap.
     //modRuntimeOnly("mezz.jei:jei-${mc_version}-fabric:${jei_version}")

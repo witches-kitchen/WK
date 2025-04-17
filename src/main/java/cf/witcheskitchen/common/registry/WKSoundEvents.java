@@ -27,6 +27,8 @@ public interface WKSoundEvents {
     SoundEvent BROOM_RIDING_EVENT = register("broom_loop");
     SoundEvent BROOM_USE_EVENT = register("broom_mount1");
 
+    SoundEvent HALLUCINATION_BREATH = register("hallucination_breath");
+
     static List<ObjectDefinition<SoundEvent>> getSoundEvents() {
         return Collections.unmodifiableList(SOUND_EVENTS);
     }
