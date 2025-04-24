@@ -13,7 +13,7 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
-import net.minecraft.state.property.DirectionProperty;
+import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ItemScatterer;
@@ -29,7 +29,7 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 public class TeapotBlock extends WKBlock implements Waterloggable {
-    public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
+    public static final EnumProperty<Direction> FACING = HorizontalFacingBlock.FACING;
     public static final VoxelShape SHAPE = VoxelShapes.union(
             createCuboidShape(4, 0, 4, 12, 6, 12),
             createCuboidShape(5, 6, 5, 11, 7, 11)

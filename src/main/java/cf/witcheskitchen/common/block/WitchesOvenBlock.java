@@ -16,12 +16,13 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.CampfireCookingRecipe;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.DirectionProperty;
+import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ItemActionResult;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -39,7 +40,7 @@ public class WitchesOvenBlock extends WKBlock implements Waterloggable {
 
     public static final BooleanProperty LIT = Properties.LIT;
     public static final BooleanProperty PASSIVE_LIT = BooleanProperty.of("passive_lit");
-    public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
+    public static final EnumProperty<Direction> FACING = HorizontalFacingBlock.FACING;
 
     public static final VoxelShape SHAPE = VoxelShapes.union(
             createCuboidShape(0, 14, 0, 16, 16, 16),
@@ -89,7 +90,7 @@ public class WitchesOvenBlock extends WKBlock implements Waterloggable {
     }
 
     @Override
-    protected ItemActionResult onUseWithItem(ItemStack stackInHand, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    protected ActionResult onUseWithItem(ItemStack stackInHand, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         final var entity = world.getBlockEntity(pos);
         if (entity instanceof WitchesOvenBlockEntity oven) {
             // Try to insert item on top
@@ -100,9 +101,9 @@ public class WitchesOvenBlock extends WKBlock implements Waterloggable {
                     // It can only place an item if it is part of a campfire recipe
                     if (!world.isClient() && passiveRecipe != null) {
                         if (oven.putItemOnTop(player.isCreative() ? stackInHand.copy() : stackInHand)) {
-                            return ItemActionResult.SUCCESS;
+                            return ActionResult.SUCCESS;
                         }
-                        return ItemActionResult.CONSUME;
+                        return ActionResult.CONSUME;
                     }
                 } else {
                     // Open GUI
@@ -110,7 +111,7 @@ public class WitchesOvenBlock extends WKBlock implements Waterloggable {
                 }
             }
         }
-        return ItemActionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        return ActionResult.PASS_TO_DEFAULT_BLOCK_ACTION;
     }
 
     @Override
@@ -125,8 +126,8 @@ public class WitchesOvenBlock extends WKBlock implements Waterloggable {
     @Override
     public void onSteppedOn(World world, BlockPos pos, BlockState state, Entity entity) {
         super.onSteppedOn(world, pos, state, entity);
-        if (state.get(LIT) && !entity.isFireImmune() && entity instanceof LivingEntity) {
-            entity.damage(entity.getDamageSources().create(WKDamageSources.ON_OVEN), 1);
+        if (state.get(LIT) && !entity.isFireImmune() && entity instanceof LivingEntity && world instanceof ServerWorld serverWorld) {
+            entity.damage(serverWorld, entity.getDamageSources().create(WKDamageSources.ON_OVEN), 1);
         }
     }
 

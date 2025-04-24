@@ -20,12 +20,13 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.Items;
 import net.minecraft.particle.ParticleEffect;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.DirectionProperty;
+import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.BlockMirror;
@@ -37,8 +38,10 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.ModifiableWorld;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
+import net.minecraft.world.WorldView;
+import net.minecraft.world.tick.ScheduledTickView;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
@@ -46,7 +49,7 @@ public class WitchesCauldronBlock extends WKBlockWithEntity implements Waterlogg
 
     public static final BooleanProperty HANGING = BooleanProperty.of("hanging");
     public static final BooleanProperty LIT = Properties.LIT;
-    public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
+    public static final EnumProperty<Direction> FACING = HorizontalFacingBlock.FACING;
     public static final VoxelShape SHAPE = VoxelShapes.union(
             createCuboidShape(2, 9, 1, 14, 11, 2),
             createCuboidShape(2, 9, 14, 14, 11, 15),
@@ -93,10 +96,12 @@ public class WitchesCauldronBlock extends WKBlockWithEntity implements Waterlogg
     }
 
     // Triggers Hanging state
+
     @Override
-    public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
-        world.setBlockState(pos, state.with(HANGING, !world.getBlockState(pos.up()).isAir()), Block.NOTIFY_ALL);
-        return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
+    protected BlockState getStateForNeighborUpdate(BlockState state, WorldView world, ScheduledTickView tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, Random random) {
+        if (world instanceof ModifiableWorld modifiableWorld)
+            modifiableWorld.setBlockState(pos, state.with(HANGING, !world.getBlockState(pos.up()).isAir()), Block.NOTIFY_ALL);
+        return super.getStateForNeighborUpdate(state, world, tickView, pos, direction, neighborPos, neighborState, random);
     }
 
     // Cauldron fill/drain fluid logic
@@ -196,8 +201,8 @@ public class WitchesCauldronBlock extends WKBlockWithEntity implements Waterlogg
                         cauldron.checkAndCollectIngredient(world, itemEntity);
                     }
                 } else if (entity instanceof LivingEntity living) {
-                    if (state.get(LIT)) {
-                        living.damage(entity.getDamageSources().lava(), 4);
+                    if (state.get(LIT) && world instanceof ServerWorld serverWorld) {
+                        living.damage(serverWorld, entity.getDamageSources().lava(), 4);
                         living.setFireTicks(TimeHelper.toTicks(15));
                     }
                 }

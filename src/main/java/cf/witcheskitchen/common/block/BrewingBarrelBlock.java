@@ -15,10 +15,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsage;
 import net.minecraft.item.Items;
 import net.minecraft.state.StateManager;
-import net.minecraft.state.property.DirectionProperty;
+import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ItemActionResult;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -31,7 +31,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class BrewingBarrelBlock extends WKBlock implements Waterloggable {
 
-    public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
+    public static final EnumProperty<Direction> FACING = Properties.HORIZONTAL_FACING;
     private static final VoxelShape NORTH_SHAPE = VoxelShapes.union(createCuboidShape(13, 5, 1, 15, 11, 15), createCuboidShape(1, 5, 1, 3, 11, 15), createCuboidShape(11, 12, 1, 14, 14, 15), createCuboidShape(11, 2, 1, 14, 4, 15), createCuboidShape(11, 0, 3, 14, 2, 6), createCuboidShape(2, 0, 3, 5, 2, 6), createCuboidShape(11, 0, 10, 14, 2, 13), createCuboidShape(2, 0, 10, 5, 2, 13), createCuboidShape(12, 11, 1, 14, 12, 15), createCuboidShape(12, 4, 1, 14, 5, 15), createCuboidShape(5, 13, 1, 11, 15, 15), createCuboidShape(5, 1, 1, 11, 3, 15), createCuboidShape(3, 3, 2, 13, 13, 14), createCuboidShape(2, 12, 1, 5, 14, 15), createCuboidShape(2, 2, 1, 5, 4, 15), createCuboidShape(2, 11, 1, 4, 12, 15), createCuboidShape(2, 4, 1, 4, 5, 15));
     private static final VoxelShape EAST_SHAPE = VoxelShapes.union(createCuboidShape(1, 5, 1, 15, 11, 3), createCuboidShape(1, 5, 13, 15, 11, 15), createCuboidShape(1, 12, 2, 15, 14, 5), createCuboidShape(1, 2, 2, 15, 4, 5), createCuboidShape(3, 0, 2, 6, 2, 5), createCuboidShape(3, 0, 11, 6, 2, 14), createCuboidShape(10, 0, 2, 13, 2, 5), createCuboidShape(10, 0, 11, 13, 2, 14), createCuboidShape(1, 11, 2, 15, 12, 4), createCuboidShape(1, 4, 2, 15, 5, 4), createCuboidShape(1, 13, 5, 15, 15, 11), createCuboidShape(1, 1, 5, 15, 3, 11), createCuboidShape(2, 3, 3, 14, 13, 13), createCuboidShape(1, 12, 11, 15, 14, 14), createCuboidShape(1, 2, 11, 15, 4, 14), createCuboidShape(1, 11, 12, 15, 12, 14), createCuboidShape(1, 4, 12, 15, 5, 14));
 
@@ -41,43 +41,43 @@ public class BrewingBarrelBlock extends WKBlock implements Waterloggable {
     }
 
     @Override
-    protected ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    protected ActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         final var blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof BrewingBarrelBlockEntity barrel) {
             if (state.get(FACING) == hit.getSide()) {
                 if (barrel.hasFinished()) {
                     ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), ((BrewingBarrelBlockEntity) blockEntity).getRenderStack());
                     barrel.reset();
-                    return ItemActionResult.SUCCESS;
+                    return ActionResult.SUCCESS;
                 }
                 if (!stack.isEmpty()) {
                     if (stack.isOf(Items.GLASS_BOTTLE)) {
                         if (barrel.insertBottle(stack)) {
-                            return ItemActionResult.SUCCESS;
+                            return ActionResult.SUCCESS;
                         }
                     }
                     if (stack.isOf(Items.WATER_BUCKET)) {
                         if (barrel.fillBarrel(stack)) {
                             player.setStackInHand(hand, ItemUsage.exchangeStack(stack, player, new ItemStack(Items.BUCKET)));
-                            return ItemActionResult.SUCCESS;
+                            return ActionResult.SUCCESS;
                         }
                     }
                     if (stack.isOf(Items.BUCKET)) {
                         if (barrel.emptyBarrel(stack)) {
                             player.setStackInHand(hand, ItemUsage.exchangeStack(stack, player, new ItemStack(Items.WATER_BUCKET)));
-                            return ItemActionResult.SUCCESS;
+                            return ActionResult.SUCCESS;
                         }
                     }
                 }
                 if (player.isSneaking() && !barrel.getRenderStack().isEmpty()) {
                     barrel.removeBottle(player);
-                    return ItemActionResult.SUCCESS;
+                    return ActionResult.SUCCESS;
                 }
                 // Open GUI
                 return super.onUseWithItem(stack, state, world, pos, player, hand, hit);
             }
         }
-        return ItemActionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        return ActionResult.PASS_TO_DEFAULT_BLOCK_ACTION;
     }
 
     @Override
