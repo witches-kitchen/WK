@@ -9,8 +9,8 @@ import net.minecraft.world.World;
 
 public class DrunkPotion extends Potion implements AlcoholEffect {
 
-    public DrunkPotion(StatusEffectInstance... statusEffectInstances) {
-        super(statusEffectInstances);
+    public DrunkPotion(String baseName, StatusEffectInstance... statusEffectInstances) {
+        super(baseName, statusEffectInstances);
     }
 
     @Override

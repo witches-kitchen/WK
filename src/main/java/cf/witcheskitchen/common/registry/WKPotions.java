@@ -19,7 +19,7 @@ public interface WKPotions {
 
     List<ObjectDefinition<Potion>> POTIONS = new ArrayList<>();
 
-    Potion DRUNK = register("rum", new DrunkPotion(withEffect(WKStatusEffects.DRUNK, 200)));
+    Potion DRUNK = register("rum", new DrunkPotion("rum", withEffect(WKStatusEffects.DRUNK, 200)));
 
     static <T extends Potion> T register(String path, T potion) {
         final Identifier resource = WitchesKitchen.id(path);

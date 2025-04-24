@@ -8,7 +8,7 @@
     "fluid.BottleItemMixin",
     "fluid.BucketItemMixin",
     "fluid.PotionItemMixin",
-    "potion.PotionItemMixin",
+      "potion.ItemMixin",
     "statuseffect.ActiveTargetGoalMixin",
     "statuseffect.ArthropodEntityMixin",
     "statuseffect.CreeperEntityMixin",
