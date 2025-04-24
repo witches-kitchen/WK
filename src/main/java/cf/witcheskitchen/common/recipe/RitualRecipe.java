@@ -15,10 +15,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.Recipe;
-import net.minecraft.recipe.RecipeSerializer;
-import net.minecraft.recipe.RecipeType;
+import net.minecraft.recipe.*;
+import net.minecraft.recipe.book.RecipeBookCategory;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
@@ -94,16 +92,6 @@ public class RitualRecipe implements Recipe<MultipleStackRecipeInput> {
         return ItemStack.EMPTY;
     }
 
-    @Override
-    public boolean fits(int width, int height) {
-        return true;
-    }
-
-    @Override
-    public ItemStack getResult(RegistryWrapper.WrapperLookup registriesLookup) {
-        return ItemStack.EMPTY;
-    }
-
     public Ritual getRite() {
         return rite;
     }
@@ -117,13 +105,27 @@ public class RitualRecipe implements Recipe<MultipleStackRecipeInput> {
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<? extends Recipe<MultipleStackRecipeInput>> getSerializer() {
         return WKRecipeTypes.RITUAL_RECIPE_SERIALIZER;
     }
 
     @Override
-    public RecipeType<?> getType() {
+    public RecipeType<? extends Recipe<MultipleStackRecipeInput>> getType() {
         return WKRecipeTypes.RITUAL_RECIPE_TYPE;
+    }
+
+    @Override
+    public IngredientPlacement getIngredientPlacement() {
+        if (this.inputs == null)
+            return IngredientPlacement.NONE;
+
+        return IngredientPlacement.forShapeless(this.inputs);
+    }
+
+    @Override
+    public RecipeBookCategory getRecipeBookCategory() {
+        // TODO: use custom recipe book category
+        return null;
     }
 
     public List<EntityType<?>> getSacrifices() {

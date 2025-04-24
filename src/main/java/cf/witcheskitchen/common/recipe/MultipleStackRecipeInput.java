@@ -12,7 +12,7 @@ public record MultipleStackRecipeInput(List<ItemStack> stacks) implements Recipe
     }
 
     @Override
-    public int getSize() {
+    public int size() {
         return stacks.size();
     }
 }

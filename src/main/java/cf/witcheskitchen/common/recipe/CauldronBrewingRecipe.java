@@ -11,10 +11,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.Recipe;
-import net.minecraft.recipe.RecipeSerializer;
-import net.minecraft.recipe.RecipeType;
+import net.minecraft.recipe.*;
+import net.minecraft.recipe.book.RecipeBookCategory;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.world.World;
 
@@ -47,17 +45,7 @@ public class CauldronBrewingRecipe implements Recipe<MultipleStackRecipeInput> {
         return this.result.copy();
     }
 
-    @Override
-    public boolean fits(int width, int height) {
-        return false;
-    }
-
     public ItemStack getResult() {
-        return this.result;
-    }
-
-    @Override
-    public ItemStack getResult(RegistryWrapper.WrapperLookup registriesLookup) {
         return this.result;
     }
 
@@ -66,12 +54,12 @@ public class CauldronBrewingRecipe implements Recipe<MultipleStackRecipeInput> {
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<? extends Recipe<MultipleStackRecipeInput>> getSerializer() {
         return WKRecipeTypes.CAULDRON_BREWING_RECIPE_SERIALIZER;
     }
 
     @Override
-    public RecipeType<?> getType() {
+    public RecipeType<? extends Recipe<MultipleStackRecipeInput>> getType() {
         return WKRecipeTypes.CAULDRON_BREWING_RECIPE_TYPE;
     }
 
@@ -79,13 +67,23 @@ public class CauldronBrewingRecipe implements Recipe<MultipleStackRecipeInput> {
         return color;
     }
 
+    @Override
+    public IngredientPlacement getIngredientPlacement() {
+        return IngredientPlacement.forShapeless(this.getInputs());
+    }
+
+    @Override
+    public RecipeBookCategory getRecipeBookCategory() {
+        // TODO: use custom recipe book category
+        return null;
+    }
 
     public static class Serializer implements RecipeSerializer<CauldronBrewingRecipe> {
         @Override
         public MapCodec<CauldronBrewingRecipe> codec() {
             return RecordCodecBuilder.mapCodec(instance ->
                     instance.group(
-                                    Ingredient.DISALLOW_EMPTY_CODEC.listOf()
+                                    Ingredient.CODEC.listOf()
                                             .fieldOf("ingredients")
                                             .validate(ingredients -> {
                                                 if (ingredients.size() < 2) {

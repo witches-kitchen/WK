@@ -8,10 +8,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.Recipe;
-import net.minecraft.recipe.RecipeSerializer;
-import net.minecraft.recipe.RecipeType;
+import net.minecraft.recipe.*;
+import net.minecraft.recipe.book.RecipeBookCategory;
 import net.minecraft.recipe.input.SingleStackRecipeInput;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKeys;
@@ -39,18 +37,8 @@ public class TeaRecipe implements Recipe<SingleStackRecipeInput> {
         return ItemStack.EMPTY;
     }
 
-    @Override
-    public boolean fits(int width, int height) {
-        return true;
-    }
-
     public Ingredient getInput() {
         return input;
-    }
-
-    @Override
-    public ItemStack getResult(RegistryWrapper.WrapperLookup registriesLookup) {
-        return ItemStack.EMPTY;
     }
 
     public ItemStack getOutput() {
@@ -62,13 +50,24 @@ public class TeaRecipe implements Recipe<SingleStackRecipeInput> {
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<? extends Recipe<SingleStackRecipeInput>> getSerializer() {
         return WKRecipeTypes.TEA_RECIPE_SERIALIZER;
     }
 
     @Override
-    public RecipeType<?> getType() {
+    public RecipeType<? extends Recipe<SingleStackRecipeInput>> getType() {
         return WKRecipeTypes.TEA_RECIPE_TYPE;
+    }
+
+    @Override
+    public IngredientPlacement getIngredientPlacement() {
+        return IngredientPlacement.forSingleSlot(this.input);
+    }
+
+    @Override
+    public RecipeBookCategory getRecipeBookCategory() {
+        // TODO: use custom recipe book category
+        return null;
     }
 
     public static class Serializer implements RecipeSerializer<TeaRecipe> {
@@ -76,7 +75,7 @@ public class TeaRecipe implements Recipe<SingleStackRecipeInput> {
         public MapCodec<TeaRecipe> codec() {
             return RecordCodecBuilder.mapCodec(instance ->
                     instance.group(
-                                    Ingredient.DISALLOW_EMPTY_CODEC
+                                    Ingredient.CODEC
                                             .fieldOf("ingredient")
                                             .forGetter(TeaRecipe::getInput),
                                     ItemStack.CODEC

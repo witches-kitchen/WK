@@ -9,10 +9,8 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.Recipe;
-import net.minecraft.recipe.RecipeSerializer;
-import net.minecraft.recipe.RecipeType;
+import net.minecraft.recipe.*;
+import net.minecraft.recipe.book.RecipeBookCategory;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.world.World;
 
@@ -38,16 +36,6 @@ public class BarrelFermentingRecipe implements Recipe<MultipleStackRecipeInput> 
         return this.output.copy();
     }
 
-    @Override
-    public boolean fits(int width, int height) {
-        return false;
-    }
-
-    @Override
-    public ItemStack getResult(RegistryWrapper.WrapperLookup registriesLookup) {
-        return this.output;
-    }
-
     public List<Ingredient> getInputs() {
         return inputs;
     }
@@ -57,13 +45,24 @@ public class BarrelFermentingRecipe implements Recipe<MultipleStackRecipeInput> 
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<? extends Recipe<MultipleStackRecipeInput>> getSerializer() {
         return WKRecipeTypes.BARREL_FERMENTING_RECIPE_SERIALIZER;
     }
 
     @Override
-    public RecipeType<?> getType() {
+    public RecipeType<? extends Recipe<MultipleStackRecipeInput>> getType() {
         return WKRecipeTypes.BARREL_FERMENTING_RECIPE_TYPE;
+    }
+
+    @Override
+    public IngredientPlacement getIngredientPlacement() {
+        return IngredientPlacement.forShapeless(this.getInputs());
+    }
+
+    @Override
+    public RecipeBookCategory getRecipeBookCategory() {
+        // TODO: create custom recipe book category
+        return null;
     }
 
     public static class Serializer implements RecipeSerializer<BarrelFermentingRecipe> {
@@ -71,7 +70,7 @@ public class BarrelFermentingRecipe implements Recipe<MultipleStackRecipeInput> 
         public MapCodec<BarrelFermentingRecipe> codec() {
             return RecordCodecBuilder.mapCodec(instance ->
                     instance.group(
-                                    Ingredient.DISALLOW_EMPTY_CODEC.listOf()
+                                    Ingredient.CODEC.listOf()
                                             .fieldOf("ingredients")
                                             .validate(inputs -> {
                                                 if (inputs.isEmpty()) {

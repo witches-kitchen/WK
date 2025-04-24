@@ -9,10 +9,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.Recipe;
-import net.minecraft.recipe.RecipeSerializer;
-import net.minecraft.recipe.RecipeType;
+import net.minecraft.recipe.*;
+import net.minecraft.recipe.book.RecipeBookCategory;
 import net.minecraft.recipe.input.SingleStackRecipeInput;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.world.World;
@@ -33,23 +31,24 @@ public record OvenCookingRecipe(Ingredient input, List<ItemStack> outputs, int t
     }
 
     @Override
-    public boolean fits(int width, int height) {
-        return false;
-    }
-
-    @Override
-    public ItemStack getResult(RegistryWrapper.WrapperLookup registriesLookup) {
-        return ItemStack.EMPTY;
-    }
-
-    @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<? extends Recipe<SingleStackRecipeInput>> getSerializer() {
         return WKRecipeTypes.WITCHES_OVEN_COOKING_RECIPE_SERIALIZER;
     }
 
     @Override
-    public RecipeType<?> getType() {
+    public RecipeType<? extends Recipe<SingleStackRecipeInput>> getType() {
         return WKRecipeTypes.WITCHES_OVEN_COOKING_RECIPE_TYPE;
+    }
+
+    @Override
+    public IngredientPlacement getIngredientPlacement() {
+        return IngredientPlacement.forSingleSlot(this.input());
+    }
+
+    @Override
+    public RecipeBookCategory getRecipeBookCategory() {
+        // TODO: use recipe book category
+        return null;
     }
 
     public static class Serializer implements RecipeSerializer<OvenCookingRecipe> {
@@ -58,7 +57,7 @@ public record OvenCookingRecipe(Ingredient input, List<ItemStack> outputs, int t
             return RecordCodecBuilder
                     .mapCodec(instance ->
                             instance.group(
-                                            Ingredient.DISALLOW_EMPTY_CODEC
+                                            Ingredient.CODEC
                                                     .fieldOf("ingredient")
                                                     .forGetter(OvenCookingRecipe::input),
                                             ItemStack.CODEC
@@ -89,7 +88,7 @@ public record OvenCookingRecipe(Ingredient input, List<ItemStack> outputs, int t
         public PacketCodec<RegistryByteBuf, OvenCookingRecipe> packetCodec() {
             return PacketCodec.tuple(
                     Ingredient.PACKET_CODEC, OvenCookingRecipe::input,
-                    ItemStack.LIST_PACKET_CODEC, OvenCookingRecipe::outputs,
+                    PacketCodecs.<RegistryByteBuf, ItemStack>toList().apply(ItemStack.PACKET_CODEC), OvenCookingRecipe::outputs,
                     PacketCodecs.VAR_INT, OvenCookingRecipe::time,
                     PacketCodecs.FLOAT, OvenCookingRecipe::xp,
                     OvenCookingRecipe::new
