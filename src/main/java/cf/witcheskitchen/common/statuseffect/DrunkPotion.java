@@ -1,4 +1,4 @@
-package cf.witcheskitchen.common.potion;
+package cf.witcheskitchen.common.statuseffect;
 
 import cf.witcheskitchen.api.interfaces.AlcoholEffect;
 import net.minecraft.entity.LivingEntity;
