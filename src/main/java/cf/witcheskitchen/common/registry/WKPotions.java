@@ -2,6 +2,7 @@ package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WitchesKitchen;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
+import cf.witcheskitchen.common.statuseffect.DrunkStatusEffect;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.potion.Potion;
@@ -18,7 +19,7 @@ public interface WKPotions {
 
     List<ObjectDefinition<Potion>> POTIONS = new ArrayList<>();
 
-    Potion DRUNK = register("rum", new DrunkPotion("rum", withEffect(WKStatusEffects.DRUNK, 200)));
+    Potion DRUNK = register("rum", new DrunkStatusEffect("rum", withEffect(WKStatusEffects.DRUNK, 200)));
 
     static <T extends Potion> T register(String path, T potion) {
         final Identifier resource = WitchesKitchen.id(path);

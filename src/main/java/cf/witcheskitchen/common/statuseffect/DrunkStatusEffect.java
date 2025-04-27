@@ -3,17 +3,15 @@ package cf.witcheskitchen.common.statuseffect;
 import cf.witcheskitchen.api.interfaces.AlcoholEffect;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Potion;
 import net.minecraft.world.World;
 
 //Todo: Learn shaders
-public class DrunkStatusEffect extends Potion implements AlcoholEffect {
+public class DrunkStatusEffect extends StatusEffect implements AlcoholEffect {
 
-    public DrunkStatusEffect(StatusEffectCategory type, int color) {
+    public DrunkStatusEffect(String type, StatusEffectInstance color) {
         super(type, color);
     }
 

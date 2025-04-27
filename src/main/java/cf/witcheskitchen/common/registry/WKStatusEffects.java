@@ -47,6 +47,8 @@ public interface WKStatusEffects {
             .addAttributeModifier(EntityAttributes.GENERIC_ARMOR, WitchesKitchen.id("reinforcement_armor"), 4D, EntityAttributeModifier.Operation.ADD_VALUE)
             .addAttributeModifier(EntityAttributes.GENERIC_ARMOR_TOUGHNESS, WitchesKitchen.id("reinforcement_armor_toughness"), 2D, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
     RegistryEntry<StatusEffect> FELIFORM = create("feliform", new FeliformStatusEffect(StatusEffectCategory.BENEFICIAL, 0x228B22));
+
+    RegistryEntry<StatusEffect> DRUNK = create("drunk", new DrunkStatusEffect(StatusEffectCategory.HARMFUL, 0x228B22));
     RegistryEntry<StatusEffect> BUG_SPRAY = create("bug_spray", new BugSprayStatusEffect(StatusEffectCategory.BENEFICIAL, 0x32CD32));
     RegistryEntry<StatusEffect> LONG_REACH = create("long_reach", new LongReachStatusEffect(StatusEffectCategory.BENEFICIAL, 0x964a6e)
             .addAttributeModifier(EntityAttributes.PLAYER_BLOCK_INTERACTION_RANGE, WitchesKitchen.id("long_reach"), 5.5D, EntityAttributeModifier.Operation.ADD_VALUE)
