@@ -1,13 +1,17 @@
 package cf.witcheskitchen.common.statuseffect;
 
+import cf.witcheskitchen.api.interfaces.AlcoholEffect;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
+import net.minecraft.world.World;
 
 //Todo: Learn shaders
-public class DrunkStatusEffect extends StatusEffect {
+public class DrunkStatusEffect extends Potion implements AlcoholEffect {
 
     public DrunkStatusEffect(StatusEffectCategory type, int color) {
         super(type, color);
@@ -42,6 +46,21 @@ public class DrunkStatusEffect extends StatusEffect {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void onDrink(World world, ItemStack wine, LivingEntity entity) {
+
+    }
+
+    @Override
+    public void onFinished(World world, ItemStack wine, LivingEntity entity) {
+
+    }
+
+    @Override
+    public int getDrunkChance() {
+        return 40;
     }
 
     //NOTICE: Values are not final! These will change once the alcohol system is fully functional
