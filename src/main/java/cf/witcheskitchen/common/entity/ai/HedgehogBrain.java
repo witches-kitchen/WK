@@ -11,6 +11,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.brain.task.LookAroundTask;
 import net.minecraft.entity.ai.brain.task.MoveToTargetTask;
 import net.minecraft.entity.ai.brain.task.StayAboveWaterTask;
+import net.minecraft.util.math.intprovider.ConstantIntProvider;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.OneRandomBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.Idle;
@@ -34,7 +35,7 @@ public class HedgehogBrain {
         return BrainActivityGroup.coreTasks(
                 new DontMoveTask(),
                 new StayAboveWaterTask(0.6f),
-                new LookAroundTask(45, 90),
+                new LookAroundTask(ConstantIntProvider.create(45), 90, -15, 15),
                 new MoveToTargetTask()
         );
     }

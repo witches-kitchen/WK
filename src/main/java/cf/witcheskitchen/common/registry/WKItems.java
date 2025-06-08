@@ -3,6 +3,9 @@ package cf.witcheskitchen.common.registry;
 import cf.witcheskitchen.WitchesKitchen;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
 import cf.witcheskitchen.common.item.*;
+import com.mojang.datafixers.util.Pair;
+import net.minecraft.component.type.ConsumableComponent;
+import net.minecraft.component.type.FoodComponent;
 import net.minecraft.component.type.FoodComponents;
 import net.minecraft.item.Item;
 import net.minecraft.item.SpawnEggItem;
@@ -37,16 +40,16 @@ public interface WKItems {
 
     //Flowers
     Item BELLADONNA_BLOSSOM = register("belladonna_blossom");
-    Item AMARANTH_SPRIG = register("amaranth_sprig", new Item(settings().food(WKFoodComponents.AMARANTH_GRAIN)));
-    Item MINT_SPRIG = register("mint_sprig", new Item(settings().food(WKFoodComponents.MINT_LEAF)));
+    Item AMARANTH_SPRIG = register("amaranth_sprig", new Item(food(WKFoodComponents.AMARANTH_GRAIN)));
+    Item MINT_SPRIG = register("mint_sprig", new Item(food(WKFoodComponents.MINT_LEAF)));
     Item WORMWOOD_SPRIG = register("wormwood_sprig");
-    Item ROWAN_BERRIES = register("rowan_berries", new Item(settings().food(WKFoodComponents.BERRIES)));
-    Item SLOE_BERRIES = register("sloe_berries", new Item(settings().food(WKFoodComponents.BERRIES)));
-    Item JUNIPER_BERRIES = register("juniper_berries", new Item(settings().food(WKFoodComponents.BERRIES)));
-    Item BLACKBERRY = register("blackberry", new Item(settings().food(WKFoodComponents.BERRIES)));
-    Item HAWTHORN_BERRIES = register("hawthorn_berries", new Item(settings().food(WKFoodComponents.BERRIES)));
-    Item SUMAC_BERRIES = register("sumac_berries", new Item(settings().food(WKFoodComponents.BERRIES)));
-    Item BRIAR_HIPS = register("briar_hips", new Item(settings().food(WKFoodComponents.BERRIES)));
+    Item ROWAN_BERRIES = register("rowan_berries", new Item(food(WKFoodComponents.BERRIES)));
+    Item SLOE_BERRIES = register("sloe_berries", new Item(food(WKFoodComponents.BERRIES)));
+    Item JUNIPER_BERRIES = register("juniper_berries", new Item(food(WKFoodComponents.BERRIES)));
+    Item BLACKBERRY = register("blackberry", new Item(food(WKFoodComponents.BERRIES)));
+    Item HAWTHORN_BERRIES = register("hawthorn_berries", new Item(food(WKFoodComponents.BERRIES)));
+    Item SUMAC_BERRIES = register("sumac_berries", new Item(food(WKFoodComponents.BERRIES)));
+    Item BRIAR_HIPS = register("briar_hips", new Item(food(WKFoodComponents.BERRIES)));
     Item ELDER_BLOSSOM = register("elder_blossom");
     Item CONEFLOWER_BLOSSOM = register("coneflower_blossom");
     Item SANGUINARY_BLOSSOM = register("sanguinary_blossom");
@@ -54,7 +57,7 @@ public interface WKItems {
     Item IRIS_BLOSSOM = register("iris_blossom");
     Item CHAMOMILE_BLOSSOM = register("chamomile_blossom");
     Item GINGER_ROOTS = register("ginger_roots");
-    Item TEA_LEAF = register("tea_leaf", new Item(settings().food(WKFoodComponents.TEA_LEAF)));
+    Item TEA_LEAF = register("tea_leaf", new Item(food(WKFoodComponents.TEA_LEAF)));
     Item HELLEBORE_BLOSSOM = register("hellebore_blossom");
     Item FOXGLOVE_BLOSSOM = register("foxglove_blossom");
 
@@ -71,13 +74,13 @@ public interface WKItems {
     Item SUMAC_TEA = register("sumac_tea", new Item(settings().food(WKFoodComponents.TEA)));
     Item YARROW_TEA = register("yarrow_tea", new Item(settings().food(WKFoodComponents.TEA)));
 
-    Item ABSINTHE = register("absinthe", new Item(settings().food(WKFoodComponents.SUPER_STRONG_ALCOHOL)));
-    Item BLACKBERRY_LIQUEUR = register("blackberry_liqueur", new Item(settings().food(WKFoodComponents.AVERAGE_ALCOHOL)));
-    Item BRINJEVEC = register("brinjevec", new Item(settings().food(WKFoodComponents.STRONG_ALCOHOL)));
-    Item HOLUNDERSEKT = register("holundersekt", new Item(settings().food(WKFoodComponents.STRONG_ALCOHOL)));
-    Item JUNIPER_MEAD = register("juniper_mead", new Item(settings().food(WKFoodComponents.STRONG_ALCOHOL)));
-    Item RUM = register("rum", new Item(settings().food(WKFoodComponents.STRONG_ALCOHOL)));
-    Item TRAVARICA = register("travarica", new Item(settings().food(WKFoodComponents.STRONG_ALCOHOL)));
+    Item ABSINTHE = register("absinthe", new Item(food(WKFoodComponents.SUPER_STRONG_ALCOHOL)));
+    Item BLACKBERRY_LIQUEUR = register("blackberry_liqueur", new Item(food(WKFoodComponents.AVERAGE_ALCOHOL)));
+    Item BRINJEVEC = register("brinjevec", new Item(food(WKFoodComponents.STRONG_ALCOHOL)));
+    Item HOLUNDERSEKT = register("holundersekt", new Item(food(WKFoodComponents.STRONG_ALCOHOL)));
+    Item JUNIPER_MEAD = register("juniper_mead", new Item(food(WKFoodComponents.STRONG_ALCOHOL)));
+    Item RUM = register("rum", new Item(food(WKFoodComponents.STRONG_ALCOHOL)));
+    Item TRAVARICA = register("travarica", new Item(food(WKFoodComponents.STRONG_ALCOHOL)));
     Item GROUND_BEEF = register("ground_beef", new Item(settings().food(FoodComponents.BEEF)));
     Item GROUND_PORK = register("ground_pork", new Item(settings().food(FoodComponents.PORKCHOP)));
     Item GROUND_MUTTON = register("ground_mutton", new Item(settings().food(FoodComponents.BEEF)));
@@ -103,16 +106,16 @@ public interface WKItems {
     Item SANGUINARY_SEEDS = register("sanguinary_seeds", new VariantSeedItem(WKBlocks.SANGUINARY, settings()));
     Item WORMWOOD_SEEDS = register("wormwood_seeds", new VariantSeedItem(WKBlocks.WORMWOOD, settings()));
 
-    Item DOLLOP_OF_FROSTING = register("dollop_of_frosting", new Item(settings().food(WKFoodComponents.FROSTING)));
-    Item CHOCOLATE_RUM_BALLS = register("chocolate_rum_balls", new Item(settings().food(WKFoodComponents.RUM_BALLS)));
-    Item SUPER_BOOZE = register("super_booze", new Item(new Item.Settings().food(WKFoodComponents.SUPER_BOOZE)));
+    Item DOLLOP_OF_FROSTING = register("dollop_of_frosting", new Item(food(WKFoodComponents.FROSTING)));
+    Item CHOCOLATE_RUM_BALLS = register("chocolate_rum_balls", new Item(food(WKFoodComponents.RUM_BALLS)));
+    Item SUPER_BOOZE = register("super_booze", new Item(food(WKFoodComponents.SUPER_BOOZE)));
 
-    Item CU_SITH_SPAWN_EGG = register("cu_sith_spawn_egg", new SpawnEggItem(WKEntityTypes.CUSITH, 0x343434, 0x355E3B, settings()));
-    Item FERRET_SPAWN_EGG = register("ferret_spawn_egg", new SpawnEggItem(WKEntityTypes.FERRET, 0x985C3A, 0x282625, settings()));
-    Item CHURCH_GRIM_SPAWN_EGG = register("church_grim_spawn_egg", new SpawnEggItem(WKEntityTypes.CHURCH_GRIM, 0xFFFAFA, 0x36454F, settings()));
-    Item HEDGEHOG_SPAWN_EGG = register("hedgehog_spawn_egg", new SpawnEggItem(WKEntityTypes.HEDGEHOG, 0xB4AEAA, 0x282625, settings()));
+    Item CU_SITH_SPAWN_EGG = register("cu_sith_spawn_egg", new SpawnEggItem(WKEntityTypes.CUSITH, settings()));
+    Item FERRET_SPAWN_EGG = register("ferret_spawn_egg", new SpawnEggItem(WKEntityTypes.FERRET, settings()));
+    Item CHURCH_GRIM_SPAWN_EGG = register("church_grim_spawn_egg", new SpawnEggItem(WKEntityTypes.CHURCH_GRIM, settings()));
+    Item HEDGEHOG_SPAWN_EGG = register("hedgehog_spawn_egg", new SpawnEggItem(WKEntityTypes.HEDGEHOG, settings()));
 
-    Item ROGGENWOLF_SPAWN_EGG = register("roggenwolf_spawn_egg", new SpawnEggItem(WKEntityTypes.ROGGENWOLF, 0xFADA5E, 0xDADD98, settings()));
+    Item ROGGENWOLF_SPAWN_EGG = register("roggenwolf_spawn_egg", new SpawnEggItem(WKEntityTypes.ROGGENWOLF, settings()));
 
 
     static List<ObjectDefinition<Item>> getItems() {
@@ -121,6 +124,10 @@ public interface WKItems {
 
     static Item.Settings settings() {
         return new Item.Settings();
+    }
+
+    static Item.Settings food(Pair<FoodComponent, ConsumableComponent> components) {
+        return settings().food(components.getFirst(), components.getSecond());
     }
 
     static Item register(String string) {

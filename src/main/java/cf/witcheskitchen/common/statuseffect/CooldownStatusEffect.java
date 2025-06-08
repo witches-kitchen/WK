@@ -4,6 +4,7 @@ import cf.witcheskitchen.common.registry.WKStatusEffects;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
+import net.minecraft.server.world.ServerWorld;
 
 public class CooldownStatusEffect extends StatusEffect {
     public CooldownStatusEffect(StatusEffectCategory type, int color) {
@@ -11,7 +12,7 @@ public class CooldownStatusEffect extends StatusEffect {
     }
 
     @Override
-    public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
+    public boolean applyUpdateEffect(ServerWorld world, LivingEntity entity, int amplifier) {
         if (entity.hasStatusEffect(WKStatusEffects.DISROBING)) {
             entity.removeStatusEffect(WKStatusEffects.DISROBING);
         }

@@ -6,8 +6,10 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.PillarBlock;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityCollisionHandler;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
@@ -34,18 +36,18 @@ public class BlackthornPillarBlock extends PillarBlock {
     }
 
     @Override
-    public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-        super.onEntityCollision(state, world, pos, entity);
-        if (entity instanceof LivingEntity) {
-            entity.damage(entity.getDamageSources().create(WKDamageSources.HUGGING_BLACKTHORN), 2.0F);
+    protected void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity, EntityCollisionHandler handler) {
+        super.onEntityCollision(state, world, pos, entity, handler);
+        if (entity instanceof LivingEntity && world instanceof ServerWorld serverWorld) {
+            entity.damage(serverWorld, entity.getDamageSources().create(WKDamageSources.HUGGING_BLACKTHORN), 2.0F);
         }
     }
 
     @Override
     public void onBlockBreakStart(BlockState state, World world, BlockPos pos, PlayerEntity player) {
         super.onBlockBreakStart(state, world, pos, player);
-        if (player.getMainHandStack().isEmpty()) {
-            player.damage(player.getDamageSources().create(WKDamageSources.PUNCHING_BLACKTHORN), 2.0F);
+        if (player.getMainHandStack().isEmpty() && world instanceof ServerWorld serverWorld) {
+            player.damage(serverWorld, player.getDamageSources().create(WKDamageSources.PUNCHING_BLACKTHORN), 2.0F);
         }
     }
 }

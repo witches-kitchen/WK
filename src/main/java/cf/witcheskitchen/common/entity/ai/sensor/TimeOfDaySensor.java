@@ -9,7 +9,7 @@ import net.minecraft.entity.ai.brain.sensor.SensorType;
 import net.minecraft.server.world.ServerWorld;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 import net.tslat.smartbrainlib.api.core.sensor.PredicateSensor;
-import net.tslat.smartbrainlib.util.BrainUtils;
+import net.tslat.smartbrainlib.util.BrainUtil;
 
 import java.util.List;
 
@@ -33,9 +33,9 @@ public class TimeOfDaySensor<E extends LivingEntity> extends PredicateSensor<E, 
     @Override
     protected void sense(ServerWorld level, E entity) {
         if (predicate().test(entity, entity)) {
-            BrainUtils.setMemory(entity, WKMemoryModuleTypes.IS_NIGHT, true);
+            BrainUtil.setMemory(entity, WKMemoryModuleTypes.IS_NIGHT, true);
         } else {
-            BrainUtils.clearMemory(entity, WKMemoryModuleTypes.IS_NIGHT);
+            BrainUtil.clearMemory(entity, WKMemoryModuleTypes.IS_NIGHT);
         }
     }
 }

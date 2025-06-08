@@ -105,10 +105,10 @@ public class WKPlayerComponent implements AutoSyncedComponent, ServerTickingComp
 
     @Override
     public void readFromNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup wrapperLookup) {
-        magic = nbt.getInt("Magic");
-        magicCap = nbt.getInt("MagicCap");
-        magicConsumed = nbt.getLong("MagicConsumed");
-        isWitch = nbt.getBoolean("IsWitch");
+        magic = nbt.getInt("Magic").orElseThrow();
+        magicCap = nbt.getInt("MagicCap").orElseThrow();
+        magicConsumed = nbt.getLong("MagicConsumed").orElseThrow();
+        isWitch = nbt.getBoolean("IsWitch").orElseThrow();
     }
 
     @Override
@@ -120,7 +120,7 @@ public class WKPlayerComponent implements AutoSyncedComponent, ServerTickingComp
     }
 
     public void addOrReplaceAttribute(EntityAttributeModifier attributeMod) {
-        EntityAttributeInstance speed = player.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
+        EntityAttributeInstance speed = player.getAttributeInstance(EntityAttributes.MOVEMENT_SPEED);
         if (speed != null && SPEED_SET.contains(attributeMod)) {
             for (EntityAttributeModifier mod : SPEED_SET) {
                 if (speed.hasModifier(mod.id())) {
@@ -130,7 +130,7 @@ public class WKPlayerComponent implements AutoSyncedComponent, ServerTickingComp
             speed.addPersistentModifier(attributeMod);
         }
 
-        EntityAttributeInstance armor = player.getAttributeInstance(EntityAttributes.GENERIC_ARMOR);
+        EntityAttributeInstance armor = player.getAttributeInstance(EntityAttributes.ARMOR);
         if (armor != null && ARMOR_SET.contains(attributeMod)) {
             for (EntityAttributeModifier mod : ARMOR_SET) {
                 if (armor.hasModifier(mod.id())) {
@@ -140,7 +140,7 @@ public class WKPlayerComponent implements AutoSyncedComponent, ServerTickingComp
             armor.addPersistentModifier(attributeMod);
         }
 
-        EntityAttributeInstance armorToughness = player.getAttributeInstance(EntityAttributes.GENERIC_ARMOR_TOUGHNESS);
+        EntityAttributeInstance armorToughness = player.getAttributeInstance(EntityAttributes.ARMOR_TOUGHNESS);
         if (armorToughness != null && ARMOR_THOUGHNESS_SET.contains(attributeMod)) {
             for (EntityAttributeModifier mod : ARMOR_THOUGHNESS_SET) {
                 if (armorToughness.hasModifier(mod.id())) {
@@ -150,7 +150,7 @@ public class WKPlayerComponent implements AutoSyncedComponent, ServerTickingComp
             armorToughness.addPersistentModifier(attributeMod);
         }
 
-        EntityAttributeInstance attack = player.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE);
+        EntityAttributeInstance attack = player.getAttributeInstance(EntityAttributes.ATTACK_DAMAGE);
         if (attack != null && ATTACK_SET.contains(attributeMod)) {
             for (EntityAttributeModifier mod : ATTACK_SET) {
                 if (attack.hasModifier(mod.id())) {

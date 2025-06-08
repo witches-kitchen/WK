@@ -4,6 +4,7 @@ import cf.witcheskitchen.api.util.TextUtils;
 import cf.witcheskitchen.common.component.WKComponents;
 import cf.witcheskitchen.data.DimColorReloadListener;
 import com.mojang.datafixers.util.Pair;
+import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -23,8 +24,8 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
 import java.util.Set;
+import java.util.function.Consumer;
 
 public class WaystoneItem extends Item {
     private static final int MAX_USE_TIME = 40;
@@ -57,7 +58,7 @@ public class WaystoneItem extends Item {
             if (blockPos != null) {
                 Vec3d center = blockPos.toBottomCenterPos();
                 // TODO: is this correct?
-                entity.teleport(toWorld != null ? toWorld : serverWorld, center.x, center.y, center.z, Set.of(PositionFlag.X, PositionFlag.Y, PositionFlag.Z), entity.getYaw(), entity.getPitch());
+                entity.teleport(toWorld != null ? toWorld : serverWorld, center.x, center.y, center.z, Set.of(PositionFlag.X, PositionFlag.Y, PositionFlag.Z), entity.getYaw(), entity.getPitch(), true);
             }
         }
     }
@@ -91,7 +92,7 @@ public class WaystoneItem extends Item {
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+    public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> textConsumer, TooltipType type) {
         if (stack.contains(WKComponents.BLOCK_POS) && stack.contains(WKComponents.DIMENSION)) {
             String dimension = stack.get(WKComponents.DIMENSION).getValue().toString();
             int color = 0xffffff;
@@ -104,8 +105,8 @@ public class WaystoneItem extends Item {
             String formattedDim = TextUtils.capitalizeString(dimension.substring(dimension.indexOf(":") + 1));
             BlockPos pos = stack.get(WKComponents.BLOCK_POS);
 
-            tooltip.add(TextUtils.formattedFromTwoStrings("Dimension", formattedDim, 0xFFAA00, color));
-            tooltip.add(TextUtils.formattedFromTwoStrings("Position", pos.getX() + " " + pos.getY() + " " + pos.getZ(), 0xFFAA00, 0x55FFFF));
+            textConsumer.accept(TextUtils.formattedFromTwoStrings("Dimension", formattedDim, 0xFFAA00, color));
+            textConsumer.accept(TextUtils.formattedFromTwoStrings("Position", pos.getX() + " " + pos.getY() + " " + pos.getZ(), 0xFFAA00, 0x55FFFF));
         }
     }
 }

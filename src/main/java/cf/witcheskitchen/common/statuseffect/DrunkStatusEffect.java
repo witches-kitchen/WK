@@ -3,15 +3,17 @@ package cf.witcheskitchen.common.statuseffect;
 import cf.witcheskitchen.api.interfaces.AlcoholEffect;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
 
 //Todo: Learn shaders
 public class DrunkStatusEffect extends StatusEffect implements AlcoholEffect {
 
-    public DrunkStatusEffect(String type, StatusEffectInstance color) {
+    public DrunkStatusEffect(StatusEffectCategory type, int color) {
         super(type, color);
     }
 
@@ -27,7 +29,7 @@ public class DrunkStatusEffect extends StatusEffect implements AlcoholEffect {
 
     //Todo: Increment to a max of level 4 if one drinks too much
     @Override
-    public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
+    public boolean applyUpdateEffect(ServerWorld world, LivingEntity entity, int amplifier) {
         if (amplifier == 1) {
             entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 2000, 1));
             return true;

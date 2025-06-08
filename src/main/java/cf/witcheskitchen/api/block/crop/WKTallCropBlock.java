@@ -180,7 +180,7 @@ public abstract class WKTallCropBlock extends WKCropBlock {
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         final var blockPos = ctx.getBlockPos();
         final var world = ctx.getWorld();
-        return blockPos.getY() < world.getTopY() - 1 && world.getBlockState(blockPos.up()).canReplace(ctx) ? super.getPlacementState(ctx) : null;
+        return blockPos.getY() < world.getTopYInclusive() - 1 && world.getBlockState(blockPos.up()).canReplace(ctx) ? super.getPlacementState(ctx) : null;
     }
 
     /**

@@ -10,6 +10,7 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.particle.EntityEffectParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
@@ -79,16 +80,14 @@ public class TeapotBlock extends WKBlock implements Waterloggable {
     }
 
     @Override
-    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-        if (!state.isOf(newState.getBlock())) {
-            final BlockEntity entity = world.getBlockEntity(pos);
-            if (entity instanceof TeapotBlockEntity teapotEntity) {
-                if (teapotEntity.progress < TeapotBlockEntity.UNOBTAINABLE_OUTPUT) {
-                    ItemScatterer.spawn(world, pos, teapotEntity);
-                }
+    protected void onStateReplaced(BlockState state, ServerWorld world, BlockPos pos, boolean moved) {
+        final BlockEntity entity = world.getBlockEntity(pos);
+        if (entity instanceof TeapotBlockEntity teapotEntity) {
+            if (teapotEntity.progress < TeapotBlockEntity.UNOBTAINABLE_OUTPUT) {
+                ItemScatterer.spawn(world, pos, teapotEntity);
             }
         }
-        super.onStateReplaced(state, world, pos, newState, moved);
+        super.onStateReplaced(state, world, pos, moved);
     }
 
     @Override
@@ -108,15 +107,15 @@ public class TeapotBlock extends WKBlock implements Waterloggable {
                 double d = (double) (color >> 16 & 0xFF) / 255.0;
                 double e = (double) (color >> 8 & 0xFF) / 255.0;
                 double f = (double) (color >> 0 & 0xFF) / 255.0;
-                world.addParticle(EntityEffectParticleEffect.create(ParticleTypes.ENTITY_EFFECT, color), pos.getX() + 0.5 + MathHelper.nextDouble(world.random, -width, width), pos.getY() + 0.25, pos.getZ() + 0.5 + MathHelper.nextDouble(world.random, -width, width), d, e, f);
+                world.addParticleClient(EntityEffectParticleEffect.create(ParticleTypes.ENTITY_EFFECT, color), pos.getX() + 0.5 + MathHelper.nextDouble(world.random, -width, width), pos.getY() + 0.25, pos.getZ() + 0.5 + MathHelper.nextDouble(world.random, -width, width), d, e, f);
             } else if (be.progress > 0) {
                 double d = (double) pos.getX() + 0.5;
                 double e = (double) pos.getY() + 0.5f;
                 double f = (double) pos.getZ() + 0.5;
                 if (random.nextDouble() < 0.2) {
-                    world.playSound(d, e, f, SoundEvents.BLOCK_BUBBLE_COLUMN_BUBBLE_POP, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
+                    world.playSoundClient(d, e, f, SoundEvents.BLOCK_BUBBLE_COLUMN_BUBBLE_POP, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
                 }
-                world.addParticle(ParticleTypes.SMOKE, d + i, e + j, f + k, 0.0, 0.0, 0.0);
+                world.addParticleClient(ParticleTypes.SMOKE, d + i, e + j, f + k, 0.0, 0.0, 0.0);
             }
         }
     }

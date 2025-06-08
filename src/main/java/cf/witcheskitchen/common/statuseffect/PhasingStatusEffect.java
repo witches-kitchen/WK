@@ -4,11 +4,11 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.InstantStatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.passive.FoxEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
 
 public class PhasingStatusEffect extends InstantStatusEffect {
     public PhasingStatusEffect(StatusEffectCategory category, int color) {
@@ -26,8 +26,7 @@ public class PhasingStatusEffect extends InstantStatusEffect {
     }
 
     @Override
-    public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
-        World world = entity.getWorld();
+    public boolean applyUpdateEffect(ServerWorld world, LivingEntity entity, int amplifier) {
         if (!world.isClient) {
             double d = entity.getX();
             double e = entity.getY();

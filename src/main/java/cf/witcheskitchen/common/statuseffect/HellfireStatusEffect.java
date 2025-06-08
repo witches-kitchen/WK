@@ -3,6 +3,7 @@ package cf.witcheskitchen.common.statuseffect;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
+import net.minecraft.server.world.ServerWorld;
 
 public class HellfireStatusEffect extends StatusEffect {
     public HellfireStatusEffect(StatusEffectCategory type, int color) {
@@ -20,7 +21,7 @@ public class HellfireStatusEffect extends StatusEffect {
     }
 
     @Override
-    public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
+    public boolean applyUpdateEffect(ServerWorld world, LivingEntity entity, int amplifier) {
         if (!entity.isOnFire() && !entity.isFireImmune()) {
             entity.setOnFireFor(10);
         }

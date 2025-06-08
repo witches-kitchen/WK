@@ -5,7 +5,6 @@ import cf.witcheskitchen.common.curse.Curse;
 import cf.witcheskitchen.common.registry.WKRegistries;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Identifier;
@@ -62,10 +61,10 @@ public class WKCurseComponent implements ServerTickingComponent, AutoSyncedCompo
 
     @Override
     public void readFromNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        NbtList cursesList = nbt.getList("Curses", NbtElement.COMPOUND_TYPE);
+        NbtList cursesList = nbt.getList("Curses").orElseThrow();
         for (int i = 0; i < cursesList.size(); i++) {
-            NbtCompound curseCompound = cursesList.getCompound(i);
-            addCurse(WKRegistries.CURSES.get(Identifier.tryParse(curseCompound.getString("Curse"))), curseCompound.getInt("Duration"));
+            NbtCompound curseCompound = cursesList.getCompound(i).orElseThrow();
+            addCurse(WKRegistries.CURSES.get(Identifier.tryParse(curseCompound.getString("Curse").orElseThrow())), curseCompound.getInt("Duration").orElseThrow());
         }
     }
 

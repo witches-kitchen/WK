@@ -126,7 +126,7 @@ public final class RecipeUtils {
     public static DefaultedList<Ingredient> deserializeIngredients(JsonArray array) {
         final DefaultedList<Ingredient> ingredients = DefaultedList.of();
         for (int i = 0; i < array.size(); i++) {
-            final Ingredient input = Ingredient.ALLOW_EMPTY_CODEC.parse(JsonOps.INSTANCE, array.get(i)).getOrThrow();
+            final Ingredient input = Ingredient.CODEC.parse(JsonOps.INSTANCE, array.get(i)).getOrThrow();
             if (!input.isEmpty()) {
                 ingredients.add(input);
             }
@@ -161,7 +161,7 @@ public final class RecipeUtils {
     public static DefaultedList<Ingredient> getIngredients(JsonArray json) {
         DefaultedList<Ingredient> ingredients = DefaultedList.of();
         for (int i = 0; i < json.size(); i++) {
-            Ingredient ingredient = Ingredient.ALLOW_EMPTY_CODEC.parse(JsonOps.INSTANCE, json.get(i)).getOrThrow();
+            Ingredient ingredient = Ingredient.CODEC.parse(JsonOps.INSTANCE, json.get(i)).getOrThrow();
             if (!ingredient.isEmpty()) {
                 ingredients.add(ingredient);
             }

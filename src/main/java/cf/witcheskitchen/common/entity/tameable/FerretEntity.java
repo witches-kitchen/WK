@@ -4,17 +4,8 @@ import cf.witcheskitchen.api.entity.WKTameableEntity;
 import cf.witcheskitchen.common.entity.ai.FerretBrain;
 import cf.witcheskitchen.common.registry.WKEntityTypes;
 import cf.witcheskitchen.common.registry.WKSoundEvents;
-import mod.azure.azurelib.common.api.common.animatable.GeoEntity;
-import mod.azure.azurelib.common.internal.common.constant.DefaultAnimations;
-import mod.azure.azurelib.common.internal.common.util.AzureLibUtil;
-import mod.azure.azurelib.core.animatable.instance.AnimatableInstanceCache;
-import mod.azure.azurelib.core.animation.*;
-import mod.azure.azurelib.core.object.PlayState;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.EntityData;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.brain.Brain;
 import net.minecraft.entity.ai.brain.MemoryModuleType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -47,10 +38,19 @@ import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.SmartBrainProvider;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animatable.manager.AnimatableManager;
+import software.bernie.geckolib.animatable.processing.AnimationController;
+import software.bernie.geckolib.animatable.processing.AnimationTest;
+import software.bernie.geckolib.animation.Animation;
+import software.bernie.geckolib.animation.PlayState;
+import software.bernie.geckolib.animation.RawAnimation;
+import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.List;
 import java.util.SplittableRandom;
-import java.util.UUID;
 
 public class FerretEntity extends WKTameableEntity implements GeoEntity, SmartBrainOwner<FerretEntity> {
 
@@ -58,7 +58,7 @@ public class FerretEntity extends WKTameableEntity implements GeoEntity, SmartBr
     public static final TrackedData<Boolean> NIGHT = DataTracker.registerData(FerretEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     public static final Ingredient BREEDING_INGREDIENTS = Ingredient.ofItems(Items.RABBIT, Items.COOKED_RABBIT, Items.CHICKEN, Items.COOKED_CHICKEN, Items.EGG, Items.RABBIT_FOOT, Items.TURTLE_EGG);
     public static final Item TAMING_INGREDIENT = Items.EGG;
-    private final AnimatableInstanceCache cache = AzureLibUtil.createInstanceCache(this);
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     public FerretEntity(EntityType<? extends TameableEntity> entityType, World world) {
         super(entityType, world);
@@ -67,9 +67,9 @@ public class FerretEntity extends WKTameableEntity implements GeoEntity, SmartBr
 
     public static DefaultAttributeContainer.Builder createAttributes() {
         return MobEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.5)
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 6.0)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE);
+                .add(EntityAttributes.MOVEMENT_SPEED, 0.5)
+                .add(EntityAttributes.MAX_HEALTH, 6.0)
+                .add(EntityAttributes.ATTACK_DAMAGE);
     }
 
     @Override
@@ -86,7 +86,7 @@ public class FerretEntity extends WKTameableEntity implements GeoEntity, SmartBr
     }
 
     @Override
-    protected void mobTick() {
+    protected void mobTick(ServerWorld world) {
         tickBrain(this);
         if (!this.getBrain().hasMemoryModule(MemoryModuleType.ATTACK_TARGET) && this.getDataTracker().get(TARGET_ID) != 0) {
             this.getDataTracker().set(TARGET_ID, 0);
@@ -134,7 +134,7 @@ public class FerretEntity extends WKTameableEntity implements GeoEntity, SmartBr
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        this.setSleeping(nbt.getBoolean("Sleep"));
+        this.setSleeping(nbt.getBoolean("Sleep").orElseThrow());
     }
 
 
@@ -178,17 +178,13 @@ public class FerretEntity extends WKTameableEntity implements GeoEntity, SmartBr
     }
 
     @Override
-    public boolean damage(DamageSource source, float amount) {
-        boolean bl = super.damage(source, amount);
-        if (this.getWorld().isClient) {
-            return false;
-        } else {
-            if (bl && source.getAttacker() instanceof LivingEntity l) {
-                this.getBrain().remember(MemoryModuleType.ANGRY_AT, l.getUuid(), 20 * 10);
-            }
-
-            return bl;
+    public boolean damage(ServerWorld world, DamageSource source, float amount) {
+        boolean bl = super.damage(world, source, amount);
+        if (bl && source.getAttacker() instanceof LivingEntity l) {
+            this.getBrain().remember(MemoryModuleType.ANGRY_AT, l.getUuid(), 20 * 10);
         }
+
+        return bl;
     }
 
     @Override
@@ -205,10 +201,10 @@ public class FerretEntity extends WKTameableEntity implements GeoEntity, SmartBr
     @Nullable
     @Override
     public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
-        FerretEntity ferretEntity = WKEntityTypes.FERRET.create(world);
-        UUID uUID = this.getOwnerUuid();
-        if (uUID != null && ferretEntity != null) {
-            ferretEntity.setOwnerUuid(uUID);
+        FerretEntity ferretEntity = WKEntityTypes.FERRET.create(world, SpawnReason.BREEDING);
+        LazyEntityReference<LivingEntity> owner = this.getOwnerReference();
+        if (owner != null && ferretEntity != null) {
+            ferretEntity.setOwner(this.getOwnerReference());
             ferretEntity.setTamed(true, true);
         }
         return ferretEntity;
@@ -220,7 +216,7 @@ public class FerretEntity extends WKTameableEntity implements GeoEntity, SmartBr
     }
 
     @Override
-    public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
+    public boolean handleFallDamage(double fallDistance, float damagePerDistance, DamageSource damageSource) {
         return false;
     }
 
@@ -276,10 +272,10 @@ public class FerretEntity extends WKTameableEntity implements GeoEntity, SmartBr
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controller) {
-        controller.add(DefaultAnimations.genericIdleController(this)).add(new AnimationController<>(this, "body", 0, this::predicate));
+        controller.add(DefaultAnimations.genericIdleController()).add(new AnimationController<>("body", 0, this::predicate));
     }
 
-    private PlayState predicate(AnimationState<FerretEntity> state) {
+    private PlayState predicate(AnimationTest<FerretEntity> state) {
         if (this.isSitting()) {
             state.setAnimation(RawAnimation.begin().then("sit", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;

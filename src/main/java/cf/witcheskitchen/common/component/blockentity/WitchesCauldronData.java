@@ -35,7 +35,7 @@ public record WitchesCauldronData(
             PacketCodecs.NBT_COMPOUND, WitchesCauldronData::tankData,
             PacketCodecs.VAR_INT, WitchesCauldronData::ticksHeated,
             PacketCodecs.VAR_INT, WitchesCauldronData::color,
-            PacketCodecs.BOOL, WitchesCauldronData::powered,
+            PacketCodecs.BOOLEAN, WitchesCauldronData::powered,
             WitchesCauldronData::new
     );
 }

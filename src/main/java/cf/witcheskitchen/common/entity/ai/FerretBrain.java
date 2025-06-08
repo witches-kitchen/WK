@@ -15,9 +15,11 @@ import net.minecraft.entity.ai.brain.LivingTargetCache;
 import net.minecraft.entity.ai.brain.MemoryModuleType;
 import net.minecraft.entity.ai.brain.sensor.Sensor;
 import net.minecraft.entity.ai.brain.task.LookAroundTask;
-import net.minecraft.entity.ai.brain.task.LookTargetUtil;
 import net.minecraft.entity.ai.brain.task.MoveToTargetTask;
 import net.minecraft.entity.ai.brain.task.StayAboveWaterTask;
+import net.minecraft.entity.ai.brain.task.TargetUtil;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.intprovider.ConstantIntProvider;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.FirstApplicableBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.OneRandomBehaviour;
@@ -63,7 +65,7 @@ public class FerretBrain {
         return BrainActivityGroup.coreTasks(
                 new DontMoveTask(),
                 new StayAboveWaterTask(0.6f),
-                new LookAroundTask(45, 90),
+                new LookAroundTask(ConstantIntProvider.create(45), 90, -15, 15),
                 new MoveToTargetTask()
         );
     }
@@ -90,8 +92,8 @@ public class FerretBrain {
 
     public static Optional<? extends LivingEntity> getAttackTarget(FerretEntity ferretEntity) {
         Brain<?> brain = ferretEntity.getBrain();
-        Optional<LivingEntity> optional = LookTargetUtil.getEntity(ferretEntity, MemoryModuleType.ANGRY_AT);
-        if (optional.isPresent() && Sensor.testAttackableTargetPredicateIgnoreVisibility(ferretEntity, optional.get())) {
+        Optional<LivingEntity> optional = TargetUtil.getEntity(ferretEntity, MemoryModuleType.ANGRY_AT);
+        if (optional.isPresent() && Sensor.testAttackableTargetPredicateIgnoreVisibility((ServerWorld) ferretEntity.getWorld(), ferretEntity, optional.get())) {
             return optional;
         }
         if (brain.hasMemoryModule(MemoryModuleType.VISIBLE_MOBS)) {

@@ -4,13 +4,6 @@ import cf.witcheskitchen.api.entity.WKHostileEntity;
 import cf.witcheskitchen.common.entity.tameable.FerretEntity;
 import cf.witcheskitchen.common.registry.WKSoundEvents;
 import cf.witcheskitchen.common.registry.WKStatusEffects;
-import mod.azure.azurelib.common.api.common.animatable.GeoEntity;
-import mod.azure.azurelib.common.internal.common.constant.DefaultAnimations;
-import mod.azure.azurelib.core.animatable.instance.AnimatableInstanceCache;
-import mod.azure.azurelib.core.animatable.instance.SingletonAnimatableInstanceCache;
-import mod.azure.azurelib.core.animation.AnimationState;
-import mod.azure.azurelib.core.animation.*;
-import mod.azure.azurelib.core.object.PlayState;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
@@ -37,6 +30,16 @@ import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animatable.instance.SingletonAnimatableInstanceCache;
+import software.bernie.geckolib.animatable.manager.AnimatableManager;
+import software.bernie.geckolib.animatable.processing.AnimationController;
+import software.bernie.geckolib.animatable.processing.AnimationTest;
+import software.bernie.geckolib.animation.Animation;
+import software.bernie.geckolib.animation.PlayState;
+import software.bernie.geckolib.animation.RawAnimation;
+import software.bernie.geckolib.constant.DefaultAnimations;
 
 import java.util.Random;
 import java.util.SplittableRandom;
@@ -51,10 +54,10 @@ public class CuSithEntity extends WKHostileEntity implements GeoEntity {
     }
 
     public static DefaultAttributeContainer.Builder createAttributes() {
-        return LivingEntity.createLivingAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 25.0D)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.45D)
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 20).add(EntityAttributes.GENERIC_ARMOR, 2.0D)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0D).add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 0.35D);
+        return LivingEntity.createLivingAttributes().add(EntityAttributes.FOLLOW_RANGE, 25.0D)
+                .add(EntityAttributes.MOVEMENT_SPEED, 0.45D)
+                .add(EntityAttributes.MAX_HEALTH, 20).add(EntityAttributes.ARMOR, 2.0D)
+                .add(EntityAttributes.ATTACK_DAMAGE, 4.0D).add(EntityAttributes.ATTACK_KNOCKBACK, 0.35D);
     }
 
     @Override
@@ -63,7 +66,7 @@ public class CuSithEntity extends WKHostileEntity implements GeoEntity {
     }
 
     @Override
-    public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
+    public boolean handleFallDamage(double fallDistance, float damageMultiplier, DamageSource damageSource) {
         return false;
     }
 
@@ -95,7 +98,7 @@ public class CuSithEntity extends WKHostileEntity implements GeoEntity {
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, SheepEntity.class, false));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, GoatEntity.class, false));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, FerretEntity.class, false));
-        this.targetSelector.add(3, new ActiveTargetGoal<>(this, LivingEntity.class, 10, false, false, entity -> entity.getType().isIn(EntityTypeTags.ILLAGER)));
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, LivingEntity.class, 10, false, false, (entity, world) -> entity.getType().isIn(EntityTypeTags.ILLAGER)));
         this.targetSelector.add(0, new RevengeGoal(this).setGroupRevenge());
     }
 
@@ -113,8 +116,8 @@ public class CuSithEntity extends WKHostileEntity implements GeoEntity {
     }
 
     @Override
-    public boolean tryAttack(Entity target) {
-        boolean flag = super.tryAttack(target);
+    public boolean tryAttack(ServerWorld world, Entity target) {
+        boolean flag = super.tryAttack(world, target);
         Random rand = new Random();
         int i = rand.nextInt(100);
         if (i <= 33) {
@@ -158,7 +161,7 @@ public class CuSithEntity extends WKHostileEntity implements GeoEntity {
     @Override
     public void readCustomDataFromNbt(NbtCompound tag) {
         super.readCustomDataFromNbt(tag);
-        this.setVariant(tag.getInt("Variant"));
+        this.setVariant(tag.getInt("Variant").orElseThrow());
     }
 
     public int getVariant() {
@@ -190,11 +193,11 @@ public class CuSithEntity extends WKHostileEntity implements GeoEntity {
     }
 
     @Override
-    public boolean damage(DamageSource source, float amount) {
+    public boolean damage(ServerWorld world, DamageSource source, float amount) {
         if (source.isOf(DamageTypes.FALLING_BLOCK) || source.isIn(DamageTypeTags.IS_FIRE) || source.isIn(DamageTypeTags.IS_FALL)) {
             return false;
         }
-        return super.damage(source, amount);
+        return super.damage(world, source, amount);
     }
 
     @Override
@@ -204,10 +207,10 @@ public class CuSithEntity extends WKHostileEntity implements GeoEntity {
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(DefaultAnimations.genericIdleController(this), new AnimationController<>(this, "move", 20, this::legTransform));
+        controllers.add(DefaultAnimations.genericIdleController(), new AnimationController<>("move", 20, this::legTransform));
     }
 
-    private PlayState legTransform(AnimationState<CuSithEntity> state) {
+    private PlayState legTransform(AnimationTest<CuSithEntity> state) {
         if (state.isMoving()) {
             state.setAnimation(RawAnimation.begin().then("run", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;

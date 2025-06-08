@@ -57,7 +57,7 @@ public class RitualRecipe implements Recipe<MultipleStackRecipeInput> {
 
     public static boolean matches(MultipleStackRecipeInput inv, List<Ingredient> input, List<EntityType<?>> sacrifices) {
         List<ItemStack> checklist = new ArrayList<>();
-        for (int i = 0; i < inv.getSize(); i++) {
+        for (int i = 0; i < inv.size(); i++) {
             ItemStack stack = inv.getStackInSlot(i);
             if (!stack.isEmpty()) {
                 checklist.add(stack);
@@ -169,10 +169,10 @@ public class RitualRecipe implements Recipe<MultipleStackRecipeInput> {
                                                 return DataResult.success(circles);
                                             })
                                             .forGetter(recipe -> recipe.getCircles().stream().toList()),
-                                    Ingredient.DISALLOW_EMPTY_CODEC
+                                    Ingredient.CODEC
                                             .listOf()
                                             .fieldOf("inputs")
-                                            .forGetter(RitualRecipe::getIngredients),
+                                            .forGetter(recipe -> recipe.getIngredientPlacement().getIngredients()),
                                     ItemStack.CODEC
                                             .listOf()
                                             .fieldOf("outputs")
@@ -203,8 +203,8 @@ public class RitualRecipe implements Recipe<MultipleStackRecipeInput> {
                     PacketCodecs.registryValue(WKRegistries.RITUAL.getKey()), RitualRecipe::getRite,
                     PacketCodecs.STRING, RitualRecipe::getEnergy,
                     CustomPacketCodecs.createSetCodec(RitualCircle.PACKET_CODEC), RitualRecipe::getCircles,
-                    CustomPacketCodecs.INGREDIENT_LIST, RitualRecipe::getIngredients,
-                    ItemStack.LIST_PACKET_CODEC, RitualRecipe::getOutputs,
+                    CustomPacketCodecs.INGREDIENT_LIST, recipe -> recipe.getIngredientPlacement().getIngredients(),
+                    ItemStack.OPTIONAL_LIST_PACKET_CODEC, RitualRecipe::getOutputs,
                     CustomPacketCodecs.createListCodec(PacketCodecs.registryValue(RegistryKeys.ENTITY_TYPE)), RitualRecipe::getSacrifices,
                     CustomPacketCodecs.createListCodec(PacketCodecs.registryValue(RegistryKeys.ENTITY_TYPE)), RitualRecipe::getSummons,
                     PacketCodecs.VAR_INT, RitualRecipe::getDuration,

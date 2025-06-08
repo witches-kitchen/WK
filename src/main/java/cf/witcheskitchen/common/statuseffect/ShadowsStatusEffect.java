@@ -3,6 +3,7 @@ package cf.witcheskitchen.common.statuseffect;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 
 //Todo: This
@@ -24,7 +25,7 @@ public class ShadowsStatusEffect extends StatusEffect {
 
     //Todo: Find methods to call for telling if an entity is moving. Also find values for average cave light level, and possibly create a mixin for making armor invisible.
     @Override
-    public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
+    public boolean applyUpdateEffect(ServerWorld world, LivingEntity entity, int amplifier) {
         BlockPos pos = entity.getBlockPos();
         if (entity.getWorld().isNight() || !entity.getWorld().isSkyVisible(pos)) {
             entity.setInvisible(true);

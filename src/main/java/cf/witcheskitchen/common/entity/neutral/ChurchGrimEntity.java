@@ -1,11 +1,6 @@
 package cf.witcheskitchen.common.entity.neutral;
 
 import cf.witcheskitchen.api.entity.WKTameableEntity;
-import mod.azure.azurelib.common.api.common.animatable.GeoEntity;
-import mod.azure.azurelib.common.internal.common.constant.DefaultAnimations;
-import mod.azure.azurelib.common.internal.common.util.AzureLibUtil;
-import mod.azure.azurelib.core.animatable.instance.AnimatableInstanceCache;
-import mod.azure.azurelib.core.animation.AnimatableManager;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
@@ -18,6 +13,7 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.TameableEntity;
+import net.minecraft.entity.passive.WolfSoundVariants;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -32,6 +28,11 @@ import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animatable.manager.AnimatableManager;
+import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.SplittableRandom;
 import java.util.UUID;
@@ -40,17 +41,17 @@ import java.util.UUID;
 public class ChurchGrimEntity extends WKTameableEntity implements GeoEntity, Angerable, Tameable {
     private final int VARIANTS = 8;
     //Add a string or something here for a variant that is a white, short-haired dog and can appear if one is named Max
-    private final AnimatableInstanceCache cache = AzureLibUtil.createInstanceCache(this);
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     public ChurchGrimEntity(EntityType<? extends TameableEntity> entityType, World world) {
         super(entityType, world);
     }
 
     public static DefaultAttributeContainer.Builder createAttributes() {
-        return LivingEntity.createLivingAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 32.0D)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.85D)
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 35).add(EntityAttributes.GENERIC_ARMOR, 2.5D)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 6.0D).add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 0.35D);
+        return LivingEntity.createLivingAttributes().add(EntityAttributes.FOLLOW_RANGE, 32.0D)
+                .add(EntityAttributes.MOVEMENT_SPEED, 0.85D)
+                .add(EntityAttributes.MAX_HEALTH, 35).add(EntityAttributes.ARMOR, 2.5D)
+                .add(EntityAttributes.ATTACK_DAMAGE, 6.0D).add(EntityAttributes.ATTACK_KNOCKBACK, 0.35D);
     }
 
     @Override
@@ -97,17 +98,17 @@ public class ChurchGrimEntity extends WKTameableEntity implements GeoEntity, Ang
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_WOLF_AMBIENT;
+        return SoundEvents.WOLF_SOUNDS.get(WolfSoundVariants.Type.CLASSIC).ambientSound().value();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.ENTITY_WOLF_DEATH;
+        return SoundEvents.WOLF_SOUNDS.get(WolfSoundVariants.Type.CLASSIC).deathSound().value();
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.ENTITY_WOLF_HURT;
+        return SoundEvents.WOLF_SOUNDS.get(WolfSoundVariants.Type.CLASSIC).hurtSound().value();
     }
 
     @Override
@@ -125,7 +126,7 @@ public class ChurchGrimEntity extends WKTameableEntity implements GeoEntity, Ang
     @Override
     public void readCustomDataFromNbt(NbtCompound tag) {
         super.readCustomDataFromNbt(tag);
-        this.setVariant(tag.getInt("Variant"));
+        this.setVariant(tag.getInt("Variant").orElseThrow());
         this.readAngerFromNbt(this.getWorld(), tag);
     }
 
@@ -172,15 +173,15 @@ public class ChurchGrimEntity extends WKTameableEntity implements GeoEntity, Ang
     }
 
     @Override
-    public boolean damage(DamageSource source, float amount) {
+    public boolean damage(ServerWorld world, DamageSource source, float amount) {
         if (source.isOf(DamageTypes.FALLING_BLOCK) || source.isIn(DamageTypeTags.IS_FIRE) || source.isIn(DamageTypeTags.IS_FALL)) {
             return false;
         }
-        return super.damage(source, amount);
+        return super.damage(world, source, amount);
     }
 
     @Override
-    public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
+    public boolean handleFallDamage(double fallDistance, float damageMultiplier, DamageSource damageSource) {
         return false;
     }
 
@@ -198,7 +199,7 @@ public class ChurchGrimEntity extends WKTameableEntity implements GeoEntity, Ang
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controller) {
-        controller.add(DefaultAnimations.genericIdleController(this));
+        controller.add(DefaultAnimations.genericIdleController());
     }
 
     @Override

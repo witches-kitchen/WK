@@ -21,6 +21,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.component.ComponentMap;
+import net.minecraft.component.ComponentsAccess;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
@@ -28,6 +29,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
@@ -63,9 +65,9 @@ public class WitchesCauldronBlockEntity extends WKBlockEntityWithInventory imple
         if (client) {
             final double offsetPos = 0.3D;
             if (i == 1) {
-                world.addParticle(ParticleTypes.LAVA, pos.getX() + offsetPos, pos.getY() + offsetPos, pos.getZ() + offsetPos, 0, 0, 0);
+                world.addParticleClient(ParticleTypes.LAVA, pos.getX() + offsetPos, pos.getY() + offsetPos, pos.getZ() + offsetPos, 0, 0, 0);
             } else if (i == 50) {
-                world.addParticle(ParticleTypes.ASH, pos.getX() + offsetPos, pos.getY() + offsetPos, pos.getZ() + offsetPos, 0, 0, 0);
+                world.addParticleClient(ParticleTypes.ASH, pos.getX() + offsetPos, pos.getY() + offsetPos, pos.getZ() + offsetPos, 0, 0, 0);
             }
         } else {
             final float pitch = 0.15F;
@@ -95,14 +97,18 @@ public class WitchesCauldronBlockEntity extends WKBlockEntityWithInventory imple
                     }
                 }
                 sendPlashPacket(entity);
-                entity.kill();
+
+                if (!world.isClient)
+                    entity.kill((ServerWorld) world);
             }
         }
 
         if (world.getBlockState(pos).get(WitchesCauldronBlock.LIT)) {
             this.manager.clear();
             PacketHelper.sendToAllTracking(entity, serverPlayer -> ParticlePacket.send(serverPlayer, this.getPos(), Registries.PARTICLE_TYPE.getId(ParticleTypes.LAVA), Registries.SOUND_EVENT.getId(SoundEvents.BLOCK_LAVA_EXTINGUISH), (byte) 3));
-            entity.kill();
+
+            if (!world.isClient)
+                entity.kill((ServerWorld) world);
         }
     }
 
@@ -147,9 +153,9 @@ public class WitchesCauldronBlockEntity extends WKBlockEntityWithInventory imple
     }
 
     private void sendPlashPacket(ItemEntity trackedEntity) {
-        final float red = ColorHelper.Argb.getRed(this.color) / 255F;
-        final float green = ColorHelper.Argb.getGreen(this.color) / 255f;
-        final float blue = ColorHelper.Argb.getBlue(this.color) / 255F;
+        final float red = ColorHelper.getRed(this.color) / 255F;
+        final float green = ColorHelper.getGreen(this.color) / 255f;
+        final float blue = ColorHelper.getBlue(this.color) / 255F;
         PacketHelper.sendToAllTracking(trackedEntity, serverPlayer -> SplashParticlePacket.send(serverPlayer, this.getPos(), red, green, blue, 0.5D, 1.0D, 0.5D, (byte) 6));
         world.playSound(null, pos, SoundEvents.ENTITY_PLAYER_SPLASH, SoundCategory.BLOCKS, 0.2F, 1.0f);
     }
@@ -188,10 +194,10 @@ public class WitchesCauldronBlockEntity extends WKBlockEntityWithInventory imple
     @Override
     protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
         super.readNbt(nbt, registryLookup);
-        this.tank.readStorage(nbt.getCompound("Tank"));
-        this.ticksHeated = nbt.getInt("TicksHeated");
-        this.color = nbt.getInt("Color");
-        this.powered = nbt.getBoolean("Powered");
+        this.tank.readStorage(nbt.getCompound("Tank").orElseThrow());
+        this.ticksHeated = nbt.getInt("TicksHeated").orElseThrow();
+        this.color = nbt.getInt("Color").orElseThrow();
+        this.powered = nbt.getBoolean("Powered").orElseThrow();
     }
 
     @Override

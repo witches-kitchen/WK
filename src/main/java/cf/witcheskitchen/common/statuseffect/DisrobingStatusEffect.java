@@ -14,6 +14,7 @@ import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Pair;
 import net.minecraft.util.math.random.Random;
 
@@ -53,7 +54,7 @@ public class DisrobingStatusEffect extends InstantStatusEffect {
     }
 
     @Override
-    public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
+    public boolean applyUpdateEffect(ServerWorld world, LivingEntity entity, int amplifier) {
         if (entity.hasStatusEffect(WKStatusEffects.COOLDOWN)) {
             return false;
         }
@@ -69,7 +70,7 @@ public class DisrobingStatusEffect extends InstantStatusEffect {
             } else if (EnchantmentHelper.hasAnyEnchantmentsWith(equippedArmor, EnchantmentEffectComponentTypes.PREVENT_EQUIPMENT_DROP)) {
                 return false;//item should disappear on death.
             }
-            if (entity.dropItem(equippedArmor.getItem(), 1) != null) {
+            if (entity.dropItem(world, equippedArmor.getItem(), 1) != null) {
                 equippedArmor.decrement(1);
             }
         } else {
@@ -89,7 +90,7 @@ public class DisrobingStatusEffect extends InstantStatusEffect {
                         final Pair<SlotReference, ItemStack> slotData = trinketInventory.get(slotIndex);
                         final int index = slotData.getLeft().index();
                         final Item itemInSlot = slotData.getRight().getItem();
-                        entity.dropItem(itemInSlot, 1);
+                        entity.dropItem(world, itemInSlot, 1);
                         slotData.getLeft().inventory().getStack(index).decrement(1);
                         break;
                     }
@@ -102,7 +103,7 @@ public class DisrobingStatusEffect extends InstantStatusEffect {
 
     // TODO: is this correct?
     @Override
-    public void onEntityRemoval(LivingEntity entity, int amplifier, Entity.RemovalReason reason) {
+    public void onEntityRemoval(ServerWorld world, LivingEntity entity, int amplifier, Entity.RemovalReason reason) {
         entity.addStatusEffect(new StatusEffectInstance(WKStatusEffects.COOLDOWN, 6000, 0));
     }
 }

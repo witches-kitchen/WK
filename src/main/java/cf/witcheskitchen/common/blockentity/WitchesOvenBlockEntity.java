@@ -13,7 +13,6 @@ import cf.witcheskitchen.common.screenhandler.WitchesOvenScreenHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CampfireBlock;
-import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.ExperienceOrbEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -21,7 +20,6 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.recipe.*;
@@ -116,7 +114,7 @@ public class WitchesOvenBlockEntity extends WKBlockEntityWithInventory implement
      * @param input ItemStack
      * @return possible return types are optional SmeltingRecipe (furnace) OvenCookingRecipe (witches oven), or Optional.empty()
      */
-    private static Optional<Recipe<?>> findMatchingRecipeFor(World world, final ItemStack input) {
+    private static Optional<Recipe<?>> findMatchingRecipeFor(ServerWorld world, final ItemStack input) {
         Objects.requireNonNull(world);
         Objects.requireNonNull(input);
         if (input.isEmpty()) {
@@ -128,13 +126,13 @@ public class WitchesOvenBlockEntity extends WKBlockEntityWithInventory implement
         }
         if (input.contains(DataComponentTypes.FOOD)) {
             final Optional<SmeltingRecipe> optional = world.getRecipeManager()
-                    .listAllOfType(RecipeType.SMELTING)
+                    .getAllOfType(RecipeType.SMELTING)
                     .stream()
                     .filter(entry -> {
                         var recipe = entry.value();
-                        final DefaultedList<Ingredient> ingredients = recipe.getIngredients();
+                        final List<Ingredient> ingredients = recipe.getIngredientPlacement().getIngredients();
                         if (ingredients.size() == 1 && ingredients.get(0).test(input)) {
-                            return recipe.getResult(world.getRegistryManager()).contains(DataComponentTypes.FOOD);
+                            return recipe.craft(new SingleStackRecipeInput(input), world.getRegistryManager()).contains(DataComponentTypes.FOOD);
                         }
                         return false;
                     }).findFirst().map(RecipeEntry::value);
@@ -146,8 +144,8 @@ public class WitchesOvenBlockEntity extends WKBlockEntityWithInventory implement
     /**
      * Returns an Optional recipe that matches the given input stack
      */
-    private static Optional<OvenCookingRecipe> getOvenRecipe(World world, ItemStack input) {
-        return world.getRecipeManager().listAllOfType(WKRecipeTypes.WITCHES_OVEN_COOKING_RECIPE_TYPE)
+    private static Optional<OvenCookingRecipe> getOvenRecipe(ServerWorld world, ItemStack input) {
+        return world.getRecipeManager().getAllOfType(WKRecipeTypes.WITCHES_OVEN_COOKING_RECIPE_TYPE)
                 .stream()
                 .filter(type -> type.value().input().test(input))
                 .findFirst()
@@ -159,15 +157,15 @@ public class WitchesOvenBlockEntity extends WKBlockEntityWithInventory implement
         super.readNbt(nbt, lookup);
         // Load Inventories
         this.passiveInventory.clear();
-        Inventories.readNbt(nbt.getCompound("PassiveInventory"), this.getStacksOnTop(), lookup);
-        this.burnTime = nbt.getShort("BurnTime");
-        this.activeProgress = nbt.getShort("Progress");
-        if (nbt.contains("PassiveProgress", NbtElement.INT_ARRAY_TYPE)) {
-            System.arraycopy(nbt.getIntArray("PassiveProgress"), 0, this.passiveProgress, 0, Math.min(this.maxProgress, 4));
+        Inventories.readNbt(nbt.getCompound("PassiveInventory").orElseThrow(), this.getStacksOnTop(), lookup);
+        this.burnTime = nbt.getShort("BurnTime").orElseThrow();
+        this.activeProgress = nbt.getShort("Progress").orElseThrow();
+        if (nbt.contains("PassiveProgress")) {
+            System.arraycopy(nbt.getIntArray("PassiveProgress").orElseThrow(), 0, this.passiveProgress, 0, Math.min(this.maxProgress, 4));
         }
-        this.maxProgress = nbt.getShort("MaxProgress");
-        this.maxBurnTime = this.getItemBurnTime(this.getStack(this.fuel));
-        this.experience = nbt.getFloat("Experience");
+        this.maxProgress = nbt.getShort("MaxProgress").orElseThrow();
+        this.maxBurnTime = this.getItemBurnTime(this.world, this.getStack(this.fuel));
+        this.experience = nbt.getFloat("Experience").orElseThrow();
     }
 
     @Override
@@ -219,7 +217,7 @@ public class WitchesOvenBlockEntity extends WKBlockEntityWithInventory implement
             }
         }
         boolean dirty = false;
-        final Optional<Recipe<?>> optionRecipe = findMatchingRecipeFor(world, this.getStack(this.input));
+        final Optional<Recipe<?>> optionRecipe = findMatchingRecipeFor((ServerWorld) world, this.getStack(this.input));
         if (optionRecipe.isPresent()) {
             final Recipe<?> recipe = optionRecipe.get();
             final List<ItemStack> outputs = this.getResults(recipe, world);
@@ -227,12 +225,12 @@ public class WitchesOvenBlockEntity extends WKBlockEntityWithInventory implement
             if (outputs != null && !outputs.isEmpty()) {
                 if (!this.isBurning() && canCraft(outputs)) {
                     dirty = true;
-                    this.burnTime = this.getItemBurnTime(this.getStack(this.fuel));
+                    this.burnTime = this.getItemBurnTime(this.getWorld(), this.getStack(this.fuel));
                     this.maxBurnTime = this.burnTime;
                     if (this.isBurning()) {
                         final ItemStack fuelStack = this.getStack(this.fuel);
-                        if (fuelStack.getItem().hasRecipeRemainder()) {
-                            this.setStack(this.fuel, new ItemStack(fuelStack.getItem().getRecipeRemainder()));
+                        if (!fuelStack.getItem().getRecipeRemainder(fuelStack).isEmpty()) {
+                            this.setStack(this.fuel, fuelStack.getItem().getRecipeRemainder(fuelStack));
                         } else if (fuelStack.getCount() > 1) {
                             fuelStack.decrement(1);
                         } else if (fuelStack.getCount() == 1) {
@@ -268,7 +266,7 @@ public class WitchesOvenBlockEntity extends WKBlockEntityWithInventory implement
                     dirty = true;
                     this.passiveProgress[i]++;
                     if (this.passiveProgress[i] >= this.maxProgress) {
-                        final var passiveRecipe = this.getCampfireRecipeFor(world, foodAt);
+                        final var passiveRecipe = this.getCampfireRecipeFor((ServerWorld) world, foodAt);
                         if (passiveRecipe == null) {
                             WitchesKitchen.LOGGER.error("Attempted to craft a null passive recipe from Witches' Oven. This must be fixed");
                             return;
@@ -315,17 +313,17 @@ public class WitchesOvenBlockEntity extends WKBlockEntityWithInventory implement
     @Override
     public void onClientTick(World world, BlockPos pos, BlockState state, WKBlockEntity wkBlockEntity) {
         super.onClientTick(world, pos, state, wkBlockEntity);
-        int facing = state.get(CampfireBlock.FACING).getHorizontal();
+        int facing = state.get(CampfireBlock.FACING).getHorizontalQuarterTurns();
         for (int j = 0; j < this.passiveInventory.size(); ++j) {
             if (state.get(WitchesOvenBlock.PASSIVE_LIT)) {
                 if (!this.passiveInventory.getStack(j).isEmpty() && world.random.nextFloat() < 0.2F) {
-                    final Direction direction = Direction.fromHorizontal(Math.floorMod(j + facing, 4));
+                    final Direction direction = Direction.fromHorizontalQuarterTurns(Math.floorMod(j + facing, 4));
                     float offset = 0.23F;
                     double d = (double) pos.getX() + 0.5D - (double) ((float) direction.getOffsetX() * offset) + (double) ((float) direction.rotateYClockwise().getOffsetX() * offset);
                     double e = (double) pos.getY() + 1.0D;
                     double g = (double) pos.getZ() + 0.5D - (double) ((float) direction.getOffsetZ() * offset) + (double) ((float) direction.rotateYClockwise().getOffsetZ() * offset);
                     for (int k = 0; k < 4; ++k) {
-                        world.addParticle(ParticleTypes.SMOKE, d, e, g, 0.0D, 5.0E-4D, 0.0D);
+                        world.addParticleClient(ParticleTypes.SMOKE, d, e, g, 0.0D, 5.0E-4D, 0.0D);
                     }
                 }
             }
@@ -340,13 +338,13 @@ public class WitchesOvenBlockEntity extends WKBlockEntityWithInventory implement
      * @param stack ItemStack (Ingredient)
      * @return CampfireCookingRecipe
      */
-    public @Nullable CampfireCookingRecipe getCampfireRecipeFor(World world, ItemStack stack) {
-        return world.getRecipeManager().listAllOfType(RecipeType.CAMPFIRE_COOKING)
+    public @Nullable CampfireCookingRecipe getCampfireRecipeFor(ServerWorld world, ItemStack stack) {
+        return world.getRecipeManager().getAllOfType(RecipeType.CAMPFIRE_COOKING)
                 .stream()
                 .filter(entry -> {
                     var recipe = entry.value();
-                    if (recipe.getIngredients().size() == 1 && recipe.getIngredients().get(0).test(stack)) {
-                        return recipe.getResult(world.getRegistryManager()).contains(DataComponentTypes.FOOD);
+                    if (recipe.getIngredientPlacement().getIngredients().size() == 1 && recipe.getIngredientPlacement().getIngredients().get(0).test(stack)) {
+                        return recipe.craft(new SingleStackRecipeInput(stack), world.getRegistryManager()).contains(DataComponentTypes.FOOD);
                     }
                     return false;
                 }).findFirst().map(RecipeEntry::value).orElse(null);
@@ -376,11 +374,11 @@ public class WitchesOvenBlockEntity extends WKBlockEntityWithInventory implement
      * @param stack fuel ItemStack
      * @return Integer Number of ticks
      */
-    public int getItemBurnTime(ItemStack stack) {
+    public int getItemBurnTime(World world, ItemStack stack) {
         if (stack.isEmpty()) {
             return 0;
         } else {
-            return AbstractFurnaceBlockEntity.createFuelTimeMap().getOrDefault(stack.getItem(), 0);
+            return world.getFuelRegistry().getFuelTicks(stack);
         }
     }
 
@@ -392,8 +390,8 @@ public class WitchesOvenBlockEntity extends WKBlockEntityWithInventory implement
      * @return the outputs of the given recipe
      */
     private List<ItemStack> getResults(final Recipe<?> recipe, World world) {
-        if (recipe instanceof SmeltingRecipe) {
-            return DefaultedList.ofSize(1, recipe.getResult(world.getRegistryManager()));
+        if (recipe instanceof SmeltingRecipe smeltingRecipe) {
+            return DefaultedList.ofSize(1, smeltingRecipe.result());
         } else if (recipe instanceof OvenCookingRecipe ovenRecipe) {
             return ovenRecipe.outputs();
         } else {

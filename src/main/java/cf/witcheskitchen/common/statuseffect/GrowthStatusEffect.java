@@ -11,8 +11,8 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.BoneMealItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
 public class GrowthStatusEffect extends StatusEffect {
     public GrowthStatusEffect(StatusEffectCategory type, int color) {
@@ -30,12 +30,11 @@ public class GrowthStatusEffect extends StatusEffect {
     }
 
     @Override
-    public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
+    public boolean applyUpdateEffect(ServerWorld world, LivingEntity entity, int amplifier) {
         if (entity.hasStatusEffect(WKStatusEffects.COOLDOWN)) {
             return false;
         }
         int radius = amplifier + 1;
-        World world = entity.getWorld();
         BlockPos initialPosition = entity.getBlockPos();
         for (BlockPos position : BlockPos.iterate(initialPosition.add(-radius, -radius, -radius), initialPosition.add(radius, radius, radius))) {
             BlockState blockState = entity.getWorld().getBlockState(position);
@@ -54,7 +53,7 @@ public class GrowthStatusEffect extends StatusEffect {
     }
 
     @Override
-    public void onEntityRemoval(LivingEntity entity, int amplifier, Entity.RemovalReason reason) {
+    public void onEntityRemoval(ServerWorld world, LivingEntity entity, int amplifier, Entity.RemovalReason reason) {
         entity.addStatusEffect(new StatusEffectInstance(WKStatusEffects.COOLDOWN, 6000, 0));
     }
 }

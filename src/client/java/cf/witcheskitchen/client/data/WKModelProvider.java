@@ -1,16 +1,14 @@
-package cf.witcheskitchen.data;
+package cf.witcheskitchen.client.data;
 
 import cf.witcheskitchen.common.registry.WKBlocks;
 import cf.witcheskitchen.common.registry.WKItems;
+import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.block.Block;
-import net.minecraft.data.client.*;
-import net.minecraft.state.property.Properties;
-import net.minecraft.state.property.Property;
+import net.minecraft.client.data.*;
 import net.minecraft.util.Identifier;
 
-import static net.minecraft.data.client.BlockStateModelGenerator.*;
+import static net.minecraft.client.data.BlockStateModelGenerator.*;
 
 public class WKModelProvider extends FabricModelProvider {
     public WKModelProvider(FabricDataOutput output) {
@@ -27,26 +25,26 @@ public class WKModelProvider extends FabricModelProvider {
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator generator) {
 
-        generator.registerFlowerPotPlant(WKBlocks.BLACKTHORN_SAPLING, WKBlocks.POTTED_BLACKTHORN_SAPLING, BlockStateModelGenerator.TintType.NOT_TINTED);
-        generator.registerFlowerPotPlant(WKBlocks.ELDER_SAPLING, WKBlocks.POTTED_ELDER_SAPLING, BlockStateModelGenerator.TintType.NOT_TINTED);
-        generator.registerFlowerPotPlant(WKBlocks.HAWTHORN_SAPLING, WKBlocks.POTTED_HAWTHORN_SAPLING, BlockStateModelGenerator.TintType.NOT_TINTED);
-        generator.registerFlowerPotPlant(WKBlocks.JUNIPER_SAPLING, WKBlocks.POTTED_JUNIPER_SAPLING, BlockStateModelGenerator.TintType.NOT_TINTED);
-        generator.registerFlowerPotPlant(WKBlocks.ROWAN_SAPLING, WKBlocks.POTTED_ROWAN_SAPLING, BlockStateModelGenerator.TintType.NOT_TINTED);
-        generator.registerFlowerPotPlant(WKBlocks.SUMAC_SAPLING, WKBlocks.POTTED_SUMAC_SAPLING, BlockStateModelGenerator.TintType.NOT_TINTED);
+        generator.registerFlowerPotPlant(WKBlocks.BLACKTHORN_SAPLING, WKBlocks.POTTED_BLACKTHORN_SAPLING, BlockStateModelGenerator.CrossType.NOT_TINTED);
+        generator.registerFlowerPotPlant(WKBlocks.ELDER_SAPLING, WKBlocks.POTTED_ELDER_SAPLING, BlockStateModelGenerator.CrossType.NOT_TINTED);
+        generator.registerFlowerPotPlant(WKBlocks.HAWTHORN_SAPLING, WKBlocks.POTTED_HAWTHORN_SAPLING, BlockStateModelGenerator.CrossType.NOT_TINTED);
+        generator.registerFlowerPotPlant(WKBlocks.JUNIPER_SAPLING, WKBlocks.POTTED_JUNIPER_SAPLING, BlockStateModelGenerator.CrossType.NOT_TINTED);
+        generator.registerFlowerPotPlant(WKBlocks.ROWAN_SAPLING, WKBlocks.POTTED_ROWAN_SAPLING, BlockStateModelGenerator.CrossType.NOT_TINTED);
+        generator.registerFlowerPotPlant(WKBlocks.SUMAC_SAPLING, WKBlocks.POTTED_SUMAC_SAPLING, BlockStateModelGenerator.CrossType.NOT_TINTED);
 
-        generator.registerLog(WKBlocks.BLACKTHORN_LOG).log(WKBlocks.BLACKTHORN_LOG).wood(WKBlocks.BLACKTHORN_WOOD);
-        generator.registerLog(WKBlocks.ELDER_LOG).log(WKBlocks.ELDER_LOG).wood(WKBlocks.ELDER_WOOD);
-        generator.registerLog(WKBlocks.HAWTHORN_LOG).log(WKBlocks.HAWTHORN_LOG).wood(WKBlocks.HAWTHORN_WOOD);
-        generator.registerLog(WKBlocks.JUNIPER_LOG).log(WKBlocks.JUNIPER_LOG).wood(WKBlocks.JUNIPER_WOOD);
-        generator.registerLog(WKBlocks.ROWAN_LOG).log(WKBlocks.ROWAN_LOG).wood(WKBlocks.ROWAN_WOOD);
-        generator.registerLog(WKBlocks.SUMAC_LOG).log(WKBlocks.SUMAC_LOG).wood(WKBlocks.SUMAC_WOOD);
+        generator.createLogTexturePool(WKBlocks.BLACKTHORN_LOG).log(WKBlocks.BLACKTHORN_LOG).wood(WKBlocks.BLACKTHORN_WOOD);
+        generator.createLogTexturePool(WKBlocks.ELDER_LOG).log(WKBlocks.ELDER_LOG).wood(WKBlocks.ELDER_WOOD);
+        generator.createLogTexturePool(WKBlocks.HAWTHORN_LOG).log(WKBlocks.HAWTHORN_LOG).wood(WKBlocks.HAWTHORN_WOOD);
+        generator.createLogTexturePool(WKBlocks.JUNIPER_LOG).log(WKBlocks.JUNIPER_LOG).wood(WKBlocks.JUNIPER_WOOD);
+        generator.createLogTexturePool(WKBlocks.ROWAN_LOG).log(WKBlocks.ROWAN_LOG).wood(WKBlocks.ROWAN_WOOD);
+        generator.createLogTexturePool(WKBlocks.SUMAC_LOG).log(WKBlocks.SUMAC_LOG).wood(WKBlocks.SUMAC_WOOD);
 
-        generator.registerLog(WKBlocks.STRIPPED_BLACKTHORN_LOG).log(WKBlocks.STRIPPED_BLACKTHORN_LOG).wood(WKBlocks.STRIPPED_BLACKTHORN_WOOD);
-        generator.registerLog(WKBlocks.STRIPPED_ELDER_LOG).log(WKBlocks.STRIPPED_ELDER_LOG).wood(WKBlocks.STRIPPED_ELDER_WOOD);
-        generator.registerLog(WKBlocks.STRIPPED_HAWTHORN_LOG).log(WKBlocks.STRIPPED_HAWTHORN_LOG).wood(WKBlocks.STRIPPED_HAWTHORN_WOOD);
-        generator.registerLog(WKBlocks.STRIPPED_JUNIPER_LOG).log(WKBlocks.STRIPPED_JUNIPER_LOG).wood(WKBlocks.STRIPPED_JUNIPER_WOOD);
-        generator.registerLog(WKBlocks.STRIPPED_ROWAN_LOG).log(WKBlocks.STRIPPED_ROWAN_LOG).wood(WKBlocks.STRIPPED_ROWAN_WOOD);
-        generator.registerLog(WKBlocks.STRIPPED_SUMAC_LOG).log(WKBlocks.STRIPPED_SUMAC_LOG).wood(WKBlocks.STRIPPED_SUMAC_WOOD);
+        generator.createLogTexturePool(WKBlocks.STRIPPED_BLACKTHORN_LOG).log(WKBlocks.STRIPPED_BLACKTHORN_LOG).wood(WKBlocks.STRIPPED_BLACKTHORN_WOOD);
+        generator.createLogTexturePool(WKBlocks.STRIPPED_ELDER_LOG).log(WKBlocks.STRIPPED_ELDER_LOG).wood(WKBlocks.STRIPPED_ELDER_WOOD);
+        generator.createLogTexturePool(WKBlocks.STRIPPED_HAWTHORN_LOG).log(WKBlocks.STRIPPED_HAWTHORN_LOG).wood(WKBlocks.STRIPPED_HAWTHORN_WOOD);
+        generator.createLogTexturePool(WKBlocks.STRIPPED_JUNIPER_LOG).log(WKBlocks.STRIPPED_JUNIPER_LOG).wood(WKBlocks.STRIPPED_JUNIPER_WOOD);
+        generator.createLogTexturePool(WKBlocks.STRIPPED_ROWAN_LOG).log(WKBlocks.STRIPPED_ROWAN_LOG).wood(WKBlocks.STRIPPED_ROWAN_WOOD);
+        generator.createLogTexturePool(WKBlocks.STRIPPED_SUMAC_LOG).log(WKBlocks.STRIPPED_SUMAC_LOG).wood(WKBlocks.STRIPPED_SUMAC_WOOD);
 
         generator.registerSingleton(WKBlocks.BLACKTHORN_LEAVES, TexturedModel.LEAVES);
         generator.registerSingleton(WKBlocks.ELDER_LEAVES, TexturedModel.LEAVES);
@@ -110,14 +108,14 @@ public class WKModelProvider extends FabricModelProvider {
         Identifier regularModelId = Models.STAIRS.upload(stairBlock, stairTextureMap, blockStateModelGenerator.modelCollector);
         Identifier innerModelId = Models.INNER_STAIRS.upload(stairBlock, stairTextureMap, blockStateModelGenerator.modelCollector);
         Identifier outerModelId = Models.OUTER_STAIRS.upload(stairBlock, stairTextureMap, blockStateModelGenerator.modelCollector);
-        blockStateModelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createStairsBlockState(stairBlock, innerModelId, regularModelId, outerModelId));
+        blockStateModelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createStairsBlockState(stairBlock, createWeightedVariant(innerModelId), createWeightedVariant(regularModelId), createWeightedVariant(outerModelId)));
     }
 
     public void registerPressurePlate(BlockStateModelGenerator blockStateModelGenerator, Block pressureplateBlock, Block parentBlock) {
         TextureMap textureMap = TextureMap.all(parentBlock);
         Identifier pressureplate_up = Models.PRESSURE_PLATE_UP.upload(pressureplateBlock, textureMap, blockStateModelGenerator.modelCollector);
         Identifier pressureplate_down = Models.PRESSURE_PLATE_DOWN.upload(pressureplateBlock, textureMap, blockStateModelGenerator.modelCollector);
-        blockStateModelGenerator.blockStateCollector.accept(createPressurePlateBlockState(pressureplateBlock, pressureplate_up, pressureplate_down));
+        blockStateModelGenerator.blockStateCollector.accept(createPressurePlateBlockState(pressureplateBlock, createWeightedVariant(pressureplate_up), createWeightedVariant(pressureplate_down)));
     }
 
     public void registerFence(BlockStateModelGenerator blockStateModelGenerator, Block fenceBlock, Block parentBlock) {
@@ -125,7 +123,7 @@ public class WKModelProvider extends FabricModelProvider {
         Identifier post = Models.FENCE_POST.upload(fenceBlock, textureMap, blockStateModelGenerator.modelCollector);
         Identifier side = Models.FENCE_SIDE.upload(fenceBlock, textureMap, blockStateModelGenerator.modelCollector);
         Identifier inventory = Models.FENCE_INVENTORY.upload(fenceBlock, textureMap, blockStateModelGenerator.modelCollector);
-        blockStateModelGenerator.blockStateCollector.accept(createFenceBlockState(fenceBlock, post, side));
+        blockStateModelGenerator.blockStateCollector.accept(createFenceBlockState(fenceBlock, createWeightedVariant(post), createWeightedVariant(side)));
         blockStateModelGenerator.registerParentedItemModel(fenceBlock, inventory);
     }
 
@@ -135,7 +133,7 @@ public class WKModelProvider extends FabricModelProvider {
         Identifier fence_gate_open = Models.TEMPLATE_FENCE_GATE_OPEN.upload(fencegateBlock, textureMap, blockStateModelGenerator.modelCollector);
         Identifier fence_gate_wall = Models.TEMPLATE_FENCE_GATE_WALL.upload(fencegateBlock, textureMap, blockStateModelGenerator.modelCollector);
         Identifier fence_gate_wall_open = Models.TEMPLATE_FENCE_GATE_WALL_OPEN.upload(fencegateBlock, textureMap, blockStateModelGenerator.modelCollector);
-        blockStateModelGenerator.blockStateCollector.accept(createFenceGateBlockState(fencegateBlock, fence_gate_open, fence_gate, fence_gate_wall_open, fence_gate_wall, false));
+        blockStateModelGenerator.blockStateCollector.accept(createFenceGateBlockState(fencegateBlock, createWeightedVariant(fence_gate_open), createWeightedVariant(fence_gate), createWeightedVariant(fence_gate_wall_open), createWeightedVariant(fence_gate_wall), false));
     }
 
     public void registerButton(BlockStateModelGenerator blockStateModelGenerator, Block buttonBlock, Block parentBlock) {
@@ -143,7 +141,7 @@ public class WKModelProvider extends FabricModelProvider {
         Identifier button = Models.BUTTON.upload(buttonBlock, textureMap, blockStateModelGenerator.modelCollector);
         Identifier pressed = Models.BUTTON_PRESSED.upload(buttonBlock, textureMap, blockStateModelGenerator.modelCollector);
         Identifier inventory = Models.BUTTON_INVENTORY.upload(buttonBlock, textureMap, blockStateModelGenerator.modelCollector);
-        blockStateModelGenerator.blockStateCollector.accept(createButtonBlockState(buttonBlock, button, pressed));
+        blockStateModelGenerator.blockStateCollector.accept(createButtonBlockState(buttonBlock, createWeightedVariant(button), createWeightedVariant(pressed)));
         blockStateModelGenerator.registerParentedItemModel(buttonBlock, inventory);
     }
 
@@ -151,10 +149,10 @@ public class WKModelProvider extends FabricModelProvider {
         TextureMap textureMap = TextureMap.all(parentBlock);
         Identifier sign = Models.PARTICLE.upload(signBlock, textureMap, blockStateModelGenerator.modelCollector);
         Identifier wallSign = Models.PARTICLE.upload(signWallBlock, textureMap, blockStateModelGenerator.modelCollector);
-        blockStateModelGenerator.blockStateCollector.accept(createSingletonBlockState(signBlock, sign));
-        blockStateModelGenerator.blockStateCollector.accept(createSingletonBlockState(signWallBlock, wallSign));
-        blockStateModelGenerator.excludeFromSimpleItemModelGeneration(signBlock);
-        blockStateModelGenerator.excludeFromSimpleItemModelGeneration(signWallBlock);
+        blockStateModelGenerator.blockStateCollector.accept(createSingletonBlockState(signBlock, createWeightedVariant(sign)));
+        blockStateModelGenerator.blockStateCollector.accept(createSingletonBlockState(signWallBlock, createWeightedVariant(wallSign)));
+        //blockStateModelGenerator.excludeFromSimpleItemModelGeneration(signBlock);
+        //blockStateModelGenerator.excludeFromSimpleItemModelGeneration(signWallBlock);
     }
 
     @Override
@@ -241,20 +239,21 @@ public class WKModelProvider extends FabricModelProvider {
         generator.register(WKItems.TEA_LEAF, Models.GENERATED);
     }
 
-    public final void registerTallCrops(BlockStateModelGenerator generator, Block crop, Property<Integer> ageProperty, int... ageTextureIndices) {
+    // TODO: port
+    /*public final void registerTallCrops(BlockStateModelGenerator generator, Block crop, Property<Integer> ageProperty, int... ageTextureIndices) {
         if (ageProperty.getValues().size() != ageTextureIndices.length) {
             throw new IllegalArgumentException();
         } else {
-            BlockStateVariantMap blockStateVariantMap = BlockStateVariantMap.create(ageProperty, Properties.DOUBLE_BLOCK_HALF)
+            BlockStateVariantMap blockStateVariantMap = BlockStateVariantMap.models(ageProperty, Properties.DOUBLE_BLOCK_HALF)
                     .register((integer, half) -> {
                         int i = ageTextureIndices[integer];
                         Identifier identifier = generator.createSubModel(crop, "_" + half + "_stage" + i, Models.CROP, TextureMap::crop);
                         return BlockStateVariant.create().put(VariantSettings.MODEL, identifier);
                     });
             generator.registerItemModel(crop.asItem());
-            generator.blockStateCollector.accept(VariantsBlockStateSupplier.create(crop, BlockStateVariant.create().put(VariantSettings.MODEL, ModelIds.getBlockModelId(crop)))
+            generator.blockStateCollector.accept(VariantsBlockModelDefinitionCreator.of(crop, createWeightedVariant(new ModelVariant(ModelIds.getBlockModelId(crop), ModelVariant.ModelState.DEFAULT)))
                     .coordinate(blockStateVariantMap)
             );
         }
-    }
+    }*/
 }

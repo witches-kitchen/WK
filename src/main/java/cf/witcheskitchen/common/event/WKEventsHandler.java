@@ -22,8 +22,8 @@ public class WKEventsHandler {
     public static class LootTablesListener implements LootTableEvents.Modify {
         @Override
         public void modifyLootTable(RegistryKey<LootTable> key, LootTable.Builder tableBuilder, LootTableSource source, RegistryWrapper.WrapperLookup registries) {
-            final RegistryKey<LootTable> grassLootTable = Blocks.SHORT_GRASS.getLootTableKey();
-            final RegistryKey<LootTable> tallGrassLootTable = Blocks.TALL_GRASS.getLootTableKey();
+            final RegistryKey<LootTable> grassLootTable = Blocks.SHORT_GRASS.getLootTableKey().orElseThrow();
+            final RegistryKey<LootTable> tallGrassLootTable = Blocks.TALL_GRASS.getLootTableKey().orElseThrow();
             final RegistryKey<LootTable> seedsAddition = RegistryKey.of(RegistryKeys.LOOT_TABLE, WitchesKitchen.id("listener/seeds"));
             if (key.equals(grassLootTable) || key.equals(tallGrassLootTable)) {
                 // Adds a new entry for grass and tall grass loot tables

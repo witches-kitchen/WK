@@ -6,12 +6,12 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.brain.MemoryModuleState;
 import net.minecraft.entity.ai.brain.MemoryModuleType;
-import net.minecraft.entity.ai.brain.task.LookTargetUtil;
+import net.minecraft.entity.ai.brain.task.TargetUtil;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Hand;
 import net.tslat.smartbrainlib.api.core.behaviour.DelayedBehaviour;
-import net.tslat.smartbrainlib.util.BrainUtils;
+import net.tslat.smartbrainlib.util.BrainUtil;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -45,7 +45,7 @@ public class AnimatableMeleeAttack<E extends MobEntity> extends DelayedBehaviour
 
     @Override
     protected boolean shouldRun(ServerWorld world, E entity) {
-        this.target = BrainUtils.getTargetOfEntity(entity);
+        this.target = BrainUtil.getTargetOfEntity(entity);
 
         return entity.getVisibilityCache().canSee(this.target) && entity.isInAttackRange(this.target);
     }
@@ -53,7 +53,7 @@ public class AnimatableMeleeAttack<E extends MobEntity> extends DelayedBehaviour
     @Override
     protected void start(E entity) {
         entity.swingHand(Hand.MAIN_HAND);
-        LookTargetUtil.lookAt(entity, this.target);
+        TargetUtil.lookAt(entity, this.target);
     }
 
     @Override
@@ -63,7 +63,7 @@ public class AnimatableMeleeAttack<E extends MobEntity> extends DelayedBehaviour
 
     @Override
     protected void doDelayedAction(E entity) {
-        BrainUtils.setForgettableMemory(entity, MemoryModuleType.ATTACK_COOLING_DOWN, true, this.attackIntervalSupplier.apply(entity));
+        BrainUtil.setForgettableMemory(entity, MemoryModuleType.ATTACK_COOLING_DOWN, true, this.attackIntervalSupplier.apply(entity));
 
         if (this.target == null)
             return;
@@ -71,6 +71,6 @@ public class AnimatableMeleeAttack<E extends MobEntity> extends DelayedBehaviour
         if (!entity.getVisibilityCache().canSee(this.target) || !entity.isInAttackRange(this.target))
             return;
 
-        entity.tryAttack(this.target);
+        entity.tryAttack((ServerWorld) entity.getWorld(), this.target);
     }
 }

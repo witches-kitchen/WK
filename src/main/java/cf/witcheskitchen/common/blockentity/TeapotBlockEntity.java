@@ -11,6 +11,7 @@ import cf.witcheskitchen.common.registry.WKBlockEntityTypes;
 import cf.witcheskitchen.common.registry.WKRecipeTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.component.ComponentMap;
+import net.minecraft.component.ComponentsAccess;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -23,6 +24,7 @@ import net.minecraft.potion.Potions;
 import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
@@ -49,7 +51,9 @@ public class TeapotBlockEntity extends WKBlockEntityWithInventory {
     public void tick(World world, BlockPos blockPos, BlockState blockState, WKBlockEntity blockEntity) {
         if (world.getBlockState(pos.down()).getBlock() instanceof WitchesOvenBlock && world.getBlockState(pos.down()).get(WitchesOvenBlock.LIT)) {
             if (teaRecipe == null) {
-                teaRecipe = world.getRecipeManager().listAllOfType(WKRecipeTypes.TEA_RECIPE_TYPE).stream().filter(recipe -> recipe.value().input.test(this.manager.getStack(0))).findFirst().map(RecipeEntry::value).orElse(null);
+                if (world instanceof ServerWorld serverWorld) {
+                    teaRecipe = serverWorld.getRecipeManager().getAllOfType(WKRecipeTypes.TEA_RECIPE_TYPE).stream().filter(recipe -> recipe.value().input.test(this.manager.getStack(0))).findFirst().map(RecipeEntry::value).orElse(null);
+                }
             } else {
                 if (hasWater) {
                     if (effect == null) {
@@ -94,8 +98,8 @@ public class TeapotBlockEntity extends WKBlockEntityWithInventory {
                     tryFillBottle(player);
                 } else if (stack.isOf(Items.POTION) && stack.contains(DataComponentTypes.POTION_CONTENTS) && stack.get(DataComponentTypes.POTION_CONTENTS).potion().isPresent() && stack.get(DataComponentTypes.POTION_CONTENTS).potion().orElseThrow().matches(Potions.WATER)) {
                     fillKettle(player);
-                } else {
-                    world.getRecipeManager().listAllOfType(WKRecipeTypes.TEA_RECIPE_TYPE).stream().filter(recipe -> recipe.value().input.test(stack)).findFirst().map(RecipeEntry::value)
+                } else if (world instanceof ServerWorld serverWorld) {
+                    serverWorld.getRecipeManager().getAllOfType(WKRecipeTypes.TEA_RECIPE_TYPE).stream().filter(recipe -> recipe.value().input.test(stack)).findFirst().map(RecipeEntry::value)
                             .ifPresent(teaRecipe -> tryAddIngredientToTeaPot(stack, world));
                 }
             }

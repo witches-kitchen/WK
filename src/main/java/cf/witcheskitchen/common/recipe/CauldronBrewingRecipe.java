@@ -37,7 +37,7 @@ public class CauldronBrewingRecipe implements Recipe<MultipleStackRecipeInput> {
 
     @Override
     public boolean matches(MultipleStackRecipeInput inventory, World world) {
-        return RecipeUtils.matches(inventory, this.ingredients, 0, inventory.getSize());
+        return RecipeUtils.matches(inventory, this.ingredients, 0, inventory.size());
     }
 
     @Override

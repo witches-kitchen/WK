@@ -11,6 +11,7 @@ import cf.witcheskitchen.common.registry.WKSoundEvents;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityCollisionHandler;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -190,8 +191,8 @@ public class WitchesCauldronBlock extends WKBlockWithEntity implements Waterlogg
     }
 
     @Override
-    public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-        super.onEntityCollision(state, world, pos, entity);
+    protected void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity, EntityCollisionHandler handler) {
+        super.onEntityCollision(state, world, pos, entity, handler);
         final BlockEntity blockEntity = world.getBlockEntity(pos);
         if (!world.isClient && blockEntity instanceof WitchesCauldronBlockEntity cauldron) {
             if (cauldron.hasFluid()) {
@@ -219,7 +220,7 @@ public class WitchesCauldronBlock extends WKBlockWithEntity implements Waterlogg
                 if (random.nextInt(5) == 0) {
                     final float volume = 0.8F + (random.nextFloat() * 0.2F);
                     final float pitch = 0.8F + (random.nextFloat() * 0.2F);
-                    world.playSound(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, WKSoundEvents.BUBBLE, SoundCategory.BLOCKS, volume, pitch, false);
+                    world.playSoundClient(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, WKSoundEvents.BUBBLE, SoundCategory.BLOCKS, volume, pitch, false);
                 }
                 final int color = cauldron.getColor();
                 final double xPos = cauldron.getPos().getX();
@@ -235,7 +236,7 @@ public class WitchesCauldronBlock extends WKBlockWithEntity implements Waterlogg
                 final double particleY = yPos + depth - 0.3D;
                 final double particleZ = zPos + front;
                 for (int i = 0; i < 2; i++) {
-                    world.addParticle((ParticleEffect) WKParticleTypes.MAGIC_SPARKLE, particleX, particleY, particleZ, r, g, b);
+                    world.addParticleClient((ParticleEffect) WKParticleTypes.MAGIC_SPARKLE, particleX, particleY, particleZ, r, g, b);
                 }
             }
         }

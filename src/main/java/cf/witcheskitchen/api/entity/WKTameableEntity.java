@@ -44,8 +44,8 @@ public abstract class WKTameableEntity extends TameableEntity {
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        dataTracker.set(POSE_FLAGS, nbt.getByte("Flags"));
-        this.setVariant(nbt.getInt("Variant"));
+        dataTracker.set(POSE_FLAGS, nbt.getByte("Flags").orElseThrow());
+        this.setVariant(nbt.getInt("Variant").orElseThrow());
     }
 
     protected void setPoseFlag(int index, boolean value) {

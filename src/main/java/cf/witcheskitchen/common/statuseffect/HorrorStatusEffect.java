@@ -7,11 +7,11 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.world.World;
 
 //Todo: Work on this
 public class HorrorStatusEffect extends StatusEffect {
@@ -34,9 +34,8 @@ public class HorrorStatusEffect extends StatusEffect {
     //Todo: Make sure only the victim can hear these sounds.
     //Todo: It would appear this potion cannot apply properly.
     @Override
-    public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
+    public boolean applyUpdateEffect(ServerWorld world, LivingEntity entity, int amplifier) {
         Random rand = entity.getRandom();
-        World world = entity.getWorld();
         BlockPos pos = entity.getBlockPos();
         if (!entity.hasStatusEffect(StatusEffects.BLINDNESS) && !entity.hasStatusEffect(StatusEffects.DARKNESS)) {
             entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 9000, 3));

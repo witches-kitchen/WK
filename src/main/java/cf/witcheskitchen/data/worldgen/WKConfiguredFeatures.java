@@ -8,7 +8,7 @@ import net.minecraft.registry.Registerable;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.collection.DataPool;
+import net.minecraft.util.collection.Pool;
 import net.minecraft.util.math.intprovider.ConstantIntProvider;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
@@ -36,7 +36,7 @@ public interface WKConfiguredFeatures {
             new TreeFeatureConfig.Builder(
                     SimpleBlockStateProvider.of(WKBlocks.ELDER_LOG.getDefaultState()),
                     new StraightTrunkPlacer(8, 4, 0),
-                    new WeightedBlockStateProvider(DataPool.<BlockState>builder().add(WKBlocks.ELDER_LEAVES.getDefaultState(), 1)),
+                    new WeightedBlockStateProvider(Pool.<BlockState>builder().add(WKBlocks.ELDER_LEAVES.getDefaultState(), 1)),
                     new BlobFoliagePlacer(ConstantIntProvider.create(2), ConstantIntProvider.create(0), 3),
                     new TwoLayersFeatureSize(1, 0, 1))
                     .ignoreVines()
@@ -46,7 +46,7 @@ public interface WKConfiguredFeatures {
             new TreeFeatureConfig.Builder(
                     SimpleBlockStateProvider.of(WKBlocks.BLACKTHORN_LOG.getDefaultState()),
                     new StraightTrunkPlacer(4, 2, 0),
-                    new WeightedBlockStateProvider(DataPool.<BlockState>builder().add(WKBlocks.BLACKTHORN_LEAVES.getDefaultState(), 1)),
+                    new WeightedBlockStateProvider(Pool.<BlockState>builder().add(WKBlocks.BLACKTHORN_LEAVES.getDefaultState(), 1)),
                     new BlobFoliagePlacer(ConstantIntProvider.create(2), ConstantIntProvider.create(0), 3),
                     new TwoLayersFeatureSize(1, 0, 1))
                     .ignoreVines()
@@ -56,7 +56,7 @@ public interface WKConfiguredFeatures {
             new TreeFeatureConfig.Builder(
                     SimpleBlockStateProvider.of(WKBlocks.HAWTHORN_LOG.getDefaultState()),
                     new BendingTrunkPlacer(5, 2, 0, 3, UniformIntProvider.create(1, 2)),
-                    new WeightedBlockStateProvider(DataPool.<BlockState>builder().add(WKBlocks.HAWTHORN_LEAVES.getDefaultState(), 1)),
+                    new WeightedBlockStateProvider(Pool.<BlockState>builder().add(WKBlocks.HAWTHORN_LEAVES.getDefaultState(), 1)),
                     new RandomSpreadFoliagePlacer(ConstantIntProvider.create(3), ConstantIntProvider.create(0), ConstantIntProvider.create(2), 50),
                     new TwoLayersFeatureSize(1, 0, 1))
                     .ignoreVines()
@@ -66,7 +66,7 @@ public interface WKConfiguredFeatures {
             new TreeFeatureConfig.Builder(
                     SimpleBlockStateProvider.of(WKBlocks.JUNIPER_LOG.getDefaultState()),
                     new StraightTrunkPlacer(4, 8, 0),
-                    new WeightedBlockStateProvider(DataPool.<BlockState>builder().add(WKBlocks.JUNIPER_LEAVES.getDefaultState(), 1)),
+                    new WeightedBlockStateProvider(Pool.<BlockState>builder().add(WKBlocks.JUNIPER_LEAVES.getDefaultState(), 1)),
                     new BlobFoliagePlacer(ConstantIntProvider.create(2), ConstantIntProvider.create(0), 3),
                     new TwoLayersFeatureSize(2, 0, 1))
                     .ignoreVines()
@@ -76,7 +76,7 @@ public interface WKConfiguredFeatures {
             new TreeFeatureConfig.Builder(
                     SimpleBlockStateProvider.of(WKBlocks.ROWAN_LOG.getDefaultState()),
                     new StraightTrunkPlacer(4, 2, 0),
-                    new WeightedBlockStateProvider(DataPool.<BlockState>builder().add(WKBlocks.ROWAN_LEAVES.getDefaultState(), 1)),
+                    new WeightedBlockStateProvider(Pool.<BlockState>builder().add(WKBlocks.ROWAN_LEAVES.getDefaultState(), 1)),
                     new BlobFoliagePlacer(ConstantIntProvider.create(2), ConstantIntProvider.create(0), 3),
                     new TwoLayersFeatureSize(2, 0, 2))
                     .ignoreVines()

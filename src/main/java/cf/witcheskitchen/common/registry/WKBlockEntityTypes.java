@@ -3,6 +3,7 @@ package cf.witcheskitchen.common.registry;
 import cf.witcheskitchen.WitchesKitchen;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
 import cf.witcheskitchen.common.blockentity.*;
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -21,7 +22,7 @@ public interface WKBlockEntityTypes {
     List<ObjectDefinition<BlockEntityType<?>>> BLOCK_ENTITY_TYPES = new ArrayList<>();
 
     static <E extends BlockEntity> BlockEntityType<E> register(final String path, BiFunction<BlockPos, BlockState, E> factory, Block... blocks) {
-        final BlockEntityType<E> type = BlockEntityType.Builder.create(factory::apply, blocks).build();
+        final BlockEntityType<E> type = FabricBlockEntityTypeBuilder.create(factory::apply, blocks).build();
         BLOCK_ENTITY_TYPES.add(new ObjectDefinition<>(WitchesKitchen.id(path), type));
         return type;
     }

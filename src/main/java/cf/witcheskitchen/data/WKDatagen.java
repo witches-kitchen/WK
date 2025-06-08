@@ -15,7 +15,6 @@ public class WKDatagen implements DataGeneratorEntrypoint {
         pack.addProvider(WKLanguageProvider::new);
         pack.addProvider(WKLootTableProvider.BlockLoot::new);
         pack.addProvider(WKLootTableProvider.EntityLoot::new);
-        pack.addProvider(WKModelProvider::new);
         pack.addProvider(WKRecipeProvider::new);
         pack.addProvider(WKTagProvider.WKBlockTags::new);
         pack.addProvider(WKTagProvider.WKItemTags::new);

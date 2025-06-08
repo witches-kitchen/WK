@@ -59,26 +59,24 @@ public abstract class WKBlock extends WKBlockWithEntity {
         // Requests a screen
         if (entity instanceof NamedScreenHandlerFactory factory) {
             player.openHandledScreen(factory);
-            return ActionResult.success(world.isClient);
+            return ActionResult.SUCCESS;
         }
         return ActionResult.PASS;
     }
 
     @Override
-    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-        if (!state.isOf(newState.getBlock())) {
-            final BlockEntity entity = world.getBlockEntity(pos);
-            if (world instanceof ServerWorld serverWorld) {
-                if (entity instanceof Inventory inventory) {
-                    ItemScatterer.spawn(world, pos, inventory);
-                }
-                if (entity instanceof IExperienceHandler handler) {
-                    handler.dropExperience(serverWorld, Vec3d.of(pos));
-                }
+    protected void onStateReplaced(BlockState state, ServerWorld world, BlockPos pos, boolean moved) {
+        final BlockEntity entity = world.getBlockEntity(pos);
+        if (world instanceof ServerWorld serverWorld) {
+            if (entity instanceof Inventory inventory) {
+                ItemScatterer.spawn(world, pos, inventory);
             }
-            world.updateComparators(pos, this);
+            if (entity instanceof IExperienceHandler handler) {
+                handler.dropExperience(serverWorld, Vec3d.of(pos));
+            }
         }
-        super.onStateReplaced(state, world, pos, newState, moved);
+        world.updateComparators(pos, this);
+        super.onStateReplaced(state, world, pos, moved);
     }
 
     @Override

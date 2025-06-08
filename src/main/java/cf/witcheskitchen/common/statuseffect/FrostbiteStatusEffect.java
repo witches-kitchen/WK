@@ -4,6 +4,7 @@ import cf.witcheskitchen.common.registry.WKStatusEffects;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
+import net.minecraft.server.world.ServerWorld;
 
 public class FrostbiteStatusEffect extends StatusEffect {
     public FrostbiteStatusEffect(StatusEffectCategory type, int color) {
@@ -21,49 +22,35 @@ public class FrostbiteStatusEffect extends StatusEffect {
     }
 
     @Override
-    public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
+    public boolean applyUpdateEffect(ServerWorld world, LivingEntity entity, int amplifier) {
         if (!entity.isFrozen()) {
             if (amplifier == 0) {
-                entity.damage(entity.getDamageSources().freeze(), 1f);
+                entity.damage(world, entity.getDamageSources().freeze(), 1f);
                 entity.setInPowderSnow(true);
             }
             if (amplifier == 1) {
-                entity.damage(entity.getDamageSources().freeze(), 2f);
+                entity.damage(world, entity.getDamageSources().freeze(), 2f);
                 entity.setInPowderSnow(true);
             }
             if (amplifier >= 2) {
-                entity.damage(entity.getDamageSources().freeze(), 4f);
+                entity.damage(world, entity.getDamageSources().freeze(), 4f);
                 entity.setInPowderSnow(true);
             }
         }
         if (entity.isOnFire()) {
             entity.extinguish();
         }
-        if (entity.isWet()) {
-            if (amplifier == 0) {
-                entity.damage(entity.getDamageSources().freeze(), 2f);
-                entity.setInPowderSnow(true);
-            }
-            if (amplifier == 1) {
-                entity.damage(entity.getDamageSources().freeze(), 4f);
-                entity.setInPowderSnow(true);
-            }
-            if (amplifier >= 2) {
-                entity.damage(entity.getDamageSources().freeze(), 6f);
-                entity.setInPowderSnow(true);
-            }
-        }
         if (entity.isTouchingWaterOrRain()) {
             if (amplifier == 0) {
-                entity.damage(entity.getDamageSources().freeze(), 2f);
+                entity.damage(world, entity.getDamageSources().freeze(), 2f);
                 entity.setInPowderSnow(true);
             }
             if (amplifier == 1) {
-                entity.damage(entity.getDamageSources().freeze(), 4f);
+                entity.damage(world, entity.getDamageSources().freeze(), 4f);
                 entity.setInPowderSnow(true);
             }
             if (amplifier >= 2) {
-                entity.damage(entity.getDamageSources().freeze(), 6f);
+                entity.damage(world, entity.getDamageSources().freeze(), 6f);
                 entity.setInPowderSnow(true);
             }
         }

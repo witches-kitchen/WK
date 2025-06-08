@@ -96,8 +96,8 @@ public class WitchesOvenBlock extends WKBlock implements Waterloggable {
             // Try to insert item on top
             if (hit.getType() == HitResult.Type.BLOCK) {
                 final Direction side = hit.getSide();
-                if (side == Direction.UP) {
-                    final CampfireCookingRecipe passiveRecipe = oven.getCampfireRecipeFor(world, stackInHand);
+                if (side == Direction.UP && !world.isClient()) {
+                    final CampfireCookingRecipe passiveRecipe = oven.getCampfireRecipeFor((ServerWorld) world, stackInHand);
                     // It can only place an item if it is part of a campfire recipe
                     if (!world.isClient() && passiveRecipe != null) {
                         if (oven.putItemOnTop(player.isCreative() ? stackInHand.copy() : stackInHand)) {
@@ -132,13 +132,11 @@ public class WitchesOvenBlock extends WKBlock implements Waterloggable {
     }
 
     @Override
-    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-        if (!state.isOf(newState.getBlock())) {
-            final BlockEntity entity = world.getBlockEntity(pos);
-            if (entity instanceof WitchesOvenBlockEntity ovenEntity) {
-                ItemScatterer.spawn(world, pos, ovenEntity.getStacksOnTop());
-            }
+    protected void onStateReplaced(BlockState state, ServerWorld world, BlockPos pos, boolean moved) {
+        final BlockEntity entity = world.getBlockEntity(pos);
+        if (entity instanceof WitchesOvenBlockEntity ovenEntity) {
+            ItemScatterer.spawn(world, pos, ovenEntity.getStacksOnTop());
         }
-        super.onStateReplaced(state, world, pos, newState, moved);
+        super.onStateReplaced(state, world, pos, moved);
     }
 }

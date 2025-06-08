@@ -25,8 +25,8 @@ public final class ItemUtil {
     public static void consumeItem(PlayerEntity player, Hand hand) {
         final var stack = player.getStackInHand(hand);
         final var item = stack.getItem();
-        final var hasRemainder = item.hasRecipeRemainder();
-        var remainder = hasRemainder ? new ItemStack(item.getRecipeRemainder()) : ItemStack.EMPTY;
+        final var hasRemainder = !item.getRecipeRemainder(stack).isEmpty();
+        var remainder = hasRemainder ? item.getRecipeRemainder(stack) : ItemStack.EMPTY;
         if (item instanceof PotionItem && !hasRemainder) {
             remainder = new ItemStack(Items.GLASS_BOTTLE);
         }

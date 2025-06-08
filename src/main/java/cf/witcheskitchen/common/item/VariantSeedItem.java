@@ -5,7 +5,8 @@ import cf.witcheskitchen.common.component.WKComponents;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FarmlandBlock;
-import net.minecraft.item.AliasedBlockItem;
+import net.minecraft.component.type.TooltipDisplayComponent;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
@@ -18,10 +19,10 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 
-public class VariantSeedItem extends AliasedBlockItem {
+public class VariantSeedItem extends BlockItem {
 
     public VariantSeedItem(Block block, Settings settings) {
         super(block, settings);
@@ -53,11 +54,11 @@ public class VariantSeedItem extends AliasedBlockItem {
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+    public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> textConsumer, TooltipType type) {
         MutableText text = SeedTypeHelper.getSeedTypeText(stack);
         if (text != null) {
-            tooltip.add(text);
+            textConsumer.accept(text);
         }
-        super.appendTooltip(stack, context, tooltip, type);
+        super.appendTooltip(stack, context, displayComponent, textConsumer, type);
     }
 }

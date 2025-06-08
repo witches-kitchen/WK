@@ -32,7 +32,8 @@
       "cf.witcheskitchen.client.integration.WKModMenu"
     ],
     "fabric-datagen": [
-      "cf.witcheskitchen.data.WKDatagen"
+      "cf.witcheskitchen.data.WKDatagen",
+      "cf.witcheskitchen.client.data.WKClientDatagen"
     ],
     "cardinal-components-entity": [
       "cf.witcheskitchen.common.component.WKEntityComponents"
@@ -57,7 +58,7 @@
     "cardinal-components-scoreboard": ">=${cca_version}",
     "cardinal-components-chunk": ">=${cca_version}",
     "cardinal-components-block": ">=${cca_version}",
-    "azurelib": ">=${azurelib_version}"
+    "geckolib": ">=${geckolib_version}"
   },
   "accessWidener": "wk.accesswidener",
   "custom": {

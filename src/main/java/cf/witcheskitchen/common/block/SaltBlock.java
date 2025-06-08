@@ -11,6 +11,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
@@ -20,12 +21,15 @@ import net.minecraft.util.BlockRotation;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
+import net.minecraft.world.block.WireOrientation;
+import net.minecraft.world.tick.ScheduledTickView;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Iterator;
@@ -175,7 +179,7 @@ public class SaltBlock extends Block {
     }
 
     @Override
-    public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
+    protected BlockState getStateForNeighborUpdate(BlockState state, WorldView world, ScheduledTickView tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, Random random) {
         if (direction == Direction.DOWN) {
             return state;
         } else if (direction == Direction.UP) {
@@ -196,7 +200,7 @@ public class SaltBlock extends Block {
                 BlockState blockState = world.getBlockState(mutable);
                 if (!blockState.isOf(Blocks.OBSERVER)) {
                     BlockPos blockPos = mutable.offset(direction.getOpposite());
-                    BlockState blockState2 = blockState.getStateForNeighborUpdate(direction.getOpposite(), world.getBlockState(blockPos), world, mutable, blockPos);
+                    BlockState blockState2 = blockState.getStateForNeighborUpdate(world, world, mutable, direction.getOpposite(), blockPos, world.getBlockState(blockPos), world.getRandom());
                     replace(blockState, blockState2, world, mutable, flags, maxUpdateDepth);
                 }
 
@@ -204,7 +208,7 @@ public class SaltBlock extends Block {
                 BlockState blockState3 = world.getBlockState(mutable);
                 if (!blockState3.isOf(Blocks.OBSERVER)) {
                     BlockPos blockPos2 = mutable.offset(direction.getOpposite());
-                    BlockState blockState4 = blockState3.getStateForNeighborUpdate(direction.getOpposite(), world.getBlockState(blockPos2), world, mutable, blockPos2);
+                    BlockState blockState4 = blockState3.getStateForNeighborUpdate(world, world, mutable, direction.getOpposite(), blockPos2, world.getBlockState(blockPos2), world.getRandom());
                     replace(blockState3, blockState4, world, mutable, flags, maxUpdateDepth);
                 }
             }
@@ -244,11 +248,11 @@ public class SaltBlock extends Block {
 
     private void updateNeighbors(World world, BlockPos pos) {
         if (world.getBlockState(pos).isOf(this)) {
-            world.updateNeighborsAlways(pos, this);
+            world.updateNeighborsAlways(pos, this, WireOrientation.random(world.getRandom()));
             Direction[] var3 = Direction.values();
 
             for (Direction direction : var3) {
-                world.updateNeighborsAlways(pos.offset(direction), this);
+                world.updateNeighborsAlways(pos.offset(direction), this, WireOrientation.random(world.getRandom()));
             }
         }
     }
@@ -257,21 +261,21 @@ public class SaltBlock extends Block {
     public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
         if (!oldState.isOf(state.getBlock()) && !world.isClient) {
             for (Direction direction : Direction.Type.VERTICAL) {
-                world.updateNeighborsAlways(pos.offset(direction), this);
+                world.updateNeighborsAlways(pos.offset(direction), this, WireOrientation.random(world.getRandom()));
             }
             this.updateOffsetNeighbors(world, pos);
         }
     }
 
     @Override
-    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-        if (!moved && !state.isOf(newState.getBlock())) {
-            super.onStateReplaced(state, world, pos, newState, false);
+    protected void onStateReplaced(BlockState state, ServerWorld world, BlockPos pos, boolean moved) {
+        if (!moved) {
+            super.onStateReplaced(state, world, pos, false);
             if (!world.isClient) {
                 Direction[] var6 = Direction.values();
 
                 for (Direction direction : var6) {
-                    world.updateNeighborsAlways(pos.offset(direction), this);
+                    world.updateNeighborsAlways(pos.offset(direction), this, WireOrientation.random(world.getRandom()));
                 }
 
                 this.updateOffsetNeighbors(world, pos);
@@ -302,7 +306,7 @@ public class SaltBlock extends Block {
     }
 
     @Override
-    public void neighborUpdate(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
+    protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, @Nullable WireOrientation wireOrientation, boolean notify) {
         if (!world.isClient) {
             if (!state.canPlaceAt(world, pos)) {
                 dropStacks(state, world, pos);
@@ -360,7 +364,7 @@ public class SaltBlock extends Block {
         for (Direction direction : Direction.Type.HORIZONTAL) {
             BlockPos blockPos = pos.offset(direction);
             if (oldState.get(DIRECTION_TO_WIRE_CONNECTION_PROPERTY.get(direction)).isConnected() != newState.get(DIRECTION_TO_WIRE_CONNECTION_PROPERTY.get(direction)).isConnected() && world.getBlockState(blockPos).isSolidBlock(world, blockPos)) {
-                world.updateNeighborsExcept(blockPos, newState.getBlock(), direction.getOpposite());
+                world.updateNeighborsExcept(blockPos, newState.getBlock(), direction.getOpposite(), WireOrientation.random(world.getRandom()));
             }
         }
     }

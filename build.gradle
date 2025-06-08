@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.7-SNAPSHOT'
+    id 'fabric-loom' version '1.10-SNAPSHOT'
     id 'maven-publish'
 }
 
@@ -59,6 +59,9 @@ repositories {
         url = 'https://oss.sonatype.org/content/repositories/snapshots'
     }
     maven {
+        url = 'https://maven.ladysnake.org/releases'
+    }
+    maven {
         url "https://jitpack.io"
     }
     maven {
@@ -68,9 +71,6 @@ repositories {
         url "https://cursemaven.com"
     }
     maven {
-        url = 'https://maven.ladysnake.org/releases'
-    }
-    maven {
         url "https://oss.sonatype.org/content/repositories/snapshots"
     }
     maven {
@@ -78,6 +78,20 @@ repositories {
     }
     maven {
         url "https://maven.architectury.dev/"
+    }
+    maven {
+        url "https://mvn.devos.one/snapshots"
+    }
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = 'GeckoLib'
+                url = 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+            }
+        }
+        filter {
+            includeGroup('software.bernie.geckolib')
+        }
     }
 }
 
@@ -111,7 +125,7 @@ dependencies {
         exclude group: "mezz.jei"
     }
     modImplementation("com.terraformersmc:modmenu:${project.modmenu_version}")
-    modImplementation "com.github.Virtuoel:Pehkui:${pehkui_version}"
+    //modImplementation "com.github.Virtuoel:Pehkui:${pehkui_version}" // not needed on >=1.21.2
     modCompileOnly "squeek.appleskin:appleskin-fabric:${appleskin_version}:api"
     include modApi("maven.modrinth:impersonate:${impersonate_version}")
     include modApi("maven.modrinth:midnightlib:${midnightlib_version}")
@@ -133,15 +147,16 @@ dependencies {
         // required for making REI integration work
         exclude(group: "net.fabricmc.fabric-api")
     }
+    // JEI is unavailable for Fabric on 1.21.5
     //modCompileOnlyApi("mezz.jei:jei-${mc_version}-common-api-intermediary:${jei_version}")
     //modCompileOnlyApi("mezz.jei:jei-${mc_version}-fabric-api:${jei_version}")
-    // TODO: JEI cannot be used in dev runtime due to an issue where the common libs it transitively depends on do not remap to Yarn.
-    //       The only fix is for either JEI to fix it or for us to switch to Mojmap.
     //modRuntimeOnly("mezz.jei:jei-${mc_version}-fabric:${jei_version}")
-    modCompileOnlyApi "dev.emi:emi-fabric:${emi_version}:api"
+    // EMI is not updated for 1.21.5
+    //modCompileOnlyApi "dev.emi:emi-fabric:${emi_version}:api"
     include modImplementation("io.github.ladysnake:PlayerAbilityLib:${pal_version}")
     include modApi("me.lucko:fabric-permissions-api:${fabric_permissions_api_version}")
     //modImplementation "mod.azure.azurelib:azurelib-fabric-${minecraft_version}:${azurelib_version}"
+    modImplementation "software.bernie.geckolib:geckolib-fabric-${minecraft_version}:${geckolib_version}"
     modImplementation "net.tslat.smartbrainlib:SmartBrainLib-fabric-${minecraft_version}:${smartbrainlib_version}"
 }
 

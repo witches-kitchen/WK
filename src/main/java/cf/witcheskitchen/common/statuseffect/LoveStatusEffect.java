@@ -4,6 +4,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.server.world.ServerWorld;
 
 public class LoveStatusEffect extends StatusEffect {
 
@@ -22,7 +23,7 @@ public class LoveStatusEffect extends StatusEffect {
     }
 
     @Override
-    public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
+    public boolean applyUpdateEffect(ServerWorld world, LivingEntity entity, int amplifier) {
         if (entity instanceof AnimalEntity) {
             if (entity.isAlive() && !((AnimalEntity) entity).isInLove()) {
                 ((AnimalEntity) entity).setLoveTicks(5000);

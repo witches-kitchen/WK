@@ -4,6 +4,7 @@ import cf.witcheskitchen.common.block.GlyphBlock;
 import cf.witcheskitchen.common.registry.WKBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
@@ -18,7 +19,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-import java.util.List;
+import java.util.function.Consumer;
 
 public class ChalkItem extends Item {
     private final GlyphBlock glyphType;
@@ -45,17 +46,17 @@ public class ChalkItem extends Item {
                 world.playSound(null, pos, state.getSoundGroup().getPlaceSound(), SoundCategory.BLOCKS, 1, MathHelper.nextFloat(world.random, 0.8f, 1.2f));
                 world.setBlockState(pos, state);
             }
-            return ActionResult.success(true);
+            return ActionResult.SUCCESS;
         }
         return super.useOnBlock(context);
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+    public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> textConsumer, TooltipType type) {
         if (glyphType != null) {
             String name = Registries.BLOCK.getId(glyphType).getPath();
             int rgb = glyphType == WKBlocks.ENCHANTED_GLYPH ? 0xD8EAB4 : 0xffffff;
-            tooltip.add(Text.translatable("tooltip.witcheskitchen." + name).setStyle(Style.EMPTY.withColor(rgb)));
+            textConsumer.accept(Text.translatable("tooltip.witcheskitchen." + name).setStyle(Style.EMPTY.withColor(rgb)));
         }
     }
 }

@@ -26,6 +26,7 @@ import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
@@ -35,6 +36,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class BrewingBarrelBlockEntity extends WKBlockEntityWithInventory implements NamedScreenHandlerFactory {
 
@@ -74,7 +77,12 @@ public class BrewingBarrelBlockEntity extends WKBlockEntityWithInventory impleme
     public void tick(World world, BlockPos pos, BlockState state, WKBlockEntity blockEntity) {
         super.tick(world, pos, state, blockEntity);
         boolean dirty = false;
-        final var recipe = this.findRecipeFor(world, this.manager.getStacks());
+        if (!(world instanceof ServerWorld serverWorld)) {
+            this.timer = 0;
+            return;
+        }
+
+        final var recipe = this.findRecipeFor(serverWorld, this.manager.getStacks());
         if (recipe == null) {
             this.timer = 0;
             return;
@@ -162,7 +170,7 @@ public class BrewingBarrelBlockEntity extends WKBlockEntityWithInventory impleme
         }
     }
 
-    private BarrelFermentingRecipe findRecipeFor(World world, DefaultedList<ItemStack> inputs) {
+    private BarrelFermentingRecipe findRecipeFor(ServerWorld world, DefaultedList<ItemStack> inputs) {
         if (world == null) {
             return null;
         } else if (inputs.isEmpty()) {
@@ -171,7 +179,7 @@ public class BrewingBarrelBlockEntity extends WKBlockEntityWithInventory impleme
             return previousRecipe;
         } else {
             final BarrelFermentingRecipe recipe = world.getRecipeManager()
-                    .listAllOfType(WKRecipeTypes.BARREL_FERMENTING_RECIPE_TYPE)
+                    .getAllOfType(WKRecipeTypes.BARREL_FERMENTING_RECIPE_TYPE)
                     .stream()
                     .filter(brewingRecipe -> brewingRecipe.value().matches(new MultipleStackRecipeInput(this.manager.getStacks()), world))
                     .findFirst()
@@ -191,8 +199,8 @@ public class BrewingBarrelBlockEntity extends WKBlockEntityWithInventory impleme
         } else if (!canMakeAlcohol(recipe)) {
             return false;
         } else {
-            for (int i = 0; i < recipe.getIngredients().size(); i++) {
-                final DefaultedList<Ingredient> ingredients = recipe.getIngredients();
+            for (int i = 0; i < recipe.getIngredientPlacement().getIngredients().size(); i++) {
+                final List<Ingredient> ingredients = recipe.getIngredientPlacement().getIngredients();
                 final Ingredient ingredient = ingredients.get(i);
                 final ItemStack stack = this.getStack(i);
                 if (ingredient.test(stack)) {
@@ -218,10 +226,10 @@ public class BrewingBarrelBlockEntity extends WKBlockEntityWithInventory impleme
     public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
         super.readNbt(nbt, lookup);
         this.clientInventoryManager.clear();
-        Inventories.readNbt(nbt.getCompound("ClientInventory"), this.clientInventoryManager.getStacks(), lookup);
-        this.timer = nbt.getInt("Timer");
-        this.hasWater = nbt.getBoolean("HasWater");
-        this.hasFinished = nbt.getBoolean("HasFinished");
+        Inventories.readNbt(nbt.getCompound("ClientInventory").orElseThrow(), this.clientInventoryManager.getStacks(), lookup);
+        this.timer = nbt.getInt("Timer").orElseThrow();
+        this.hasWater = nbt.getBoolean("HasWater").orElseThrow();
+        this.hasFinished = nbt.getBoolean("HasFinished").orElseThrow();
     }
 
     @Override

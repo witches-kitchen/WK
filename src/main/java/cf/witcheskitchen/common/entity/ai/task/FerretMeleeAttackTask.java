@@ -5,8 +5,8 @@ import com.google.common.collect.ImmutableMap;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.brain.MemoryModuleState;
 import net.minecraft.entity.ai.brain.MemoryModuleType;
-import net.minecraft.entity.ai.brain.task.LookTargetUtil;
 import net.minecraft.entity.ai.brain.task.MultiTickTask;
+import net.minecraft.entity.ai.brain.task.TargetUtil;
 import net.minecraft.server.world.ServerWorld;
 
 public class FerretMeleeAttackTask extends MultiTickTask<FerretEntity> {
@@ -25,7 +25,7 @@ public class FerretMeleeAttackTask extends MultiTickTask<FerretEntity> {
 
     protected boolean shouldRun(ServerWorld serverWorld, FerretEntity ferret) {
         LivingEntity livingEntity = this.getAttackTarget(ferret);
-        return LookTargetUtil.isVisibleInMemory(ferret, livingEntity) && ferret.isInAttackRange(livingEntity);
+        return TargetUtil.isVisibleInMemory(ferret, livingEntity) && ferret.isInAttackRange(livingEntity);
     }
 
     @Override
@@ -38,7 +38,7 @@ public class FerretMeleeAttackTask extends MultiTickTask<FerretEntity> {
         this.target = this.getAttackTarget(ferret);
         if (ferret.getVehicle() != target) {
             ferret.getDataTracker().set(FerretEntity.TARGET_ID, target.getId());
-            ferret.tryAttack(target);
+            ferret.tryAttack(world, target);
         }
         super.run(world, ferret, time);
     }
@@ -46,7 +46,7 @@ public class FerretMeleeAttackTask extends MultiTickTask<FerretEntity> {
     @Override
     protected void keepRunning(ServerWorld world, FerretEntity ferret, long time) {
         if (coolDown % 20 == 0 && target != null) {
-            ferret.tryAttack(target);
+            ferret.tryAttack(world, target);
         }
         coolDown++;
         super.keepRunning(world, ferret, time);

@@ -1,9 +1,6 @@
 package cf.witcheskitchen.common.entity.hostile;
 
 import cf.witcheskitchen.api.entity.WKHostileEntity;
-import mod.azure.azurelib.common.api.common.animatable.GeoEntity;
-import mod.azure.azurelib.core.animatable.instance.AnimatableInstanceCache;
-import mod.azure.azurelib.core.animation.AnimatableManager;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -13,11 +10,15 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animatable.manager.AnimatableManager;
 
 import java.util.SplittableRandom;
 
@@ -27,10 +28,10 @@ public class RoggenwolfEntity extends WKHostileEntity implements GeoEntity {
     }
 
     public static DefaultAttributeContainer.Builder createAttributes() {
-        return LivingEntity.createLivingAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 16.0D)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 1.25D)
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 15).add(EntityAttributes.GENERIC_ARMOR, 0.0D)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 3.5D).add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 0.35D);
+        return LivingEntity.createLivingAttributes().add(EntityAttributes.FOLLOW_RANGE, 16.0D)
+                .add(EntityAttributes.MOVEMENT_SPEED, 1.25D)
+                .add(EntityAttributes.MAX_HEALTH, 15).add(EntityAttributes.ARMOR, 0.0D)
+                .add(EntityAttributes.ATTACK_DAMAGE, 3.5D).add(EntityAttributes.ATTACK_KNOCKBACK, 0.35D);
     }
 
     @Nullable
@@ -75,15 +76,15 @@ public class RoggenwolfEntity extends WKHostileEntity implements GeoEntity {
     }
 
     @Override
-    public boolean damage(DamageSource source, float amount) {
+    public boolean damage(ServerWorld world, DamageSource source, float amount) {
         if (source.isOf(DamageTypes.FALLING_BLOCK)) {
             return false;
         }
-        return super.damage(source, amount);
+        return super.damage(world, source, amount);
     }
 
     @Override
-    public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
+    public boolean handleFallDamage(double fallDistance, float damageMultiplier, DamageSource damageSource) {
         return false;
     }
 
@@ -92,7 +93,7 @@ public class RoggenwolfEntity extends WKHostileEntity implements GeoEntity {
     public DamageSource getRecentDamageSource() {
         if (isOnFire()) {
             setOnFireFor(15);
-            this.applyDamage(this.getDamageSources().onFire(), 500);
+            this.applyDamage((ServerWorld) this.getWorld(), this.getDamageSources().onFire(), 500);
         }
         return super.getRecentDamageSource();
     }

@@ -160,7 +160,7 @@ public class WKLootTableProvider {
                             .pool(LootPool.builder().conditionally(builder)
                                     .with(ItemEntry.builder(seed)
                                             .apply(ApplyBonusLootFunction
-                                                    .binomialWithBonusCount(this.registryLookup.getWrapperOrThrow(RegistryKeys.ENCHANTMENT).getOrThrow(Enchantments.FORTUNE), 0.5714286F, 3)))))
+                                                    .binomialWithBonusCount(this.registries.getOrThrow(RegistryKeys.ENCHANTMENT).getOrThrow(Enchantments.FORTUNE), 0.5714286F, 3)))))
                     .pool(LootPool.builder()
                             .with(ItemEntry.builder(drop))));
         }

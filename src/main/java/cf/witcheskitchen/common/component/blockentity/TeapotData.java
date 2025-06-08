@@ -32,7 +32,7 @@ public record TeapotData(int progress, int effectTimer, boolean hasWater, Regist
     public static final PacketCodec<RegistryByteBuf, TeapotData> PACKET_CODEC = PacketCodec.tuple(
             PacketCodecs.INTEGER, TeapotData::progress,
             PacketCodecs.INTEGER, TeapotData::effectTimer,
-            PacketCodecs.BOOL, TeapotData::hasWater,
+            PacketCodecs.BOOLEAN, TeapotData::hasWater,
             PacketCodecs.registryEntry(RegistryKeys.STATUS_EFFECT), TeapotData::effect,
             TeapotData::new
     );

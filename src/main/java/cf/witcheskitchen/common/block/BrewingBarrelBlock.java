@@ -14,6 +14,7 @@ import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsage;
 import net.minecraft.item.Items;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
@@ -86,14 +87,12 @@ public class BrewingBarrelBlock extends WKBlock implements Waterloggable {
     }
 
     @Override
-    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-        if (!state.isOf(newState.getBlock())) {
-            final BlockEntity entity = world.getBlockEntity(pos);
-            if (entity instanceof BrewingBarrelBlockEntity barrel) {
-                ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), barrel.getRenderStack());
-            }
+    protected void onStateReplaced(BlockState state, ServerWorld world, BlockPos pos, boolean moved) {
+        final BlockEntity entity = world.getBlockEntity(pos);
+        if (entity instanceof BrewingBarrelBlockEntity barrel) {
+            ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), barrel.getRenderStack());
         }
-        super.onStateReplaced(state, world, pos, newState, moved);
+        super.onStateReplaced(state, world, pos, moved);
     }
 
     @SuppressWarnings("deprecation")

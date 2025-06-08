@@ -9,6 +9,8 @@ import net.minecraft.advancement.AdvancementEntry;
 import net.minecraft.advancement.AdvancementFrame;
 import net.minecraft.advancement.criterion.InventoryChangedCriterion;
 import net.minecraft.advancement.criterion.RecipeUnlockedCriterion;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.text.Text;
 
@@ -34,7 +36,7 @@ public class WKAdvancementsProvider extends FabricAdvancementProvider {
                         false
                 )
                 .criterion("has_item", InventoryChangedCriterion.Conditions.items(WKItems.DOLLOP_OF_FROSTING))
-                .criterion("has_the_recipe", RecipeUnlockedCriterion.create(WitchesKitchen.id("frosting")))
+                .criterion("has_the_recipe", RecipeUnlockedCriterion.create(RegistryKey.of(RegistryKeys.RECIPE, WitchesKitchen.id("frosting"))))
                 .build(consumer, "witcheskitchen:witcheskitchen/root");
     }
 }

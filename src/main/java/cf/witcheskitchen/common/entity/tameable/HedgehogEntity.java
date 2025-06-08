@@ -3,18 +3,7 @@ package cf.witcheskitchen.common.entity.tameable;
 import cf.witcheskitchen.api.entity.WKTameableEntity;
 import cf.witcheskitchen.common.entity.ai.HedgehogBrain;
 import cf.witcheskitchen.common.registry.WKEntityTypes;
-import mod.azure.azurelib.common.api.common.animatable.GeoEntity;
-import mod.azure.azurelib.common.internal.common.constant.DefaultAnimations;
-import mod.azure.azurelib.common.internal.common.util.AzureLibUtil;
-import mod.azure.azurelib.core.animatable.instance.AnimatableInstanceCache;
-import mod.azure.azurelib.core.animation.AnimatableManager;
-import mod.azure.azurelib.core.animation.AnimationController;
-import mod.azure.azurelib.core.animation.AnimationState;
-import mod.azure.azurelib.core.animation.RawAnimation;
-import mod.azure.azurelib.core.object.PlayState;
-import net.minecraft.entity.EntityData;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.brain.Brain;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -31,13 +20,21 @@ import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.SmartBrainProvider;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animatable.manager.AnimatableManager;
+import software.bernie.geckolib.animatable.processing.AnimationController;
+import software.bernie.geckolib.animatable.processing.AnimationTest;
+import software.bernie.geckolib.animation.PlayState;
+import software.bernie.geckolib.animation.RawAnimation;
+import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.List;
 import java.util.SplittableRandom;
-import java.util.UUID;
 
 public class HedgehogEntity extends WKTameableEntity implements GeoEntity, SmartBrainOwner<HedgehogEntity> {
-    private final AnimatableInstanceCache cache = AzureLibUtil.createInstanceCache(this);
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     public HedgehogEntity(EntityType<? extends TameableEntity> entityType, World world) {
         super(entityType, world);
@@ -46,9 +43,9 @@ public class HedgehogEntity extends WKTameableEntity implements GeoEntity, Smart
 
     public static DefaultAttributeContainer.Builder createAttributes() {
         return MobEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.25)
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 6.0)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE);
+                .add(EntityAttributes.MOVEMENT_SPEED, 0.25)
+                .add(EntityAttributes.MAX_HEALTH, 6.0)
+                .add(EntityAttributes.ATTACK_DAMAGE);
     }
 
     @Override
@@ -57,7 +54,7 @@ public class HedgehogEntity extends WKTameableEntity implements GeoEntity, Smart
     }
 
     @Override
-    protected void mobTick() {
+    protected void mobTick(ServerWorld world) {
         tickBrain(this);
     }
 
@@ -82,10 +79,10 @@ public class HedgehogEntity extends WKTameableEntity implements GeoEntity, Smart
     @Nullable
     @Override
     public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
-        HedgehogEntity hedgehogEntity = WKEntityTypes.HEDGEHOG.create(world);
-        UUID uUID = this.getOwnerUuid();
-        if (uUID != null && hedgehogEntity != null) {
-            hedgehogEntity.setOwnerUuid(uUID);
+        HedgehogEntity hedgehogEntity = WKEntityTypes.HEDGEHOG.create(world, SpawnReason.BREEDING);
+        LazyEntityReference<LivingEntity> owner = this.getOwnerReference();
+        if (owner != null && hedgehogEntity != null) {
+            hedgehogEntity.setOwner(owner);
             hedgehogEntity.setTamed(true, true);
         }
         return hedgehogEntity;
@@ -114,10 +111,10 @@ public class HedgehogEntity extends WKTameableEntity implements GeoEntity, Smart
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controller) {
-        controller.add(DefaultAnimations.genericIdleController(this)).add(new AnimationController<HedgehogEntity>(this, "move", 0, this::predicate));
+        controller.add(DefaultAnimations.genericIdleController()).add(new AnimationController<HedgehogEntity>("move", 0, this::predicate));
     }
 
-    private PlayState predicate(AnimationState<HedgehogEntity> state) {
+    private PlayState predicate(AnimationTest<HedgehogEntity> state) {
         if (this.isSitting()) {
             state.setAnimation(RawAnimation.begin().thenLoop("loaf"));
             return PlayState.CONTINUE;
