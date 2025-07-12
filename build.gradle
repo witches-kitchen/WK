@@ -82,6 +82,12 @@ repositories {
     maven {
         url "https://mvn.devos.one/snapshots"
     }
+    maven {
+        url "https://archive.naylahanegan.com/0:/"
+    }    
+    maven {
+        url "https://mcmodarchive.femtopedia.de/"
+    }      
     exclusiveContent {
         forRepository {
             maven {
