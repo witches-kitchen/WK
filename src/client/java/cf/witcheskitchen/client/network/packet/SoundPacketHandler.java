@@ -23,7 +23,7 @@ public class SoundPacketHandler implements S2CPacketRegistryListener<SoundPacket
             if (world != null) {
                 if (!soundId.toString().isEmpty()) {
                     final SoundEvent soundEvent = Registries.SOUND_EVENT.get(soundId);
-                    world.playSoundAtBlockCenter(pos, soundEvent, category, 1.0F, 1.0F, false);
+                    world.playSoundAtBlockCenterClient(pos, soundEvent, category, 1.0F, 1.0F, false);
                 }
             }
         });

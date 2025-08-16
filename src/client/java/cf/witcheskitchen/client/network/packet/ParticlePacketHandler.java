@@ -29,11 +29,11 @@ public class ParticlePacketHandler implements S2CPacketRegistryListener<Particle
             final ParticleType<?> particle = Registries.PARTICLE_TYPE.get(particleId);
             if (world != null) {
                 for (int i = 0; i < range; i++) {
-                    world.addParticle((ParticleEffect) particle, pos.getX() + 0.5D, pos.getY() + 1.0D, pos.getZ() + 0.5D, 0.5D, 0.5D, 0.5D);
+                    world.addParticleClient((ParticleEffect) particle, pos.getX() + 0.5D, pos.getY() + 1.0D, pos.getZ() + 0.5D, 0.5D, 0.5D, 0.5D);
                 }
                 if (!soundId.toString().isEmpty()) {
                     final SoundEvent soundEvent = Registries.SOUND_EVENT.get(soundId);
-                    world.playSoundAtBlockCenter(pos, soundEvent, SoundCategory.NEUTRAL, 1.0F, 1.0F, false);
+                    world.playSoundAtBlockCenterClient(pos, soundEvent, SoundCategory.NEUTRAL, 1.0F, 1.0F, false);
                 }
             }
         });

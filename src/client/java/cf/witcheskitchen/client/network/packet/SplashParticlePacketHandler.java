@@ -25,7 +25,7 @@ public class SplashParticlePacketHandler implements S2CPacketRegistryListener<Sp
             final ClientWorld world = context.client().world;
             if (world != null) {
                 for (int j = 0; j < i; j++) {
-                    world.addParticle((ParticleEffect) WKParticleTypes.SPLASH, pos.getX() + offsetX, pos.getY() + offsetY, pos.getZ() + offsetZ, r, g, b);
+                    world.addParticleClient((ParticleEffect) WKParticleTypes.SPLASH, pos.getX() + offsetX, pos.getY() + offsetY, pos.getZ() + offsetZ, r, g, b);
                 }
             }
         });

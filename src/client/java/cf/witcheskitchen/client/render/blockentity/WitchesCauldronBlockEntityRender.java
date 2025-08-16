@@ -17,13 +17,14 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 @Environment(EnvType.CLIENT)
 public class WitchesCauldronBlockEntityRender implements BlockEntityRenderer<WitchesCauldronBlockEntity> {
 
     @Override
-    public void render(WitchesCauldronBlockEntity cauldron, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
+    public void render(WitchesCauldronBlockEntity cauldron, float tickProgress, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, Vec3d cameraPos) {
         final FluidStack stack = cauldron.getFluidStack();
         if (cauldron.getWorld() != null && !stack.isEmpty()) {
             final World world = cauldron.getWorld();
@@ -50,11 +51,11 @@ public class WitchesCauldronBlockEntityRender implements BlockEntityRenderer<Wit
                     switch (heatTicks) {
                         case 1, 2, 3, 4 -> {
                             if (world.getTime() % 5 == 0) { // 5 ticks delay
-                                world.addParticle((ParticleEffect) WKParticleTypes.BUBBLE, xPos + offsetX, yPos + depth, zPos + offsetZ, r, g, b);
+                                world.addParticleClient((ParticleEffect) WKParticleTypes.BUBBLE, xPos + offsetX, yPos + depth, zPos + offsetZ, r, g, b);
                             }
                         }
                         case 5 ->
-                                world.addParticle((ParticleEffect) WKParticleTypes.BUBBLE, xPos + offsetX, yPos + depth, zPos + offsetZ, r, g, b);
+                                world.addParticleClient((ParticleEffect) WKParticleTypes.BUBBLE, xPos + offsetX, yPos + depth, zPos + offsetZ, r, g, b);
                     }
                 }
             } else {

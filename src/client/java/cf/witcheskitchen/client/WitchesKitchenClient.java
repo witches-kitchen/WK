@@ -34,13 +34,14 @@ public class WitchesKitchenClient implements ClientModInitializer {
 
         WKBlocks.getBlocks().forEach(entry -> BlockRenderLayerMap.INSTANCE.putBlock(entry.object(), RenderLayer.getCutout()));//TODO eyo what is this, bad code, fix this
 
-        ModelPredicateProviderRegistry.register(WKItems.WAYSTONE, Identifier.of("bound"), ((itemStack, clientWorld, livingEntity, i) -> {
+        // TODO: implement with items JSON
+        /*ModelPredicateProviderRegistry.register(WKItems.WAYSTONE, Identifier.of("bound"), ((itemStack, clientWorld, livingEntity, i) -> {
             if (itemStack.contains(WKComponents.BLOCK_POS)) {
                 return 1.0f;
             } else {
                 return 0.0f;
             }
-        }));
+        }));*/
 
         WKColorProviderRegistry.init();
         WKRendererRegistry.init();

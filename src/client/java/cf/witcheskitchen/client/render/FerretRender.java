@@ -1,11 +1,13 @@
 package cf.witcheskitchen.client.render;
 
 import cf.witcheskitchen.client.model.FerretEntityModel;
+import cf.witcheskitchen.client.render.state.WKRenderState;
 import cf.witcheskitchen.common.entity.tameable.FerretEntity;
-import mod.azure.azurelib.common.api.client.renderer.GeoEntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
+import software.bernie.geckolib.renderer.GeoEntityRenderer;
+import software.bernie.geckolib.renderer.base.GeoRenderState;
 
-public class FerretRender extends GeoEntityRenderer<FerretEntity> {
+public class FerretRender<R extends WKRenderState & GeoRenderState> extends GeoEntityRenderer<FerretEntity, R> {
     public FerretRender(EntityRendererFactory.Context ctx) {
         super(ctx, new FerretEntityModel());
         this.shadowRadius = 0.33f;
