@@ -8,8 +8,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.particle.EntityEffectParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.particle.TintedParticleEffect;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -107,7 +107,7 @@ public class TeapotBlock extends WKBlock implements Waterloggable {
                 double d = (double) (color >> 16 & 0xFF) / 255.0;
                 double e = (double) (color >> 8 & 0xFF) / 255.0;
                 double f = (double) (color >> 0 & 0xFF) / 255.0;
-                world.addParticleClient(EntityEffectParticleEffect.create(ParticleTypes.ENTITY_EFFECT, color), pos.getX() + 0.5 + MathHelper.nextDouble(world.random, -width, width), pos.getY() + 0.25, pos.getZ() + 0.5 + MathHelper.nextDouble(world.random, -width, width), d, e, f);
+                world.addParticleClient(TintedParticleEffect.create(ParticleTypes.ENTITY_EFFECT, color), pos.getX() + 0.5 + MathHelper.nextDouble(world.random, -width, width), pos.getY() + 0.25, pos.getZ() + 0.5 + MathHelper.nextDouble(world.random, -width, width), d, e, f);
             } else if (be.progress > 0) {
                 double d = (double) pos.getX() + 0.5;
                 double e = (double) pos.getY() + 0.5f;

@@ -14,8 +14,8 @@ import cf.witcheskitchen.data.worldgen.WKConfiguredFeatures;
 import net.minecraft.block.*;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.particle.EntityEffectParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.particle.TintedParticleEffect;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
@@ -319,7 +319,7 @@ public interface WKBlocks {
     }
 
     private static Block registerLeaf(String path) {
-        return register(path, new UntintedParticleLeavesBlock(0.0f, EntityEffectParticleEffect.create(ParticleTypes.ENTITY_EFFECT, 16777215), leavesSettings()), true);
+        return register(path, new UntintedParticleLeavesBlock(0.0f, TintedParticleEffect.create(ParticleTypes.ENTITY_EFFECT, 16777215), leavesSettings()), true);
     }
 
     private static Block registerWood(String path, MapColor color) {

@@ -1,9 +1,9 @@
 package cf.witcheskitchen.common.statuseffect;
 
 import cf.witcheskitchen.common.registry.WKStatusEffects;
-import dev.emi.trinkets.api.SlotReference;
+/*import dev.emi.trinkets.api.SlotReference;
 import dev.emi.trinkets.api.TrinketComponent;
-import dev.emi.trinkets.api.TrinketsApi;
+import dev.emi.trinkets.api.TrinketsApi;*/
 import net.minecraft.component.EnchantmentEffectComponentTypes;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -74,7 +74,8 @@ public class DisrobingStatusEffect extends InstantStatusEffect {
                 equippedArmor.decrement(1);
             }
         } else {
-            final Optional<TrinketComponent> component = TrinketsApi.getTrinketComponent(entity);
+            // FIXME: Trinkets isn't updated
+            /*final Optional<TrinketComponent> component = TrinketsApi.getTrinketComponent(entity);
             if (component.isPresent()) {
                 //non empty slots
                 final List<Pair<SlotReference, ItemStack>> trinketInventory = component.get().getAllEquipped();
@@ -95,7 +96,7 @@ public class DisrobingStatusEffect extends InstantStatusEffect {
                         break;
                     }
                 }
-            }
+            }*/
         }
 
         return true;
