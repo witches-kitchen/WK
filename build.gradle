@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.10-SNAPSHOT'
+    id 'fabric-loom' version '1.11-SNAPSHOT'
     id 'maven-publish'
 }
 
@@ -82,12 +82,12 @@ repositories {
     maven {
         url "https://mvn.devos.one/snapshots"
     }
-    maven {
+    /*maven { // errors w/ 500
         url "https://archive.naylahanegan.com/0:/"
-    }    
+    } */
     maven {
         url "https://mcmodarchive.femtopedia.de/"
-    }      
+    }
     exclusiveContent {
         forRepository {
             maven {
@@ -126,16 +126,16 @@ dependencies {
 
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-    modImplementation("com.klikli_dev:modonomicon-${minecraft_version}-fabric:${modonomicon_version}") {
+    /*modImplementation("com.klikli_dev:modonomicon-${minecraft_version}-fabric:${modonomicon_version}") {
         // Exclude JEI transitive dependency, as otherwise, the game will not launch in dev.
         exclude group: "mezz.jei"
-    }
+    }*/ // TODO: not updated
     modImplementation("com.terraformersmc:modmenu:${project.modmenu_version}")
     //modImplementation "com.github.Virtuoel:Pehkui:${pehkui_version}" // not needed on >=1.21.2
     modCompileOnly "squeek.appleskin:appleskin-fabric:${appleskin_version}:api"
-    include modApi("maven.modrinth:impersonate:${impersonate_version}")
+    //include modApi("maven.modrinth:impersonate:${impersonate_version}") // TODO: not updated
     include modApi("maven.modrinth:midnightlib:${midnightlib_version}")
-    modImplementation "dev.emi:trinkets:${trinkets_version}"
+    //modImplementation "dev.emi:trinkets:${trinkets_version}" //TODO: not updated
     modImplementation "org.ladysnake.cardinal-components-api:cardinal-components-base:${project.cca_version}"
     modImplementation "org.ladysnake.cardinal-components-api:cardinal-components-entity:${project.cca_version}"
     modImplementation "org.ladysnake.cardinal-components-api:cardinal-components-world:${project.cca_version}"
@@ -163,7 +163,8 @@ dependencies {
     include modApi("me.lucko:fabric-permissions-api:${fabric_permissions_api_version}")
     //modImplementation "mod.azure.azurelib:azurelib-fabric-${minecraft_version}:${azurelib_version}"
     modImplementation "software.bernie.geckolib:geckolib-fabric-${minecraft_version}:${geckolib_version}"
-    modImplementation "net.tslat.smartbrainlib:SmartBrainLib-fabric-${minecraft_version}:${smartbrainlib_version}"
+    //modImplementation "net.tslat.smartbrainlib:SmartBrainLib-fabric-${minecraft_version}:${smartbrainlib_version}"
+    modImplementation "maven.modrinth:smartbrainlib:${smartbrainlib_version}"
 }
 
 processResources {
