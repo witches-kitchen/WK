@@ -30,7 +30,11 @@ import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.property.Properties;
+import net.minecraft.storage.NbtWriteView;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.text.Text;
+import net.minecraft.util.ErrorReporter;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
@@ -153,33 +157,31 @@ public class WitchesOvenBlockEntity extends WKBlockEntityWithInventory implement
     }
 
     @Override
-    public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
-        super.readNbt(nbt, lookup);
+    public void readData(ReadView data) {
+        super.readData(data);
         // Load Inventories
         this.passiveInventory.clear();
-        Inventories.readNbt(nbt.getCompound("PassiveInventory").orElseThrow(), this.getStacksOnTop(), lookup);
-        this.burnTime = nbt.getShort("BurnTime").orElseThrow();
-        this.activeProgress = nbt.getShort("Progress").orElseThrow();
-        if (nbt.contains("PassiveProgress")) {
-            System.arraycopy(nbt.getIntArray("PassiveProgress").orElseThrow(), 0, this.passiveProgress, 0, Math.min(this.maxProgress, 4));
+        Inventories.readData(data.getReadView("PassiveInventory"), this.getStacksOnTop());
+        this.burnTime = data.getShort("BurnTime", (short) 0);
+        this.activeProgress = data.getShort("Progress", (short) 0);
+        if (data.getOptionalIntArray("PassiveProgress").isPresent()) {
+            System.arraycopy(data.getOptionalIntArray("PassiveProgress").orElseThrow(), 0, this.passiveProgress, 0, Math.min(this.maxProgress, 4));
         }
-        this.maxProgress = nbt.getShort("MaxProgress").orElseThrow();
+        this.maxProgress = data.getShort("MaxProgress", (short) 0);
         this.maxBurnTime = this.getItemBurnTime(this.world, this.getStack(this.fuel));
-        this.experience = nbt.getFloat("Experience").orElseThrow();
+        this.experience = data.getFloat("Experience", 0f);
     }
 
     @Override
-    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
-        super.writeNbt(nbt, lookup);
+    protected void writeData(WriteView data) {
+        super.writeData(data);
         // Save Inventories
-        var inventoryNbt = new NbtCompound();
-        Inventories.writeNbt(inventoryNbt, this.getStacksOnTop(), lookup);
-        nbt.put("PassiveInventory", inventoryNbt);
-        nbt.putShort("BurnTime", (short) this.burnTime);
-        nbt.putShort("Progress", (short) this.activeProgress);
-        nbt.putIntArray("PassiveProgress", this.passiveProgress);
-        nbt.putShort("MaxProgress", (short) this.maxProgress);
-        nbt.putFloat("Experience", this.experience);
+        Inventories.writeData(data.get("PassiveInventory"), this.getStacksOnTop());
+        data.putShort("BurnTime", (short) this.burnTime);
+        data.putShort("Progress", (short) this.activeProgress);
+        data.putIntArray("PassiveProgress", this.passiveProgress);
+        data.putShort("MaxProgress", (short) this.maxProgress);
+        data.putFloat("Experience", this.experience);
     }
 
     public boolean isBurning() {
@@ -525,9 +527,9 @@ public class WitchesOvenBlockEntity extends WKBlockEntityWithInventory implement
     // with the client
     @Override
     public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup lookup) {
-        final NbtCompound data = new NbtCompound();
-        writeNbt(data, lookup);
-        return data;
+        final NbtWriteView data = NbtWriteView.create(ErrorReporter.EMPTY, lookup);
+        writeData(data);
+        return data.getNbt();
     }
 
     // From NamedScreenHandlerFactory

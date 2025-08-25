@@ -8,6 +8,8 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.util.math.BlockPos;
 
 public class WKBlockEntityWithInventory extends WKBlockEntity implements Inventory {
@@ -20,15 +22,15 @@ public class WKBlockEntityWithInventory extends WKBlockEntity implements Invento
     }
 
     @Override
-    protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        super.readNbt(nbt, registryLookup);
-        this.manager.readNbt(nbt, registryLookup);
+    protected void readData(ReadView data) {
+        super.readData(data);
+        this.manager.readData(data);
     }
 
     @Override
-    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        super.writeNbt(nbt, registryLookup);
-        this.manager.writeNbt(nbt, registryLookup);
+    protected void writeData(WriteView data) {
+        super.writeData(data);
+        this.manager.writeData(data);
     }
 
     @Override

@@ -10,6 +10,7 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.storage.ReadView;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -21,9 +22,9 @@ public class WKBlockEntity extends BlockEntity implements BlockEntityTicker<WKBl
     }
 
     @Override
-    protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+    protected void readData(ReadView view) {
         needsSync = true;
-        super.readNbt(nbt, registryLookup);
+        super.readData(view);
     }
 
     public void sync(World world, BlockPos pos) {

@@ -7,6 +7,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.util.Identifier;
 import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
 import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
@@ -60,17 +62,16 @@ public class WKCurseComponent implements ServerTickingComponent, AutoSyncedCompo
     }
 
     @Override
-    public void readFromNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        NbtList cursesList = nbt.getList("Curses").orElseThrow();
-        for (int i = 0; i < cursesList.size(); i++) {
-            NbtCompound curseCompound = cursesList.getCompound(i).orElseThrow();
-            addCurse(WKRegistries.CURSES.get(Identifier.tryParse(curseCompound.getString("Curse").orElseThrow())), curseCompound.getInt("Duration").orElseThrow());
+    public void readData(ReadView data) {
+        ReadView.ListReadView cursesList = data.getListReadView("Curses");
+        for (ReadView curseView : cursesList) {
+            addCurse(WKRegistries.CURSES.get(Identifier.tryParse(curseView.getOptionalString("Curse").orElseThrow())), curseView.getOptionalInt("Duration").orElseThrow());
         }
     }
 
     @Override
-    public void writeToNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        nbt.put("Curses", toNbtCurse());
+    public void writeData(WriteView data) {
+        writeCurse(data.getList("Curses"));
     }
 
     public Set<CursePair> getCurses() {
@@ -81,14 +82,11 @@ public class WKCurseComponent implements ServerTickingComponent, AutoSyncedCompo
         return getCurses().stream().anyMatch(c -> c.getCurse() == curse);
     }
 
-    public NbtList toNbtCurse() {
-        NbtList cursesList = new NbtList();
+    public void writeCurse(WriteView.ListView cursesList) {
         for (CursePair cursePair : getCurses()) {
-            NbtCompound curseCompound = new NbtCompound();
-            curseCompound.putString("Curse", WKRegistries.CURSES.getId(cursePair.getCurse()).toString());
-            curseCompound.putInt("Duration", cursePair.getDuration());
-            cursesList.add(curseCompound);
+            WriteView curseView = cursesList.add();
+            curseView.putString("Curse", WKRegistries.CURSES.getId(cursePair.getCurse()).toString());
+            curseView.putInt("Duration", cursePair.getDuration());
         }
-        return cursesList;
     }
 }

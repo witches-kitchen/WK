@@ -2,6 +2,8 @@ package cf.witcheskitchen.api.fluid;
 
 
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.util.math.Direction;
 import org.jetbrains.annotations.NotNull;
 
@@ -96,19 +98,17 @@ public interface IFluidStorage {
     /**
      * Writes the internal content of this tank {@link FluidStack} to a {@link NbtCompound}.
      * <br>
-     * Must be written from {@link net.minecraft.block.entity.BlockEntity#writeNbt(NbtCompound)}.
-     *
-     * @return {@link NbtCompound} that contains the data of the {@link FluidStack} of the tank
+     * Must be written from {@link net.minecraft.block.entity.BlockEntity#writeData(WriteView)}.
      */
-    NbtCompound writeStorage();
+    void writeStorage(@NotNull WriteView data);
 
     /**
      * Reads the internal content of this tank.
      * <br>
-     * Must be read from {@link net.minecraft.block.entity.BlockEntity#readNbt(NbtCompound)}
+     * Must be read from {@link net.minecraft.block.entity.BlockEntity#readData(net.minecraft.storage.ReadView)}
      *
      * @param data {@link NbtCompound}
      */
-    void readStorage(@NotNull NbtCompound data);
+    void readStorage(@NotNull ReadView data);
 
 }

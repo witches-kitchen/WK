@@ -27,6 +27,8 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -126,15 +128,15 @@ public class FerretEntity extends WKTameableEntity implements GeoEntity, SmartBr
     }
 
     @Override
-    public void writeCustomDataToNbt(NbtCompound nbt) {
-        super.writeCustomDataToNbt(nbt);
-        nbt.putBoolean("Sleep", this.isSleeping());
+    public void writeCustomData(WriteView data) {
+        super.writeCustomData(data);
+        data.putBoolean("Sleep", this.isSleeping());
     }
 
     @Override
-    public void readCustomDataFromNbt(NbtCompound nbt) {
-        super.readCustomDataFromNbt(nbt);
-        this.setSleeping(nbt.getBoolean("Sleep").orElseThrow());
+    public void readCustomData(ReadView data) {
+        super.readCustomData(data);
+        this.setSleeping(data.getBoolean("Sleep", false));
     }
 
 

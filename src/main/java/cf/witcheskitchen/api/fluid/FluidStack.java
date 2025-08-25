@@ -12,6 +12,8 @@ import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -128,6 +130,20 @@ public final class FluidStack implements Comparable<FluidStack> {
     }
 
     /**
+     * Deserializes a fluid stack from a data view.
+     *
+     * @see <a href="#nbt-operations">Fluid Stack NBT Operations</a>
+     */
+    @NotNull
+    public static FluidStack fromData(ReadView data) {
+        if (data == null) {
+            return FluidStack.EMPTY;
+        }
+        // FIXME: this mismatches the NBT operations.
+        return data.read("FluidStack", CODEC).orElse(FluidStack.EMPTY);
+    }
+
+    /**
      * Writes the serialized fluid stack into the given {@link NbtCompound}.
      *
      * @param nbt the NBT compound to write to
@@ -137,6 +153,17 @@ public final class FluidStack implements Comparable<FluidStack> {
     public NbtCompound writeToNbt(NbtCompound nbt) {
         CODEC.encode(this, NbtOps.INSTANCE, nbt);
         return nbt;
+    }
+
+    /**
+     * Writes the serialized fluid stack into the given {@link WriteView}.
+     *
+     * @param data the view to write to
+     * @see <a href="#nbt-operations">Fluid Stack NBT Operations</a>
+     */
+    public void writeToData(WriteView data) {
+        // FIXME: this mismatches the NBT operations.
+        data.put("FluidStack", CODEC, this);
     }
 
     /**

@@ -3,6 +3,7 @@ package cf.witcheskitchen.api.client.screen;
 
 import cf.witcheskitchen.WitchesKitchen;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.text.Text;
@@ -63,10 +64,10 @@ public final class ScreenBuilder {
 
     public void drawContainer(final DrawContext context, final int left, final int top, final int width, final int height) {
         // spriteId, textureWidth, textureHeight, u, v, x, y, width, height
-        context.drawGuiTexture(RenderLayer::getGuiTextured, GUI_CONTAINER, 150, 150, 0, 0, left, top, width / 2, height / 2);
-        context.drawGuiTexture(RenderLayer::getGuiTextured, GUI_CONTAINER, 150, 150, 150 - width / 2, 0, left + width / 2, top, width / 2, height / 2);
-        context.drawGuiTexture(RenderLayer::getGuiTextured, GUI_CONTAINER, 150, 150, 0, 150 - height / 2, left, top + height / 2, width / 2, height / 2);
-        context.drawGuiTexture(RenderLayer::getGuiTextured, GUI_CONTAINER, 150, 150, 150 - width / 2, 150 - height / 2, left + width / 2, top + height / 2, width / 2, height / 2);
+        context.drawGuiTexture(RenderPipelines.GUI_TEXTURED, GUI_CONTAINER, 150, 150, 0, 0, left, top, width / 2, height / 2);
+        context.drawGuiTexture(RenderPipelines.GUI_TEXTURED, GUI_CONTAINER, 150, 150, 150 - width / 2, 0, left + width / 2, top, width / 2, height / 2);
+        context.drawGuiTexture(RenderPipelines.GUI_TEXTURED, GUI_CONTAINER, 150, 150, 0, 150 - height / 2, left, top + height / 2, width / 2, height / 2);
+        context.drawGuiTexture(RenderPipelines.GUI_TEXTURED, GUI_CONTAINER, 150, 150, 150 - width / 2, 150 - height / 2, left + width / 2, top + height / 2, width / 2, height / 2);
     }
 
     /**
@@ -82,12 +83,12 @@ public final class ScreenBuilder {
         posY += 83;
         for (int x = 0; x < 3; x++) {
             for (int y = 0; y < 9; y++) {
-                context.drawGuiTexture(RenderLayer::getGuiTextured, GUI_SLOT, posX + y * 18, posY + x * 18, 18, 18);
+                context.drawGuiTexture(RenderPipelines.GUI_TEXTURED, GUI_SLOT, posX + y * 18, posY + x * 18, 18, 18);
             }
         }
         final int offsetY = 58;
         for (int x = 0; x < 9; x++) {
-            context.drawGuiTexture(RenderLayer::getGuiTextured, GUI_SLOT, posX + x * 18, posY + offsetY, 18, 18);
+            context.drawGuiTexture(RenderPipelines.GUI_TEXTURED, GUI_SLOT, posX + x * 18, posY + offsetY, 18, 18);
         }
     }
 
@@ -99,7 +100,7 @@ public final class ScreenBuilder {
      * @param posY    background posY
      */
     public void drawSlot(final DrawContext context, final int posX, final int posY) {
-        context.drawGuiTexture(RenderLayer::getGuiTextured, GUI_SLOT, posX, posY, 18, 18);
+        context.drawGuiTexture(RenderPipelines.GUI_TEXTURED, GUI_SLOT, posX, posY, 18, 18);
     }
 
     /**
@@ -110,7 +111,7 @@ public final class ScreenBuilder {
      * @param posY    background posY
      */
     public void drawOutputSlot(final DrawContext context, final int posX, final int posY) {
-        context.drawGuiTexture(RenderLayer::getGuiTextured, GUI_OUTPUT_SLOT, posX, posY, 26, 26);
+        context.drawGuiTexture(RenderPipelines.GUI_TEXTURED, GUI_OUTPUT_SLOT, posX, posY, 26, 26);
     }
 
     /**
@@ -123,10 +124,10 @@ public final class ScreenBuilder {
      * @param maxProgress max progress
      */
     public void drawSmeltingProgress(DrawContext context, int posX, int posY, int progress, int maxProgress) {
-        context.drawGuiTexture(RenderLayer::getGuiTextured, GUI_SMELTING_PROGRESS, posX, posY, 22, 15);
+        context.drawGuiTexture(RenderPipelines.GUI_TEXTURED, GUI_SMELTING_PROGRESS, posX, posY, 22, 15);
         int i = (int) ((double) progress / (double) maxProgress * 23);
         i = Math.max(i, 0);
-        context.drawGuiTexture(RenderLayer::getGuiTextured, GUI_SMELTING_PROGRESS_FILLED, posX, posY, i, 16);
+        context.drawGuiTexture(RenderPipelines.GUI_TEXTURED, GUI_SMELTING_PROGRESS_FILLED, posX, posY, i, 16);
     }
 
     /**
@@ -140,12 +141,12 @@ public final class ScreenBuilder {
      * @param maxProgress max burning progress (depends on the stack fuel)
      */
     public void drawBurningProgress(DrawContext context, int posX, int posY, boolean burning, int progress, int maxProgress) {
-        context.drawGuiTexture(RenderLayer::getGuiTextured, GUI_BURNING_PROGRESS, posX, posY, 13, 13);
+        context.drawGuiTexture(RenderPipelines.GUI_TEXTURED, GUI_BURNING_PROGRESS, posX, posY, 13, 13);
         int i = 12 - (int) ((double) progress / (double) maxProgress * 13); // 12 down to zero
         i = Math.max(i, 0);
         if (burning) {
             // FIXME: this might be broken?
-            context.drawGuiTexture(RenderLayer::getGuiTextured, GUI_BURNING_PROGRESS_FILLED, posX, posY, 14, 14 - i);
+            context.drawGuiTexture(RenderPipelines.GUI_TEXTURED, GUI_BURNING_PROGRESS_FILLED, posX, posY, 14, 14 - i);
         }
     }
 
@@ -162,11 +163,11 @@ public final class ScreenBuilder {
      * @param brewing     whether the device is brewing
      */
     public void drawBrewingProgress(DrawContext context, int posX, int posY, int mouseX, int mouseY, int progress, int maxProgress, boolean brewing) {
-        context.drawGuiTexture(RenderLayer::getGuiTextured, GUI_BREWING_PROGRESS, posX, posY, 27, 27);
+        context.drawGuiTexture(RenderPipelines.GUI_TEXTURED, GUI_BREWING_PROGRESS, posX, posY, 27, 27);
         int i = 26 - (int) ((double) progress / (double) maxProgress * 27); // 26 down to zero
         if (brewing) {
             // FIXME: this might be broken?
-            context.drawGuiTexture(RenderLayer::getGuiTextured, GUI_BREWING_PROGRESS_FILLED, posX, posY, 11, 28 - i);
+            context.drawGuiTexture(RenderPipelines.GUI_TEXTURED, GUI_BREWING_PROGRESS_FILLED, posX, posY, 11, 28 - i);
             ScreenBuilder.drawPercentageTooltip(this.parent, context, posX, posY, 11, 28, mouseX, mouseY, progress, maxProgress);
         }
     }

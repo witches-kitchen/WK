@@ -24,6 +24,8 @@ import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.LocalDifficulty;
@@ -153,15 +155,15 @@ public class CuSithEntity extends WKHostileEntity implements GeoEntity {
     }
 
     @Override
-    public void writeCustomDataToNbt(NbtCompound nbt) {
-        super.writeCustomDataToNbt(nbt);
-        nbt.putInt("Variant", this.getVariant());
+    public void writeCustomData(WriteView data) {
+        super.writeCustomData(data);
+        data.putInt("Variant", this.getVariant());
     }
 
     @Override
-    public void readCustomDataFromNbt(NbtCompound tag) {
-        super.readCustomDataFromNbt(tag);
-        this.setVariant(tag.getInt("Variant").orElseThrow());
+    public void readCustomData(ReadView data) {
+        super.readCustomData(data);
+        this.setVariant(data.getInt("Variant", 0));
     }
 
     public int getVariant() {

@@ -6,6 +6,8 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.util.math.Direction;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -167,26 +169,24 @@ public class FluidTank implements IFluidStorage {
 
     /**
      * Reads the content of this tank.
-     * Must be read from {@link net.minecraft.block.entity.BlockEntity#readNbt(NbtCompound)}
+     * Must be read from {@link net.minecraft.block.entity.BlockEntity#readData(ReadView)}
      *
      * @param data {@link NbtCompound}
      */
     @Override
-    public void readStorage(@NotNull NbtCompound data) {
-        this.stack = FluidStack.fromNbt(data);
+    public void readStorage(@NotNull ReadView data) {
+        this.stack = FluidStack.fromData(data);
     }
 
     /**
      * Writes the content of this tank.
-     * Must be written from {@link net.minecraft.block.entity.BlockEntity#writeNbt(NbtCompound)}
+     * Must be written from {@link net.minecraft.block.entity.BlockEntity#writeData(net.minecraft.storage.WriteView)}
      *
      * @return {@link NbtCompound} that contains the data of the {@link FluidStack} of the tank
      */
     @Override
-    public NbtCompound writeStorage() {
-        final NbtCompound data = new NbtCompound();
-        this.stack.writeToNbt(data);
-        return data;
+    public void writeStorage(@NotNull WriteView data) {
+        this.stack.writeToData(data);
     }
 
     /**

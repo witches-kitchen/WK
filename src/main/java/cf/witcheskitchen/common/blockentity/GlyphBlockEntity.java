@@ -23,6 +23,8 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -163,16 +165,16 @@ public class GlyphBlockEntity extends WKBlockEntityWithInventory {
     }
 
     @Override
-    protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        super.readNbt(nbt, registryLookup);
-        progress = nbt.getInt("Progress").orElseThrow();
-        ritual = WKRegistries.RITUAL.get(Identifier.tryParse(nbt.getString("Ritual").orElseThrow()));
+    protected void readData(ReadView data) {
+        super.readData(data);
+        progress = data.getInt("Progress", 0);
+        ritual = WKRegistries.RITUAL.get(Identifier.tryParse(data.getOptionalString("Ritual").orElseThrow()));
     }
 
     @Override
-    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        super.writeNbt(nbt, registryLookup);
-        nbt.putInt("Progress", progress);
-        nbt.putString("Ritual", ritual.toString());
+    protected void writeData(WriteView data) {
+        super.writeData(data);
+        data.putInt("Progress", progress);
+        data.putString("Ritual", ritual.toString());
     }
 }

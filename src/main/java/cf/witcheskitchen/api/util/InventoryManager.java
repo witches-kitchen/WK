@@ -7,6 +7,8 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.Vec3d;
 
@@ -63,11 +65,11 @@ public class InventoryManager<T extends BlockEntity> implements Inventory {
      * when you load a {@link net.minecraft.world.World}
      * or you open the container.
      *
-     * @param data {@link NbtCompound} from your {@link BlockEntity} readNbt().
+     * @param data {@link ReadView} from your {@link BlockEntity} readData().
      */
-    public void readNbt(NbtCompound data, RegistryWrapper.WrapperLookup registryLookup) {
+    public void readData(ReadView data) {
         this.clear();
-        Inventories.readNbt(data, this.inventory, registryLookup);
+        Inventories.readData(data, this.inventory);
     }
 
     /**
@@ -75,10 +77,10 @@ public class InventoryManager<T extends BlockEntity> implements Inventory {
      * This is typically invoked when you exit a {@link net.minecraft.world.World}
      * or the {@link Inventory} changes.
      *
-     * @param data {@link NbtCompound} from your {@link BlockEntity} writeNbt().
+     * @param data {@link NbtCompound} from your {@link BlockEntity} writeData().
      */
-    public void writeNbt(NbtCompound data, RegistryWrapper.WrapperLookup registryLookup) {
-        Inventories.writeNbt(data, this.inventory, registryLookup);
+    public void writeData(WriteView data) {
+        Inventories.writeData(data, this.inventory);
     }
 
     /**

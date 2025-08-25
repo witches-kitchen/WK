@@ -32,6 +32,11 @@ import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.storage.NbtReadView;
+import net.minecraft.storage.NbtWriteView;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
+import net.minecraft.util.ErrorReporter;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.ColorHelper;
@@ -192,21 +197,21 @@ public class WitchesCauldronBlockEntity extends WKBlockEntityWithInventory imple
     // TODO: write to NBT or to components?
     //       or some to components and some to NBT?
     @Override
-    protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        super.readNbt(nbt, registryLookup);
-        this.tank.readStorage(nbt.getCompound("Tank").orElseThrow());
-        this.ticksHeated = nbt.getInt("TicksHeated").orElseThrow();
-        this.color = nbt.getInt("Color").orElseThrow();
-        this.powered = nbt.getBoolean("Powered").orElseThrow();
+    protected void readData(ReadView data) {
+        super.readData(data);
+        this.tank.readStorage(data.getReadView("Tank"));
+        this.ticksHeated = data.getInt("TicksHeated", 0);
+        this.color = data.getInt("Color", 0);
+        this.powered = data.getBoolean("Powered", false);
     }
 
     @Override
-    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        super.writeNbt(nbt, registryLookup);
-        nbt.put("Tank", tank.writeStorage());
-        nbt.putInt("TicksHeated", this.ticksHeated);
-        nbt.putInt("Color", this.color);
-        nbt.putBoolean("Powered", this.powered);
+    protected void writeData(WriteView data) {
+        super.writeData(data);
+        tank.writeStorage(data.get("Tank"));
+        data.putInt("TicksHeated", this.ticksHeated);
+        data.putInt("Color", this.color);
+        data.putBoolean("Powered", this.powered);
     }
 
     @Override
@@ -215,7 +220,8 @@ public class WitchesCauldronBlockEntity extends WKBlockEntityWithInventory imple
 
         var cauldronData = components.get(WKComponents.WITCHES_CAULDRON);
         if (cauldronData != null) {
-            this.tank.readStorage(cauldronData.tankData());
+            ReadView view = NbtReadView.create(ErrorReporter.EMPTY, this.getWorld().getRegistryManager(), cauldronData.tankData());
+            this.tank.readStorage(view);
             this.ticksHeated = cauldronData.ticksHeated();
             this.color = cauldronData.color();
             this.powered = cauldronData.powered();
@@ -225,8 +231,10 @@ public class WitchesCauldronBlockEntity extends WKBlockEntityWithInventory imple
     @Override
     protected void addComponents(ComponentMap.Builder componentMapBuilder) {
         super.addComponents(componentMapBuilder);
+        NbtWriteView view = NbtWriteView.create(ErrorReporter.EMPTY, this.getWorld().getRegistryManager());
+        tank.writeStorage(view);
         componentMapBuilder.add(WKComponents.WITCHES_CAULDRON, new WitchesCauldronData(
-                tank.writeStorage(),
+                view.getNbt(),
                 this.ticksHeated,
                 this.color,
                 this.powered
@@ -235,9 +243,9 @@ public class WitchesCauldronBlockEntity extends WKBlockEntityWithInventory imple
 
     @Override
     public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup) {
-        final NbtCompound data = new NbtCompound();
-        writeNbt(data, registryLookup);
-        return data;
+        final NbtWriteView data = NbtWriteView.create(ErrorReporter.EMPTY, registryLookup);
+        writeData(data);
+        return data.getNbt();
     }
 
     @Override

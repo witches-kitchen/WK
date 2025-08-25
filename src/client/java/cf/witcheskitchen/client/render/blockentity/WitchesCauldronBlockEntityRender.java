@@ -31,7 +31,7 @@ public class WitchesCauldronBlockEntityRender implements BlockEntityRenderer<Wit
             matrices.push();
             final float depth = (float) (((cauldron.getPercentFilled() - 1) * (0.4D)) + (0.6D));
             matrices.translate(0, depth, 0);
-            final VertexConsumer buffer = vertexConsumers.getBuffer(RenderLayer.getTranslucent());
+            final VertexConsumer buffer = vertexConsumers.getBuffer(RenderLayer.getTranslucentMovingBlock()); // TODO: this was previously RenderLayer.getTranslucent(), is this correct?
             final int color = cauldron.getColor();
             final float i = 0.12F;
             boolean water = stack.getFluid() != Fluids.LAVA;

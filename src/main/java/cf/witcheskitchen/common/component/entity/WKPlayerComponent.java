@@ -9,6 +9,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
 import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
 
@@ -104,19 +106,19 @@ public class WKPlayerComponent implements AutoSyncedComponent, ServerTickingComp
     }
 
     @Override
-    public void readFromNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup wrapperLookup) {
-        magic = nbt.getInt("Magic").orElseThrow();
-        magicCap = nbt.getInt("MagicCap").orElseThrow();
-        magicConsumed = nbt.getLong("MagicConsumed").orElseThrow();
-        isWitch = nbt.getBoolean("IsWitch").orElseThrow();
+    public void readData(ReadView data) {
+        magic = data.getInt("Magic", 0);
+        magicCap = data.getInt("MagicCap", 0);
+        magicConsumed = data.getLong("MagicConsumed", 0);
+        isWitch = data.getBoolean("IsWitch", false);
     }
 
     @Override
-    public void writeToNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup wrapperLookup) {
-        nbt.putInt("Magic", magic);
-        nbt.putInt("MagicCap", magicCap);
-        nbt.putLong("MagicConsumed", magicConsumed);
-        nbt.putBoolean("IsWitch", isWitch);
+    public void writeData(WriteView data) {
+        data.putInt("Magic", magic);
+        data.putInt("MagicCap", magicCap);
+        data.putLong("MagicConsumed", magicConsumed);
+        data.putBoolean("IsWitch", isWitch);
     }
 
     public void addOrReplaceAttribute(EntityAttributeModifier attributeMod) {

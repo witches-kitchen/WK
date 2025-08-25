@@ -8,6 +8,8 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
@@ -35,17 +37,17 @@ public abstract class WKTameableEntity extends TameableEntity {
     }
 
     @Override
-    public void writeCustomDataToNbt(NbtCompound nbt) {
-        super.writeCustomDataToNbt(nbt);
-        nbt.putByte("Flags", dataTracker.get(POSE_FLAGS));
-        nbt.putInt("Variant", this.getVariant());
+    public void writeCustomData(WriteView data) {
+        super.writeCustomData(data);
+        data.putByte("Flags", dataTracker.get(POSE_FLAGS));
+        data.putInt("Variant", this.getVariant());
     }
 
     @Override
-    public void readCustomDataFromNbt(NbtCompound nbt) {
-        super.readCustomDataFromNbt(nbt);
-        dataTracker.set(POSE_FLAGS, nbt.getByte("Flags").orElseThrow());
-        this.setVariant(nbt.getInt("Variant").orElseThrow());
+    public void readCustomData(ReadView data) {
+        super.readCustomData(data);
+        dataTracker.set(POSE_FLAGS, data.getByte("Flags", (byte) 0));
+        this.setVariant(data.getInt("Variant", 0));
     }
 
     protected void setPoseFlag(int index, boolean value) {

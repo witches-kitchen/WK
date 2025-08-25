@@ -22,6 +22,8 @@ import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.LocalDifficulty;
@@ -117,17 +119,17 @@ public class ChurchGrimEntity extends WKTameableEntity implements GeoEntity, Ang
     }
 
     @Override
-    public void writeCustomDataToNbt(NbtCompound nbt) {
-        super.writeCustomDataToNbt(nbt);
-        nbt.putInt("Variant", this.getVariant());
-        this.writeAngerToNbt(nbt);
+    public void writeCustomData(WriteView data) {
+        super.writeCustomData(data);
+        data.putInt("Variant", this.getVariant());
+        this.writeAngerToData(data);
     }
 
     @Override
-    public void readCustomDataFromNbt(NbtCompound tag) {
-        super.readCustomDataFromNbt(tag);
-        this.setVariant(tag.getInt("Variant").orElseThrow());
-        this.readAngerFromNbt(this.getWorld(), tag);
+    public void readCustomData(ReadView data) {
+        super.readCustomData(data);
+        this.setVariant(data.getInt("Variant", 0));
+        this.readAngerFromData(this.getWorld(), data);
     }
 
     @Override

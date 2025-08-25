@@ -30,7 +30,11 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.storage.NbtWriteView;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.text.Text;
+import net.minecraft.util.ErrorReporter;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
@@ -223,24 +227,22 @@ public class BrewingBarrelBlockEntity extends WKBlockEntityWithInventory impleme
     }
 
     @Override
-    public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
-        super.readNbt(nbt, lookup);
+    public void readData(ReadView data) {
+        super.readData(data);
         this.clientInventoryManager.clear();
-        Inventories.readNbt(nbt.getCompound("ClientInventory").orElseThrow(), this.clientInventoryManager.getStacks(), lookup);
-        this.timer = nbt.getInt("Timer").orElseThrow();
-        this.hasWater = nbt.getBoolean("HasWater").orElseThrow();
-        this.hasFinished = nbt.getBoolean("HasFinished").orElseThrow();
+        Inventories.readData(data.getReadView("ClientInventory"), this.clientInventoryManager.getStacks());
+        this.timer = data.getInt("Timer", 0);
+        this.hasWater = data.getBoolean("HasWater", false);
+        this.hasFinished = data.getBoolean("HasFinished", false);
     }
 
     @Override
-    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
-        super.writeNbt(nbt, lookup);
-        NbtCompound clientData = new NbtCompound();
-        Inventories.writeNbt(clientData, this.clientInventoryManager.getStacks(), lookup);
-        nbt.put("ClientInventory", clientData);
-        nbt.putInt("Timer", this.timer);
-        nbt.putBoolean("HasWater", this.hasWater);
-        nbt.putBoolean("HasFinished", this.hasFinished);
+    protected void writeData(WriteView data) {
+        super.writeData(data);
+        Inventories.writeData(data.get("ClientInventory"), this.clientInventoryManager.getStacks());
+        data.putInt("Timer", this.timer);
+        data.putBoolean("HasWater", this.hasWater);
+        data.putBoolean("HasFinished", this.hasFinished);
     }
 
     @Override
@@ -282,9 +284,9 @@ public class BrewingBarrelBlockEntity extends WKBlockEntityWithInventory impleme
 
     @Override
     public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup) {
-        final NbtCompound data = new NbtCompound();
-        writeNbt(data, registryLookup);
-        return data;
+        final NbtWriteView data = NbtWriteView.create(ErrorReporter.EMPTY, registryLookup);
+        writeData(data);
+        return data.getNbt();
     }
 
     private void playSound(SoundEvent soundEvent) {

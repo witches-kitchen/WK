@@ -14,9 +14,10 @@ import cf.witcheskitchen.common.registry.*;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
+import net.minecraft.client.render.BlockRenderLayer;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.util.Identifier;
 
@@ -32,7 +33,7 @@ public class WitchesKitchenClient implements ClientModInitializer {
         HandledScreens.register(WKScreenHandlerTypes.WITCHES_OVEN, WitchesOvenScreen::new);
         HandledScreens.register(WKScreenHandlerTypes.BREWING_BARREL, BrewingBarrelScreen::new);
 
-        WKBlocks.getBlocks().forEach(entry -> BlockRenderLayerMap.INSTANCE.putBlock(entry.object(), RenderLayer.getCutout()));//TODO eyo what is this, bad code, fix this
+        WKBlocks.getBlocks().forEach(entry -> BlockRenderLayerMap.putBlock(entry.object(), BlockRenderLayer.CUTOUT));//TODO eyo what is this, bad code, fix this
 
         // TODO: implement with items JSON
         /*ModelPredicateProviderRegistry.register(WKItems.WAYSTONE, Identifier.of("bound"), ((itemStack, clientWorld, livingEntity, i) -> {
