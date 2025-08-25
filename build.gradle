@@ -99,6 +99,9 @@ repositories {
             includeGroup('software.bernie.geckolib')
         }
     }
+    maven {
+        url "https://maven.wispforest.io/releases"
+    }
 }
 
 loom {
@@ -135,7 +138,8 @@ dependencies {
     modCompileOnly "squeek.appleskin:appleskin-fabric:${appleskin_version}:api"
     //include modApi("maven.modrinth:impersonate:${impersonate_version}") // TODO: not updated
     include modApi("maven.modrinth:midnightlib:${midnightlib_version}")
-    //modImplementation "dev.emi:trinkets:${trinkets_version}" //TODO: not updated
+    modImplementation "io.wispforest:owo-lib:${owo_version}"
+    modImplementation "io.wispforest:accessories-fabric:${accessories_version}"
     modImplementation "org.ladysnake.cardinal-components-api:cardinal-components-base:${project.cca_version}"
     modImplementation "org.ladysnake.cardinal-components-api:cardinal-components-entity:${project.cca_version}"
     modImplementation "org.ladysnake.cardinal-components-api:cardinal-components-world:${project.cca_version}"

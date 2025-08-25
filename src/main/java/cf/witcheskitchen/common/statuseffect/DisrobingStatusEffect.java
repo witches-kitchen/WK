@@ -1,9 +1,8 @@
 package cf.witcheskitchen.common.statuseffect;
 
 import cf.witcheskitchen.common.registry.WKStatusEffects;
-/*import dev.emi.trinkets.api.SlotReference;
-import dev.emi.trinkets.api.TrinketComponent;
-import dev.emi.trinkets.api.TrinketsApi;*/
+import io.wispforest.accessories.api.AccessoriesCapability;
+import io.wispforest.accessories.api.slot.SlotEntryReference;
 import net.minecraft.component.EnchantmentEffectComponentTypes;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -74,13 +73,12 @@ public class DisrobingStatusEffect extends InstantStatusEffect {
                 equippedArmor.decrement(1);
             }
         } else {
-            // FIXME: Trinkets isn't updated
-            /*final Optional<TrinketComponent> component = TrinketsApi.getTrinketComponent(entity);
-            if (component.isPresent()) {
+            AccessoriesCapability capability = entity.accessoriesCapability();
+            if (capability != null) {
                 //non empty slots
-                final List<Pair<SlotReference, ItemStack>> trinketInventory = component.get().getAllEquipped();
-                final int size = trinketInventory.size();
-                if (trinketInventory.isEmpty()) {
+                final List<SlotEntryReference> accessories = capability.getAllEquipped();
+                final int size = accessories.size();
+                if (accessories.isEmpty()) {
                     return false;//all slots are empty
                     //plus, we can get an exception from random
                 }
@@ -88,15 +86,16 @@ public class DisrobingStatusEffect extends InstantStatusEffect {
                 //else generate a random number 1..= size
                 for (int slotIndex = 0; slotIndex < size; slotIndex++) {
                     if (targetIndex == slotIndex) {
-                        final Pair<SlotReference, ItemStack> slotData = trinketInventory.get(slotIndex);
-                        final int index = slotData.getLeft().index();
-                        final Item itemInSlot = slotData.getRight().getItem();
+                        final SlotEntryReference slotData = accessories.get(slotIndex);
+                        final Item itemInSlot = slotData.stack().getItem();
                         entity.dropItem(world, itemInSlot, 1);
-                        slotData.getLeft().inventory().getStack(index).decrement(1);
+                        ItemStack stack = slotData.stack();
+                        stack.decrement(1);
+                        slotData.reference().setStack(stack);
                         break;
                     }
                 }
-            }*/
+            }
         }
 
         return true;

@@ -51,7 +51,7 @@
     "minecraft": "~${minecraft_version}",
     "java": ">=21",
     "fabric-api": "*",
-    "trinkets": ">=${trinkets_version}",
+    "accessories": ">=${accessories_version}",
     "cardinal-components-base": ">=${cca_version}",
     "cardinal-components-entity": ">=${cca_version}",
     "cardinal-components-world": ">=${cca_version}",
