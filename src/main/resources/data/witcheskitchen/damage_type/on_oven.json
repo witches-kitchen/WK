@@ -1,6 +1,6 @@
 {
-    "exhaustion": 0.1,
-    "message_id": "on_oven",
-    "effects": "burning",
-    "scaling": "never"
+  "exhaustion": 0.1,
+  "message_id": "on_oven",
+  "effects": "burning",
+  "scaling": "never"
 }

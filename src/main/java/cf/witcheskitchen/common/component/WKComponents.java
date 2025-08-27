@@ -55,15 +55,15 @@ public class WKComponents {
     );
 
     public static final ComponentType<RegistryKey<World>> DIMENSION = register("dimension", ComponentType.<RegistryKey<World>>builder()
-        .codec(RegistryKey.createCodec(RegistryKeys.WORLD))
-        .packetCodec(RegistryKey.createPacketCodec(RegistryKeys.WORLD))
-        .build()
+            .codec(RegistryKey.createCodec(RegistryKeys.WORLD))
+            .packetCodec(RegistryKey.createPacketCodec(RegistryKeys.WORLD))
+            .build()
     );
 
     public static final ComponentType<UUID> UUID = register("uuid", ComponentType.<UUID>builder()
-        .codec(Uuids.INT_STREAM_CODEC)
-        .packetCodec(Uuids.PACKET_CODEC)
-        .build()
+            .codec(Uuids.INT_STREAM_CODEC)
+            .packetCodec(Uuids.PACKET_CODEC)
+            .build()
     );
 
     private static <T> ComponentType<T> register(String name, ComponentType<T> component) {

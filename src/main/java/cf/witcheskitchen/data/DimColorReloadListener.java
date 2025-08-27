@@ -15,13 +15,13 @@ import java.util.Set;
 
 public class DimColorReloadListener extends JsonDataLoader<Pair<String, Integer>> {
     public static final Codec<Pair<String, Integer>> CODEC = Codec.pair(Codec.STRING,
-        Codec.withAlternative(Codec.INT, Codec.STRING.comapFlatMap(s -> {
-            try {
-                return DataResult.success(Integer.decode(s));
-            } catch (NumberFormatException e) {
-                return DataResult.error(e::getMessage);
-            }
-        }, Object::toString)));
+            Codec.withAlternative(Codec.INT, Codec.STRING.comapFlatMap(s -> {
+                try {
+                    return DataResult.success(Integer.decode(s));
+                } catch (NumberFormatException e) {
+                    return DataResult.error(e::getMessage);
+                }
+            }, Object::toString)));
     public static final Set<Pair<String, Integer>> COLOR_DATA = new HashSet<>();
 
     public DimColorReloadListener() {

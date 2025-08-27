@@ -19,6 +19,8 @@ import java.util.List;
 public interface WKScreenHandlerTypes {
 
     List<ObjectDefinition<ScreenHandlerType<?>>> SCREEN_HANDLER_TYPES = new ArrayList<>();
+    ScreenHandlerType<WitchesOvenScreenHandler> WITCHES_OVEN = register("witches_oven", WitchesOvenScreenHandler::new);
+    ScreenHandlerType<BrewingBarrelScreenHandler> BREWING_BARREL = register("brewing_barrel", BrewingBarrelScreenHandler::new);
 
     static <T extends ScreenHandler> ScreenHandlerType<T> register(final String name, final ScreenHandlerType.Factory<T> factory) {
         Validate.isTrue(factory != null);
@@ -35,11 +37,6 @@ public interface WKScreenHandlerTypes {
     static void init() {
         SCREEN_HANDLER_TYPES.forEach(entry -> Registry.register(Registries.SCREEN_HANDLER, entry.id(), entry.object()));
     }
-
-    ScreenHandlerType<WitchesOvenScreenHandler> WITCHES_OVEN = register("witches_oven", WitchesOvenScreenHandler::new);
-
-
-    ScreenHandlerType<BrewingBarrelScreenHandler> BREWING_BARREL = register("brewing_barrel", BrewingBarrelScreenHandler::new);
 
 
 }

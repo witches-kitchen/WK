@@ -28,6 +28,6 @@ public class CuSithEyeLayer<T extends GeoAnimatable, R extends WKRenderState & G
         RenderLayer layer = getRenderType(renderState);
         getRenderer().reRender(renderState, poseStack, bakedModel, bufferSource, layer,
                 bufferSource.getBuffer(layer), 15728640, OverlayTexture.DEFAULT_UV,
-            ColorHelper.getArgb(255, 255, 255, 255));
+                ColorHelper.getArgb(255, 255, 255, 255));
     }
 }

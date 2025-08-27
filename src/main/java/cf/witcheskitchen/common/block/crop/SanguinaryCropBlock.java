@@ -19,8 +19,8 @@ import java.util.Optional;
 
 public class SanguinaryCropBlock extends WKCropBlock implements CropVariants {
     public static final int MAX_AGE = 4;
-    private final SanguinaryTypes type;
     private static final IntProperty AGE = IntProperty.of("age", 0, MAX_AGE);
+    private final SanguinaryTypes type;
 
     public SanguinaryCropBlock(Settings settings) {
         this(settings, SanguinaryTypes.COMMON);
