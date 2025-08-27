@@ -16,7 +16,6 @@ import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.passive.WolfSoundVariants;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.world.ServerWorld;

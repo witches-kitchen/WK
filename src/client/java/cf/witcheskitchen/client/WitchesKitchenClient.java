@@ -9,8 +9,10 @@ import cf.witcheskitchen.client.registry.WKClientEventsRegistry;
 import cf.witcheskitchen.client.registry.WKClientPacketTypes;
 import cf.witcheskitchen.client.registry.WKColorProviderRegistry;
 import cf.witcheskitchen.client.registry.WKRendererRegistry;
-import cf.witcheskitchen.common.component.WKComponents;
-import cf.witcheskitchen.common.registry.*;
+import cf.witcheskitchen.common.registry.WKBlocks;
+import cf.witcheskitchen.common.registry.WKEventsRegistry;
+import cf.witcheskitchen.common.registry.WKParticleTypes;
+import cf.witcheskitchen.common.registry.WKScreenHandlerTypes;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -18,8 +20,6 @@ import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.render.BlockRenderLayer;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
 public class WitchesKitchenClient implements ClientModInitializer {

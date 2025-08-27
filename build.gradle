@@ -1,8 +1,8 @@
 plugins {
-    id 'java'
     id 'fabric-loom' version '1.11-SNAPSHOT'
     id 'maven-publish'
-    id 'xyz.wagyourtail.unimined'
+    id("java")
+    //TODO: FIX id 'xyz.wagyourtail.unimined' version '1.4.1'
 }
 
 version = project.mod_version
@@ -14,10 +14,7 @@ base {
 
 repositories {
     mavenCentral()
-    unimined.neoForgedMaven()
-    unimined.spongeMaven()
-    unimined.wagYourMaven("releases")
-    unimined.modrinthMaven()
+    mavenLocal()
     maven {
         url "https://dl.cloudsmith.io/public/klikli-dev/mods/maven/"
         content {
@@ -30,6 +27,9 @@ repositories {
             includeGroup "lol.bai"
             includeGroup "mcp.mobius.waila"
         }
+    }
+    maven {
+        url "https://cursemaven.com"
     }
     maven {
         url = "https://www.curseforge.com/api/maven/"
@@ -56,27 +56,6 @@ repositories {
         url = "https://maven.blamejared.com/"
     }
     maven {
-        url = "https://modmaven.dev"
-    }
-    maven {
-        url "https://api.modrinth.com/maven"
-    }
-    maven {
-        url = 'https://oss.sonatype.org/content/repositories/snapshots'
-    }
-    maven {
-        url = 'https://maven.ladysnake.org/releases'
-    }
-    maven {
-        url "https://jitpack.io"
-    }
-    maven {
-        url "https://maven.terraformersmc.com/releases"
-    }
-    maven {
-        url "https://cursemaven.com"
-    }
-    maven {
         url = "https://maven.neoforged.net/releases"
     }
     maven {
@@ -97,10 +76,37 @@ repositories {
         }
     }
     maven {
+        url = "https://modmaven.dev"
+    }
+    maven {
+        url "https://api.modrinth.com/maven"
+    }
+    maven {
+        url = 'https://oss.sonatype.org/content/repositories/snapshots'
+    }
+    maven {
+        url = 'https://maven.ladysnake.org/releases'
+    }
+    maven {
+        url "https://jitpack.io"
+    }
+    maven {
+        url "https://maven.terraformersmc.com/releases"
+    }
+    maven {
+        url "https://uncomfortable-fey-midnight145-884fba2b.koyeb.app"
+        content {
+            includeGroup "curse.fetch"
+        }
+    }
+    maven {
         url "https://oss.sonatype.org/content/repositories/snapshots"
     }
     maven {
         url "https://maven.jamieswhiteshirt.com/libs-release"
+    }
+    maven {
+        url "https://beta.cursemaven.com"
     }
     maven {
         url "https://maven.architectury.dev/"
@@ -109,8 +115,8 @@ repositories {
         url "https://mvn.devos.one/snapshots"
     }
     /*maven { // errors w/ 500
-        url "https://archive.naylahanegan.com/0:/"
-    } */
+url "https://archive.naylahanegan.com/0:/"
+} */
     maven {
         url "https://mcmodarchive.femtopedia.de/"
     }
@@ -147,8 +153,6 @@ fabricApi {
     configureDataGeneration()
 }
 
-apply plugin: 'com.wynprice.cursemaven'
-
 dependencies {
     // To change the versions see the gradle.properties file
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
@@ -158,9 +162,9 @@ dependencies {
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
     /*modImplementation("com.klikli_dev:modonomicon-${minecraft_version}-fabric:${modonomicon_version}") {
-        // Exclude JEI transitive dependency, as otherwise, the game will not launch in dev.
-        exclude group: "mezz.jei"
-    }*/ // TODO: not updated
+// Exclude JEI transitive dependency, as otherwise, the game will not launch in dev.
+exclude group: "mezz.jei"
+}*/ // TODO: not updated
     modImplementation("com.terraformersmc:modmenu:${project.modmenu_version}")
     //modImplementation "com.github.Virtuoel:Pehkui:${pehkui_version}" // not needed on >=1.21.2
     modCompileOnly "squeek.appleskin:appleskin-fabric:${appleskin_version}:api"
@@ -197,7 +201,6 @@ dependencies {
     modImplementation "software.bernie.geckolib:geckolib-fabric-${minecraft_version}:${geckolib_version}"
     //modImplementation "net.tslat.smartbrainlib:SmartBrainLib-fabric-${minecraft_version}:${smartbrainlib_version}"
     modImplementation "maven.modrinth:smartbrainlib:${smartbrainlib_version}"
-    classpath 'com.wynprice.cursemaven:CurseMaven:2.1.5'
 }
 
 processResources {

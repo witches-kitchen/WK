@@ -4,10 +4,8 @@ import cf.witcheskitchen.WitchesKitchen;
 import cf.witcheskitchen.api.event.network.MagicSparkleParticleEvent;
 import cf.witcheskitchen.client.event.WKClientEventsHandler;
 import cf.witcheskitchen.client.render.blockentity.WitchesCauldronBlockEntityRender;
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements;
-import net.minecraft.client.MinecraftClient;
 
 public interface WKClientEventsRegistry {
     static void init() {

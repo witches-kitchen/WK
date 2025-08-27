@@ -14,11 +14,9 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.Pair;
 import net.minecraft.util.math.random.Random;
 
 import java.util.List;
-import java.util.Optional;
 
 public class DisrobingStatusEffect extends InstantStatusEffect {
 
