@@ -7,15 +7,18 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.recipe.*;
-import net.minecraft.recipe.book.RecipeBookCategory;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.world.World;
-
+import net.minecraft.core.HolderLookup;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.PlacementInfo;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeBookCategory;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.Level;
 import java.util.List;
 
 public class CauldronBrewingRecipe implements Recipe<MultipleStackRecipeInput> {
@@ -31,17 +34,17 @@ public class CauldronBrewingRecipe implements Recipe<MultipleStackRecipeInput> {
     }
 
     @Override
-    public boolean isIgnoredInRecipeBook() {
+    public boolean isSpecial() {
         return true;
     }
 
     @Override
-    public boolean matches(MultipleStackRecipeInput inventory, World world) {
+    public boolean matches(MultipleStackRecipeInput inventory, Level world) {
         return RecipeUtils.matches(inventory, this.ingredients, 0, inventory.size());
     }
 
     @Override
-    public ItemStack craft(MultipleStackRecipeInput input, RegistryWrapper.WrapperLookup lookup) {
+    public ItemStack assemble(MultipleStackRecipeInput input, HolderLookup.Provider lookup) {
         return this.result.copy();
     }
 
@@ -68,12 +71,12 @@ public class CauldronBrewingRecipe implements Recipe<MultipleStackRecipeInput> {
     }
 
     @Override
-    public IngredientPlacement getIngredientPlacement() {
-        return IngredientPlacement.forShapeless(this.getInputs());
+    public PlacementInfo placementInfo() {
+        return PlacementInfo.create(this.getInputs());
     }
 
     @Override
-    public RecipeBookCategory getRecipeBookCategory() {
+    public RecipeBookCategory recipeBookCategory() {
         // TODO: use custom recipe book category
         return null;
     }
@@ -107,11 +110,11 @@ public class CauldronBrewingRecipe implements Recipe<MultipleStackRecipeInput> {
         }
 
         @Override
-        public PacketCodec<RegistryByteBuf, CauldronBrewingRecipe> packetCodec() {
-            return PacketCodec.tuple(
+        public StreamCodec<RegistryFriendlyByteBuf, CauldronBrewingRecipe> streamCodec() {
+            return StreamCodec.composite(
                     CustomPacketCodecs.INGREDIENT_LIST, CauldronBrewingRecipe::getInputs,
-                    ItemStack.PACKET_CODEC, CauldronBrewingRecipe::getResult,
-                    PacketCodecs.VAR_INT, CauldronBrewingRecipe::getColor,
+                    ItemStack.STREAM_CODEC, CauldronBrewingRecipe::getResult,
+                    ByteBufCodecs.VAR_INT, CauldronBrewingRecipe::getColor,
                     CauldronBrewingRecipe::new
             );
         }

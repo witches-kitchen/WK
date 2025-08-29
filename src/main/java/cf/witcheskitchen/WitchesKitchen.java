@@ -32,8 +32,8 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
-import net.minecraft.resource.ResourceType;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.PackType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,8 +42,8 @@ public class WitchesKitchen implements ModInitializer {
     public static final String MODID = "witcheskitchen";
     public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
 
-    public static Identifier id(String name) {
-        return Identifier.of(MODID, name);
+    public static ResourceLocation id(String name) {
+        return ResourceLocation.fromNamespaceAndPath(MODID, name);
     }
 
     @Override
@@ -69,14 +69,14 @@ public class WitchesKitchen implements ModInitializer {
         WKEntityTypes.init();
         WKMemoryModuleTypes.init();
         WKSensorTypes.init();
-        ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new DimColorResourceReloader());
+        ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(new DimColorResourceReloader());
 
     }
 
     public static class DimColorResourceReloader extends DimColorReloadListener implements IdentifiableResourceReloadListener {
         @Override
-        public Identifier getFabricId() {
-            return Identifier.of(MODID, "dimension_color");
+        public ResourceLocation getFabricId() {
+            return ResourceLocation.fromNamespaceAndPath(MODID, "dimension_color");
         }
     }
 }

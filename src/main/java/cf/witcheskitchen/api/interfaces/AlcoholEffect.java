@@ -1,8 +1,8 @@
 package cf.witcheskitchen.api.interfaces;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 public interface AlcoholEffect {
 
@@ -15,7 +15,7 @@ public interface AlcoholEffect {
         return 200;
     }
 
-    void onDrink(World world, ItemStack wine, LivingEntity entity);
+    void onDrink(Level world, ItemStack wine, LivingEntity entity);
 
-    void onFinished(World world, ItemStack wine, LivingEntity entity);
+    void onFinished(Level world, ItemStack wine, LivingEntity entity);
 }

@@ -5,10 +5,10 @@ import cf.witcheskitchen.api.util.CodecUtils;
 import cf.witcheskitchen.common.registry.WKBlocks;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 
 public class RitualCircle {
     public static final Codec<RitualCircle> CODEC = RecordCodecBuilder.create(instance ->
@@ -23,7 +23,7 @@ public class RitualCircle {
                     .apply(instance, RitualCircle::new)
     );
 
-    public static final PacketCodec<PacketByteBuf, RitualCircle> PACKET_CODEC = PacketCodec.tuple(
+    public static final StreamCodec<FriendlyByteBuf, RitualCircle> PACKET_CODEC = StreamCodec.composite(
             CustomPacketCodecs.createEnumCodec(Size::valueOf), RitualCircle::getSize,
             CustomPacketCodecs.createEnumCodec(Type::valueOf), RitualCircle::getType,
             RitualCircle::new

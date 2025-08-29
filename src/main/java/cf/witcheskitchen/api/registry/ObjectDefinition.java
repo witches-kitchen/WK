@@ -1,15 +1,15 @@
 package cf.witcheskitchen.api.registry;
 
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.ResourceLocation;
 
 
 /**
  * Utility for registering objects.
  *
- * @param id     {@link Identifier} .
+ * @param id     {@link ResourceLocation} .
  * @param object Object to register.
  * @param <T>    Object.
  */
-public record ObjectDefinition<T>(Identifier id, T object) {
+public record ObjectDefinition<T>(ResourceLocation id, T object) {
 
 }

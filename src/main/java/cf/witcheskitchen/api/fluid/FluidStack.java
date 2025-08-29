@@ -3,17 +3,17 @@ package cf.witcheskitchen.api.fluid;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -24,7 +24,7 @@ import org.jetbrains.annotations.Nullable;
  *
  * <h3>NBT serialization</h3>
  * <p>
- * An Item Stack can be serialized with {@link #writeToNbt(NbtCompound)}, and deserialized with {@link #fromNbt(NbtCompound)}.
+ * An Item Stack can be serialized with {@link #writeToNbt(CompoundTag)}, and deserialized with {@link #fromNbt(CompoundTag)}.
  * <div class="fabric">
  * <table border=1>
  * <caption>Serialized NBT Structure</caption>
@@ -32,42 +32,42 @@ import org.jetbrains.annotations.Nullable;
  *   <th>Key</th><th>Type</th><th>Purpose</th>
  * </tr>
  * <tr>
- *   <td>{@code Fluid}</td><td>{@link net.minecraft.nbt.NbtString}</td><td>The identifier for the internal fluid.</td>
+ *   <td>{@code Fluid}</td><td>{@link net.minecraft.nbt.StringTag}</td><td>The identifier for the internal fluid.</td>
  * </tr>
  * <tr>
- *   <td>{@code Amount}</td><td>{@link net.minecraft.nbt.NbtInt}</td><td>The amount of fluids (in MilliBuckets) in the stack.</td>
+ *   <td>{@code Amount}</td><td>{@link net.minecraft.nbt.IntTag}</td><td>The amount of fluids (in MilliBuckets) in the stack.</td>
  * </tr>
  * <tr>
- *   <td>{@code tag}</td><td>{@link NbtCompound}</td><td>The fluid stack internal nbt data.</td>
+ *   <td>{@code tag}</td><td>{@link CompoundTag}</td><td>The fluid stack internal nbt data.</td>
  * </tr>
  * </table>
  * </div>
  * <h3>Custom NBT</h3>
  * <p>
- * The fluid stack {@link NbtCompound} may be used to store extra information,
+ * The fluid stack {@link CompoundTag} may be used to store extra information,
  * such as the type of fluid it contains, the amount, etc
  * <p>
  */
 public final class FluidStack implements Comparable<FluidStack> {
     public static final Codec<FluidStack> CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
-                            Registries.FLUID.getCodec()
+                            BuiltInRegistries.FLUID.byNameCodec()
                                     .fieldOf("fluid")
                                     .forGetter(FluidStack::getFluid),
                             Codec.INT
                                     .fieldOf("amount")
                                     .forGetter(FluidStack::getAmount),
-                            NbtCompound.CODEC
+                            CompoundTag.CODEC
                                     .optionalFieldOf("data", null)
                                     .forGetter(FluidStack::getNbt)
                     )
                     .apply(instance, FluidStack::new)
     );
 
-    public static final PacketCodec<RegistryByteBuf, FluidStack> PACKET_CODEC = PacketCodec.tuple(
-            PacketCodecs.registryValue(RegistryKeys.FLUID), FluidStack::getFluid,
-            PacketCodecs.VAR_INT, FluidStack::getAmount,
-            PacketCodecs.NBT_COMPOUND, FluidStack::getNbt,
+    public static final StreamCodec<RegistryFriendlyByteBuf, FluidStack> PACKET_CODEC = StreamCodec.composite(
+            ByteBufCodecs.registry(Registries.FLUID), FluidStack::getFluid,
+            ByteBufCodecs.VAR_INT, FluidStack::getAmount,
+            ByteBufCodecs.COMPOUND_TAG, FluidStack::getNbt,
             FluidStack::new
     );
 
@@ -96,7 +96,7 @@ public final class FluidStack implements Comparable<FluidStack> {
      * Stored at the key {@code tag} in the serialized fluid stack NBT.
      */
     @Nullable
-    private NbtCompound data;
+    private CompoundTag data;
 
     // Default constructor
     public FluidStack(Fluid fluid, int amount) {
@@ -105,7 +105,7 @@ public final class FluidStack implements Comparable<FluidStack> {
         updateEmptyState();
     }
 
-    private FluidStack(Fluid fluid, int amount, NbtCompound nbt) {
+    private FluidStack(Fluid fluid, int amount, CompoundTag nbt) {
         this(fluid, amount);
         if (nbt != null) {
             this.data = nbt.copy();
@@ -122,7 +122,7 @@ public final class FluidStack implements Comparable<FluidStack> {
      * @see <a href="#nbt-operations">Fluid Stack NBT Operations</a>
      */
     @NotNull
-    public static FluidStack fromNbt(NbtCompound nbt) {
+    public static FluidStack fromNbt(CompoundTag nbt) {
         if (nbt == null) {
             return FluidStack.EMPTY;
         }
@@ -135,7 +135,7 @@ public final class FluidStack implements Comparable<FluidStack> {
      * @see <a href="#nbt-operations">Fluid Stack NBT Operations</a>
      */
     @NotNull
-    public static FluidStack fromData(ReadView data) {
+    public static FluidStack fromData(ValueInput data) {
         if (data == null) {
             return FluidStack.EMPTY;
         }
@@ -144,26 +144,26 @@ public final class FluidStack implements Comparable<FluidStack> {
     }
 
     /**
-     * Writes the serialized fluid stack into the given {@link NbtCompound}.
+     * Writes the serialized fluid stack into the given {@link CompoundTag}.
      *
      * @param nbt the NBT compound to write to
      * @return the written NBT compound
      * @see <a href="#nbt-operations">Fluid Stack NBT Operations</a>
      */
-    public NbtCompound writeToNbt(NbtCompound nbt) {
+    public CompoundTag writeToNbt(CompoundTag nbt) {
         CODEC.encode(this, NbtOps.INSTANCE, nbt);
         return nbt;
     }
 
     /**
-     * Writes the serialized fluid stack into the given {@link WriteView}.
+     * Writes the serialized fluid stack into the given {@link ValueOutput}.
      *
      * @param data the view to write to
      * @see <a href="#nbt-operations">Fluid Stack NBT Operations</a>
      */
-    public void writeToData(WriteView data) {
+    public void writeToData(ValueOutput data) {
         // FIXME: this mismatches the NBT operations.
-        data.put("FluidStack", CODEC, this);
+        data.store("FluidStack", CODEC, this);
     }
 
     /**
@@ -188,7 +188,7 @@ public final class FluidStack implements Comparable<FluidStack> {
     }
 
     /**
-     * @return whether the given fluid stacks have equivalent custom {@link NbtCompound}
+     * @return whether the given fluid stacks have equivalent custom {@link CompoundTag}
      */
     public boolean isTagEqualTo(FluidStack other) {
         if (this.data == null && other.data == null) {
@@ -247,7 +247,7 @@ public final class FluidStack implements Comparable<FluidStack> {
      * @return the custom NBT of this fluid stack, which may be <b>null</b>.
      * @see <a href="#nbt-operations">Item Stack NBT Operations</a>
      */
-    public NbtCompound getNbt() {
+    public CompoundTag getNbt() {
         return this.data;
     }
 
@@ -257,7 +257,7 @@ public final class FluidStack implements Comparable<FluidStack> {
      * @param data the custom NBT compound, may be {@code null} to reset
      * @see <a href="#nbt-operations">Fluid Stack NBT Operations</a>
      */
-    public void setNbt(NbtCompound data) {
+    public void setNbt(CompoundTag data) {
         this.data = data;
     }
 

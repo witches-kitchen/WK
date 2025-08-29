@@ -1,8 +1,8 @@
 package cf.witcheskitchen.api.event.network;
 
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.packet.CustomPayload;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 
-public interface PacketRegistryListener<T extends CustomPayload> {
-    CustomPayload.Type<RegistryByteBuf, T> type();
+public interface PacketRegistryListener<T extends CustomPacketPayload> {
+    CustomPacketPayload.TypeAndCodec<RegistryFriendlyByteBuf, T> type();
 }

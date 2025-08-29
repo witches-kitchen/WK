@@ -4,32 +4,53 @@ import cf.witcheskitchen.api.entity.WKHostileEntity;
 import cf.witcheskitchen.common.entity.tameable.FerretEntity;
 import cf.witcheskitchen.common.registry.WKSoundEvents;
 import cf.witcheskitchen.common.registry.WKStatusEffects;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.damage.DamageTypes;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.mob.*;
-import net.minecraft.entity.passive.*;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.registry.tag.DamageTypeTags;
-import net.minecraft.registry.tag.EntityTypeTags;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.LocalDifficulty;
-import net.minecraft.world.ServerWorldAccess;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.tags.EntityTypeTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.util.Mth;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.InteractGoal;
+import net.minecraft.world.entity.ai.goal.LeapAtTargetGoal;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.animal.AbstractGolem;
+import net.minecraft.world.entity.animal.Cow;
+import net.minecraft.world.entity.animal.goat.Goat;
+import net.minecraft.world.entity.animal.sheep.Sheep;
+import net.minecraft.world.entity.monster.AbstractIllager;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.Witch;
+import net.minecraft.world.entity.monster.piglin.Piglin;
+import net.minecraft.world.entity.monster.piglin.PiglinBrute;
+import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
@@ -50,57 +71,57 @@ public class CuSithEntity extends WKHostileEntity implements GeoEntity {
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
 
-    public CuSithEntity(EntityType<? extends HostileEntity> entityType, World world) {
+    public CuSithEntity(EntityType<? extends Monster> entityType, Level world) {
         super(entityType, world);
     }
 
-    public static DefaultAttributeContainer.Builder createAttributes() {
-        return LivingEntity.createLivingAttributes().add(EntityAttributes.FOLLOW_RANGE, 25.0D)
-                .add(EntityAttributes.MOVEMENT_SPEED, 0.45D)
-                .add(EntityAttributes.MAX_HEALTH, 20).add(EntityAttributes.ARMOR, 2.0D)
-                .add(EntityAttributes.ATTACK_DAMAGE, 4.0D).add(EntityAttributes.ATTACK_KNOCKBACK, 0.35D);
+    public static AttributeSupplier.Builder createAttributes() {
+        return LivingEntity.createLivingAttributes().add(Attributes.FOLLOW_RANGE, 25.0D)
+                .add(Attributes.MOVEMENT_SPEED, 0.45D)
+                .add(Attributes.MAX_HEALTH, 20).add(Attributes.ARMOR, 2.0D)
+                .add(Attributes.ATTACK_DAMAGE, 4.0D).add(Attributes.ATTACK_KNOCKBACK, 0.35D);
     }
 
     @Override
-    public boolean shouldRender(double distance) {
+    public boolean shouldRenderAtSqrDistance(double distance) {
         return true;
     }
 
     @Override
-    public boolean handleFallDamage(double fallDistance, float damageMultiplier, DamageSource damageSource) {
+    public boolean causeFallDamage(double fallDistance, float damageMultiplier, DamageSource damageSource) {
         return false;
     }
 
     @Override
-    protected void initGoals() {
-        super.initGoals();
-        this.goalSelector.add(0, new SwimGoal(this)); //need to make this the ability to walk on the body of water's floor.
-        this.goalSelector.add(2, new LookAtEntityGoal(this, PlayerEntity.class, 6.0f));
-        this.goalSelector.add(2, new LookAtEntityGoal(this, VillagerEntity.class, 6.0f));
-        this.goalSelector.add(2, new LookAtEntityGoal(this, GolemEntity.class, 6.0f));
-        this.goalSelector.add(2, new LookAtEntityGoal(this, IllagerEntity.class, 6.0f));
-        this.goalSelector.add(2, new LookAtEntityGoal(this, WitchEntity.class, 6.0f));
-        this.goalSelector.add(2, new LookAtEntityGoal(this, CowEntity.class, 6.0f));
-        this.goalSelector.add(2, new LookAtEntityGoal(this, PiglinEntity.class, 6.0f));
-        this.goalSelector.add(2, new LookAtEntityGoal(this, PiglinBruteEntity.class, 6.0f));
-        this.goalSelector.add(2, new LookAtEntityGoal(this, SheepEntity.class, 6.0f));
-        this.goalSelector.add(2, new LookAtEntityGoal(this, GoatEntity.class, 6.0f));
-        this.goalSelector.add(1, new PounceAtTargetGoal(this, 0.4f));
-        this.goalSelector.add(2, new MeleeAttackGoal(this, 1, true));
-        this.goalSelector.add(4, new StopAndLookAtEntityGoal(this, MobEntity.class, 2.0f, 0.8f));
-        this.goalSelector.add(6, new WanderAroundFarGoal(this, 0.8D, 1));
-        this.targetSelector.add(3, new ActiveTargetGoal<>(this, PlayerEntity.class, false));
-        this.targetSelector.add(3, new ActiveTargetGoal<>(this, VillagerEntity.class, false));
-        this.targetSelector.add(3, new ActiveTargetGoal<>(this, GolemEntity.class, false));
-        this.targetSelector.add(3, new ActiveTargetGoal<>(this, WitchEntity.class, false));
-        this.targetSelector.add(3, new ActiveTargetGoal<>(this, CowEntity.class, false));
-        this.targetSelector.add(3, new ActiveTargetGoal<>(this, PiglinEntity.class, false));
-        this.targetSelector.add(3, new ActiveTargetGoal<>(this, PiglinBruteEntity.class, false));
-        this.targetSelector.add(3, new ActiveTargetGoal<>(this, SheepEntity.class, false));
-        this.targetSelector.add(3, new ActiveTargetGoal<>(this, GoatEntity.class, false));
-        this.targetSelector.add(3, new ActiveTargetGoal<>(this, FerretEntity.class, false));
-        this.targetSelector.add(3, new ActiveTargetGoal<>(this, LivingEntity.class, 10, false, false, (entity, world) -> entity.getType().isIn(EntityTypeTags.ILLAGER)));
-        this.targetSelector.add(0, new RevengeGoal(this).setGroupRevenge());
+    protected void registerGoals() {
+        super.registerGoals();
+        this.goalSelector.addGoal(0, new FloatGoal(this)); //need to make this the ability to walk on the body of water's floor.
+        this.goalSelector.addGoal(2, new LookAtPlayerGoal(this, Player.class, 6.0f));
+        this.goalSelector.addGoal(2, new LookAtPlayerGoal(this, Villager.class, 6.0f));
+        this.goalSelector.addGoal(2, new LookAtPlayerGoal(this, AbstractGolem.class, 6.0f));
+        this.goalSelector.addGoal(2, new LookAtPlayerGoal(this, AbstractIllager.class, 6.0f));
+        this.goalSelector.addGoal(2, new LookAtPlayerGoal(this, Witch.class, 6.0f));
+        this.goalSelector.addGoal(2, new LookAtPlayerGoal(this, Cow.class, 6.0f));
+        this.goalSelector.addGoal(2, new LookAtPlayerGoal(this, Piglin.class, 6.0f));
+        this.goalSelector.addGoal(2, new LookAtPlayerGoal(this, PiglinBrute.class, 6.0f));
+        this.goalSelector.addGoal(2, new LookAtPlayerGoal(this, Sheep.class, 6.0f));
+        this.goalSelector.addGoal(2, new LookAtPlayerGoal(this, Goat.class, 6.0f));
+        this.goalSelector.addGoal(1, new LeapAtTargetGoal(this, 0.4f));
+        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1, true));
+        this.goalSelector.addGoal(4, new InteractGoal(this, Mob.class, 2.0f, 0.8f));
+        this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 0.8D, 1));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, false));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Villager.class, false));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractGolem.class, false));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Witch.class, false));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Cow.class, false));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Piglin.class, false));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, PiglinBrute.class, false));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Sheep.class, false));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Goat.class, false));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, FerretEntity.class, false));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 10, false, false, (entity, world) -> entity.getType().is(EntityTypeTags.ILLAGER)));
+        this.targetSelector.addGoal(0, new HurtByTargetGoal(this).setAlertOthers());
     }
 
     @Override
@@ -111,19 +132,19 @@ public class CuSithEntity extends WKHostileEntity implements GeoEntity {
     @Override
     public void tick() {
         super.tick();
-        if (!getWorld().isClient && !hasCustomName() && getWorld().isDay() && !getWorld().isRaining() && !getWorld().isThundering() && getWorld().isSkyVisibleAllowingSea(getBlockPos())) {
+        if (!level().isClientSide && !hasCustomName() && level().isBrightOutside() && !level().isRaining() && !level().isThundering() && level().canSeeSkyFromBelowWater(blockPosition())) {
             remove(Entity.RemovalReason.KILLED);
         }
     }
 
     @Override
-    public boolean tryAttack(ServerWorld world, Entity target) {
-        boolean flag = super.tryAttack(world, target);
+    public boolean doHurtTarget(ServerLevel world, Entity target) {
+        boolean flag = super.doHurtTarget(world, target);
         Random rand = new Random();
         int i = rand.nextInt(100);
         if (i <= 33) {
             if (target instanceof LivingEntity) {
-                ((LivingEntity) target).addStatusEffect(new StatusEffectInstance(WKStatusEffects.HORROR, 1000));
+                ((LivingEntity) target).addEffect(new MobEffectInstance(WKStatusEffects.HORROR, 1000));
                 this.playSound(WKSoundEvents.CUSITH_HOWL_EVENT, 0.8F, 0.7F);
             }
         }
@@ -131,46 +152,46 @@ public class CuSithEntity extends WKHostileEntity implements GeoEntity {
     }
 
     @Override
-    public void onStruckByLightning(ServerWorld world, LightningEntity lightning) {
-        this.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 4000, 1, true, true), this);
-        this.addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 4000, 1, true, true), this);
-        this.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 4000, 1, true, true), this);
-        this.addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 250, 1, true, true), this);
+    public void thunderHit(ServerLevel world, LightningBolt lightning) {
+        this.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 4000, 1, true, true), this);
+        this.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 4000, 1, true, true), this);
+        this.addEffect(new MobEffectInstance(MobEffects.STRENGTH, 4000, 1, true, true), this);
+        this.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 250, 1, true, true), this);
     }
 
     @Override
-    protected void swimUpward(TagKey<Fluid> fluid) {
-        super.swimUpward(fluid);
+    protected void jumpInLiquid(TagKey<Fluid> fluid) {
+        super.jumpInLiquid(fluid);
     }
 
     @Nullable
     @Override
-    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, EntitySpawnReason spawnReason, @Nullable SpawnGroupData entityData) {
         SplittableRandom random = new SplittableRandom();
         int var = random.nextInt(0, 8);
         this.setVariant(var);
-        this.dataTracker.set(VARIANT, random.nextInt(EYE_VARIANTS));
-        return super.initialize(world, difficulty, spawnReason, entityData);
+        this.entityData.set(VARIANT, random.nextInt(EYE_VARIANTS));
+        return super.finalizeSpawn(world, difficulty, spawnReason, entityData);
     }
 
     @Override
-    public void writeCustomData(WriteView data) {
-        super.writeCustomData(data);
+    public void addAdditionalSaveData(ValueOutput data) {
+        super.addAdditionalSaveData(data);
         data.putInt("Variant", this.getVariant());
     }
 
     @Override
-    public void readCustomData(ReadView data) {
-        super.readCustomData(data);
-        this.setVariant(data.getInt("Variant", 0));
+    public void readAdditionalSaveData(ValueInput data) {
+        super.readAdditionalSaveData(data);
+        this.setVariant(data.getIntOr("Variant", 0));
     }
 
     public int getVariant() {
-        return MathHelper.clamp(this.dataTracker.get(VARIANT), 1, 8);
+        return Mth.clamp(this.entityData.get(VARIANT), 1, 8);
     }
 
     public void setVariant(int variant) {
-        this.dataTracker.set(VARIANT, variant);
+        this.entityData.set(VARIANT, variant);
     }
 
     @Override
@@ -190,19 +211,19 @@ public class CuSithEntity extends WKHostileEntity implements GeoEntity {
 
     @Override
     protected void playStepSound(BlockPos pos, BlockState state) {
-        this.playSound(SoundEvents.ENTITY_WOLF_STEP, 0.5F, 0.7F);
+        this.playSound(SoundEvents.WOLF_STEP, 0.5F, 0.7F);
     }
 
     @Override
-    public boolean damage(ServerWorld world, DamageSource source, float amount) {
-        if (source.isOf(DamageTypes.FALLING_BLOCK) || source.isIn(DamageTypeTags.IS_FIRE) || source.isIn(DamageTypeTags.IS_FALL)) {
+    public boolean hurtServer(ServerLevel world, DamageSource source, float amount) {
+        if (source.is(DamageTypes.FALLING_BLOCK) || source.is(DamageTypeTags.IS_FIRE) || source.is(DamageTypeTags.IS_FALL)) {
             return false;
         }
-        return super.damage(world, source, amount);
+        return super.hurtServer(world, source, amount);
     }
 
     @Override
-    public boolean isFireImmune() {
+    public boolean fireImmune() {
         return true;
     }
 

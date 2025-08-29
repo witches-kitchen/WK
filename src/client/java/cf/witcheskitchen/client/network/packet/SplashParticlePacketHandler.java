@@ -4,11 +4,11 @@ import cf.witcheskitchen.api.event.network.S2CPacketRegistryListener;
 import cf.witcheskitchen.common.network.packet.SplashParticlePacket;
 import cf.witcheskitchen.common.registry.WKParticleTypes;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.packet.CustomPayload;
-import net.minecraft.particle.ParticleEffect;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 
 public class SplashParticlePacketHandler implements S2CPacketRegistryListener<SplashParticlePacket> {
     @Override
@@ -22,17 +22,17 @@ public class SplashParticlePacketHandler implements S2CPacketRegistryListener<Sp
         final double offsetZ = payload.offset().z;
         final byte i = payload.amount();
         context.client().execute(() -> {
-            final ClientWorld world = context.client().world;
+            final ClientLevel world = context.client().level;
             if (world != null) {
                 for (int j = 0; j < i; j++) {
-                    world.addParticleClient((ParticleEffect) WKParticleTypes.SPLASH, pos.getX() + offsetX, pos.getY() + offsetY, pos.getZ() + offsetZ, r, g, b);
+                    world.addParticle((ParticleOptions) WKParticleTypes.SPLASH, pos.getX() + offsetX, pos.getY() + offsetY, pos.getZ() + offsetZ, r, g, b);
                 }
             }
         });
     }
 
     @Override
-    public CustomPayload.Type<RegistryByteBuf, SplashParticlePacket> type() {
+    public CustomPacketPayload.TypeAndCodec<RegistryFriendlyByteBuf, SplashParticlePacket> type() {
         return SplashParticlePacket.TYPE;
     }
 }

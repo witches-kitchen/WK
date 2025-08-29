@@ -1,13 +1,13 @@
 package cf.witcheskitchen.api.block;
 
 import cf.witcheskitchen.api.block.entity.WKBlockEntity;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockEntityProvider;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityTicker;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
 
@@ -19,20 +19,20 @@ import org.jetbrains.annotations.Nullable;
  * It simply creates a ticking context, Nothing else.
  * </p>
  */
-public abstract class WKBlockWithEntity extends Block implements BlockEntityProvider {
+public abstract class WKBlockWithEntity extends Block implements EntityBlock {
 
-    public WKBlockWithEntity(Settings settings) {
+    public WKBlockWithEntity(Properties settings) {
         super(settings);
     }
 
     @Nullable
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
         return (tickerWorld, pos, tickerState, blockEntity) -> {
             if (world != null) {
                 if (blockEntity instanceof WKBlockEntity ticker) {
                     ticker.tick(tickerWorld, pos, tickerState, ticker);
-                    if (world.isClient()) {
+                    if (world.isClientSide()) {
                         ticker.onClientTick(world, pos, state, ticker);
                     } else {
                         ticker.onServerTick(world, pos, state, ticker);

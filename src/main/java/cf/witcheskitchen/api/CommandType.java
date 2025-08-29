@@ -2,9 +2,9 @@ package cf.witcheskitchen.api;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 
 public class CommandType {
     public static Codec<CommandType> CODEC = RecordCodecBuilder.create(instance ->
@@ -19,9 +19,9 @@ public class CommandType {
                     .apply(instance, CommandType::new)
     );
 
-    public static PacketCodec<PacketByteBuf, CommandType> PACKET_CODEC = PacketCodec.tuple(
-            PacketCodecs.STRING, CommandType::getCommand,
-            PacketCodecs.STRING, CommandType::getType,
+    public static StreamCodec<FriendlyByteBuf, CommandType> PACKET_CODEC = StreamCodec.composite(
+            ByteBufCodecs.STRING_UTF8, CommandType::getCommand,
+            ByteBufCodecs.STRING_UTF8, CommandType::getType,
             CommandType::new
     );
 

@@ -2,61 +2,60 @@ package cf.witcheskitchen.common.item;
 
 import cf.witcheskitchen.common.block.GlyphBlock;
 import cf.witcheskitchen.common.registry.WKBlocks;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.component.type.TooltipDisplayComponent;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUsageContext;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.registry.Registries;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.text.Style;
-import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
-
 import java.util.function.Consumer;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class ChalkItem extends Item {
     private final GlyphBlock glyphType;
 
-    public ChalkItem(Settings settings, Block block) {
+    public ChalkItem(Properties settings, Block block) {
         super(settings);
         this.glyphType = (GlyphBlock) block;
     }
 
     @Override
-    public ActionResult useOnBlock(ItemUsageContext context) {
-        World world = context.getWorld();
-        BlockPos pos = context.getBlockPos();
-        ItemPlacementContext placementContext = new ItemPlacementContext(context);
-        BlockState state = glyphType.getPlacementState(placementContext);
-        if (!world.getBlockState(pos).canReplace(placementContext)) {
-            pos = pos.offset(context.getSide());
+    public InteractionResult useOn(UseOnContext context) {
+        Level world = context.getLevel();
+        BlockPos pos = context.getClickedPos();
+        BlockPlaceContext placementContext = new BlockPlaceContext(context);
+        BlockState state = glyphType.getStateForPlacement(placementContext);
+        if (!world.getBlockState(pos).canBeReplaced(placementContext)) {
+            pos = pos.relative(context.getClickedFace());
         }
-        if (!world.getBlockState(pos).canReplace(placementContext)) {
-            return ActionResult.PASS;
+        if (!world.getBlockState(pos).canBeReplaced(placementContext)) {
+            return InteractionResult.PASS;
         }
-        if (state != null && state.canPlaceAt(world, pos)) {
-            if (!world.isClient()) {
-                world.playSound(null, pos, state.getSoundGroup().getPlaceSound(), SoundCategory.BLOCKS, 1, MathHelper.nextFloat(world.random, 0.8f, 1.2f));
-                world.setBlockState(pos, state);
+        if (state != null && state.canSurvive(world, pos)) {
+            if (!world.isClientSide()) {
+                world.playSound(null, pos, state.getSoundType().getPlaceSound(), SoundSource.BLOCKS, 1, Mth.nextFloat(world.random, 0.8f, 1.2f));
+                world.setBlockAndUpdate(pos, state);
             }
-            return ActionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
-        return super.useOnBlock(context);
+        return super.useOn(context);
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> textConsumer, TooltipType type) {
+    public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay displayComponent, Consumer<Component> textConsumer, TooltipFlag type) {
         if (glyphType != null) {
-            String name = Registries.BLOCK.getId(glyphType).getPath();
+            String name = BuiltInRegistries.BLOCK.getKey(glyphType).getPath();
             int rgb = glyphType == WKBlocks.ENCHANTED_GLYPH ? 0xD8EAB4 : 0xffffff;
-            textConsumer.accept(Text.translatable("tooltip.witcheskitchen." + name).setStyle(Style.EMPTY.withColor(rgb)));
+            textConsumer.accept(Component.translatable("tooltip.witcheskitchen." + name).setStyle(Style.EMPTY.withColor(rgb)));
         }
     }
 }

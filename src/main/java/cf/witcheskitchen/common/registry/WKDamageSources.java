@@ -1,16 +1,16 @@
 package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WitchesKitchen;
-import net.minecraft.entity.damage.DamageType;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.damagesource.DamageType;
 
 public interface WKDamageSources {
 
-    RegistryKey<DamageType> ON_OVEN = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, WitchesKitchen.id("on_oven"));
-    RegistryKey<DamageType> HOLY = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, WitchesKitchen.id("holy"));
-    RegistryKey<DamageType> HUGGING_BLACKTHORN = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, WitchesKitchen.id("hugging_blackthorn"));
-    RegistryKey<DamageType> PUNCHING_BLACKTHORN = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, WitchesKitchen.id("punching_blackthorn"));
+    ResourceKey<DamageType> ON_OVEN = ResourceKey.create(Registries.DAMAGE_TYPE, WitchesKitchen.id("on_oven"));
+    ResourceKey<DamageType> HOLY = ResourceKey.create(Registries.DAMAGE_TYPE, WitchesKitchen.id("holy"));
+    ResourceKey<DamageType> HUGGING_BLACKTHORN = ResourceKey.create(Registries.DAMAGE_TYPE, WitchesKitchen.id("hugging_blackthorn"));
+    ResourceKey<DamageType> PUNCHING_BLACKTHORN = ResourceKey.create(Registries.DAMAGE_TYPE, WitchesKitchen.id("punching_blackthorn"));
 
     // Used to control in which order static constructors are called
     static void init() {

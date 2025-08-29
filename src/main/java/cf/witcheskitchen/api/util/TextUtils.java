@@ -1,8 +1,8 @@
 package cf.witcheskitchen.api.util;
 
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Style;
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 
 public class TextUtils {
     /**
@@ -14,15 +14,15 @@ public class TextUtils {
      * @param valueColor color fo second string
      * @return Text styled to "first: second"
      */
-    public static Text formattedFromTwoStrings(String first, String second, int nameColor, int valueColor) {
-        final MutableText name = styledText(first, nameColor);
-        final MutableText value = styledText(second, valueColor);
+    public static Component formattedFromTwoStrings(String first, String second, int nameColor, int valueColor) {
+        final MutableComponent name = styledText(first, nameColor);
+        final MutableComponent value = styledText(second, valueColor);
 
-        return name.append(Text.of(": ")).append(value);
+        return name.append(Component.nullToEmpty(": ")).append(value);
     }
 
-    public static MutableText styledText(Object string, int color) {
-        return Text.literal(string.toString()).setStyle(Style.EMPTY.withColor(color));
+    public static MutableComponent styledText(Object string, int color) {
+        return Component.literal(string.toString()).setStyle(Style.EMPTY.withColor(color));
     }
 
     /**

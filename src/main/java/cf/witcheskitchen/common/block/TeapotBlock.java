@@ -2,104 +2,108 @@ package cf.witcheskitchen.common.block;
 
 import cf.witcheskitchen.api.block.WKBlock;
 import cf.witcheskitchen.common.blockentity.TeapotBlockEntity;
-import net.minecraft.block.*;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.particle.TintedParticleEffect;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ItemScatterer;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ColorParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.Containers;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-public class TeapotBlock extends WKBlock implements Waterloggable {
-    public static final EnumProperty<Direction> FACING = HorizontalFacingBlock.FACING;
-    public static final VoxelShape SHAPE = VoxelShapes.union(
-            createCuboidShape(4, 0, 4, 12, 6, 12),
-            createCuboidShape(5, 6, 5, 11, 7, 11)
+public class TeapotBlock extends WKBlock implements SimpleWaterloggedBlock {
+    public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
+    public static final VoxelShape SHAPE = Shapes.or(
+            box(4, 0, 4, 12, 6, 12),
+            box(5, 6, 5, 11, 7, 11)
     );
 
 
-    public TeapotBlock(Settings settings) {
+    public TeapotBlock(Properties settings) {
         super(settings);
-        this.setDefaultState(this.getStateManager().getDefaultState().with(FACING, Direction.NORTH).with(Properties.WATERLOGGED, false));
+        this.registerDefaultState(this.getStateDefinition().any().setValue(FACING, Direction.NORTH).setValue(BlockStateProperties.WATERLOGGED, false));
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         return SHAPE;
     }
 
     @SuppressWarnings("deprecation")
     @Override
     public FluidState getFluidState(BlockState state) {
-        return state.get(Properties.WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
+        return state.getValue(BlockStateProperties.WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
 
     @Override
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return this.getDefaultState().with(FACING, ctx.getPlayerLookDirection().getOpposite()).with(Properties.WATERLOGGED, ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER);
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        return this.defaultBlockState().setValue(FACING, ctx.getNearestLookingDirection().getOpposite()).setValue(BlockStateProperties.WATERLOGGED, ctx.getLevel().getFluidState(ctx.getClickedPos()).getType() == Fluids.WATER);
     }
 
     @Nullable
     @Override
-    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new TeapotBlockEntity(pos, state);
     }
 
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        super.appendProperties(builder);
-        builder.add(FACING, Properties.WATERLOGGED);
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
+        builder.add(FACING, BlockStateProperties.WATERLOGGED);
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
+    public InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
         if (world.getBlockEntity(pos) instanceof TeapotBlockEntity be) {
             be.onUse(world, state, pos, player, hit);
         }
 
-        return super.onUse(state, world, pos, player, hit);
+        return super.useWithoutItem(state, world, pos, player, hit);
     }
 
     @Override
-    protected void onStateReplaced(BlockState state, ServerWorld world, BlockPos pos, boolean moved) {
+    protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel world, BlockPos pos, boolean moved) {
         final BlockEntity entity = world.getBlockEntity(pos);
         if (entity instanceof TeapotBlockEntity teapotEntity) {
             if (teapotEntity.progress < TeapotBlockEntity.UNOBTAINABLE_OUTPUT) {
-                ItemScatterer.spawn(world, pos, teapotEntity);
+                Containers.dropContents(world, pos, teapotEntity);
             }
         }
-        super.onStateReplaced(state, world, pos, moved);
+        super.affectNeighborsAfterRemoval(state, world, pos, moved);
     }
 
     @Override
-    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+    public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource random) {
         if (world.getBlockEntity(pos) instanceof TeapotBlockEntity be) {
-            Direction direction = state.get(FACING).rotateClockwise(Direction.Axis.Y);
+            Direction direction = state.getValue(FACING).getClockWise(Direction.Axis.Y);
             Direction.Axis axis = direction.getAxis();
             double g = 0.52;
             double h = random.nextDouble() * 0.6 - 0.3;
-            double i = axis == Direction.Axis.X ? (double) direction.getOffsetX() * g : h;
+            double i = axis == Direction.Axis.X ? (double) direction.getStepX() * g : h;
             double j = random.nextDouble() * 6.0 / 16.0;
-            double k = axis == Direction.Axis.Z ? (double) direction.getOffsetZ() * g : h;
+            double k = axis == Direction.Axis.Z ? (double) direction.getStepZ() * g : h;
 
             if (be.effect != null) {
                 int color = be.effect.value().getColor();
@@ -107,15 +111,15 @@ public class TeapotBlock extends WKBlock implements Waterloggable {
                 double d = (double) (color >> 16 & 0xFF) / 255.0;
                 double e = (double) (color >> 8 & 0xFF) / 255.0;
                 double f = (double) (color >> 0 & 0xFF) / 255.0;
-                world.addParticleClient(TintedParticleEffect.create(ParticleTypes.ENTITY_EFFECT, color), pos.getX() + 0.5 + MathHelper.nextDouble(world.random, -width, width), pos.getY() + 0.25, pos.getZ() + 0.5 + MathHelper.nextDouble(world.random, -width, width), d, e, f);
+                world.addParticle(ColorParticleOption.create(ParticleTypes.ENTITY_EFFECT, color), pos.getX() + 0.5 + Mth.nextDouble(world.random, -width, width), pos.getY() + 0.25, pos.getZ() + 0.5 + Mth.nextDouble(world.random, -width, width), d, e, f);
             } else if (be.progress > 0) {
                 double d = (double) pos.getX() + 0.5;
                 double e = (double) pos.getY() + 0.5f;
                 double f = (double) pos.getZ() + 0.5;
                 if (random.nextDouble() < 0.2) {
-                    world.playSoundClient(d, e, f, SoundEvents.BLOCK_BUBBLE_COLUMN_BUBBLE_POP, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
+                    world.playLocalSound(d, e, f, SoundEvents.BUBBLE_COLUMN_BUBBLE_POP, SoundSource.BLOCKS, 1.0F, 1.0F, false);
                 }
-                world.addParticleClient(ParticleTypes.SMOKE, d + i, e + j, f + k, 0.0, 0.0, 0.0);
+                world.addParticle(ParticleTypes.SMOKE, d + i, e + j, f + k, 0.0, 0.0, 0.0);
             }
         }
     }

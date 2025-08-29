@@ -2,33 +2,33 @@ package cf.witcheskitchen.api.block.crop;
 
 import cf.witcheskitchen.common.component.WKComponents;
 import cf.witcheskitchen.common.component.item.SeedTypeData;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.CropBlock;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityCollisionHandler;
-import net.minecraft.entity.passive.BeeEntity;
-import net.minecraft.item.ItemConvertible;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.IntProperty;
-import net.minecraft.util.ItemScatterer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
-import net.minecraft.world.WorldView;
-import net.minecraft.world.chunk.WorldChunk;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.Containers;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
+import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.CropBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.chunk.LevelChunk;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 /**
  * <p>
  * A CropBlock represents a {@link Block} that can grow
- * and have different ages, which is represented as an {@link IntProperty}
+ * and have different ages, which is represented as an {@link IntegerProperty}
  * with a certain range of numbers.
  * </p>
  *
@@ -40,7 +40,7 @@ import net.minecraft.world.chunk.WorldChunk;
  *
  * <p>
  * In addition, this class provides abstraction for the age property
- * in order to setup the {@link StateManager.Builder} correctly
+ * in order to setup the {@link StateDefinition.Builder} correctly
  * and some useful methods to determine the growing behaviour.
  * </p>
  *
@@ -63,7 +63,7 @@ import net.minecraft.world.chunk.WorldChunk;
  * }
  * It declares a CropBlock with 2 ages, which means it will only have 2 stages
  * and will only be considered as matured when the {@link BlockState} returns
- * an {@link IntProperty} of age 1.
+ * an {@link IntegerProperty} of age 1.
  * </p>
  *
  * <p>
@@ -72,9 +72,9 @@ import net.minecraft.world.chunk.WorldChunk;
  * </p>
  *
  * <strong>IMPORTANT:</strong>
- * If your {@link IntProperty} property has a maxAge > 7
+ * If your {@link IntegerProperty} property has a maxAge > 7
  * you'll have to add a different {@link VoxelShape} that the one
- * provided by the parent class {@link CropBlock#getOutlineShape(BlockState, BlockView, BlockPos, ShapeContext)},
+ * provided by the parent class {@link CropBlock#getShape(BlockState, BlockGetter, BlockPos, CollisionContext)},
  * this is due the limitation of 7 ages that it has.
  * </p>
  *
@@ -85,7 +85,7 @@ import net.minecraft.world.chunk.WorldChunk;
  */
 public abstract class WKCropBlock extends CropBlock {
 
-    public WKCropBlock(Settings settings) {
+    public WKCropBlock(Properties settings) {
         super(settings);
     }
 
@@ -103,14 +103,14 @@ public abstract class WKCropBlock extends CropBlock {
      * @return IntProperty
      */
     @Override
-    public abstract IntProperty getAgeProperty();
+    public abstract IntegerProperty getAgeProperty();
 
 
     /**
      * Builds the IntProperty.
      */
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(getAgeProperty());
     }
 
@@ -118,12 +118,12 @@ public abstract class WKCropBlock extends CropBlock {
 
     /**
      * This is a filter that determines whether the CropBlock can be placed
-     * above another. By default, you can only place it above a {@link net.minecraft.block.Blocks#FARMLAND},
+     * above another. By default, you can only place it above a {@link net.minecraft.world.level.block.Blocks#FARMLAND},
      * but feel free to override this if needed.
      */
     @Override
-    protected boolean canPlantOnTop(BlockState floor, BlockView world, BlockPos pos) {
-        return super.canPlantOnTop(floor, world, pos);
+    protected boolean mayPlaceOn(BlockState floor, BlockGetter world, BlockPos pos) {
+        return super.mayPlaceOn(floor, world, pos);
     }
 
     /**
@@ -135,15 +135,15 @@ public abstract class WKCropBlock extends CropBlock {
     }
 
     /**
-     * Creates a new crop {@link BlockState} reference, with the {@link IntProperty}
+     * Creates a new crop {@link BlockState} reference, with the {@link IntegerProperty}
      * already set.
      *
      * @param age {@link Integer} that represents the age of the new crop BlockState.
      * @return A new crop {@link BlockState}
      */
     @Override
-    public BlockState withAge(int age) {
-        return super.withAge(age);
+    public BlockState getStateForAge(int age) {
+        return super.getStateForAge(age);
     }
 
     /**
@@ -153,13 +153,13 @@ public abstract class WKCropBlock extends CropBlock {
      * and {@link WKCropBlock#getMaxAge()}.
      * </p>
      * It is used as a filter in different places, such as when the player
-     * attempts to use a {@link net.minecraft.item.BoneMealItem} in the crop
+     * attempts to use a {@link net.minecraft.world.item.BoneMealItem} in the crop
      *
      * @return Whether the given crop is mature
      */
     @Override
-    public boolean isMature(BlockState state) {
-        return super.isMature(state);
+    public boolean isMaxAge(BlockState state) {
+        return super.isMaxAge(state);
     }
 
     /**
@@ -169,20 +169,20 @@ public abstract class WKCropBlock extends CropBlock {
      * random tick as long as the crop is not matured.
      * </p>
      * <p>
-     * This is triggered in {@link ServerWorld#tickChunk(WorldChunk, int)} and
-     * if this returns false, {@link WKCropBlock#randomTick(BlockState, ServerWorld, BlockPos, Random)}
+     * This is triggered in {@link ServerLevel#tickChunk(LevelChunk, int)} and
+     * if this returns false, {@link WKCropBlock#randomTick(BlockState, ServerLevel, BlockPos, RandomSource)}
      * will never get executed.
      * </p>
      */
     @Override
-    public boolean hasRandomTicks(BlockState state) {
-        return super.hasRandomTicks(state);
+    public boolean isRandomlyTicking(BlockState state) {
+        return super.isRandomlyTicking(state);
     }
 
     /**
      * <p>
      * The logic within this method gets executed in a tick, but randomly
-     * whenever the {@link ServerWorld#tickChunk(WorldChunk, int)} decides to do so.
+     * whenever the {@link ServerLevel#tickChunk(LevelChunk, int)} decides to do so.
      * </p>
      * <p>
      * This place is useful to update the {@link BlockState} of the crop, because it is
@@ -190,73 +190,73 @@ public abstract class WKCropBlock extends CropBlock {
      * </p>
      * <p>
      * By default it is set update the crop block if there is enough light level,
-     * {@link WKCropBlock#isMature(BlockState)} is false and they determined that there is
+     * {@link WKCropBlock#isMaxAge(BlockState)} is false and they determined that there is
      * a good amount of available moisture.
      * </p>
      */
     @Override
-    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+    public void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
         super.randomTick(state, world, pos, random);
     }
 
     /**
      * Updates the crop {@link BlockState}, by checking {@link CropBlock#getAge(BlockState)} is <  {@link CropBlock#getMaxAge()}.
-     * <strong>NOTE:</strong> THIS METHOD IS ONLY TRIGGERED BY {@link WKCropBlock#grow(ServerWorld, Random, BlockPos, BlockState)}
+     * <strong>NOTE:</strong> THIS METHOD IS ONLY TRIGGERED BY {@link WKCropBlock#performBonemeal(ServerLevel, RandomSource, BlockPos, BlockState)}
      */
     @Override
-    public void applyGrowth(World world, BlockPos pos, BlockState state) {
-        super.applyGrowth(world, pos, state);
+    public void growCrops(Level world, BlockPos pos, BlockState state) {
+        super.growCrops(world, pos, state);
     }
 
 
     /**
      * <p>
-     * This method is a filter for {@link #grow(ServerWorld, Random, BlockPos, BlockState)} and the BoneMeal grow method.
-     * It is only used by {@link net.minecraft.item.BoneMealItem#useOnFertilizable(ItemStack, World, BlockPos)},
-     * although when extending this class it will also be triggered by {@link #grow(ServerWorld, Random, BlockPos, BlockState)}.
+     * This method is a filter for {@link #performBonemeal(ServerLevel, RandomSource, BlockPos, BlockState)} and the BoneMeal grow method.
+     * It is only used by {@link net.minecraft.world.item.BoneMealItem#growCrop(ItemStack, Level, BlockPos)},
+     * although when extending this class it will also be triggered by {@link #performBonemeal(ServerLevel, RandomSource, BlockPos, BlockState)}.
      * </p>
      * It is always returning true by the parent class unless overridden.
      */
     @Override
-    public boolean canGrow(World world, Random random, BlockPos pos, BlockState state) {
-        return super.canGrow(world, random, pos, state);
+    public boolean isBonemealSuccess(Level world, RandomSource random, BlockPos pos, BlockState state) {
+        return super.isBonemealSuccess(world, random, pos, state);
     }
 
     /**
      * <p>
-     * All what this method does is to call {@link WKCropBlock#applyGrowth(World, BlockPos, BlockState)}.
+     * All what this method does is to call {@link WKCropBlock#growCrops(Level, BlockPos, BlockState)}.
      * <strong>IMPORTANT</strong>:
      * <p>
-     * This method is part of {@link net.minecraft.block.Fertilizable} interface, and it's only triggered
+     * This method is part of {@link net.minecraft.world.level.block.BonemealableBlock} interface, and it's only triggered
      * in the following places
      * </p>
-     * {@link net.minecraft.item.BoneMealItem#useOnFertilizable(ItemStack, World, BlockPos)}
-     * {@link BeeEntity.GrowCropsGoal#tick()}
+     * {@link net.minecraft.world.item.BoneMealItem#growCrop(ItemStack, Level, BlockPos)}
+     * {@link Bee.BeeGrowCropGoal#tick()}
      */
     @Override
-    public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
-        if (canGrow(world, random, pos, state)) {
-            super.grow(world, random, pos, state);
+    public void performBonemeal(ServerLevel world, RandomSource random, BlockPos pos, BlockState state) {
+        if (isBonemealSuccess(world, random, pos, state)) {
+            super.performBonemeal(world, random, pos, state);
         }
     }
 
     /**
      * Gives you the context of the entity that collides with the block
      * This method only gets executed is the entity is colliding with the block.
-     * See also {@link Entity#checkBlockCollision()}
+     * See also {@link Entity#checkInsideBlocks()}
      */
     @Override
-    protected void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity, EntityCollisionHandler handler) {
-        super.onEntityCollision(state, world, pos, entity, handler);
+    protected void entityInside(BlockState state, Level world, BlockPos pos, Entity entity, InsideBlockEffectApplier handler) {
+        super.entityInside(state, world, pos, entity, handler);
     }
 
     /**
-     * Filter for {@link net.minecraft.block.PlantBlock#getStateForNeighborUpdate(BlockState, Direction, BlockState, WorldAccess, BlockPos, BlockPos)}
+     * Filter for {@link net.minecraft.world.level.block.VegetationBlock#updateShape(BlockState, Direction, BlockState, LevelAccessor, BlockPos, BlockPos)}
      * which destroys the crop if there is not enough light to place it.
      */
     @Override
-    public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-        return super.canPlaceAt(state, world, pos);
+    public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
+        return super.canSurvive(state, world, pos);
     }
 
     /**
@@ -265,20 +265,20 @@ public abstract class WKCropBlock extends CropBlock {
      * Triggered on {@link MinecraftClient#doItemPick()}.
      */
     @Override
-    protected ItemConvertible getSeedsItem() {
+    protected ItemLike getBaseSeedId() {
         return getSeedsItemStack().getItem();
     }
 
     @Override
-    protected ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state, boolean includeData) {
+    protected ItemStack getCloneItemStack(LevelReader world, BlockPos pos, BlockState state, boolean includeData) {
         return getSeedsItemStack();
     }
 
     protected abstract ItemStack getSeedsItemStack();
 
-    public void getNextSeed(World world, BlockPos pos, SeedTypeData data) {
+    public void getNextSeed(Level world, BlockPos pos, SeedTypeData data) {
         ItemStack itemStack2 = getSeedsItemStack();
         itemStack2.set(WKComponents.SEED_TYPE, data);
-        ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), itemStack2);
+        Containers.dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), itemStack2);
     }
 }

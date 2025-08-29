@@ -1,11 +1,10 @@
 package cf.witcheskitchen.api.util;
 
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
-import net.minecraft.entity.Entity;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
-
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
 import java.util.function.Consumer;
 
 public final class PacketHelper {
@@ -25,11 +24,11 @@ public final class PacketHelper {
      * @throws IllegalArgumentException if the entity is not in a server world
      */
 
-    public static void sendToAllTracking(final Entity trackedEntity, Consumer<? super ServerPlayerEntity> packet) {
+    public static void sendToAllTracking(final Entity trackedEntity, Consumer<? super ServerPlayer> packet) {
         PlayerLookup.tracking(trackedEntity).forEach(packet);
     }
 
-    public static void sendToAllTracking(ServerWorld world, BlockPos pos, Consumer<? super ServerPlayerEntity> packet) {
-        PlayerLookup.tracking(world, world.getWorldChunk(pos).getPos()).forEach(packet);
+    public static void sendToAllTracking(ServerLevel world, BlockPos pos, Consumer<? super ServerPlayer> packet) {
+        PlayerLookup.tracking(world, world.getChunkAt(pos).getPos()).forEach(packet);
     }
 }

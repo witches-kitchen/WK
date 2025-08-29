@@ -2,36 +2,36 @@ package cf.witcheskitchen.api.entity;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.JumpingMount;
-import net.minecraft.entity.data.DataTracker;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.passive.PassiveEntity;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.InventoryChangedListener;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.world.World;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.Container;
+import net.minecraft.world.ContainerListener;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.PlayerRideableJumping;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
 //Todo: Revamp texture variants and their code
-public abstract class WKMountEntity extends AnimalEntity implements InventoryChangedListener, JumpingMount {
-    public static final TrackedData<Integer> VARIANT = DataTracker.registerData(WKMountEntity.class,
-            TrackedDataHandlerRegistry.INTEGER);
+public abstract class WKMountEntity extends Animal implements ContainerListener, PlayerRideableJumping {
+    public static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(WKMountEntity.class,
+            EntityDataSerializers.INT);
 
-    public WKMountEntity(EntityType<? extends AnimalEntity> entityType, World world) {
+    public WKMountEntity(EntityType<? extends Animal> entityType, Level world) {
         super(entityType, world);
     }
 
     @Override
-    protected void initDataTracker(DataTracker.Builder builder) {
-        super.initDataTracker(builder);
-        builder.add(VARIANT, 0);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(VARIANT, 0);
     }
 
     @Override
-    public void setJumpStrength(int strength) {
+    public void onPlayerJump(int strength) {
 
     }
 
@@ -41,33 +41,33 @@ public abstract class WKMountEntity extends AnimalEntity implements InventoryCha
     }
 
     @Override
-    public void startJumping(int height) {
+    public void handleStartJump(int height) {
 
     }
 
     @Override
-    public void stopJumping() {
+    public void handleStopJump() {
     }
 
     @Override
-    public boolean hasSaddleEquipped() {
+    public boolean isSaddled() {
         return false;
     }
 
     @Nullable
     @Override
-    public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
+    public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entity) {
         return null;
     }
 
     @Override
-    public void onInventoryChanged(Inventory sender) {
+    public void containerChanged(Container sender) {
 
     }
 
     @Override
     @Environment(EnvType.CLIENT)
-    public boolean shouldRender(double distance) {
+    public boolean shouldRenderAtSqrDistance(double distance) {
         return true;
     }
 

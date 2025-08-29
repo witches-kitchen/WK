@@ -1,24 +1,24 @@
 package cf.witcheskitchen.common.statuseffect;
 
 import cf.witcheskitchen.api.interfaces.AlcoholEffect;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectCategory;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.world.World;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 //Todo: Learn shaders
-public class DrunkStatusEffect extends StatusEffect implements AlcoholEffect {
+public class DrunkStatusEffect extends MobEffect implements AlcoholEffect {
 
-    public DrunkStatusEffect(StatusEffectCategory type, int color) {
+    public DrunkStatusEffect(MobEffectCategory type, int color) {
         super(type, color);
     }
 
     @Override
-    public boolean canApplyUpdateEffect(int duration, int amplifier) {
+    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
         return true;
     }
 
@@ -29,32 +29,32 @@ public class DrunkStatusEffect extends StatusEffect implements AlcoholEffect {
 
     //Todo: Increment to a max of level 4 if one drinks too much
     @Override
-    public boolean applyUpdateEffect(ServerWorld world, LivingEntity entity, int amplifier) {
+    public boolean applyEffectTick(ServerLevel world, LivingEntity entity, int amplifier) {
         if (amplifier == 1) {
-            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 2000, 1));
+            entity.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 2000, 1));
             return true;
         }
         if (amplifier == 2) {
-            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 4000, 2));
-            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 4000, 2));
+            entity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 4000, 2));
+            entity.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 4000, 2));
             return true;
         }
         if (amplifier >= 3) {
-            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 6000, 3));
-            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 6000, 3));
-            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 6000, 3));
+            entity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 6000, 3));
+            entity.addEffect(new MobEffectInstance(MobEffects.NAUSEA, 6000, 3));
+            entity.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 6000, 3));
             return true;
         }
         return false;
     }
 
     @Override
-    public void onDrink(World world, ItemStack wine, LivingEntity entity) {
+    public void onDrink(Level world, ItemStack wine, LivingEntity entity) {
 
     }
 
     @Override
-    public void onFinished(World world, ItemStack wine, LivingEntity entity) {
+    public void onFinished(Level world, ItemStack wine, LivingEntity entity) {
 
     }
 

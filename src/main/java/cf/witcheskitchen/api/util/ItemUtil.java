@@ -1,11 +1,11 @@
 package cf.witcheskitchen.api.util;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.PotionItem;
-import net.minecraft.util.Hand;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.PotionItem;
 
 public final class ItemUtil {
 
@@ -16,14 +16,14 @@ public final class ItemUtil {
     /**
      * <p>
      * <b>Consumes</b> the Item at the given hand of the player
-     * with the {@link Item#getRecipeRemainder()} or air if it doesn't exist.
+     * with the {@link Item#getCraftingRemainder()} or air if it doesn't exist.
      * </p>
      *
      * @param player PlayerEntity
      * @param hand   Hand
      */
-    public static void consumeItem(PlayerEntity player, Hand hand) {
-        final var stack = player.getStackInHand(hand);
+    public static void consumeItem(Player player, InteractionHand hand) {
+        final var stack = player.getItemInHand(hand);
         final var item = stack.getItem();
         final var hasRemainder = !item.getRecipeRemainder(stack).isEmpty();
         var remainder = hasRemainder ? item.getRecipeRemainder(stack) : ItemStack.EMPTY;
@@ -39,34 +39,34 @@ public final class ItemUtil {
      * if the player is on creative mode.
      * </p>
      * If the player inventory is full, the stack is going to be dropped
-     * into the {@link net.minecraft.world.World}
+     * into the {@link net.minecraft.world.level.Level}
      *
      * @param player   PlayerEntity
      * @param hand     Hand
      * @param toInsert ItemStack to insert
      */
-    public static void replaceItem(PlayerEntity player, Hand hand, ItemStack toInsert) {
+    public static void replaceItem(Player player, InteractionHand hand, ItemStack toInsert) {
         // Flag that determines whether we should insert the item into the PlayerInventory
         // Which means we decremented a stack (only 1 per call).
         // Or false if the stack only had 1 count and therefore was consumed/replaced by the passed stack
         var insert = false;
         // Stack in Hand
-        final var stack = player.getStackInHand(hand);
+        final var stack = player.getItemInHand(hand);
         if (!player.isCreative()) {
             // If there is only 1 count
             // We want to replace it with the passed stack
             if (stack.getCount() == 1) {
-                player.setStackInHand(hand, toInsert);
+                player.setItemInHand(hand, toInsert);
             } else {
                 // Otherwise, we remove one and update the insert flag.
-                stack.decrement(1);
+                stack.shrink(1);
                 insert = true;
             }
             if (insert) {
                 // Just in case the player inventory is full
-                if (!player.getInventory().insertStack(toInsert)) {
+                if (!player.getInventory().add(toInsert)) {
                     // We drop the item into the World.
-                    player.dropItem(toInsert, false, true);
+                    player.drop(toInsert, false, true);
                 }
             }
         }
@@ -95,22 +95,22 @@ public final class ItemUtil {
                 return true;
             }
             //Match nbt
-            return ItemStack.areItemsAndComponentsEqual(stackA, stackB);
+            return ItemStack.isSameItemSameComponents(stackA, stackB);
         }
     }
 
-    public static void addItemToInventoryAndConsume(PlayerEntity player, Hand hand, ItemStack toAdd) {
+    public static void addItemToInventoryAndConsume(Player player, InteractionHand hand, ItemStack toAdd) {
         boolean shouldAdd = false;
-        ItemStack stack = player.getStackInHand(hand);
+        ItemStack stack = player.getItemInHand(hand);
         if (stack.getCount() == 1) {
-            player.setStackInHand(hand, toAdd);
+            player.setItemInHand(hand, toAdd);
         } else {
-            stack.decrement(1);
+            stack.shrink(1);
             shouldAdd = true;
         }
         if (shouldAdd) {
-            if (!player.getInventory().insertStack(toAdd)) {
-                player.dropItem(toAdd, false, true);
+            if (!player.getInventory().add(toAdd)) {
+                player.drop(toAdd, false, true);
             }
         }
     }

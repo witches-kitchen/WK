@@ -1,68 +1,68 @@
 package cf.witcheskitchen.api.entity;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.data.DataTracker;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.listener.ClientPlayPacketListener;
-import net.minecraft.network.packet.Packet;
-import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
-import net.minecraft.server.network.EntityTrackerEntry;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.world.World;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerEntity;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 public abstract class WKBroomBase extends Entity {
     public final ItemStack stack;
 
-    public WKBroomBase(EntityType<?> type, World world, ItemStack stack) {
+    public WKBroomBase(EntityType<?> type, Level world, ItemStack stack) {
         super(type, world);
         this.stack = stack;
     }
 
     @Override
-    public ActionResult interact(PlayerEntity player, Hand hand) {
-        if (player.shouldCancelInteraction()) {
-            return ActionResult.PASS;
-        } else if (!this.getWorld().isClient) {
-            if (player.isSneaking() && player.getMainHandStack().isEmpty()) {
+    public InteractionResult interact(Player player, InteractionHand hand) {
+        if (player.isSecondaryUseActive()) {
+            return InteractionResult.PASS;
+        } else if (!this.level().isClientSide) {
+            if (player.isShiftKeyDown() && player.getMainHandItem().isEmpty()) {
                 return pickUpBroom(player);
             } else {
-                return player.startRiding(this) ? ActionResult.CONSUME : ActionResult.PASS;
+                return player.startRiding(this) ? InteractionResult.CONSUME : InteractionResult.PASS;
             }
 
         }
         return super.interact(player, hand);
     }
 
-    private ActionResult pickUpBroom(PlayerEntity player) {
-        player.setStackInHand(player.preferredHand, this.stack);
-        return ActionResult.CONSUME;
+    private InteractionResult pickUpBroom(Player player) {
+        player.setItemInHand(player.swingingArm, this.stack);
+        return InteractionResult.CONSUME;
     }
 
     @Override
-    protected void initDataTracker(DataTracker.Builder builder) {
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
     }
 
     @Override
-    protected void readCustomData(ReadView view) {
+    protected void readAdditionalSaveData(ValueInput view) {
     }
 
     @Override
-    protected void writeCustomData(WriteView view) {
+    protected void addAdditionalSaveData(ValueOutput view) {
     }
 
     @Override
-    public Packet<ClientPlayPacketListener> createSpawnPacket(EntityTrackerEntry entityTrackerEntry) {
-        return new EntitySpawnS2CPacket(this, entityTrackerEntry);
+    public Packet<ClientGamePacketListener> getAddEntityPacket(ServerEntity entityTrackerEntry) {
+        return new ClientboundAddEntityPacket(this, entityTrackerEntry);
     }
 
     @Override
-    public boolean handleFallDamage(double fallDistance, float damageMultiplier, DamageSource damageSource) {
+    public boolean causeFallDamage(double fallDistance, float damageMultiplier, DamageSource damageSource) {
         return false;
     }
 }

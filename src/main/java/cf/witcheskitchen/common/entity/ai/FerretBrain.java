@@ -8,18 +8,18 @@ import cf.witcheskitchen.common.entity.ai.task.DontMoveTask;
 import cf.witcheskitchen.common.entity.tameable.FerretEntity;
 import cf.witcheskitchen.common.registry.WKEntityTypes;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.brain.Brain;
-import net.minecraft.entity.ai.brain.LivingTargetCache;
-import net.minecraft.entity.ai.brain.MemoryModuleType;
-import net.minecraft.entity.ai.brain.sensor.Sensor;
-import net.minecraft.entity.ai.brain.task.LookAroundTask;
-import net.minecraft.entity.ai.brain.task.MoveToTargetTask;
-import net.minecraft.entity.ai.brain.task.StayAboveWaterTask;
-import net.minecraft.entity.ai.brain.task.TargetUtil;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.intprovider.ConstantIntProvider;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.valueproviders.ConstantInt;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.Brain;
+import net.minecraft.world.entity.ai.behavior.BehaviorUtils;
+import net.minecraft.world.entity.ai.behavior.MoveToTargetSink;
+import net.minecraft.world.entity.ai.behavior.RandomLookAround;
+import net.minecraft.world.entity.ai.behavior.Swim;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
+import net.minecraft.world.entity.ai.memory.NearestVisibleLivingEntities;
+import net.minecraft.world.entity.ai.sensing.Sensor;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.FirstApplicableBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.OneRandomBehaviour;
@@ -64,9 +64,9 @@ public class FerretBrain {
     public static BrainActivityGroup<FerretEntity> getCoreTasks() {
         return BrainActivityGroup.coreTasks(
                 new DontMoveTask(),
-                new StayAboveWaterTask(0.6f),
-                new LookAroundTask(ConstantIntProvider.create(45), 90, -15, 15),
-                new MoveToTargetTask()
+                new Swim(0.6f),
+                new RandomLookAround(ConstantInt.of(45), 90, -15, 15),
+                new MoveToTargetSink()
         );
     }
 
@@ -92,14 +92,14 @@ public class FerretBrain {
 
     public static Optional<? extends LivingEntity> getAttackTarget(FerretEntity ferretEntity) {
         Brain<?> brain = ferretEntity.getBrain();
-        Optional<LivingEntity> optional = TargetUtil.getEntity(ferretEntity, MemoryModuleType.ANGRY_AT);
-        if (optional.isPresent() && Sensor.testAttackableTargetPredicateIgnoreVisibility((ServerWorld) ferretEntity.getWorld(), ferretEntity, optional.get())) {
+        Optional<LivingEntity> optional = BehaviorUtils.getLivingEntityFromUUIDMemory(ferretEntity, MemoryModuleType.ANGRY_AT);
+        if (optional.isPresent() && Sensor.isEntityAttackableIgnoringLineOfSight((ServerLevel) ferretEntity.level(), ferretEntity, optional.get())) {
             return optional;
         }
-        if (brain.hasMemoryModule(MemoryModuleType.VISIBLE_MOBS)) {
-            Optional<LivingTargetCache> visibleLivingEntitiesCache = ferretEntity.getBrain().getOptionalMemory(MemoryModuleType.VISIBLE_MOBS);
+        if (brain.hasMemoryValue(MemoryModuleType.NEAREST_VISIBLE_LIVING_ENTITIES)) {
+            Optional<NearestVisibleLivingEntities> visibleLivingEntitiesCache = ferretEntity.getBrain().getMemoryInternal(MemoryModuleType.NEAREST_VISIBLE_LIVING_ENTITIES);
             if (visibleLivingEntitiesCache.isPresent()) {
-                return visibleLivingEntitiesCache.get().findFirst(UNTAMED_TARGET_PREDICATE);
+                return visibleLivingEntitiesCache.get().findClosest(UNTAMED_TARGET_PREDICATE);
             }
         }
         return Optional.empty();

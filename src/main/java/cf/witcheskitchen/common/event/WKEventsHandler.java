@@ -3,13 +3,13 @@ package cf.witcheskitchen.common.event;
 import cf.witcheskitchen.WitchesKitchen;
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.fabricmc.fabric.api.loot.v3.LootTableSource;
-import net.minecraft.block.Blocks;
-import net.minecraft.loot.LootPool;
-import net.minecraft.loot.LootTable;
-import net.minecraft.loot.entry.LootTableEntry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.NestedLootTable;
 
 public class WKEventsHandler {
     /**
@@ -21,13 +21,13 @@ public class WKEventsHandler {
      */
     public static class LootTablesListener implements LootTableEvents.Modify {
         @Override
-        public void modifyLootTable(RegistryKey<LootTable> key, LootTable.Builder tableBuilder, LootTableSource source, RegistryWrapper.WrapperLookup registries) {
-            final RegistryKey<LootTable> grassLootTable = Blocks.SHORT_GRASS.getLootTableKey().orElseThrow();
-            final RegistryKey<LootTable> tallGrassLootTable = Blocks.TALL_GRASS.getLootTableKey().orElseThrow();
-            final RegistryKey<LootTable> seedsAddition = RegistryKey.of(RegistryKeys.LOOT_TABLE, WitchesKitchen.id("listener/seeds"));
+        public void modifyLootTable(ResourceKey<LootTable> key, LootTable.Builder tableBuilder, LootTableSource source, HolderLookup.Provider registries) {
+            final ResourceKey<LootTable> grassLootTable = Blocks.SHORT_GRASS.getLootTable().orElseThrow();
+            final ResourceKey<LootTable> tallGrassLootTable = Blocks.TALL_GRASS.getLootTable().orElseThrow();
+            final ResourceKey<LootTable> seedsAddition = ResourceKey.create(Registries.LOOT_TABLE, WitchesKitchen.id("listener/seeds"));
             if (key.equals(grassLootTable) || key.equals(tallGrassLootTable)) {
                 // Adds a new entry for grass and tall grass loot tables
-                tableBuilder.pool(LootPool.builder().with(LootTableEntry.builder(seedsAddition).weight(1)).build());
+                tableBuilder.pool(LootPool.lootPool().add(NestedLootTable.lootTableReference(seedsAddition).setWeight(1)).build());
             }
         }
     }

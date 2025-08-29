@@ -2,20 +2,20 @@ package cf.witcheskitchen.common.component.blockentity;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 
 public record WitchesCauldronData(
-        NbtCompound tankData,
+        CompoundTag tankData,
         int ticksHeated,
         int color,
         boolean powered
 ) {
     public static final Codec<WitchesCauldronData> CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
-                            NbtCompound.CODEC
+                            CompoundTag.CODEC
                                     .fieldOf("tank")
                                     .forGetter(WitchesCauldronData::tankData),
                             Codec.INT
@@ -31,11 +31,11 @@ public record WitchesCauldronData(
                     .apply(instance, WitchesCauldronData::new)
     );
 
-    public static final PacketCodec<RegistryByteBuf, WitchesCauldronData> PACKET_CODEC = PacketCodec.tuple(
-            PacketCodecs.NBT_COMPOUND, WitchesCauldronData::tankData,
-            PacketCodecs.VAR_INT, WitchesCauldronData::ticksHeated,
-            PacketCodecs.VAR_INT, WitchesCauldronData::color,
-            PacketCodecs.BOOLEAN, WitchesCauldronData::powered,
+    public static final StreamCodec<RegistryFriendlyByteBuf, WitchesCauldronData> PACKET_CODEC = StreamCodec.composite(
+            ByteBufCodecs.COMPOUND_TAG, WitchesCauldronData::tankData,
+            ByteBufCodecs.VAR_INT, WitchesCauldronData::ticksHeated,
+            ByteBufCodecs.VAR_INT, WitchesCauldronData::color,
+            ByteBufCodecs.BOOL, WitchesCauldronData::powered,
             WitchesCauldronData::new
     );
 }

@@ -5,48 +5,51 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.recipe.*;
-import net.minecraft.recipe.book.RecipeBookCategory;
-import net.minecraft.recipe.input.SingleStackRecipeInput;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.world.World;
-
+import net.minecraft.core.HolderLookup;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.PlacementInfo;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeBookCategory;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
+import net.minecraft.world.level.Level;
 import java.util.List;
 
 public record OvenCookingRecipe(Ingredient input, List<ItemStack> outputs, int time,
-                                float xp) implements Recipe<SingleStackRecipeInput> {
+                                float xp) implements Recipe<SingleRecipeInput> {
 
     @Override
-    public boolean matches(SingleStackRecipeInput inventory, World world) {
-        return input.test(inventory.getStackInSlot(0));
+    public boolean matches(SingleRecipeInput inventory, Level world) {
+        return input.test(inventory.getItem(0));
     }
 
     @Override
-    public ItemStack craft(SingleStackRecipeInput input, RegistryWrapper.WrapperLookup lookup) {
+    public ItemStack assemble(SingleRecipeInput input, HolderLookup.Provider lookup) {
         return ItemStack.EMPTY;
     }
 
     @Override
-    public RecipeSerializer<? extends Recipe<SingleStackRecipeInput>> getSerializer() {
+    public RecipeSerializer<? extends Recipe<SingleRecipeInput>> getSerializer() {
         return WKRecipeTypes.WITCHES_OVEN_COOKING_RECIPE_SERIALIZER;
     }
 
     @Override
-    public RecipeType<? extends Recipe<SingleStackRecipeInput>> getType() {
+    public RecipeType<? extends Recipe<SingleRecipeInput>> getType() {
         return WKRecipeTypes.WITCHES_OVEN_COOKING_RECIPE_TYPE;
     }
 
     @Override
-    public IngredientPlacement getIngredientPlacement() {
-        return IngredientPlacement.forSingleSlot(this.input());
+    public PlacementInfo placementInfo() {
+        return PlacementInfo.create(this.input());
     }
 
     @Override
-    public RecipeBookCategory getRecipeBookCategory() {
+    public RecipeBookCategory recipeBookCategory() {
         // TODO: use recipe book category
         return null;
     }
@@ -85,12 +88,12 @@ public record OvenCookingRecipe(Ingredient input, List<ItemStack> outputs, int t
         }
 
         @Override
-        public PacketCodec<RegistryByteBuf, OvenCookingRecipe> packetCodec() {
-            return PacketCodec.tuple(
-                    Ingredient.PACKET_CODEC, OvenCookingRecipe::input,
-                    PacketCodecs.<RegistryByteBuf, ItemStack>toList().apply(ItemStack.PACKET_CODEC), OvenCookingRecipe::outputs,
-                    PacketCodecs.VAR_INT, OvenCookingRecipe::time,
-                    PacketCodecs.FLOAT, OvenCookingRecipe::xp,
+        public StreamCodec<RegistryFriendlyByteBuf, OvenCookingRecipe> streamCodec() {
+            return StreamCodec.composite(
+                    Ingredient.CONTENTS_STREAM_CODEC, OvenCookingRecipe::input,
+                    ByteBufCodecs.<RegistryFriendlyByteBuf, ItemStack>list().apply(ItemStack.STREAM_CODEC), OvenCookingRecipe::outputs,
+                    ByteBufCodecs.VAR_INT, OvenCookingRecipe::time,
+                    ByteBufCodecs.FLOAT, OvenCookingRecipe::xp,
                     OvenCookingRecipe::new
             );
         }

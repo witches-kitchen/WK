@@ -8,98 +8,97 @@ import cf.witcheskitchen.common.component.WKComponents;
 import cf.witcheskitchen.common.registry.WKItems;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.CropBlock;
-import net.minecraft.block.enums.DoubleBlockHalf;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.state.property.IntProperty;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.World;
-
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.CropBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import java.util.Optional;
 
 public class CamelliaCropBlock extends WKTallCropBlock implements CropVariants {
     public static final VoxelShape[] LOWER_AGE_TO_SHAPE;
     public static final VoxelShape[] UPPER_AGE_TO_SHAPE;
     public static final int MAX_AGE = 7;
-    private static final IntProperty AGE = IntProperty.of("age", 0, MAX_AGE);
+    private static final IntegerProperty AGE = IntegerProperty.create("age", 0, MAX_AGE);
 
     static {
         LOWER_AGE_TO_SHAPE = new VoxelShape[]{
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 8.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 10.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0)
+                Block.box(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
+                Block.box(0.0, 0.0, 0.0, 16.0, 8.0, 16.0),
+                Block.box(0.0, 0.0, 0.0, 16.0, 10.0, 16.0),
+                Block.box(0.0, 0.0, 0.0, 16.0, 16.0, 16.0),
+                Block.box(0.0, 0.0, 0.0, 16.0, 16.0, 16.0),
+                Block.box(0.0, 0.0, 0.0, 16.0, 16.0, 16.0),
+                Block.box(0.0, 0.0, 0.0, 16.0, 16.0, 16.0),
+                Block.box(0.0, 0.0, 0.0, 16.0, 16.0, 16.0)
         };
 
         UPPER_AGE_TO_SHAPE = new VoxelShape[]{
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 4.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 6.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 8.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 8.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 8.0, 16.0)
+                Block.box(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
+                Block.box(0.0, 0.0, 0.0, 16.0, 4.0, 16.0),
+                Block.box(0.0, 0.0, 0.0, 16.0, 6.0, 16.0),
+                Block.box(0.0, 0.0, 0.0, 16.0, 8.0, 16.0),
+                Block.box(0.0, 0.0, 0.0, 16.0, 8.0, 16.0),
+                Block.box(0.0, 0.0, 0.0, 16.0, 8.0, 16.0)
         };
     }
 
     private final CamelliaTypes type;
 
-    public CamelliaCropBlock(Settings settings) {
+    public CamelliaCropBlock(Properties settings) {
         this(settings, CamelliaTypes.COMMON);
     }
 
-    public CamelliaCropBlock(Settings settings, CamelliaTypes type) {
+    public CamelliaCropBlock(Properties settings, CamelliaTypes type) {
         super(settings);
         this.type = type;
-        this.setDefaultState(this.getDefaultState().with(getAgeProperty(), 0).with(HALF, DoubleBlockHalf.LOWER));
+        this.registerDefaultState(this.defaultBlockState().setValue(getAgeProperty(), 0).setValue(HALF, DoubleBlockHalf.LOWER));
     }
 
     @Override
-    public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+    public BlockState playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
         Optional<CamelliaTypes> nextType = type.next(type);
         if (nextType.isPresent()) {
             var component = SeedTypeHelper.toComponent(nextType.get().getName(), nextType.get().getType(), nextType.get().getColor());
             getNextSeed(world, pos, component);
         }
-        super.onBreak(world, pos, state, player);
+        super.playerWillDestroy(world, pos, state, player);
         return state;
     }
 
     @Override
-    public void applyGrowth(World world, BlockPos pos, BlockState state) {
+    public void growCrops(Level world, BlockPos pos, BlockState state) {
         int maxAge;
-        int age = this.getAge(state) + this.getGrowthAmount(world);
+        int age = this.getAge(state) + this.getBonemealAgeIncrease(world);
         if (age > (maxAge = this.getMaxAge())) {
             age = maxAge;
         }
-        world.setBlockState(pos, this.withHalf(age == 5 ? age + 1 : age, DoubleBlockHalf.LOWER), Block.NOTIFY_LISTENERS);
+        world.setBlock(pos, this.withHalf(age == 5 ? age + 1 : age, DoubleBlockHalf.LOWER), Block.UPDATE_CLIENTS);
         if (age >= doubleBlockAge()) {
-            world.setBlockState(pos.up(), this.withHalf(age == 5 ? age + 1 : age, DoubleBlockHalf.UPPER), Block.NOTIFY_LISTENERS);
+            world.setBlock(pos.above(), this.withHalf(age == 5 ? age + 1 : age, DoubleBlockHalf.UPPER), Block.UPDATE_CLIENTS);
         }
     }
 
     @Override
-    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+    public void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
         final int age = this.getAge(state);
         boolean bl = age == 4;
-        if (world.getBaseLightLevel(pos, 0) >= 9) {
+        if (world.getRawBrightness(pos, 0) >= 9) {
             if (age < getMaxAge()) {
-                if (random.nextInt((int) (25.0f / (CropBlock.getAvailableMoisture(this, world, pos))) + 1) == 0) {
+                if (random.nextInt((int) (25.0f / (CropBlock.getGrowthSpeed(this, world, pos))) + 1) == 0) {
                     final int nextAge = age + 1;
-                    world.setBlockState(pos, withHalf(bl ? nextAge + 1 : nextAge, DoubleBlockHalf.LOWER), Block.NOTIFY_LISTENERS);
+                    world.setBlock(pos, withHalf(bl ? nextAge + 1 : nextAge, DoubleBlockHalf.LOWER), Block.UPDATE_CLIENTS);
                     if (age >= doubleBlockAge()) {
-                        world.setBlockState(pos.up(), withHalf(bl ? nextAge + 1 : nextAge, DoubleBlockHalf.UPPER), Block.NOTIFY_LISTENERS);
+                        world.setBlock(pos.above(), withHalf(bl ? nextAge + 1 : nextAge, DoubleBlockHalf.UPPER), Block.UPDATE_CLIENTS);
                     }
                 }
             }
@@ -107,16 +106,16 @@ public class CamelliaCropBlock extends WKTallCropBlock implements CropVariants {
     }
 
     @Override
-    protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-        if (state.get(HALF) == DoubleBlockHalf.UPPER) {
-            pos = pos.down();
+    protected InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
+        if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
+            pos = pos.below();
         }
 
-        if (player.getMainHandStack().isEmpty() && state.get(getAgeProperty()) == MAX_AGE) {
-            world.setBlockState(pos, this.withHalf(this.getAge(state) - 2, DoubleBlockHalf.LOWER), Block.NOTIFY_LISTENERS);
-            world.setBlockState(pos.up(), this.withHalf(this.getAge(state) - 2, DoubleBlockHalf.UPPER), Block.NOTIFY_LISTENERS);
+        if (player.getMainHandItem().isEmpty() && state.getValue(getAgeProperty()) == MAX_AGE) {
+            world.setBlock(pos, this.withHalf(this.getAge(state) - 2, DoubleBlockHalf.LOWER), Block.UPDATE_CLIENTS);
+            world.setBlock(pos.above(), this.withHalf(this.getAge(state) - 2, DoubleBlockHalf.UPPER), Block.UPDATE_CLIENTS);
         }
-        return super.onUse(state, world, pos, player, hit);
+        return super.useWithoutItem(state, world, pos, player, hit);
     }
 
     @Override
@@ -130,7 +129,7 @@ public class CamelliaCropBlock extends WKTallCropBlock implements CropVariants {
     }
 
     @Override
-    public IntProperty getAgeProperty() {
+    public IntegerProperty getAgeProperty() {
         return AGE;
     }
 

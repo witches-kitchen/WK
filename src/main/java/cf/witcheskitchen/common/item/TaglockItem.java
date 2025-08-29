@@ -1,25 +1,24 @@
 package cf.witcheskitchen.common.item;
 
 import cf.witcheskitchen.common.component.WKComponents;
-import net.minecraft.component.type.TooltipDisplayComponent;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.text.Style;
-import net.minecraft.text.Text;
-
 import java.util.function.Consumer;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 
 public class TaglockItem extends Item {
-    public TaglockItem(Settings settings) {
+    public TaglockItem(Properties settings) {
         super(settings);
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> textConsumer, TooltipType type) {
-        if (stack.contains(WKComponents.TAGLOCK)) {
+    public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay displayComponent, Consumer<Component> textConsumer, TooltipFlag type) {
+        if (stack.has(WKComponents.TAGLOCK)) {
             var taglock = stack.get(WKComponents.TAGLOCK);
-            textConsumer.accept(Text.literal(taglock.name()).setStyle(Style.EMPTY.withColor(0xF90C19)));
+            textConsumer.accept(Component.literal(taglock.name()).setStyle(Style.EMPTY.withColor(0xF90C19)));
         }
     }
 }

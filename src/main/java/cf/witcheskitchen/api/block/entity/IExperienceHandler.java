@@ -1,7 +1,7 @@
 package cf.witcheskitchen.api.block.entity;
 
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.phys.Vec3;
 
 public interface IExperienceHandler {
 
@@ -12,5 +12,5 @@ public interface IExperienceHandler {
      * @param world     ServerWorld
      * @param playerPos Vec3d ((position of the player))
      */
-    void dropExperience(final ServerWorld world, final Vec3d playerPos);
+    void dropExperience(final ServerLevel world, final Vec3 playerPos);
 }

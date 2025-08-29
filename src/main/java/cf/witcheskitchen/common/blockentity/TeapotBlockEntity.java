@@ -9,29 +9,29 @@ import cf.witcheskitchen.common.component.blockentity.TeapotData;
 import cf.witcheskitchen.common.recipe.TeaRecipe;
 import cf.witcheskitchen.common.registry.WKBlockEntityTypes;
 import cf.witcheskitchen.common.registry.WKRecipeTypes;
-import net.minecraft.block.BlockState;
-import net.minecraft.component.ComponentMap;
-import net.minecraft.component.ComponentsAccess;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.potion.Potions;
-import net.minecraft.recipe.RecipeEntry;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.Hand;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponentGetter;
+import net.minecraft.core.component.DataComponentMap;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
 
 public class TeapotBlockEntity extends WKBlockEntityWithInventory {
     public static final int MAX_DURATION = 20 * 60 * 20; //20min
@@ -40,7 +40,7 @@ public class TeapotBlockEntity extends WKBlockEntityWithInventory {
     public int progress = 0;
     public int effectTimer = 0;
     public TeaRecipe teaRecipe = null;
-    public RegistryEntry<StatusEffect> effect = null;
+    public Holder<MobEffect> effect = null;
     public boolean hasWater = false;
 
     public TeapotBlockEntity(BlockPos pos, BlockState state) {
@@ -48,11 +48,11 @@ public class TeapotBlockEntity extends WKBlockEntityWithInventory {
     }
 
     @Override
-    public void tick(World world, BlockPos blockPos, BlockState blockState, WKBlockEntity blockEntity) {
-        if (world.getBlockState(pos.down()).getBlock() instanceof WitchesOvenBlock && world.getBlockState(pos.down()).get(WitchesOvenBlock.LIT)) {
+    public void tick(Level world, BlockPos blockPos, BlockState blockState, WKBlockEntity blockEntity) {
+        if (world.getBlockState(worldPosition.below()).getBlock() instanceof WitchesOvenBlock && world.getBlockState(worldPosition.below()).getValue(WitchesOvenBlock.LIT)) {
             if (teaRecipe == null) {
-                if (world instanceof ServerWorld serverWorld) {
-                    teaRecipe = serverWorld.getRecipeManager().getAllOfType(WKRecipeTypes.TEA_RECIPE_TYPE).stream().filter(recipe -> recipe.value().input.test(this.manager.getStack(0))).findFirst().map(RecipeEntry::value).orElse(null);
+                if (world instanceof ServerLevel serverWorld) {
+                    teaRecipe = serverWorld.recipeAccess().getAllOfType(WKRecipeTypes.TEA_RECIPE_TYPE).stream().filter(recipe -> recipe.value().input.test(this.manager.getItem(0))).findFirst().map(RecipeHolder::value).orElse(null);
                 }
             } else {
                 if (hasWater) {
@@ -60,93 +60,93 @@ public class TeapotBlockEntity extends WKBlockEntityWithInventory {
                         effectTimer = 0;
                         progress++;
                         if (progress >= UNOBTAINABLE_OUTPUT) {
-                            effect = Registries.STATUS_EFFECT.getEntry(teaRecipe.getEffect());
+                            effect = BuiltInRegistries.MOB_EFFECT.wrapAsHolder(teaRecipe.getEffect());
                         }
                     } else {
                         progress = 0;
                         effectTimer++;
-                        emitEffect(world, pos);
+                        emitEffect(world, worldPosition);
                         if (effectTimer >= MAX_DURATION) {
                             effect = null;
-                            this.manager.clear();
+                            this.manager.clearContent();
                         }
                     }
-                    markDirty();
+                    setChanged();
                 }
             }
             super.tick(world, blockPos, blockState, blockEntity);
         }
     }
 
-    private void emitEffect(World world, BlockPos pos) {
-        if (world.getTime() % 80L == 0L) {
-            Box box = new Box(pos).expand(8);
-            var list = world.getEntitiesByClass(LivingEntity.class, box, Entity::isAlive);
+    private void emitEffect(Level world, BlockPos pos) {
+        if (world.getGameTime() % 80L == 0L) {
+            AABB box = new AABB(pos).inflate(8);
+            var list = world.getEntitiesOfClass(LivingEntity.class, box, Entity::isAlive);
             for (LivingEntity livingEntity : list) {
-                livingEntity.addStatusEffect(new StatusEffectInstance(effect, 12 * 20, 1, true, false));
+                livingEntity.addEffect(new MobEffectInstance(effect, 12 * 20, 1, true, false));
             }
         }
     }
 
-    public void onUse(World world, BlockState state, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-        if (player.getActiveHand() == Hand.MAIN_HAND) {
-            ItemStack stack = player.getMainHandStack();
-            if (player.isSneaking()) {
+    public void onUse(Level world, BlockState state, BlockPos pos, Player player, BlockHitResult hit) {
+        if (player.getUsedItemHand() == InteractionHand.MAIN_HAND) {
+            ItemStack stack = player.getMainHandItem();
+            if (player.isShiftKeyDown()) {
                 emptyInventoryAndReset(world, true);
             } else {
-                if (player.getMainHandStack().isOf(Items.GLASS_BOTTLE)) {
+                if (player.getMainHandItem().is(Items.GLASS_BOTTLE)) {
                     tryFillBottle(player);
-                } else if (stack.isOf(Items.POTION) && stack.contains(DataComponentTypes.POTION_CONTENTS) && stack.get(DataComponentTypes.POTION_CONTENTS).potion().isPresent() && stack.get(DataComponentTypes.POTION_CONTENTS).potion().orElseThrow().matches(Potions.WATER)) {
+                } else if (stack.is(Items.POTION) && stack.has(DataComponents.POTION_CONTENTS) && stack.get(DataComponents.POTION_CONTENTS).potion().isPresent() && stack.get(DataComponents.POTION_CONTENTS).potion().orElseThrow().is(Potions.WATER)) {
                     fillKettle(player);
-                } else if (world instanceof ServerWorld serverWorld) {
-                    serverWorld.getRecipeManager().getAllOfType(WKRecipeTypes.TEA_RECIPE_TYPE).stream().filter(recipe -> recipe.value().input.test(stack)).findFirst().map(RecipeEntry::value)
+                } else if (world instanceof ServerLevel serverWorld) {
+                    serverWorld.recipeAccess().getAllOfType(WKRecipeTypes.TEA_RECIPE_TYPE).stream().filter(recipe -> recipe.value().input.test(stack)).findFirst().map(RecipeHolder::value)
                             .ifPresent(teaRecipe -> tryAddIngredientToTeaPot(stack, world));
                 }
             }
         }
     }
 
-    private void tryAddIngredientToTeaPot(ItemStack input, World world) {
+    private void tryAddIngredientToTeaPot(ItemStack input, Level world) {
         if (manager.isEmpty()) {
-            manager.setStack(0, input.split(1));
-            world.playSound(null, pos, SoundEvents.ENTITY_GENERIC_SPLASH, SoundCategory.BLOCKS, 1 / 3f, 1.5f);
+            manager.setItem(0, input.split(1));
+            world.playSound(null, worldPosition, SoundEvents.GENERIC_SPLASH, SoundSource.BLOCKS, 1 / 3f, 1.5f);
         }
     }
 
-    private void fillKettle(PlayerEntity player) {
+    private void fillKettle(Player player) {
         if (!hasWater) {
-            ItemUtil.addItemToInventoryAndConsume(player, Hand.MAIN_HAND, new ItemStack(Items.GLASS_BOTTLE));
-            player.getWorld().playSound(null, pos, SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.BLOCKS, 1 / 3f, 1.0f);
+            ItemUtil.addItemToInventoryAndConsume(player, InteractionHand.MAIN_HAND, new ItemStack(Items.GLASS_BOTTLE));
+            player.level().playSound(null, worldPosition, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1 / 3f, 1.0f);
             hasWater = true;
         }
     }
 
-    private void tryFillBottle(PlayerEntity player) {
+    private void tryFillBottle(Player player) {
         if (progress > TIME_TO_BREW && progress < UNOBTAINABLE_OUTPUT) {
             if (teaRecipe != null) {
-                player.getWorld().playSound(null, pos, SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.BLOCKS, 1 / 3f, 1.0F);
-                ItemUtil.addItemToInventoryAndConsume(player, Hand.MAIN_HAND, teaRecipe.getOutput());
-                emptyInventoryAndReset(world, false);
+                player.level().playSound(null, worldPosition, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1 / 3f, 1.0F);
+                ItemUtil.addItemToInventoryAndConsume(player, InteractionHand.MAIN_HAND, teaRecipe.getOutput());
+                emptyInventoryAndReset(level, false);
             }
         }
     }
 
-    private void emptyInventoryAndReset(World world, boolean sound) {
+    private void emptyInventoryAndReset(Level world, boolean sound) {
         if (sound) {
-            world.playSound(null, pos, SoundEvents.ENTITY_GENERIC_SPLASH, SoundCategory.BLOCKS, 1 / 3f, 1);
+            world.playSound(null, worldPosition, SoundEvents.GENERIC_SPLASH, SoundSource.BLOCKS, 1 / 3f, 1);
         }
-        this.manager.clear();
+        this.manager.clearContent();
         this.hasWater = false;
         this.effect = null;
         this.progress = 0;
         this.effectTimer = 0;
         this.teaRecipe = null;
-        this.markDirty();
+        this.setChanged();
     }
 
     @Override
-    protected void readComponents(ComponentsAccess components) {
-        super.readComponents(components);
+    protected void applyImplicitComponents(DataComponentGetter components) {
+        super.applyImplicitComponents(components);
         TeapotData data = components.get(WKComponents.TEAPOT);
 
         if (data != null) {
@@ -158,8 +158,8 @@ public class TeapotBlockEntity extends WKBlockEntityWithInventory {
     }
 
     @Override
-    protected void addComponents(ComponentMap.Builder builder) {
-        super.addComponents(builder);
-        builder.add(WKComponents.TEAPOT, new TeapotData(this.progress, this.effectTimer, this.hasWater, this.effect));
+    protected void collectImplicitComponents(DataComponentMap.Builder builder) {
+        super.collectImplicitComponents(builder);
+        builder.set(WKComponents.TEAPOT, new TeapotData(this.progress, this.effectTimer, this.hasWater, this.effect));
     }
 }

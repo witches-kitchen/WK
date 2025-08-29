@@ -3,18 +3,22 @@ package cf.witcheskitchen.common.entity.tameable;
 import cf.witcheskitchen.api.entity.WKTameableEntity;
 import cf.witcheskitchen.common.entity.ai.HedgehogBrain;
 import cf.witcheskitchen.common.registry.WKEntityTypes;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.brain.Brain;
-import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.passive.PassiveEntity;
-import net.minecraft.entity.passive.TameableEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.world.LocalDifficulty;
-import net.minecraft.world.ServerWorldAccess;
-import net.minecraft.world.World;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntityReference;
+import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.ai.Brain;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.tslat.smartbrainlib.api.SmartBrainOwner;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.SmartBrainProvider;
@@ -36,39 +40,39 @@ import java.util.SplittableRandom;
 public class HedgehogEntity extends WKTameableEntity implements GeoEntity, SmartBrainOwner<HedgehogEntity> {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
-    public HedgehogEntity(EntityType<? extends TameableEntity> entityType, World world) {
+    public HedgehogEntity(EntityType<? extends TamableAnimal> entityType, Level world) {
         super(entityType, world);
-        this.setTamed(false, true);
+        this.setTame(false, true);
     }
 
-    public static DefaultAttributeContainer.Builder createAttributes() {
-        return MobEntity.createMobAttributes()
-                .add(EntityAttributes.MOVEMENT_SPEED, 0.25)
-                .add(EntityAttributes.MAX_HEALTH, 6.0)
-                .add(EntityAttributes.ATTACK_DAMAGE);
+    public static AttributeSupplier.Builder createAttributes() {
+        return Mob.createMobAttributes()
+                .add(Attributes.MOVEMENT_SPEED, 0.25)
+                .add(Attributes.MAX_HEALTH, 6.0)
+                .add(Attributes.ATTACK_DAMAGE);
     }
 
     @Override
-    protected Brain.Profile<?> createBrainProfile() {
+    protected Brain.Provider<?> brainProvider() {
         return new SmartBrainProvider<>(this);
     }
 
     @Override
-    protected void mobTick(ServerWorld world) {
+    protected void customServerAiStep(ServerLevel world) {
         tickBrain(this);
     }
 
     @Override
-    public boolean isBreedingItem(ItemStack stack) {
+    public boolean isFood(ItemStack stack) {
         return false;
     }
 
     @Nullable
     @Override
-    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, EntitySpawnReason spawnReason, @Nullable SpawnGroupData entityData) {
         int var = new SplittableRandom().nextInt(1, 7);
         this.setVariant(var);
-        return super.initialize(world, difficulty, spawnReason, entityData);
+        return super.finalizeSpawn(world, difficulty, spawnReason, entityData);
     }
 
     @Override
@@ -78,12 +82,12 @@ public class HedgehogEntity extends WKTameableEntity implements GeoEntity, Smart
 
     @Nullable
     @Override
-    public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
-        HedgehogEntity hedgehogEntity = WKEntityTypes.HEDGEHOG.create(world, SpawnReason.BREEDING);
-        LazyEntityReference<LivingEntity> owner = this.getOwnerReference();
+    public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entity) {
+        HedgehogEntity hedgehogEntity = WKEntityTypes.HEDGEHOG.create(world, EntitySpawnReason.BREEDING);
+        EntityReference<LivingEntity> owner = this.getOwnerReference();
         if (owner != null && hedgehogEntity != null) {
-            hedgehogEntity.setOwner(owner);
-            hedgehogEntity.setTamed(true, true);
+            hedgehogEntity.setOwnerReference(owner);
+            hedgehogEntity.setTame(true, true);
         }
         return hedgehogEntity;
     }
@@ -115,7 +119,7 @@ public class HedgehogEntity extends WKTameableEntity implements GeoEntity, Smart
     }
 
     private PlayState predicate(AnimationTest<HedgehogEntity> state) {
-        if (this.isSitting()) {
+        if (this.isOrderedToSit()) {
             state.setAnimation(RawAnimation.begin().thenLoop("loaf"));
             return PlayState.CONTINUE;
         } else if (state.isMoving()) {

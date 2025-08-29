@@ -2,15 +2,15 @@ package cf.witcheskitchen.mixin.fluid;
 
 import cf.witcheskitchen.api.fluid.IFluidContainer;
 import cf.witcheskitchen.api.fluid.WKFluidAPI;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.GlassBottleItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.world.item.BottleItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 
-@Mixin(GlassBottleItem.class)
+@Mixin(BottleItem.class)
 public class BottleItemMixin implements IFluidContainer {
 
     @Override
@@ -21,14 +21,14 @@ public class BottleItemMixin implements IFluidContainer {
     @Override
     public @NotNull
     ItemStack getEmptyStack() {
-        return new ItemStack(((GlassBottleItem) (Object) this));
+        return new ItemStack(((BottleItem) (Object) this));
     }
 
     @Override
     public @NotNull
     ItemStack getFullStack(Fluid fluid) {
         if (fluid == Fluids.WATER) {
-            return Items.POTION.getDefaultStack();
+            return Items.POTION.getDefaultInstance();
         } else {
             return ItemStack.EMPTY;
         }

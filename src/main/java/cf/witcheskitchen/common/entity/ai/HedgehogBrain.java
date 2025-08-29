@@ -6,12 +6,12 @@ import cf.witcheskitchen.common.entity.ai.task.FollowOwnerTask;
 import cf.witcheskitchen.common.entity.tameable.HedgehogEntity;
 import cf.witcheskitchen.common.registry.WKEntityTypes;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.brain.task.LookAroundTask;
-import net.minecraft.entity.ai.brain.task.MoveToTargetTask;
-import net.minecraft.entity.ai.brain.task.StayAboveWaterTask;
-import net.minecraft.util.math.intprovider.ConstantIntProvider;
+import net.minecraft.util.valueproviders.ConstantInt;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.behavior.MoveToTargetSink;
+import net.minecraft.world.entity.ai.behavior.RandomLookAround;
+import net.minecraft.world.entity.ai.behavior.Swim;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.OneRandomBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.Idle;
@@ -34,9 +34,9 @@ public class HedgehogBrain {
     public static BrainActivityGroup<HedgehogEntity> getCoreTasks() {
         return BrainActivityGroup.coreTasks(
                 new DontMoveTask(),
-                new StayAboveWaterTask(0.6f),
-                new LookAroundTask(ConstantIntProvider.create(45), 90, -15, 15),
-                new MoveToTargetTask()
+                new Swim(0.6f),
+                new RandomLookAround(ConstantInt.of(45), 90, -15, 15),
+                new MoveToTargetSink()
         );
     }
 

@@ -2,14 +2,14 @@ package cf.witcheskitchen.api.screen;
 
 import cf.witcheskitchen.common.screenhandler.slot.WKOutputSlot;
 import cf.witcheskitchen.common.screenhandler.slot.WKSlot;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.screen.slot.Slot;
 import org.apache.commons.lang3.Range;
 
 import java.util.function.Predicate;
+import net.minecraft.world.Container;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * A ScreenHandler slot builder.
@@ -19,8 +19,8 @@ import java.util.function.Predicate;
 public final class ScreenHandlerBuilder {
 
     private final WKScreenHandler parent;
-    private final PlayerInventory playerInventory;
-    private final Inventory inventory;
+    private final Inventory playerInventory;
+    private final Container inventory;
     private int start;
 
     public ScreenHandlerBuilder(WKScreenHandler parent) {
@@ -39,7 +39,7 @@ public final class ScreenHandlerBuilder {
         return this;
     }
 
-    public ScreenHandlerBuilder output(final int index, final int posX, final int posY, PlayerEntity player) {
+    public ScreenHandlerBuilder output(final int index, final int posX, final int posY, Player player) {
         this.parent.addSlot(new WKOutputSlot(this.inventory, index, posX, posY, player));
         return this;
     }

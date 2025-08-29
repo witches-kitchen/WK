@@ -5,15 +5,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mojang.serialization.JsonOps;
-import net.minecraft.entity.EntityType;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.input.RecipeInput;
-import net.minecraft.registry.Registries;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.JsonHelper;
-import net.minecraft.util.collection.DefaultedList;
 import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -27,6 +18,15 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
+import net.minecraft.core.NonNullList;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.Container;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeInput;
 
 public final class RecipeUtils {
 
@@ -36,8 +36,8 @@ public final class RecipeUtils {
 
     /**
      * <p>
-     * This function finds out whether the given slots from the {@link Inventory}
-     * do match the {@link DefaultedList} of Ingredients, which is used as a filter
+     * This function finds out whether the given slots from the {@link Container}
+     * do match the {@link NonNullList} of Ingredients, which is used as a filter
      * for crafting recipes.
      * </p>
      *
@@ -64,7 +64,7 @@ public final class RecipeUtils {
         // This collection holds the valid stacks
         final var validStacks = new ArrayList<ItemStack>();
         for (int slot = startIndex; slot <= endIndex; slot += 1) {
-            final ItemStack stackInSlot = inventory.getStackInSlot(slot);
+            final ItemStack stackInSlot = inventory.getItem(slot);
             // All the empty stacks are discarded
             if (stackInSlot.isEmpty()) {
                 continue;
@@ -101,11 +101,11 @@ public final class RecipeUtils {
      * @param array JsonArray
      * @return DefaultedList of ItemStack
      */
-    public static DefaultedList<ItemStack> deserializeStacks(JsonArray array) {
+    public static NonNullList<ItemStack> deserializeStacks(JsonArray array) {
         if (array.isJsonArray()) {
             return arrayStream(array.getAsJsonArray()).map(entry -> deserializeStack(entry.getAsJsonObject())).collect(DefaultedListCollector.toList());
         } else {
-            return DefaultedList.copyOf(deserializeStack(array.getAsJsonObject()));
+            return NonNullList.of(deserializeStack(array.getAsJsonObject()));
         }
     }
 
@@ -113,7 +113,7 @@ public final class RecipeUtils {
         if (array.isJsonArray()) {
             return arrayStream(array.getAsJsonArray()).map(entry -> deserializeEntityType(entry.getAsJsonObject())).collect(DefaultedListCollector.toList());
         } else {
-            return DefaultedList.copyOf(deserializeEntityType(array.getAsJsonObject()));
+            return NonNullList.of(deserializeEntityType(array.getAsJsonObject()));
         }
     }
 
@@ -123,8 +123,8 @@ public final class RecipeUtils {
      * @param array JsonArray
      * @return DefaultedList of Ingredient
      */
-    public static DefaultedList<Ingredient> deserializeIngredients(JsonArray array) {
-        final DefaultedList<Ingredient> ingredients = DefaultedList.of();
+    public static NonNullList<Ingredient> deserializeIngredients(JsonArray array) {
+        final NonNullList<Ingredient> ingredients = NonNullList.create();
         for (int i = 0; i < array.size(); i++) {
             final Ingredient input = Ingredient.CODEC.parse(JsonOps.INSTANCE, array.get(i)).getOrThrow();
             if (!input.isEmpty()) {
@@ -154,12 +154,12 @@ public final class RecipeUtils {
     }
 
     public static @Nullable EntityType<?> deserializeEntityType(JsonObject object) {
-        final Identifier id = Identifier.tryParse(JsonHelper.getString(object, "entity"));
-        return Registries.ENTITY_TYPE.get(id);
+        final ResourceLocation id = ResourceLocation.tryParse(GsonHelper.getAsString(object, "entity"));
+        return BuiltInRegistries.ENTITY_TYPE.getValue(id);
     }
 
-    public static DefaultedList<Ingredient> getIngredients(JsonArray json) {
-        DefaultedList<Ingredient> ingredients = DefaultedList.of();
+    public static NonNullList<Ingredient> getIngredients(JsonArray json) {
+        NonNullList<Ingredient> ingredients = NonNullList.create();
         for (int i = 0; i < json.size(); i++) {
             Ingredient ingredient = Ingredient.CODEC.parse(JsonOps.INSTANCE, json.get(i)).getOrThrow();
             if (!ingredient.isEmpty()) {
@@ -177,8 +177,8 @@ public final class RecipeUtils {
     }
 
     public static @NotNull CommandType deserializeCommand(JsonObject object) {
-        String command = JsonHelper.getString(object, "command");
-        String type = JsonHelper.getString(object, "type");
+        String command = GsonHelper.getAsString(object, "command");
+        String type = GsonHelper.getAsString(object, "type");
         return new CommandType(command, type);
     }
 
@@ -188,7 +188,7 @@ public final class RecipeUtils {
      *
      * @param <T>
      */
-    public static class DefaultedListCollector<T> implements Collector<T, DefaultedList<T>, DefaultedList<T>> {
+    public static class DefaultedListCollector<T> implements Collector<T, NonNullList<T>, NonNullList<T>> {
 
         private static final Set<Characteristics> CH_ID = Collections.unmodifiableSet(EnumSet.of(Characteristics.IDENTITY_FINISH));
 
@@ -197,17 +197,17 @@ public final class RecipeUtils {
         }
 
         @Override
-        public Supplier<DefaultedList<T>> supplier() {
-            return DefaultedList::of;
+        public Supplier<NonNullList<T>> supplier() {
+            return NonNullList::create;
         }
 
         @Override
-        public BiConsumer<DefaultedList<T>, T> accumulator() {
-            return DefaultedList::add;
+        public BiConsumer<NonNullList<T>, T> accumulator() {
+            return NonNullList::add;
         }
 
         @Override
-        public BinaryOperator<DefaultedList<T>> combiner() {
+        public BinaryOperator<NonNullList<T>> combiner() {
             return (left, right) -> {
                 left.addAll(right);
                 return left;
@@ -215,8 +215,8 @@ public final class RecipeUtils {
         }
 
         @Override
-        public Function<DefaultedList<T>, DefaultedList<T>> finisher() {
-            return i -> (DefaultedList<T>) i;
+        public Function<NonNullList<T>, NonNullList<T>> finisher() {
+            return i -> (NonNullList<T>) i;
         }
 
         @Override

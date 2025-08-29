@@ -3,10 +3,9 @@ package cf.witcheskitchen.common.registry;
 import cf.witcheskitchen.WitchesKitchen;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
 import cf.witcheskitchen.common.curse.Curse;
-import net.minecraft.registry.Registry;
-
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.core.Registry;
 
 public interface WKCurseRegistry {
     List<ObjectDefinition<Curse>> CURSES = new ArrayList<>();

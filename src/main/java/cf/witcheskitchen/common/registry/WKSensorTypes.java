@@ -2,7 +2,7 @@ package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.common.entity.ai.sensor.TamableSensor;
 import cf.witcheskitchen.common.entity.ai.sensor.TimeOfDaySensor;
-import net.minecraft.entity.ai.brain.sensor.SensorType;
+import net.minecraft.world.entity.ai.sensing.SensorType;
 import net.tslat.smartbrainlib.SBLConstants;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 

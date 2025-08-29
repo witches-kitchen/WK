@@ -1,6 +1,6 @@
 package cf.witcheskitchen.common.curse;
 
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class Curse {
@@ -10,15 +10,15 @@ public class Curse {
         this.level = level;
     }
 
-    public void tick(@NotNull PlayerEntity player) {
+    public void tick(@NotNull Player player) {
 
     }
 
-    public void onRemoved(PlayerEntity player) {
+    public void onRemoved(Player player) {
 
     }
 
-    public void onAdded(PlayerEntity player) {
+    public void onAdded(Player player) {
 
     }
 }

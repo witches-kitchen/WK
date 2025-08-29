@@ -2,17 +2,17 @@ package cf.witcheskitchen.api.fluid;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.util.math.Direction;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Predicate;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 /**
  * WitchesKitchen FluidTank implementation of a {@link IFluidStorage}.
@@ -21,7 +21,7 @@ import java.util.function.Predicate;
  *
  * <p>It is important to notice that each FluidTank instance can only hold
  * one {@link FluidStack}, that can mutate the current data, very similar to
- * {@link net.minecraft.item.ItemStack} <p>
+ * {@link net.minecraft.world.item.ItemStack} <p>
  */
 public class FluidTank implements IFluidStorage {
     // TODO: is this what we want?
@@ -37,8 +37,8 @@ public class FluidTank implements IFluidStorage {
                     .apply(instance, FluidTank::fromCodec)
     );
 
-    public static final PacketCodec<RegistryByteBuf, FluidTank> PACKET_CODEC = PacketCodec.tuple(
-            PacketCodecs.VAR_INT, FluidTank::getCapacity,
+    public static final StreamCodec<RegistryFriendlyByteBuf, FluidTank> PACKET_CODEC = StreamCodec.composite(
+            ByteBufCodecs.VAR_INT, FluidTank::getCapacity,
             FluidStack.PACKET_CODEC, FluidTank::getStack,
             FluidTank::fromCodec
     );
@@ -169,23 +169,23 @@ public class FluidTank implements IFluidStorage {
 
     /**
      * Reads the content of this tank.
-     * Must be read from {@link net.minecraft.block.entity.BlockEntity#readData(ReadView)}
+     * Must be read from {@link net.minecraft.world.level.block.entity.BlockEntity#loadAdditional(ValueInput)}
      *
-     * @param data {@link NbtCompound}
+     * @param data {@link CompoundTag}
      */
     @Override
-    public void readStorage(@NotNull ReadView data) {
+    public void readStorage(@NotNull ValueInput data) {
         this.stack = FluidStack.fromData(data);
     }
 
     /**
      * Writes the content of this tank.
-     * Must be written from {@link net.minecraft.block.entity.BlockEntity#writeData(net.minecraft.storage.WriteView)}
+     * Must be written from {@link net.minecraft.world.level.block.entity.BlockEntity#saveAdditional(net.minecraft.world.level.storage.ValueOutput)}
      *
-     * @return {@link NbtCompound} that contains the data of the {@link FluidStack} of the tank
+     * @return {@link CompoundTag} that contains the data of the {@link FluidStack} of the tank
      */
     @Override
-    public void writeStorage(@NotNull WriteView data) {
+    public void writeStorage(@NotNull ValueOutput data) {
         this.stack.writeToData(data);
     }
 
@@ -215,9 +215,9 @@ public class FluidTank implements IFluidStorage {
     }
 
     /**
-     * @return The internal {@link NbtCompound} of the {@link FluidStack} in the tank
+     * @return The internal {@link CompoundTag} of the {@link FluidStack} in the tank
      */
-    public NbtCompound getInternalNbt() {
+    public CompoundTag getInternalNbt() {
         return this.stack.getNbt();
     }
 

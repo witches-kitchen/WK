@@ -1,12 +1,11 @@
 package cf.witcheskitchen.api.util;
 
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.collection.DefaultedList;
-
 import java.util.HashSet;
 import java.util.Set;
+import net.minecraft.core.NonNullList;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 public final class InventoryHelper {
 
@@ -14,20 +13,20 @@ public final class InventoryHelper {
         // Don't let anyone instantiate this
     }
 
-    public static boolean containsItem(Inventory inventory, Item item) {
+    public static boolean containsItem(Container inventory, Item item) {
         return findAnyIndexOf(inventory, item) >= 0;
     }
 
     /**
      * Finds the position of the requested {@link ItemStack} (including empty stacks), or -1 if is not found.
      *
-     * @param inventory {@link Inventory}
+     * @param inventory {@link Container}
      * @param search    {@link ItemStack} to search.
      * @return index of the stack
      */
-    public static int findAnyIndexOf(Inventory inventory, ItemStack search) {
-        for (int i = 0; i < inventory.size(); i++) {
-            if (ItemUtil.areItemsEqual(inventory.getStack(i), search, true)) {
+    public static int findAnyIndexOf(Container inventory, ItemStack search) {
+        for (int i = 0; i < inventory.getContainerSize(); i++) {
+            if (ItemUtil.areItemsEqual(inventory.getItem(i), search, true)) {
                 return i;
             }
         }
@@ -38,13 +37,13 @@ public final class InventoryHelper {
     /**
      * Finds the position of the requested {@link Item} or -1 if is not found.
      *
-     * @param inventory {@link Inventory}
+     * @param inventory {@link Container}
      * @param search    {@link Item} to search.
      * @return index of the stack
      */
-    public static int findAnyIndexOf(Inventory inventory, Item search) {
-        for (int i = 0; i < inventory.size(); i++) {
-            if (inventory.getStack(i).getItem() == search) {
+    public static int findAnyIndexOf(Container inventory, Item search) {
+        for (int i = 0; i < inventory.getContainerSize(); i++) {
+            if (inventory.getItem(i).getItem() == search) {
                 return i;
             }
         }
@@ -59,7 +58,7 @@ public final class InventoryHelper {
      * @param stacks DefaultedList
      * @return the count of the Set of Items.
      */
-    public static int countInSet(final DefaultedList<ItemStack> stacks) {
+    public static int countInSet(final NonNullList<ItemStack> stacks) {
         if (stacks.isEmpty()) {
             return 0;
         }
@@ -73,7 +72,7 @@ public final class InventoryHelper {
      * @param stacks DefaultedList of ItemStack
      * @return A populated HashSet instance
      */
-    public static Set<Item> createNonEmptySet(final DefaultedList<ItemStack> stacks) {
+    public static Set<Item> createNonEmptySet(final NonNullList<ItemStack> stacks) {
         final Set<Item> nonEmptySet = new HashSet<>();
         for (ItemStack entry : stacks) {
             if (!entry.isEmpty()) {

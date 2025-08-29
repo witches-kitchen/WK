@@ -1,7 +1,7 @@
 accessWidener v2 named
-accessible method net/minecraft/world/gen/foliage/FoliagePlacerType register (Ljava/lang/String;Lcom/mojang/serialization/Codec;)Lnet/minecraft/world/gen/foliage/FoliagePlacerType;
-accessible method net/minecraft/block/Blocks canSpawnOnLeaves (Lnet/minecraft/block/BlockState;Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/entity/EntityType;)Ljava/lang/Boolean;
-accessible method net/minecraft/block/Blocks never (Lnet/minecraft/block/BlockState;Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;)Z
-accessible method net/minecraft/block/CropBlock isMature (Lnet/minecraft/block/BlockState;)Z
-extendable method net/minecraft/block/CropBlock isMature (Lnet/minecraft/block/BlockState;)Z
-accessible method net/minecraft/recipe/SingleStackRecipe result ()Lnet/minecraft/item/ItemStack;
+accessible method net/minecraft/world/level/levelgen/feature/foliageplacers/FoliagePlacerType register (Ljava/lang/String;Lcom/mojang/serialization/Codec;)Lnet/minecraft/world/level/levelgen/feature/foliageplacers/FoliagePlacerType;
+accessible method net/minecraft/world/level/block/Blocks ocelotOrParrot (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/EntityType;)Ljava/lang/Boolean;
+accessible method net/minecraft/world/level/block/Blocks never (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Z
+accessible method net/minecraft/world/level/block/CropBlock isMaxAge (Lnet/minecraft/world/level/block/state/BlockState;)Z
+extendable method net/minecraft/world/level/block/CropBlock isMaxAge (Lnet/minecraft/world/level/block/state/BlockState;)Z
+accessible method net/minecraft/world/item/crafting/SingleItemRecipe result ()Lnet/minecraft/world/item/ItemStack;

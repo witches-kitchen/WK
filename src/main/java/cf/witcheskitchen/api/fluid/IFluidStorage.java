@@ -1,10 +1,10 @@
 package cf.witcheskitchen.api.fluid;
 
 
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.util.math.Direction;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -96,19 +96,19 @@ public interface IFluidStorage {
     boolean isEmpty();
 
     /**
-     * Writes the internal content of this tank {@link FluidStack} to a {@link NbtCompound}.
+     * Writes the internal content of this tank {@link FluidStack} to a {@link CompoundTag}.
      * <br>
-     * Must be written from {@link net.minecraft.block.entity.BlockEntity#writeData(WriteView)}.
+     * Must be written from {@link net.minecraft.world.level.block.entity.BlockEntity#saveAdditional(ValueOutput)}.
      */
-    void writeStorage(@NotNull WriteView data);
+    void writeStorage(@NotNull ValueOutput data);
 
     /**
      * Reads the internal content of this tank.
      * <br>
-     * Must be read from {@link net.minecraft.block.entity.BlockEntity#readData(net.minecraft.storage.ReadView)}
+     * Must be read from {@link net.minecraft.world.level.block.entity.BlockEntity#loadAdditional(net.minecraft.world.level.storage.ValueInput)}
      *
-     * @param data {@link NbtCompound}
+     * @param data {@link CompoundTag}
      */
-    void readStorage(@NotNull ReadView data);
+    void readStorage(@NotNull ValueInput data);
 
 }

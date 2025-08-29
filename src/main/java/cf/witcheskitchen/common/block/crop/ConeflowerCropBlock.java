@@ -8,62 +8,61 @@ import cf.witcheskitchen.common.component.WKComponents;
 import cf.witcheskitchen.common.registry.WKItems;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.enums.DoubleBlockHalf;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.property.IntProperty;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.World;
-
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import java.util.Optional;
 
 public class ConeflowerCropBlock extends WKTallCropBlock implements CropVariants {
     public static final VoxelShape[] LOWER_AGE_TO_SHAPE;
     public static final VoxelShape[] UPPER_AGE_TO_SHAPE;
     public static final int MAX_AGE = 6;
-    private static final IntProperty AGE = IntProperty.of("age", 0, MAX_AGE);
+    private static final IntegerProperty AGE = IntegerProperty.create("age", 0, MAX_AGE);
 
     static {
         LOWER_AGE_TO_SHAPE = new VoxelShape[]{
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 6.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 10.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 12.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0)
+                Block.box(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
+                Block.box(0.0, 0.0, 0.0, 16.0, 6.0, 16.0),
+                Block.box(0.0, 0.0, 0.0, 16.0, 10.0, 16.0),
+                Block.box(0.0, 0.0, 0.0, 16.0, 12.0, 16.0),
+                Block.box(0.0, 0.0, 0.0, 16.0, 16.0, 16.0),
+                Block.box(0.0, 0.0, 0.0, 16.0, 16.0, 16.0),
+                Block.box(0.0, 0.0, 0.0, 16.0, 16.0, 16.0)
         };
         UPPER_AGE_TO_SHAPE = new VoxelShape[]{
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 3.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 8.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 12.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0)
+                Block.box(0.0, 0.0, 0.0, 16.0, 3.0, 16.0),
+                Block.box(0.0, 0.0, 0.0, 16.0, 8.0, 16.0),
+                Block.box(0.0, 0.0, 0.0, 16.0, 12.0, 16.0),
+                Block.box(0.0, 0.0, 0.0, 16.0, 16.0, 16.0)
         };
     }
 
     private final ConeflowerTypes type;
 
-    public ConeflowerCropBlock(Settings settings) {
+    public ConeflowerCropBlock(Properties settings) {
         this(settings, ConeflowerTypes.COMMON);
     }
 
-    public ConeflowerCropBlock(Settings settings, ConeflowerTypes rarity) {
+    public ConeflowerCropBlock(Properties settings, ConeflowerTypes rarity) {
         super(settings);
         this.type = rarity;
-        this.setDefaultState(this.getDefaultState().with(getAgeProperty(), 0).with(HALF, DoubleBlockHalf.LOWER));
+        this.registerDefaultState(this.defaultBlockState().setValue(getAgeProperty(), 0).setValue(HALF, DoubleBlockHalf.LOWER));
     }
 
     @Override
-    public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+    public BlockState playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
         Optional<ConeflowerTypes> nextType = type.next(type);
         if (nextType.isPresent()) {
             var component = SeedTypeHelper.toComponent(nextType.get().getName(), nextType.get().getType(), nextType.get().getColor());
             getNextSeed(world, pos, component);
         }
-        super.onBreak(world, pos, state, player);
+        super.playerWillDestroy(world, pos, state, player);
         return state;
     }
 
@@ -78,7 +77,7 @@ public class ConeflowerCropBlock extends WKTallCropBlock implements CropVariants
     }
 
     @Override
-    public IntProperty getAgeProperty() {
+    public IntegerProperty getAgeProperty() {
         return AGE;
     }
 

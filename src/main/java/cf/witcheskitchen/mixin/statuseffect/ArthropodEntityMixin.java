@@ -1,13 +1,17 @@
 package cf.witcheskitchen.mixin.statuseffect;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.FleeEntityGoal;
-import net.minecraft.entity.ai.goal.GoalSelector;
-import net.minecraft.entity.mob.*;
-import net.minecraft.entity.passive.BeeEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
+import net.minecraft.world.entity.ai.goal.GoalSelector;
+import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.monster.Endermite;
+import net.minecraft.world.entity.monster.Silverfish;
+import net.minecraft.world.entity.monster.Spider;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -18,26 +22,26 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.Arrays;
 import java.util.List;
 
-@Mixin(MobEntity.class)
+@Mixin(Mob.class)
 public abstract class ArthropodEntityMixin extends LivingEntity {
 
     @Shadow
     @Final
     protected GoalSelector goalSelector;
 
-    protected ArthropodEntityMixin(EntityType<? extends PathAwareEntity> entityType, World world) {
+    protected ArthropodEntityMixin(EntityType<? extends PathfinderMob> entityType, Level world) {
         super(entityType, world);
     }
 
-    @Inject(method = "initGoals", at = @At("HEAD"))
+    @Inject(method = "registerGoals", at = @At("HEAD"))
     private void initFleeGoal(CallbackInfo ci) {
-        MobEntity mob = MobEntity.class.cast(this);
+        Mob mob = Mob.class.cast(this);
 
-        List<Class<? extends MobEntity>> fleeEntities = Arrays.asList(SpiderEntity.class, SilverfishEntity.class, EndermiteEntity.class, BeeEntity.class);
+        List<Class<? extends Mob>> fleeEntities = Arrays.asList(Spider.class, Silverfish.class, Endermite.class, Bee.class);
 
-        for (Class<? extends MobEntity> entityClass : fleeEntities) {
+        for (Class<? extends Mob> entityClass : fleeEntities) {
             if (entityClass.isInstance(mob)) {
-                this.goalSelector.add(3, new FleeEntityGoal<>((PathAwareEntity) mob, PlayerEntity.class, 12.0F, 1.0D, 1.6D));
+                this.goalSelector.addGoal(3, new AvoidEntityGoal<>((PathfinderMob) mob, Player.class, 12.0F, 1.0D, 1.6D));
                 break;
             }
         }

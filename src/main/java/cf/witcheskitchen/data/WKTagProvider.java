@@ -6,33 +6,32 @@ import cf.witcheskitchen.common.registry.WKItems;
 import cf.witcheskitchen.common.registry.WKTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.EntityType;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.registry.tag.EntityTypeTags;
-import net.minecraft.registry.tag.ItemTags;
-import net.minecraft.registry.tag.TagKey;
-
+import net.minecraft.core.HolderLookup;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.EntityTypeTags;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import java.util.concurrent.CompletableFuture;
 
 public class WKTagProvider {
     public static class WKBlockTags extends FabricTagProvider.BlockTagProvider {
-        public WKBlockTags(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+        public WKBlockTags(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
             super(output, registriesFuture);
         }
 
         @Override
-        protected void configure(RegistryWrapper.WrapperLookup arg) {
+        protected void addTags(HolderLookup.Provider arg) {
             //WK
             builder(WKTags.HEATS_CAULDRON, Blocks.FIRE, Blocks.SOUL_FIRE, Blocks.MAGMA_BLOCK, Blocks.LAVA, Blocks.CAMPFIRE, Blocks.SOUL_CAMPFIRE);
 
             //VANILLA
-            builder(BlockTags.PICKAXE_MINEABLE, WKBlocks.IRON_WITCHES_CAULDRON, WKBlocks.COPPER_WITCHES_OVEN, WKBlocks.EXPOSED_COPPER_WITCHES_OVEN, WKBlocks.WEATHERED_COPPER_WITCHES_OVEN, WKBlocks.OXIDIZED_COPPER_WITCHES_OVEN, WKBlocks.WAXED_COPPER_WITCHES_OVEN, WKBlocks.WAXED_EXPOSED_COPPER_WITCHES_OVEN, WKBlocks.WAXED_WEATHERED_COPPER_WITCHES_OVEN, WKBlocks.WAXED_OXIDIZED_COPPER_WITCHES_OVEN, WKBlocks.OAK_BREWING_BARREL, WKBlocks.SPRUCE_BREWING_BARREL, WKBlocks.BIRCH_BREWING_BARREL, WKBlocks.JUNGLE_BREWING_BARREL, WKBlocks.ACACIA_BREWING_BARREL, WKBlocks.DARK_OAK_BREWING_BARREL, WKBlocks.CRIMSON_BREWING_BARREL, WKBlocks.WARPED_BREWING_BARREL);
-            builder(BlockTags.AXE_MINEABLE, WKBlocks.BLACKTHORN_LOG, WKBlocks.BLACKTHORN_WOOD, WKBlocks.BLACKTHORN_STAIRS, WKBlocks.BLACKTHORN_SLAB, WKBlocks.BLACKTHORN_PLANKS, WKBlocks.STRIPPED_BLACKTHORN_LOG, WKBlocks.STRIPPED_BLACKTHORN_WOOD, WKBlocks.ELDER_LOG, WKBlocks.ELDER_WOOD, WKBlocks.ELDER_STAIRS, WKBlocks.ELDER_SLAB, WKBlocks.ELDER_PLANKS, WKBlocks.STRIPPED_ELDER_LOG, WKBlocks.STRIPPED_ELDER_WOOD, WKBlocks.HAWTHORN_LOG, WKBlocks.HAWTHORN_WOOD, WKBlocks.HAWTHORN_STAIRS, WKBlocks.HAWTHORN_SLAB, WKBlocks.HAWTHORN_PLANKS, WKBlocks.STRIPPED_HAWTHORN_LOG, WKBlocks.STRIPPED_HAWTHORN_WOOD, WKBlocks.JUNIPER_LOG, WKBlocks.JUNIPER_WOOD, WKBlocks.JUNIPER_STAIRS, WKBlocks.JUNIPER_SLAB, WKBlocks.JUNIPER_PLANKS, WKBlocks.STRIPPED_JUNIPER_LOG, WKBlocks.STRIPPED_JUNIPER_WOOD, WKBlocks.ROWAN_LOG, WKBlocks.ROWAN_WOOD, WKBlocks.ROWAN_STAIRS, WKBlocks.ROWAN_SLAB, WKBlocks.ROWAN_PLANKS, WKBlocks.STRIPPED_ROWAN_LOG, WKBlocks.STRIPPED_ROWAN_WOOD, WKBlocks.SUMAC_LOG, WKBlocks.SUMAC_WOOD, WKBlocks.SUMAC_STAIRS, WKBlocks.SUMAC_SLAB, WKBlocks.SUMAC_PLANKS, WKBlocks.STRIPPED_SUMAC_LOG, WKBlocks.STRIPPED_SUMAC_WOOD);
+            builder(BlockTags.MINEABLE_WITH_PICKAXE, WKBlocks.IRON_WITCHES_CAULDRON, WKBlocks.COPPER_WITCHES_OVEN, WKBlocks.EXPOSED_COPPER_WITCHES_OVEN, WKBlocks.WEATHERED_COPPER_WITCHES_OVEN, WKBlocks.OXIDIZED_COPPER_WITCHES_OVEN, WKBlocks.WAXED_COPPER_WITCHES_OVEN, WKBlocks.WAXED_EXPOSED_COPPER_WITCHES_OVEN, WKBlocks.WAXED_WEATHERED_COPPER_WITCHES_OVEN, WKBlocks.WAXED_OXIDIZED_COPPER_WITCHES_OVEN, WKBlocks.OAK_BREWING_BARREL, WKBlocks.SPRUCE_BREWING_BARREL, WKBlocks.BIRCH_BREWING_BARREL, WKBlocks.JUNGLE_BREWING_BARREL, WKBlocks.ACACIA_BREWING_BARREL, WKBlocks.DARK_OAK_BREWING_BARREL, WKBlocks.CRIMSON_BREWING_BARREL, WKBlocks.WARPED_BREWING_BARREL);
+            builder(BlockTags.MINEABLE_WITH_AXE, WKBlocks.BLACKTHORN_LOG, WKBlocks.BLACKTHORN_WOOD, WKBlocks.BLACKTHORN_STAIRS, WKBlocks.BLACKTHORN_SLAB, WKBlocks.BLACKTHORN_PLANKS, WKBlocks.STRIPPED_BLACKTHORN_LOG, WKBlocks.STRIPPED_BLACKTHORN_WOOD, WKBlocks.ELDER_LOG, WKBlocks.ELDER_WOOD, WKBlocks.ELDER_STAIRS, WKBlocks.ELDER_SLAB, WKBlocks.ELDER_PLANKS, WKBlocks.STRIPPED_ELDER_LOG, WKBlocks.STRIPPED_ELDER_WOOD, WKBlocks.HAWTHORN_LOG, WKBlocks.HAWTHORN_WOOD, WKBlocks.HAWTHORN_STAIRS, WKBlocks.HAWTHORN_SLAB, WKBlocks.HAWTHORN_PLANKS, WKBlocks.STRIPPED_HAWTHORN_LOG, WKBlocks.STRIPPED_HAWTHORN_WOOD, WKBlocks.JUNIPER_LOG, WKBlocks.JUNIPER_WOOD, WKBlocks.JUNIPER_STAIRS, WKBlocks.JUNIPER_SLAB, WKBlocks.JUNIPER_PLANKS, WKBlocks.STRIPPED_JUNIPER_LOG, WKBlocks.STRIPPED_JUNIPER_WOOD, WKBlocks.ROWAN_LOG, WKBlocks.ROWAN_WOOD, WKBlocks.ROWAN_STAIRS, WKBlocks.ROWAN_SLAB, WKBlocks.ROWAN_PLANKS, WKBlocks.STRIPPED_ROWAN_LOG, WKBlocks.STRIPPED_ROWAN_WOOD, WKBlocks.SUMAC_LOG, WKBlocks.SUMAC_WOOD, WKBlocks.SUMAC_STAIRS, WKBlocks.SUMAC_SLAB, WKBlocks.SUMAC_PLANKS, WKBlocks.STRIPPED_SUMAC_LOG, WKBlocks.STRIPPED_SUMAC_WOOD);
             builder(BlockTags.LEAVES, WKBlocks.BLACKTHORN_LEAVES, WKBlocks.ELDER_LEAVES, WKBlocks.HAWTHORN_LEAVES, WKBlocks.JUNIPER_LEAVES, WKBlocks.ROWAN_LEAVES, WKBlocks.SUMAC_LEAVES);
             builder(BlockTags.LOGS, WKBlocks.BLACKTHORN_LOG, WKBlocks.BLACKTHORN_WOOD, WKBlocks.STRIPPED_BLACKTHORN_LOG, WKBlocks.STRIPPED_BLACKTHORN_WOOD, WKBlocks.ELDER_LOG, WKBlocks.ELDER_WOOD, WKBlocks.STRIPPED_ELDER_LOG, WKBlocks.STRIPPED_ELDER_WOOD, WKBlocks.HAWTHORN_LOG, WKBlocks.HAWTHORN_WOOD, WKBlocks.STRIPPED_HAWTHORN_LOG, WKBlocks.STRIPPED_HAWTHORN_WOOD, WKBlocks.JUNIPER_LOG, WKBlocks.JUNIPER_WOOD, WKBlocks.STRIPPED_JUNIPER_LOG, WKBlocks.STRIPPED_JUNIPER_WOOD, WKBlocks.ROWAN_LOG, WKBlocks.ROWAN_WOOD, WKBlocks.STRIPPED_ROWAN_LOG, WKBlocks.STRIPPED_ROWAN_WOOD, WKBlocks.SUMAC_LOG, WKBlocks.SUMAC_WOOD, WKBlocks.STRIPPED_SUMAC_LOG, WKBlocks.STRIPPED_SUMAC_WOOD);
             builder(BlockTags.LOGS_THAT_BURN, WKBlocks.BLACKTHORN_LOG, WKBlocks.BLACKTHORN_WOOD, WKBlocks.STRIPPED_BLACKTHORN_LOG, WKBlocks.STRIPPED_BLACKTHORN_WOOD, WKBlocks.ELDER_LOG, WKBlocks.ELDER_WOOD, WKBlocks.STRIPPED_ELDER_LOG, WKBlocks.STRIPPED_ELDER_WOOD, WKBlocks.HAWTHORN_LOG, WKBlocks.HAWTHORN_WOOD, WKBlocks.STRIPPED_HAWTHORN_LOG, WKBlocks.STRIPPED_HAWTHORN_WOOD, WKBlocks.JUNIPER_LOG, WKBlocks.JUNIPER_WOOD, WKBlocks.STRIPPED_JUNIPER_LOG, WKBlocks.STRIPPED_JUNIPER_WOOD, WKBlocks.ROWAN_LOG, WKBlocks.ROWAN_WOOD, WKBlocks.STRIPPED_ROWAN_LOG, WKBlocks.STRIPPED_ROWAN_WOOD, WKBlocks.SUMAC_LOG, WKBlocks.SUMAC_WOOD, WKBlocks.STRIPPED_SUMAC_LOG, WKBlocks.STRIPPED_SUMAC_WOOD);
@@ -43,18 +42,18 @@ public class WKTagProvider {
         private void builder(TagKey<Block> tag, Block... blocks) {
             var builder = builder(tag);
             for (Block block : blocks) {
-                builder.add(block.getRegistryEntry().registryKey());
+                builder.add(block.builtInRegistryHolder().key());
             }
         }
     }
 
     public static class WKItemTags extends FabricTagProvider.ItemTagProvider {
-        public WKItemTags(FabricDataOutput dataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture) {
+        public WKItemTags(FabricDataOutput dataOutput, CompletableFuture<HolderLookup.Provider> completableFuture) {
             super(dataOutput, completableFuture, new WKTagProvider.WKBlockTags(dataOutput, completableFuture));
         }
 
         @Override
-        protected void configure(RegistryWrapper.WrapperLookup arg) {
+        protected void addTags(HolderLookup.Provider arg) {
             //WK
             builder(WKTags.BARREL_BLACKLIST, Items.AIR);
             builder(WKTags.OVEN_BLACKLIST, Items.AIR);
@@ -74,18 +73,18 @@ public class WKTagProvider {
         private void builder(TagKey<Item> tag, Item... items) {
             var builder = builder(tag);
             for (Item item : items) {
-                builder.add(item.getRegistryEntry().registryKey());
+                builder.add(item.builtInRegistryHolder().key());
             }
         }
     }
 
     public static class WKEntityTypeTags extends FabricTagProvider.EntityTypeTagProvider {
-        public WKEntityTypeTags(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture) {
+        public WKEntityTypeTags(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> completableFuture) {
             super(output, completableFuture);
         }
 
         @Override
-        protected void configure(RegistryWrapper.WrapperLookup arg) {
+        protected void addTags(HolderLookup.Provider arg) {
             //WK
             builder(WKTags.GHOST, WKEntityTypes.CUSITH, WKEntityTypes.CHURCH_GRIM);
             builder(WKTags.GREATER_DEMON);
@@ -103,7 +102,7 @@ public class WKTagProvider {
         private void builder(TagKey<EntityType<?>> tag, EntityType<?>... types) {
             var builder = builder(tag);
             for (EntityType<?> type : types) {
-                builder.add(type.getRegistryEntry().registryKey());
+                builder.add(type.builtInRegistryHolder().key());
             }
         }
     }

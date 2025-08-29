@@ -4,17 +4,16 @@ import cf.witcheskitchen.WitchesKitchen;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
 import cf.witcheskitchen.common.item.*;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.component.type.ConsumableComponent;
-import net.minecraft.component.type.FoodComponent;
-import net.minecraft.component.type.FoodComponents;
-import net.minecraft.item.Item;
-import net.minecraft.item.SpawnEggItem;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.food.Foods;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.SpawnEggItem;
+import net.minecraft.world.item.component.Consumable;
 
 public interface WKItems {
 
@@ -81,14 +80,14 @@ public interface WKItems {
     Item JUNIPER_MEAD = register("juniper_mead", new Item(food(WKFoodComponents.STRONG_ALCOHOL)));
     Item RUM = register("rum", new Item(food(WKFoodComponents.STRONG_ALCOHOL)));
     Item TRAVARICA = register("travarica", new Item(food(WKFoodComponents.STRONG_ALCOHOL)));
-    Item GROUND_BEEF = register("ground_beef", new Item(settings().food(FoodComponents.BEEF)));
-    Item GROUND_PORK = register("ground_pork", new Item(settings().food(FoodComponents.PORKCHOP)));
-    Item GROUND_MUTTON = register("ground_mutton", new Item(settings().food(FoodComponents.BEEF)));
-    Item HEART_PIE = register("heart_pie", new Item(settings().food(FoodComponents.PUMPKIN_PIE)));
-    Item ROOTS_PLATTER = register("roots_platter", new Item(settings().food(FoodComponents.BEETROOT_SOUP)));
-    Item DEMONIC_STEW = register("demonic_stew", new Item(settings().food(FoodComponents.RABBIT_STEW)));
-    Item MEATY_STEW = register("meaty_stew", new Item(settings().food(FoodComponents.RABBIT_STEW)));
-    Item VEGETABLE_STEW = register("vegetable_stew", new Item(settings().food(FoodComponents.BEETROOT_SOUP)));
+    Item GROUND_BEEF = register("ground_beef", new Item(settings().food(Foods.BEEF)));
+    Item GROUND_PORK = register("ground_pork", new Item(settings().food(Foods.PORKCHOP)));
+    Item GROUND_MUTTON = register("ground_mutton", new Item(settings().food(Foods.BEEF)));
+    Item HEART_PIE = register("heart_pie", new Item(settings().food(Foods.PUMPKIN_PIE)));
+    Item ROOTS_PLATTER = register("roots_platter", new Item(settings().food(Foods.BEETROOT_SOUP)));
+    Item DEMONIC_STEW = register("demonic_stew", new Item(settings().food(Foods.RABBIT_STEW)));
+    Item MEATY_STEW = register("meaty_stew", new Item(settings().food(Foods.RABBIT_STEW)));
+    Item VEGETABLE_STEW = register("vegetable_stew", new Item(settings().food(Foods.BEETROOT_SOUP)));
 
     //Materials
     Item HEART_OF_INNOCENCE = register("heart_of_innocence");
@@ -122,11 +121,11 @@ public interface WKItems {
         return Collections.unmodifiableList(ITEMS);
     }
 
-    static Item.Settings settings() {
-        return new Item.Settings();
+    static Item.Properties settings() {
+        return new Item.Properties();
     }
 
-    static Item.Settings food(Pair<FoodComponent, ConsumableComponent> components) {
+    static Item.Properties food(Pair<FoodProperties, Consumable> components) {
         return settings().food(components.getFirst(), components.getSecond());
     }
 
@@ -141,6 +140,6 @@ public interface WKItems {
     }
 
     static void init() {
-        ITEMS.forEach(entry -> Registry.register(Registries.ITEM, entry.id(), entry.object()));
+        ITEMS.forEach(entry -> Registry.register(BuiltInRegistries.ITEM, entry.id(), entry.object()));
     }
 }

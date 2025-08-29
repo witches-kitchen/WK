@@ -2,21 +2,21 @@ package cf.witcheskitchen.common.ritual;
 
 import cf.witcheskitchen.api.ritual.Ritual;
 import cf.witcheskitchen.common.recipe.RitualRecipe;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LightningEntity;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 
 public class LightningRitual extends Ritual {
     @Override
-    public void tick(World world, BlockPos blockPos, RitualRecipe ritualRecipe) {
+    public void tick(Level world, BlockPos blockPos, RitualRecipe ritualRecipe) {
         super.tick(world, blockPos, ritualRecipe);
-        LightningEntity lightningEntity = EntityType.LIGHTNING_BOLT.create(world, SpawnReason.MOB_SUMMONED);
+        LightningBolt lightningEntity = EntityType.LIGHTNING_BOLT.create(world, EntitySpawnReason.MOB_SUMMONED);
         if (lightningEntity != null) {
-            lightningEntity.refreshPositionAfterTeleport(Vec3d.ofBottomCenter(blockPos));
-            world.spawnEntity(lightningEntity);
+            lightningEntity.snapTo(Vec3.atBottomCenterOf(blockPos));
+            world.addFreshEntity(lightningEntity);
         }
     }
 }

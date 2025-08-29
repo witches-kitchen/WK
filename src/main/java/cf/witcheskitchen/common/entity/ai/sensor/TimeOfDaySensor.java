@@ -3,10 +3,10 @@ package cf.witcheskitchen.common.entity.ai.sensor;
 import cf.witcheskitchen.common.registry.WKMemoryModuleTypes;
 import cf.witcheskitchen.common.registry.WKSensorTypes;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.brain.MemoryModuleType;
-import net.minecraft.entity.ai.brain.sensor.SensorType;
-import net.minecraft.server.world.ServerWorld;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
+import net.minecraft.world.entity.ai.sensing.SensorType;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 import net.tslat.smartbrainlib.api.core.sensor.PredicateSensor;
 import net.tslat.smartbrainlib.util.BrainUtil;
@@ -17,7 +17,7 @@ public class TimeOfDaySensor<E extends LivingEntity> extends PredicateSensor<E, 
     private static final List<MemoryModuleType<?>> MEMORIES = ObjectArrayList.of(WKMemoryModuleTypes.IS_NIGHT);
 
     public TimeOfDaySensor() {
-        super((entity2, entity) -> entity.getWorld().isNight());
+        super((entity2, entity) -> entity.level().isDarkOutside());
     }
 
     @Override
@@ -31,7 +31,7 @@ public class TimeOfDaySensor<E extends LivingEntity> extends PredicateSensor<E, 
     }
 
     @Override
-    protected void sense(ServerWorld level, E entity) {
+    protected void doTick(ServerLevel level, E entity) {
         if (predicate().test(entity, entity)) {
             BrainUtil.setMemory(entity, WKMemoryModuleTypes.IS_NIGHT, true);
         } else {

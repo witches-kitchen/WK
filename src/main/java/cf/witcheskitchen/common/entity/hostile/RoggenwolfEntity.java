@@ -1,45 +1,45 @@
 package cf.witcheskitchen.common.entity.hostile;
 
 import cf.witcheskitchen.api.entity.WKHostileEntity;
-import net.minecraft.entity.EntityData;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.damage.DamageTypes;
-import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.LocalDifficulty;
-import net.minecraft.world.ServerWorldAccess;
-import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animatable.manager.AnimatableManager;
 
 import java.util.SplittableRandom;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
+import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 
 public class RoggenwolfEntity extends WKHostileEntity implements GeoEntity {
-    public RoggenwolfEntity(EntityType<? extends HostileEntity> entityType, World world) {
+    public RoggenwolfEntity(EntityType<? extends Monster> entityType, Level world) {
         super(entityType, world);
     }
 
-    public static DefaultAttributeContainer.Builder createAttributes() {
-        return LivingEntity.createLivingAttributes().add(EntityAttributes.FOLLOW_RANGE, 16.0D)
-                .add(EntityAttributes.MOVEMENT_SPEED, 1.25D)
-                .add(EntityAttributes.MAX_HEALTH, 15).add(EntityAttributes.ARMOR, 0.0D)
-                .add(EntityAttributes.ATTACK_DAMAGE, 3.5D).add(EntityAttributes.ATTACK_KNOCKBACK, 0.35D);
+    public static AttributeSupplier.Builder createAttributes() {
+        return LivingEntity.createLivingAttributes().add(Attributes.FOLLOW_RANGE, 16.0D)
+                .add(Attributes.MOVEMENT_SPEED, 1.25D)
+                .add(Attributes.MAX_HEALTH, 15).add(Attributes.ARMOR, 0.0D)
+                .add(Attributes.ATTACK_DAMAGE, 3.5D).add(Attributes.ATTACK_KNOCKBACK, 0.35D);
     }
 
     @Nullable
     @Override
-    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, EntitySpawnReason spawnReason, @Nullable SpawnGroupData entityData) {
         int var = new SplittableRandom().nextInt(1, 7);
         this.setVariant(var);
-        return super.initialize(world, difficulty, spawnReason, entityData);
+        return super.finalizeSpawn(world, difficulty, spawnReason, entityData);
     }
 
     @Override
@@ -48,11 +48,11 @@ public class RoggenwolfEntity extends WKHostileEntity implements GeoEntity {
     }
 
     public int getVariant() {
-        return MathHelper.clamp(this.dataTracker.get(VARIANT), 1, 7);
+        return Mth.clamp(this.entityData.get(VARIANT), 1, 7);
     }
 
     public void setVariant(int variant) {
-        this.dataTracker.set(VARIANT, variant);
+        this.entityData.set(VARIANT, variant);
     }
 
     @Override
@@ -61,12 +61,12 @@ public class RoggenwolfEntity extends WKHostileEntity implements GeoEntity {
     }
 
     @Override
-    public boolean shouldRender(double distance) {
+    public boolean shouldRenderAtSqrDistance(double distance) {
         return true;
     }
 
     @Override
-    public boolean isFireImmune() {
+    public boolean fireImmune() {
         return false;
     }
 
@@ -76,26 +76,26 @@ public class RoggenwolfEntity extends WKHostileEntity implements GeoEntity {
     }
 
     @Override
-    public boolean damage(ServerWorld world, DamageSource source, float amount) {
-        if (source.isOf(DamageTypes.FALLING_BLOCK)) {
+    public boolean hurtServer(ServerLevel world, DamageSource source, float amount) {
+        if (source.is(DamageTypes.FALLING_BLOCK)) {
             return false;
         }
-        return super.damage(world, source, amount);
+        return super.hurtServer(world, source, amount);
     }
 
     @Override
-    public boolean handleFallDamage(double fallDistance, float damageMultiplier, DamageSource damageSource) {
+    public boolean causeFallDamage(double fallDistance, float damageMultiplier, DamageSource damageSource) {
         return false;
     }
 
     @Nullable
     @Override
-    public DamageSource getRecentDamageSource() {
+    public DamageSource getLastDamageSource() {
         if (isOnFire()) {
-            setOnFireFor(15);
-            this.applyDamage((ServerWorld) this.getWorld(), this.getDamageSources().onFire(), 500);
+            igniteForSeconds(15);
+            this.actuallyHurt((ServerLevel) this.level(), this.damageSources().onFire(), 500);
         }
-        return super.getRecentDamageSource();
+        return super.getLastDamageSource();
     }
 
     @Override

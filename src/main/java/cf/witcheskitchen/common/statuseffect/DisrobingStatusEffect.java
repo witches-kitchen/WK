@@ -3,28 +3,28 @@ package cf.witcheskitchen.common.statuseffect;
 import cf.witcheskitchen.common.registry.WKStatusEffects;
 import io.wispforest.accessories.api.AccessoriesCapability;
 import io.wispforest.accessories.api.slot.SlotEntryReference;
-import net.minecraft.component.EnchantmentEffectComponentTypes;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.InstantStatusEffect;
-import net.minecraft.entity.effect.StatusEffectCategory;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.random.Random;
-
 import java.util.List;
+import java.util.Optional;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.effect.InstantenousMobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
-public class DisrobingStatusEffect extends InstantStatusEffect {
+public class DisrobingStatusEffect extends InstantenousMobEffect {
 
-    public DisrobingStatusEffect(StatusEffectCategory type, int color) {
+    public DisrobingStatusEffect(MobEffectCategory type, int color) {
         super(type, color);
     }
 
-    private static EquipmentSlot getRandomArmor(final Random random) {
+    private static EquipmentSlot getRandomArmor(final RandomSource random) {
         final int i = random.nextInt(4);
         switch (i) {
             case 0 -> {
@@ -51,24 +51,24 @@ public class DisrobingStatusEffect extends InstantStatusEffect {
     }
 
     @Override
-    public boolean applyUpdateEffect(ServerWorld world, LivingEntity entity, int amplifier) {
-        if (entity.hasStatusEffect(WKStatusEffects.COOLDOWN)) {
+    public boolean applyEffectTick(ServerLevel world, LivingEntity entity, int amplifier) {
+        if (entity.hasEffect(WKStatusEffects.COOLDOWN)) {
             return false;
         }
-        final Random random = entity.getRandom();
+        final RandomSource random = entity.getRandom();
         final int i = random.nextInt(100) + 1;
         if (i <= 50) {
             final EquipmentSlot dice = getRandomArmor(random);
-            final ItemStack equippedArmor = entity.getEquippedStack(dice);
+            final ItemStack equippedArmor = entity.getItemBySlot(dice);
             if (equippedArmor.isEmpty()) {
                 return false;//fast fail, if there is no item in slot.
-            } else if (EnchantmentHelper.hasAnyEnchantmentsWith(equippedArmor, EnchantmentEffectComponentTypes.PREVENT_ARMOR_CHANGE)) {
+            } else if (EnchantmentHelper.has(equippedArmor, EnchantmentEffectComponents.PREVENT_ARMOR_CHANGE)) {
                 return false;//item has binding curse
-            } else if (EnchantmentHelper.hasAnyEnchantmentsWith(equippedArmor, EnchantmentEffectComponentTypes.PREVENT_EQUIPMENT_DROP)) {
+            } else if (EnchantmentHelper.has(equippedArmor, EnchantmentEffectComponents.PREVENT_EQUIPMENT_DROP)) {
                 return false;//item should disappear on death.
             }
-            if (entity.dropItem(world, equippedArmor.getItem(), 1) != null) {
-                equippedArmor.decrement(1);
+            if (entity.spawnAtLocation(world, equippedArmor.getItem(), 1) != null) {
+                equippedArmor.shrink(1);
             }
         } else {
             AccessoriesCapability capability = entity.accessoriesCapability();
@@ -86,9 +86,9 @@ public class DisrobingStatusEffect extends InstantStatusEffect {
                     if (targetIndex == slotIndex) {
                         final SlotEntryReference slotData = accessories.get(slotIndex);
                         final Item itemInSlot = slotData.stack().getItem();
-                        entity.dropItem(world, itemInSlot, 1);
+                        entity.spawnAtLocation(world, itemInSlot, 1);
                         ItemStack stack = slotData.stack();
-                        stack.decrement(1);
+                        stack.shrink(1);
                         slotData.reference().setStack(stack);
                         break;
                     }
@@ -101,7 +101,7 @@ public class DisrobingStatusEffect extends InstantStatusEffect {
 
     // TODO: is this correct?
     @Override
-    public void onEntityRemoval(ServerWorld world, LivingEntity entity, int amplifier, Entity.RemovalReason reason) {
-        entity.addStatusEffect(new StatusEffectInstance(WKStatusEffects.COOLDOWN, 6000, 0));
+    public void onMobRemoved(ServerLevel world, LivingEntity entity, int amplifier, Entity.RemovalReason reason) {
+        entity.addEffect(new MobEffectInstance(WKStatusEffects.COOLDOWN, 6000, 0));
     }
 }

@@ -2,11 +2,11 @@ package cf.witcheskitchen.mixin.fluid;
 
 import cf.witcheskitchen.api.fluid.IFluidContainer;
 import cf.witcheskitchen.api.fluid.WKFluidAPI;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.PotionItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.PotionItem;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 
@@ -27,7 +27,7 @@ public class PotionItemMixin implements IFluidContainer {
     public @NotNull
     ItemStack getFullStack(Fluid fluid) {
         if (fluid == Fluids.WATER) {
-            return Items.POTION.getDefaultStack();
+            return Items.POTION.getDefaultInstance();
         } else {
             return ItemStack.EMPTY;
         }

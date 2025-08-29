@@ -1,12 +1,12 @@
 package cf.witcheskitchen.common.block.sapling;
 
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.SaplingBlock;
-import net.minecraft.block.SaplingGenerator;
+import net.minecraft.world.level.block.SaplingBlock;
+import net.minecraft.world.level.block.grower.TreeGrower;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 
 public class WKSaplingBlock extends SaplingBlock {
 
-    public WKSaplingBlock(SaplingGenerator generator, AbstractBlock.Settings settings) {
+    public WKSaplingBlock(TreeGrower generator, BlockBehaviour.Properties settings) {
         super(generator, settings);
     }
 }

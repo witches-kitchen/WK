@@ -2,36 +2,36 @@ package cf.witcheskitchen.client.particle;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.particle.ParticleFactory;
-import net.minecraft.client.particle.RainSplashParticle;
-import net.minecraft.client.particle.SpriteProvider;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particle.SimpleParticleType;
+import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.SpriteSet;
+import net.minecraft.client.particle.WaterDropParticle;
+import net.minecraft.core.particles.SimpleParticleType;
 
 @Environment(EnvType.CLIENT)
-public class WKSplashParticle extends RainSplashParticle {
+public class WKSplashParticle extends WaterDropParticle {
 
-    public WKSplashParticle(ClientWorld clientWorld, double d, double e, double f, double r, double g, double b) {
+    public WKSplashParticle(ClientLevel clientWorld, double d, double e, double f, double r, double g, double b) {
         super(clientWorld, d, e, f);
-        this.gravityStrength = 0.04F;
+        this.gravity = 0.04F;
         if (g == 0.0 && (r != 0.0 || b != 0.0)) {
-            this.velocityX = r;
-            this.velocityY = 0.1;
-            this.velocityZ = b;
+            this.xd = r;
+            this.yd = 0.1;
+            this.zd = b;
         }
-        this.red = (float) r;
-        this.green = (float) g;
-        this.blue = (float) b;
+        this.rCol = (float) r;
+        this.gCol = (float) g;
+        this.bCol = (float) b;
     }
 
 
     @Environment(EnvType.CLIENT)
-    public record Factory(SpriteProvider spriteProvider) implements ParticleFactory<SimpleParticleType> {
+    public record Factory(SpriteSet spriteProvider) implements ParticleProvider<SimpleParticleType> {
         @Override
-        public Particle createParticle(SimpleParticleType defaultParticleType, ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {
+        public Particle createParticle(SimpleParticleType defaultParticleType, ClientLevel clientWorld, double d, double e, double f, double g, double h, double i) {
             final WKSplashParticle particle = new WKSplashParticle(clientWorld, d, e, f, g, h, i);
-            particle.setSprite(this.spriteProvider);
+            particle.pickSprite(this.spriteProvider);
             return particle;
         }
     }

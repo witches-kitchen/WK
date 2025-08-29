@@ -19,29 +19,29 @@ import cf.witcheskitchen.common.registry.WKBlockEntityTypes;
 import cf.witcheskitchen.common.registry.WKTags;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.BlockState;
-import net.minecraft.component.ComponentMap;
-import net.minecraft.component.ComponentsAccess;
-import net.minecraft.entity.ItemEntity;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.storage.NbtReadView;
-import net.minecraft.storage.NbtWriteView;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.util.ErrorReporter;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.ColorHelper;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentGetter;
+import net.minecraft.core.component.DataComponentMap;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.ARGB;
+import net.minecraft.util.ProblemReporter;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.storage.TagValueInput;
+import net.minecraft.world.level.storage.TagValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.NotNull;
 
 public class WitchesCauldronBlockEntity extends WKBlockEntityWithInventory implements IStorageHandler {
@@ -53,7 +53,7 @@ public class WitchesCauldronBlockEntity extends WKBlockEntityWithInventory imple
     private static final int MAXIMUM_INGREDIENTS = 7;
     private static final int MINIMUM_INGREDIENTS = 2;
     private final FluidTank tank = new FluidTank(TANK_CAPACITY);
-    private final Box collectionBox = new Box(this.pos).contract(0.65);
+    private final AABB collectionBox = new AABB(this.worldPosition).deflate(0.65);
     private final CauldronBrewingRecipe recipe = null;
     private int color;
     private int ticksHeated;
@@ -64,70 +64,70 @@ public class WitchesCauldronBlockEntity extends WKBlockEntityWithInventory imple
         this.color = DEFAULT_WATER_COLOR;
     }
 
-    private static void lavaTick(World world, BlockPos pos, boolean client) {
+    private static void lavaTick(Level world, BlockPos pos, boolean client) {
         final var random = world.getRandom();
         final int i = random.nextInt(50) + 1;
         if (client) {
             final double offsetPos = 0.3D;
             if (i == 1) {
-                world.addParticleClient(ParticleTypes.LAVA, pos.getX() + offsetPos, pos.getY() + offsetPos, pos.getZ() + offsetPos, 0, 0, 0);
+                world.addParticle(ParticleTypes.LAVA, pos.getX() + offsetPos, pos.getY() + offsetPos, pos.getZ() + offsetPos, 0, 0, 0);
             } else if (i == 50) {
-                world.addParticleClient(ParticleTypes.ASH, pos.getX() + offsetPos, pos.getY() + offsetPos, pos.getZ() + offsetPos, 0, 0, 0);
+                world.addParticle(ParticleTypes.ASH, pos.getX() + offsetPos, pos.getY() + offsetPos, pos.getZ() + offsetPos, 0, 0, 0);
             }
         } else {
             final float pitch = 0.15F;
             if (i == 1) {
-                world.playSound(null, pos, SoundEvents.BLOCK_LAVA_POP, SoundCategory.BLOCKS, 0.2F + random.nextFloat() * 0.2F, 0.9F + random.nextFloat() * pitch);
+                world.playSound(null, pos, SoundEvents.LAVA_POP, SoundSource.BLOCKS, 0.2F + random.nextFloat() * 0.2F, 0.9F + random.nextFloat() * pitch);
             } else if (i == 50) {
-                world.playSound(null, pos, SoundEvents.BLOCK_LAVA_AMBIENT, SoundCategory.BLOCKS, 0.2F + random.nextFloat() * 0.2F, 0.9F + random.nextFloat() * pitch);
+                world.playSound(null, pos, SoundEvents.LAVA_AMBIENT, SoundSource.BLOCKS, 0.2F + random.nextFloat() * 0.2F, 0.9F + random.nextFloat() * pitch);
             }
         }
     }
 
-    public void checkAndCollectIngredient(World world, final ItemEntity entity) {
+    public void checkAndCollectIngredient(Level world, final ItemEntity entity) {
         // Wait until the cauldron is fully boiling
         if (this.isBoiling()) {
             // You must throw the stack correctly
             if (entity.getBoundingBox().intersects(this.collectionBox)) {
-                final ItemStack ingredient = entity.getStack();
-                if (ingredient.isIn(WKTags.RESETS_CAULDRON)) {
+                final ItemStack ingredient = entity.getItem();
+                if (ingredient.is(WKTags.RESETS_CAULDRON)) {
                     this.reset(false);
                 } else {
                     final int emptySlot = this.manager.findAnyEmptySlot();
                     if (emptySlot >= 0) {
-                        this.setStack(emptySlot, ingredient.split(1));
-                        if (!this.getStack(emptySlot).isEmpty()) {
-                            updateCauldron(this.getStack(emptySlot));
+                        this.setItem(emptySlot, ingredient.split(1));
+                        if (!this.getItem(emptySlot).isEmpty()) {
+                            updateCauldron(this.getItem(emptySlot));
                         }
                     }
                 }
                 sendPlashPacket(entity);
 
-                if (!world.isClient)
-                    entity.kill((ServerWorld) world);
+                if (!world.isClientSide)
+                    entity.kill((ServerLevel) world);
             }
         }
 
-        if (world.getBlockState(pos).get(WitchesCauldronBlock.LIT)) {
-            this.manager.clear();
-            PacketHelper.sendToAllTracking(entity, serverPlayer -> ParticlePacket.send(serverPlayer, this.getPos(), Registries.PARTICLE_TYPE.getId(ParticleTypes.LAVA), Registries.SOUND_EVENT.getId(SoundEvents.BLOCK_LAVA_EXTINGUISH), (byte) 3));
+        if (world.getBlockState(worldPosition).getValue(WitchesCauldronBlock.LIT)) {
+            this.manager.clearContent();
+            PacketHelper.sendToAllTracking(entity, serverPlayer -> ParticlePacket.send(serverPlayer, this.getBlockPos(), BuiltInRegistries.PARTICLE_TYPE.getKey(ParticleTypes.LAVA), BuiltInRegistries.SOUND_EVENT.getKey(SoundEvents.LAVA_EXTINGUISH), (byte) 3));
 
-            if (!world.isClient)
-                entity.kill((ServerWorld) world);
+            if (!world.isClientSide)
+                entity.kill((ServerLevel) world);
         }
     }
 
     @Override
-    public void tick(World world, BlockPos pos, BlockState state, WKBlockEntity blockEntity) {
-        final BlockState belowState = world.getBlockState(pos.down());
+    public void tick(Level world, BlockPos pos, BlockState state, WKBlockEntity blockEntity) {
+        final BlockState belowState = world.getBlockState(pos.below());
         boolean sync = false;
         if (this.hasFluid()) {
-            if (state.get(WitchesCauldronBlock.LIT)) {
-                if (world.getTime() % 10L == 8L) {
+            if (state.getValue(WitchesCauldronBlock.LIT)) {
+                if (world.getGameTime() % 10L == 8L) {
                     lavaTick(world, pos, false);
                 }
             }
-            if (belowState.isIn(WKTags.HEATS_CAULDRON)) {
+            if (belowState.is(WKTags.HEATS_CAULDRON)) {
                 final int secondsHeated = TimeHelper.toSeconds(this.ticksHeated);
                 if (this.ticksHeated < TICKS_TO_BOIL) {
                     this.ticksHeated++;
@@ -145,40 +145,40 @@ public class WitchesCauldronBlockEntity extends WKBlockEntityWithInventory imple
             sync = true;
         }
         if (sync) {
-            this.markDirty();
+            this.setChanged();
         }
     }
 
     @Override
     @Environment(EnvType.CLIENT)
-    public void onClientTick(World world, BlockPos pos, BlockState state, WKBlockEntity wkBlockEntity) {
-        if (state.get(WitchesCauldronBlock.LIT)) {
+    public void onClientTick(Level world, BlockPos pos, BlockState state, WKBlockEntity wkBlockEntity) {
+        if (state.getValue(WitchesCauldronBlock.LIT)) {
             WitchesCauldronBlockEntity.lavaTick(world, pos, true);
         }
     }
 
     private void sendPlashPacket(ItemEntity trackedEntity) {
-        final float red = ColorHelper.getRed(this.color) / 255F;
-        final float green = ColorHelper.getGreen(this.color) / 255f;
-        final float blue = ColorHelper.getBlue(this.color) / 255F;
-        PacketHelper.sendToAllTracking(trackedEntity, serverPlayer -> SplashParticlePacket.send(serverPlayer, this.getPos(), red, green, blue, 0.5D, 1.0D, 0.5D, (byte) 6));
-        world.playSound(null, pos, SoundEvents.ENTITY_PLAYER_SPLASH, SoundCategory.BLOCKS, 0.2F, 1.0f);
+        final float red = ARGB.red(this.color) / 255F;
+        final float green = ARGB.green(this.color) / 255f;
+        final float blue = ARGB.blue(this.color) / 255F;
+        PacketHelper.sendToAllTracking(trackedEntity, serverPlayer -> SplashParticlePacket.send(serverPlayer, this.getBlockPos(), red, green, blue, 0.5D, 1.0D, 0.5D, (byte) 6));
+        level.playSound(null, worldPosition, SoundEvents.PLAYER_SPLASH, SoundSource.BLOCKS, 0.2F, 1.0f);
     }
 
     private void reset(boolean fullReset) {
         boilWater(5);
-        manager.clear();
+        manager.clearContent();
         powered = false;
         if (fullReset) {
             tank.drain(tank.getCapacity(), null);
         }
-        markDirty();
+        setChanged();
     }
 
     private void updateCauldron(ItemStack stack) {
-        if (!stack.isIn(WKTags.VALID_BREW_ITEM)) {
+        if (!stack.is(WKTags.VALID_BREW_ITEM)) {
             this.color = DIRTY_WATER_COLOR;
-            markDirty();
+            setChanged();
             return;
         }
 
@@ -191,36 +191,36 @@ public class WitchesCauldronBlockEntity extends WKBlockEntityWithInventory imple
             case 2 -> color = 0x2495ff;
             case 3 -> color = 0x8936ff;
         }
-        markDirty();
+        setChanged();
     }
 
     // TODO: write to NBT or to components?
     //       or some to components and some to NBT?
     @Override
-    protected void readData(ReadView data) {
-        super.readData(data);
-        this.tank.readStorage(data.getReadView("Tank"));
-        this.ticksHeated = data.getInt("TicksHeated", 0);
-        this.color = data.getInt("Color", 0);
-        this.powered = data.getBoolean("Powered", false);
+    protected void loadAdditional(ValueInput data) {
+        super.loadAdditional(data);
+        this.tank.readStorage(data.childOrEmpty("Tank"));
+        this.ticksHeated = data.getIntOr("TicksHeated", 0);
+        this.color = data.getIntOr("Color", 0);
+        this.powered = data.getBooleanOr("Powered", false);
     }
 
     @Override
-    protected void writeData(WriteView data) {
-        super.writeData(data);
-        tank.writeStorage(data.get("Tank"));
+    protected void saveAdditional(ValueOutput data) {
+        super.saveAdditional(data);
+        tank.writeStorage(data.child("Tank"));
         data.putInt("TicksHeated", this.ticksHeated);
         data.putInt("Color", this.color);
         data.putBoolean("Powered", this.powered);
     }
 
     @Override
-    protected void readComponents(ComponentsAccess components) {
-        super.readComponents(components);
+    protected void applyImplicitComponents(DataComponentGetter components) {
+        super.applyImplicitComponents(components);
 
         var cauldronData = components.get(WKComponents.WITCHES_CAULDRON);
         if (cauldronData != null) {
-            ReadView view = NbtReadView.create(ErrorReporter.EMPTY, this.getWorld().getRegistryManager(), cauldronData.tankData());
+            ValueInput view = TagValueInput.create(ProblemReporter.DISCARDING, this.getLevel().registryAccess(), cauldronData.tankData());
             this.tank.readStorage(view);
             this.ticksHeated = cauldronData.ticksHeated();
             this.color = cauldronData.color();
@@ -229,12 +229,12 @@ public class WitchesCauldronBlockEntity extends WKBlockEntityWithInventory imple
     }
 
     @Override
-    protected void addComponents(ComponentMap.Builder componentMapBuilder) {
-        super.addComponents(componentMapBuilder);
-        NbtWriteView view = NbtWriteView.create(ErrorReporter.EMPTY, this.getWorld().getRegistryManager());
+    protected void collectImplicitComponents(DataComponentMap.Builder componentMapBuilder) {
+        super.collectImplicitComponents(componentMapBuilder);
+        TagValueOutput view = TagValueOutput.createWithContext(ProblemReporter.DISCARDING, this.getLevel().registryAccess());
         tank.writeStorage(view);
-        componentMapBuilder.add(WKComponents.WITCHES_CAULDRON, new WitchesCauldronData(
-                view.getNbt(),
+        componentMapBuilder.set(WKComponents.WITCHES_CAULDRON, new WitchesCauldronData(
+                view.buildResult(),
                 this.ticksHeated,
                 this.color,
                 this.powered
@@ -242,10 +242,10 @@ public class WitchesCauldronBlockEntity extends WKBlockEntityWithInventory imple
     }
 
     @Override
-    public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup) {
-        final NbtWriteView data = NbtWriteView.create(ErrorReporter.EMPTY, registryLookup);
-        writeData(data);
-        return data.getNbt();
+    public CompoundTag getUpdateTag(HolderLookup.Provider registryLookup) {
+        final TagValueOutput data = TagValueOutput.createWithContext(ProblemReporter.DISCARDING, registryLookup);
+        saveAdditional(data);
+        return data.buildResult();
     }
 
     @Override

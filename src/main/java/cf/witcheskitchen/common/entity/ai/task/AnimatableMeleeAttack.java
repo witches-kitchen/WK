@@ -3,24 +3,24 @@ package cf.witcheskitchen.common.entity.ai.task;
 import com.mojang.datafixers.util.Pair;
 import it.unimi.dsi.fastutil.Function;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.brain.MemoryModuleState;
-import net.minecraft.entity.ai.brain.MemoryModuleType;
-import net.minecraft.entity.ai.brain.task.TargetUtil;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.Hand;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.behavior.BehaviorUtils;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
+import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.tslat.smartbrainlib.api.core.behaviour.DelayedBehaviour;
 import net.tslat.smartbrainlib.util.BrainUtil;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class AnimatableMeleeAttack<E extends MobEntity> extends DelayedBehaviour<E> {
-    private static final List<Pair<MemoryModuleType<?>, MemoryModuleState>> MEMORY_REQUIREMENTS =
+public class AnimatableMeleeAttack<E extends Mob> extends DelayedBehaviour<E> {
+    private static final List<Pair<MemoryModuleType<?>, MemoryStatus>> MEMORY_REQUIREMENTS =
             ObjectArrayList.of(
-                    Pair.of(MemoryModuleType.ATTACK_TARGET, MemoryModuleState.VALUE_PRESENT),
-                    Pair.of(MemoryModuleType.ATTACK_COOLING_DOWN, MemoryModuleState.VALUE_ABSENT));
+                    Pair.of(MemoryModuleType.ATTACK_TARGET, MemoryStatus.VALUE_PRESENT),
+                    Pair.of(MemoryModuleType.ATTACK_COOLING_DOWN, MemoryStatus.VALUE_ABSENT));
 
     protected Function<E, Integer> attackIntervalSupplier = entity -> 20;
 
@@ -39,21 +39,21 @@ public class AnimatableMeleeAttack<E extends MobEntity> extends DelayedBehaviour
     }
 
     @Override
-    protected List<Pair<MemoryModuleType<?>, MemoryModuleState>> getMemoryRequirements() {
+    protected List<Pair<MemoryModuleType<?>, MemoryStatus>> getMemoryRequirements() {
         return MEMORY_REQUIREMENTS;
     }
 
     @Override
-    protected boolean shouldRun(ServerWorld world, E entity) {
+    protected boolean checkExtraStartConditions(ServerLevel world, E entity) {
         this.target = BrainUtil.getTargetOfEntity(entity);
 
-        return entity.getVisibilityCache().canSee(this.target) && entity.isInAttackRange(this.target);
+        return entity.getSensing().hasLineOfSight(this.target) && entity.isWithinMeleeAttackRange(this.target);
     }
 
     @Override
     protected void start(E entity) {
-        entity.swingHand(Hand.MAIN_HAND);
-        TargetUtil.lookAt(entity, this.target);
+        entity.swing(InteractionHand.MAIN_HAND);
+        BehaviorUtils.lookAtEntity(entity, this.target);
     }
 
     @Override
@@ -68,9 +68,9 @@ public class AnimatableMeleeAttack<E extends MobEntity> extends DelayedBehaviour
         if (this.target == null)
             return;
 
-        if (!entity.getVisibilityCache().canSee(this.target) || !entity.isInAttackRange(this.target))
+        if (!entity.getSensing().hasLineOfSight(this.target) || !entity.isWithinMeleeAttackRange(this.target))
             return;
 
-        entity.tryAttack((ServerWorld) entity.getWorld(), this.target);
+        entity.doHurtTarget((ServerLevel) entity.level(), this.target);
     }
 }

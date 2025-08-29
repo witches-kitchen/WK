@@ -1,33 +1,42 @@
 package cf.witcheskitchen.common.entity.neutral;
 
 import cf.witcheskitchen.api.entity.WKTameableEntity;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.damage.DamageTypes;
-import net.minecraft.entity.mob.Angerable;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.passive.PassiveEntity;
-import net.minecraft.entity.passive.TameableEntity;
-import net.minecraft.entity.passive.WolfSoundVariants;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.item.ItemStack;
-import net.minecraft.registry.tag.DamageTypeTags;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.LocalDifficulty;
-import net.minecraft.world.ServerWorldAccess;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.util.Mth;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.NeutralMob;
+import net.minecraft.world.entity.OwnableEntity;
+import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.InteractGoal;
+import net.minecraft.world.entity.ai.goal.LeapAtTargetGoal;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.wolf.WolfSoundVariants;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
@@ -39,20 +48,20 @@ import java.util.SplittableRandom;
 import java.util.UUID;
 
 //Todo: This once structures are in
-public class ChurchGrimEntity extends WKTameableEntity implements GeoEntity, Angerable, Tameable {
+public class ChurchGrimEntity extends WKTameableEntity implements GeoEntity, NeutralMob, OwnableEntity {
     private final int VARIANTS = 8;
     //Add a string or something here for a variant that is a white, short-haired dog and can appear if one is named Max
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
-    public ChurchGrimEntity(EntityType<? extends TameableEntity> entityType, World world) {
+    public ChurchGrimEntity(EntityType<? extends TamableAnimal> entityType, Level world) {
         super(entityType, world);
     }
 
-    public static DefaultAttributeContainer.Builder createAttributes() {
-        return LivingEntity.createLivingAttributes().add(EntityAttributes.FOLLOW_RANGE, 32.0D)
-                .add(EntityAttributes.MOVEMENT_SPEED, 0.85D)
-                .add(EntityAttributes.MAX_HEALTH, 35).add(EntityAttributes.ARMOR, 2.5D)
-                .add(EntityAttributes.ATTACK_DAMAGE, 6.0D).add(EntityAttributes.ATTACK_KNOCKBACK, 0.35D);
+    public static AttributeSupplier.Builder createAttributes() {
+        return LivingEntity.createLivingAttributes().add(Attributes.FOLLOW_RANGE, 32.0D)
+                .add(Attributes.MOVEMENT_SPEED, 0.85D)
+                .add(Attributes.MAX_HEALTH, 35).add(Attributes.ARMOR, 2.5D)
+                .add(Attributes.ATTACK_DAMAGE, 6.0D).add(Attributes.ATTACK_KNOCKBACK, 0.35D);
     }
 
     @Override
@@ -61,22 +70,22 @@ public class ChurchGrimEntity extends WKTameableEntity implements GeoEntity, Ang
     }
 
     @Override
-    public int getAngerTime() {
+    public int getRemainingPersistentAngerTime() {
         return 0;
     }
 
     @Override
-    public void setAngerTime(int ticks) {
+    public void setRemainingPersistentAngerTime(int ticks) {
 
     }
 
     @Nullable
     @Override
-    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, EntitySpawnReason spawnReason, @Nullable SpawnGroupData entityData) {
         SplittableRandom random = new SplittableRandom();
         int var = random.nextInt(0, 9);
         this.setVariant(var);
-        return super.initialize(world, difficulty, spawnReason, entityData);
+        return super.finalizeSpawn(world, difficulty, spawnReason, entityData);
     }
 
     @Override
@@ -85,115 +94,115 @@ public class ChurchGrimEntity extends WKTameableEntity implements GeoEntity, Ang
     }
 
     public int getVariant() {
-        return MathHelper.clamp(this.dataTracker.get(VARIANT), 0, VARIANTS);
+        return Mth.clamp(this.entityData.get(VARIANT), 0, VARIANTS);
     }
 
     public void setVariant(int variant) {
-        this.dataTracker.set(VARIANT, variant);
+        this.entityData.set(VARIANT, variant);
     }
 
     @Override
     protected void playStepSound(BlockPos pos, BlockState state) {
-        this.playSound(SoundEvents.ENTITY_WOLF_STEP, 0.5F, 0.7F);
+        this.playSound(SoundEvents.WOLF_STEP, 0.5F, 0.7F);
     }
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.WOLF_SOUNDS.get(WolfSoundVariants.Type.CLASSIC).ambientSound().value();
+        return SoundEvents.WOLF_SOUNDS.get(WolfSoundVariants.SoundSet.CLASSIC).ambientSound().value();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.WOLF_SOUNDS.get(WolfSoundVariants.Type.CLASSIC).deathSound().value();
+        return SoundEvents.WOLF_SOUNDS.get(WolfSoundVariants.SoundSet.CLASSIC).deathSound().value();
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.WOLF_SOUNDS.get(WolfSoundVariants.Type.CLASSIC).hurtSound().value();
+        return SoundEvents.WOLF_SOUNDS.get(WolfSoundVariants.SoundSet.CLASSIC).hurtSound().value();
     }
 
     @Override
-    public boolean canBreedWith(AnimalEntity other) {
+    public boolean canMate(Animal other) {
         return false;
     }
 
     @Override
-    public void writeCustomData(WriteView data) {
-        super.writeCustomData(data);
+    public void addAdditionalSaveData(ValueOutput data) {
+        super.addAdditionalSaveData(data);
         data.putInt("Variant", this.getVariant());
-        this.writeAngerToData(data);
+        this.addPersistentAngerSaveData(data);
     }
 
     @Override
-    public void readCustomData(ReadView data) {
-        super.readCustomData(data);
-        this.setVariant(data.getInt("Variant", 0));
-        this.readAngerFromData(this.getWorld(), data);
+    public void readAdditionalSaveData(ValueInput data) {
+        super.readAdditionalSaveData(data);
+        this.setVariant(data.getIntOr("Variant", 0));
+        this.readPersistentAngerSaveData(this.level(), data);
     }
 
     @Override
-    public boolean isBreedingItem(ItemStack stack) {
+    public boolean isFood(ItemStack stack) {
         return false;
     }
 
     @Override
-    protected void initGoals() {
-        super.initGoals();
-        this.goalSelector.add(0, new SwimGoal(this));
-        this.goalSelector.add(1, new PounceAtTargetGoal(this, 0.4f));
-        this.goalSelector.add(2, new MeleeAttackGoal(this, 1, true));
-        this.goalSelector.add(4, new StopAndLookAtEntityGoal(this, MobEntity.class, 2.0f, 0.8f));
-        this.goalSelector.add(6, new WanderAroundFarGoal(this, 0.8D, 1));
-        this.targetSelector.add(0, new RevengeGoal(this).setGroupRevenge());
+    protected void registerGoals() {
+        super.registerGoals();
+        this.goalSelector.addGoal(0, new FloatGoal(this));
+        this.goalSelector.addGoal(1, new LeapAtTargetGoal(this, 0.4f));
+        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1, true));
+        this.goalSelector.addGoal(4, new InteractGoal(this, Mob.class, 2.0f, 0.8f));
+        this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 0.8D, 1));
+        this.targetSelector.addGoal(0, new HurtByTargetGoal(this).setAlertOthers());
     }
 
     @Override
-    public boolean shouldRender(double distance) {
+    public boolean shouldRenderAtSqrDistance(double distance) {
         return true;
     }
 
     @Nullable
     @Override
-    public UUID getAngryAt() {
+    public UUID getPersistentAngerTarget() {
         return null;
     }
 
     @Override
-    public void setAngryAt(@Nullable UUID uuid) {
+    public void setPersistentAngerTarget(@Nullable UUID uuid) {
 
     }
 
     @Override
-    public void chooseRandomAngerTime() {
+    public void startPersistentAngerTimer() {
 
     }
 
     @Override
-    public boolean isFireImmune() {
+    public boolean fireImmune() {
         return true;
     }
 
     @Override
-    public boolean damage(ServerWorld world, DamageSource source, float amount) {
-        if (source.isOf(DamageTypes.FALLING_BLOCK) || source.isIn(DamageTypeTags.IS_FIRE) || source.isIn(DamageTypeTags.IS_FALL)) {
+    public boolean hurtServer(ServerLevel world, DamageSource source, float amount) {
+        if (source.is(DamageTypes.FALLING_BLOCK) || source.is(DamageTypeTags.IS_FIRE) || source.is(DamageTypeTags.IS_FALL)) {
             return false;
         }
-        return super.damage(world, source, amount);
+        return super.hurtServer(world, source, amount);
     }
 
     @Override
-    public boolean handleFallDamage(double fallDistance, float damageMultiplier, DamageSource damageSource) {
+    public boolean causeFallDamage(double fallDistance, float damageMultiplier, DamageSource damageSource) {
         return false;
     }
 
     @Override
-    protected void swimUpward(TagKey<Fluid> fluid) {
-        super.swimUpward(fluid);
+    protected void jumpInLiquid(TagKey<Fluid> fluid) {
+        super.jumpInLiquid(fluid);
     }
 
     @Nullable
     @Override
-    public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
+    public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entity) {
         return null;
     }
 

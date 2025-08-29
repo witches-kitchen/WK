@@ -2,10 +2,10 @@ package cf.witcheskitchen.mixin.fluid;
 
 import cf.witcheskitchen.api.fluid.IFluidContainer;
 import cf.witcheskitchen.api.fluid.WKFluidAPI;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.item.BucketItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.world.item.BucketItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.material.Fluid;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -16,7 +16,7 @@ public class BucketItemMixin implements IFluidContainer {
 
     @Shadow
     @Final
-    private Fluid fluid;
+    private Fluid content;
 
     @Override
     public int getCapacity() {
@@ -32,12 +32,12 @@ public class BucketItemMixin implements IFluidContainer {
     @Override
     public @NotNull
     ItemStack getFullStack(Fluid fluid) {
-        return new ItemStack(fluid.getBucketItem());
+        return new ItemStack(fluid.getBucket());
     }
 
     @Override
     public @NotNull
     Fluid getFluidType(ItemStack stack) {
-        return this.fluid;
+        return this.content;
     }
 }

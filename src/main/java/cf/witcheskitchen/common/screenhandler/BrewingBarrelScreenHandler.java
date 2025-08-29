@@ -3,26 +3,26 @@ package cf.witcheskitchen.common.screenhandler;
 import cf.witcheskitchen.api.screen.WKScreenHandler;
 import cf.witcheskitchen.common.blockentity.BrewingBarrelBlockEntity;
 import cf.witcheskitchen.common.registry.WKScreenHandlerTypes;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.SimpleInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.screen.ArrayPropertyDelegate;
-import net.minecraft.screen.PropertyDelegate;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
+import net.minecraft.world.item.ItemStack;
 
 public class BrewingBarrelScreenHandler extends WKScreenHandler {
 
-    private final PropertyDelegate delegate;
+    private final ContainerData delegate;
 
-    public BrewingBarrelScreenHandler(int syncId, PlayerInventory playerInventory) {
-        this(syncId, playerInventory, new SimpleInventory(6), new ArrayPropertyDelegate(1));
+    public BrewingBarrelScreenHandler(int syncId, Inventory playerInventory) {
+        this(syncId, playerInventory, new SimpleContainer(6), new SimpleContainerData(1));
     }
 
-    public BrewingBarrelScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, PropertyDelegate delegate) {
+    public BrewingBarrelScreenHandler(int syncId, Inventory playerInventory, Container inventory, ContainerData delegate) {
         super(WKScreenHandlerTypes.BREWING_BARREL, syncId, playerInventory, inventory);
         this.delegate = delegate;
-        super.addProperties(delegate);
+        super.addDataSlots(delegate);
         this.builder()
                 .playerSetup()
                 // First Row
@@ -46,7 +46,7 @@ public class BrewingBarrelScreenHandler extends WKScreenHandler {
     }
 
     @Override
-    public ItemStack quickMove(PlayerEntity player, int fromIndex) {
+    public ItemStack quickMoveStack(Player player, int fromIndex) {
         return ItemStack.EMPTY;
     }
 }

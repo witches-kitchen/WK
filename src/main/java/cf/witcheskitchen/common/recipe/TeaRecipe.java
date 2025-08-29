@@ -3,37 +3,41 @@ package cf.witcheskitchen.common.recipe;
 import cf.witcheskitchen.common.registry.WKRecipeTypes;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.recipe.*;
-import net.minecraft.recipe.book.RecipeBookCategory;
-import net.minecraft.recipe.input.SingleStackRecipeInput;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.world.World;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.PlacementInfo;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeBookCategory;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
+import net.minecraft.world.level.Level;
 
-public class TeaRecipe implements Recipe<SingleStackRecipeInput> {
+public class TeaRecipe implements Recipe<SingleRecipeInput> {
     public final Ingredient input;
     public final ItemStack output;
-    public final StatusEffect effect;
+    public final MobEffect effect;
 
-    public TeaRecipe(Ingredient input, ItemStack output, StatusEffect effect) {
+    public TeaRecipe(Ingredient input, ItemStack output, MobEffect effect) {
         this.input = input;
         this.effect = effect;
         this.output = output;
     }
 
     @Override
-    public boolean matches(SingleStackRecipeInput inventory, World world) {
+    public boolean matches(SingleRecipeInput inventory, Level world) {
         return false;
     }
 
     @Override
-    public ItemStack craft(SingleStackRecipeInput input, RegistryWrapper.WrapperLookup lookup) {
+    public ItemStack assemble(SingleRecipeInput input, HolderLookup.Provider lookup) {
         return ItemStack.EMPTY;
     }
 
@@ -45,27 +49,27 @@ public class TeaRecipe implements Recipe<SingleStackRecipeInput> {
         return output;
     }
 
-    public StatusEffect getEffect() {
+    public MobEffect getEffect() {
         return effect;
     }
 
     @Override
-    public RecipeSerializer<? extends Recipe<SingleStackRecipeInput>> getSerializer() {
+    public RecipeSerializer<? extends Recipe<SingleRecipeInput>> getSerializer() {
         return WKRecipeTypes.TEA_RECIPE_SERIALIZER;
     }
 
     @Override
-    public RecipeType<? extends Recipe<SingleStackRecipeInput>> getType() {
+    public RecipeType<? extends Recipe<SingleRecipeInput>> getType() {
         return WKRecipeTypes.TEA_RECIPE_TYPE;
     }
 
     @Override
-    public IngredientPlacement getIngredientPlacement() {
-        return IngredientPlacement.forSingleSlot(this.input);
+    public PlacementInfo placementInfo() {
+        return PlacementInfo.create(this.input);
     }
 
     @Override
-    public RecipeBookCategory getRecipeBookCategory() {
+    public RecipeBookCategory recipeBookCategory() {
         // TODO: use custom recipe book category
         return null;
     }
@@ -81,7 +85,7 @@ public class TeaRecipe implements Recipe<SingleStackRecipeInput> {
                                     ItemStack.CODEC
                                             .fieldOf("result")
                                             .forGetter(TeaRecipe::getOutput),
-                                    Registries.STATUS_EFFECT.getCodec()
+                                    BuiltInRegistries.MOB_EFFECT.byNameCodec()
                                             .fieldOf("effect")
                                             .forGetter(TeaRecipe::getEffect)
                             )
@@ -90,11 +94,11 @@ public class TeaRecipe implements Recipe<SingleStackRecipeInput> {
         }
 
         @Override
-        public PacketCodec<RegistryByteBuf, TeaRecipe> packetCodec() {
-            return PacketCodec.tuple(
-                    Ingredient.PACKET_CODEC, TeaRecipe::getInput,
-                    ItemStack.PACKET_CODEC, TeaRecipe::getOutput,
-                    PacketCodecs.registryValue(RegistryKeys.STATUS_EFFECT), TeaRecipe::getEffect,
+        public StreamCodec<RegistryFriendlyByteBuf, TeaRecipe> streamCodec() {
+            return StreamCodec.composite(
+                    Ingredient.CONTENTS_STREAM_CODEC, TeaRecipe::getInput,
+                    ItemStack.STREAM_CODEC, TeaRecipe::getOutput,
+                    ByteBufCodecs.registry(Registries.MOB_EFFECT), TeaRecipe::getEffect,
                     TeaRecipe::new
             );
         }

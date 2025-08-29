@@ -1,23 +1,23 @@
 package cf.witcheskitchen.api.screen;
 
 import cf.witcheskitchen.api.util.ItemUtil;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.ScreenHandlerType;
-import net.minecraft.screen.slot.Slot;
 import org.apache.commons.lang3.Range;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.world.Container;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * WitchesKitchen's ScreenHandler base for devices.
  * <p>
- * It defines a default {@link #transferSlot(PlayerEntity, int)} implementation
+ * It defines a default {@link #transferSlot(Player, int)} implementation
  * which should work for the most of devices.
  * </p>
  *
@@ -25,29 +25,29 @@ import java.util.List;
  * You can build the slots by chaining {@link #builder} methods.
  * </p>
  */
-public abstract class WKScreenHandler extends ScreenHandler {
+public abstract class WKScreenHandler extends AbstractContainerMenu {
 
     protected final List<Range<Integer>> playerRanges;
     protected final List<Range<Integer>> blockEntityRanges;
-    private final PlayerInventory playerInventory;
-    private final Inventory inventory;
+    private final Inventory playerInventory;
+    private final Container inventory;
     private final ScreenHandlerBuilder builder;
 
-    protected WKScreenHandler(@Nullable ScreenHandlerType<?> type, int syncId, PlayerInventory playerInventory, Inventory inventory) {
+    protected WKScreenHandler(@Nullable MenuType<?> type, int syncId, Inventory playerInventory, Container inventory) {
         super(type, syncId);
         this.playerInventory = playerInventory;
         this.inventory = inventory;
         this.playerRanges = new ArrayList<>();
         this.blockEntityRanges = new ArrayList<>();
         this.builder = new ScreenHandlerBuilder(this);
-        this.inventory.onOpen(playerInventory.player);
+        this.inventory.startOpen(playerInventory.player);
     }
 
-    public ItemStack transferSlot(PlayerEntity player, int index) {
+    public ItemStack transferSlot(Player player, int index) {
         ItemStack originalStack = ItemStack.EMPTY;
         final Slot slot = this.getSlot(index);
-        if (slot != null && slot.hasStack()) {
-            final ItemStack stackInSlot = slot.getStack();
+        if (slot != null && slot.hasItem()) {
+            final ItemStack stackInSlot = slot.getItem();
             originalStack = stackInSlot.copy();
             boolean shifted = false;
             for (final Range<Integer> range : this.playerRanges) {
@@ -68,16 +68,16 @@ public abstract class WKScreenHandler extends ScreenHandler {
                     }
                 }
             }
-            slot.onQuickTransfer(stackInSlot, originalStack);
+            slot.onQuickCraft(stackInSlot, originalStack);
             if (stackInSlot.getCount() <= 0) {
-                slot.setStack(ItemStack.EMPTY);
+                slot.setByPlayer(ItemStack.EMPTY);
             } else {
-                slot.markDirty();
+                slot.setChanged();
             }
             if (stackInSlot.getCount() == originalStack.getCount()) {
                 return ItemStack.EMPTY;
             }
-            slot.onTakeItem(player, stackInSlot);
+            slot.onTake(player, stackInSlot);
         }
         return originalStack;
     }
@@ -111,17 +111,17 @@ public abstract class WKScreenHandler extends ScreenHandler {
         // First lets see if we have the same item in a slot to merge with
         for (int slotIndex = start; stackToShift.getCount() > 0 && slotIndex < end; slotIndex++) {
             final Slot slot = this.slots.get(slotIndex);
-            final ItemStack stackInSlot = slot.getStack();
-            int maxCount = Math.min(stackToShift.getMaxCount(), slot.getMaxItemCount());
+            final ItemStack stackInSlot = slot.getItem();
+            int maxCount = Math.min(stackToShift.getMaxStackSize(), slot.getMaxStackSize());
 
-            if (!stackToShift.isEmpty() && slot.canInsert(stackToShift)) {
+            if (!stackToShift.isEmpty() && slot.mayPlace(stackToShift)) {
                 if (ItemUtil.areItemsEqual(stackInSlot, stackToShift, true)) {
                     // Got 2 stacks that need merging
                     final int space = maxCount - stackInSlot.getCount();
                     if (space > 0) {
                         int transferAmount = Math.min(space, stackToShift.getCount());
-                        stackInSlot.increment(transferAmount);
-                        stackToShift.decrement(transferAmount);
+                        stackInSlot.grow(transferAmount);
+                        stackToShift.shrink(transferAmount);
                     }
                 }
             }
@@ -130,16 +130,16 @@ public abstract class WKScreenHandler extends ScreenHandler {
         // If not lets go find the next free slot to insert our remaining stack
         for (int slotIndex = start; stackToShift.getCount() > 0 && slotIndex < end; slotIndex++) {
             final Slot slot = this.slots.get(slotIndex);
-            final ItemStack stackInSlot = slot.getStack();
+            final ItemStack stackInSlot = slot.getItem();
 
-            if (stackInSlot.isEmpty() && slot.canInsert(stackToShift)) {
-                int maxCount = Math.min(stackToShift.getMaxCount(), slot.getMaxItemCount());
+            if (stackInSlot.isEmpty() && slot.mayPlace(stackToShift)) {
+                int maxCount = Math.min(stackToShift.getMaxStackSize(), slot.getMaxStackSize());
 
                 int moveCount = Math.min(maxCount, stackToShift.getCount());
                 ItemStack moveStack = stackToShift.copy();
                 moveStack.setCount(moveCount);
-                slot.setStack(moveStack);
-                stackToShift.decrement(moveCount);
+                slot.setByPlayer(moveStack);
+                stackToShift.shrink(moveCount);
             }
         }
 
@@ -152,14 +152,14 @@ public abstract class WKScreenHandler extends ScreenHandler {
     }
 
     @Override
-    protected boolean insertItem(ItemStack stack, int startIndex, int endIndex, boolean fromLast) {
+    protected boolean moveItemStackTo(ItemStack stack, int startIndex, int endIndex, boolean fromLast) {
         throw new UnsupportedOperationException("Don't use this shit");
     }
 
     @Override
-    public void onClosed(PlayerEntity player) {
-        super.onClosed(player);
-        this.inventory.onClose(player);
+    public void removed(Player player) {
+        super.removed(player);
+        this.inventory.stopOpen(player);
     }
 
     public ScreenHandlerBuilder builder() {
@@ -167,8 +167,8 @@ public abstract class WKScreenHandler extends ScreenHandler {
     }
 
     @Override
-    public boolean canUse(PlayerEntity player) {
-        return this.inventory.canPlayerUse(player);
+    public boolean stillValid(Player player) {
+        return this.inventory.stillValid(player);
     }
 
     public void addPlayerRange(final Range<Integer> range) {
@@ -179,11 +179,11 @@ public abstract class WKScreenHandler extends ScreenHandler {
         this.blockEntityRanges.add(range);
     }
 
-    public PlayerInventory getPlayerInventory() {
+    public Inventory getPlayerInventory() {
         return playerInventory;
     }
 
-    public Inventory getInventory() {
+    public Container getInventory() {
         return inventory;
     }
 

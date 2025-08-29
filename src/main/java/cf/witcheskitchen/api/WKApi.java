@@ -3,12 +3,16 @@ package cf.witcheskitchen.api;
 import cf.witcheskitchen.common.component.WKComponents;
 import cf.witcheskitchen.common.item.TaglockItem;
 import cf.witcheskitchen.common.registry.WKTags;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.mob.*;
-import net.minecraft.item.ItemStack;
-import net.minecraft.registry.tag.EntityTypeTags;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.world.World;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.EntityTypeTags;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.monster.Blaze;
+import net.minecraft.world.entity.monster.EnderMan;
+import net.minecraft.world.entity.monster.Ghast;
+import net.minecraft.world.entity.monster.Guardian;
+import net.minecraft.world.entity.monster.Vex;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
@@ -20,48 +24,48 @@ public class WKApi {
      * Use this if you wish to blanket-target such entities.
      */
     public static boolean isSpiritualEntity(LivingEntity entity) {
-        return entity.getType().isIn(EntityTypeTags.UNDEAD) ||
-                entity.getType().isIn(WKTags.DEMONIC) ||
-                entity instanceof EndermanEntity ||
-                entity instanceof GhastEntity ||
-                entity instanceof BlazeEntity ||
-                entity instanceof VexEntity ||
-                entity instanceof GuardianEntity;
+        return entity.getType().is(EntityTypeTags.UNDEAD) ||
+                entity.getType().is(WKTags.DEMONIC) ||
+                entity instanceof EnderMan ||
+                entity instanceof Ghast ||
+                entity instanceof Blaze ||
+                entity instanceof Vex ||
+                entity instanceof Guardian;
     }
 
     /**
      * This allows one to tell if something is a lesser demon, i.e. not a boss.
      */
     public static boolean isLesserDemon(LivingEntity livingEntity) {
-        return livingEntity.getType().isIn(WKTags.LESSER_DEMON);
+        return livingEntity.getType().is(WKTags.LESSER_DEMON);
     }
 
     /**
      * This allows one to tell if something is a greater demon, i.e. something on the level of a boss.
      */
     public static boolean isGreaterDemon(LivingEntity livingEntity) {
-        return livingEntity.getType().isIn(WKTags.GREATER_DEMON);
+        return livingEntity.getType().is(WKTags.GREATER_DEMON);
     }
 
     /**
      * This allows one to tell if something is a ghost, and is used to target only such mobs.
      */
     public static boolean isGhost(LivingEntity livingEntity) {
-        return livingEntity.getType().isIn(WKTags.GHOST);
+        return livingEntity.getType().is(WKTags.GHOST);
     }
 
     /**
      * This allows one to tell if something is immune to cold iron, and is used to target only such mobs.
      */
     public static boolean isColdIronImmune(LivingEntity livingEntity) {
-        return livingEntity.getType().isIn(WKTags.COLD_IRON_IMMUNE);
+        return livingEntity.getType().is(WKTags.COLD_IRON_IMMUNE);
     }
 
     /**
      * This allows one to tell if something is weak to cold iron, and is used to target only such mobs.
      */
     public static boolean isColdIronWeak(LivingEntity livingEntity) {
-        return livingEntity.getType().isIn(WKTags.COLD_IRON_WEAK);
+        return livingEntity.getType().is(WKTags.COLD_IRON_WEAK);
     }
 
     /**
@@ -69,7 +73,7 @@ public class WKApi {
      * as this mod won't have silver and thus, some players might want to see the two materials behave similar.
      */
     public static boolean isSilverImmune(LivingEntity livingEntity) {
-        return livingEntity.getType().isIn(WKTags.SILVER_IMMUNE);
+        return livingEntity.getType().is(WKTags.SILVER_IMMUNE);
     }
 
     /**
@@ -77,29 +81,29 @@ public class WKApi {
      * as this mod won't have silver and thus, some players might want to see the two materials behave similar.
      */
     public static boolean isSilverWeak(LivingEntity livingEntity) {
-        return livingEntity.getType().isIn(WKTags.SILVER_WEAK);
+        return livingEntity.getType().is(WKTags.SILVER_WEAK);
     }
 
     /**
      * This allows one to tell if something is a summon for a right-hand (good/light/cunning man) witch mob
      */
     public static boolean isRightHandSummon(LivingEntity livingEntity) {
-        return livingEntity.getType().isIn(WKTags.RIGHT_HAND_WITCH_SUMMON);
+        return livingEntity.getType().is(WKTags.RIGHT_HAND_WITCH_SUMMON);
     }
 
     /**
      * This allows one to tell if something is a summon for a left-hand (evil/dark) witch mob
      */
     public static boolean isLeftHandSummon(LivingEntity livingEntity) {
-        return livingEntity.getType().isIn(WKTags.LEFT_HAND_WITCH_SUMMON);
+        return livingEntity.getType().is(WKTags.LEFT_HAND_WITCH_SUMMON);
     }
 
     @Nullable
-    public static LivingEntity getTaglockEntity(World world, ItemStack taglock) {
-        if (world instanceof ServerWorld && taglock.getItem() instanceof TaglockItem && hasTaglock(taglock)) {
+    public static LivingEntity getTaglockEntity(Level world, ItemStack taglock) {
+        if (world instanceof ServerLevel && taglock.getItem() instanceof TaglockItem && hasTaglock(taglock)) {
             UUID uuid = getTaglockUUID(taglock);
             if (uuid != null) {
-                for (ServerWorld serverWorld : world.getServer().getWorlds()) {
+                for (ServerLevel serverWorld : world.getServer().getAllLevels()) {
                     if (serverWorld.getEntity(uuid) instanceof LivingEntity livingEntity) {
                         return livingEntity;
                     }
@@ -110,7 +114,7 @@ public class WKApi {
     }
 
     public static boolean hasTaglock(ItemStack stack) {
-        return stack.contains(WKComponents.TAGLOCK);
+        return stack.has(WKComponents.TAGLOCK);
     }
 
     @Nullable

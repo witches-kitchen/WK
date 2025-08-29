@@ -1,12 +1,12 @@
 package cf.witcheskitchen.common.statuseffect;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectCategory;
-import net.minecraft.server.world.ServerWorld;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.entity.LivingEntity;
 
-public class FireShieldStatusEffect extends StatusEffect {
-    public FireShieldStatusEffect(StatusEffectCategory type, int color) {
+public class FireShieldStatusEffect extends MobEffect {
+    public FireShieldStatusEffect(MobEffectCategory type, int color) {
         super(type, color);
     }
 
@@ -16,16 +16,16 @@ public class FireShieldStatusEffect extends StatusEffect {
     }
 
     @Override
-    public boolean canApplyUpdateEffect(int duration, int amplifier) {
+    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
         return true;
     }
 
     @Override
-    public boolean applyUpdateEffect(ServerWorld world, LivingEntity entity, int amplifier) {
-        LivingEntity attacker = entity.getAttacker();
-        if (entity.getAttacker() == attacker) {
+    public boolean applyEffectTick(ServerLevel world, LivingEntity entity, int amplifier) {
+        LivingEntity attacker = entity.getLastHurtByMob();
+        if (entity.getLastHurtByMob() == attacker) {
             if (attacker != null) {
-                attacker.setOnFireFor(10);
+                attacker.igniteForSeconds(10);
             }
         }
         return true;

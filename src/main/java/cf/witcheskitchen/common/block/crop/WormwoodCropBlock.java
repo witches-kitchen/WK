@@ -8,47 +8,47 @@ import cf.witcheskitchen.common.component.WKComponents;
 import cf.witcheskitchen.common.registry.WKItems;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.Block;
-import net.minecraft.block.enums.DoubleBlockHalf;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.property.IntProperty;
-import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class WormwoodCropBlock extends WKTallCropBlock implements CropVariants {
     public static final VoxelShape[] LOWER_AGE_TO_SHAPE;
     public static final VoxelShape[] UPPER_AGE_TO_SHAPE;
     public static final int MAX_AGE = 7;
-    private static final IntProperty AGE = IntProperty.of("age", 0, MAX_AGE);
+    private static final IntegerProperty AGE = IntegerProperty.create("age", 0, MAX_AGE);
 
     static {
         LOWER_AGE_TO_SHAPE = new VoxelShape[]{
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 4.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 6.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 10.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 14.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0)
+                Block.box(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
+                Block.box(0.0, 0.0, 0.0, 16.0, 4.0, 16.0),
+                Block.box(0.0, 0.0, 0.0, 16.0, 6.0, 16.0),
+                Block.box(0.0, 0.0, 0.0, 16.0, 10.0, 16.0),
+                Block.box(0.0, 0.0, 0.0, 16.0, 14.0, 16.0),
+                Block.box(0.0, 0.0, 0.0, 16.0, 16.0, 16.0),
+                Block.box(0.0, 0.0, 0.0, 16.0, 16.0, 16.0),
+                Block.box(0.0, 0.0, 0.0, 16.0, 16.0, 16.0)
         };
         UPPER_AGE_TO_SHAPE = new VoxelShape[]{
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 1.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 3.0, 16.0),
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 4.0, 16.0)
+                Block.box(0.0, 0.0, 0.0, 16.0, 1.0, 16.0),
+                Block.box(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
+                Block.box(0.0, 0.0, 0.0, 16.0, 3.0, 16.0),
+                Block.box(0.0, 0.0, 0.0, 16.0, 4.0, 16.0)
         };
     }
 
     private final WormwoodTypes type;
 
-    public WormwoodCropBlock(Settings settings) {
+    public WormwoodCropBlock(Properties settings) {
         this(settings, WormwoodTypes.COMMON);
     }
 
-    public WormwoodCropBlock(Settings settings, WormwoodTypes type) {
+    public WormwoodCropBlock(Properties settings, WormwoodTypes type) {
         super(settings);
         this.type = type;
-        this.setDefaultState(this.getDefaultState().with(getAgeProperty(), 0).with(HALF, DoubleBlockHalf.LOWER));
+        this.registerDefaultState(this.defaultBlockState().setValue(getAgeProperty(), 0).setValue(HALF, DoubleBlockHalf.LOWER));
     }
 
     @Override
@@ -62,7 +62,7 @@ public class WormwoodCropBlock extends WKTallCropBlock implements CropVariants {
     }
 
     @Override
-    public IntProperty getAgeProperty() {
+    public IntegerProperty getAgeProperty() {
         return AGE;
     }
 

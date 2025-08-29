@@ -10,17 +10,21 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.entity.EntityType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.recipe.*;
-import net.minecraft.recipe.book.RecipeBookCategory;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.world.World;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.PlacementInfo;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeBookCategory;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -58,7 +62,7 @@ public class RitualRecipe implements Recipe<MultipleStackRecipeInput> {
     public static boolean matches(MultipleStackRecipeInput inv, List<Ingredient> input, List<EntityType<?>> sacrifices) {
         List<ItemStack> checklist = new ArrayList<>();
         for (int i = 0; i < inv.size(); i++) {
-            ItemStack stack = inv.getStackInSlot(i);
+            ItemStack stack = inv.getItem(i);
             if (!stack.isEmpty()) {
                 checklist.add(stack);
             }
@@ -83,12 +87,12 @@ public class RitualRecipe implements Recipe<MultipleStackRecipeInput> {
     }
 
     @Override
-    public boolean matches(MultipleStackRecipeInput input, World world) {
+    public boolean matches(MultipleStackRecipeInput input, Level world) {
         return matches(input, inputs, sacrifices);
     }
 
     @Override
-    public ItemStack craft(MultipleStackRecipeInput input, RegistryWrapper.WrapperLookup lookup) {
+    public ItemStack assemble(MultipleStackRecipeInput input, HolderLookup.Provider lookup) {
         return ItemStack.EMPTY;
     }
 
@@ -115,15 +119,15 @@ public class RitualRecipe implements Recipe<MultipleStackRecipeInput> {
     }
 
     @Override
-    public IngredientPlacement getIngredientPlacement() {
+    public PlacementInfo placementInfo() {
         if (this.inputs == null)
-            return IngredientPlacement.NONE;
+            return PlacementInfo.NOT_PLACEABLE;
 
-        return IngredientPlacement.forShapeless(this.inputs);
+        return PlacementInfo.create(this.inputs);
     }
 
     @Override
-    public RecipeBookCategory getRecipeBookCategory() {
+    public RecipeBookCategory recipeBookCategory() {
         // TODO: use custom recipe book category
         return null;
     }
@@ -153,7 +157,7 @@ public class RitualRecipe implements Recipe<MultipleStackRecipeInput> {
         public MapCodec<RitualRecipe> codec() {
             return RecordCodecBuilder.mapCodec(instance ->
                     instance.group(
-                                    WKRegistries.RITUAL.getCodec()
+                                    WKRegistries.RITUAL.byNameCodec()
                                             .fieldOf("ritual")
                                             .forGetter(RitualRecipe::getRite),
                                     Codec.STRING
@@ -172,16 +176,16 @@ public class RitualRecipe implements Recipe<MultipleStackRecipeInput> {
                                     Ingredient.CODEC
                                             .listOf()
                                             .fieldOf("inputs")
-                                            .forGetter(recipe -> recipe.getIngredientPlacement().getIngredients()),
+                                            .forGetter(recipe -> recipe.placementInfo().ingredients()),
                                     ItemStack.CODEC
                                             .listOf()
                                             .fieldOf("outputs")
                                             .forGetter(RitualRecipe::getOutputs),
-                                    Registries.ENTITY_TYPE.getCodec()
+                                    BuiltInRegistries.ENTITY_TYPE.byNameCodec()
                                             .listOf()
                                             .fieldOf("sacrifices")
                                             .forGetter(RitualRecipe::getSacrifices),
-                                    Registries.ENTITY_TYPE.getCodec()
+                                    BuiltInRegistries.ENTITY_TYPE.byNameCodec()
                                             .listOf()
                                             .fieldOf("summons")
                                             .forGetter(RitualRecipe::getSummons),
@@ -198,16 +202,16 @@ public class RitualRecipe implements Recipe<MultipleStackRecipeInput> {
         }
 
         @Override
-        public PacketCodec<RegistryByteBuf, RitualRecipe> packetCodec() {
+        public StreamCodec<RegistryFriendlyByteBuf, RitualRecipe> streamCodec() {
             return CustomPacketCodecs.tuple(
-                    PacketCodecs.registryValue(WKRegistries.RITUAL.getKey()), RitualRecipe::getRite,
-                    PacketCodecs.STRING, RitualRecipe::getEnergy,
+                    ByteBufCodecs.registry(WKRegistries.RITUAL.key()), RitualRecipe::getRite,
+                    ByteBufCodecs.STRING_UTF8, RitualRecipe::getEnergy,
                     CustomPacketCodecs.createSetCodec(RitualCircle.PACKET_CODEC), RitualRecipe::getCircles,
-                    CustomPacketCodecs.INGREDIENT_LIST, recipe -> recipe.getIngredientPlacement().getIngredients(),
-                    ItemStack.OPTIONAL_LIST_PACKET_CODEC, RitualRecipe::getOutputs,
-                    CustomPacketCodecs.createListCodec(PacketCodecs.registryValue(RegistryKeys.ENTITY_TYPE)), RitualRecipe::getSacrifices,
-                    CustomPacketCodecs.createListCodec(PacketCodecs.registryValue(RegistryKeys.ENTITY_TYPE)), RitualRecipe::getSummons,
-                    PacketCodecs.VAR_INT, RitualRecipe::getDuration,
+                    CustomPacketCodecs.INGREDIENT_LIST, recipe -> recipe.placementInfo().ingredients(),
+                    ItemStack.OPTIONAL_LIST_STREAM_CODEC, RitualRecipe::getOutputs,
+                    CustomPacketCodecs.createListCodec(ByteBufCodecs.registry(Registries.ENTITY_TYPE)), RitualRecipe::getSacrifices,
+                    CustomPacketCodecs.createListCodec(ByteBufCodecs.registry(Registries.ENTITY_TYPE)), RitualRecipe::getSummons,
+                    ByteBufCodecs.VAR_INT, RitualRecipe::getDuration,
                     CustomPacketCodecs.createSetCodec(CommandType.PACKET_CODEC), RitualRecipe::getCommands,
                     RitualRecipe::new
             );

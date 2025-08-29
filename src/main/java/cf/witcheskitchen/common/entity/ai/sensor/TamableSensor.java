@@ -3,13 +3,13 @@ package cf.witcheskitchen.common.entity.ai.sensor;
 import cf.witcheskitchen.api.entity.WKTameableEntity;
 import cf.witcheskitchen.common.registry.WKMemoryModuleTypes;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.brain.Brain;
-import net.minecraft.entity.ai.brain.MemoryModuleType;
-import net.minecraft.entity.ai.brain.sensor.SensorType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.Box;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.Brain;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
+import net.minecraft.world.entity.ai.sensing.SensorType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.AABB;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 
 import java.util.List;
@@ -26,12 +26,12 @@ public class TamableSensor<E extends WKTameableEntity> extends ExtendedSensor<E>
     }
 
     @Override
-    protected void sense(ServerWorld world, WKTameableEntity entity) {
-        Box box = entity.getBoundingBox().expand(this.getHorizontalExpansion(), this.getHeightExpansion(), this.getHorizontalExpansion());
-        List<PlayerEntity> list = world.getEntitiesByClass(PlayerEntity.class, box, LivingEntity::isAlive);
-        if (entity.getOwner() instanceof PlayerEntity player && list.contains(player)) {
+    protected void doTick(ServerLevel world, WKTameableEntity entity) {
+        AABB box = entity.getBoundingBox().inflate(this.getHorizontalExpansion(), this.getHeightExpansion(), this.getHorizontalExpansion());
+        List<Player> list = world.getEntitiesOfClass(Player.class, box, LivingEntity::isAlive);
+        if (entity.getOwner() instanceof Player player && list.contains(player)) {
             Brain<?> brain = entity.getBrain();
-            brain.remember(WKMemoryModuleTypes.OWNER_PLAYER, player);
+            brain.setMemory(WKMemoryModuleTypes.OWNER_PLAYER, player);
         }
     }
 

@@ -9,14 +9,14 @@ import cf.witcheskitchen.common.registry.WKEntityTypes;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
-import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 
 @Environment(EnvType.CLIENT)
 public interface WKRendererRegistry {
     static void init() {
-        BlockEntityRendererFactories.register(WKBlockEntityTypes.WITCHES_OVEN, (ctx) -> new WitchesOvenBlockEntityRender());
-        BlockEntityRendererFactories.register(WKBlockEntityTypes.WITCHES_CAULDRON, (ctx) -> new WitchesCauldronBlockEntityRender());
-        BlockEntityRendererFactories.register(WKBlockEntityTypes.BREWING_BARREL, (ctx) -> new BrewingBarrelBlockEntityRender());
+        BlockEntityRenderers.register(WKBlockEntityTypes.WITCHES_OVEN, (ctx) -> new WitchesOvenBlockEntityRender());
+        BlockEntityRenderers.register(WKBlockEntityTypes.WITCHES_CAULDRON, (ctx) -> new WitchesCauldronBlockEntityRender());
+        BlockEntityRenderers.register(WKBlockEntityTypes.BREWING_BARREL, (ctx) -> new BrewingBarrelBlockEntityRender());
 
         EntityRendererRegistry.register(WKEntityTypes.CUSITH, CuSithRender::new);
         EntityRendererRegistry.register(WKEntityTypes.ROGGENWOLF, RoggenwolfRender::new);

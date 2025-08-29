@@ -1,16 +1,16 @@
 package cf.witcheskitchen.api.block.entity;
 
 import cf.witcheskitchen.api.util.InventoryManager;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.Container;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
-public class WKBlockEntityWithInventory extends WKBlockEntity implements Inventory {
+public class WKBlockEntityWithInventory extends WKBlockEntity implements Container {
 
     protected final InventoryManager<WKBlockEntityWithInventory> manager;
 
@@ -20,20 +20,20 @@ public class WKBlockEntityWithInventory extends WKBlockEntity implements Invento
     }
 
     @Override
-    protected void readData(ReadView data) {
-        super.readData(data);
+    protected void loadAdditional(ValueInput data) {
+        super.loadAdditional(data);
         this.manager.readData(data);
     }
 
     @Override
-    protected void writeData(WriteView data) {
-        super.writeData(data);
+    protected void saveAdditional(ValueOutput data) {
+        super.saveAdditional(data);
         this.manager.writeData(data);
     }
 
     @Override
-    public int size() {
-        return this.manager.size();
+    public int getContainerSize() {
+        return this.manager.getContainerSize();
     }
 
     @Override
@@ -42,32 +42,32 @@ public class WKBlockEntityWithInventory extends WKBlockEntity implements Invento
     }
 
     @Override
-    public ItemStack getStack(int slot) {
-        return this.manager.getStack(slot);
+    public ItemStack getItem(int slot) {
+        return this.manager.getItem(slot);
     }
 
     @Override
-    public ItemStack removeStack(int slot, int amount) {
-        return this.manager.removeStack(slot, amount);
+    public ItemStack removeItem(int slot, int amount) {
+        return this.manager.removeItem(slot, amount);
     }
 
     @Override
-    public ItemStack removeStack(int slot) {
-        return this.manager.removeStack(slot);
+    public ItemStack removeItemNoUpdate(int slot) {
+        return this.manager.removeItemNoUpdate(slot);
     }
 
     @Override
-    public void setStack(int slot, ItemStack stack) {
-        this.manager.setStack(slot, stack);
+    public void setItem(int slot, ItemStack stack) {
+        this.manager.setItem(slot, stack);
     }
 
     @Override
-    public boolean canPlayerUse(PlayerEntity player) {
-        return this.manager.canPlayerUse(player);
+    public boolean stillValid(Player player) {
+        return this.manager.stillValid(player);
     }
 
     @Override
-    public void clear() {
-        this.manager.clear();
+    public void clearContent() {
+        this.manager.clearContent();
     }
 }

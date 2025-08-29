@@ -3,21 +3,21 @@ package cf.witcheskitchen.common.component.entity;
 import cf.witcheskitchen.api.util.CursePair;
 import cf.witcheskitchen.common.curse.Curse;
 import cf.witcheskitchen.common.registry.WKRegistries;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.util.Identifier;
 import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
 import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
 
 import java.util.HashSet;
 import java.util.Set;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 public class WKCurseComponent implements ServerTickingComponent, AutoSyncedComponent {
     private final Set<CursePair> curses = new HashSet<>();
-    private final PlayerEntity player;
+    private final Player player;
 
-    public WKCurseComponent(PlayerEntity player) {
+    public WKCurseComponent(Player player) {
         this.player = player;
     }
 
@@ -59,16 +59,16 @@ public class WKCurseComponent implements ServerTickingComponent, AutoSyncedCompo
     }
 
     @Override
-    public void readData(ReadView data) {
-        ReadView.ListReadView cursesList = data.getListReadView("Curses");
-        for (ReadView curseView : cursesList) {
-            addCurse(WKRegistries.CURSES.get(Identifier.tryParse(curseView.getOptionalString("Curse").orElseThrow())), curseView.getOptionalInt("Duration").orElseThrow());
+    public void readData(ValueInput data) {
+        ValueInput.ValueInputList cursesList = data.childrenListOrEmpty("Curses");
+        for (ValueInput curseView : cursesList) {
+            addCurse(WKRegistries.CURSES.getValue(ResourceLocation.tryParse(curseView.getString("Curse").orElseThrow())), curseView.getInt("Duration").orElseThrow());
         }
     }
 
     @Override
-    public void writeData(WriteView data) {
-        writeCurse(data.getList("Curses"));
+    public void writeData(ValueOutput data) {
+        writeCurse(data.childrenList("Curses"));
     }
 
     public Set<CursePair> getCurses() {
@@ -79,10 +79,10 @@ public class WKCurseComponent implements ServerTickingComponent, AutoSyncedCompo
         return getCurses().stream().anyMatch(c -> c.getCurse() == curse);
     }
 
-    public void writeCurse(WriteView.ListView cursesList) {
+    public void writeCurse(ValueOutput.ValueOutputList cursesList) {
         for (CursePair cursePair : getCurses()) {
-            WriteView curseView = cursesList.add();
-            curseView.putString("Curse", WKRegistries.CURSES.getId(cursePair.getCurse()).toString());
+            ValueOutput curseView = cursesList.addChild();
+            curseView.putString("Curse", WKRegistries.CURSES.getKey(cursePair.getCurse()).toString());
             curseView.putInt("Duration", cursePair.getDuration());
         }
     }

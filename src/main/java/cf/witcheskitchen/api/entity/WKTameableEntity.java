@@ -2,64 +2,64 @@ package cf.witcheskitchen.api.entity;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.data.DataTracker;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.passive.TameableEntity;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 //Todo: Revamp texture variants and their code
-public abstract class WKTameableEntity extends TameableEntity {
+public abstract class WKTameableEntity extends TamableAnimal {
     /**
      * This allows the mod to assign a number of textural variants for a mob.
      * Please be sane with it.
      */
-    public static final TrackedData<Integer> VARIANT = DataTracker.registerData(WKTameableEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    public static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(WKTameableEntity.class, EntityDataSerializers.INT);
     /**
      * Pose Flags Indexes: 0 - Default, 1 - Sitting, 2 - Sleeping
      */
-    private static final TrackedData<Byte> POSE_FLAGS = DataTracker.registerData(WKTameableEntity.class, TrackedDataHandlerRegistry.BYTE);
+    private static final EntityDataAccessor<Byte> POSE_FLAGS = SynchedEntityData.defineId(WKTameableEntity.class, EntityDataSerializers.BYTE);
 
-    public WKTameableEntity(EntityType<? extends TameableEntity> entityType, World world) {
+    public WKTameableEntity(EntityType<? extends TamableAnimal> entityType, Level world) {
         super(entityType, world);
     }
 
     @Override
-    protected void initDataTracker(DataTracker.Builder builder) {
-        super.initDataTracker(builder);
-        builder.add(VARIANT, 0);
-        builder.add(POSE_FLAGS, (byte) 0b0000_0000);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(VARIANT, 0);
+        builder.define(POSE_FLAGS, (byte) 0b0000_0000);
     }
 
     @Override
-    public void writeCustomData(WriteView data) {
-        super.writeCustomData(data);
-        data.putByte("Flags", dataTracker.get(POSE_FLAGS));
+    public void addAdditionalSaveData(ValueOutput data) {
+        super.addAdditionalSaveData(data);
+        data.putByte("Flags", entityData.get(POSE_FLAGS));
         data.putInt("Variant", this.getVariant());
     }
 
     @Override
-    public void readCustomData(ReadView data) {
-        super.readCustomData(data);
-        dataTracker.set(POSE_FLAGS, data.getByte("Flags", (byte) 0));
-        this.setVariant(data.getInt("Variant", 0));
+    public void readAdditionalSaveData(ValueInput data) {
+        super.readAdditionalSaveData(data);
+        entityData.set(POSE_FLAGS, data.getByteOr("Flags", (byte) 0));
+        this.setVariant(data.getIntOr("Variant", 0));
     }
 
     protected void setPoseFlag(int index, boolean value) {
-        byte b = this.dataTracker.get(POSE_FLAGS);
+        byte b = this.entityData.get(POSE_FLAGS);
         if (value) {
-            this.dataTracker.set(POSE_FLAGS, (byte) (b | 1 << index));
+            this.entityData.set(POSE_FLAGS, (byte) (b | 1 << index));
         } else {
-            this.dataTracker.set(POSE_FLAGS, (byte) (b & ~(1 << index)));
+            this.entityData.set(POSE_FLAGS, (byte) (b & ~(1 << index)));
         }
     }
 
     protected boolean getPoseFlag(int index) {
-        return (this.dataTracker.get(POSE_FLAGS) & 1 << index) != 0;
+        return (this.entityData.get(POSE_FLAGS) & 1 << index) != 0;
     }
 
     @Override
@@ -72,17 +72,17 @@ public abstract class WKTameableEntity extends TameableEntity {
     }
 
     @Override
-    public boolean isSitting() {
+    public boolean isOrderedToSit() {
         return getPoseFlag(1);
     }
 
-    public void setSitting(boolean sitting) {
+    public void setOrderedToSit(boolean sitting) {
         setPoseFlag(1, sitting);
     }
 
     @Override
     @Environment(EnvType.CLIENT)
-    public boolean shouldRender(double distance) {
+    public boolean shouldRenderAtSqrDistance(double distance) {
         return true;
     }
 
@@ -93,10 +93,10 @@ public abstract class WKTameableEntity extends TameableEntity {
     public abstract int getVariants();
 
     public int getVariant() {
-        return MathHelper.clamp(this.dataTracker.get(VARIANT), 1, getVariants());
+        return Mth.clamp(this.entityData.get(VARIANT), 1, getVariants());
     }
 
     public void setVariant(int variant) {
-        this.dataTracker.set(VARIANT, variant);
+        this.entityData.set(VARIANT, variant);
     }
 }

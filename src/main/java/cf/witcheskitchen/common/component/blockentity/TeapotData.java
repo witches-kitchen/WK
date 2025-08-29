@@ -2,15 +2,15 @@ package cf.witcheskitchen.common.component.blockentity;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.effect.MobEffect;
 
-public record TeapotData(int progress, int effectTimer, boolean hasWater, RegistryEntry<StatusEffect> effect) {
+public record TeapotData(int progress, int effectTimer, boolean hasWater, Holder<MobEffect> effect) {
     public static final Codec<TeapotData> CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
                             Codec.INT
@@ -22,18 +22,18 @@ public record TeapotData(int progress, int effectTimer, boolean hasWater, Regist
                             Codec.BOOL
                                     .fieldOf("hasWater")
                                     .forGetter(TeapotData::hasWater),
-                            Registries.STATUS_EFFECT.getEntryCodec()
+                            BuiltInRegistries.MOB_EFFECT.holderByNameCodec()
                                     .fieldOf("effect")
                                     .forGetter(TeapotData::effect)
                     )
                     .apply(instance, TeapotData::new)
     );
 
-    public static final PacketCodec<RegistryByteBuf, TeapotData> PACKET_CODEC = PacketCodec.tuple(
-            PacketCodecs.INTEGER, TeapotData::progress,
-            PacketCodecs.INTEGER, TeapotData::effectTimer,
-            PacketCodecs.BOOLEAN, TeapotData::hasWater,
-            PacketCodecs.registryEntry(RegistryKeys.STATUS_EFFECT), TeapotData::effect,
+    public static final StreamCodec<RegistryFriendlyByteBuf, TeapotData> PACKET_CODEC = StreamCodec.composite(
+            ByteBufCodecs.INT, TeapotData::progress,
+            ByteBufCodecs.INT, TeapotData::effectTimer,
+            ByteBufCodecs.BOOL, TeapotData::hasWater,
+            ByteBufCodecs.holderRegistry(Registries.MOB_EFFECT), TeapotData::effect,
             TeapotData::new
     );
 }

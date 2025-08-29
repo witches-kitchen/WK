@@ -3,48 +3,48 @@ package cf.witcheskitchen.client.particle;
 import cf.witcheskitchen.api.event.network.MagicSparkleParticleEvent;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particle.SimpleParticleType;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.util.RandomSource;
 
 @Environment(EnvType.CLIENT)
-public class MagicSparkleParticle extends SpriteBillboardParticle {
+public class MagicSparkleParticle extends TextureSheetParticle {
 
-    private final Random random;
+    private final RandomSource random;
     private boolean canMove = false;
     private boolean circling = false;
 
-    protected MagicSparkleParticle(ClientWorld clientWorld, double x, double y, double z, double r, double g, double b) {
+    protected MagicSparkleParticle(ClientLevel clientWorld, double x, double y, double z, double r, double g, double b) {
         super(clientWorld, x, y, z);
         this.setScale(0.12f);
         this.setColor((float) r, (float) g, (float) b);
         this.random = clientWorld.getRandom();
-        this.maxAge = 25 + (random.nextInt(10));
+        this.lifetime = 25 + (random.nextInt(10));
         MagicSparkleParticleEvent.PARTICLE_CONSTRUCTOR_EVENT.invoker().onConstructor(this);
     }
 
     @Override
     public void tick() {
-        this.lastX = this.x;
-        this.lastY = this.y;
-        this.lastZ = this.z;
+        this.xo = this.x;
+        this.yo = this.y;
+        this.zo = this.z;
 
-        if (this.age++ >= this.maxAge) {
-            this.markDead();
+        if (this.age++ >= this.lifetime) {
+            this.remove();
         }
-        if (!this.dead) {
-            super.velocityY -= 0.04D * (double) super.gravityStrength;
+        if (!this.removed) {
+            super.yd -= 0.04D * (double) super.gravity;
         }
-        this.move(super.velocityX, super.velocityY, super.velocityZ);
+        this.move(super.xd, super.yd, super.zd);
         if (this.onGround) {
-            this.velocityX *= 0.7F;
-            this.velocityZ *= 0.7F;
+            this.xd *= 0.7F;
+            this.zd *= 0.7F;
         }
     }
 
     public MagicSparkleParticle setGravity(float gravity) {
-        super.gravityStrength = gravity;
+        super.gravity = gravity;
         return this;
     }
 
@@ -55,7 +55,7 @@ public class MagicSparkleParticle extends SpriteBillboardParticle {
     }
 
     public MagicSparkleParticle setScale(float scale) {
-        super.scale = scale;
+        super.quadSize = scale;
         return this;
     }
 
@@ -66,24 +66,24 @@ public class MagicSparkleParticle extends SpriteBillboardParticle {
 
 
     @Override
-    public ParticleTextureSheet getType() {
-        return ParticleTextureSheet.PARTICLE_SHEET_OPAQUE;
+    public ParticleRenderType getRenderType() {
+        return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
     }
 
-    public Random getRandom() {
+    public RandomSource getRandom() {
         return random;
     }
 
     public float getRed() {
-        return this.red;
+        return this.rCol;
     }
 
     public float getGreen() {
-        return this.green;
+        return this.gCol;
     }
 
     public float getBlue() {
-        return this.blue;
+        return this.bCol;
     }
 
     public float getAlpha() {
@@ -91,10 +91,10 @@ public class MagicSparkleParticle extends SpriteBillboardParticle {
     }
 
     @Environment(EnvType.CLIENT)
-    public record Factory(SpriteProvider spriteProvider) implements ParticleFactory<SimpleParticleType> {
-        public Particle createParticle(SimpleParticleType defaultParticleType, ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {
+    public record Factory(SpriteSet spriteProvider) implements ParticleProvider<SimpleParticleType> {
+        public Particle createParticle(SimpleParticleType defaultParticleType, ClientLevel clientWorld, double d, double e, double f, double g, double h, double i) {
             final MagicSparkleParticle particle = new MagicSparkleParticle(clientWorld, d, e, f, g, h, i);
-            particle.setSprite(this.spriteProvider);
+            particle.pickSprite(this.spriteProvider);
             return particle;
         }
     }

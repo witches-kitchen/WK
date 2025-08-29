@@ -4,12 +4,12 @@ import cf.witcheskitchen.api.CommandType;
 import cf.witcheskitchen.api.event.RitualEvent;
 import cf.witcheskitchen.common.recipe.RitualRecipe;
 import com.mojang.brigadier.ParseResults;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.command.CommandManager;
-import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 
 public class Ritual {
 
@@ -17,7 +17,7 @@ public class Ritual {
 
     }
 
-    public void tick(World world, BlockPos blockPos, RitualRecipe ritualRecipe) {
+    public void tick(Level world, BlockPos blockPos, RitualRecipe ritualRecipe) {
         RitualEvent.TICK.invoker().tick(this, world, blockPos);
         MinecraftServer minecraftServer = world.getServer();
         for (CommandType commandType : ritualRecipe.command) {
@@ -27,7 +27,7 @@ public class Ritual {
         }
     }
 
-    public void onStart(World world, BlockPos blockPos, PlayerEntity player, RitualRecipe ritualRecipe) {
+    public void onStart(Level world, BlockPos blockPos, Player player, RitualRecipe ritualRecipe) {
         RitualEvent.START.invoker().start(this, world, blockPos, player);
         MinecraftServer minecraftServer = world.getServer();
         for (CommandType commandType : ritualRecipe.command) {
@@ -37,7 +37,7 @@ public class Ritual {
         }
     }
 
-    public void onEnd(World world, BlockPos blockPos, RitualRecipe ritualRecipe) {
+    public void onEnd(Level world, BlockPos blockPos, RitualRecipe ritualRecipe) {
         RitualEvent.END.invoker().end(this, world, blockPos);
         MinecraftServer minecraftServer = world.getServer();
         for (CommandType commandType : ritualRecipe.command) {
@@ -52,10 +52,10 @@ public class Ritual {
         if (minecraftServer != null && !command.isEmpty()) {
             String posString = blockPos.getX() + " " + blockPos.getY() + " " + blockPos.getZ();
             String parsedCommand = command.replaceAll("\\{pos}", posString);
-            ServerCommandSource commandSource = minecraftServer.getCommandSource();
-            CommandManager commandManager = minecraftServer.getCommandManager();
-            ParseResults<ServerCommandSource> parseResults = commandManager.getDispatcher().parse(parsedCommand, commandSource);
-            commandManager.execute(parseResults, parsedCommand);
+            CommandSourceStack commandSource = minecraftServer.createCommandSourceStack();
+            Commands commandManager = minecraftServer.getCommands();
+            ParseResults<CommandSourceStack> parseResults = commandManager.getDispatcher().parse(parsedCommand, commandSource);
+            commandManager.performCommand(parseResults, parsedCommand);
         }
     }
 }

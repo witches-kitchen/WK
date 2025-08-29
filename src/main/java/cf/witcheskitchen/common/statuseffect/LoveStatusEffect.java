@@ -1,33 +1,33 @@
 package cf.witcheskitchen.common.statuseffect;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectCategory;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.server.world.ServerWorld;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.Animal;
 
-public class LoveStatusEffect extends StatusEffect {
+public class LoveStatusEffect extends MobEffect {
 
-    public LoveStatusEffect(StatusEffectCategory type, int color) {
+    public LoveStatusEffect(MobEffectCategory type, int color) {
         super(type, color);
     }
 
     @Override
-    public boolean isInstant() {
+    public boolean isInstantenous() {
         return false;
     }
 
     @Override
-    public boolean canApplyUpdateEffect(int duration, int amplifier) {
+    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
         return true;
     }
 
     @Override
-    public boolean applyUpdateEffect(ServerWorld world, LivingEntity entity, int amplifier) {
-        if (entity instanceof AnimalEntity) {
-            if (entity.isAlive() && !((AnimalEntity) entity).isInLove()) {
-                ((AnimalEntity) entity).setLoveTicks(5000);
-                ((AnimalEntity) entity).isInLove();
+    public boolean applyEffectTick(ServerLevel world, LivingEntity entity, int amplifier) {
+        if (entity instanceof Animal) {
+            if (entity.isAlive() && !((Animal) entity).isInLove()) {
+                ((Animal) entity).setInLoveTime(5000);
+                ((Animal) entity).isInLove();
             }
         }
         return true;

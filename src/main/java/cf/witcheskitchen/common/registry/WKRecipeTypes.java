@@ -3,16 +3,15 @@ package cf.witcheskitchen.common.registry;
 import cf.witcheskitchen.WitchesKitchen;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
 import cf.witcheskitchen.common.recipe.*;
-import net.minecraft.recipe.Recipe;
-import net.minecraft.recipe.RecipeSerializer;
-import net.minecraft.recipe.RecipeType;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.util.Identifier;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
 
 public interface WKRecipeTypes {
     List<ObjectDefinition<RecipeSerializer<?>>> RECIPE_SERIALIZERS = new ArrayList<>();
@@ -32,14 +31,14 @@ public interface WKRecipeTypes {
     RecipeType<TeaRecipe> TEA_RECIPE_TYPE = register("tea");
 
     static <T extends Recipe<?>> RecipeSerializer<T> register(String name, RecipeSerializer<T> serializer) {
-        final Identifier id = WitchesKitchen.id(name);
+        final ResourceLocation id = WitchesKitchen.id(name);
         final ObjectDefinition<RecipeSerializer<?>> definition = new ObjectDefinition<>(id, serializer);
         RECIPE_SERIALIZERS.add(definition);
         return serializer;
     }
 
     static <T extends Recipe<?>> RecipeType<T> register(String name) {
-        final Identifier id = WitchesKitchen.id(name);
+        final ResourceLocation id = WitchesKitchen.id(name);
         final RecipeType<T> type = new RecipeType<>() {
             @Override
             public String toString() {
@@ -60,7 +59,7 @@ public interface WKRecipeTypes {
     }
 
     static void init() {
-        RECIPE_SERIALIZERS.forEach(entry -> Registry.register(Registries.RECIPE_SERIALIZER, entry.id(), entry.object()));
-        RECIPE_TYPES.forEach(entry -> Registry.register(Registries.RECIPE_TYPE, entry.id(), entry.object()));
+        RECIPE_SERIALIZERS.forEach(entry -> Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, entry.id(), entry.object()));
+        RECIPE_TYPES.forEach(entry -> Registry.register(BuiltInRegistries.RECIPE_TYPE, entry.id(), entry.object()));
     }
 }

@@ -3,14 +3,13 @@ package cf.witcheskitchen.api.util;
 import cf.witcheskitchen.common.component.WKComponents;
 import cf.witcheskitchen.common.component.item.SeedTypeData;
 import cf.witcheskitchen.common.registry.WKBlocks;
-import net.minecraft.block.Block;
-import net.minecraft.item.ItemStack;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Style;
-import net.minecraft.text.Text;
-
 import java.util.Map;
 import java.util.Optional;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 
 public class SeedTypeHelper {
 
@@ -38,10 +37,10 @@ public class SeedTypeHelper {
         return new SeedTypeData(plantName, typeName, variantColor);
     }
 
-    public static MutableText getSeedTypeText(ItemStack stack) {
-        if (stack.contains(WKComponents.SEED_TYPE)) {
+    public static MutableComponent getSeedTypeText(ItemStack stack) {
+        if (stack.has(WKComponents.SEED_TYPE)) {
             var seedType = stack.get(WKComponents.SEED_TYPE);
-            return Text.translatable(TextUtils.capitalizeString(seedType.type())).setStyle(Style.EMPTY.withColor(seedType.color()));
+            return Component.translatable(TextUtils.capitalizeString(seedType.type())).setStyle(Style.EMPTY.withColor(seedType.color()));
         }
         return null;
     }

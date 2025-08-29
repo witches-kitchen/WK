@@ -6,68 +6,67 @@ import cf.witcheskitchen.common.component.blockentity.TeapotData;
 import cf.witcheskitchen.common.component.blockentity.WitchesCauldronData;
 import cf.witcheskitchen.common.component.item.SeedTypeData;
 import cf.witcheskitchen.common.component.item.TaglockEntityData;
-import net.minecraft.component.ComponentType;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.util.Uuids;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-
 import java.util.UUID;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
+import net.minecraft.core.UUIDUtil;
+import net.minecraft.core.component.DataComponentType;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.Level;
 
 public class WKComponents {
-    public static final ComponentType<BlockPos> BLOCK_POS = register("block_pos", ComponentType.<BlockPos>builder()
-            .codec(BlockPos.CODEC)
-            .packetCodec(BlockPos.PACKET_CODEC)
+    public static final DataComponentType<BlockPos> BLOCK_POS = register("block_pos", DataComponentType.<BlockPos>builder()
+            .persistent(BlockPos.CODEC)
+            .networkSynchronized(BlockPos.STREAM_CODEC)
             .build()
     );
 
-    public static final ComponentType<TaglockEntityData> TAGLOCK = register("taglock", ComponentType.<TaglockEntityData>builder()
-            .codec(TaglockEntityData.CODEC)
-            .packetCodec(TaglockEntityData.PACKET_CODEC)
+    public static final DataComponentType<TaglockEntityData> TAGLOCK = register("taglock", DataComponentType.<TaglockEntityData>builder()
+            .persistent(TaglockEntityData.CODEC)
+            .networkSynchronized(TaglockEntityData.PACKET_CODEC)
             .build()
     );
 
-    public static final ComponentType<WitchesCauldronData> WITCHES_CAULDRON = register("witches_cauldron", ComponentType.<WitchesCauldronData>builder()
-            .codec(WitchesCauldronData.CODEC)
-            .packetCodec(WitchesCauldronData.PACKET_CODEC)
+    public static final DataComponentType<WitchesCauldronData> WITCHES_CAULDRON = register("witches_cauldron", DataComponentType.<WitchesCauldronData>builder()
+            .persistent(WitchesCauldronData.CODEC)
+            .networkSynchronized(WitchesCauldronData.PACKET_CODEC)
             .build()
     );
 
-    public static final ComponentType<FluidStack> FLUID_STACK = register("fluid_stack", ComponentType.<FluidStack>builder()
-            .codec(FluidStack.CODEC)
-            .packetCodec(FluidStack.PACKET_CODEC)
+    public static final DataComponentType<FluidStack> FLUID_STACK = register("fluid_stack", DataComponentType.<FluidStack>builder()
+            .persistent(FluidStack.CODEC)
+            .networkSynchronized(FluidStack.PACKET_CODEC)
             .build()
     );
 
-    public static final ComponentType<TeapotData> TEAPOT = register("teapot", ComponentType.<TeapotData>builder()
-            .codec(TeapotData.CODEC)
-            .packetCodec(TeapotData.PACKET_CODEC)
+    public static final DataComponentType<TeapotData> TEAPOT = register("teapot", DataComponentType.<TeapotData>builder()
+            .persistent(TeapotData.CODEC)
+            .networkSynchronized(TeapotData.PACKET_CODEC)
             .build()
     );
 
-    public static final ComponentType<SeedTypeData> SEED_TYPE = register("seed_type", ComponentType.<SeedTypeData>builder()
-            .codec(SeedTypeData.CODEC)
-            .packetCodec(SeedTypeData.PACKET_CODEC)
+    public static final DataComponentType<SeedTypeData> SEED_TYPE = register("seed_type", DataComponentType.<SeedTypeData>builder()
+            .persistent(SeedTypeData.CODEC)
+            .networkSynchronized(SeedTypeData.PACKET_CODEC)
             .build()
     );
 
-    public static final ComponentType<RegistryKey<World>> DIMENSION = register("dimension", ComponentType.<RegistryKey<World>>builder()
-            .codec(RegistryKey.createCodec(RegistryKeys.WORLD))
-            .packetCodec(RegistryKey.createPacketCodec(RegistryKeys.WORLD))
-            .build()
+    public static final DataComponentType<ResourceKey<Level>> DIMENSION = register("dimension", DataComponentType.<ResourceKey<Level>>builder()
+        .persistent(ResourceKey.codec(Registries.DIMENSION))
+        .networkSynchronized(ResourceKey.streamCodec(Registries.DIMENSION))
+        .build()
     );
 
-    public static final ComponentType<UUID> UUID = register("uuid", ComponentType.<UUID>builder()
-            .codec(Uuids.INT_STREAM_CODEC)
-            .packetCodec(Uuids.PACKET_CODEC)
-            .build()
+    public static final DataComponentType<UUID> UUID = register("uuid", DataComponentType.<UUID>builder()
+        .persistent(UUIDUtil.CODEC)
+        .networkSynchronized(UUIDUtil.STREAM_CODEC)
+        .build()
     );
 
-    private static <T> ComponentType<T> register(String name, ComponentType<T> component) {
-        return Registry.register(Registries.DATA_COMPONENT_TYPE, WitchesKitchen.id(name), component);
+    private static <T> DataComponentType<T> register(String name, DataComponentType<T> component) {
+        return Registry.register(BuiltInRegistries.DATA_COMPONENT_TYPE, WitchesKitchen.id(name), component);
     }
 
     public static void init() {

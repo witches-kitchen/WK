@@ -2,44 +2,47 @@ package cf.witcheskitchen.common.entity.ai.task;
 
 import cf.witcheskitchen.common.registry.WKMemoryModuleTypes;
 import com.google.common.collect.ImmutableMap;
-import net.minecraft.entity.ai.brain.*;
-import net.minecraft.entity.ai.brain.task.MultiTickTask;
-import net.minecraft.entity.mob.PathAwareEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.Brain;
+import net.minecraft.world.entity.ai.behavior.Behavior;
+import net.minecraft.world.entity.ai.behavior.EntityTracker;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
+import net.minecraft.world.entity.ai.memory.MemoryStatus;
+import net.minecraft.world.entity.ai.memory.WalkTarget;
+import net.minecraft.world.entity.player.Player;
 import java.util.Optional;
 
-public class FollowOwnerTask extends MultiTickTask<PathAwareEntity> {
+public class FollowOwnerTask extends Behavior<PathfinderMob> {
     public FollowOwnerTask() {
         super(ImmutableMap.of(
-                MemoryModuleType.LOOK_TARGET, MemoryModuleState.REGISTERED,
-                MemoryModuleType.WALK_TARGET, MemoryModuleState.REGISTERED,
-                WKMemoryModuleTypes.OWNER_PLAYER, MemoryModuleState.VALUE_PRESENT,
-                WKMemoryModuleTypes.SHOULD_FOLLOW_OWNER, MemoryModuleState.VALUE_PRESENT
+                MemoryModuleType.LOOK_TARGET, MemoryStatus.REGISTERED,
+                MemoryModuleType.WALK_TARGET, MemoryStatus.REGISTERED,
+                WKMemoryModuleTypes.OWNER_PLAYER, MemoryStatus.VALUE_PRESENT,
+                WKMemoryModuleTypes.SHOULD_FOLLOW_OWNER, MemoryStatus.VALUE_PRESENT
         ));
     }
 
     @Override
-    protected boolean isTimeLimitExceeded(long time) {
+    protected boolean timedOut(long time) {
         return false;
     }
 
     @Override
-    protected boolean shouldRun(ServerWorld world, PathAwareEntity entity) {
-        return entity.getBrain().getOptionalMemory(WKMemoryModuleTypes.SHOULD_FOLLOW_OWNER).get();
+    protected boolean checkExtraStartConditions(ServerLevel world, PathfinderMob entity) {
+        return entity.getBrain().getMemoryInternal(WKMemoryModuleTypes.SHOULD_FOLLOW_OWNER).get();
     }
 
     @Override
-    protected boolean shouldKeepRunning(ServerWorld world, PathAwareEntity entity, long time) {
-        return shouldRun(world, entity);
+    protected boolean canStillUse(ServerLevel world, PathfinderMob entity, long time) {
+        return checkExtraStartConditions(world, entity);
     }
 
     @Override
-    protected void keepRunning(ServerWorld world, PathAwareEntity entity, long time) {
+    protected void tick(ServerLevel world, PathfinderMob entity, long time) {
         Brain<?> brain = entity.getBrain();
-        Optional<PlayerEntity> playerEntityOptional = brain.getOptionalMemory(WKMemoryModuleTypes.OWNER_PLAYER);
-        playerEntityOptional.ifPresent(player -> brain.remember(MemoryModuleType.WALK_TARGET, new WalkTarget(new EntityLookTarget(player, false), 0.45F, 3)));
-        super.keepRunning(world, entity, time);
+        Optional<Player> playerEntityOptional = brain.getMemoryInternal(WKMemoryModuleTypes.OWNER_PLAYER);
+        playerEntityOptional.ifPresent(player -> brain.setMemory(MemoryModuleType.WALK_TARGET, new WalkTarget(new EntityTracker(player, false), 0.45F, 3)));
+        super.tick(world, entity, time);
     }
 }

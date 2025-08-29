@@ -1,17 +1,17 @@
 package cf.witcheskitchen.common.statuseffect;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectCategory;
-import net.minecraft.server.world.ServerWorld;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.entity.LivingEntity;
 
-public class BugSprayStatusEffect extends StatusEffect {
-    public BugSprayStatusEffect(StatusEffectCategory type, int color) {
+public class BugSprayStatusEffect extends MobEffect {
+    public BugSprayStatusEffect(MobEffectCategory type, int color) {
         super(type, color);
     }
 
     @Override
-    public boolean applyUpdateEffect(ServerWorld world, LivingEntity entity, int amplifier) {
+    public boolean applyEffectTick(ServerLevel world, LivingEntity entity, int amplifier) {
         return true;
     }
 }

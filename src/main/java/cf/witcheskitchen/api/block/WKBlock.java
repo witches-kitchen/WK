@@ -1,19 +1,19 @@
 package cf.witcheskitchen.api.block;
 
 import cf.witcheskitchen.api.block.entity.IExperienceHandler;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.screen.NamedScreenHandlerFactory;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ItemScatterer;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.Container;
+import net.minecraft.world.Containers;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 
 
 /**
@@ -44,49 +44,49 @@ import net.minecraft.world.World;
 @SuppressWarnings("deprecation")
 public abstract class WKBlock extends WKBlockWithEntity {
 
-    protected WKBlock(Settings settings) {
+    protected WKBlock(Properties settings) {
         super(settings);
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
+    public InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
         final BlockEntity entity = world.getBlockEntity(pos);
         // We extended BlockEntityProvider.
         // But i've seen weird bugs
         if (entity == null) {
-            return ActionResult.PASS;
+            return InteractionResult.PASS;
         }
         // Requests a screen
-        if (entity instanceof NamedScreenHandlerFactory factory) {
-            player.openHandledScreen(factory);
-            return ActionResult.SUCCESS;
+        if (entity instanceof MenuProvider factory) {
+            player.openMenu(factory);
+            return InteractionResult.SUCCESS;
         }
-        return ActionResult.PASS;
+        return InteractionResult.PASS;
     }
 
     @Override
-    protected void onStateReplaced(BlockState state, ServerWorld world, BlockPos pos, boolean moved) {
+    protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel world, BlockPos pos, boolean moved) {
         final BlockEntity entity = world.getBlockEntity(pos);
-        if (world instanceof ServerWorld serverWorld) {
-            if (entity instanceof Inventory inventory) {
-                ItemScatterer.spawn(world, pos, inventory);
+        if (world instanceof ServerLevel serverWorld) {
+            if (entity instanceof Container inventory) {
+                Containers.dropContents(world, pos, inventory);
             }
             if (entity instanceof IExperienceHandler handler) {
-                handler.dropExperience(serverWorld, Vec3d.of(pos));
+                handler.dropExperience(serverWorld, Vec3.atLowerCornerOf(pos));
             }
         }
-        world.updateComparators(pos, this);
-        super.onStateReplaced(state, world, pos, moved);
+        world.updateNeighbourForOutputSignal(pos, this);
+        super.affectNeighborsAfterRemoval(state, world, pos, moved);
     }
 
     @Override
-    public boolean hasComparatorOutput(BlockState state) {
+    public boolean hasAnalogOutputSignal(BlockState state) {
         return true;
     }
 
     @Override
-    public int getComparatorOutput(BlockState state, World world, BlockPos pos) {
-        return ScreenHandler.calculateComparatorOutput(world.getBlockEntity(pos));
+    public int getAnalogOutputSignal(BlockState state, Level world, BlockPos pos) {
+        return AbstractContainerMenu.getRedstoneSignalFromBlockEntity(world.getBlockEntity(pos));
     }
 
 }

@@ -2,29 +2,29 @@ package cf.witcheskitchen.client.render.blockentity;
 
 import cf.witcheskitchen.common.block.WitchesOvenBlock;
 import cf.witcheskitchen.common.blockentity.BrewingBarrelBlockEntity;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.block.entity.BlockEntityRenderer;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.item.ItemDisplayContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.RotationAxis;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec3;
 
 @Environment(EnvType.CLIENT)
 public class BrewingBarrelBlockEntityRender implements BlockEntityRenderer<BrewingBarrelBlockEntity> {
 
     @Override
-    public void render(BrewingBarrelBlockEntity entity, float tickProgress, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, Vec3d cameraPos) {
-        final Direction facing = entity.getCachedState().get(WitchesOvenBlock.FACING);
+    public void render(BrewingBarrelBlockEntity entity, float tickProgress, PoseStack matrices, MultiBufferSource vertexConsumers, int light, int overlay, Vec3 cameraPos) {
+        final Direction facing = entity.getBlockState().getValue(WitchesOvenBlock.FACING);
         final ItemStack stack = entity.getRenderStack();
         if (stack.isEmpty()) {
             return;
         }
-        matrices.push();
+        matrices.pushPose();
         double offsetZ = 0;
         double offsetX = 0;
         switch (facing) {
@@ -32,11 +32,11 @@ public class BrewingBarrelBlockEntityRender implements BlockEntityRenderer<Brewi
             case EAST -> {
                 offsetX -= 1.0;
                 offsetZ += 1.05;
-                matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(90));
+                matrices.mulPose(Axis.YP.rotationDegrees(90));
             }
             case WEST -> {
                 offsetX -= 1.0;
-                matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(90));
+                matrices.mulPose(Axis.YP.rotationDegrees(90));
             }
             default -> {
             }
@@ -44,8 +44,8 @@ public class BrewingBarrelBlockEntityRender implements BlockEntityRenderer<Brewi
 
         matrices.translate(0.51 + offsetX, 0.2, -0.02 + offsetZ);
         matrices.scale(0.375F, 0.375F, 0.375F);
-        MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ItemDisplayContext.FIXED, light, overlay, matrices, vertexConsumers, entity.getWorld(), 0);
-        matrices.pop();
+        Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemDisplayContext.FIXED, light, overlay, matrices, vertexConsumers, entity.getLevel(), 0);
+        matrices.popPose();
     }
 
 }

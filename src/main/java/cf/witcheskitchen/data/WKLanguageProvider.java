@@ -7,17 +7,16 @@ import cf.witcheskitchen.common.registry.WKItems;
 import cf.witcheskitchen.common.registry.WKStatusEffects;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.minecraft.registry.RegistryWrapper;
-
+import net.minecraft.core.HolderLookup;
 import java.util.concurrent.CompletableFuture;
 
 public class WKLanguageProvider extends FabricLanguageProvider {
-    protected WKLanguageProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> future) {
+    protected WKLanguageProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> future) {
         super(output, future);
     }
 
     @Override
-    public void generateTranslations(RegistryWrapper.WrapperLookup lookup, TranslationBuilder builder) {
+    public void generateTranslations(HolderLookup.Provider lookup, TranslationBuilder builder) {
         //GROUPS
         builder.add(WKItemGroupEvents.GENERAL_TAB, "Witches' Kitchen General");
         builder.add(WKItemGroupEvents.FOOD_TAB, "Witches' Kitchen Food");

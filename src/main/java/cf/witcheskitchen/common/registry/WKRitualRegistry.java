@@ -7,10 +7,9 @@ import cf.witcheskitchen.common.ritual.FreezeRitual;
 import cf.witcheskitchen.common.ritual.LightningRitual;
 import cf.witcheskitchen.common.ritual.SummoningRitual;
 import cf.witcheskitchen.common.ritual.VariantIncreaseRitual;
-import net.minecraft.registry.Registry;
-
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.core.Registry;
 
 public interface WKRitualRegistry {
     List<ObjectDefinition<Ritual>> RITUALS = new ArrayList<>();

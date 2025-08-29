@@ -1,14 +1,14 @@
 package cf.witcheskitchen.common.statuseffect;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectCategory;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.entity.LivingEntity;
 
 //Todo: This
-public class ShadowsStatusEffect extends StatusEffect {
-    public ShadowsStatusEffect(StatusEffectCategory category, int color) {
+public class ShadowsStatusEffect extends MobEffect {
+    public ShadowsStatusEffect(MobEffectCategory category, int color) {
         super(category, color);
     }
 
@@ -18,20 +18,20 @@ public class ShadowsStatusEffect extends StatusEffect {
     }
 
     @Override
-    public boolean canApplyUpdateEffect(int duration, int amplifier) {
+    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
         return true;
     }
 
 
     //Todo: Find methods to call for telling if an entity is moving. Also find values for average cave light level, and possibly create a mixin for making armor invisible.
     @Override
-    public boolean applyUpdateEffect(ServerWorld world, LivingEntity entity, int amplifier) {
-        BlockPos pos = entity.getBlockPos();
-        if (entity.getWorld().isNight() || !entity.getWorld().isSkyVisible(pos)) {
+    public boolean applyEffectTick(ServerLevel world, LivingEntity entity, int amplifier) {
+        BlockPos pos = entity.blockPosition();
+        if (entity.level().isDarkOutside() || !entity.level().canSeeSky(pos)) {
             entity.setInvisible(true);
         } else {
-            if (entity.getWorld().isDay()) {
-                entity.getWorld().isSkyVisible(pos);
+            if (entity.level().isBrightOutside()) {
+                entity.level().canSeeSky(pos);
             }
         }
         return true;

@@ -1,17 +1,16 @@
 package cf.witcheskitchen.api.util;
 
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventories;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.math.Vec3d;
-
 import java.util.function.Predicate;
+import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.Container;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.phys.Vec3;
 
 /**
  * Inventory Manager.
@@ -21,7 +20,7 @@ import java.util.function.Predicate;
  * so here is an Inventory Manager of it which only requires giving it an initial size
  * or an already existing DefaultedList of ItemStacks.
  */
-public class InventoryManager<T extends BlockEntity> implements Inventory {
+public class InventoryManager<T extends BlockEntity> implements Container {
 
     /**
      * Parent BlockEntity, which is going to create the inventory
@@ -36,7 +35,7 @@ public class InventoryManager<T extends BlockEntity> implements Inventory {
      * stacks of items as it can be set for default as an EMPTY stack,
      * which is the proper way of saying that there is no item in the slot.
      */
-    private final DefaultedList<ItemStack> inventory;
+    private final NonNullList<ItemStack> inventory;
 
     /**
      * Creates a new Inventory Manager and DefaultedList of ItemStack with the specified size
@@ -44,7 +43,7 @@ public class InventoryManager<T extends BlockEntity> implements Inventory {
      * @param size Integer (Inventory size)
      */
     public InventoryManager(T blockEntity, int size) {
-        this(blockEntity, DefaultedList.ofSize(size, ItemStack.EMPTY));
+        this(blockEntity, NonNullList.withSize(size, ItemStack.EMPTY));
     }
 
     /**
@@ -53,33 +52,33 @@ public class InventoryManager<T extends BlockEntity> implements Inventory {
      *
      * @param inventory DefaultedList of ItemStack
      */
-    public InventoryManager(T blockEntity, DefaultedList<ItemStack> inventory) {
+    public InventoryManager(T blockEntity, NonNullList<ItemStack> inventory) {
         this.inventory = inventory;
         this.blockEntity = blockEntity;
     }
 
     /**
-     * Reads the inventory data from {@link NbtCompound}
+     * Reads the inventory data from {@link CompoundTag}
      * of your {@link BlockEntity}.This is typically invoked
-     * when you load a {@link net.minecraft.world.World}
+     * when you load a {@link net.minecraft.world.level.Level}
      * or you open the container.
      *
-     * @param data {@link ReadView} from your {@link BlockEntity} readData().
+     * @param data {@link ValueInput} from your {@link BlockEntity} readData().
      */
-    public void readData(ReadView data) {
-        this.clear();
-        Inventories.readData(data, this.inventory);
+    public void readData(ValueInput data) {
+        this.clearContent();
+        ContainerHelper.loadAllItems(data, this.inventory);
     }
 
     /**
-     * Writes the inventory data to {@link NbtCompound}.
-     * This is typically invoked when you exit a {@link net.minecraft.world.World}
-     * or the {@link Inventory} changes.
+     * Writes the inventory data to {@link CompoundTag}.
+     * This is typically invoked when you exit a {@link net.minecraft.world.level.Level}
+     * or the {@link Container} changes.
      *
-     * @param data {@link NbtCompound} from your {@link BlockEntity} writeData().
+     * @param data {@link CompoundTag} from your {@link BlockEntity} writeData().
      */
-    public void writeData(WriteView data) {
-        Inventories.writeData(data, this.inventory);
+    public void writeData(ValueOutput data) {
+        ContainerHelper.saveAllItems(data, this.inventory);
     }
 
     /**
@@ -87,7 +86,7 @@ public class InventoryManager<T extends BlockEntity> implements Inventory {
      * In other words the Inventory size.
      */
     @Override
-    public int size() {
+    public int getContainerSize() {
         return this.inventory.size();
     }
 
@@ -98,8 +97,8 @@ public class InventoryManager<T extends BlockEntity> implements Inventory {
      */
     @Override
     public boolean isEmpty() {
-        for (int i = 0; i < this.size(); i++) {
-            if (!this.getStack(i).isEmpty()) {
+        for (int i = 0; i < this.getContainerSize(); i++) {
+            if (!this.getItem(i).isEmpty()) {
                 return false;
             }
         }
@@ -113,7 +112,7 @@ public class InventoryManager<T extends BlockEntity> implements Inventory {
      * @return The stack (ItemStack) in that specific index.
      */
     @Override
-    public ItemStack getStack(int index) {
+    public ItemStack getItem(int index) {
         return this.inventory.get(index);
     }
 
@@ -127,10 +126,10 @@ public class InventoryManager<T extends BlockEntity> implements Inventory {
      */
 
     @Override
-    public ItemStack removeStack(int index, int amount) {
-        final ItemStack stack = Inventories.splitStack(this.inventory, index, amount);
+    public ItemStack removeItem(int index, int amount) {
+        final ItemStack stack = ContainerHelper.removeItem(this.inventory, index, amount);
         if (!stack.isEmpty()) {
-            markDirty();
+            setChanged();
         }
         return stack;
     }
@@ -142,8 +141,8 @@ public class InventoryManager<T extends BlockEntity> implements Inventory {
      * @param index The slot to remove from.
      */
     @Override
-    public ItemStack removeStack(int index) {
-        return Inventories.removeStack(this.inventory, index);
+    public ItemStack removeItemNoUpdate(int index) {
+        return ContainerHelper.takeItem(this.inventory, index);
     }
 
     /**
@@ -152,17 +151,17 @@ public class InventoryManager<T extends BlockEntity> implements Inventory {
      *
      * @param index Position of the stack
      * @param stack The replacing ItemStack. If the stack is too big for
-     *              this inventory ({@link Inventory#getMaxCountPerStack()},
+     *              this inventory ({@link Container#getMaxStackSize()},
      *              it gets resized to this inventory's maximum amount.
      */
 
     @Override
-    public void setStack(int index, ItemStack stack) {
+    public void setItem(int index, ItemStack stack) {
         this.inventory.set(index, stack);
-        if (stack.getCount() > this.getMaxCountPerStack()) {
-            stack.setCount(this.getMaxCountPerStack());
+        if (stack.getCount() > this.getMaxStackSize()) {
+            stack.setCount(this.getMaxStackSize());
         }
-        markDirty();
+        setChanged();
     }
 
     /**
@@ -171,15 +170,15 @@ public class InventoryManager<T extends BlockEntity> implements Inventory {
      * the inventory contents and notify neighboring blocks of inventory changes.
      */
     @Override
-    public void markDirty() {
-        this.blockEntity.markDirty();
+    public void setChanged() {
+        this.blockEntity.setChanged();
     }
 
     /**
      * @return Whether the player can access the inventory
      */
     @Override
-    public boolean canPlayerUse(PlayerEntity player) {
+    public boolean stillValid(Player player) {
         return canUse().test(player);
     }
 
@@ -187,7 +186,7 @@ public class InventoryManager<T extends BlockEntity> implements Inventory {
      * Clears the DefaultedList (inventory).
      */
     @Override
-    public void clear() {
+    public void clearContent() {
         this.inventory.clear();
     }
 
@@ -202,21 +201,21 @@ public class InventoryManager<T extends BlockEntity> implements Inventory {
 
     /**
      * Checks that the {@link BlockEntity} is valid and corresponds to the given parent,
-     * and that the {@link PlayerEntity} is at the required distance to open the container.
+     * and that the {@link Player} is at the required distance to open the container.
      *
-     * @return a {@link Predicate} of {@link PlayerEntity}.
+     * @return a {@link Predicate} of {@link Player}.
      */
-    protected Predicate<PlayerEntity> canUse() {
-        return player -> player.getWorld().getBlockEntity(this.getContainer().getPos()) == this.getContainer() && player.getPos().distanceTo(Vec3d.of(this.getContainer().getPos())) < 16;
+    protected Predicate<Player> canUse() {
+        return player -> player.level().getBlockEntity(this.getContainer().getBlockPos()) == this.getContainer() && player.position().distanceTo(Vec3.atLowerCornerOf(this.getContainer().getBlockPos())) < 16;
     }
 
     /**
-     * Getter for the {@link DefaultedList} of {@link ItemStack}
+     * Getter for the {@link NonNullList} of {@link ItemStack}
      * that this instance of the manager is currently using.
      *
-     * @return a reference to the {@link DefaultedList}.
+     * @return a reference to the {@link NonNullList}.
      */
-    public DefaultedList<ItemStack> getStacks() {
+    public NonNullList<ItemStack> getStacks() {
         return this.inventory;
     }
 

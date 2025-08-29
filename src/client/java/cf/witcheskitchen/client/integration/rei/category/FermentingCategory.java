@@ -16,9 +16,8 @@ import me.shedaniel.rei.api.common.entry.EntryStack;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.item.ItemStack;
-import net.minecraft.text.Text;
-
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +25,7 @@ import java.util.List;
 public class FermentingCategory implements DisplayCategory<FermentingDisplay> {
 
     public static final EntryStack<ItemStack> ICON = EntryStacks.of(WKBlocks.OAK_BREWING_BARREL);
-    public static final Text TITLE = Text.translatable("rei.witcheskitchen.fermenting");
+    public static final Component TITLE = Component.translatable("rei.witcheskitchen.fermenting");
 
     public static void register(CategoryRegistry registry) {
         registry.add(new FermentingCategory());
@@ -39,7 +38,7 @@ public class FermentingCategory implements DisplayCategory<FermentingDisplay> {
     }
 
     @Override
-    public Text getTitle() {
+    public Component getTitle() {
         return TITLE;
     }
 

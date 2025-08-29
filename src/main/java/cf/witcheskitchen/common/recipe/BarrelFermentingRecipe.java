@@ -6,14 +6,17 @@ import cf.witcheskitchen.common.registry.WKRecipeTypes;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.recipe.*;
-import net.minecraft.recipe.book.RecipeBookCategory;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.world.World;
-
+import net.minecraft.core.HolderLookup;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.PlacementInfo;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeBookCategory;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.Level;
 import java.util.List;
 
 public class BarrelFermentingRecipe implements Recipe<MultipleStackRecipeInput> {
@@ -27,12 +30,12 @@ public class BarrelFermentingRecipe implements Recipe<MultipleStackRecipeInput> 
     }
 
     @Override
-    public boolean matches(MultipleStackRecipeInput inventory, World world) {
+    public boolean matches(MultipleStackRecipeInput inventory, Level world) {
         return RecipeUtils.matches(inventory, this.inputs, 0, 5);
     }
 
     @Override
-    public ItemStack craft(MultipleStackRecipeInput input, RegistryWrapper.WrapperLookup lookup) {
+    public ItemStack assemble(MultipleStackRecipeInput input, HolderLookup.Provider lookup) {
         return this.output.copy();
     }
 
@@ -55,12 +58,12 @@ public class BarrelFermentingRecipe implements Recipe<MultipleStackRecipeInput> 
     }
 
     @Override
-    public IngredientPlacement getIngredientPlacement() {
-        return IngredientPlacement.forShapeless(this.getInputs());
+    public PlacementInfo placementInfo() {
+        return PlacementInfo.create(this.getInputs());
     }
 
     @Override
-    public RecipeBookCategory getRecipeBookCategory() {
+    public RecipeBookCategory recipeBookCategory() {
         // TODO: create custom recipe book category
         return null;
     }
@@ -98,10 +101,10 @@ public class BarrelFermentingRecipe implements Recipe<MultipleStackRecipeInput> 
         }
 
         @Override
-        public PacketCodec<RegistryByteBuf, BarrelFermentingRecipe> packetCodec() {
-            return PacketCodec.tuple(
+        public StreamCodec<RegistryFriendlyByteBuf, BarrelFermentingRecipe> streamCodec() {
+            return StreamCodec.composite(
                     CustomPacketCodecs.INGREDIENT_LIST, BarrelFermentingRecipe::getInputs,
-                    ItemStack.PACKET_CODEC, BarrelFermentingRecipe::getOutput,
+                    ItemStack.STREAM_CODEC, BarrelFermentingRecipe::getOutput,
 
                     BarrelFermentingRecipe::new
             );

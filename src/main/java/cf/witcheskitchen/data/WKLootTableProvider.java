@@ -5,26 +5,25 @@ import cf.witcheskitchen.common.registry.WKItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider;
-import net.minecraft.block.Block;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.item.ItemConvertible;
-import net.minecraft.loot.ContainerComponentModifiers;
-import net.minecraft.loot.LootPool;
-import net.minecraft.loot.LootTable;
-import net.minecraft.loot.condition.BlockStatePropertyLootCondition;
-import net.minecraft.loot.condition.LootCondition;
-import net.minecraft.loot.context.LootContextTypes;
-import net.minecraft.loot.entry.ItemEntry;
-import net.minecraft.loot.function.ApplyBonusLootFunction;
-import net.minecraft.loot.function.CopyNameLootFunction;
-import net.minecraft.loot.function.CopyNbtLootFunction;
-import net.minecraft.loot.function.SetContentsLootFunction;
-import net.minecraft.loot.provider.nbt.ContextLootNbtProvider;
-import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.RegistryWrapper;
-
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.storage.loot.ContainerComponentManipulators;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
+import net.minecraft.world.level.storage.loot.functions.CopyCustomDataFunction;
+import net.minecraft.world.level.storage.loot.functions.CopyNameFunction;
+import net.minecraft.world.level.storage.loot.functions.SetContainerContents;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.providers.nbt.ContextNbtProvider;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 
@@ -33,7 +32,7 @@ public class WKLootTableProvider {
     public static class BlockLoot extends FabricBlockLootTableProvider {
         private static final float[] SAPLING_DROP_CHANCE = new float[]{0.05F, 0.0625F, 0.083333336F, 0.1F};
 
-        protected BlockLoot(FabricDataOutput dataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> future) {
+        protected BlockLoot(FabricDataOutput dataOutput, CompletableFuture<HolderLookup.Provider> future) {
             super(dataOutput, future);
         }
 
@@ -73,68 +72,68 @@ public class WKLootTableProvider {
             teaDrops(WKBlocks.WAXED_WEATHERED_COPPER_TEAPOT);
             teaDrops(WKBlocks.WAXED_OXIDIZED_COPPER_TEAPOT);
 
-            addDrop(WKBlocks.BLACKTHORN_SAPLING);
-            addDrop(WKBlocks.ELDER_SAPLING);
-            addDrop(WKBlocks.HAWTHORN_SAPLING);
-            addDrop(WKBlocks.JUNIPER_SAPLING);
-            addDrop(WKBlocks.ROWAN_SAPLING);
-            addDrop(WKBlocks.SUMAC_SAPLING);
+            dropSelf(WKBlocks.BLACKTHORN_SAPLING);
+            dropSelf(WKBlocks.ELDER_SAPLING);
+            dropSelf(WKBlocks.HAWTHORN_SAPLING);
+            dropSelf(WKBlocks.JUNIPER_SAPLING);
+            dropSelf(WKBlocks.ROWAN_SAPLING);
+            dropSelf(WKBlocks.SUMAC_SAPLING);
 
-            addDrop(WKBlocks.BLACKTHORN_LOG);
-            addDrop(WKBlocks.ELDER_LOG);
-            addDrop(WKBlocks.HAWTHORN_LOG);
-            addDrop(WKBlocks.JUNIPER_LOG);
-            addDrop(WKBlocks.ROWAN_LOG);
-            addDrop(WKBlocks.SUMAC_LOG);
+            dropSelf(WKBlocks.BLACKTHORN_LOG);
+            dropSelf(WKBlocks.ELDER_LOG);
+            dropSelf(WKBlocks.HAWTHORN_LOG);
+            dropSelf(WKBlocks.JUNIPER_LOG);
+            dropSelf(WKBlocks.ROWAN_LOG);
+            dropSelf(WKBlocks.SUMAC_LOG);
 
-            addDrop(WKBlocks.BLACKTHORN_PLANKS);
-            addDrop(WKBlocks.ELDER_PLANKS);
-            addDrop(WKBlocks.HAWTHORN_PLANKS);
-            addDrop(WKBlocks.JUNIPER_PLANKS);
-            addDrop(WKBlocks.ROWAN_PLANKS);
-            addDrop(WKBlocks.SUMAC_PLANKS);
+            dropSelf(WKBlocks.BLACKTHORN_PLANKS);
+            dropSelf(WKBlocks.ELDER_PLANKS);
+            dropSelf(WKBlocks.HAWTHORN_PLANKS);
+            dropSelf(WKBlocks.JUNIPER_PLANKS);
+            dropSelf(WKBlocks.ROWAN_PLANKS);
+            dropSelf(WKBlocks.SUMAC_PLANKS);
 
-            addDrop(WKBlocks.BLACKTHORN_WOOD);
-            addDrop(WKBlocks.ELDER_WOOD);
-            addDrop(WKBlocks.HAWTHORN_WOOD);
-            addDrop(WKBlocks.JUNIPER_WOOD);
-            addDrop(WKBlocks.ROWAN_WOOD);
-            addDrop(WKBlocks.SUMAC_WOOD);
+            dropSelf(WKBlocks.BLACKTHORN_WOOD);
+            dropSelf(WKBlocks.ELDER_WOOD);
+            dropSelf(WKBlocks.HAWTHORN_WOOD);
+            dropSelf(WKBlocks.JUNIPER_WOOD);
+            dropSelf(WKBlocks.ROWAN_WOOD);
+            dropSelf(WKBlocks.SUMAC_WOOD);
 
-            leavesDrops(WKBlocks.BLACKTHORN_LEAVES, WKBlocks.BLACKTHORN_SAPLING, SAPLING_DROP_CHANCE);
-            leavesDrops(WKBlocks.ELDER_LEAVES, WKBlocks.ELDER_SAPLING, SAPLING_DROP_CHANCE);
-            leavesDrops(WKBlocks.HAWTHORN_LEAVES, WKBlocks.HAWTHORN_SAPLING, SAPLING_DROP_CHANCE);
-            leavesDrops(WKBlocks.JUNIPER_LEAVES, WKBlocks.JUNIPER_SAPLING, SAPLING_DROP_CHANCE);
-            leavesDrops(WKBlocks.ROWAN_LEAVES, WKBlocks.ROWAN_SAPLING, SAPLING_DROP_CHANCE);
-            leavesDrops(WKBlocks.SUMAC_LEAVES, WKBlocks.SUMAC_SAPLING, SAPLING_DROP_CHANCE);
+            createLeavesDrops(WKBlocks.BLACKTHORN_LEAVES, WKBlocks.BLACKTHORN_SAPLING, NORMAL_LEAVES_SAPLING_CHANCES);
+            createLeavesDrops(WKBlocks.ELDER_LEAVES, WKBlocks.ELDER_SAPLING, NORMAL_LEAVES_SAPLING_CHANCES);
+            createLeavesDrops(WKBlocks.HAWTHORN_LEAVES, WKBlocks.HAWTHORN_SAPLING, NORMAL_LEAVES_SAPLING_CHANCES);
+            createLeavesDrops(WKBlocks.JUNIPER_LEAVES, WKBlocks.JUNIPER_SAPLING, NORMAL_LEAVES_SAPLING_CHANCES);
+            createLeavesDrops(WKBlocks.ROWAN_LEAVES, WKBlocks.ROWAN_SAPLING, NORMAL_LEAVES_SAPLING_CHANCES);
+            createLeavesDrops(WKBlocks.SUMAC_LEAVES, WKBlocks.SUMAC_SAPLING, NORMAL_LEAVES_SAPLING_CHANCES);
 
-            slabDrops(WKBlocks.BLACKTHORN_SLAB);
-            slabDrops(WKBlocks.ELDER_SLAB);
-            slabDrops(WKBlocks.HAWTHORN_SLAB);
-            slabDrops(WKBlocks.JUNIPER_SLAB);
-            slabDrops(WKBlocks.ROWAN_SLAB);
-            slabDrops(WKBlocks.SUMAC_SLAB);
+            createSlabItemTable(WKBlocks.BLACKTHORN_SLAB);
+            createSlabItemTable(WKBlocks.ELDER_SLAB);
+            createSlabItemTable(WKBlocks.HAWTHORN_SLAB);
+            createSlabItemTable(WKBlocks.JUNIPER_SLAB);
+            createSlabItemTable(WKBlocks.ROWAN_SLAB);
+            createSlabItemTable(WKBlocks.SUMAC_SLAB);
 
-            addDrop(WKBlocks.BLACKTHORN_STAIRS);
-            addDrop(WKBlocks.ELDER_STAIRS);
-            addDrop(WKBlocks.HAWTHORN_STAIRS);
-            addDrop(WKBlocks.JUNIPER_STAIRS);
-            addDrop(WKBlocks.ROWAN_STAIRS);
-            addDrop(WKBlocks.SUMAC_STAIRS);
+            dropSelf(WKBlocks.BLACKTHORN_STAIRS);
+            dropSelf(WKBlocks.ELDER_STAIRS);
+            dropSelf(WKBlocks.HAWTHORN_STAIRS);
+            dropSelf(WKBlocks.JUNIPER_STAIRS);
+            dropSelf(WKBlocks.ROWAN_STAIRS);
+            dropSelf(WKBlocks.SUMAC_STAIRS);
 
-            addDrop(WKBlocks.STRIPPED_BLACKTHORN_WOOD);
-            addDrop(WKBlocks.STRIPPED_ELDER_WOOD);
-            addDrop(WKBlocks.STRIPPED_HAWTHORN_WOOD);
-            addDrop(WKBlocks.STRIPPED_JUNIPER_WOOD);
-            addDrop(WKBlocks.STRIPPED_ROWAN_WOOD);
-            addDrop(WKBlocks.STRIPPED_SUMAC_WOOD);
+            dropSelf(WKBlocks.STRIPPED_BLACKTHORN_WOOD);
+            dropSelf(WKBlocks.STRIPPED_ELDER_WOOD);
+            dropSelf(WKBlocks.STRIPPED_HAWTHORN_WOOD);
+            dropSelf(WKBlocks.STRIPPED_JUNIPER_WOOD);
+            dropSelf(WKBlocks.STRIPPED_ROWAN_WOOD);
+            dropSelf(WKBlocks.STRIPPED_SUMAC_WOOD);
 
-            addDrop(WKBlocks.STRIPPED_BLACKTHORN_LOG);
-            addDrop(WKBlocks.STRIPPED_ELDER_LOG);
-            addDrop(WKBlocks.STRIPPED_HAWTHORN_LOG);
-            addDrop(WKBlocks.STRIPPED_JUNIPER_LOG);
-            addDrop(WKBlocks.STRIPPED_ROWAN_LOG);
-            addDrop(WKBlocks.STRIPPED_SUMAC_LOG);
+            dropSelf(WKBlocks.STRIPPED_BLACKTHORN_LOG);
+            dropSelf(WKBlocks.STRIPPED_ELDER_LOG);
+            dropSelf(WKBlocks.STRIPPED_HAWTHORN_LOG);
+            dropSelf(WKBlocks.STRIPPED_JUNIPER_LOG);
+            dropSelf(WKBlocks.STRIPPED_ROWAN_LOG);
+            dropSelf(WKBlocks.STRIPPED_SUMAC_LOG);
 
             addPlantDrop(WKBlocks.AMARANTH_PLANT, WKItems.AMARANTH_SPRIG, WKItems.AMARANTH_SEEDS);
             addPlantDrop(WKBlocks.BELLADONNA_PLANT, WKItems.BELLADONNA_BLOSSOM, WKItems.BELLADONNA_SEEDS);
@@ -147,79 +146,79 @@ public class WKLootTableProvider {
         }
 
         @Override
-        public void accept(BiConsumer<RegistryKey<LootTable>, LootTable.Builder> biConsumer) {
+        public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> biConsumer) {
 
         }
 
-        public void addPlantDrop(Block block, ItemConvertible drop, ItemConvertible seed) {
-            LootCondition.Builder builder = BlockStatePropertyLootCondition.builder(block);
-            this.addDrop(block, applyExplosionDecay(
-                    seed, LootTable.builder()
-                            .pool(LootPool.builder()
-                                    .with(ItemEntry.builder(seed)))
-                            .pool(LootPool.builder().conditionally(builder)
-                                    .with(ItemEntry.builder(seed)
-                                            .apply(ApplyBonusLootFunction
-                                                    .binomialWithBonusCount(this.registries.getOrThrow(RegistryKeys.ENCHANTMENT).getOrThrow(Enchantments.FORTUNE), 0.5714286F, 3)))))
-                    .pool(LootPool.builder()
-                            .with(ItemEntry.builder(drop))));
+        public void addPlantDrop(Block block, ItemLike drop, ItemLike seed) {
+            LootItemCondition.Builder builder = LootItemBlockStatePropertyCondition.hasBlockStateProperties(block);
+            this.add(block, applyExplosionDecay(
+                    seed, LootTable.lootTable()
+                            .withPool(LootPool.lootPool()
+                                    .add(LootItem.lootTableItem(seed)))
+                            .withPool(LootPool.lootPool().when(builder)
+                                    .add(LootItem.lootTableItem(seed)
+                                            .apply(ApplyBonusCount
+                                                    .addBonusBinomialDistributionCount(this.registries.lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.FORTUNE), 0.5714286F, 3)))))
+                    .withPool(LootPool.lootPool()
+                            .add(LootItem.lootTableItem(drop))));
         }
 
         public LootTable.Builder barrelDrops(Block drop) {
-            return LootTable.builder().pool(applyExplosionDecay(drop,
-                            LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0F))
-                                    .with(ItemEntry.builder(drop).apply(CopyNameLootFunction.builder(CopyNameLootFunction.Source.BLOCK_ENTITY))
-                                            .apply(CopyNbtLootFunction.builder(ContextLootNbtProvider.BLOCK_ENTITY)
-                                                    .withOperation("Lock", "BlockEntityTag.Lock")
-                                                    .withOperation("LootTable", "BlockEntityTag.LootTable")
-                                                    .withOperation("LootTableSeed", "BlockEntityTag.LootTableSeed")
+            return LootTable.lootTable().withPool(applyExplosionDecay(drop,
+                            LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
+                                    .add(LootItem.lootTableItem(drop).apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY))
+                                            .apply(CopyCustomDataFunction.copyData(ContextNbtProvider.BLOCK_ENTITY)
+                                                    .copy("Lock", "BlockEntityTag.Lock")
+                                                    .copy("LootTable", "BlockEntityTag.LootTable")
+                                                    .copy("LootTableSeed", "BlockEntityTag.LootTableSeed")
                                             )
-                                            .apply(SetContentsLootFunction.builder(ContainerComponentModifiers.CONTAINER))
+                                            .apply(SetContainerContents.setContents(ContainerComponentManipulators.CONTAINER))
                                     )
                     )
             );
         }
 
         public LootTable.Builder ovenDrops(Block drop) {
-            return LootTable.builder().pool(applyExplosionDecay(drop,
-                            LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0F))
-                                    .with(ItemEntry.builder(drop).apply(CopyNameLootFunction.builder(CopyNameLootFunction.Source.BLOCK_ENTITY))
-                                            .apply(CopyNbtLootFunction.builder(ContextLootNbtProvider.BLOCK_ENTITY)
-                                                    .withOperation("Lock", "BlockEntityTag.Lock")
-                                                    .withOperation("LootTable", "BlockEntityTag.LootTable")
-                                                    .withOperation("LootTableSeed", "BlockEntityTag.LootTableSeed")
+            return LootTable.lootTable().withPool(applyExplosionDecay(drop,
+                            LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
+                                    .add(LootItem.lootTableItem(drop).apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY))
+                                            .apply(CopyCustomDataFunction.copyData(ContextNbtProvider.BLOCK_ENTITY)
+                                                    .copy("Lock", "BlockEntityTag.Lock")
+                                                    .copy("LootTable", "BlockEntityTag.LootTable")
+                                                    .copy("LootTableSeed", "BlockEntityTag.LootTableSeed")
                                             )
-                                            .apply(SetContentsLootFunction.builder(ContainerComponentModifiers.CONTAINER))
+                                            .apply(SetContainerContents.setContents(ContainerComponentManipulators.CONTAINER))
                                     )
                     )
             );
         }
 
         public LootTable.Builder teaDrops(Block drop) {
-            return LootTable.builder().pool(applyExplosionDecay(drop,
-                            LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0F))
-                                    .with(ItemEntry.builder(drop).apply(CopyNameLootFunction.builder(CopyNameLootFunction.Source.BLOCK_ENTITY))
-                                            .apply(CopyNbtLootFunction.builder(ContextLootNbtProvider.BLOCK_ENTITY)
-                                                    .withOperation("Lock", "BlockEntityTag.Lock")
-                                                    .withOperation("LootTable", "BlockEntityTag.LootTable")
-                                                    .withOperation("LootTableSeed", "BlockEntityTag.LootTableSeed")
+            return LootTable.lootTable().withPool(applyExplosionDecay(drop,
+                            LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
+                                    .add(LootItem.lootTableItem(drop).apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY))
+                                            .apply(CopyCustomDataFunction.copyData(ContextNbtProvider.BLOCK_ENTITY)
+                                                    .copy("Lock", "BlockEntityTag.Lock")
+                                                    .copy("LootTable", "BlockEntityTag.LootTable")
+                                                    .copy("LootTableSeed", "BlockEntityTag.LootTableSeed")
                                             )
-                                            .apply(SetContentsLootFunction.builder(ContainerComponentModifiers.CONTAINER))
+                                            .apply(SetContainerContents.setContents(ContainerComponentManipulators.CONTAINER))
                                     )
                     )
             );
         }
 
         public LootTable.Builder cauldronDrops(Block drop) {
-            return LootTable.builder().pool(applyExplosionDecay(drop,
-                            LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0F))
-                                    .with(ItemEntry.builder(drop).apply(CopyNameLootFunction.builder(CopyNameLootFunction.Source.BLOCK_ENTITY))
-                                            .apply(CopyNbtLootFunction.builder(ContextLootNbtProvider.BLOCK_ENTITY)
-                                                    .withOperation("Lock", "BlockEntityTag.Lock")
-                                                    .withOperation("LootTable", "BlockEntityTag.LootTable")
-                                                    .withOperation("LootTableSeed", "BlockEntityTag.LootTableSeed")
+            return LootTable.lootTable().withPool(applyExplosionDecay(drop,
+                            LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
+                                    .add(LootItem.lootTableItem(drop).apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY))
+                                            .apply(CopyCustomDataFunction.copyData(ContextNbtProvider.BLOCK_ENTITY)
+                                                    .copy("Lock", "BlockEntityTag.Lock")
+                                                    .copy("LootTable", "BlockEntityTag.LootTable")
+                                                    .copy("LootTableSeed", "BlockEntityTag.LootTableSeed")
                                             )
-                                            .apply(SetContentsLootFunction.builder(ContainerComponentModifiers.CONTAINER))
+                                            .apply(SetContainerContents.setContents(ContainerComponentManipulators.CONTAINER))
                                     )
                     )
             );
@@ -227,12 +226,12 @@ public class WKLootTableProvider {
     }
 
     public static class EntityLoot extends SimpleFabricLootTableProvider {
-        public EntityLoot(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> lookup) {
-            super(output, lookup, LootContextTypes.ENTITY);
+        public EntityLoot(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> lookup) {
+            super(output, lookup, LootContextParamSets.ENTITY);
         }
 
         @Override
-        public void accept(BiConsumer<RegistryKey<LootTable>, LootTable.Builder> lootTableBiConsumer) {
+        public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> lootTableBiConsumer) {
 
         }
     }

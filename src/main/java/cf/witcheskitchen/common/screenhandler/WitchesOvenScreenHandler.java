@@ -3,29 +3,29 @@ package cf.witcheskitchen.common.screenhandler;
 import cf.witcheskitchen.api.screen.WKScreenHandler;
 import cf.witcheskitchen.common.registry.WKScreenHandlerTypes;
 import cf.witcheskitchen.common.registry.WKTags;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.SimpleInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.screen.ArrayPropertyDelegate;
-import net.minecraft.screen.PropertyDelegate;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
+import net.minecraft.world.item.ItemStack;
 
 public class WitchesOvenScreenHandler extends WKScreenHandler {
 
-    private final PropertyDelegate delegate;
+    private final ContainerData delegate;
 
-    public WitchesOvenScreenHandler(int syncId, PlayerInventory playerInventory) {
-        this(syncId, playerInventory, new SimpleInventory(4), new ArrayPropertyDelegate(4));
+    public WitchesOvenScreenHandler(int syncId, Inventory playerInventory) {
+        this(syncId, playerInventory, new SimpleContainer(4), new SimpleContainerData(4));
     }
 
-    public WitchesOvenScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, PropertyDelegate delegate) {
+    public WitchesOvenScreenHandler(int syncId, Inventory playerInventory, Container inventory, ContainerData delegate) {
         super(WKScreenHandlerTypes.WITCHES_OVEN, syncId, playerInventory, inventory);
         this.delegate = delegate;
-        super.addProperties(this.delegate);
+        super.addDataSlots(this.delegate);
         this.builder().playerSetup()
-                .input(0, 44, 55, stack -> !stack.isIn(WKTags.OVEN_BLACKLIST))//fuel
-                .input(1, 44, 19, stack -> !stack.isIn(WKTags.OVEN_BLACKLIST))//input
+                .input(0, 44, 55, stack -> !stack.is(WKTags.OVEN_BLACKLIST))//fuel
+                .input(1, 44, 19, stack -> !stack.is(WKTags.OVEN_BLACKLIST))//input
                 .output(2, 116, 19, playerInventory.player)//output
                 .output(3, 116, 55, playerInventory.player)//extra output
                 .build();
@@ -53,7 +53,7 @@ public class WitchesOvenScreenHandler extends WKScreenHandler {
     }
 
     @Override
-    public ItemStack quickMove(PlayerEntity player, int fromIndex) {
+    public ItemStack quickMoveStack(Player player, int fromIndex) {
         return ItemStack.EMPTY;
     }
 }

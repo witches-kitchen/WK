@@ -1,19 +1,26 @@
 package cf.witcheskitchen.api.block.crop;
 
-import net.minecraft.block.*;
-import net.minecraft.block.enums.DoubleBlockHalf;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.*;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.*;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CropBlock;
+import net.minecraft.world.level.block.DoublePlantBlock;
+import net.minecraft.world.level.block.LevelEvent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -23,7 +30,7 @@ import org.jetbrains.annotations.Nullable;
  * </p>
  * <p>
  * <strong>WkTallCropBlock</strong> wraps a WKCropBlock and adds
- * all the features from vanilla {@link TallPlantBlock} to it.
+ * all the features from vanilla {@link DoublePlantBlock} to it.
  * </p>
  *
  * <p>
@@ -44,47 +51,47 @@ import org.jetbrains.annotations.Nullable;
  *
  * <strong> IMPORTANT: </strong>
  * <p>
- * You <strong> MUST </strong> build the block properties overriding {@link #appendProperties(StateManager.Builder)}
+ * You <strong> MUST </strong> build the block properties overriding {@link #createBlockStateDefinition(StateDefinition.Builder)}
  * </p>
  */
 public abstract class WKTallCropBlock extends WKCropBlock {
     /**
      * A property that specifies whether a double height block is the upper or lower half.
      */
-    public static final EnumProperty<DoubleBlockHalf> HALF = TallPlantBlock.HALF;
+    public static final EnumProperty<DoubleBlockHalf> HALF = DoublePlantBlock.HALF;
 
-    public WKTallCropBlock(Settings settings) {
+    public WKTallCropBlock(Properties settings) {
         super(settings);
     }
 
     /**
-     * From {@link TallPlantBlock#onBreakInCreative(World, BlockPos, BlockState, PlayerEntity)}
+     * From {@link DoublePlantBlock#preventDropFromBottomPart(Level, BlockPos, BlockState, Player)}
      * Destroys a bottom half of a tall double block (such as a plant or a door)
      * without dropping an item when broken in creative.
      *
-     * @see Block#onBreak(World, BlockPos, BlockState, PlayerEntity)
+     * @see Block#playerWillDestroy(Level, BlockPos, BlockState, Player)
      */
-    protected static void onBreakInCreative(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+    protected static void onBreakInCreative(Level world, BlockPos pos, BlockState state, Player player) {
         BlockPos blockPos;
         BlockState blockState;
-        DoubleBlockHalf doubleBlockHalf = state.get(HALF);
-        if (doubleBlockHalf == DoubleBlockHalf.UPPER && (blockState = world.getBlockState(blockPos = pos.down())).isOf(state.getBlock()) && blockState.get(HALF) == DoubleBlockHalf.LOWER) {
-            BlockState blockState2 = blockState.contains(Properties.WATERLOGGED) && blockState.get(Properties.WATERLOGGED) ? Blocks.WATER.getDefaultState() : Blocks.AIR.getDefaultState();
-            world.setBlockState(blockPos, blockState2, Block.NOTIFY_ALL | Block.SKIP_DROPS);
-            world.syncWorldEvent(player, WorldEvents.BLOCK_BROKEN, blockPos, Block.getRawIdFromState(blockState));
+        DoubleBlockHalf doubleBlockHalf = state.getValue(HALF);
+        if (doubleBlockHalf == DoubleBlockHalf.UPPER && (blockState = world.getBlockState(blockPos = pos.below())).is(state.getBlock()) && blockState.getValue(HALF) == DoubleBlockHalf.LOWER) {
+            BlockState blockState2 = blockState.hasProperty(BlockStateProperties.WATERLOGGED) && blockState.getValue(BlockStateProperties.WATERLOGGED) ? Blocks.WATER.defaultBlockState() : Blocks.AIR.defaultBlockState();
+            world.setBlock(blockPos, blockState2, Block.UPDATE_ALL | Block.UPDATE_SUPPRESS_DROPS);
+            world.levelEvent(player, LevelEvent.PARTICLES_DESTROY_BLOCK, blockPos, Block.getId(blockState));
         }
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        if (state.get(HALF) == DoubleBlockHalf.UPPER) {
-            if (state.get(getAgeProperty()) > doubleBlockAge()) {
-                return getUpperShape()[state.get(getAgeProperty()) - doubleBlockAge() - 1];
+    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+        if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
+            if (state.getValue(getAgeProperty()) > doubleBlockAge()) {
+                return getUpperShape()[state.getValue(getAgeProperty()) - doubleBlockAge() - 1];
             }
         } else {
-            return getLowerShape()[state.get(getAgeProperty())];
+            return getLowerShape()[state.getValue(getAgeProperty())];
         }
-        return Block.createCuboidShape(0, 0, 0, 16, 16, 16);
+        return Block.box(0, 0, 0, 16, 16, 16);
     }
 
     /**
@@ -114,25 +121,25 @@ public abstract class WKTallCropBlock extends WKCropBlock {
     }
 
     @Override
-    public long getRenderingSeed(BlockState state, BlockPos pos) {
-        return MathHelper.hashCode(pos.getX(), pos.down(state.get(HALF) == DoubleBlockHalf.LOWER ? 0 : 1).getY(), pos.getZ());
+    public long getSeed(BlockState state, BlockPos pos) {
+        return Mth.getSeed(pos.getX(), pos.below(state.getValue(HALF) == DoubleBlockHalf.LOWER ? 0 : 1).getY(), pos.getZ());
     }
 
     @Override
-    public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-        if (!world.isClient) {
+    public BlockState playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
+        if (!world.isClientSide) {
             if (player.isCreative()) {
                 WKTallCropBlock.onBreakInCreative(world, pos, state, player);
             }
         }
-        return super.onBreak(world, pos, state, player);
+        return super.playerWillDestroy(world, pos, state, player);
     }
 
     public BlockState withHalf(int age, DoubleBlockHalf half) {
         if (age < doubleBlockAge() && half == DoubleBlockHalf.UPPER) {
             throw new IllegalArgumentException("Upper part of the plant does not exists at age " + age);
         } else {
-            return this.getDefaultState().with(getAgeProperty(), age).with(HALF, half);
+            return this.defaultBlockState().setValue(getAgeProperty(), age).setValue(HALF, half);
         }
     }
 
@@ -140,19 +147,19 @@ public abstract class WKTallCropBlock extends WKCropBlock {
      * Updates the crop age
      */
     @Override
-    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+    public void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
         // Initial age
         final int age = this.getAge(state);
         // First we check if there is enough light
-        if (world.getBaseLightLevel(pos, 0) >= 9) {
+        if (world.getRawBrightness(pos, 0) >= 9) {
             // And the crop has not reached its last stage
             if (age < getMaxAge()) {
                 // Vanilla algorithm to check the available moisture
-                if (random.nextInt((int) (25.0f / (CropBlock.getAvailableMoisture(this, world, pos))) + 1) == 0) {
+                if (random.nextInt((int) (25.0f / (CropBlock.getGrowthSpeed(this, world, pos))) + 1) == 0) {
                     final int nextAge = age + 1;
-                    world.setBlockState(pos, withHalf(nextAge, DoubleBlockHalf.LOWER), Block.NOTIFY_LISTENERS);
+                    world.setBlock(pos, withHalf(nextAge, DoubleBlockHalf.LOWER), Block.UPDATE_CLIENTS);
                     if (age >= doubleBlockAge()) {
-                        world.setBlockState(pos.up(), withHalf(nextAge, DoubleBlockHalf.UPPER), Block.NOTIFY_LISTENERS);
+                        world.setBlock(pos.above(), withHalf(nextAge, DoubleBlockHalf.UPPER), Block.UPDATE_CLIENTS);
                     }
                 }
             }
@@ -163,38 +170,38 @@ public abstract class WKTallCropBlock extends WKCropBlock {
      * BoneMeal Logic for WK tall crops.
      */
     @Override
-    public void applyGrowth(World world, BlockPos pos, BlockState state) {
+    public void growCrops(Level world, BlockPos pos, BlockState state) {
         final int maxAge;
-        int age = this.getAge(state) + this.getGrowthAmount(world);
+        int age = this.getAge(state) + this.getBonemealAgeIncrease(world);
         if (age > (maxAge = this.getMaxAge())) {
             age = maxAge;
         }
-        world.setBlockState(pos, this.withHalf(age, DoubleBlockHalf.LOWER), Block.NOTIFY_LISTENERS);
+        world.setBlock(pos, this.withHalf(age, DoubleBlockHalf.LOWER), Block.UPDATE_CLIENTS);
         if (age >= doubleBlockAge()) {
-            world.setBlockState(pos.up(), this.withHalf(age, DoubleBlockHalf.UPPER), Block.NOTIFY_LISTENERS);
+            world.setBlock(pos.above(), this.withHalf(age, DoubleBlockHalf.UPPER), Block.UPDATE_CLIENTS);
         }
     }
 
     @Nullable
     @Override
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        final var blockPos = ctx.getBlockPos();
-        final var world = ctx.getWorld();
-        return blockPos.getY() < world.getTopYInclusive() - 1 && world.getBlockState(blockPos.up()).canReplace(ctx) ? super.getPlacementState(ctx) : null;
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        final var blockPos = ctx.getClickedPos();
+        final var world = ctx.getLevel();
+        return blockPos.getY() < world.getMaxY() - 1 && world.getBlockState(blockPos.above()).canBeReplaced(ctx) ? super.getStateForPlacement(ctx) : null;
     }
 
     /**
      * Prevents the plant from being destroyed when a neighbor block triggers
-     * the following method: {@link TallPlantBlock#getStateForNeighborUpdate(BlockState, Direction, BlockState, WorldAccess, BlockPos, BlockPos)}.
+     * the following method: {@link DoublePlantBlock#updateShape(BlockState, LevelReader, ScheduledTickAccess, BlockPos, Direction, BlockPos, BlockState, RandomSource)}.
      * Do not override this unless you know what you are doing.
      */
     @Override
-    public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-        if (state.get(HALF) != DoubleBlockHalf.UPPER) {
-            return super.canPlaceAt(state, world, pos);
+    public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
+        if (state.getValue(HALF) != DoubleBlockHalf.UPPER) {
+            return super.canSurvive(state, world, pos);
         } else {
-            BlockState blockState = world.getBlockState(pos.down());
-            return blockState.isOf(this) && blockState.get(HALF) == DoubleBlockHalf.LOWER;
+            BlockState blockState = world.getBlockState(pos.below());
+            return blockState.is(this) && blockState.getValue(HALF) == DoubleBlockHalf.LOWER;
         }
     }
 
@@ -202,7 +209,7 @@ public abstract class WKTallCropBlock extends WKCropBlock {
      * Builds the properties of this crop
      */
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(getAgeProperty());
         builder.add(getHalfProperty());
     }

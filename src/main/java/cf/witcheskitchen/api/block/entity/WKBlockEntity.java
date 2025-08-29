@@ -2,15 +2,15 @@ package cf.witcheskitchen.api.block.entity;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityTicker;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
-import net.minecraft.storage.ReadView;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
 
 public class WKBlockEntity extends BlockEntity implements BlockEntityTicker<WKBlockEntity> {
     public boolean needsSync;
@@ -20,27 +20,27 @@ public class WKBlockEntity extends BlockEntity implements BlockEntityTicker<WKBl
     }
 
     @Override
-    protected void readData(ReadView view) {
+    protected void loadAdditional(ValueInput view) {
         needsSync = true;
-        super.readData(view);
+        super.loadAdditional(view);
     }
 
-    public void sync(World world, BlockPos pos) {
-        if (world != null && !world.isClient) {
-            world.updateListeners(pos, getCachedState(), getCachedState(), Block.NOTIFY_LISTENERS);
-            toUpdatePacket();
+    public void sync(Level world, BlockPos pos) {
+        if (world != null && !world.isClientSide) {
+            world.sendBlockUpdated(pos, getBlockState(), getBlockState(), Block.UPDATE_CLIENTS);
+            getUpdatePacket();
         }
     }
 
     @Override
-    public void markDirty() {
-        super.markDirty();
-        sync(world, pos);
+    public void setChanged() {
+        super.setChanged();
+        sync(level, worldPosition);
     }
 
     @Override
-    public BlockEntityUpdateS2CPacket toUpdatePacket() {
-        return BlockEntityUpdateS2CPacket.create(this);
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     /**
@@ -52,18 +52,18 @@ public class WKBlockEntity extends BlockEntity implements BlockEntityTicker<WKBl
 
 
     @Override
-    public void tick(World world, BlockPos blockPos, BlockState blockState, WKBlockEntity blockEntity) {
+    public void tick(Level world, BlockPos blockPos, BlockState blockState, WKBlockEntity blockEntity) {
 
     }
 
     // Server-side Tick
-    public void onServerTick(World world, BlockPos blockPos, BlockState blockState, WKBlockEntity blockEntity) {
+    public void onServerTick(Level world, BlockPos blockPos, BlockState blockState, WKBlockEntity blockEntity) {
 
     }
 
     // Client-side Tick
     @Environment(EnvType.CLIENT)
-    public void onClientTick(World world, BlockPos pos, BlockState state, WKBlockEntity blockEntity) {
+    public void onClientTick(Level world, BlockPos pos, BlockState state, WKBlockEntity blockEntity) {
 
     }
 }

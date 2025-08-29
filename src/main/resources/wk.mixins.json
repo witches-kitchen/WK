@@ -9,10 +9,10 @@
     "fluid.BucketItemMixin",
     "fluid.PotionItemMixin",
     "potion.ItemMixin",
-    "statuseffect.ActiveTargetGoalMixin",
+    "statuseffect.NearestAttackableTargetGoalMixin",
     "statuseffect.ArthropodEntityMixin",
-    "statuseffect.CreeperEntityMixin",
-    "statuseffect.FleeEntityGoalMixin"
+    "statuseffect.CreeperMixin",
+    "statuseffect.AvoidEntityGoalMixin"
   ],
   "client": [
   ],

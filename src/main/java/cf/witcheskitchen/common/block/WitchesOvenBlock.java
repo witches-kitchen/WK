@@ -6,137 +6,143 @@ import cf.witcheskitchen.common.blockentity.WitchesOvenBlockEntity;
 import cf.witcheskitchen.common.registry.WKDamageSources;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.*;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.CampfireCookingRecipe;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ItemScatterer;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.Containers;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.crafting.CampfireCookingRecipe;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CampfireBlock;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
-public class WitchesOvenBlock extends WKBlock implements Waterloggable {
+public class WitchesOvenBlock extends WKBlock implements SimpleWaterloggedBlock {
 
-    public static final BooleanProperty LIT = Properties.LIT;
-    public static final BooleanProperty PASSIVE_LIT = BooleanProperty.of("passive_lit");
-    public static final EnumProperty<Direction> FACING = HorizontalFacingBlock.FACING;
+    public static final BooleanProperty LIT = BlockStateProperties.LIT;
+    public static final BooleanProperty PASSIVE_LIT = BooleanProperty.create("passive_lit");
+    public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
 
-    public static final VoxelShape SHAPE = VoxelShapes.union(
-            createCuboidShape(0, 14, 0, 16, 16, 16),
-            createCuboidShape(0, 2, 1, 16, 13, 16),
-            createCuboidShape(0, 11, 0, 16, 13, 1),
-            createCuboidShape(13, 2, 0, 16, 4, 1),
-            createCuboidShape(0, 2, 0, 3, 4, 1),
-            createCuboidShape(3, 2, 0, 13, 8, 1),
-            createCuboidShape(5, 8, 0, 11, 9, 1),
-            createCuboidShape(1, 13, 2, 15, 14, 15),
-            createCuboidShape(13, 0, 1, 15, 2, 3),
-            createCuboidShape(13, 0, 13, 15, 2, 15),
-            createCuboidShape(1, 0, 13, 3, 2, 15),
-            createCuboidShape(1, 0, 1, 3, 2, 3)
+    public static final VoxelShape SHAPE = Shapes.or(
+            box(0, 14, 0, 16, 16, 16),
+            box(0, 2, 1, 16, 13, 16),
+            box(0, 11, 0, 16, 13, 1),
+            box(13, 2, 0, 16, 4, 1),
+            box(0, 2, 0, 3, 4, 1),
+            box(3, 2, 0, 13, 8, 1),
+            box(5, 8, 0, 11, 9, 1),
+            box(1, 13, 2, 15, 14, 15),
+            box(13, 0, 1, 15, 2, 3),
+            box(13, 0, 13, 15, 2, 15),
+            box(1, 0, 13, 3, 2, 15),
+            box(1, 0, 1, 3, 2, 3)
     );
 
-    public WitchesOvenBlock(Settings settings) {
+    public WitchesOvenBlock(Properties settings) {
         super(settings);
-        this.setDefaultState(this.getStateManager().getDefaultState().with(FACING, Direction.NORTH).with(Properties.WATERLOGGED, false).with(LIT, false).with(PASSIVE_LIT, false));
+        this.registerDefaultState(this.getStateDefinition().any().setValue(FACING, Direction.NORTH).setValue(BlockStateProperties.WATERLOGGED, false).setValue(LIT, false).setValue(PASSIVE_LIT, false));
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return WKUtils.rotateShape(Direction.NORTH, state.get(FACING), SHAPE);
+    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+        return WKUtils.rotateShape(Direction.NORTH, state.getValue(FACING), SHAPE);
     }
 
     @Override
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return this.getDefaultState().with(FACING, ctx.getPlayerLookDirection().getOpposite()).with(Properties.WATERLOGGED, ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER);
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        return this.defaultBlockState().setValue(FACING, ctx.getNearestLookingDirection().getOpposite()).setValue(BlockStateProperties.WATERLOGGED, ctx.getLevel().getFluidState(ctx.getClickedPos()).getType() == Fluids.WATER);
     }
 
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        super.appendProperties(builder);
-        builder.add(FACING, LIT, PASSIVE_LIT, Properties.WATERLOGGED);
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
+        builder.add(FACING, LIT, PASSIVE_LIT, BlockStateProperties.WATERLOGGED);
     }
 
     @Override
     public FluidState getFluidState(BlockState state) {
-        return state.get(Properties.WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
+        return state.getValue(BlockStateProperties.WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
 
     @Nullable
     @Override
-    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new WitchesOvenBlockEntity(pos, state);
     }
 
     @Override
-    protected ActionResult onUseWithItem(ItemStack stackInHand, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    protected InteractionResult useItemOn(ItemStack stackInHand, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         final var entity = world.getBlockEntity(pos);
         if (entity instanceof WitchesOvenBlockEntity oven) {
             // Try to insert item on top
             if (hit.getType() == HitResult.Type.BLOCK) {
-                final Direction side = hit.getSide();
-                if (side == Direction.UP && !world.isClient()) {
-                    final CampfireCookingRecipe passiveRecipe = oven.getCampfireRecipeFor((ServerWorld) world, stackInHand);
+                final Direction side = hit.getDirection();
+                if (side == Direction.UP && !world.isClientSide()) {
+                    final CampfireCookingRecipe passiveRecipe = oven.getCampfireRecipeFor((ServerLevel) world, stackInHand);
                     // It can only place an item if it is part of a campfire recipe
-                    if (!world.isClient() && passiveRecipe != null) {
+                    if (!world.isClientSide() && passiveRecipe != null) {
                         if (oven.putItemOnTop(player.isCreative() ? stackInHand.copy() : stackInHand)) {
-                            return ActionResult.SUCCESS;
+                            return InteractionResult.SUCCESS;
                         }
-                        return ActionResult.CONSUME;
+                        return InteractionResult.CONSUME;
                     }
                 } else {
                     // Open GUI
-                    return super.onUseWithItem(stackInHand, state, world, pos, player, hand, hit);
+                    return super.useItemOn(stackInHand, state, world, pos, player, hand, hit);
                 }
             }
         }
-        return ActionResult.PASS_TO_DEFAULT_BLOCK_ACTION;
+        return InteractionResult.TRY_WITH_EMPTY_HAND;
     }
 
     @Override
     @Environment(EnvType.CLIENT)
-    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
-        if (state.get(LIT)) {
-            CampfireBlock.spawnSmokeParticle(world, pos, false, false);
-            Blocks.FURNACE.randomDisplayTick(state, world, pos, random);
+    public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource random) {
+        if (state.getValue(LIT)) {
+            CampfireBlock.makeParticles(world, pos, false, false);
+            Blocks.FURNACE.animateTick(state, world, pos, random);
         }
     }
 
     @Override
-    public void onSteppedOn(World world, BlockPos pos, BlockState state, Entity entity) {
-        super.onSteppedOn(world, pos, state, entity);
-        if (state.get(LIT) && !entity.isFireImmune() && entity instanceof LivingEntity && world instanceof ServerWorld serverWorld) {
-            entity.damage(serverWorld, entity.getDamageSources().create(WKDamageSources.ON_OVEN), 1);
+    public void stepOn(Level world, BlockPos pos, BlockState state, Entity entity) {
+        super.stepOn(world, pos, state, entity);
+        if (state.getValue(LIT) && !entity.fireImmune() && entity instanceof LivingEntity && world instanceof ServerLevel serverWorld) {
+            entity.hurtServer(serverWorld, entity.damageSources().source(WKDamageSources.ON_OVEN), 1);
         }
     }
 
     @Override
-    protected void onStateReplaced(BlockState state, ServerWorld world, BlockPos pos, boolean moved) {
+    protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel world, BlockPos pos, boolean moved) {
         final BlockEntity entity = world.getBlockEntity(pos);
         if (entity instanceof WitchesOvenBlockEntity ovenEntity) {
-            ItemScatterer.spawn(world, pos, ovenEntity.getStacksOnTop());
+            Containers.dropContents(world, pos, ovenEntity.getStacksOnTop());
         }
-        super.onStateReplaced(state, world, pos, moved);
+        super.affectNeighborsAfterRemoval(state, world, pos, moved);
     }
 }

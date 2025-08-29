@@ -1,6 +1,6 @@
 package cf.witcheskitchen.api.fluid;
 
-import net.minecraft.util.math.Direction;
+import net.minecraft.core.Direction;
 import org.jetbrains.annotations.NotNull;
 
 /**
