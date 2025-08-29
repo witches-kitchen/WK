@@ -11,9 +11,6 @@ import cf.witcheskitchen.common.registry.WKBlocks;
 import cf.witcheskitchen.common.registry.WKRecipeTypes;
 import cf.witcheskitchen.common.registry.WKRegistries;
 import com.google.common.collect.Lists;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -31,6 +28,10 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class GlyphBlockEntity extends WKBlockEntityWithInventory {
     public int progress = 0;

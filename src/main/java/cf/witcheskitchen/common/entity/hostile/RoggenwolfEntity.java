@@ -1,12 +1,6 @@
 package cf.witcheskitchen.common.entity.hostile;
 
 import cf.witcheskitchen.api.entity.WKHostileEntity;
-import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.animatable.manager.AnimatableManager;
-
-import java.util.SplittableRandom;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
@@ -21,6 +15,12 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animatable.manager.AnimatableManager;
+
+import java.util.SplittableRandom;
 
 public class RoggenwolfEntity extends WKHostileEntity implements GeoEntity {
     public RoggenwolfEntity(EntityType<? extends Monster> entityType, Level world) {

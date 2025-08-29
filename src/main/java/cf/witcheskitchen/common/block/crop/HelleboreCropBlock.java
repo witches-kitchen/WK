@@ -14,12 +14,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+
 import java.util.Optional;
 
 public class HelleboreCropBlock extends WKCropBlock implements CropVariants {
     public static final int MAX_AGE = 6;
-    private final HelleboreTypes type;
     private static final IntegerProperty AGE = IntegerProperty.create("age", 0, MAX_AGE);
+    private final HelleboreTypes type;
 
     public HelleboreCropBlock(Properties settings) {
         this(settings, HelleboreTypes.COMMON);

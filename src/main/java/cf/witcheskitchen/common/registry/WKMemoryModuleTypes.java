@@ -1,11 +1,12 @@
 package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WitchesKitchen;
-import java.util.Optional;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.player.Player;
+
+import java.util.Optional;
 
 public interface WKMemoryModuleTypes {
     MemoryModuleType<Boolean> IS_NIGHT = register("is_night");

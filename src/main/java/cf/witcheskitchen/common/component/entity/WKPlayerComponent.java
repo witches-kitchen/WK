@@ -2,12 +2,6 @@ package cf.witcheskitchen.common.component.entity;
 
 import cf.witcheskitchen.WitchesKitchen;
 import cf.witcheskitchen.common.component.WKEntityComponents;
-import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
-import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -15,6 +9,12 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
+import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class WKPlayerComponent implements AutoSyncedComponent, ServerTickingComponent {
     private static final AttributeModifier SPEED_LOW, SPEED_MEDIUM, SPEED_HIGH, ARMOR_LOW, ARMOR_MEDIUM, ARMOR_HIGH, ARMOR_TOUGHNESS_LOW, ARMOR_TOUGHNESS_MEDIUM, ARMOR_TOUGHNESS_HIGH, ATTACK_LOW, ATTACK_MEDIUM, ATTACK_HIGH;

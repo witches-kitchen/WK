@@ -2,11 +2,12 @@ package cf.witcheskitchen.common.component.item;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import java.util.UUID;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+
+import java.util.UUID;
 
 public record TaglockEntityData(UUID uuid, String name) {
     public static final Codec<TaglockEntityData> CODEC = RecordCodecBuilder.create(instance ->

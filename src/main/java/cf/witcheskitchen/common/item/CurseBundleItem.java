@@ -1,11 +1,12 @@
 package cf.witcheskitchen.common.item;
 
-import java.util.function.Consumer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipDisplay;
+
+import java.util.function.Consumer;
 
 public class CurseBundleItem extends Item {
     public int levels;

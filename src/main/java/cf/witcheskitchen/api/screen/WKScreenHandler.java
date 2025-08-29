@@ -1,11 +1,6 @@
 package cf.witcheskitchen.api.screen;
 
 import cf.witcheskitchen.api.util.ItemUtil;
-import org.apache.commons.lang3.Range;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.ArrayList;
-import java.util.List;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -13,6 +8,11 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import org.apache.commons.lang3.Range;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * WitchesKitchen's ScreenHandler base for devices.

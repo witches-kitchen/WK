@@ -8,6 +8,7 @@ import cf.witcheskitchen.common.registry.WKStatusEffects;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.core.HolderLookup;
+
 import java.util.concurrent.CompletableFuture;
 
 public class WKLanguageProvider extends FabricLanguageProvider {

@@ -3,15 +3,15 @@ package cf.witcheskitchen.common.component.entity;
 import cf.witcheskitchen.api.util.CursePair;
 import cf.witcheskitchen.common.curse.Curse;
 import cf.witcheskitchen.common.registry.WKRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
 import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
 
 import java.util.HashSet;
 import java.util.Set;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
 
 public class WKCurseComponent implements ServerTickingComponent, AutoSyncedComponent {
     private final Set<CursePair> curses = new HashSet<>();

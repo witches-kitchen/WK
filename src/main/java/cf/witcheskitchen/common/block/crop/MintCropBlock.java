@@ -14,8 +14,8 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 
 public class MintCropBlock extends WKCropBlock implements CropVariants {
     public static final int MAX_AGE = 4;
-    private final MintTypes type;
     private static final IntegerProperty AGE = IntegerProperty.create("age", 0, MAX_AGE);
+    private final MintTypes type;
 
     public MintCropBlock(Properties settings) {
         this(settings, MintTypes.COMMON);

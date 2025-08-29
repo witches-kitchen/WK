@@ -3,11 +3,6 @@ package cf.witcheskitchen.common.registry;
 import cf.witcheskitchen.WitchesKitchen;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
 import cf.witcheskitchen.common.statuseffect.*;
-import org.apache.commons.lang3.Validate;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -16,6 +11,11 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import org.apache.commons.lang3.Validate;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public interface WKStatusEffects {
     List<ObjectDefinition<MobEffect>> STATUS_EFFECTS = new ArrayList<>();

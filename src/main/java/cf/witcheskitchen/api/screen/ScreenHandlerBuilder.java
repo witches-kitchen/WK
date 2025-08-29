@@ -2,14 +2,14 @@ package cf.witcheskitchen.api.screen;
 
 import cf.witcheskitchen.common.screenhandler.slot.WKOutputSlot;
 import cf.witcheskitchen.common.screenhandler.slot.WKSlot;
-import org.apache.commons.lang3.Range;
-
-import java.util.function.Predicate;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import org.apache.commons.lang3.Range;
+
+import java.util.function.Predicate;
 
 /**
  * A ScreenHandler slot builder.

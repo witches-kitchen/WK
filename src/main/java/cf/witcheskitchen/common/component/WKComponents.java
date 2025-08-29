@@ -6,7 +6,6 @@ import cf.witcheskitchen.common.component.blockentity.TeapotData;
 import cf.witcheskitchen.common.component.blockentity.WitchesCauldronData;
 import cf.witcheskitchen.common.component.item.SeedTypeData;
 import cf.witcheskitchen.common.component.item.TaglockEntityData;
-import java.util.UUID;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.UUIDUtil;
@@ -15,6 +14,8 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
+
+import java.util.UUID;
 
 public class WKComponents {
     public static final DataComponentType<BlockPos> BLOCK_POS = register("block_pos", DataComponentType.<BlockPos>builder()
@@ -54,15 +55,15 @@ public class WKComponents {
     );
 
     public static final DataComponentType<ResourceKey<Level>> DIMENSION = register("dimension", DataComponentType.<ResourceKey<Level>>builder()
-        .persistent(ResourceKey.codec(Registries.DIMENSION))
-        .networkSynchronized(ResourceKey.streamCodec(Registries.DIMENSION))
-        .build()
+            .persistent(ResourceKey.codec(Registries.DIMENSION))
+            .networkSynchronized(ResourceKey.streamCodec(Registries.DIMENSION))
+            .build()
     );
 
     public static final DataComponentType<UUID> UUID = register("uuid", DataComponentType.<UUID>builder()
-        .persistent(UUIDUtil.CODEC)
-        .networkSynchronized(UUIDUtil.STREAM_CODEC)
-        .build()
+            .persistent(UUIDUtil.CODEC)
+            .networkSynchronized(UUIDUtil.STREAM_CODEC)
+            .build()
     );
 
     private static <T> DataComponentType<T> register(String name, DataComponentType<T> component) {

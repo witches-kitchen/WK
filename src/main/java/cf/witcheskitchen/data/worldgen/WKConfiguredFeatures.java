@@ -3,8 +3,6 @@ package cf.witcheskitchen.data.worldgen;
 import cf.witcheskitchen.WitchesKitchen;
 import cf.witcheskitchen.common.registry.WKBlocks;
 import cf.witcheskitchen.common.world.generator.SumacFoliagePlacer;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
@@ -25,6 +23,9 @@ import net.minecraft.world.level.levelgen.feature.stateproviders.SimpleStateProv
 import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.BendingTrunkPlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlacer;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public interface WKConfiguredFeatures {
     Map<ResourceLocation, ConfiguredFeature<?, ?>> CONFIGURED_FEATURES = new LinkedHashMap<>();

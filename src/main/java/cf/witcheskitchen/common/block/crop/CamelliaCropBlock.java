@@ -22,6 +22,7 @@ import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.VoxelShape;
+
 import java.util.Optional;
 
 public class CamelliaCropBlock extends WKTallCropBlock implements CropVariants {

@@ -4,9 +4,10 @@ import cf.witcheskitchen.api.event.network.S2CPacketRegistryListener;
 import cf.witcheskitchen.client.network.packet.ParticlePacketHandler;
 import cf.witcheskitchen.client.network.packet.SoundPacketHandler;
 import cf.witcheskitchen.client.network.packet.SplashParticlePacketHandler;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+
 import java.util.LinkedList;
 import java.util.List;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 
 public interface WKClientPacketTypes {
     // Packets that are sent by the server and received by the client

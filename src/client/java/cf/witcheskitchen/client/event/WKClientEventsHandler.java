@@ -3,7 +3,6 @@ package cf.witcheskitchen.client.event;
 import cf.witcheskitchen.WitchesKitchen;
 import cf.witcheskitchen.common.component.WKEntityComponents;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElement;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
@@ -36,11 +35,11 @@ public class WKClientEventsHandler {
                 //RenderSystem.enableBlend();
                 //RenderSystem.defaultBlendFunc();
                 RenderSystem.getDynamicUniforms().writeTransform(
-                    RenderSystem.getModelViewMatrix(),
-                    new Vector4f(1f, 1f, 1f, 1f),
-                    RenderSystem.getModelOffset(),
-                    RenderSystem.getTextureMatrix(),
-                    RenderSystem.getShaderLineWidth()
+                        RenderSystem.getModelViewMatrix(),
+                        new Vector4f(1f, 1f, 1f, 1f),
+                        RenderSystem.getModelOffset(),
+                        RenderSystem.getTextureMatrix(),
+                        RenderSystem.getShaderLineWidth()
                 );
 
                 context.blit(RenderPipelines.GUI_TEXTURED, getEmptyTexture(), 0, 0, 0, 0, 20, 42, 20, 42);

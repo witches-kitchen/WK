@@ -1,8 +1,9 @@
 package cf.witcheskitchen.common.recipe;
 
-import java.util.List;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeInput;
+
+import java.util.List;
 
 public record MultipleStackRecipeInput(List<ItemStack> stacks) implements RecipeInput {
     @Override

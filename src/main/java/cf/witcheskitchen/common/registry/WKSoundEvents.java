@@ -2,13 +2,14 @@ package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WitchesKitchen;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public interface WKSoundEvents {
     List<ObjectDefinition<SoundEvent>> SOUND_EVENTS = new ArrayList<>();

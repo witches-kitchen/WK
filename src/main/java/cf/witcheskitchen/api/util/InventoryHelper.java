@@ -1,11 +1,12 @@
 package cf.witcheskitchen.api.util;
 
-import java.util.HashSet;
-import java.util.Set;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public final class InventoryHelper {
 

@@ -3,8 +3,6 @@ package cf.witcheskitchen.common.statuseffect;
 import cf.witcheskitchen.common.registry.WKStatusEffects;
 import io.wispforest.accessories.api.AccessoriesCapability;
 import io.wispforest.accessories.api.slot.SlotEntryReference;
-import java.util.List;
-import java.util.Optional;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.InstantenousMobEffect;
@@ -17,6 +15,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+
+import java.util.List;
 
 public class DisrobingStatusEffect extends InstantenousMobEffect {
 
