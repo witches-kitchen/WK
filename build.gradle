@@ -60,6 +60,12 @@ repositories {
         url = "https://maven.neoforged.net/releases"
     }
     maven {
+        url "https://uncomfortable-fey-midnight145-884fba2b.koyeb.app"
+        content {
+            includeGroup "curse.fetch"
+        }
+    }	
+    maven {
         url = "https://maven.minecraftforge.net/"
     }
     maven {
