@@ -2,7 +2,6 @@ plugins {
     id 'fabric-loom' version '1.11-SNAPSHOT'
     id 'maven-publish'
     id("java")
-	id("com.wynprice.cursemaven") version "2.1.5"
     //TODO: FIX id 'xyz.wagyourtail.unimined' version '1.4.1'
 }
 
@@ -64,7 +63,7 @@ repositories {
         content {
             includeGroup "curse.fetch"
         }
-    }	
+    }
     maven {
         url = "https://maven.minecraftforge.net/"
     }
