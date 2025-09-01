@@ -101,12 +101,6 @@ repositories {
         url "https://maven.terraformersmc.com/releases"
     }
     maven {
-        url "https://uncomfortable-fey-midnight145-884fba2b.koyeb.app"
-        content {
-            includeGroup "curse.fetch"
-        }
-    }
-    maven {
         url "https://oss.sonatype.org/content/repositories/snapshots"
     }
     maven {
