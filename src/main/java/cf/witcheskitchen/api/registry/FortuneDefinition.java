@@ -48,7 +48,8 @@ public abstract class FortuneDefinition {
      * Fortune definition
      * Needs more work
      */
-    public Fortune (ResourceLocation id, boolean isNegative, int minTimeFrame, int maxTimeFrame) {
+    public Fortune (ResourceLocation id, boolean isInstant, boolean isNegative, int minTimeFrame, int maxTimeFrame) {
+        this.isInstant = isInstant;
         this.isNegative = isNegative;
         this.minTimeFrame = minTimeFrame;
         this.maxTimeFrame = maxTimeFrame;
