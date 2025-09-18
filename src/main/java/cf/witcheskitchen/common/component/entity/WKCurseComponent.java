@@ -1,8 +1,10 @@
 package cf.witcheskitchen.common.component.entity;
 
+import cf.witcheskitchen.WitchesKitchen;
 import cf.witcheskitchen.api.curse.CurseDefinition;
 import cf.witcheskitchen.api.util.CursePair;
 import cf.witcheskitchen.common.registry.WKRegistries;
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.storage.ValueInput;
@@ -25,7 +27,7 @@ public class WKCurseComponent implements ServerTickingComponent, AutoSyncedCompo
     public void serverTick() {
         for (CursePair cursePair : getCurses()) {
             if (cursePair.getDuration() > 0) {
-                cursePair.getCurse().tick(player);
+                cursePair.getCurse().value().curseEffect().tick(player);
                 cursePair.setDuration(cursePair.getDuration() - 1);
             } else {
                 removeCurse(cursePair.getCurse());
@@ -33,25 +35,25 @@ public class WKCurseComponent implements ServerTickingComponent, AutoSyncedCompo
         }
     }
 
-    public void addCurse(CurseDefinition curseDefinition, int duration) {
+    public void addCurse(Holder<CurseDefinition> curseDefinition, int duration) {
         if (hasCurse(curseDefinition)) {
             for (CursePair cursePair : getCurses()) {
                 if (cursePair.getCurse() == curseDefinition) {
                     cursePair.setDuration(duration);
-                    curseDefinition.onAdded(this.player);
+                    curseDefinition.value().curseEffect().onAdded(this.player);
                     return;
                 }
             }
         }
         getCurses().add(new CursePair(curseDefinition, duration));
-        curseDefinition.onAdded(this.player);
+        curseDefinition.value().curseEffect().onAdded(this.player);
     }
 
-    public void removeCurse(CurseDefinition curseDefinition) {
+    public void removeCurse(Holder<CurseDefinition> curseDefinition) {
         if (hasCurse(curseDefinition)) {
             for (CursePair cursePair : getCurses()) {
                 if (cursePair.getCurse() == curseDefinition) {
-                    cursePair.getCurse().onRemoved(this.player);
+                    cursePair.getCurse().value().curseEffect().onRemoved(this.player);
                     getCurses().remove(cursePair);
                 }
             }
@@ -62,7 +64,13 @@ public class WKCurseComponent implements ServerTickingComponent, AutoSyncedCompo
     public void readData(ValueInput data) {
         ValueInput.ValueInputList cursesList = data.childrenListOrEmpty("Curses");
         for (ValueInput curseView : cursesList) {
-            addCurse(WKRegistries.CURSES.getValue(ResourceLocation.tryParse(curseView.getString("Curse").orElseThrow())), curseView.getInt("Duration").orElseThrow());
+            Holder<CurseDefinition> curse = curseView.read("Curse", CurseDefinition.HOLDER_CODEC).orElse(null);
+
+            if (curse == null) {
+                continue;
+            }
+
+            addCurse(curse, curseView.getInt("Duration").orElseThrow());
         }
     }
 
@@ -75,14 +83,14 @@ public class WKCurseComponent implements ServerTickingComponent, AutoSyncedCompo
         return curses;
     }
 
-    public boolean hasCurse(CurseDefinition curseDefinition) {
+    public boolean hasCurse(Holder<CurseDefinition> curseDefinition) {
         return getCurses().stream().anyMatch(c -> c.getCurse() == curseDefinition);
     }
 
     public void writeCurse(ValueOutput.ValueOutputList cursesList) {
         for (CursePair cursePair : getCurses()) {
             ValueOutput curseView = cursesList.addChild();
-            curseView.putString("Curse", WKRegistries.CURSES.getKey(cursePair.getCurse()).toString());
+            curseView.store("Curse", CurseDefinition.HOLDER_CODEC, cursePair.getCurse());
             curseView.putInt("Duration", cursePair.getDuration());
         }
     }

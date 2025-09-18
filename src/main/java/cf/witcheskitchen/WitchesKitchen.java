@@ -49,6 +49,7 @@ public class WitchesKitchen implements ModInitializer {
     @Override
     public void onInitialize() {
         WitchesKitchenConfig.init(MODID, WitchesKitchenConfig.class);
+        WKCurseRegistry.init();
         WKPacketTypes.init();
         WKBlocks.init();
         WKComponents.init();

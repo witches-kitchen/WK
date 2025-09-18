@@ -1,98 +1,92 @@
 package cf.witcheskitchen.api.curse;
 
+import cf.witcheskitchen.api.registry.WKRegistries;
+import cf.witcheskitchen.api.registry.WKRegistryKeys;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.Holder;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.RegistryFixedCodec;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.ExtraCodecs;
+import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
 
 //TODO: FACTOR IN MORE THINGS
-public abstract class CurseDefinition {
 
+/**
+ *
+ * @param level
+ * @param canDeflectToCaster Can the curse be sent back to the caster via ritual?
+ * @param canNegateCurse Can the curse be negated, as opposed to dispelling it, rendering it useless to either party?
+ * @param canDispelCurse Can the curse be dispelled before it is over?
+ * @param canDispelPermanentCurse Does the curse last until it is dispelled by the victim?
+ * @param isCurseInstant Is the curse instant?
+ * @param minTimeFrame How many ticks at minimum does it take for a non-instant curse to fire?
+ * @param maxTimeFrame How many ticks at maximum does it take for a non-instant curse to fire?
+ * @param curseLength How many ticks does a curse last for once fired?
+ */
+public record CurseDefinition(
     //TODO: What does this line do?
-    public int level;
-    /**
-     * Can the curse be
-     * sent back to the caster
-     * via ritual?
-     */
-    public boolean canDeflectToCaster;
-    /**
-     * Can the curse be
-     * negated, as opposed
-     * to dispelling it,
-     * rendering it useless
-     * to either party?
-     */
-    public boolean canNegateCurse;
-    /**
-     * Can the curse be
-     * dispelled before
-     * it is over?
-     */
-    public boolean canDispelCurse;
-    /**
-     * Does the curse last
-     * until it is dispelled
-     * by the victim?
-     */
-    public boolean canDispelPermanentCurse;
-    /**
-     * Is the curse instant?
-     */
-    public boolean isCurseInstant;
-    /**
-     * How many ticks at minimum
-     * does it take for a non-instant
-     * curse to fire?
-     */
-    public int minTimeFrame;
-    /**
-     * How many ticks at maximum
-     * does it take for a non-instant
-     * fortune to fire?
-     */
-    public int maxTimeFrame;
-    /**
-     * How many ticks does
-     * a curse last for
-     * once fired?
-     */
-    public int curseLength;
+    int level,
 
-    public CurseDefinition(int level) {
-        this.level = level;
-    }
+    boolean canDeflectToCaster,
+    boolean canNegateCurse,
+    boolean canDispelCurse,
+    boolean canDispelPermanentCurse,
+    boolean isCurseInstant,
 
-    public void tick(@NotNull Player player) {
+    int minTimeFrame,
+    int maxTimeFrame,
+    int curseLength,
 
-    }
+    CurseEffect curseEffect
+) {
+    public static final Codec<CurseDefinition> DIRECT_CODEC = RecordCodecBuilder.create(instance ->
+        instance.group(
+            Codec.INT
+                .fieldOf("level")
+                .forGetter(CurseDefinition::level),
 
-    /**
-     * Effects of the curse on
-     * a player on first applying the curse
-     */
-    public void onAdded(Player player) {
+            Codec.BOOL
+                .fieldOf("can_deflect_to_caster")
+                .forGetter(CurseDefinition::canDeflectToCaster),
+            Codec.BOOL
+                .fieldOf("can_negate_curse")
+                .forGetter(CurseDefinition::canNegateCurse),
+            Codec.BOOL
+                .fieldOf("can_dispel_curse")
+                .forGetter(CurseDefinition::canDispelCurse),
+            Codec.BOOL
+                .fieldOf("can_dispel_permanent_curse")
+                .forGetter(CurseDefinition::canDispelPermanentCurse),
+            Codec.BOOL
+                .fieldOf("is_curse_instant")
+                .forGetter(CurseDefinition::isCurseInstant),
 
-    }
+            ExtraCodecs.POSITIVE_INT
+                .fieldOf("min_time_frame")
+                .forGetter(CurseDefinition::minTimeFrame),
+            ExtraCodecs.POSITIVE_INT
+                .fieldOf("max_time_frame")
+                .forGetter(CurseDefinition::maxTimeFrame),
+            ExtraCodecs.POSITIVE_INT
+                .fieldOf("curse_length")
+                .forGetter(CurseDefinition::curseLength),
 
-    /**
-     * Effects of the curse on
-     * a player on removing a curse
-     */
-    public void onRemoved(Player player) {
+            WKRegistries.CURSE_EFFECTS.byNameCodec()
+                .fieldOf("curse_effect")
+                .forGetter(CurseDefinition::curseEffect)
+        )
+            .apply(instance, CurseDefinition::new)
+    );
 
-    }
-
-    /**
-     * Check if the player is a valid
-     * target for the curse
-     */
-    public boolean isValid(Player player) {
-        return true;
-    }
-
-    /**
-     * Apply the curse if valid
-     */
-    public abstract boolean apply(Player player);
+    public static final Codec<Holder<CurseDefinition>> HOLDER_CODEC = RegistryFixedCodec.create(WKRegistryKeys.CURSES);
+    public static final StreamCodec<RegistryFriendlyByteBuf, Holder<CurseDefinition>> STREAM_CODEC = ByteBufCodecs.holderRegistry(WKRegistryKeys.CURSES);
 
     /**
      * Enum for curse strength
@@ -102,10 +96,21 @@ public abstract class CurseDefinition {
      * easy a curse is to
      * dispel off of a player
      */
-    public enum curseStrength {
-        HEX,
-        LESSER,
-        GREATER,
-        DEMONIC
+    public enum CurseStrength implements StringRepresentable {
+        HEX("hex"),
+        LESSER("lesser"),
+        GREATER("greater"),
+        DEMONIC("demonic");
+
+        private final String serializedName;
+
+        CurseStrength(String serializedName) {
+            this.serializedName = serializedName;
+        }
+
+        @Override
+        public String getSerializedName() {
+            return this.serializedName;
+        }
     }
 }

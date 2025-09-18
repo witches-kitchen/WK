@@ -1,21 +1,22 @@
 package cf.witcheskitchen.api.util;
 
 import cf.witcheskitchen.api.curse.CurseDefinition;
+import net.minecraft.core.Holder;
 
 public class CursePair {
-    private CurseDefinition curseDefinition;
+    private Holder<CurseDefinition> curseDefinition;
     private int duration;
 
-    public CursePair(CurseDefinition curseDefinition, int duration) {
+    public CursePair(Holder<CurseDefinition> curseDefinition, int duration) {
         this.curseDefinition = curseDefinition;
         this.duration = duration;
     }
 
-    public CurseDefinition getCurse() {
+    public Holder<CurseDefinition> getCurse() {
         return this.curseDefinition;
     }
 
-    public void setCurse(CurseDefinition curseDefinition) {
+    public void setCurse(Holder<CurseDefinition> curseDefinition) {
         this.curseDefinition = curseDefinition;
     }
 
