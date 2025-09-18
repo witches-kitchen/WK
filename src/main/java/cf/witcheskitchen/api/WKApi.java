@@ -6,7 +6,14 @@ import cf.witcheskitchen.common.registry.WKTags;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.monster.*;
+import net.minecraft.world.entity.animal.allay.Allay;
+import net.minecraft.world.entity.monster.Blaze;
+import net.minecraft.world.entity.monster.EnderMan;
+import net.minecraft.world.entity.monster.Guardian;
+import net.minecraft.world.entity.monster.Vex;
+import net.minecraft.world.entity.monster.breeze.Breeze;
+import net.minecraft.world.entity.monster.creaking.Creaking;
+import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
@@ -25,6 +32,10 @@ public class WKApi {
             entity instanceof EnderMan ||
             entity instanceof Blaze ||
             entity instanceof Vex ||
+            entity instanceof Breeze ||
+            entity instanceof Creaking ||
+            entity instanceof Warden ||
+            entity instanceof Allay ||
             entity instanceof Guardian;
     }
 

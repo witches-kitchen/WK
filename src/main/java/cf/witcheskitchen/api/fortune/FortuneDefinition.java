@@ -38,29 +38,11 @@ public abstract class FortuneDefinition {
      * once fired?
      */
     public int fortuneLength;
-
-    /**
-     * Effects of the fortune on
-     * a player on first applying the fortune
-     */
-    public void onAdded(Player player) {
-
-    }
-
-    /**
-     * Effects of the fortune on
-     * a player on removing a fortune
-     */
-    public void onRemoved(Player player) {
-
-    }
-
     /**
      * Can curses negate
      * this particular fortune?
      */
     public boolean canCursesNegateFortune;
-
     /**
      * Can this fortune
      * negate an existing curse?
@@ -76,6 +58,22 @@ public abstract class FortuneDefinition {
         this.isNegative = isNegative;
         this.minTimeFrame = minTimeFrame;
         this.maxTimeFrame = maxTimeFrame;
+    }
+
+    /**
+     * Effects of the fortune on
+     * a player on first applying the fortune
+     */
+    public void onAdded(Player player) {
+
+    }
+
+    /**
+     * Effects of the fortune on
+     * a player on removing a fortune
+     */
+    public void onRemoved(Player player) {
+
     }
 
     /**
