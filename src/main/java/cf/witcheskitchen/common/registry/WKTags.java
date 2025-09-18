@@ -29,6 +29,9 @@ public interface WKTags {
     TagKey<EntityType<?>> DEMONIC = register(Registries.ENTITY_TYPE, "demonic");
     TagKey<EntityType<?>> CONSTRUCT = register(Registries.ENTITY_TYPE, "construct");
 
+    TagKey<EntityType<?>> AVOIDS_BUG_SPRAY = register(Registries.ENTITY_TYPE, "avoids_bug_spray");
+    TagKey<EntityType<?>> AVOIDS_FELIFORM = register(Registries.ENTITY_TYPE, "avoids_feliform");
+
     // Block
     TagKey<Block> HEATS_CAULDRON = register(Registries.BLOCK, "heats_cauldron");
 
