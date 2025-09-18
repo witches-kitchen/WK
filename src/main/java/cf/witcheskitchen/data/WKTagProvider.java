@@ -95,6 +95,10 @@ public class WKTagProvider {
             builder(WKTags.TAGLOCK_BLACKLIST, EntityType.ENDER_DRAGON, EntityType.WITHER);
             builder(WKTags.DEMONIC, WKEntityTypes.ROGGENWOLF);
 
+            builder(WKTags.FLEEING_MOBS)
+                .addTag(WKTags.AVOIDS_BUG_SPRAY)
+                .addTag(WKTags.AVOIDS_FELIFORM);
+
             builder(WKTags.AVOIDS_FELIFORM, EntityType.CREEPER);
             builder(WKTags.AVOIDS_BUG_SPRAY)
                 .addOptionalTag(EntityTypeTags.ARTHROPOD);
