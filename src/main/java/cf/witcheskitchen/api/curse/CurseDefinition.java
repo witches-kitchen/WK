@@ -1,5 +1,6 @@
 package cf.witcheskitchen.api.curse;
 
+import cf.witcheskitchen.api.fortune.FortuneDefinition;
 import cf.witcheskitchen.api.registry.WKRegistries;
 import cf.witcheskitchen.api.registry.WKRegistryKeys;
 import com.mojang.serialization.Codec;
@@ -9,6 +10,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.RegistryFixedCodec;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.StringRepresentable;
 
@@ -24,6 +26,7 @@ import net.minecraft.util.StringRepresentable;
  * @param isCurseInstant Is the curse instant?
  * @param minTimeFrame How many ticks at minimum does it take for a non-instant curse to fire?
  * @param maxTimeFrame How many ticks at maximum does it take for a non-instant curse to fire?
+ * @param curingFortunes List of fortunes that can cure this curse.
  * @param curseLength How many ticks does a curse last for once fired?
  */
 public record CurseDefinition(
@@ -40,6 +43,7 @@ public record CurseDefinition(
     int maxTimeFrame,
     int curseLength,
 
+    TagKey<FortuneDefinition> curingFortunes,
     CurseEffect curseEffect
 ) {
     public static final Codec<CurseDefinition> DIRECT_CODEC = RecordCodecBuilder.create(instance ->
@@ -73,6 +77,10 @@ public record CurseDefinition(
             ExtraCodecs.POSITIVE_INT
                 .fieldOf("curse_length")
                 .forGetter(CurseDefinition::curseLength),
+
+            TagKey.hashedCodec(WKRegistryKeys.FORTUNES)
+                .fieldOf("curing_fortunes")
+                .forGetter(CurseDefinition::curingFortunes),
 
             WKRegistries.CURSE_EFFECTS.byNameCodec()
                 .fieldOf("curse_effect")

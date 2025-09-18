@@ -10,9 +10,8 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.RegistryFixedCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.ExtraCodecs;
-import net.minecraft.world.entity.player.Player;
 
 
 //TODO: FACTOR IN MORE THINGS
@@ -24,8 +23,7 @@ import net.minecraft.world.entity.player.Player;
  * @param minTimeFrame How many ticks at minimum does it take for a non-instant fortune to fire?
  * @param maxTimeFrame How many ticks at maximum does it take for a non-instant fortune to fire?
  * @param fortuneLength How many ticks does a fortune last for once fired?
- * @param canCursesNegateFortune Can curses negate this particular fortune?
- * @param canFortuneCureCurse Can this fortune negate an existing curse?
+ * @param negatingCurses List of curses that negate this fortune from firing.
  */
 public record FortuneDefinition(
     boolean isNegative,
@@ -35,8 +33,7 @@ public record FortuneDefinition(
     int maxTimeFrame,
     int fortuneLength,
 
-    boolean canCursesNegateFortune,
-    boolean canFortuneCureCurse,
+    TagKey<CurseDefinition> negatingCurses,
 
     FortuneEffect fortuneEffect
 ) {
@@ -59,12 +56,9 @@ public record FortuneDefinition(
                 .fieldOf("fortune_length")
                 .forGetter(FortuneDefinition::fortuneLength),
 
-            Codec.BOOL
-                .fieldOf("can_curses_negate_fortune")
-                .forGetter(FortuneDefinition::canCursesNegateFortune),
-            Codec.BOOL
-                .fieldOf("can_fortune_cure_curse")
-                .forGetter(FortuneDefinition::canFortuneCureCurse),
+            TagKey.hashedCodec(WKRegistryKeys.CURSES)
+                .fieldOf("negating_curses")
+                .forGetter(FortuneDefinition::negatingCurses),
 
             WKRegistries.FORTUNE_EFFECTS.byNameCodec()
                 .fieldOf("fortune_effect")
