@@ -183,12 +183,12 @@ public class BrewingBarrelBlockEntity extends WKBlockEntityWithInventory impleme
             return previousRecipe;
         } else {
             final BarrelFermentingRecipe recipe = world.recipeAccess()
-                    .getAllOfType(WKRecipeTypes.BARREL_FERMENTING_RECIPE_TYPE)
-                    .stream()
-                    .filter(brewingRecipe -> brewingRecipe.value().matches(new MultipleStackRecipeInput(this.manager.getStacks()), world))
-                    .findFirst()
-                    .map(RecipeHolder::value)
-                    .orElse(null);
+                .getAllOfType(WKRecipeTypes.BARREL_FERMENTING_RECIPE_TYPE)
+                .stream()
+                .filter(brewingRecipe -> brewingRecipe.value().matches(new MultipleStackRecipeInput(this.manager.getStacks()), world))
+                .findFirst()
+                .map(RecipeHolder::value)
+                .orElse(null);
             if (recipe != null) {
                 this.previousRecipe = recipe;
                 return recipe;

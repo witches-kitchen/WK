@@ -1,22 +1,22 @@
 package cf.witcheskitchen.api.util;
 
-import cf.witcheskitchen.common.curse.Curse;
+import cf.witcheskitchen.api.curse.CurseDefinition;
 
 public class CursePair {
-    private Curse curse;
+    private CurseDefinition curseDefinition;
     private int duration;
 
-    public CursePair(Curse curse, int duration) {
-        this.curse = curse;
+    public CursePair(CurseDefinition curseDefinition, int duration) {
+        this.curseDefinition = curseDefinition;
         this.duration = duration;
     }
 
-    public Curse getCurse() {
-        return this.curse;
+    public CurseDefinition getCurse() {
+        return this.curseDefinition;
     }
 
-    public void setCurse(Curse curse) {
-        this.curse = curse;
+    public void setCurse(CurseDefinition curseDefinition) {
+        this.curseDefinition = curseDefinition;
     }
 
     public int getDuration() {

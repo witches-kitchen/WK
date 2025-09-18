@@ -11,8 +11,8 @@ import net.minecraft.world.level.FoliageColor;
 public interface WKColorProviderRegistry {
     static void init() {
         ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> pos != null && world != null ? BiomeColors.getAverageFoliageColor(world, pos) : FoliageColor.FOLIAGE_DEFAULT,
-                WKBlocks.SUMAC_LEAVES,
-                WKBlocks.JUNIPER_LEAVES
+            WKBlocks.SUMAC_LEAVES,
+            WKBlocks.JUNIPER_LEAVES
         );
 
         /*ColorProviderRegistry.ITEM.register((stack, tintIndex) -> ColorProviderRegistry.BLOCK.get(((BlockItem) stack.getItem()).getBlock()).getColor(((BlockItem) stack.getItem()).getBlock().getDefaultState(), null, null, tintIndex),

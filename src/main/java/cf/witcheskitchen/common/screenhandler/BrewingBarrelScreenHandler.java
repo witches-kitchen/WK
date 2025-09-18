@@ -24,16 +24,16 @@ public class BrewingBarrelScreenHandler extends WKScreenHandler {
         this.delegate = delegate;
         super.addDataSlots(delegate);
         this.builder()
-                .playerSetup()
-                // First Row
-                .input(0, 56, 30)
-                .input(1, 75, 30)
-                .input(2, 94, 30)
-                // Second Row
-                .input(3, 56, 49)
-                .input(4, 75, 49)
-                .input(5, 94, 49)
-                .build();
+            .playerSetup()
+            // First Row
+            .input(0, 56, 30)
+            .input(1, 75, 30)
+            .input(2, 94, 30)
+            // Second Row
+            .input(3, 56, 49)
+            .input(4, 75, 49)
+            .input(5, 94, 49)
+            .build();
     }
 
     public boolean isFermenting() {

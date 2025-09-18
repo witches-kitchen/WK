@@ -33,8 +33,8 @@ public final class ScreenBuilder {
         if (base.isHovering(x, y, width, height, xMouse, yMouse)) {
             int percentage = scaledPercentageOf(value, max);
             context.setTooltipForNextFrame(Minecraft.getInstance().font, Component.literal(String.valueOf(percentage))
-                    .withStyle(percentageColor(percentage))
-                    .append("%"), xMouse, yMouse);
+                .withStyle(percentageColor(percentage))
+                .append("%"), xMouse, yMouse);
         }
     }
 

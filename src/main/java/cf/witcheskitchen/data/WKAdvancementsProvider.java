@@ -25,18 +25,18 @@ public class WKAdvancementsProvider extends FabricAdvancementProvider {
     @Override
     public void generateAdvancement(HolderLookup.Provider lookup, Consumer<AdvancementHolder> consumer) {
         var root = Advancement.Builder.advancement()
-                .display(
-                        WKItems.DOLLOP_OF_FROSTING,
-                        Component.translatable("witcheskitchen.advancements.witcheskitchen.root.title"),
-                        Component.translatable("witcheskitchen.advancements.witcheskitchen.root.desc"),
-                        null,
-                        AdvancementType.TASK,
-                        true,
-                        false,
-                        false
-                )
-                .addCriterion("has_item", InventoryChangeTrigger.TriggerInstance.hasItems(WKItems.DOLLOP_OF_FROSTING))
-                .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(ResourceKey.create(Registries.RECIPE, WitchesKitchen.id("frosting"))))
-                .save(consumer, "witcheskitchen:witcheskitchen/root");
+            .display(
+                WKItems.DOLLOP_OF_FROSTING,
+                Component.translatable("witcheskitchen.advancements.witcheskitchen.root.title"),
+                Component.translatable("witcheskitchen.advancements.witcheskitchen.root.desc"),
+                null,
+                AdvancementType.TASK,
+                true,
+                false,
+                false
+            )
+            .addCriterion("has_item", InventoryChangeTrigger.TriggerInstance.hasItems(WKItems.DOLLOP_OF_FROSTING))
+            .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(ResourceKey.create(Registries.RECIPE, WitchesKitchen.id("frosting"))))
+            .save(consumer, "witcheskitchen:witcheskitchen/root");
     }
 }

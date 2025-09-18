@@ -27,17 +27,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class RitualRecipe implements Recipe<MultipleStackRecipeInput> {
-    public final Ritual rite;
-    public final Set<RitualCircle> circleSet;
-    public final List<Ingredient> inputs;
-    public final List<ItemStack> outputs;
-    public final List<EntityType<?>> summons;
-    public final List<EntityType<?>> sacrifices;
-    public final int duration;
-    public final Set<CommandType> command;
-    public final String energy;
-
+public record RitualRecipe(Ritual rite, String energy, Set<RitualCircle> circleSet, List<Ingredient> inputs,
+                           List<ItemStack> outputs, List<EntityType<?>> sacrifices, List<EntityType<?>> summons,
+                           int duration, Set<CommandType> command) implements Recipe<MultipleStackRecipeInput> {
     public RitualRecipe(Ritual rite, String energy, Set<RitualCircle> circleSet, @Nullable List<Ingredient> inputs, @Nullable List<ItemStack> outputs, @Nullable List<EntityType<?>> sacrifices, @Nullable List<EntityType<?>> summons, int duration, Set<CommandType> command) {
         this.rite = rite;
         this.circleSet = circleSet;
@@ -91,18 +83,6 @@ public class RitualRecipe implements Recipe<MultipleStackRecipeInput> {
         return ItemStack.EMPTY;
     }
 
-    public Ritual getRite() {
-        return rite;
-    }
-
-    public String getEnergy() {
-        return energy;
-    }
-
-    public List<ItemStack> getOutputs() {
-        return outputs;
-    }
-
     @Override
     public RecipeSerializer<? extends Recipe<MultipleStackRecipeInput>> getSerializer() {
         return WKRecipeTypes.RITUAL_RECIPE_SERIALIZER;
@@ -127,18 +107,6 @@ public class RitualRecipe implements Recipe<MultipleStackRecipeInput> {
         return null;
     }
 
-    public List<EntityType<?>> getSacrifices() {
-        return sacrifices;
-    }
-
-    public List<EntityType<?>> getSummons() {
-        return summons;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
     public Set<CommandType> getCommands() {
         return command;
     }
@@ -151,64 +119,64 @@ public class RitualRecipe implements Recipe<MultipleStackRecipeInput> {
         @Override
         public MapCodec<RitualRecipe> codec() {
             return RecordCodecBuilder.mapCodec(instance ->
-                    instance.group(
-                                    WKRegistries.RITUAL.byNameCodec()
-                                            .fieldOf("ritual")
-                                            .forGetter(RitualRecipe::getRite),
-                                    Codec.STRING
-                                            .optionalFieldOf("environment", "low")
-                                            .forGetter(RitualRecipe::getEnergy),
-                                    RitualCircle.CODEC
-                                            .listOf()
-                                            .fieldOf("circles")
-                                            .validate(circles -> {
-                                                if (circles.isEmpty()) {
-                                                    return DataResult.error(() -> "No circles");
-                                                }
-                                                return DataResult.success(circles);
-                                            })
-                                            .forGetter(recipe -> recipe.getCircles().stream().toList()),
-                                    Ingredient.CODEC
-                                            .listOf()
-                                            .fieldOf("inputs")
-                                            .forGetter(recipe -> recipe.placementInfo().ingredients()),
-                                    ItemStack.CODEC
-                                            .listOf()
-                                            .fieldOf("outputs")
-                                            .forGetter(RitualRecipe::getOutputs),
-                                    BuiltInRegistries.ENTITY_TYPE.byNameCodec()
-                                            .listOf()
-                                            .fieldOf("sacrifices")
-                                            .forGetter(RitualRecipe::getSacrifices),
-                                    BuiltInRegistries.ENTITY_TYPE.byNameCodec()
-                                            .listOf()
-                                            .fieldOf("summons")
-                                            .forGetter(RitualRecipe::getSummons),
-                                    Codec.INT
-                                            .fieldOf("duration")
-                                            .forGetter(RitualRecipe::getDuration),
-                                    CommandType.CODEC
-                                            .listOf()
-                                            .fieldOf("commands")
-                                            .forGetter(recipe -> recipe.getCommands().stream().toList())
-                            )
-                            .apply(instance, RitualRecipe::fromCodec)
+                instance.group(
+                        WKRegistries.RITUAL.byNameCodec()
+                            .fieldOf("ritual")
+                            .forGetter(RitualRecipe::rite),
+                        Codec.STRING
+                            .optionalFieldOf("environment", "low")
+                            .forGetter(RitualRecipe::energy),
+                        RitualCircle.CODEC
+                            .listOf()
+                            .fieldOf("circles")
+                            .validate(circles -> {
+                                if (circles.isEmpty()) {
+                                    return DataResult.error(() -> "No circles");
+                                }
+                                return DataResult.success(circles);
+                            })
+                            .forGetter(recipe -> recipe.getCircles().stream().toList()),
+                        Ingredient.CODEC
+                            .listOf()
+                            .fieldOf("inputs")
+                            .forGetter(recipe -> recipe.placementInfo().ingredients()),
+                        ItemStack.CODEC
+                            .listOf()
+                            .fieldOf("outputs")
+                            .forGetter(RitualRecipe::outputs),
+                        BuiltInRegistries.ENTITY_TYPE.byNameCodec()
+                            .listOf()
+                            .fieldOf("sacrifices")
+                            .forGetter(RitualRecipe::sacrifices),
+                        BuiltInRegistries.ENTITY_TYPE.byNameCodec()
+                            .listOf()
+                            .fieldOf("summons")
+                            .forGetter(RitualRecipe::summons),
+                        Codec.INT
+                            .fieldOf("duration")
+                            .forGetter(RitualRecipe::duration),
+                        CommandType.CODEC
+                            .listOf()
+                            .fieldOf("commands")
+                            .forGetter(recipe -> recipe.getCommands().stream().toList())
+                    )
+                    .apply(instance, RitualRecipe::fromCodec)
             );
         }
 
         @Override
         public StreamCodec<RegistryFriendlyByteBuf, RitualRecipe> streamCodec() {
             return CustomPacketCodecs.tuple(
-                    ByteBufCodecs.registry(WKRegistries.RITUAL.key()), RitualRecipe::getRite,
-                    ByteBufCodecs.STRING_UTF8, RitualRecipe::getEnergy,
-                    CustomPacketCodecs.createSetCodec(RitualCircle.PACKET_CODEC), RitualRecipe::getCircles,
-                    CustomPacketCodecs.INGREDIENT_LIST, recipe -> recipe.placementInfo().ingredients(),
-                    ItemStack.OPTIONAL_LIST_STREAM_CODEC, RitualRecipe::getOutputs,
-                    CustomPacketCodecs.createListCodec(ByteBufCodecs.registry(Registries.ENTITY_TYPE)), RitualRecipe::getSacrifices,
-                    CustomPacketCodecs.createListCodec(ByteBufCodecs.registry(Registries.ENTITY_TYPE)), RitualRecipe::getSummons,
-                    ByteBufCodecs.VAR_INT, RitualRecipe::getDuration,
-                    CustomPacketCodecs.createSetCodec(CommandType.PACKET_CODEC), RitualRecipe::getCommands,
-                    RitualRecipe::new
+                ByteBufCodecs.registry(WKRegistries.RITUAL.key()), RitualRecipe::rite,
+                ByteBufCodecs.STRING_UTF8, RitualRecipe::energy,
+                CustomPacketCodecs.createSetCodec(RitualCircle.PACKET_CODEC), RitualRecipe::getCircles,
+                CustomPacketCodecs.INGREDIENT_LIST, recipe -> recipe.placementInfo().ingredients(),
+                ItemStack.OPTIONAL_LIST_STREAM_CODEC, RitualRecipe::outputs,
+                CustomPacketCodecs.createListCodec(ByteBufCodecs.registry(Registries.ENTITY_TYPE)), RitualRecipe::sacrifices,
+                CustomPacketCodecs.createListCodec(ByteBufCodecs.registry(Registries.ENTITY_TYPE)), RitualRecipe::summons,
+                ByteBufCodecs.VAR_INT, RitualRecipe::duration,
+                CustomPacketCodecs.createSetCodec(CommandType.PACKET_CODEC), RitualRecipe::getCommands,
+                RitualRecipe::new
             );
         }
     }

@@ -66,9 +66,9 @@ public class CuSithEntity extends WKHostileEntity implements GeoEntity {
 
     public static AttributeSupplier.Builder createAttributes() {
         return LivingEntity.createLivingAttributes().add(Attributes.FOLLOW_RANGE, 25.0D)
-                .add(Attributes.MOVEMENT_SPEED, 0.45D)
-                .add(Attributes.MAX_HEALTH, 20).add(Attributes.ARMOR, 2.0D)
-                .add(Attributes.ATTACK_DAMAGE, 4.0D).add(Attributes.ATTACK_KNOCKBACK, 0.35D);
+            .add(Attributes.MOVEMENT_SPEED, 0.45D)
+            .add(Attributes.MAX_HEALTH, 20).add(Attributes.ARMOR, 2.0D)
+            .add(Attributes.ATTACK_DAMAGE, 4.0D).add(Attributes.ATTACK_KNOCKBACK, 0.35D);
     }
 
     @Override

@@ -52,7 +52,7 @@ public class TeapotBlockEntity extends WKBlockEntityWithInventory {
         if (world.getBlockState(worldPosition.below()).getBlock() instanceof WitchesOvenBlock && world.getBlockState(worldPosition.below()).getValue(WitchesOvenBlock.LIT)) {
             if (teaRecipe == null) {
                 if (world instanceof ServerLevel serverWorld) {
-                    teaRecipe = serverWorld.recipeAccess().getAllOfType(WKRecipeTypes.TEA_RECIPE_TYPE).stream().filter(recipe -> recipe.value().input.test(this.manager.getItem(0))).findFirst().map(RecipeHolder::value).orElse(null);
+                    teaRecipe = serverWorld.recipeAccess().getAllOfType(WKRecipeTypes.TEA_RECIPE_TYPE).stream().filter(recipe -> recipe.value().input().test(this.manager.getItem(0))).findFirst().map(RecipeHolder::value).orElse(null);
                 }
             } else {
                 if (hasWater) {
@@ -60,7 +60,7 @@ public class TeapotBlockEntity extends WKBlockEntityWithInventory {
                         effectTimer = 0;
                         progress++;
                         if (progress >= UNOBTAINABLE_OUTPUT) {
-                            effect = BuiltInRegistries.MOB_EFFECT.wrapAsHolder(teaRecipe.getEffect());
+                            effect = BuiltInRegistries.MOB_EFFECT.wrapAsHolder(teaRecipe.effect());
                         }
                     } else {
                         progress = 0;
@@ -99,8 +99,8 @@ public class TeapotBlockEntity extends WKBlockEntityWithInventory {
                 } else if (stack.is(Items.POTION) && stack.has(DataComponents.POTION_CONTENTS) && stack.get(DataComponents.POTION_CONTENTS).potion().isPresent() && stack.get(DataComponents.POTION_CONTENTS).potion().orElseThrow().is(Potions.WATER)) {
                     fillKettle(player);
                 } else if (world instanceof ServerLevel serverWorld) {
-                    serverWorld.recipeAccess().getAllOfType(WKRecipeTypes.TEA_RECIPE_TYPE).stream().filter(recipe -> recipe.value().input.test(stack)).findFirst().map(RecipeHolder::value)
-                            .ifPresent(teaRecipe -> tryAddIngredientToTeaPot(stack, world));
+                    serverWorld.recipeAccess().getAllOfType(WKRecipeTypes.TEA_RECIPE_TYPE).stream().filter(recipe -> recipe.value().input().test(stack)).findFirst().map(RecipeHolder::value)
+                        .ifPresent(teaRecipe -> tryAddIngredientToTeaPot(stack, world));
                 }
             }
         }
@@ -125,7 +125,7 @@ public class TeapotBlockEntity extends WKBlockEntityWithInventory {
         if (progress > TIME_TO_BREW && progress < UNOBTAINABLE_OUTPUT) {
             if (teaRecipe != null) {
                 player.level().playSound(null, worldPosition, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1 / 3f, 1.0F);
-                ItemUtil.addItemToInventoryAndConsume(player, InteractionHand.MAIN_HAND, teaRecipe.getOutput());
+                ItemUtil.addItemToInventoryAndConsume(player, InteractionHand.MAIN_HAND, teaRecipe.output());
                 emptyInventoryAndReset(level, false);
             }
         }

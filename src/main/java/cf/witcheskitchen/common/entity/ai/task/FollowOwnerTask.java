@@ -17,10 +17,10 @@ import java.util.Optional;
 public class FollowOwnerTask extends Behavior<PathfinderMob> {
     public FollowOwnerTask() {
         super(ImmutableMap.of(
-                MemoryModuleType.LOOK_TARGET, MemoryStatus.REGISTERED,
-                MemoryModuleType.WALK_TARGET, MemoryStatus.REGISTERED,
-                WKMemoryModuleTypes.OWNER_PLAYER, MemoryStatus.VALUE_PRESENT,
-                WKMemoryModuleTypes.SHOULD_FOLLOW_OWNER, MemoryStatus.VALUE_PRESENT
+            MemoryModuleType.LOOK_TARGET, MemoryStatus.REGISTERED,
+            MemoryModuleType.WALK_TARGET, MemoryStatus.REGISTERED,
+            WKMemoryModuleTypes.OWNER_PLAYER, MemoryStatus.VALUE_PRESENT,
+            WKMemoryModuleTypes.SHOULD_FOLLOW_OWNER, MemoryStatus.VALUE_PRESENT
         ));
     }
 

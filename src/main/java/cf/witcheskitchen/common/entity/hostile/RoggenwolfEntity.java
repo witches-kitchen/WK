@@ -29,9 +29,9 @@ public class RoggenwolfEntity extends WKHostileEntity implements GeoEntity {
 
     public static AttributeSupplier.Builder createAttributes() {
         return LivingEntity.createLivingAttributes().add(Attributes.FOLLOW_RANGE, 16.0D)
-                .add(Attributes.MOVEMENT_SPEED, 1.25D)
-                .add(Attributes.MAX_HEALTH, 15).add(Attributes.ARMOR, 0.0D)
-                .add(Attributes.ATTACK_DAMAGE, 3.5D).add(Attributes.ATTACK_KNOCKBACK, 0.35D);
+            .add(Attributes.MOVEMENT_SPEED, 1.25D)
+            .add(Attributes.MAX_HEALTH, 15).add(Attributes.ARMOR, 0.0D)
+            .add(Attributes.ATTACK_DAMAGE, 3.5D).add(Attributes.ATTACK_KNOCKBACK, 0.35D);
     }
 
     @Nullable

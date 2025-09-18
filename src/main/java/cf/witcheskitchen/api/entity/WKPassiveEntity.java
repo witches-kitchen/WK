@@ -18,7 +18,7 @@ public abstract class WKPassiveEntity extends AgeableMob {
      * Please be sane with it.
      */
     public static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(WKPassiveEntity.class,
-            EntityDataSerializers.INT);
+        EntityDataSerializers.INT);
 
     public WKPassiveEntity(EntityType<? extends AgeableMob> entityType, Level world) {
         super(entityType, world);

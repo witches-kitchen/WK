@@ -20,7 +20,7 @@ public class Ritual {
     public void tick(Level world, BlockPos blockPos, RitualRecipe ritualRecipe) {
         RitualEvent.TICK.invoker().tick(this, world, blockPos);
         MinecraftServer minecraftServer = world.getServer();
-        for (CommandType commandType : ritualRecipe.command) {
+        for (CommandType commandType : ritualRecipe.command()) {
             if (commandType.type.equals("tick")) {
                 runCommand(minecraftServer, blockPos, commandType.command);
             }
@@ -30,7 +30,7 @@ public class Ritual {
     public void onStart(Level world, BlockPos blockPos, Player player, RitualRecipe ritualRecipe) {
         RitualEvent.START.invoker().start(this, world, blockPos, player);
         MinecraftServer minecraftServer = world.getServer();
-        for (CommandType commandType : ritualRecipe.command) {
+        for (CommandType commandType : ritualRecipe.command()) {
             if (commandType.type.equals("start")) {
                 runCommand(minecraftServer, blockPos, commandType.command);
             }
@@ -40,7 +40,7 @@ public class Ritual {
     public void onEnd(Level world, BlockPos blockPos, RitualRecipe ritualRecipe) {
         RitualEvent.END.invoker().end(this, world, blockPos);
         MinecraftServer minecraftServer = world.getServer();
-        for (CommandType commandType : ritualRecipe.command) {
+        for (CommandType commandType : ritualRecipe.command()) {
             if (commandType.type.equals("end")) {
                 runCommand(minecraftServer, blockPos, commandType.command);
             }

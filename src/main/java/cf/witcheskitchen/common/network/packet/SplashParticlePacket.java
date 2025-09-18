@@ -12,18 +12,18 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.phys.Vec3;
 
 public record SplashParticlePacket(
-        BlockPos pos,
-        Vec3 rgb,
-        Vec3 offset,
-        byte amount
+    BlockPos pos,
+    Vec3 rgb,
+    Vec3 offset,
+    byte amount
 ) implements CustomPacketPayload {
     public static final Type<SplashParticlePacket> ID = new Type<>(WitchesKitchen.id("splash_particle"));
     public static final TypeAndCodec<RegistryFriendlyByteBuf, SplashParticlePacket> TYPE = new TypeAndCodec<>(ID, StreamCodec.composite(
-            BlockPos.STREAM_CODEC, SplashParticlePacket::pos,
-            CustomPacketCodecs.VECTOR3D, SplashParticlePacket::rgb,
-            CustomPacketCodecs.VECTOR3D, SplashParticlePacket::offset,
-            ByteBufCodecs.BYTE, SplashParticlePacket::amount,
-            SplashParticlePacket::new
+        BlockPos.STREAM_CODEC, SplashParticlePacket::pos,
+        CustomPacketCodecs.VECTOR3D, SplashParticlePacket::rgb,
+        CustomPacketCodecs.VECTOR3D, SplashParticlePacket::offset,
+        ByteBufCodecs.BYTE, SplashParticlePacket::amount,
+        SplashParticlePacket::new
     ));
 
     public static void send(ServerPlayer player, BlockPos pos, double r, double g, double b) {

@@ -36,8 +36,8 @@ import org.jetbrains.annotations.Nullable;
 public class TeapotBlock extends WKBlock implements SimpleWaterloggedBlock {
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     public static final VoxelShape SHAPE = Shapes.or(
-            box(4, 0, 4, 12, 6, 12),
-            box(5, 6, 5, 11, 7, 11)
+        box(4, 0, 4, 12, 6, 12),
+        box(5, 6, 5, 11, 7, 11)
     );
 
 

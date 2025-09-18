@@ -53,8 +53,8 @@ public class GlyphBlockEntity extends WKBlockEntityWithInventory {
         if (ritualRecipe != null) {
             progress++;
             if (progress > 0) {
-                ritual = ritualRecipe.rite;
-                if (progress < ritualRecipe.duration) {
+                ritual = ritualRecipe.rite();
+                if (progress < ritualRecipe.duration()) {
                     ritual.tick(world, blockPos, ritualRecipe);
                 } else {
                     ritual.onEnd(world, worldPosition, ritualRecipe);
@@ -77,12 +77,12 @@ public class GlyphBlockEntity extends WKBlockEntityWithInventory {
         if (handStack.isEmpty() && world instanceof ServerLevel serverWorld) {
             RitualRecipe ritualRecipeNoCircleCheck = serverWorld.recipeAccess().getAllOfType(WKRecipeTypes.RITUAL_RECIPE_TYPE).stream().filter(entry -> entry.value().matches(new MultipleStackRecipeInput(this.manager.getStacks()), world)).findFirst().map(RecipeHolder::value).orElse(null);
             if (ritualRecipeNoCircleCheck != null) {
-                Set<RitualCircle> circle = ritualRecipeNoCircleCheck.circleSet;
+                Set<RitualCircle> circle = ritualRecipeNoCircleCheck.circleSet();
                 if (checkValidCircle(world, pos, circle)) {
                     if (checkValidSacrifices(ritualRecipeNoCircleCheck, serverWorld)) {
                         this.manager.clearContent();
                         ritualRecipe = ritualRecipeNoCircleCheck;
-                        ritual = ritualRecipe.rite;
+                        ritual = ritualRecipe.rite();
                         ritual.onStart(world, pos, player, ritualRecipe);
                         setChanged();
                     }
@@ -92,15 +92,15 @@ public class GlyphBlockEntity extends WKBlockEntityWithInventory {
     }
 
     private boolean checkValidSacrifices(RitualRecipe ritual, ServerLevel world) {
-        if (ritual.sacrifices != null && ritual.sacrifices.isEmpty()) {
+        if (ritual.sacrifices() != null && ritual.sacrifices().isEmpty()) {
             return true;
         }
 
-        int size = (ritual.circleSet.size() * 2) + 1;
+        int size = (ritual.circleSet().size() * 2) + 1;
 
         List<LivingEntity> livingEntityList = world.getEntitiesOfClass(LivingEntity.class, new AABB(this.worldPosition).inflate(size), Entity::isAlive);
         List<EntityType<?>> entityTypeList = Lists.newArrayList(livingEntityList.stream().map(Entity::getType).toList());
-        List<EntityType<?>> ritualSacrifices = ritual.sacrifices;
+        List<EntityType<?>> ritualSacrifices = ritual.sacrifices();
 
         if (ritualSacrifices != null && new HashSet<>(entityTypeList).containsAll(ritualSacrifices)) {
             for (EntityType<?> entityType : ritualSacrifices) {

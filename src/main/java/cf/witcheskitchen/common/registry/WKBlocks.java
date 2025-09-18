@@ -285,13 +285,13 @@ public interface WKBlocks {
 
     static BlockBehaviour.Properties leavesSettings() {
         return BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)
-                .strength(0.2F)
-                .randomTicks()
-                .sound(SoundType.GRASS)
-                .noOcclusion()
-                .isValidSpawn(Blocks::ocelotOrParrot)
-                .isSuffocating(Blocks::never)
-                .isViewBlocking(Blocks::never);
+            .strength(0.2F)
+            .randomTicks()
+            .sound(SoundType.GRASS)
+            .noOcclusion()
+            .isValidSpawn(Blocks::ocelotOrParrot)
+            .isSuffocating(Blocks::never)
+            .isViewBlocking(Blocks::never);
     }
 
     static BlockBehaviour.Properties plankSettings() {
@@ -314,11 +314,11 @@ public interface WKBlocks {
 
     private static Block registerSapling(String path, ConfiguredFeature<TreeConfiguration, ?> feature) {
         final Block sapling = new WKSaplingBlock(new TreeGrower(path, Optional.empty(), Optional.of(WKConfiguredFeatures.CONFIGURED_FEATURE_KEYS.get(feature)), Optional.empty()),
-                BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SAPLING)
-                        .noCollission()
-                        .randomTicks()
-                        .instabreak()
-                        .sound(SoundType.GRASS));
+            BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SAPLING)
+                .noCollission()
+                .randomTicks()
+                .instabreak()
+                .sound(SoundType.GRASS));
         return register(path, sapling, true);
     }
 

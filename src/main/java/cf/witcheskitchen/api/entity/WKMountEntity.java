@@ -18,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
 //Todo: Revamp texture variants and their code
 public abstract class WKMountEntity extends Animal implements ContainerListener, PlayerRideableJumping {
     public static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(WKMountEntity.class,
-            EntityDataSerializers.INT);
+        EntityDataSerializers.INT);
 
     public WKMountEntity(EntityType<? extends Animal> entityType, Level world) {
         super(entityType, world);

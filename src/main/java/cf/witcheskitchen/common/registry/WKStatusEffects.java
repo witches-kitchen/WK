@@ -36,25 +36,25 @@ public interface WKStatusEffects {
     Holder<MobEffect> GROWTH = create("growth", new GrowthStatusEffect(MobEffectCategory.BENEFICIAL, 0x4F7942));
     Holder<MobEffect> LOVE = create("love", new LoveStatusEffect(MobEffectCategory.BENEFICIAL, 0xFFB7C5));
     Holder<MobEffect> PARALYSIS = create("paralysis", new ParalysisStatusEffect(MobEffectCategory.HARMFUL, 0xFADA5E)
-            .addAttributeModifier(Attributes.BLOCK_INTERACTION_RANGE, WitchesKitchen.id("paralysis_decreased_reach"), -9.0D, AttributeModifier.Operation.ADD_VALUE)
-            .addAttributeModifier(Attributes.ENTITY_INTERACTION_RANGE, WitchesKitchen.id("paralysis_decreased_entity_reach"), -9.D, AttributeModifier.Operation.ADD_VALUE));
+        .addAttributeModifier(Attributes.BLOCK_INTERACTION_RANGE, WitchesKitchen.id("paralysis_decreased_reach"), -9.0D, AttributeModifier.Operation.ADD_VALUE)
+        .addAttributeModifier(Attributes.ENTITY_INTERACTION_RANGE, WitchesKitchen.id("paralysis_decreased_entity_reach"), -9.D, AttributeModifier.Operation.ADD_VALUE));
     Holder<MobEffect> PHASING = create("phasing", new PhasingStatusEffect(MobEffectCategory.NEUTRAL, 0x7851A9));
     Holder<MobEffect> SHADOWS = create("shadows", new PhasingStatusEffect(MobEffectCategory.BENEFICIAL, 0x86608E));
     Holder<MobEffect> CORROSION = create("corrosion", new CorrosionStatusEffect(MobEffectCategory.HARMFUL, 0x3FFF00)
-            .addAttributeModifier(Attributes.ARMOR, WitchesKitchen.id("corrosion_armor_decrease"), -4D, AttributeModifier.Operation.ADD_VALUE)
-            .addAttributeModifier(Attributes.ARMOR_TOUGHNESS, WitchesKitchen.id("corrosion_armor_toughness_decrease"), -2D, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+        .addAttributeModifier(Attributes.ARMOR, WitchesKitchen.id("corrosion_armor_decrease"), -4D, AttributeModifier.Operation.ADD_VALUE)
+        .addAttributeModifier(Attributes.ARMOR_TOUGHNESS, WitchesKitchen.id("corrosion_armor_toughness_decrease"), -2D, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
     Holder<MobEffect> REINFORCEMENT = create("reinforcement", new ReinforcementStatusEffect(MobEffectCategory.BENEFICIAL, 0x4000FF)
-            .addAttributeModifier(Attributes.ARMOR, WitchesKitchen.id("reinforcement_armor"), 4D, AttributeModifier.Operation.ADD_VALUE)
-            .addAttributeModifier(Attributes.ARMOR_TOUGHNESS, WitchesKitchen.id("reinforcement_armor_toughness"), 2D, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+        .addAttributeModifier(Attributes.ARMOR, WitchesKitchen.id("reinforcement_armor"), 4D, AttributeModifier.Operation.ADD_VALUE)
+        .addAttributeModifier(Attributes.ARMOR_TOUGHNESS, WitchesKitchen.id("reinforcement_armor_toughness"), 2D, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
     Holder<MobEffect> FELIFORM = create("feliform", new FeliformStatusEffect(MobEffectCategory.BENEFICIAL, 0x228B22));
 
     Holder<MobEffect> DRUNK = create("drunk", new DrunkStatusEffect(MobEffectCategory.HARMFUL, 0x228B22));
     Holder<MobEffect> BUG_SPRAY = create("bug_spray", new BugSprayStatusEffect(MobEffectCategory.BENEFICIAL, 0x32CD32));
     Holder<MobEffect> LONG_REACH = create("long_reach", new LongReachStatusEffect(MobEffectCategory.BENEFICIAL, 0x964a6e)
-            .addAttributeModifier(Attributes.BLOCK_INTERACTION_RANGE, WitchesKitchen.id("long_reach"), 5.5D, AttributeModifier.Operation.ADD_VALUE)
-            .addAttributeModifier(Attributes.ENTITY_INTERACTION_RANGE, WitchesKitchen.id("long_attack_reach"), 4.5D, AttributeModifier.Operation.ADD_VALUE));
+        .addAttributeModifier(Attributes.BLOCK_INTERACTION_RANGE, WitchesKitchen.id("long_reach"), 5.5D, AttributeModifier.Operation.ADD_VALUE)
+        .addAttributeModifier(Attributes.ENTITY_INTERACTION_RANGE, WitchesKitchen.id("long_attack_reach"), 4.5D, AttributeModifier.Operation.ADD_VALUE));
     Holder<MobEffect> LONG_STRIDE = create("long_stride", new LongStrideStatusEffect(MobEffectCategory.BENEFICIAL, 0xB7410E)
-            .addAttributeModifier(Attributes.STEP_HEIGHT, WitchesKitchen.id("long_stride"), 1.25D, AttributeModifier.Operation.ADD_VALUE));
+        .addAttributeModifier(Attributes.STEP_HEIGHT, WitchesKitchen.id("long_stride"), 1.25D, AttributeModifier.Operation.ADD_VALUE));
 
     static List<ObjectDefinition<MobEffect>> getStatusEffects() {
         return Collections.unmodifiableList(STATUS_EFFECTS);

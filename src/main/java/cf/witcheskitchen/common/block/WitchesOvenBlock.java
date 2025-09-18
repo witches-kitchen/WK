@@ -45,18 +45,18 @@ public class WitchesOvenBlock extends WKBlock implements SimpleWaterloggedBlock 
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
 
     public static final VoxelShape SHAPE = Shapes.or(
-            box(0, 14, 0, 16, 16, 16),
-            box(0, 2, 1, 16, 13, 16),
-            box(0, 11, 0, 16, 13, 1),
-            box(13, 2, 0, 16, 4, 1),
-            box(0, 2, 0, 3, 4, 1),
-            box(3, 2, 0, 13, 8, 1),
-            box(5, 8, 0, 11, 9, 1),
-            box(1, 13, 2, 15, 14, 15),
-            box(13, 0, 1, 15, 2, 3),
-            box(13, 0, 13, 15, 2, 15),
-            box(1, 0, 13, 3, 2, 15),
-            box(1, 0, 1, 3, 2, 3)
+        box(0, 14, 0, 16, 16, 16),
+        box(0, 2, 1, 16, 13, 16),
+        box(0, 11, 0, 16, 13, 1),
+        box(13, 2, 0, 16, 4, 1),
+        box(0, 2, 0, 3, 4, 1),
+        box(3, 2, 0, 13, 8, 1),
+        box(5, 8, 0, 11, 9, 1),
+        box(1, 13, 2, 15, 14, 15),
+        box(13, 0, 1, 15, 2, 3),
+        box(13, 0, 13, 15, 2, 15),
+        box(1, 0, 13, 3, 2, 15),
+        box(1, 0, 1, 3, 2, 3)
     );
 
     public WitchesOvenBlock(Properties settings) {

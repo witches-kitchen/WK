@@ -21,12 +21,12 @@ public class WKApi {
      */
     public static boolean isSpiritualEntity(LivingEntity entity) {
         return entity.getType().is(EntityTypeTags.UNDEAD) ||
-                entity.getType().is(WKTags.DEMONIC) ||
-                entity instanceof EnderMan ||
-                entity instanceof Ghast ||
-                entity instanceof Blaze ||
-                entity instanceof Vex ||
-                entity instanceof Guardian;
+            entity.getType().is(WKTags.DEMONIC) ||
+            entity instanceof EnderMan ||
+            entity instanceof Ghast ||
+            entity instanceof Blaze ||
+            entity instanceof Vex ||
+            entity instanceof Guardian;
     }
 
     /**

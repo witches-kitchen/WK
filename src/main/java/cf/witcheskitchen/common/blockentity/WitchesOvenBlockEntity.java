@@ -129,16 +129,16 @@ public class WitchesOvenBlockEntity extends WKBlockEntityWithInventory implement
         }
         if (input.has(DataComponents.FOOD)) {
             final Optional<SmeltingRecipe> optional = world.recipeAccess()
-                    .getAllOfType(RecipeType.SMELTING)
-                    .stream()
-                    .filter(entry -> {
-                        var recipe = entry.value();
-                        final List<Ingredient> ingredients = recipe.placementInfo().ingredients();
-                        if (ingredients.size() == 1 && ingredients.get(0).test(input)) {
-                            return recipe.assemble(new SingleRecipeInput(input), world.registryAccess()).has(DataComponents.FOOD);
-                        }
-                        return false;
-                    }).findFirst().map(RecipeHolder::value);
+                .getAllOfType(RecipeType.SMELTING)
+                .stream()
+                .filter(entry -> {
+                    var recipe = entry.value();
+                    final List<Ingredient> ingredients = recipe.placementInfo().ingredients();
+                    if (ingredients.size() == 1 && ingredients.get(0).test(input)) {
+                        return recipe.assemble(new SingleRecipeInput(input), world.registryAccess()).has(DataComponents.FOOD);
+                    }
+                    return false;
+                }).findFirst().map(RecipeHolder::value);
             if (optional.isPresent()) return Optional.of(optional.get());
         }
         return Optional.empty();
@@ -149,10 +149,10 @@ public class WitchesOvenBlockEntity extends WKBlockEntityWithInventory implement
      */
     private static Optional<OvenCookingRecipe> getOvenRecipe(ServerLevel world, ItemStack input) {
         return world.recipeAccess().getAllOfType(WKRecipeTypes.WITCHES_OVEN_COOKING_RECIPE_TYPE)
-                .stream()
-                .filter(type -> type.value().input().test(input))
-                .findFirst()
-                .map(RecipeHolder::value);
+            .stream()
+            .filter(type -> type.value().input().test(input))
+            .findFirst()
+            .map(RecipeHolder::value);
     }
 
     @Override
@@ -341,14 +341,14 @@ public class WitchesOvenBlockEntity extends WKBlockEntityWithInventory implement
      */
     public @Nullable CampfireCookingRecipe getCampfireRecipeFor(ServerLevel world, ItemStack stack) {
         return world.recipeAccess().getAllOfType(RecipeType.CAMPFIRE_COOKING)
-                .stream()
-                .filter(entry -> {
-                    var recipe = entry.value();
-                    if (recipe.placementInfo().ingredients().size() == 1 && recipe.placementInfo().ingredients().get(0).test(stack)) {
-                        return recipe.assemble(new SingleRecipeInput(stack), world.registryAccess()).has(DataComponents.FOOD);
-                    }
-                    return false;
-                }).findFirst().map(RecipeHolder::value).orElse(null);
+            .stream()
+            .filter(entry -> {
+                var recipe = entry.value();
+                if (recipe.placementInfo().ingredients().size() == 1 && recipe.placementInfo().ingredients().get(0).test(stack)) {
+                    return recipe.assemble(new SingleRecipeInput(stack), world.registryAccess()).has(DataComponents.FOOD);
+                }
+                return false;
+            }).findFirst().map(RecipeHolder::value).orElse(null);
     }
 
     /**

@@ -15,15 +15,8 @@ import net.minecraft.world.level.Level;
 
 import java.util.List;
 
-public class BarrelFermentingRecipe implements Recipe<MultipleStackRecipeInput> {
-
-    private final List<Ingredient> inputs;
-    private final ItemStack output;
-
-    public BarrelFermentingRecipe(List<Ingredient> inputs, ItemStack output) {
-        this.inputs = inputs;
-        this.output = output;
-    }
+public record BarrelFermentingRecipe(List<Ingredient> inputs,
+                                     ItemStack output) implements Recipe<MultipleStackRecipeInput> {
 
     @Override
     public boolean matches(MultipleStackRecipeInput inventory, Level world) {
@@ -33,14 +26,6 @@ public class BarrelFermentingRecipe implements Recipe<MultipleStackRecipeInput> 
     @Override
     public ItemStack assemble(MultipleStackRecipeInput input, HolderLookup.Provider lookup) {
         return this.output.copy();
-    }
-
-    public List<Ingredient> getInputs() {
-        return inputs;
-    }
-
-    public ItemStack getOutput() {
-        return output;
     }
 
     @Override
@@ -55,7 +40,7 @@ public class BarrelFermentingRecipe implements Recipe<MultipleStackRecipeInput> 
 
     @Override
     public PlacementInfo placementInfo() {
-        return PlacementInfo.create(this.getInputs());
+        return PlacementInfo.create(this.inputs());
     }
 
     @Override
@@ -68,41 +53,41 @@ public class BarrelFermentingRecipe implements Recipe<MultipleStackRecipeInput> 
         @Override
         public MapCodec<BarrelFermentingRecipe> codec() {
             return RecordCodecBuilder.mapCodec(instance ->
-                    instance.group(
-                                    Ingredient.CODEC.listOf()
-                                            .fieldOf("ingredients")
-                                            .validate(inputs -> {
-                                                if (inputs.isEmpty()) {
-                                                    return DataResult.error(() -> "No ingredients for fermenting recipe");
-                                                } else if (inputs.size() > 6) {
-                                                    return DataResult.error(() -> "Too many ingredients for fermenting recipe");
-                                                }
+                instance.group(
+                        Ingredient.CODEC.listOf()
+                            .fieldOf("ingredients")
+                            .validate(inputs -> {
+                                if (inputs.isEmpty()) {
+                                    return DataResult.error(() -> "No ingredients for fermenting recipe");
+                                } else if (inputs.size() > 6) {
+                                    return DataResult.error(() -> "Too many ingredients for fermenting recipe");
+                                }
 
-                                                return DataResult.success(inputs);
-                                            })
-                                            .forGetter(BarrelFermentingRecipe::getInputs),
-                                    ItemStack.CODEC
-                                            .fieldOf("result")
-                                            .validate(output -> {
-                                                if (output.isEmpty()) {
-                                                    return DataResult.error(() -> "No output for fermenting recipe");
-                                                }
+                                return DataResult.success(inputs);
+                            })
+                            .forGetter(BarrelFermentingRecipe::inputs),
+                        ItemStack.CODEC
+                            .fieldOf("result")
+                            .validate(output -> {
+                                if (output.isEmpty()) {
+                                    return DataResult.error(() -> "No output for fermenting recipe");
+                                }
 
-                                                return DataResult.success(output);
-                                            })
-                                            .forGetter(BarrelFermentingRecipe::getOutput)
-                            )
-                            .apply(instance, BarrelFermentingRecipe::new)
+                                return DataResult.success(output);
+                            })
+                            .forGetter(BarrelFermentingRecipe::output)
+                    )
+                    .apply(instance, BarrelFermentingRecipe::new)
             );
         }
 
         @Override
         public StreamCodec<RegistryFriendlyByteBuf, BarrelFermentingRecipe> streamCodec() {
             return StreamCodec.composite(
-                    CustomPacketCodecs.INGREDIENT_LIST, BarrelFermentingRecipe::getInputs,
-                    ItemStack.STREAM_CODEC, BarrelFermentingRecipe::getOutput,
+                CustomPacketCodecs.INGREDIENT_LIST, BarrelFermentingRecipe::inputs,
+                ItemStack.STREAM_CODEC, BarrelFermentingRecipe::output,
 
-                    BarrelFermentingRecipe::new
+                BarrelFermentingRecipe::new
             );
         }
     }

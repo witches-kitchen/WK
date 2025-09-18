@@ -35,11 +35,11 @@ public class WKClientEventsHandler {
                 //RenderSystem.enableBlend();
                 //RenderSystem.defaultBlendFunc();
                 RenderSystem.getDynamicUniforms().writeTransform(
-                        RenderSystem.getModelViewMatrix(),
-                        new Vector4f(1f, 1f, 1f, 1f),
-                        RenderSystem.getModelOffset(),
-                        RenderSystem.getTextureMatrix(),
-                        RenderSystem.getShaderLineWidth()
+                    RenderSystem.getModelViewMatrix(),
+                    new Vector4f(1f, 1f, 1f, 1f),
+                    RenderSystem.getModelOffset(),
+                    RenderSystem.getTextureMatrix(),
+                    RenderSystem.getShaderLineWidth()
                 );
 
                 context.blit(RenderPipelines.GUI_TEXTURED, getEmptyTexture(), 0, 0, 0, 0, 20, 42, 20, 42);

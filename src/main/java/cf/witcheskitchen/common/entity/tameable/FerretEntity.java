@@ -65,9 +65,9 @@ public class FerretEntity extends WKTameableEntity implements GeoEntity, SmartBr
 
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
-                .add(Attributes.MOVEMENT_SPEED, 0.5)
-                .add(Attributes.MAX_HEALTH, 6.0)
-                .add(Attributes.ATTACK_DAMAGE);
+            .add(Attributes.MOVEMENT_SPEED, 0.5)
+            .add(Attributes.MAX_HEALTH, 6.0)
+            .add(Attributes.ATTACK_DAMAGE);
     }
 
     @Override

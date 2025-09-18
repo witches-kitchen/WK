@@ -50,25 +50,25 @@ import org.jetbrains.annotations.Nullable;
  */
 public final class FluidStack implements Comparable<FluidStack> {
     public static final Codec<FluidStack> CODEC = RecordCodecBuilder.create(instance ->
-            instance.group(
-                            BuiltInRegistries.FLUID.byNameCodec()
-                                    .fieldOf("fluid")
-                                    .forGetter(FluidStack::getFluid),
-                            Codec.INT
-                                    .fieldOf("amount")
-                                    .forGetter(FluidStack::getAmount),
-                            CompoundTag.CODEC
-                                    .optionalFieldOf("data", null)
-                                    .forGetter(FluidStack::getNbt)
-                    )
-                    .apply(instance, FluidStack::new)
+        instance.group(
+                BuiltInRegistries.FLUID.byNameCodec()
+                    .fieldOf("fluid")
+                    .forGetter(FluidStack::getFluid),
+                Codec.INT
+                    .fieldOf("amount")
+                    .forGetter(FluidStack::getAmount),
+                CompoundTag.CODEC
+                    .optionalFieldOf("data", null)
+                    .forGetter(FluidStack::getNbt)
+            )
+            .apply(instance, FluidStack::new)
     );
 
     public static final StreamCodec<RegistryFriendlyByteBuf, FluidStack> PACKET_CODEC = StreamCodec.composite(
-            ByteBufCodecs.registry(Registries.FLUID), FluidStack::getFluid,
-            ByteBufCodecs.VAR_INT, FluidStack::getAmount,
-            ByteBufCodecs.COMPOUND_TAG, FluidStack::getNbt,
-            FluidStack::new
+        ByteBufCodecs.registry(Registries.FLUID), FluidStack::getFluid,
+        ByteBufCodecs.VAR_INT, FluidStack::getAmount,
+        ByteBufCodecs.COMPOUND_TAG, FluidStack::getNbt,
+        FluidStack::new
     );
 
     /**
@@ -290,11 +290,11 @@ public final class FluidStack implements Comparable<FluidStack> {
     @Override
     public String toString() {
         return "FluidStack{" +
-                "fluid=" + fluid +
-                ", amount=" + amount +
-                ", empty=" + empty +
-                ", data=" + data +
-                '}';
+            "fluid=" + fluid +
+            ", amount=" + amount +
+            ", empty=" + empty +
+            ", data=" + data +
+            '}';
     }
 
     @Override

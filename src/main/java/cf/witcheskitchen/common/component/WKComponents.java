@@ -19,51 +19,51 @@ import java.util.UUID;
 
 public class WKComponents {
     public static final DataComponentType<BlockPos> BLOCK_POS = register("block_pos", DataComponentType.<BlockPos>builder()
-            .persistent(BlockPos.CODEC)
-            .networkSynchronized(BlockPos.STREAM_CODEC)
-            .build()
+        .persistent(BlockPos.CODEC)
+        .networkSynchronized(BlockPos.STREAM_CODEC)
+        .build()
     );
 
     public static final DataComponentType<TaglockEntityData> TAGLOCK = register("taglock", DataComponentType.<TaglockEntityData>builder()
-            .persistent(TaglockEntityData.CODEC)
-            .networkSynchronized(TaglockEntityData.PACKET_CODEC)
-            .build()
+        .persistent(TaglockEntityData.CODEC)
+        .networkSynchronized(TaglockEntityData.PACKET_CODEC)
+        .build()
     );
 
     public static final DataComponentType<WitchesCauldronData> WITCHES_CAULDRON = register("witches_cauldron", DataComponentType.<WitchesCauldronData>builder()
-            .persistent(WitchesCauldronData.CODEC)
-            .networkSynchronized(WitchesCauldronData.PACKET_CODEC)
-            .build()
+        .persistent(WitchesCauldronData.CODEC)
+        .networkSynchronized(WitchesCauldronData.PACKET_CODEC)
+        .build()
     );
 
     public static final DataComponentType<FluidStack> FLUID_STACK = register("fluid_stack", DataComponentType.<FluidStack>builder()
-            .persistent(FluidStack.CODEC)
-            .networkSynchronized(FluidStack.PACKET_CODEC)
-            .build()
+        .persistent(FluidStack.CODEC)
+        .networkSynchronized(FluidStack.PACKET_CODEC)
+        .build()
     );
 
     public static final DataComponentType<TeapotData> TEAPOT = register("teapot", DataComponentType.<TeapotData>builder()
-            .persistent(TeapotData.CODEC)
-            .networkSynchronized(TeapotData.PACKET_CODEC)
-            .build()
+        .persistent(TeapotData.CODEC)
+        .networkSynchronized(TeapotData.PACKET_CODEC)
+        .build()
     );
 
     public static final DataComponentType<SeedTypeData> SEED_TYPE = register("seed_type", DataComponentType.<SeedTypeData>builder()
-            .persistent(SeedTypeData.CODEC)
-            .networkSynchronized(SeedTypeData.PACKET_CODEC)
-            .build()
+        .persistent(SeedTypeData.CODEC)
+        .networkSynchronized(SeedTypeData.PACKET_CODEC)
+        .build()
     );
 
     public static final DataComponentType<ResourceKey<Level>> DIMENSION = register("dimension", DataComponentType.<ResourceKey<Level>>builder()
-            .persistent(ResourceKey.codec(Registries.DIMENSION))
-            .networkSynchronized(ResourceKey.streamCodec(Registries.DIMENSION))
-            .build()
+        .persistent(ResourceKey.codec(Registries.DIMENSION))
+        .networkSynchronized(ResourceKey.streamCodec(Registries.DIMENSION))
+        .build()
     );
 
     public static final DataComponentType<UUID> UUID = register("uuid", DataComponentType.<UUID>builder()
-            .persistent(UUIDUtil.CODEC)
-            .networkSynchronized(UUIDUtil.STREAM_CODEC)
-            .build()
+        .persistent(UUIDUtil.CODEC)
+        .networkSynchronized(UUIDUtil.STREAM_CODEC)
+        .build()
     );
 
     private static <T> DataComponentType<T> register(String name, DataComponentType<T> component) {

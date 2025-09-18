@@ -27,24 +27,24 @@ public interface WKEntityTypes {
 
     //monsters
     EntityType<CuSithEntity> CUSITH = create("cusith", CuSithEntity.createAttributes(), key -> EntityType.Builder.of(CuSithEntity::new, MobCategory.MONSTER)
-            .sized(1.0f, 1.0f)
-            .build(key));
+        .sized(1.0f, 1.0f)
+        .build(key));
 
     //animals
     EntityType<FerretEntity> FERRET = create("ferret", FerretEntity.createAttributes(), key -> EntityType.Builder.of(FerretEntity::new, MobCategory.CREATURE)
-            .sized(1.0f, 1.0f)
-            .build(key));
+        .sized(1.0f, 1.0f)
+        .build(key));
     EntityType<HedgehogEntity> HEDGEHOG = create("hedgehog", HedgehogEntity.createAttributes(), key -> EntityType.Builder.of(HedgehogEntity::new, MobCategory.CREATURE)
-            .sized(0.25f, 0.25f)
-            .build(key));
+        .sized(0.25f, 0.25f)
+        .build(key));
 
     EntityType<ChurchGrimEntity> CHURCH_GRIM = create("church_grim", ChurchGrimEntity.createAttributes(), key -> EntityType.Builder.of(ChurchGrimEntity::new, MobCategory.CREATURE)
-            .sized(1.0f, 1.0f)
-            .build(key));
+        .sized(1.0f, 1.0f)
+        .build(key));
 
     EntityType<RoggenwolfEntity> ROGGENWOLF = create("roggenwolf", RoggenwolfEntity.createAttributes(), key -> EntityType.Builder.of(RoggenwolfEntity::new, MobCategory.CREATURE)
-            .sized(1.0f, 1.0f)
-            .build(key));
+        .sized(1.0f, 1.0f)
+        .build(key));
 
 
     static List<ObjectDefinition<EntityType<?>>> getEntityTypes() {

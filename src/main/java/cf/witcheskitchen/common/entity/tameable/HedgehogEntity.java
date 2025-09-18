@@ -40,9 +40,9 @@ public class HedgehogEntity extends WKTameableEntity implements GeoEntity, Smart
 
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
-                .add(Attributes.MOVEMENT_SPEED, 0.25)
-                .add(Attributes.MAX_HEALTH, 6.0)
-                .add(Attributes.ATTACK_DAMAGE);
+            .add(Attributes.MOVEMENT_SPEED, 0.25)
+            .add(Attributes.MAX_HEALTH, 6.0)
+            .add(Attributes.ATTACK_DAMAGE);
     }
 
     @Override

@@ -18,11 +18,11 @@ import java.util.function.Function;
 
 public interface CustomPacketCodecs {
     StreamCodec<FriendlyByteBuf, Vec3> VECTOR3D = StreamCodec.ofMember(
-            (value, buf) ->
-                    buf.writeDouble(value.x)
-                            .writeDouble(value.y)
-                            .writeDouble(value.z),
-            buf -> new Vec3(buf.readDouble(), buf.readDouble(), buf.readDouble())
+        (value, buf) ->
+            buf.writeDouble(value.x)
+                .writeDouble(value.y)
+                .writeDouble(value.z),
+        buf -> new Vec3(buf.readDouble(), buf.readDouble(), buf.readDouble())
     );
 
     StreamCodec<FriendlyByteBuf, SoundSource> SOUND_CATEGORY = createEnumCodec(SoundSource::valueOf);
@@ -31,8 +31,8 @@ public interface CustomPacketCodecs {
 
     static <T extends Enum<T>> StreamCodec<FriendlyByteBuf, T> createEnumCodec(Function<String, T> function) {
         return StreamCodec.ofMember(
-                (value, buf) -> buf.writeUtf(value.name()),
-                buf -> function.apply(buf.readUtf())
+            (value, buf) -> buf.writeUtf(value.name()),
+            buf -> function.apply(buf.readUtf())
         );
     }
 
@@ -74,14 +74,14 @@ public interface CustomPacketCodecs {
 
     // yes, we needed more
     static <B, C, T1, T2, T3, T4, T5, T6, T7> StreamCodec<B, C> tuple(
-            final StreamCodec<? super B, T1> codec1, final Function<C, T1> from1,
-            final StreamCodec<? super B, T2> codec2, final Function<C, T2> from2,
-            final StreamCodec<? super B, T3> codec3, final Function<C, T3> from3,
-            final StreamCodec<? super B, T4> codec4, final Function<C, T4> from4,
-            final StreamCodec<? super B, T5> codec5, final Function<C, T5> from5,
-            final StreamCodec<? super B, T6> codec6, final Function<C, T6> from6,
-            final StreamCodec<? super B, T7> codec7, final Function<C, T7> from7,
-            final Function7<T1, T2, T3, T4, T5, T6, T7, C> to
+        final StreamCodec<? super B, T1> codec1, final Function<C, T1> from1,
+        final StreamCodec<? super B, T2> codec2, final Function<C, T2> from2,
+        final StreamCodec<? super B, T3> codec3, final Function<C, T3> from3,
+        final StreamCodec<? super B, T4> codec4, final Function<C, T4> from4,
+        final StreamCodec<? super B, T5> codec5, final Function<C, T5> from5,
+        final StreamCodec<? super B, T6> codec6, final Function<C, T6> from6,
+        final StreamCodec<? super B, T7> codec7, final Function<C, T7> from7,
+        final Function7<T1, T2, T3, T4, T5, T6, T7, C> to
     ) {
         return new StreamCodec<>() {
             public C decode(B object) {
@@ -108,15 +108,15 @@ public interface CustomPacketCodecs {
     }
 
     static <B, C, T1, T2, T3, T4, T5, T6, T7, T8> StreamCodec<B, C> tuple(
-            final StreamCodec<? super B, T1> codec1, final Function<C, T1> from1,
-            final StreamCodec<? super B, T2> codec2, final Function<C, T2> from2,
-            final StreamCodec<? super B, T3> codec3, final Function<C, T3> from3,
-            final StreamCodec<? super B, T4> codec4, final Function<C, T4> from4,
-            final StreamCodec<? super B, T5> codec5, final Function<C, T5> from5,
-            final StreamCodec<? super B, T6> codec6, final Function<C, T6> from6,
-            final StreamCodec<? super B, T7> codec7, final Function<C, T7> from7,
-            final StreamCodec<? super B, T8> codec8, final Function<C, T8> from8,
-            final Function8<T1, T2, T3, T4, T5, T6, T7, T8, C> to
+        final StreamCodec<? super B, T1> codec1, final Function<C, T1> from1,
+        final StreamCodec<? super B, T2> codec2, final Function<C, T2> from2,
+        final StreamCodec<? super B, T3> codec3, final Function<C, T3> from3,
+        final StreamCodec<? super B, T4> codec4, final Function<C, T4> from4,
+        final StreamCodec<? super B, T5> codec5, final Function<C, T5> from5,
+        final StreamCodec<? super B, T6> codec6, final Function<C, T6> from6,
+        final StreamCodec<? super B, T7> codec7, final Function<C, T7> from7,
+        final StreamCodec<? super B, T8> codec8, final Function<C, T8> from8,
+        final Function8<T1, T2, T3, T4, T5, T6, T7, T8, C> to
     ) {
         return new StreamCodec<>() {
             public C decode(B object) {
@@ -145,16 +145,16 @@ public interface CustomPacketCodecs {
     }
 
     static <B, C, T1, T2, T3, T4, T5, T6, T7, T8, T9> StreamCodec<B, C> tuple(
-            final StreamCodec<? super B, T1> codec1, final Function<C, T1> from1,
-            final StreamCodec<? super B, T2> codec2, final Function<C, T2> from2,
-            final StreamCodec<? super B, T3> codec3, final Function<C, T3> from3,
-            final StreamCodec<? super B, T4> codec4, final Function<C, T4> from4,
-            final StreamCodec<? super B, T5> codec5, final Function<C, T5> from5,
-            final StreamCodec<? super B, T6> codec6, final Function<C, T6> from6,
-            final StreamCodec<? super B, T7> codec7, final Function<C, T7> from7,
-            final StreamCodec<? super B, T8> codec8, final Function<C, T8> from8,
-            final StreamCodec<? super B, T9> codec9, final Function<C, T9> from9,
-            final Function9<T1, T2, T3, T4, T5, T6, T7, T8, T9, C> to
+        final StreamCodec<? super B, T1> codec1, final Function<C, T1> from1,
+        final StreamCodec<? super B, T2> codec2, final Function<C, T2> from2,
+        final StreamCodec<? super B, T3> codec3, final Function<C, T3> from3,
+        final StreamCodec<? super B, T4> codec4, final Function<C, T4> from4,
+        final StreamCodec<? super B, T5> codec5, final Function<C, T5> from5,
+        final StreamCodec<? super B, T6> codec6, final Function<C, T6> from6,
+        final StreamCodec<? super B, T7> codec7, final Function<C, T7> from7,
+        final StreamCodec<? super B, T8> codec8, final Function<C, T8> from8,
+        final StreamCodec<? super B, T9> codec9, final Function<C, T9> from9,
+        final Function9<T1, T2, T3, T4, T5, T6, T7, T8, T9, C> to
     ) {
         return new StreamCodec<>() {
             public C decode(B object) {

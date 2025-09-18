@@ -47,7 +47,7 @@ public class BrewingBarrelBlock extends WKBlock implements SimpleWaterloggedBloc
         if (blockEntity instanceof BrewingBarrelBlockEntity barrel) {
             if (state.getValue(FACING) == hit.getDirection()) {
                 if (barrel.hasFinished()) {
-                    Containers.dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), ((BrewingBarrelBlockEntity) blockEntity).getRenderStack());
+                    Containers.dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), barrel.getRenderStack());
                     barrel.reset();
                     return InteractionResult.SUCCESS;
                 }

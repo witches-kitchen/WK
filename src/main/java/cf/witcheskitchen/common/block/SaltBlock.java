@@ -148,7 +148,7 @@ public class SaltBlock extends Block {
     @Override
     public VoxelShape getCollisionShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         if (context instanceof EntityCollisionContext entityShapeContext && entityShapeContext.getEntity() instanceof LivingEntity living && WKApi.isSpiritualEntity(living)) {
-            Entity entity = ((EntityCollisionContext) context).getEntity();
+            Entity entity = entityShapeContext.getEntity();
             if (entity instanceof LivingEntity livingEntity) {
                 boolean spiritual = WKApi.isSpiritualEntity(livingEntity);
                 if (spiritual && !WKApi.isGreaterDemon(livingEntity)) {
@@ -317,11 +317,11 @@ public class SaltBlock extends Block {
     public BlockState rotate(BlockState state, Rotation rotation) {
         return switch (rotation) {
             case CLOCKWISE_180 ->
-                    state.setValue(WIRE_CONNECTION_NORTH, state.getValue(WIRE_CONNECTION_SOUTH)).setValue(WIRE_CONNECTION_EAST, state.getValue(WIRE_CONNECTION_WEST)).setValue(WIRE_CONNECTION_SOUTH, state.getValue(WIRE_CONNECTION_NORTH)).setValue(WIRE_CONNECTION_WEST, state.getValue(WIRE_CONNECTION_EAST));
+                state.setValue(WIRE_CONNECTION_NORTH, state.getValue(WIRE_CONNECTION_SOUTH)).setValue(WIRE_CONNECTION_EAST, state.getValue(WIRE_CONNECTION_WEST)).setValue(WIRE_CONNECTION_SOUTH, state.getValue(WIRE_CONNECTION_NORTH)).setValue(WIRE_CONNECTION_WEST, state.getValue(WIRE_CONNECTION_EAST));
             case COUNTERCLOCKWISE_90 ->
-                    state.setValue(WIRE_CONNECTION_NORTH, state.getValue(WIRE_CONNECTION_EAST)).setValue(WIRE_CONNECTION_EAST, state.getValue(WIRE_CONNECTION_SOUTH)).setValue(WIRE_CONNECTION_SOUTH, state.getValue(WIRE_CONNECTION_WEST)).setValue(WIRE_CONNECTION_WEST, state.getValue(WIRE_CONNECTION_NORTH));
+                state.setValue(WIRE_CONNECTION_NORTH, state.getValue(WIRE_CONNECTION_EAST)).setValue(WIRE_CONNECTION_EAST, state.getValue(WIRE_CONNECTION_SOUTH)).setValue(WIRE_CONNECTION_SOUTH, state.getValue(WIRE_CONNECTION_WEST)).setValue(WIRE_CONNECTION_WEST, state.getValue(WIRE_CONNECTION_NORTH));
             case CLOCKWISE_90 ->
-                    state.setValue(WIRE_CONNECTION_NORTH, state.getValue(WIRE_CONNECTION_WEST)).setValue(WIRE_CONNECTION_EAST, state.getValue(WIRE_CONNECTION_NORTH)).setValue(WIRE_CONNECTION_SOUTH, state.getValue(WIRE_CONNECTION_EAST)).setValue(WIRE_CONNECTION_WEST, state.getValue(WIRE_CONNECTION_SOUTH));
+                state.setValue(WIRE_CONNECTION_NORTH, state.getValue(WIRE_CONNECTION_WEST)).setValue(WIRE_CONNECTION_EAST, state.getValue(WIRE_CONNECTION_NORTH)).setValue(WIRE_CONNECTION_SOUTH, state.getValue(WIRE_CONNECTION_EAST)).setValue(WIRE_CONNECTION_WEST, state.getValue(WIRE_CONNECTION_SOUTH));
             default -> state;
         };
     }
@@ -330,9 +330,9 @@ public class SaltBlock extends Block {
     public BlockState mirror(BlockState state, Mirror mirror) {
         return switch (mirror) {
             case LEFT_RIGHT ->
-                    state.setValue(WIRE_CONNECTION_NORTH, state.getValue(WIRE_CONNECTION_SOUTH)).setValue(WIRE_CONNECTION_SOUTH, state.getValue(WIRE_CONNECTION_NORTH));
+                state.setValue(WIRE_CONNECTION_NORTH, state.getValue(WIRE_CONNECTION_SOUTH)).setValue(WIRE_CONNECTION_SOUTH, state.getValue(WIRE_CONNECTION_NORTH));
             case FRONT_BACK ->
-                    state.setValue(WIRE_CONNECTION_EAST, state.getValue(WIRE_CONNECTION_WEST)).setValue(WIRE_CONNECTION_WEST, state.getValue(WIRE_CONNECTION_EAST));
+                state.setValue(WIRE_CONNECTION_EAST, state.getValue(WIRE_CONNECTION_WEST)).setValue(WIRE_CONNECTION_WEST, state.getValue(WIRE_CONNECTION_EAST));
             default -> super.mirror(state, mirror);
         };
     }

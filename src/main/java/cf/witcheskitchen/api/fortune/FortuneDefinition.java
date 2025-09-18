@@ -1,6 +1,5 @@
-package cf.witcheskitchen.api.registry;
+package cf.witcheskitchen.api.fortune;
 
-import cf.witcheskitchen.WitchesKitchen;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 
@@ -32,10 +31,21 @@ public abstract class FortuneDefinition {
     public int maxTimeFrame;
 
     /**
+     * Fortune definition
+     * Needs more work
+     */
+    public Fortune(ResourceLocation id, boolean isInstant, boolean isNegative, int minTimeFrame, int maxTimeFrame) {
+        this.isInstant = isInstant;
+        this.isNegative = isNegative;
+        this.minTimeFrame = minTimeFrame;
+        this.maxTimeFrame = maxTimeFrame;
+    }
+
+    /**
      * Check if the player is a valid
      * target for the fortune
      */
-    public boolean isValid (Player player) {
+    public boolean isValid(Player player) {
         return true;
     }
 
@@ -43,16 +53,5 @@ public abstract class FortuneDefinition {
      * Apply the fortune
      */
     public abstract boolean apply(Player player);
-
-    /**
-     * Fortune definition
-     * Needs more work
-     */
-    public Fortune (ResourceLocation id, boolean isInstant, boolean isNegative, int minTimeFrame, int maxTimeFrame) {
-        this.isInstant = isInstant;
-        this.isNegative = isNegative;
-        this.minTimeFrame = minTimeFrame;
-        this.maxTimeFrame = maxTimeFrame;
-    }
 
 }

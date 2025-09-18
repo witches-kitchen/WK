@@ -12,21 +12,21 @@ import net.minecraft.world.level.block.Blocks;
 
 public class RitualCircle {
     public static final Codec<RitualCircle> CODEC = RecordCodecBuilder.create(instance ->
-            instance.group(
-                            CodecUtils.createEnumCodec(Size::valueOf)
-                                    .fieldOf("size")
-                                    .forGetter(RitualCircle::getSize),
-                            CodecUtils.createEnumCodec(Type::valueOf)
-                                    .fieldOf("type")
-                                    .forGetter(RitualCircle::getType)
-                    )
-                    .apply(instance, RitualCircle::new)
+        instance.group(
+                CodecUtils.createEnumCodec(Size::valueOf)
+                    .fieldOf("size")
+                    .forGetter(RitualCircle::getSize),
+                CodecUtils.createEnumCodec(Type::valueOf)
+                    .fieldOf("type")
+                    .forGetter(RitualCircle::getType)
+            )
+            .apply(instance, RitualCircle::new)
     );
 
     public static final StreamCodec<FriendlyByteBuf, RitualCircle> PACKET_CODEC = StreamCodec.composite(
-            CustomPacketCodecs.createEnumCodec(Size::valueOf), RitualCircle::getSize,
-            CustomPacketCodecs.createEnumCodec(Type::valueOf), RitualCircle::getType,
-            RitualCircle::new
+        CustomPacketCodecs.createEnumCodec(Size::valueOf), RitualCircle::getSize,
+        CustomPacketCodecs.createEnumCodec(Type::valueOf), RitualCircle::getType,
+        RitualCircle::new
     );
 
     public static final byte[][] small = {{0, 1, 1, 1, 0}, {1, 0, 0, 0, 1}, {1, 0, 0, 0, 1}, {1, 0, 0, 0, 1}, {0, 1, 1, 1, 0},};

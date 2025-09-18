@@ -8,21 +8,21 @@ import net.minecraft.network.codec.StreamCodec;
 
 public class CommandType {
     public static Codec<CommandType> CODEC = RecordCodecBuilder.create(instance ->
-            instance.group(
-                            Codec.STRING
-                                    .fieldOf("command")
-                                    .forGetter(CommandType::getCommand),
-                            Codec.STRING
-                                    .fieldOf("type")
-                                    .forGetter(CommandType::getType)
-                    )
-                    .apply(instance, CommandType::new)
+        instance.group(
+                Codec.STRING
+                    .fieldOf("command")
+                    .forGetter(CommandType::getCommand),
+                Codec.STRING
+                    .fieldOf("type")
+                    .forGetter(CommandType::getType)
+            )
+            .apply(instance, CommandType::new)
     );
 
     public static StreamCodec<FriendlyByteBuf, CommandType> PACKET_CODEC = StreamCodec.composite(
-            ByteBufCodecs.STRING_UTF8, CommandType::getCommand,
-            ByteBufCodecs.STRING_UTF8, CommandType::getType,
-            CommandType::new
+        ByteBufCodecs.STRING_UTF8, CommandType::getCommand,
+        ByteBufCodecs.STRING_UTF8, CommandType::getType,
+        CommandType::new
     );
 
     public String command;

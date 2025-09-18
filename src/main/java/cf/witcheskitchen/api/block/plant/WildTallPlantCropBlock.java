@@ -16,10 +16,10 @@ public class WildTallPlantCropBlock extends DoublePlantBlock {
 
     static {
         UPPER_SHAPE = new VoxelShape[]{
-                Block.box(0.0, 0.0, 0.0, 16.0, 4.0, 16.0),
-                Block.box(0.0, 0.0, 0.0, 16.0, 8.0, 16.0),
-                Block.box(0.0, 0.0, 0.0, 16.0, 12.0, 16.0),
-                Block.box(0.0, 0.0, 0.0, 16.0, 16.0, 16.0)
+            Block.box(0.0, 0.0, 0.0, 16.0, 4.0, 16.0),
+            Block.box(0.0, 0.0, 0.0, 16.0, 8.0, 16.0),
+            Block.box(0.0, 0.0, 0.0, 16.0, 12.0, 16.0),
+            Block.box(0.0, 0.0, 0.0, 16.0, 16.0, 16.0)
         };
     }
 

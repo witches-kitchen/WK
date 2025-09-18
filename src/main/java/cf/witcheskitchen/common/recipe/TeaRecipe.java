@@ -14,16 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 
-public class TeaRecipe implements Recipe<SingleRecipeInput> {
-    public final Ingredient input;
-    public final ItemStack output;
-    public final MobEffect effect;
-
-    public TeaRecipe(Ingredient input, ItemStack output, MobEffect effect) {
-        this.input = input;
-        this.effect = effect;
-        this.output = output;
-    }
+public record TeaRecipe(Ingredient input, ItemStack output, MobEffect effect) implements Recipe<SingleRecipeInput> {
 
     @Override
     public boolean matches(SingleRecipeInput inventory, Level world) {
@@ -33,18 +24,6 @@ public class TeaRecipe implements Recipe<SingleRecipeInput> {
     @Override
     public ItemStack assemble(SingleRecipeInput input, HolderLookup.Provider lookup) {
         return ItemStack.EMPTY;
-    }
-
-    public Ingredient getInput() {
-        return input;
-    }
-
-    public ItemStack getOutput() {
-        return output;
-    }
-
-    public MobEffect getEffect() {
-        return effect;
     }
 
     @Override
@@ -72,28 +51,28 @@ public class TeaRecipe implements Recipe<SingleRecipeInput> {
         @Override
         public MapCodec<TeaRecipe> codec() {
             return RecordCodecBuilder.mapCodec(instance ->
-                    instance.group(
-                                    Ingredient.CODEC
-                                            .fieldOf("ingredient")
-                                            .forGetter(TeaRecipe::getInput),
-                                    ItemStack.CODEC
-                                            .fieldOf("result")
-                                            .forGetter(TeaRecipe::getOutput),
-                                    BuiltInRegistries.MOB_EFFECT.byNameCodec()
-                                            .fieldOf("effect")
-                                            .forGetter(TeaRecipe::getEffect)
-                            )
-                            .apply(instance, TeaRecipe::new)
+                instance.group(
+                        Ingredient.CODEC
+                            .fieldOf("ingredient")
+                            .forGetter(TeaRecipe::input),
+                        ItemStack.CODEC
+                            .fieldOf("result")
+                            .forGetter(TeaRecipe::output),
+                        BuiltInRegistries.MOB_EFFECT.byNameCodec()
+                            .fieldOf("effect")
+                            .forGetter(TeaRecipe::effect)
+                    )
+                    .apply(instance, TeaRecipe::new)
             );
         }
 
         @Override
         public StreamCodec<RegistryFriendlyByteBuf, TeaRecipe> streamCodec() {
             return StreamCodec.composite(
-                    Ingredient.CONTENTS_STREAM_CODEC, TeaRecipe::getInput,
-                    ItemStack.STREAM_CODEC, TeaRecipe::getOutput,
-                    ByteBufCodecs.registry(Registries.MOB_EFFECT), TeaRecipe::getEffect,
-                    TeaRecipe::new
+                Ingredient.CONTENTS_STREAM_CODEC, TeaRecipe::input,
+                ItemStack.STREAM_CODEC, TeaRecipe::output,
+                ByteBufCodecs.registry(Registries.MOB_EFFECT), TeaRecipe::effect,
+                TeaRecipe::new
             );
         }
     }

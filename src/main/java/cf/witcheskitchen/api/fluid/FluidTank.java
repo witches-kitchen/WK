@@ -26,21 +26,21 @@ import java.util.function.Predicate;
 public class FluidTank implements IFluidStorage {
     // TODO: is this what we want?
     public static final Codec<FluidTank> CODEC = RecordCodecBuilder.create(instance ->
-            instance.group(
-                            Codec.INT
-                                    .fieldOf("capacity")
-                                    .forGetter(FluidTank::getCapacity),
-                            FluidStack.CODEC
-                                    .fieldOf("stack")
-                                    .forGetter(FluidTank::getStack)
-                    )
-                    .apply(instance, FluidTank::fromCodec)
+        instance.group(
+                Codec.INT
+                    .fieldOf("capacity")
+                    .forGetter(FluidTank::getCapacity),
+                FluidStack.CODEC
+                    .fieldOf("stack")
+                    .forGetter(FluidTank::getStack)
+            )
+            .apply(instance, FluidTank::fromCodec)
     );
 
     public static final StreamCodec<RegistryFriendlyByteBuf, FluidTank> PACKET_CODEC = StreamCodec.composite(
-            ByteBufCodecs.VAR_INT, FluidTank::getCapacity,
-            FluidStack.PACKET_CODEC, FluidTank::getStack,
-            FluidTank::fromCodec
+        ByteBufCodecs.VAR_INT, FluidTank::getCapacity,
+        FluidStack.PACKET_CODEC, FluidTank::getStack,
+        FluidTank::fromCodec
     );
     /**
      * The <b>Max</b> capacity of fluid this instance of Tank can hold (in MilliBuckets).

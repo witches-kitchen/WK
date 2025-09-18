@@ -16,9 +16,9 @@ public class FerretMeleeAttackTask extends Behavior<FerretEntity> {
 
     public FerretMeleeAttackTask(int interval) {
         super(ImmutableMap.of(
-                MemoryModuleType.LOOK_TARGET, MemoryStatus.REGISTERED,
-                MemoryModuleType.ATTACK_TARGET, MemoryStatus.VALUE_PRESENT,
-                MemoryModuleType.ATTACK_COOLING_DOWN, MemoryStatus.VALUE_ABSENT
+            MemoryModuleType.LOOK_TARGET, MemoryStatus.REGISTERED,
+            MemoryModuleType.ATTACK_TARGET, MemoryStatus.VALUE_PRESENT,
+            MemoryModuleType.ATTACK_COOLING_DOWN, MemoryStatus.VALUE_ABSENT
         ), 100, 200);
         this.interval = interval;
     }

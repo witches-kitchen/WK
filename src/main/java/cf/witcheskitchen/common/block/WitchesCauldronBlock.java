@@ -48,19 +48,19 @@ public class WitchesCauldronBlock extends WKBlockWithEntity implements SimpleWat
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     public static final VoxelShape SHAPE = Shapes.or(
-            box(2, 9, 1, 14, 11, 2),
-            box(2, 9, 14, 14, 11, 15),
-            box(14, 9, 2, 15, 11, 14),
-            box(1, 9, 2, 2, 11, 14),
-            box(2, 8, 13, 14, 9, 14),
-            box(2, 8, 3, 3, 9, 13),
-            box(13, 8, 3, 14, 9, 13),
-            box(1, 2, 2, 3, 8, 14),
-            box(2, 2, 13, 14, 8, 15),
-            box(13, 2, 2, 15, 8, 14),
-            box(2, 2, 1, 14, 8, 3),
-            box(2, 1, 2, 14, 2, 14),
-            box(3, 0, 3, 13, 1, 13)
+        box(2, 9, 1, 14, 11, 2),
+        box(2, 9, 14, 14, 11, 15),
+        box(14, 9, 2, 15, 11, 14),
+        box(1, 9, 2, 2, 11, 14),
+        box(2, 8, 13, 14, 9, 14),
+        box(2, 8, 3, 3, 9, 13),
+        box(13, 8, 3, 14, 9, 13),
+        box(1, 2, 2, 3, 8, 14),
+        box(2, 2, 13, 14, 8, 15),
+        box(13, 2, 2, 15, 8, 14),
+        box(2, 2, 1, 14, 8, 3),
+        box(2, 1, 2, 14, 2, 14),
+        box(3, 0, 3, 13, 1, 13)
     );
 
     public WitchesCauldronBlock(Properties settings) {

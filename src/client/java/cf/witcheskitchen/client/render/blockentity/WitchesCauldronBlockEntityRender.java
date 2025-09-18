@@ -55,7 +55,7 @@ public class WitchesCauldronBlockEntityRender implements BlockEntityRenderer<Wit
                             }
                         }
                         case 5 ->
-                                world.addParticle((ParticleOptions) WKParticleTypes.BUBBLE, xPos + offsetX, yPos + depth, zPos + offsetZ, r, g, b);
+                            world.addParticle((ParticleOptions) WKParticleTypes.BUBBLE, xPos + offsetX, yPos + depth, zPos + offsetZ, r, g, b);
                     }
                 }
             } else {

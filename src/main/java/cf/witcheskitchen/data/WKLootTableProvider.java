@@ -154,74 +154,74 @@ public class WKLootTableProvider {
         public void addPlantDrop(Block block, ItemLike drop, ItemLike seed) {
             LootItemCondition.Builder builder = LootItemBlockStatePropertyCondition.hasBlockStateProperties(block);
             this.add(block, applyExplosionDecay(
-                    seed, LootTable.lootTable()
-                            .withPool(LootPool.lootPool()
-                                    .add(LootItem.lootTableItem(seed)))
-                            .withPool(LootPool.lootPool().when(builder)
-                                    .add(LootItem.lootTableItem(seed)
-                                            .apply(ApplyBonusCount
-                                                    .addBonusBinomialDistributionCount(this.registries.lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.FORTUNE), 0.5714286F, 3)))))
+                seed, LootTable.lootTable()
                     .withPool(LootPool.lootPool()
-                            .add(LootItem.lootTableItem(drop))));
+                        .add(LootItem.lootTableItem(seed)))
+                    .withPool(LootPool.lootPool().when(builder)
+                        .add(LootItem.lootTableItem(seed)
+                            .apply(ApplyBonusCount
+                                .addBonusBinomialDistributionCount(this.registries.lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.FORTUNE), 0.5714286F, 3)))))
+                .withPool(LootPool.lootPool()
+                    .add(LootItem.lootTableItem(drop))));
         }
 
         public LootTable.Builder barrelDrops(Block drop) {
             return LootTable.lootTable().withPool(applyExplosionDecay(drop,
-                            LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
-                                    .add(LootItem.lootTableItem(drop).apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY))
-                                            .apply(CopyCustomDataFunction.copyData(ContextNbtProvider.BLOCK_ENTITY)
-                                                    .copy("Lock", "BlockEntityTag.Lock")
-                                                    .copy("LootTable", "BlockEntityTag.LootTable")
-                                                    .copy("LootTableSeed", "BlockEntityTag.LootTableSeed")
-                                            )
-                                            .apply(SetContainerContents.setContents(ContainerComponentManipulators.CONTAINER))
-                                    )
-                    )
+                    LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
+                        .add(LootItem.lootTableItem(drop).apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY))
+                            .apply(CopyCustomDataFunction.copyData(ContextNbtProvider.BLOCK_ENTITY)
+                                .copy("Lock", "BlockEntityTag.Lock")
+                                .copy("LootTable", "BlockEntityTag.LootTable")
+                                .copy("LootTableSeed", "BlockEntityTag.LootTableSeed")
+                            )
+                            .apply(SetContainerContents.setContents(ContainerComponentManipulators.CONTAINER))
+                        )
+                )
             );
         }
 
         public LootTable.Builder ovenDrops(Block drop) {
             return LootTable.lootTable().withPool(applyExplosionDecay(drop,
-                            LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
-                                    .add(LootItem.lootTableItem(drop).apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY))
-                                            .apply(CopyCustomDataFunction.copyData(ContextNbtProvider.BLOCK_ENTITY)
-                                                    .copy("Lock", "BlockEntityTag.Lock")
-                                                    .copy("LootTable", "BlockEntityTag.LootTable")
-                                                    .copy("LootTableSeed", "BlockEntityTag.LootTableSeed")
-                                            )
-                                            .apply(SetContainerContents.setContents(ContainerComponentManipulators.CONTAINER))
-                                    )
-                    )
+                    LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
+                        .add(LootItem.lootTableItem(drop).apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY))
+                            .apply(CopyCustomDataFunction.copyData(ContextNbtProvider.BLOCK_ENTITY)
+                                .copy("Lock", "BlockEntityTag.Lock")
+                                .copy("LootTable", "BlockEntityTag.LootTable")
+                                .copy("LootTableSeed", "BlockEntityTag.LootTableSeed")
+                            )
+                            .apply(SetContainerContents.setContents(ContainerComponentManipulators.CONTAINER))
+                        )
+                )
             );
         }
 
         public LootTable.Builder teaDrops(Block drop) {
             return LootTable.lootTable().withPool(applyExplosionDecay(drop,
-                            LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
-                                    .add(LootItem.lootTableItem(drop).apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY))
-                                            .apply(CopyCustomDataFunction.copyData(ContextNbtProvider.BLOCK_ENTITY)
-                                                    .copy("Lock", "BlockEntityTag.Lock")
-                                                    .copy("LootTable", "BlockEntityTag.LootTable")
-                                                    .copy("LootTableSeed", "BlockEntityTag.LootTableSeed")
-                                            )
-                                            .apply(SetContainerContents.setContents(ContainerComponentManipulators.CONTAINER))
-                                    )
-                    )
+                    LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
+                        .add(LootItem.lootTableItem(drop).apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY))
+                            .apply(CopyCustomDataFunction.copyData(ContextNbtProvider.BLOCK_ENTITY)
+                                .copy("Lock", "BlockEntityTag.Lock")
+                                .copy("LootTable", "BlockEntityTag.LootTable")
+                                .copy("LootTableSeed", "BlockEntityTag.LootTableSeed")
+                            )
+                            .apply(SetContainerContents.setContents(ContainerComponentManipulators.CONTAINER))
+                        )
+                )
             );
         }
 
         public LootTable.Builder cauldronDrops(Block drop) {
             return LootTable.lootTable().withPool(applyExplosionDecay(drop,
-                            LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
-                                    .add(LootItem.lootTableItem(drop).apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY))
-                                            .apply(CopyCustomDataFunction.copyData(ContextNbtProvider.BLOCK_ENTITY)
-                                                    .copy("Lock", "BlockEntityTag.Lock")
-                                                    .copy("LootTable", "BlockEntityTag.LootTable")
-                                                    .copy("LootTableSeed", "BlockEntityTag.LootTableSeed")
-                                            )
-                                            .apply(SetContainerContents.setContents(ContainerComponentManipulators.CONTAINER))
-                                    )
-                    )
+                    LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
+                        .add(LootItem.lootTableItem(drop).apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY))
+                            .apply(CopyCustomDataFunction.copyData(ContextNbtProvider.BLOCK_ENTITY)
+                                .copy("Lock", "BlockEntityTag.Lock")
+                                .copy("LootTable", "BlockEntityTag.LootTable")
+                                .copy("LootTableSeed", "BlockEntityTag.LootTableSeed")
+                            )
+                            .apply(SetContainerContents.setContents(ContainerComponentManipulators.CONTAINER))
+                        )
+                )
             );
         }
     }

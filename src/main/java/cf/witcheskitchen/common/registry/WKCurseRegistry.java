@@ -1,29 +1,29 @@
 package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WitchesKitchen;
+import cf.witcheskitchen.api.curse.CurseDefinition;
 import cf.witcheskitchen.api.registry.ObjectDefinition;
-import cf.witcheskitchen.common.curse.Curse;
 import net.minecraft.core.Registry;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public interface WKCurseRegistry {
-    List<ObjectDefinition<Curse>> CURSES = new ArrayList<>();
+    List<ObjectDefinition<CurseDefinition>> CURSES = new ArrayList<>();
 
-    Curse CALEFACTION = register("calefaction", new Curse(2));
-    Curse CURSE_OF_MIDAS = register("curse_of_midas", new Curse(1));
-    Curse FEAR = register("fear", new Curse(1));
-    Curse FIELD_GEISTER_HEX = register("feild_geister_hex", new Curse(1));
-    Curse HUNGRY_POCKETS = register("hungry_pockets", new Curse(1));
-    Curse INEPTITUDE = register("ineptitude", new Curse(1));
-    Curse MISPLACEMENT = register("misplacement", new Curse(1));
-    Curse NULLARDOR = register("nullador", new Curse(1));
-    Curse PARANOIA = register("paranoia", new Curse(3));
-    Curse PERUNS_JEST = register("peruns_jest", new Curse(1));
+    CurseDefinition CALEFACTION = register("calefaction", new CurseDefinition(2));
+    CurseDefinition CURSE_DEFINITION_OF_MIDAS = register("curse_of_midas", new CurseDefinition(1));
+    CurseDefinition FEAR = register("fear", new CurseDefinition(1));
+    CurseDefinition FIELD_GEISTER_HEX = register("feild_geister_hex", new CurseDefinition(1));
+    CurseDefinition HUNGRY_POCKETS = register("hungry_pockets", new CurseDefinition(1));
+    CurseDefinition INEPTITUDE = register("ineptitude", new CurseDefinition(1));
+    CurseDefinition MISPLACEMENT = register("misplacement", new CurseDefinition(1));
+    CurseDefinition NULLARDOR = register("nullador", new CurseDefinition(1));
+    CurseDefinition PARANOIA = register("paranoia", new CurseDefinition(3));
+    CurseDefinition PERUNS_JEST = register("peruns_jest", new CurseDefinition(1));
 
 
-    static <T extends Curse> T register(String name, T curse) {
+    static <T extends CurseDefinition> T register(String name, T curse) {
         CURSES.add(new ObjectDefinition<>(WitchesKitchen.id(name), curse));
         return curse;
     }

@@ -52,41 +52,41 @@ public class FerretBrain {
 
     public static List<ExtendedSensor<FerretEntity>> getSensors() {
         return ObjectArrayList.of(
-                new NearbyPlayersSensor<>(),
-                new NearbyLivingEntitySensor<>(),
-                new HurtBySensor<>(),
-                new TimeOfDaySensor<>(),
-                new TamableSensor<>()
+            new NearbyPlayersSensor<>(),
+            new NearbyLivingEntitySensor<>(),
+            new HurtBySensor<>(),
+            new TimeOfDaySensor<>(),
+            new TamableSensor<>()
 
         );
     }
 
     public static BrainActivityGroup<FerretEntity> getCoreTasks() {
         return BrainActivityGroup.coreTasks(
-                new DontMoveTask(),
-                new Swim(0.6f),
-                new RandomLookAround(ConstantInt.of(45), 90, -15, 15),
-                new MoveToTargetSink()
+            new DontMoveTask(),
+            new Swim(0.6f),
+            new RandomLookAround(ConstantInt.of(45), 90, -15, 15),
+            new MoveToTargetSink()
         );
     }
 
     public static BrainActivityGroup<FerretEntity> getIdleTasks(FerretEntity ferret) {
         return BrainActivityGroup.idleTasks(
-                new FirstApplicableBehaviour<>(
-                        //new TargetOrRetaliate<>().startCondition(e -> getAttackTarget(ferret).isPresent()),
-                        new SetPlayerLookTarget<>()),
-                //new SetRandomLookTarget<>()),
-                new OneRandomBehaviour<>(
-                        new SetRandomWalkTarget<>().speedModifier(0.6f),
-                        new Idle<>()
-                )
+            new FirstApplicableBehaviour<>(
+                //new TargetOrRetaliate<>().startCondition(e -> getAttackTarget(ferret).isPresent()),
+                new SetPlayerLookTarget<>()),
+            //new SetRandomLookTarget<>()),
+            new OneRandomBehaviour<>(
+                new SetRandomWalkTarget<>().speedModifier(0.6f),
+                new Idle<>()
+            )
         );
     }
 
     public static BrainActivityGroup<FerretEntity> getFightTasks(FerretEntity ferret) {
         return BrainActivityGroup.fightTasks(
-                new InvalidateAttackTarget<>(),
-                new AnimatableMeleeAttack<>(20)
+            new InvalidateAttackTarget<>(),
+            new AnimatableMeleeAttack<>(20)
         );
     }
 

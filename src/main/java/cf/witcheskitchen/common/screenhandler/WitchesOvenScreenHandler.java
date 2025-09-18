@@ -24,11 +24,11 @@ public class WitchesOvenScreenHandler extends WKScreenHandler {
         this.delegate = delegate;
         super.addDataSlots(this.delegate);
         this.builder().playerSetup()
-                .input(0, 44, 55, stack -> !stack.is(WKTags.OVEN_BLACKLIST))//fuel
-                .input(1, 44, 19, stack -> !stack.is(WKTags.OVEN_BLACKLIST))//input
-                .output(2, 116, 19, playerInventory.player)//output
-                .output(3, 116, 55, playerInventory.player)//extra output
-                .build();
+            .input(0, 44, 55, stack -> !stack.is(WKTags.OVEN_BLACKLIST))//fuel
+            .input(1, 44, 19, stack -> !stack.is(WKTags.OVEN_BLACKLIST))//input
+            .output(2, 116, 19, playerInventory.player)//output
+            .output(3, 116, 55, playerInventory.player)//extra output
+            .build();
     }
 
     public boolean isBurning() {

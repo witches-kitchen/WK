@@ -1,7 +1,7 @@
 package cf.witcheskitchen.common.component.entity;
 
+import cf.witcheskitchen.api.curse.CurseDefinition;
 import cf.witcheskitchen.api.util.CursePair;
-import cf.witcheskitchen.common.curse.Curse;
 import cf.witcheskitchen.common.registry.WKRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
@@ -33,24 +33,24 @@ public class WKCurseComponent implements ServerTickingComponent, AutoSyncedCompo
         }
     }
 
-    public void addCurse(Curse curse, int duration) {
-        if (hasCurse(curse)) {
+    public void addCurse(CurseDefinition curseDefinition, int duration) {
+        if (hasCurse(curseDefinition)) {
             for (CursePair cursePair : getCurses()) {
-                if (cursePair.getCurse() == curse) {
+                if (cursePair.getCurse() == curseDefinition) {
                     cursePair.setDuration(duration);
-                    curse.onAdded(this.player);
+                    curseDefinition.onAdded(this.player);
                     return;
                 }
             }
         }
-        getCurses().add(new CursePair(curse, duration));
-        curse.onAdded(this.player);
+        getCurses().add(new CursePair(curseDefinition, duration));
+        curseDefinition.onAdded(this.player);
     }
 
-    public void removeCurse(Curse curse) {
-        if (hasCurse(curse)) {
+    public void removeCurse(CurseDefinition curseDefinition) {
+        if (hasCurse(curseDefinition)) {
             for (CursePair cursePair : getCurses()) {
-                if (cursePair.getCurse() == curse) {
+                if (cursePair.getCurse() == curseDefinition) {
                     cursePair.getCurse().onRemoved(this.player);
                     getCurses().remove(cursePair);
                 }
@@ -75,8 +75,8 @@ public class WKCurseComponent implements ServerTickingComponent, AutoSyncedCompo
         return curses;
     }
 
-    public boolean hasCurse(Curse curse) {
-        return getCurses().stream().anyMatch(c -> c.getCurse() == curse);
+    public boolean hasCurse(CurseDefinition curseDefinition) {
+        return getCurses().stream().anyMatch(c -> c.getCurse() == curseDefinition);
     }
 
     public void writeCurse(ValueOutput.ValueOutputList cursesList) {

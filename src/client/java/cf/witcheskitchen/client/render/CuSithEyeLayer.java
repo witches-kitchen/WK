@@ -27,7 +27,7 @@ public class CuSithEyeLayer<T extends GeoAnimatable, R extends WKRenderState & G
         //TODO do color instead of multiple textures
         RenderType layer = getRenderType(renderState);
         getRenderer().reRender(renderState, poseStack, bakedModel, bufferSource, layer,
-                bufferSource.getBuffer(layer), 15728640, OverlayTexture.NO_OVERLAY,
-                ARGB.color(255, 255, 255, 255));
+            bufferSource.getBuffer(layer), 15728640, OverlayTexture.NO_OVERLAY,
+            ARGB.color(255, 255, 255, 255));
     }
 }

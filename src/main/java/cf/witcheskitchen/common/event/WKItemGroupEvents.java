@@ -23,13 +23,13 @@ public class WKItemGroupEvents {
 
     public static void init() {
         Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, GENERAL_TAB, FabricItemGroup.builder()
-                .title(Component.translatable(GENERAL_TAB.location().toLanguageKey("itemGroup")))
-                .icon(() -> new ItemStack(WKBlocks.IRON_WITCHES_OVEN.asItem()))
-                .build()
+            .title(Component.translatable(GENERAL_TAB.location().toLanguageKey("itemGroup")))
+            .icon(() -> new ItemStack(WKBlocks.IRON_WITCHES_OVEN.asItem()))
+            .build()
         );
         Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, FOOD_TAB, FabricItemGroup.builder()
-                .title(Component.translatable(FOOD_TAB.location().toLanguageKey("itemGroup")))
-                .icon(() -> new ItemStack(WKItems.ELDER_TEA)).build()
+            .title(Component.translatable(FOOD_TAB.location().toLanguageKey("itemGroup")))
+            .icon(() -> new ItemStack(WKItems.ELDER_TEA)).build()
         );
 
         ItemGroupEvents.modifyEntriesEvent(GENERAL_TAB).register(WKItemGroupEvents::generalGroup);

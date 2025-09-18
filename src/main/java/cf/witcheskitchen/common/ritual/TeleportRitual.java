@@ -15,9 +15,9 @@ public class TeleportRitual extends Ritual {
         super.onEnd(world, blockPos, ritualRecipe);
 
         BlockPos location = BlockPos.ZERO; //TODO get waystone location
-        double strength = ritualRecipe.circleSet.size() * 2;
+        double strength = ritualRecipe.circleSet().size() * 2;
         List<Entity> list = world.getEntitiesOfClass(Entity.class, new AABB(blockPos).inflate(strength), livingEntity ->
-                livingEntity.distanceToSqr(blockPos.getX(), blockPos.getY(), blockPos.getZ()) < strength);
+            livingEntity.distanceToSqr(blockPos.getX(), blockPos.getY(), blockPos.getZ()) < strength);
 
         for (Entity entity : list) {
             entity.teleportTo(location.getX(), location.getY(), location.getZ());

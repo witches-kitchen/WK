@@ -13,8 +13,8 @@ public class SummoningRitual extends Ritual {
     @Override
     public void onEnd(Level world, BlockPos blockPos, RitualRecipe ritualRecipe) {
         super.onEnd(world, blockPos, ritualRecipe);
-        if (ritualRecipe.summons != null && !ritualRecipe.summons.isEmpty()) {
-            for (EntityType<?> entityType : ritualRecipe.summons) {
+        if (ritualRecipe.summons() != null && !ritualRecipe.summons().isEmpty()) {
+            for (EntityType<?> entityType : ritualRecipe.summons()) {
                 Entity entity = entityType.create(world, EntitySpawnReason.MOB_SUMMONED);
                 if (entity != null) {
                     BlockPos spawnPos = blockPos.offset(world.getRandom().nextInt(2) - 1, 0, world.getRandom().nextInt(2) - 1);

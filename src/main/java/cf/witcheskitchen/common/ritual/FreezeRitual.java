@@ -14,9 +14,9 @@ public class FreezeRitual extends Ritual {
     @Override
     public void tick(Level world, BlockPos blockPos, RitualRecipe ritualRecipe) {
         super.tick(world, blockPos, ritualRecipe);
-        double strength = ritualRecipe.circleSet.size() * 2;
+        double strength = ritualRecipe.circleSet().size() * 2;
         List<LivingEntity> list = world.getEntitiesOfClass(LivingEntity.class, new AABB(blockPos).inflate(strength), livingEntity ->
-                livingEntity.distanceToSqr(blockPos.getX(), blockPos.getY(), blockPos.getZ()) < strength && !(livingEntity instanceof Player));
+            livingEntity.distanceToSqr(blockPos.getX(), blockPos.getY(), blockPos.getZ()) < strength && !(livingEntity instanceof Player));
         for (LivingEntity entity : list) {
             entity.setDeltaMovement(0, 0, 0);
             entity.setSpeed(0);

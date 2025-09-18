@@ -19,8 +19,6 @@ import java.util.List;
 public interface WKScreenHandlerTypes {
 
     List<ObjectDefinition<MenuType<?>>> SCREEN_HANDLER_TYPES = new ArrayList<>();
-    MenuType<WitchesOvenScreenHandler> WITCHES_OVEN = register("witches_oven", WitchesOvenScreenHandler::new);
-    MenuType<BrewingBarrelScreenHandler> BREWING_BARREL = register("brewing_barrel", BrewingBarrelScreenHandler::new);
 
     static <T extends AbstractContainerMenu> MenuType<T> register(final String name, final MenuType.MenuSupplier<T> factory) {
         Validate.isTrue(factory != null);
@@ -28,15 +26,19 @@ public interface WKScreenHandlerTypes {
         final ResourceLocation id = WitchesKitchen.id(name);
         SCREEN_HANDLER_TYPES.add(new ObjectDefinition<>(id, handler));
         return handler;
-    }
+    }    MenuType<WitchesOvenScreenHandler> WITCHES_OVEN = register("witches_oven", WitchesOvenScreenHandler::new);
 
     static List<ObjectDefinition<MenuType<?>>> getScreenHandlers() {
         return Collections.unmodifiableList(SCREEN_HANDLER_TYPES);
-    }
+    }    MenuType<BrewingBarrelScreenHandler> BREWING_BARREL = register("brewing_barrel", BrewingBarrelScreenHandler::new);
 
     static void init() {
         SCREEN_HANDLER_TYPES.forEach(entry -> Registry.register(BuiltInRegistries.MENU, entry.id(), entry.object()));
     }
+
+
+
+
 
 
 }

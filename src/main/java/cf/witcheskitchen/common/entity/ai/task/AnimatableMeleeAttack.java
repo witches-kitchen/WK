@@ -18,9 +18,9 @@ import java.util.List;
 
 public class AnimatableMeleeAttack<E extends Mob> extends DelayedBehaviour<E> {
     private static final List<Pair<MemoryModuleType<?>, MemoryStatus>> MEMORY_REQUIREMENTS =
-            ObjectArrayList.of(
-                    Pair.of(MemoryModuleType.ATTACK_TARGET, MemoryStatus.VALUE_PRESENT),
-                    Pair.of(MemoryModuleType.ATTACK_COOLING_DOWN, MemoryStatus.VALUE_ABSENT));
+        ObjectArrayList.of(
+            Pair.of(MemoryModuleType.ATTACK_TARGET, MemoryStatus.VALUE_PRESENT),
+            Pair.of(MemoryModuleType.ATTACK_COOLING_DOWN, MemoryStatus.VALUE_ABSENT));
 
     protected Function<E, Integer> attackIntervalSupplier = entity -> 20;
 

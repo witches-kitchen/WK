@@ -81,37 +81,37 @@ public class CauldronBrewingRecipe implements Recipe<MultipleStackRecipeInput> {
         @Override
         public MapCodec<CauldronBrewingRecipe> codec() {
             return RecordCodecBuilder.mapCodec(instance ->
-                    instance.group(
-                                    Ingredient.CODEC.listOf()
-                                            .fieldOf("ingredients")
-                                            .validate(ingredients -> {
-                                                if (ingredients.size() < 2) {
-                                                    return DataResult.error(() -> "Cauldron recipes must have at least 2 ingredients");
-                                                } else if (ingredients.size() > 7) {
-                                                    return DataResult.error(() -> "Too many ingredients for Cauldron recipe");
-                                                }
+                instance.group(
+                        Ingredient.CODEC.listOf()
+                            .fieldOf("ingredients")
+                            .validate(ingredients -> {
+                                if (ingredients.size() < 2) {
+                                    return DataResult.error(() -> "Cauldron recipes must have at least 2 ingredients");
+                                } else if (ingredients.size() > 7) {
+                                    return DataResult.error(() -> "Too many ingredients for Cauldron recipe");
+                                }
 
-                                                return DataResult.success(ingredients);
-                                            })
-                                            .forGetter(CauldronBrewingRecipe::getInputs),
-                                    ItemStack.CODEC
-                                            .fieldOf("result")
-                                            .forGetter(CauldronBrewingRecipe::getResult),
-                                    Codec.INT
-                                            .fieldOf("color")
-                                            .forGetter(CauldronBrewingRecipe::getColor)
-                            )
-                            .apply(instance, CauldronBrewingRecipe::new)
+                                return DataResult.success(ingredients);
+                            })
+                            .forGetter(CauldronBrewingRecipe::getInputs),
+                        ItemStack.CODEC
+                            .fieldOf("result")
+                            .forGetter(CauldronBrewingRecipe::getResult),
+                        Codec.INT
+                            .fieldOf("color")
+                            .forGetter(CauldronBrewingRecipe::getColor)
+                    )
+                    .apply(instance, CauldronBrewingRecipe::new)
             );
         }
 
         @Override
         public StreamCodec<RegistryFriendlyByteBuf, CauldronBrewingRecipe> streamCodec() {
             return StreamCodec.composite(
-                    CustomPacketCodecs.INGREDIENT_LIST, CauldronBrewingRecipe::getInputs,
-                    ItemStack.STREAM_CODEC, CauldronBrewingRecipe::getResult,
-                    ByteBufCodecs.VAR_INT, CauldronBrewingRecipe::getColor,
-                    CauldronBrewingRecipe::new
+                CustomPacketCodecs.INGREDIENT_LIST, CauldronBrewingRecipe::getInputs,
+                ItemStack.STREAM_CODEC, CauldronBrewingRecipe::getResult,
+                ByteBufCodecs.VAR_INT, CauldronBrewingRecipe::getColor,
+                CauldronBrewingRecipe::new
             );
         }
     }

@@ -35,7 +35,7 @@ public class OvenCookingDisplay implements Display {
 
     public static void register(DisplayRegistry registry) {
         registry.beginFiller(OvenCookingRecipe.class)
-                .fill(OvenCookingDisplay::new);
+            .fill(OvenCookingDisplay::new);
     }
 
     @Override

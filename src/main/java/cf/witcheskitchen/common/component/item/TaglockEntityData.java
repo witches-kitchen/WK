@@ -11,20 +11,20 @@ import java.util.UUID;
 
 public record TaglockEntityData(UUID uuid, String name) {
     public static final Codec<TaglockEntityData> CODEC = RecordCodecBuilder.create(instance ->
-            instance.group(
-                            UUIDUtil.AUTHLIB_CODEC
-                                    .fieldOf("uuid")
-                                    .forGetter(TaglockEntityData::uuid),
-                            Codec.STRING
-                                    .fieldOf("name")
-                                    .forGetter(TaglockEntityData::name)
-                    )
-                    .apply(instance, TaglockEntityData::new)
+        instance.group(
+                UUIDUtil.AUTHLIB_CODEC
+                    .fieldOf("uuid")
+                    .forGetter(TaglockEntityData::uuid),
+                Codec.STRING
+                    .fieldOf("name")
+                    .forGetter(TaglockEntityData::name)
+            )
+            .apply(instance, TaglockEntityData::new)
     );
 
     public static final StreamCodec<FriendlyByteBuf, TaglockEntityData> PACKET_CODEC = StreamCodec.composite(
-            UUIDUtil.STREAM_CODEC, TaglockEntityData::uuid,
-            ByteBufCodecs.STRING_UTF8, TaglockEntityData::name,
-            TaglockEntityData::new
+        UUIDUtil.STREAM_CODEC, TaglockEntityData::uuid,
+        ByteBufCodecs.STRING_UTF8, TaglockEntityData::name,
+        TaglockEntityData::new
     );
 }

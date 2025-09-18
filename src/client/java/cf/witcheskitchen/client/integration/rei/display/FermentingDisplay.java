@@ -24,13 +24,13 @@ public class FermentingDisplay implements Display {
     private final List<EntryIngredient> output;
 
     public FermentingDisplay(BarrelFermentingRecipe recipe) {
-        this.inputs = EntryIngredients.ofIngredients(recipe.getInputs());
-        this.output = Collections.singletonList(EntryIngredients.of(recipe.getOutput()));
+        this.inputs = EntryIngredients.ofIngredients(recipe.inputs());
+        this.output = Collections.singletonList(EntryIngredients.of(recipe.output()));
     }
 
     public static void register(DisplayRegistry registry) {
         registry.beginFiller(BarrelFermentingRecipe.class)
-                .fill(FermentingDisplay::new);
+            .fill(FermentingDisplay::new);
     }
 
     @Override

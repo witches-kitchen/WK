@@ -234,10 +234,10 @@ public class WitchesCauldronBlockEntity extends WKBlockEntityWithInventory imple
         TagValueOutput view = TagValueOutput.createWithContext(ProblemReporter.DISCARDING, this.getLevel().registryAccess());
         tank.writeStorage(view);
         componentMapBuilder.set(WKComponents.WITCHES_CAULDRON, new WitchesCauldronData(
-                view.buildResult(),
-                this.ticksHeated,
-                this.color,
-                this.powered
+            view.buildResult(),
+            this.ticksHeated,
+            this.color,
+            this.powered
         ));
     }
 

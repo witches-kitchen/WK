@@ -33,19 +33,19 @@ public class HedgehogBrain {
 
     public static BrainActivityGroup<HedgehogEntity> getCoreTasks() {
         return BrainActivityGroup.coreTasks(
-                new DontMoveTask(),
-                new Swim(0.6f),
-                new RandomLookAround(ConstantInt.of(45), 90, -15, 15),
-                new MoveToTargetSink()
+            new DontMoveTask(),
+            new Swim(0.6f),
+            new RandomLookAround(ConstantInt.of(45), 90, -15, 15),
+            new MoveToTargetSink()
         );
     }
 
     public static BrainActivityGroup<HedgehogEntity> getIdleTasks() {
         return BrainActivityGroup.idleTasks(
-                new OneRandomBehaviour<>(
-                        new SetPlayerLookTarget<>()),
-                new Idle<>(),
-                new FollowOwnerTask()
+            new OneRandomBehaviour<>(
+                new SetPlayerLookTarget<>()),
+            new Idle<>(),
+            new FollowOwnerTask()
         );
     }
 

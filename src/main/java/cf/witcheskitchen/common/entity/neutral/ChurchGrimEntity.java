@@ -47,9 +47,9 @@ public class ChurchGrimEntity extends WKTameableEntity implements GeoEntity, Neu
 
     public static AttributeSupplier.Builder createAttributes() {
         return LivingEntity.createLivingAttributes().add(Attributes.FOLLOW_RANGE, 32.0D)
-                .add(Attributes.MOVEMENT_SPEED, 0.85D)
-                .add(Attributes.MAX_HEALTH, 35).add(Attributes.ARMOR, 2.5D)
-                .add(Attributes.ATTACK_DAMAGE, 6.0D).add(Attributes.ATTACK_KNOCKBACK, 0.35D);
+            .add(Attributes.MOVEMENT_SPEED, 0.85D)
+            .add(Attributes.MAX_HEALTH, 35).add(Attributes.ARMOR, 2.5D)
+            .add(Attributes.ATTACK_DAMAGE, 6.0D).add(Attributes.ATTACK_KNOCKBACK, 0.35D);
     }
 
     @Override
