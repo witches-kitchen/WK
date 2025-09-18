@@ -1,91 +1,78 @@
 package cf.witcheskitchen.api.fortune;
 
+import cf.witcheskitchen.api.curse.CurseDefinition;
+import cf.witcheskitchen.api.registry.WKRegistries;
+import cf.witcheskitchen.api.registry.WKRegistryKeys;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.Holder;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.RegistryFixedCodec;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.player.Player;
 
 
 //TODO: FACTOR IN MORE THINGS
-public abstract class FortuneDefinition {
 
+/**
+ *
+ * @param isNegative Is the fortune bad?
+ * @param isInstant Does the fortune fire instantly?
+ * @param minTimeFrame How many ticks at minimum does it take for a non-instant fortune to fire?
+ * @param maxTimeFrame How many ticks at maximum does it take for a non-instant fortune to fire?
+ * @param fortuneLength How many ticks does a fortune last for once fired?
+ * @param canCursesNegateFortune Can curses negate this particular fortune?
+ * @param canFortuneCureCurse Can this fortune negate an existing curse?
+ */
+public record FortuneDefinition(
+    boolean isNegative,
+    boolean isInstant,
 
-    /**
-     * Is the fortune bad?
-     */
-    public boolean isNegative;
+    int minTimeFrame,
+    int maxTimeFrame,
+    int fortuneLength,
 
-    /**
-     * Does the fortune fire instantly?
-     */
-    public boolean isInstant;
+    boolean canCursesNegateFortune,
+    boolean canFortuneCureCurse,
 
-    /**
-     * How many ticks at minimum
-     * does it take for a non-instant
-     * fortune to fire?
-     */
-    public int minTimeFrame;
+    FortuneEffect fortuneEffect
+) {
+    public static final Codec<FortuneDefinition> DIRECT_CODEC = RecordCodecBuilder.create(instance ->
+        instance.group(
+            Codec.BOOL
+                .fieldOf("is_negative")
+                .forGetter(FortuneDefinition::isNegative),
+            Codec.BOOL
+                .fieldOf("is_instant")
+                .forGetter(FortuneDefinition::isInstant),
 
-    /**
-     * How many ticks at maximum
-     * does it take for a non-instant
-     * fortune to fire?
-     */
-    public int maxTimeFrame;
+            ExtraCodecs.POSITIVE_INT
+                .fieldOf("min_time_frame")
+                .forGetter(FortuneDefinition::minTimeFrame),
+            ExtraCodecs.POSITIVE_INT
+                .fieldOf("max_time_frame")
+                .forGetter(FortuneDefinition::maxTimeFrame),
+            ExtraCodecs.POSITIVE_INT
+                .fieldOf("fortune_length")
+                .forGetter(FortuneDefinition::fortuneLength),
 
-    /**
-     * How many ticks does
-     * a fortune last for
-     * once fired?
-     */
-    public int fortuneLength;
-    /**
-     * Can curses negate
-     * this particular fortune?
-     */
-    public boolean canCursesNegateFortune;
-    /**
-     * Can this fortune
-     * negate an existing curse?
-     */
-    public boolean canFortuneCureCurse;
+            Codec.BOOL
+                .fieldOf("can_curses_negate_fortune")
+                .forGetter(FortuneDefinition::canCursesNegateFortune),
+            Codec.BOOL
+                .fieldOf("can_fortune_cure_curse")
+                .forGetter(FortuneDefinition::canFortuneCureCurse),
 
-    /**
-     * Fortune definition
-     * Needs more work
-     */
-    public Fortune(ResourceLocation id, boolean isInstant, boolean isNegative, int minTimeFrame, int maxTimeFrame) {
-        this.isInstant = isInstant;
-        this.isNegative = isNegative;
-        this.minTimeFrame = minTimeFrame;
-        this.maxTimeFrame = maxTimeFrame;
-    }
+            WKRegistries.FORTUNE_EFFECTS.byNameCodec()
+                .fieldOf("fortune_effect")
+                .forGetter(FortuneDefinition::fortuneEffect)
+        )
+            .apply(instance, FortuneDefinition::new)
+    );
 
-    /**
-     * Effects of the fortune on
-     * a player on first applying the fortune
-     */
-    public void onAdded(Player player) {
-
-    }
-
-    /**
-     * Effects of the fortune on
-     * a player on removing a fortune
-     */
-    public void onRemoved(Player player) {
-
-    }
-
-    /**
-     * Check if the player is a valid
-     * target for the fortune
-     */
-    public boolean isValid(Player player) {
-        return true;
-    }
-
-    /**
-     * Apply the fortune if valid
-     */
-    public abstract boolean apply(Player player);
+    public static final Codec<Holder<FortuneDefinition>> HOLDER_CODEC = RegistryFixedCodec.create(WKRegistryKeys.FORTUNES);
+    public static final StreamCodec<RegistryFriendlyByteBuf, Holder<FortuneDefinition>> STREAM_CODEC = ByteBufCodecs.holderRegistry(WKRegistryKeys.FORTUNES);
 }

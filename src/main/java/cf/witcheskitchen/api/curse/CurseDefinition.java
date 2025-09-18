@@ -3,18 +3,14 @@ package cf.witcheskitchen.api.curse;
 import cf.witcheskitchen.api.registry.WKRegistries;
 import cf.witcheskitchen.api.registry.WKRegistryKeys;
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Holder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.RegistryFixedCodec;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.StringRepresentable;
-import net.minecraft.world.entity.player.Player;
-import org.jetbrains.annotations.NotNull;
 
 //TODO: FACTOR IN MORE THINGS
 
@@ -22,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @param level
  * @param canDeflectToCaster Can the curse be sent back to the caster via ritual?
- * @param canNegateCurse Can the curse be negated, as opposed to dispelling it, rendering it useless to either party?
+ * @param canCurseBeNegated Can the curse be negated, as opposed to dispelling it, rendering it useless to either party?
  * @param canDispelCurse Can the curse be dispelled before it is over?
  * @param canDispelPermanentCurse Does the curse last until it is dispelled by the victim?
  * @param isCurseInstant Is the curse instant?
@@ -35,7 +31,7 @@ public record CurseDefinition(
     int level,
 
     boolean canDeflectToCaster,
-    boolean canNegateCurse,
+    boolean canCurseBeNegated,
     boolean canDispelCurse,
     boolean canDispelPermanentCurse,
     boolean isCurseInstant,
@@ -56,8 +52,8 @@ public record CurseDefinition(
                 .fieldOf("can_deflect_to_caster")
                 .forGetter(CurseDefinition::canDeflectToCaster),
             Codec.BOOL
-                .fieldOf("can_negate_curse")
-                .forGetter(CurseDefinition::canNegateCurse),
+                .fieldOf("can_curse_be_negated")
+                .forGetter(CurseDefinition::canCurseBeNegated),
             Codec.BOOL
                 .fieldOf("can_dispel_curse")
                 .forGetter(CurseDefinition::canDispelCurse),
