@@ -23,7 +23,6 @@ public class WKApi {
         return entity.getType().is(EntityTypeTags.UNDEAD) ||
             entity.getType().is(WKTags.DEMONIC) ||
             entity instanceof EnderMan ||
-            entity instanceof Ghast ||
             entity instanceof Blaze ||
             entity instanceof Vex ||
             entity instanceof Guardian;
