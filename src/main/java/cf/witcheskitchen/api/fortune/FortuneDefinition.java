@@ -3,6 +3,8 @@ package cf.witcheskitchen.api.fortune;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 
+
+//TODO: FACTOR IN MORE THINGS
 public abstract class FortuneDefinition {
 
 
@@ -31,6 +33,41 @@ public abstract class FortuneDefinition {
     public int maxTimeFrame;
 
     /**
+     * How many ticks does
+     * a fortune last for
+     * once fired?
+     */
+    public int fortuneLength;
+
+    /**
+     * Effects of the fortune on
+     * a player on first applying the fortune
+     */
+    public void onAdded(Player player) {
+
+    }
+
+    /**
+     * Effects of the fortune on
+     * a player on removing a fortune
+     */
+    public void onRemoved(Player player) {
+
+    }
+
+    /**
+     * Can curses negate
+     * this particular fortune?
+     */
+    public boolean canCursesNegateFortune;
+
+    /**
+     * Can this fortune
+     * negate an existing curse?
+     */
+    public boolean canFortuneCureCurse;
+
+    /**
      * Fortune definition
      * Needs more work
      */
@@ -50,8 +87,7 @@ public abstract class FortuneDefinition {
     }
 
     /**
-     * Apply the fortune
+     * Apply the fortune if valid
      */
     public abstract boolean apply(Player player);
-
 }
