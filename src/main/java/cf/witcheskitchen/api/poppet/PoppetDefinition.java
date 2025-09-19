@@ -9,7 +9,28 @@ public record PoppetDefinition(
     boolean canEffectBeUsedOnSelf,
     boolean isPoppetEffectPositive,
     boolean isPoppetEffectInstant,
-    boolean canAttractWitchHunters
+    boolean canAttractWitchHunters,
+    boolean isEffectActivatedByHitting,
+    boolean isEffectActivatedByDropping,
+    boolean canEffectFireOnDeath,
+    boolean isEffectActivatedByHolding,
+    boolean isEffectActivatedByPricking,
+    boolean canTakeDamageInPlaceOfPlayer,
+    boolean isEffectActivatedByDroppingBlock,
+    boolean isEffectActivatedByFire,
+    boolean isEffectActivatedByExplosion,
+    boolean isEffectActivatedByHoldingInOffhand,
+    boolean isEffectActivatedInAnotherDimension,
+    boolean isEffectActivatedByGivingItems,
+    boolean isEffectActivatedByThrowingInContainer,
+    boolean isEffectActivatedByYouSleeping,
+    boolean isEffectActivatedByVictimSleeping,
+    boolean isEffectActivatedByDroppingIntoVoid,
+    boolean isEffectActivatedBySound,
+
+    int taglockVictimID,
+    int effectDurationMinimum,
+    int effectDurationMaximum
 ) {
 
 
