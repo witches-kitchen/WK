@@ -28,6 +28,7 @@ import net.minecraft.util.StringRepresentable;
  * @param maxTimeFrame How many ticks at maximum does it take for a non-instant curse to fire?
  * @param curingFortunes List of fortunes that can cure this curse.
  * @param curseLength How many ticks does a curse last for once fired?
+ * @param isCursePermanent Is the curse permanent if it is not treated?
  */
 public record CurseDefinition(
     //TODO: What does this line do?
@@ -38,6 +39,7 @@ public record CurseDefinition(
     boolean canDispelCurse,
     boolean canDispelPermanentCurse,
     boolean isCurseInstant,
+    boolean isCursePermanent,
 
     int minTimeFrame,
     int maxTimeFrame,
@@ -67,6 +69,10 @@ public record CurseDefinition(
             Codec.BOOL
                 .fieldOf("is_curse_instant")
                 .forGetter(CurseDefinition::isCurseInstant),
+            Codec.BOOL
+                .fieldOf("is_curse_permanent_unless_dispelled")
+                .forGetter(CurseDefinition::isCursePermanent),
+
 
             ExtraCodecs.POSITIVE_INT
                 .fieldOf("min_time_frame")
