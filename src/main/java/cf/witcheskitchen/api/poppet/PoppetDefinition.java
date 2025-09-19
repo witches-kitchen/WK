@@ -27,6 +27,7 @@ public record PoppetDefinition(
     boolean isEffectActivatedByVictimSleeping,
     boolean isEffectActivatedByDroppingIntoVoid,
     boolean isEffectActivatedBySound,
+    boolean isEffectActivatedByAnotherMob,
 
     int taglockVictimID,
     int effectDurationMinimum,
