@@ -1,7 +1,6 @@
 package cf.witcheskitchen.common.registry;
 
 import cf.witcheskitchen.WitchesKitchen;
-import cf.witcheskitchen.api.curse.CurseDefinition;
 import cf.witcheskitchen.api.ritual.Ritual;
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
 import net.minecraft.core.Registry;

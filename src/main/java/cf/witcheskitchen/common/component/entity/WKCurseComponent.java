@@ -1,11 +1,8 @@
 package cf.witcheskitchen.common.component.entity;
 
-import cf.witcheskitchen.WitchesKitchen;
 import cf.witcheskitchen.api.curse.CurseDefinition;
 import cf.witcheskitchen.api.util.CursePair;
-import cf.witcheskitchen.common.registry.WKRegistries;
 import net.minecraft.core.Holder;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;

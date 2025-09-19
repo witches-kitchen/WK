@@ -19,16 +19,16 @@ import net.minecraft.util.StringRepresentable;
 /**
  *
  * @param level
- * @param canDeflectToCaster Can the curse be sent back to the caster via ritual?
- * @param canCurseBeNegated Can the curse be negated, as opposed to dispelling it, rendering it useless to either party?
- * @param canDispelCurse Can the curse be dispelled before it is over?
+ * @param canDeflectToCaster      Can the curse be sent back to the caster via ritual?
+ * @param canCurseBeNegated       Can the curse be negated, as opposed to dispelling it, rendering it useless to either party?
+ * @param canDispelCurse          Can the curse be dispelled before it is over?
  * @param canDispelPermanentCurse Does the curse last until it is dispelled by the victim?
- * @param isCurseInstant Is the curse instant?
- * @param minTimeFrame How many ticks at minimum does it take for a non-instant curse to fire?
- * @param maxTimeFrame How many ticks at maximum does it take for a non-instant curse to fire?
- * @param curingFortunes List of fortunes that can cure this curse.
- * @param curseLength How many ticks does a curse last for once fired?
- * @param isCursePermanent Is the curse permanent if it is not treated?
+ * @param isCurseInstant          Is the curse instant?
+ * @param minTimeFrame            How many ticks at minimum does it take for a non-instant curse to fire?
+ * @param maxTimeFrame            How many ticks at maximum does it take for a non-instant curse to fire?
+ * @param curingFortunes          List of fortunes that can cure this curse.
+ * @param curseLength             How many ticks does a curse last for once fired?
+ * @param isCursePermanent        Is the curse permanent if it is not treated?
  */
 public record CurseDefinition(
     //TODO: What does this line do?
@@ -50,48 +50,48 @@ public record CurseDefinition(
 ) {
     public static final Codec<CurseDefinition> DIRECT_CODEC = RecordCodecBuilder.create(instance ->
         instance.group(
-            Codec.INT
-                .fieldOf("level")
-                .forGetter(CurseDefinition::level),
+                Codec.INT
+                    .fieldOf("level")
+                    .forGetter(CurseDefinition::level),
 
-            Codec.BOOL
-                .fieldOf("can_deflect_to_caster")
-                .forGetter(CurseDefinition::canDeflectToCaster),
-            Codec.BOOL
-                .fieldOf("can_curse_be_negated")
-                .forGetter(CurseDefinition::canCurseBeNegated),
-            Codec.BOOL
-                .fieldOf("can_dispel_curse")
-                .forGetter(CurseDefinition::canDispelCurse),
-            Codec.BOOL
-                .fieldOf("can_dispel_permanent_curse")
-                .forGetter(CurseDefinition::canDispelPermanentCurse),
-            Codec.BOOL
-                .fieldOf("is_curse_instant")
-                .forGetter(CurseDefinition::isCurseInstant),
-            Codec.BOOL
-                .fieldOf("is_curse_permanent_unless_dispelled")
-                .forGetter(CurseDefinition::isCursePermanent),
+                Codec.BOOL
+                    .fieldOf("can_deflect_to_caster")
+                    .forGetter(CurseDefinition::canDeflectToCaster),
+                Codec.BOOL
+                    .fieldOf("can_curse_be_negated")
+                    .forGetter(CurseDefinition::canCurseBeNegated),
+                Codec.BOOL
+                    .fieldOf("can_dispel_curse")
+                    .forGetter(CurseDefinition::canDispelCurse),
+                Codec.BOOL
+                    .fieldOf("can_dispel_permanent_curse")
+                    .forGetter(CurseDefinition::canDispelPermanentCurse),
+                Codec.BOOL
+                    .fieldOf("is_curse_instant")
+                    .forGetter(CurseDefinition::isCurseInstant),
+                Codec.BOOL
+                    .fieldOf("is_curse_permanent_unless_dispelled")
+                    .forGetter(CurseDefinition::isCursePermanent),
 
 
-            ExtraCodecs.POSITIVE_INT
-                .fieldOf("min_time_frame")
-                .forGetter(CurseDefinition::minTimeFrame),
-            ExtraCodecs.POSITIVE_INT
-                .fieldOf("max_time_frame")
-                .forGetter(CurseDefinition::maxTimeFrame),
-            ExtraCodecs.POSITIVE_INT
-                .fieldOf("curse_length")
-                .forGetter(CurseDefinition::curseLength),
+                ExtraCodecs.POSITIVE_INT
+                    .fieldOf("min_time_frame")
+                    .forGetter(CurseDefinition::minTimeFrame),
+                ExtraCodecs.POSITIVE_INT
+                    .fieldOf("max_time_frame")
+                    .forGetter(CurseDefinition::maxTimeFrame),
+                ExtraCodecs.POSITIVE_INT
+                    .fieldOf("curse_length")
+                    .forGetter(CurseDefinition::curseLength),
 
-            TagKey.hashedCodec(WKRegistryKeys.FORTUNES)
-                .fieldOf("curing_fortunes")
-                .forGetter(CurseDefinition::curingFortunes),
+                TagKey.hashedCodec(WKRegistryKeys.FORTUNES)
+                    .fieldOf("curing_fortunes")
+                    .forGetter(CurseDefinition::curingFortunes),
 
-            WKRegistries.CURSE_EFFECTS.byNameCodec()
-                .fieldOf("curse_effect")
-                .forGetter(CurseDefinition::curseEffect)
-        )
+                WKRegistries.CURSE_EFFECTS.byNameCodec()
+                    .fieldOf("curse_effect")
+                    .forGetter(CurseDefinition::curseEffect)
+            )
             .apply(instance, CurseDefinition::new)
     );
 

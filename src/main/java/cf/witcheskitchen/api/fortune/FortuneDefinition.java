@@ -18,11 +18,11 @@ import net.minecraft.util.ExtraCodecs;
 
 /**
  *
- * @param isNegative Is the fortune bad?
- * @param isInstant Does the fortune fire instantly?
- * @param minTimeFrame How many ticks at minimum does it take for a non-instant fortune to fire?
- * @param maxTimeFrame How many ticks at maximum does it take for a non-instant fortune to fire?
- * @param fortuneLength How many ticks does a fortune last for once fired?
+ * @param isNegative     Is the fortune bad?
+ * @param isInstant      Does the fortune fire instantly?
+ * @param minTimeFrame   How many ticks at minimum does it take for a non-instant fortune to fire?
+ * @param maxTimeFrame   How many ticks at maximum does it take for a non-instant fortune to fire?
+ * @param fortuneLength  How many ticks does a fortune last for once fired?
  * @param negatingCurses List of curses that negate this fortune from firing.
  */
 public record FortuneDefinition(
@@ -39,31 +39,31 @@ public record FortuneDefinition(
 ) {
     public static final Codec<FortuneDefinition> DIRECT_CODEC = RecordCodecBuilder.create(instance ->
         instance.group(
-            Codec.BOOL
-                .fieldOf("is_negative")
-                .forGetter(FortuneDefinition::isNegative),
-            Codec.BOOL
-                .fieldOf("is_instant")
-                .forGetter(FortuneDefinition::isInstant),
+                Codec.BOOL
+                    .fieldOf("is_negative")
+                    .forGetter(FortuneDefinition::isNegative),
+                Codec.BOOL
+                    .fieldOf("is_instant")
+                    .forGetter(FortuneDefinition::isInstant),
 
-            ExtraCodecs.POSITIVE_INT
-                .fieldOf("min_time_frame")
-                .forGetter(FortuneDefinition::minTimeFrame),
-            ExtraCodecs.POSITIVE_INT
-                .fieldOf("max_time_frame")
-                .forGetter(FortuneDefinition::maxTimeFrame),
-            ExtraCodecs.POSITIVE_INT
-                .fieldOf("fortune_length")
-                .forGetter(FortuneDefinition::fortuneLength),
+                ExtraCodecs.POSITIVE_INT
+                    .fieldOf("min_time_frame")
+                    .forGetter(FortuneDefinition::minTimeFrame),
+                ExtraCodecs.POSITIVE_INT
+                    .fieldOf("max_time_frame")
+                    .forGetter(FortuneDefinition::maxTimeFrame),
+                ExtraCodecs.POSITIVE_INT
+                    .fieldOf("fortune_length")
+                    .forGetter(FortuneDefinition::fortuneLength),
 
-            TagKey.hashedCodec(WKRegistryKeys.CURSES)
-                .fieldOf("negating_curses")
-                .forGetter(FortuneDefinition::negatingCurses),
+                TagKey.hashedCodec(WKRegistryKeys.CURSES)
+                    .fieldOf("negating_curses")
+                    .forGetter(FortuneDefinition::negatingCurses),
 
-            WKRegistries.FORTUNE_EFFECTS.byNameCodec()
-                .fieldOf("fortune_effect")
-                .forGetter(FortuneDefinition::fortuneEffect)
-        )
+                WKRegistries.FORTUNE_EFFECTS.byNameCodec()
+                    .fieldOf("fortune_effect")
+                    .forGetter(FortuneDefinition::fortuneEffect)
+            )
             .apply(instance, FortuneDefinition::new)
     );
 

@@ -34,8 +34,9 @@ public interface WKScreenHandlerTypes {
 
     static void init() {
         SCREEN_HANDLER_TYPES.forEach(entry -> Registry.register(BuiltInRegistries.MENU, entry.id(), entry.object()));
-    }    MenuType<WitchesOvenScreenHandler> WITCHES_OVEN = register("witches_oven", WitchesOvenScreenHandler::new);
+    }
 
+    MenuType<WitchesOvenScreenHandler> WITCHES_OVEN = register("witches_oven", WitchesOvenScreenHandler::new);
 
 
     MenuType<BrewingBarrelScreenHandler> BREWING_BARREL = register("brewing_barrel", BrewingBarrelScreenHandler::new);

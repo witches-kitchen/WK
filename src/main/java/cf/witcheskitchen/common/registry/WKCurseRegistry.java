@@ -1,14 +1,8 @@
 package cf.witcheskitchen.common.registry;
 
-import cf.witcheskitchen.WitchesKitchen;
 import cf.witcheskitchen.api.curse.CurseDefinition;
-import cf.witcheskitchen.api.registry.ObjectDefinition;
 import cf.witcheskitchen.api.registry.WKRegistryKeys;
 import net.fabricmc.fabric.api.event.registry.DynamicRegistries;
-import net.minecraft.core.Registry;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public interface WKCurseRegistry {
     // TODO: migrate to JSON data

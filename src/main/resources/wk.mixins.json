@@ -9,8 +9,8 @@
     "fluid.BucketItemMixin",
     "fluid.PotionItemMixin",
     "potion.ItemMixin",
-    "statuseffect.MobMixin",
     "statuseffect.AvoidEntityGoalMixin",
+    "statuseffect.MobMixin",
     "statuseffect.NearestAttackableTargetGoalMixin"
   ],
   "client": [
