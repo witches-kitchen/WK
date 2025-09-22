@@ -24,10 +24,14 @@ import net.minecraft.util.ExtraCodecs;
  * @param maxTimeFrame   How many ticks at maximum does it take for a non-instant fortune to fire?
  * @param fortuneLength  How many ticks does a fortune last for once fired?
  * @param negatingCurses List of curses that negate this fortune from firing.
+ * @param requiresDay  Will this fortune only fire at day?
+ * @param requiresNight Will this fortune only fire at night?
  */
 public record FortuneDefinition(
     boolean isNegative,
     boolean isInstant,
+    boolean requiresDay,
+    boolean requiresNight,
 
     int minTimeFrame,
     int maxTimeFrame,
@@ -45,6 +49,12 @@ public record FortuneDefinition(
                 Codec.BOOL
                     .fieldOf("is_instant")
                     .forGetter(FortuneDefinition::isInstant),
+                Codec.BOOL
+                    .fieldOf("requires_day")
+                    .forGetter(FortuneDefinition::requiresDay),
+                Codec.BOOL
+                    .fieldOf("requires_night")
+                    .forGetter(FortuneDefinition::requiresNight),
 
                 ExtraCodecs.POSITIVE_INT
                     .fieldOf("min_time_frame")

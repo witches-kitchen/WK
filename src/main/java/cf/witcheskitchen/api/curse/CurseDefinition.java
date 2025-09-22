@@ -29,6 +29,8 @@ import net.minecraft.util.StringRepresentable;
  * @param curingFortunes          List of fortunes that can cure this curse.
  * @param curseLength             How many ticks does a curse last for once fired?
  * @param isCursePermanent        Is the curse permanent if it is not treated?
+ * @param canCurseBeInflictedOnlyAtNight        Is the curse dependent on it being night?
+ * @param canCurseBeInflictedOnlyAtDay       Is the curse dependent on it being day?
  */
 public record CurseDefinition(
     //TODO: What does this line do?
@@ -40,6 +42,8 @@ public record CurseDefinition(
     boolean canDispelPermanentCurse,
     boolean isCurseInstant,
     boolean isCursePermanent,
+    boolean canCurseBeInflictedOnlyAtNight,
+    boolean canCurseBeInflictedOnlyAtDay,
 
     int minTimeFrame,
     int maxTimeFrame,
@@ -72,6 +76,12 @@ public record CurseDefinition(
                 Codec.BOOL
                     .fieldOf("is_curse_permanent_unless_dispelled")
                     .forGetter(CurseDefinition::isCursePermanent),
+                Codec.BOOL
+                    .fieldOf("can_cursed_be_inflicted_only_at_night")
+                    .forGetter(CurseDefinition::canCurseBeInflictedOnlyAtNight),
+                Codec.BOOL
+                    .fieldOf("can_cursed_be_inflicted_only_at_day")
+                    .forGetter(CurseDefinition::canCurseBeInflictedOnlyAtDay),
 
 
                 ExtraCodecs.POSITIVE_INT
