@@ -22,7 +22,14 @@ public record PoppetDefinition(
      * @param isEffectActivatedByFire Must you burn the poppet for the effect to fire?
      * @param isEffectActivatedByExplosion Does the poppet need to be near an explosion to fire?
      * @param isEffectActivatedInAnotherDimension Does the poppet need to be in another dimension for its effects to fire?
-     * @param isEffectActivatedByGivingItems Does this effect fire if you give the poppet these specific items?
+     * @param isEffectActivatedByGivingItems Does this effect fire if you give the poppet specific items?
+     * @param isEffectActivatedByThrowingInContainer Does this effect fire if you throw it into a container? (I.e. a barrel, a cauldron, etc)
+     * @param isEffectActivatedBySleep Does this effect fire if you or the target are asleep?
+     * @param isEffectActivatedByDroppingIntoVoid Does this effect fire if you drop the item into the void?
+     * @param isEffectActivatedBySound Does this effect fire via exposure to specific sounds?
+     * @param isEffectActivatedByAnotherMob Does this effect fire via exposure to specific mobs?
+     * @param isEffectActivatedByTime Does this effect need a specific time of day to fire?
+     *
      */
 
     boolean canEffectBeUsedOnSelf,
@@ -41,13 +48,11 @@ public record PoppetDefinition(
     boolean isEffectActivatedInAnotherDimension,
     boolean isEffectActivatedByGivingItems,
     boolean isEffectActivatedByThrowingInContainer,
-    boolean isEffectActivatedByYouSleeping,
-    boolean isEffectActivatedByVictimSleeping,
+    boolean isEffectActivatedBySleep,
     boolean isEffectActivatedByDroppingIntoVoid,
     boolean isEffectActivatedBySound,
     boolean isEffectActivatedByAnotherMob,
-    boolean isEffectActivatedByMoonlight,
-    boolean isEffectActivatedBySunlight,
+    boolean isEffectActivatedByTime,
 
     /**
      *
