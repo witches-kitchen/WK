@@ -31,6 +31,10 @@ public record PoppetDefinition(
     boolean isEffectActivatedByMoonlight,
     boolean isEffectActivatedBySunlight,
 
+    /**
+    * @param taglockVictimID This is the UUID of the player or mob targeted.
+    */
+
     int taglockVictimID,
     int effectDurationMinimum,
     int effectDurationMaximum

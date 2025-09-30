@@ -24,10 +24,10 @@ import net.minecraft.util.StringRepresentable;
  * @param canDispelCurse          Can the curse be dispelled before it is over?
  * @param canDispelPermanentCurse Does the curse last until it is dispelled by the victim?
  * @param isCurseInstant          Is the curse instant?
- * @param minTimeFrame            How many ticks at minimum does it take for a non-instant curse to fire?
- * @param maxTimeFrame            How many ticks at maximum does it take for a non-instant curse to fire?
+ * @param minTimeFrame            How many ticks at minimum does it take for a non-instant curse to fire? One tick is 50 milliseconds
+ * @param maxTimeFrame            How many ticks at maximum does it take for a non-instant curse to fire? One tick is 50 milliseconds
  * @param curingFortunes          List of fortunes that can cure this curse.
- * @param curseLength             How many ticks does a curse last for once fired?
+ * @param curseLength             How many ticks does a curse last for once fired? One tick is 50 milliseconds
  * @param isCursePermanent        Is the curse permanent if it is not treated?
  * @param canCurseBeInflictedOnlyAtNight        Is the curse dependent on it being night?
  * @param canCurseBeInflictedOnlyAtDay       Is the curse dependent on it being day?

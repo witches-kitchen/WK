@@ -20,9 +20,9 @@ import net.minecraft.util.ExtraCodecs;
  *
  * @param isNegative     Is the fortune bad?
  * @param isInstant      Does the fortune fire instantly?
- * @param minTimeFrame   How many ticks at minimum does it take for a non-instant fortune to fire?
- * @param maxTimeFrame   How many ticks at maximum does it take for a non-instant fortune to fire?
- * @param fortuneLength  How many ticks does a fortune last for once fired?
+ * @param minTimeFrame   How many ticks at minimum does it take for a non-instant fortune to fire? One tick is 50 milliseconds
+ * @param maxTimeFrame   How many ticks at maximum does it take for a non-instant fortune to fire? One tick is 50 milliseconds
+ * @param fortuneLength  How many ticks does a fortune last for once fired? One tick is 50 milliseconds 
  * @param negatingCurses List of curses that negate this fortune from firing.
  * @param requiresDay  Will this fortune only fire at day?
  * @param requiresNight Will this fortune only fire at night?

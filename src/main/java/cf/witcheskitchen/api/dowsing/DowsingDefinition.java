@@ -44,12 +44,14 @@ public record DowsingDefinition(
     /**
      * Minimum distance to find what your rods picked up
      * Measured in blocks.
+     * Blocks are 1 cubic meter long.
      */
     int distanceFromPlayerMin,
 
     /**
      * Maximum distance to find what your rods picked up
      * Measured in blocks.
+     * Blocks are 1 cubic meter long.
      */
     int distanceFromPlayerMax
 ) {
