@@ -14,6 +14,15 @@ public record PoppetDefinition(
      * @param canAttractWitchHunters Can this effect attract witch hunters to you?
      * @param isEffectActivatedByHitting Do you need to punch the poppet entity to activate the effect?
      * @param isEffectActivatedByDropping Do you need to drop the item to activate the effect?
+     * @param canEffectFireOnDeath Can this fire on the death of either you or a targeted entity?
+     * @param isEffectActivatedByHolding Do you need to hold this in the main hand or offhand for this to fire?
+     * @param isEffectActivatedByPricking Do you need to prick the poppet with a needle or other sharp object for this to fire?
+     * @param canTakeDamageInPlaceOfPlayer Can this take damage in your place?
+     * @param isEffectActivatedByDroppingBlock Do you need to drop a gravity-affected block (i.e. sand, anvils, etc) onto the poppet for this to fire?
+     * @param isEffectActivatedByFire Must you burn the poppet for the effect to fire?
+     * @param isEffectActivatedByExplosion Does the poppet need to be near an explosion to fire?
+     * @param isEffectActivatedInAnotherDimension Does the poppet need to be in another dimension for its effects to fire?
+     * @param isEffectActivatedByGivingItems Does this effect fire if you give the poppet these specific items?
      */
 
     boolean canEffectBeUsedOnSelf,
@@ -29,7 +38,6 @@ public record PoppetDefinition(
     boolean isEffectActivatedByDroppingBlock,
     boolean isEffectActivatedByFire,
     boolean isEffectActivatedByExplosion,
-    boolean isEffectActivatedByHoldingInOffhand,
     boolean isEffectActivatedInAnotherDimension,
     boolean isEffectActivatedByGivingItems,
     boolean isEffectActivatedByThrowingInContainer,
