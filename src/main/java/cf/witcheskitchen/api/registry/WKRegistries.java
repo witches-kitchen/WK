@@ -2,7 +2,6 @@ package cf.witcheskitchen.api.registry;
 
 import cf.witcheskitchen.api.curse.CurseEffect;
 import cf.witcheskitchen.api.fortune.FortuneEffect;
-import net.fabricmc.fabric.api.event.registry.FabricRegistry;
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
 import net.fabricmc.fabric.api.event.registry.RegistryAttribute;
 import net.minecraft.core.Registry;

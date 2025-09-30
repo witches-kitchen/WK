@@ -32,8 +32,11 @@ public record PoppetDefinition(
     boolean isEffectActivatedBySunlight,
 
     /**
-    * @param taglockVictimID This is the UUID of the player or mob targeted.
-    */
+     *
+     * @param taglockVictimID This is the UUID of the player or mob targeted.
+     * @param effectDurationMinimum How long does a poppet effect last at minimum? Measured in ticks. One tick is 50 milliseconds. 20 ticks are in a second.
+     * @param effectDurationMaximum How long does a poppet effect last at maximum? Measured in ticks. One tick is 50 milliseconds. 20 ticks are in a second.
+     */
 
     int taglockVictimID,
     int effectDurationMinimum,
