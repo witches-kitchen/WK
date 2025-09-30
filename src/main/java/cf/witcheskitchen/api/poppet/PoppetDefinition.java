@@ -6,6 +6,16 @@ package cf.witcheskitchen.api.poppet;
 //Todo: After setting up everything, add java docs
 public record PoppetDefinition(
 
+    /**
+     *
+     * @param canEffectBeUsedOnSelf Can you use this on yourself?
+     * @param isPoppetEffectPositive Does this poppet has a positive effect?
+     * @param isPoppetEffectInstant Does this poppet effect fire instantly?
+     * @param canAttractWitchHunters Can this effect attract witch hunters to you?
+     * @param isEffectActivatedByHitting Do you need to punch the poppet entity to activate the effect?
+     * @param isEffectActivatedByDropping Do you need to drop the item to activate the effect?
+     */
+
     boolean canEffectBeUsedOnSelf,
     boolean isPoppetEffectPositive,
     boolean isPoppetEffectInstant,
