@@ -44,7 +44,7 @@ public class HorrorStatusEffect extends MobEffect {
         int i = rand.nextInt(100);
         if (timer > 0) timer--;
         if (i < 5 && timer == 0) {
-            switch (rand.nextInt(26)) {
+            switch (rand.nextInt(28)) {
                 case 0 -> {
                     world.playSound(null, pos, SoundEvents.WOODEN_BUTTON_CLICK_ON, SoundSource.HOSTILE, 1, 1);
                     world.playSound(null, pos, SoundEvents.TNT_PRIMED, SoundSource.HOSTILE, 1, 1);
@@ -366,6 +366,32 @@ public class HorrorStatusEffect extends MobEffect {
                 }
                 case 24 -> {
                     world.playSound(null, pos, SoundEvents.GHAST_SHOOT, SoundSource.HOSTILE, 1, 1);
+                    if (amplifier == 0) {
+                        timer = 650;
+                        entity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 9000, 3));
+                        entity.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 9000, 3));
+                    }
+                    if (amplifier >= 1) {
+                        timer = 350;
+                        entity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 9000, 3));
+                        entity.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 9000, 3));
+                    }
+                }
+                case 25 -> {
+                    world.playSound(null, pos, SoundEvents.APPLY_EFFECT_BAD_OMEN, SoundSource.HOSTILE, 1, 1);
+                    if (amplifier == 0) {
+                        timer = 650;
+                        entity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 9000, 3));
+                        entity.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 9000, 3));
+                    }
+                    if (amplifier >= 1) {
+                        timer = 350;
+                        entity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 9000, 3));
+                        entity.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 9000, 3));
+                    }
+                }
+                case 26 -> {
+                    world.playSound(null, pos, SoundEvents.PILLAGER_CELEBRATE, SoundSource.HOSTILE, 1, 1);
                     if (amplifier == 0) {
                         timer = 650;
                         entity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 9000, 3));
