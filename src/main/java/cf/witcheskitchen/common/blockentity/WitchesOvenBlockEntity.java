@@ -26,6 +26,7 @@ import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.ExperienceOrb;
+import net.minecraft.world.entity.ItemOwner;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -47,7 +48,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-public class WitchesOvenBlockEntity extends WKBlockEntityWithInventory implements IExperienceHandler, MenuProvider {
+public class WitchesOvenBlockEntity extends WKBlockEntityWithInventory implements IExperienceHandler, MenuProvider, ItemOwner {
 
     // Default cooking value for vanilla recipes is 200
     private static final int DEFAULT_COOKING_TIME = 200;
@@ -554,4 +555,18 @@ public class WitchesOvenBlockEntity extends WKBlockEntityWithInventory implement
         this.experience = 0;
     }
 
+    @Override
+    public Level level() {
+        return this.level;
+    }
+
+    @Override
+    public Vec3 position() {
+        return this.getBlockPos().getCenter();
+    }
+
+    @Override
+    public float getVisualRotationYInDegrees() {
+        return this.getBlockState().getValue(WitchesOvenBlock.FACING).toYRot();
+    }
 }

@@ -109,7 +109,7 @@ public class WitchesCauldronBlock extends WKBlockWithEntity implements SimpleWat
         final var blockEntity = world.getBlockEntity(pos);
         final var heldStack = player.getItemInHand(hand);
         final var side = hit.getDirection();
-        if (world.isClientSide) {
+        if (world.isClientSide()) {
             world.playSound(player, pos, WKSoundEvents.FERRET_IDLE_EVENT, SoundSource.BLOCKS, 1.0f, 1.0f);
         }
         if (blockEntity instanceof final WitchesCauldronBlockEntity cauldron) {
@@ -187,10 +187,10 @@ public class WitchesCauldronBlock extends WKBlockWithEntity implements SimpleWat
     }
 
     @Override
-    protected void entityInside(BlockState state, Level world, BlockPos pos, Entity entity, InsideBlockEffectApplier handler) {
-        super.entityInside(state, world, pos, entity, handler);
+    protected void entityInside(BlockState state, Level world, BlockPos pos, Entity entity, InsideBlockEffectApplier handler, boolean intersects) {
+        super.entityInside(state, world, pos, entity, handler, intersects);
         final BlockEntity blockEntity = world.getBlockEntity(pos);
-        if (!world.isClientSide && blockEntity instanceof WitchesCauldronBlockEntity cauldron) {
+        if (!world.isClientSide() && blockEntity instanceof WitchesCauldronBlockEntity cauldron) {
             if (cauldron.hasFluid()) {
                 if (entity instanceof ItemEntity itemEntity) {
                     final Item item = itemEntity.getItem().getItem();

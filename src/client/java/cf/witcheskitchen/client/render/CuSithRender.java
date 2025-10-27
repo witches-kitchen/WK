@@ -11,6 +11,6 @@ public class CuSithRender<R extends WKRenderState & GeoRenderState> extends GeoE
     public CuSithRender(EntityRendererProvider.Context ctx) {
         super(ctx, new CuSithEntityModel());
         this.shadowRadius = 0.33f;
-        addRenderLayer(new CuSithEyeLayer<>(this));
+        this.withRenderLayer(new CuSithEyeLayer<>(this));
     }
 }

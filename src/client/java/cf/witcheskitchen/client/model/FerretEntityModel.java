@@ -11,7 +11,7 @@ public class FerretEntityModel extends DefaultedEntityGeoModel<FerretEntity> {
     public static final DataTicket<Integer> VARIANT = DataTicket.create("variant", int.class);
 
     public FerretEntityModel() {
-        super(WitchesKitchen.id("ferret"), true);
+        super(WitchesKitchen.id("ferret"), "head");
     }
 
     @Override

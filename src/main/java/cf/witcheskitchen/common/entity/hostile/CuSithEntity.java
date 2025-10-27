@@ -121,7 +121,7 @@ public class CuSithEntity extends WKHostileEntity implements GeoEntity {
     @Override
     public void tick() {
         super.tick();
-        if (!level().isClientSide && !hasCustomName() && level().isBrightOutside() && !level().isRaining() && !level().isThundering() && level().canSeeSkyFromBelowWater(blockPosition())) {
+        if (!level().isClientSide() && !hasCustomName() && level().isBrightOutside() && !level().isRaining() && !level().isThundering() && level().canSeeSkyFromBelowWater(blockPosition())) {
             remove(Entity.RemovalReason.KILLED);
         }
     }

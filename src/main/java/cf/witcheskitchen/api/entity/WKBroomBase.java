@@ -28,7 +28,7 @@ public abstract class WKBroomBase extends Entity {
     public InteractionResult interact(Player player, InteractionHand hand) {
         if (player.isSecondaryUseActive()) {
             return InteractionResult.PASS;
-        } else if (!this.level().isClientSide) {
+        } else if (!this.level().isClientSide()) {
             if (player.isShiftKeyDown() && player.getMainHandItem().isEmpty()) {
                 return pickUpBroom(player);
             } else {

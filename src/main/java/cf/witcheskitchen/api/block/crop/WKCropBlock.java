@@ -242,8 +242,8 @@ public abstract class WKCropBlock extends CropBlock {
      * See also {@link Entity#checkInsideBlocks()}
      */
     @Override
-    protected void entityInside(BlockState state, Level world, BlockPos pos, Entity entity, InsideBlockEffectApplier handler) {
-        super.entityInside(state, world, pos, entity, handler);
+    protected void entityInside(BlockState state, Level world, BlockPos pos, Entity entity, InsideBlockEffectApplier handler, boolean intersects) {
+        super.entityInside(state, world, pos, entity, handler, intersects);
     }
 
     /**

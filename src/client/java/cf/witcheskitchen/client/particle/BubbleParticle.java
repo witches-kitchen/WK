@@ -5,17 +5,23 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.SingleQuadParticle;
+import net.minecraft.client.particle.SpriteSet;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import org.jetbrains.annotations.Nullable;
 
 @Environment(EnvType.CLIENT)
-public class BubbleParticle extends TextureSheetParticle {
+public class BubbleParticle extends SingleQuadParticle {
 
-    public BubbleParticle(ClientLevel clientWorld, double posX, double posY, double posZ, double r, double g, double b) {
-        super(clientWorld, posX, posY, posZ, r, g, b);
+    public BubbleParticle(ClientLevel clientWorld, double posX, double posY, double posZ, double xSpeed, double ySpeed, double zSpeed, TextureAtlasSprite sprite) {
+        super(clientWorld, posX, posY, posZ, xSpeed, ySpeed, zSpeed, sprite);
         this.setSize(0.02F, 0.02F);
         float offset = (float) ((Math.random() * 0.4F) + 0.3F);
         this.quadSize *= offset;
@@ -23,9 +29,12 @@ public class BubbleParticle extends TextureSheetParticle {
         this.xd *= 0.1;
         this.yd *= 0.1;
         this.zd *= 0.1;
-        this.rCol = (float) (((Math.random() * 0.3F) + 1.0F) * r * offset);
-        this.gCol = (float) (((Math.random() * 0.3F) + 1.0F) * g * offset);
-        this.bCol = (float) (((Math.random() * 0.3F) + 1.0F) * b * offset);
+//        this.rCol = (float) (((Math.random() * 0.3F) + 1.0F) * r * offset);
+//        this.gCol = (float) (((Math.random() * 0.3F) + 1.0F) * g * offset);
+//        this.bCol = (float) (((Math.random() * 0.3F) + 1.0F) * b * offset);
+        this.rCol = (float) (((Math.random() * 0.3F) + 1.0F) * offset);
+        this.gCol = (float) (((Math.random() * 0.3F) + 1.0F) * offset);
+        this.bCol = (float) (((Math.random() * 0.3F) + 1.0F) * offset);
     }
 
     @Override
@@ -57,8 +66,8 @@ public class BubbleParticle extends TextureSheetParticle {
     }
 
     @Override
-    public ParticleRenderType getRenderType() {
-        return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
+    protected Layer getLayer() {
+        return Layer.OPAQUE;
     }
 
     public void setScale(float scale) {
@@ -68,10 +77,9 @@ public class BubbleParticle extends TextureSheetParticle {
     // Immutable Factory
     @Environment(EnvType.CLIENT)
     public record Factory(SpriteSet spriteProvider) implements ParticleProvider<SimpleParticleType> {
-        public Particle createParticle(SimpleParticleType defaultParticleType, ClientLevel clientWorld, double d, double e, double f, double g, double h, double i) {
-            final BubbleParticle particle = new BubbleParticle(clientWorld, d, e, f, g, h, i);
-            particle.pickSprite(this.spriteProvider);
-            return particle;
+        @Override
+        public @Nullable Particle createParticle(SimpleParticleType particleType, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, RandomSource random) {
+            return new BubbleParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, spriteProvider.get(random));
         }
     }
 }

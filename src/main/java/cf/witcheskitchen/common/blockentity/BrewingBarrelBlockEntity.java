@@ -3,6 +3,7 @@ package cf.witcheskitchen.common.blockentity;
 import cf.witcheskitchen.api.block.entity.WKBlockEntity;
 import cf.witcheskitchen.api.block.entity.WKBlockEntityWithInventory;
 import cf.witcheskitchen.api.util.InventoryManager;
+import cf.witcheskitchen.common.block.WitchesOvenBlock;
 import cf.witcheskitchen.common.recipe.BarrelFermentingRecipe;
 import cf.witcheskitchen.common.recipe.MultipleStackRecipeInput;
 import cf.witcheskitchen.common.registry.WKBlockEntityTypes;
@@ -24,6 +25,8 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.ContainerUser;
+import net.minecraft.world.entity.ItemOwner;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -39,11 +42,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class BrewingBarrelBlockEntity extends WKBlockEntityWithInventory implements MenuProvider {
+public class BrewingBarrelBlockEntity extends WKBlockEntityWithInventory implements MenuProvider, ItemOwner {
 
     public static final int MAX_TIME = 168_000; // 7 days
     // TODO: are we sure this wouldn't crash the dedicated server?
@@ -251,13 +255,13 @@ public class BrewingBarrelBlockEntity extends WKBlockEntityWithInventory impleme
     }
 
     @Override
-    public void startOpen(Player player) {
+    public void startOpen(ContainerUser player) {
         super.startOpen(player);
         this.playSound(SoundEvents.BARREL_OPEN);
     }
 
     @Override
-    public void stopOpen(Player player) {
+    public void stopOpen(ContainerUser player) {
         super.stopOpen(player);
         this.playSound(SoundEvents.BARREL_CLOSE);
     }
@@ -311,5 +315,20 @@ public class BrewingBarrelBlockEntity extends WKBlockEntityWithInventory impleme
 
     public boolean hasFinished() {
         return this.hasFinished;
+    }
+
+    @Override
+    public Level level() {
+        return this.getLevel();
+    }
+
+    @Override
+    public Vec3 position() {
+        return this.getBlockPos().getCenter();
+    }
+
+    @Override
+    public float getVisualRotationYInDegrees() {
+        return this.getBlockState().getValue(WitchesOvenBlock.FACING).toYRot();
     }
 }

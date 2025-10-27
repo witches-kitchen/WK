@@ -11,7 +11,7 @@ public class ChurchGrimModel extends DefaultedEntityGeoModel<ChurchGrimEntity> {
     public static final DataTicket<Integer> VARIANT = DataTicket.create("variant", int.class);
 
     public ChurchGrimModel() {
-        super(WitchesKitchen.id("churchgrim"), true);
+        super(WitchesKitchen.id("churchgrim"), "head");
     }
 
     @Override

@@ -11,7 +11,7 @@ public class RoggenwolfModel extends DefaultedEntityGeoModel<RoggenwolfEntity> {
     public static final DataTicket<Integer> VARIANT = DataTicket.create("variant", int.class);
 
     public RoggenwolfModel() {
-        super(WitchesKitchen.id("roggenwolf"), true);
+        super(WitchesKitchen.id("roggenwolf"), "head");
     }
 
     @Override

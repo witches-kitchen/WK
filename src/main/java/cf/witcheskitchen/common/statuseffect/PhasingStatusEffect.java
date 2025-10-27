@@ -27,7 +27,7 @@ public class PhasingStatusEffect extends InstantenousMobEffect {
 
     @Override
     public boolean applyEffectTick(ServerLevel world, LivingEntity entity, int amplifier) {
-        if (!world.isClientSide) {
+        if (!world.isClientSide()) {
             double d = entity.getX();
             double e = entity.getY();
             double f = entity.getZ();

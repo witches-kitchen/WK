@@ -67,7 +67,7 @@ public class DisrobingStatusEffect extends InstantenousMobEffect {
             } else if (EnchantmentHelper.has(equippedArmor, EnchantmentEffectComponents.PREVENT_EQUIPMENT_DROP)) {
                 return false;//item should disappear on death.
             }
-            if (entity.spawnAtLocation(world, equippedArmor.getItem(), 1) != null) {
+            if (entity.spawnAtLocation(world, equippedArmor.copyWithCount(1)) != null) {
                 equippedArmor.shrink(1);
             }
         } else {
@@ -86,7 +86,7 @@ public class DisrobingStatusEffect extends InstantenousMobEffect {
                     if (targetIndex == slotIndex) {
                         final SlotEntryReference slotData = accessories.get(slotIndex);
                         final Item itemInSlot = slotData.stack().getItem();
-                        entity.spawnAtLocation(world, itemInSlot, 1);
+                        entity.spawnAtLocation(world, itemInSlot.getDefaultInstance().copyWithCount(1));
                         ItemStack stack = slotData.stack();
                         stack.shrink(1);
                         slotData.reference().setStack(stack);

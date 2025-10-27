@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.11-SNAPSHOT'
+    id 'fabric-loom' version '1.12-SNAPSHOT'
     id 'maven-publish'
     id("java")
     //TODO: FIX id 'xyz.wagyourtail.unimined' version '1.4.1'
@@ -167,10 +167,10 @@ dependencies {
 
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-    /*modImplementation("com.klikli_dev:modonomicon-${minecraft_version}-fabric:${modonomicon_version}") {
-// Exclude JEI transitive dependency, as otherwise, the game will not launch in dev.
-exclude group: "mezz.jei"
-}*/ // TODO: not updated
+    modImplementation("com.klikli_dev:modonomicon-${minecraft_version}-fabric:${modonomicon_version}") {
+        // Exclude JEI transitive dependency, as otherwise, the game will not launch in dev.
+        exclude group: "mezz.jei"
+    }
     modImplementation("com.terraformersmc:modmenu:${project.modmenu_version}")
     //modImplementation "com.github.Virtuoel:Pehkui:${pehkui_version}" // not needed on >=1.21.2
     modCompileOnly "squeek.appleskin:appleskin-fabric:${appleskin_version}:api"
@@ -189,7 +189,7 @@ exclude group: "mezz.jei"
     modRuntimeOnly "lol.bai:badpackets:fabric-${badpacketsVersion}"
     modCompileOnlyApi "me.shedaniel:RoughlyEnoughItems-api-fabric:$rei_version"
     modCompileOnlyApi "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:$rei_version"
-    modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:$rei_version"
+//    modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:$rei_version" // TODO: REI isn't updated yet
     modCompileOnly "dev.architectury:architectury-fabric:$architectury_version"
     modCompileOnly("me.shedaniel.cloth:cloth-config-fabric:$cloth_version") {
         // required for making REI integration work

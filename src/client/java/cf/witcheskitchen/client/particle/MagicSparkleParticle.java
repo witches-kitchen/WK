@@ -4,21 +4,24 @@ import cf.witcheskitchen.api.event.network.MagicSparkleParticleEvent;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.*;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.util.RandomSource;
+import org.jetbrains.annotations.Nullable;
 
 @Environment(EnvType.CLIENT)
-public class MagicSparkleParticle extends TextureSheetParticle {
+public class MagicSparkleParticle extends SingleQuadParticle {
 
     private final RandomSource random;
     private boolean canMove = false;
     private boolean circling = false;
 
-    protected MagicSparkleParticle(ClientLevel clientWorld, double x, double y, double z, double r, double g, double b) {
-        super(clientWorld, x, y, z);
+    protected MagicSparkleParticle(ClientLevel clientWorld, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, TextureAtlasSprite sprite) {
+        super(clientWorld, x, y, z, xSpeed, ySpeed, zSpeed, sprite);
         this.setScale(0.12f);
-        this.setColor((float) r, (float) g, (float) b);
+//        this.setColor((float) r, (float) g, (float) b);
+        this.setColor(1f, 1f, 1f);
         this.random = clientWorld.getRandom();
         this.lifetime = 25 + (random.nextInt(10));
         MagicSparkleParticleEvent.PARTICLE_CONSTRUCTOR_EVENT.invoker().onConstructor(this);
@@ -64,10 +67,14 @@ public class MagicSparkleParticle extends TextureSheetParticle {
         return this;
     }
 
+    @Override
+    public ParticleRenderType getGroup() {
+        return ParticleRenderType.SINGLE_QUADS;
+    }
 
     @Override
-    public ParticleRenderType getRenderType() {
-        return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
+    protected Layer getLayer() {
+        return Layer.OPAQUE;
     }
 
     public RandomSource getRandom() {
@@ -92,10 +99,9 @@ public class MagicSparkleParticle extends TextureSheetParticle {
 
     @Environment(EnvType.CLIENT)
     public record Factory(SpriteSet spriteProvider) implements ParticleProvider<SimpleParticleType> {
-        public Particle createParticle(SimpleParticleType defaultParticleType, ClientLevel clientWorld, double d, double e, double f, double g, double h, double i) {
-            final MagicSparkleParticle particle = new MagicSparkleParticle(clientWorld, d, e, f, g, h, i);
-            particle.pickSprite(this.spriteProvider);
-            return particle;
+        @Override
+        public @Nullable Particle createParticle(SimpleParticleType particleType, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, RandomSource random) {
+            return new MagicSparkleParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, this.spriteProvider.get(random));
         }
     }
 

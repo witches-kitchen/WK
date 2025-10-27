@@ -10,6 +10,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.ResourceLocation;
+import org.joml.Vector3f;
 import org.joml.Vector4f;
 
 public class WKClientEventsHandler {
@@ -37,7 +38,7 @@ public class WKClientEventsHandler {
                 RenderSystem.getDynamicUniforms().writeTransform(
                     RenderSystem.getModelViewMatrix(),
                     new Vector4f(1f, 1f, 1f, 1f),
-                    RenderSystem.getModelOffset(),
+                    new Vector3f(),
                     RenderSystem.getTextureMatrix(),
                     RenderSystem.getShaderLineWidth()
                 );

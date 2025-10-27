@@ -36,8 +36,8 @@ public class BlackthornPillarBlock extends RotatedPillarBlock {
     }
 
     @Override
-    protected void entityInside(BlockState state, Level world, BlockPos pos, Entity entity, InsideBlockEffectApplier handler) {
-        super.entityInside(state, world, pos, entity, handler);
+    protected void entityInside(BlockState state, Level world, BlockPos pos, Entity entity, InsideBlockEffectApplier handler, boolean intersects) {
+        super.entityInside(state, world, pos, entity, handler, intersects);
         if (entity instanceof LivingEntity && world instanceof ServerLevel serverWorld) {
             entity.hurtServer(serverWorld, entity.damageSources().source(WKDamageSources.HUGGING_BLACKTHORN), 2.0F);
         }

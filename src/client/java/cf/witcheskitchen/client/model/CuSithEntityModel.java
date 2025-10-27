@@ -11,7 +11,7 @@ public class CuSithEntityModel extends DefaultedEntityGeoModel<CuSithEntity> {
     public static final DataTicket<Integer> VARIANT = DataTicket.create("variant", int.class);
 
     public CuSithEntityModel() {
-        super(WitchesKitchen.id("cusith"), true);
+        super(WitchesKitchen.id("cusith"), "head");
     }
 
     @Override

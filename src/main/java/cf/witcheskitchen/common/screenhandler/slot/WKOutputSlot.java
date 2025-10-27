@@ -24,7 +24,7 @@ public class WKOutputSlot extends WKSlot {
     @Override
     protected void checkTakeAchievements(ItemStack stack) {
         //drop xp when the player takes the item from output
-        if (!this.player.level().isClientSide && this.container instanceof IExperienceHandler xpHandler) {
+        if (!this.player.level().isClientSide() && this.container instanceof IExperienceHandler xpHandler) {
             if (this.player.level() instanceof ServerLevel world) {
                 xpHandler.dropExperience(world, this.player.position());
             }

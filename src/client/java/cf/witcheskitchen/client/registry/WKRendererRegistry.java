@@ -14,9 +14,9 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 @Environment(EnvType.CLIENT)
 public interface WKRendererRegistry {
     static void init() {
-        BlockEntityRenderers.register(WKBlockEntityTypes.WITCHES_OVEN, (ctx) -> new WitchesOvenBlockEntityRender());
+        BlockEntityRenderers.register(WKBlockEntityTypes.WITCHES_OVEN, WitchesOvenBlockEntityRender::new);
         BlockEntityRenderers.register(WKBlockEntityTypes.WITCHES_CAULDRON, (ctx) -> new WitchesCauldronBlockEntityRender());
-        BlockEntityRenderers.register(WKBlockEntityTypes.BREWING_BARREL, (ctx) -> new BrewingBarrelBlockEntityRender());
+        BlockEntityRenderers.register(WKBlockEntityTypes.BREWING_BARREL, BrewingBarrelBlockEntityRender::new);
 
         EntityRendererRegistry.register(WKEntityTypes.CUSITH, CuSithRender::new);
         EntityRendererRegistry.register(WKEntityTypes.ROGGENWOLF, RoggenwolfRender::new);

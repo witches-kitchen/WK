@@ -26,7 +26,7 @@ public class WKBlockEntity extends BlockEntity implements BlockEntityTicker<WKBl
     }
 
     public void sync(Level world, BlockPos pos) {
-        if (world != null && !world.isClientSide) {
+        if (world != null && !world.isClientSide()) {
             world.sendBlockUpdated(pos, getBlockState(), getBlockState(), Block.UPDATE_CLIENTS);
             getUpdatePacket();
         }

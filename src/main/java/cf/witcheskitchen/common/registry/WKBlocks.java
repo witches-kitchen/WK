@@ -132,7 +132,7 @@ public interface WKBlocks {
     Block WAXED_WEATHERED_COPPER_WITCHES_OVEN = register("waxed_weathered_copper_witches_oven", new WitchesOvenBlock(BlockBehaviour.Properties.ofFullCopy(WEATHERED_COPPER_WITCHES_OVEN)), true);
     Block OXIDIZED_COPPER_WITCHES_OVEN = register("oxidized_copper_witches_oven", new CopperWitchesOvenBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OXIDIZED_COPPER).lightLevel(state -> state.getValue(WitchesOvenBlock.LIT) ? 13 : 0), WeatheringCopper.WeatherState.OXIDIZED), true);
     Block WAXED_OXIDIZED_COPPER_WITCHES_OVEN = register("waxed_oxidized_copper_witches_oven", new WitchesOvenBlock(BlockBehaviour.Properties.ofFullCopy(OXIDIZED_COPPER_WITCHES_OVEN)), true);
-    Block GLYPH = register("glyph", new GlyphBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.FLOWER_POT).noCollission().noLootTable().strength(1, 0)), false);
+    Block GLYPH = register("glyph", new GlyphBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.FLOWER_POT).noCollision().noLootTable().strength(1, 0)), false);
     Block ENCHANTED_GLYPH = register("enchanted_glyph", new GlyphBlock(BlockBehaviour.Properties.ofFullCopy(GLYPH)), false);
     Block IRON_WITCHES_CAULDRON = register("iron_witches_cauldron", new WitchesCauldronBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAULDRON).lightLevel(state -> state.getValue(WitchesCauldronBlock.LIT) ? 13 : 0)), true);
     Block OAK_BREWING_BARREL = registerBarrel("oak_brewing_barrel");
@@ -157,7 +157,7 @@ public interface WKBlocks {
     Block SUMAC_SAPLING = registerSapling("sumac_sapling", WKConfiguredFeatures.SUMAC_TREE);
     Block POTTED_SUMAC_SAPLING = registerPottedSapling("potted_sumac_sapling", SUMAC_SAPLING);
     //Crops
-    WKTallCropBlock AMARANTH = registerWithType("amaranth", new AmaranthCropBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SHORT_GRASS).noCollission().randomTicks().instabreak().sound(SoundType.CROP)));
+    WKTallCropBlock AMARANTH = registerWithType("amaranth", new AmaranthCropBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SHORT_GRASS).noCollision().randomTicks().instabreak().sound(SoundType.CROP)));
     WKTallCropBlock AMARANTH_SWEETBERRY = registerWithType("amaranth_sweetberry", new AmaranthCropBlock(BlockBehaviour.Properties.ofFullCopy(AMARANTH), AmaranthTypes.SWEETBERRY));
     WKTallCropBlock AMARANTH_TORCH = registerWithType("amaranth_torch", new AmaranthCropBlock(BlockBehaviour.Properties.ofFullCopy(AMARANTH), AmaranthTypes.TORCH));
     WKTallCropBlock AMARANTH_SUNDEW = registerWithType("amaranth_sundew", new AmaranthCropBlock(BlockBehaviour.Properties.ofFullCopy(AMARANTH), AmaranthTypes.SUNDEW));
@@ -169,21 +169,21 @@ public interface WKBlocks {
     WKTallCropBlock AMARANTH_FIREBIRD = registerWithType("amaranth_firebird", new AmaranthCropBlock(BlockBehaviour.Properties.ofFullCopy(AMARANTH), AmaranthTypes.FIREBIRD));
     //Plants
     Block AMARANTH_PLANT = register("amaranth_plant", new WildTallPlantCropBlock(getCropSettings(), AMARANTH, 0), false);
-    WKTallCropBlock BELLADONNA = registerWithType("belladonna", new BelladonnaCropBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CORNFLOWER).noCollission().randomTicks().instabreak().sound(SoundType.CROP)));
+    WKTallCropBlock BELLADONNA = registerWithType("belladonna", new BelladonnaCropBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CORNFLOWER).noCollision().randomTicks().instabreak().sound(SoundType.CROP)));
     WKTallCropBlock BELLADONNA_GLOW = registerWithType("belladonna_glow", new BelladonnaCropBlock(BlockBehaviour.Properties.ofFullCopy(BELLADONNA), BelladonnaTypes.GLOW));
     WKTallCropBlock BELLADONNA_NOCTURNAL = registerWithType("belladonna_nocturnal", new BelladonnaCropBlock(BlockBehaviour.Properties.ofFullCopy(BELLADONNA), BelladonnaTypes.NOCTURNAL));
     Block BELLADONNA_PLANT = register("belladonna_plant", new WildTallPlantCropBlock(getCropSettings(), BELLADONNA, 0), false);
-    WKTallCropBlock CAMELLIA = registerWithType("camellia", new CamelliaCropBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CORNFLOWER).noCollission().randomTicks().instabreak().sound(SoundType.CROP)));
+    WKTallCropBlock CAMELLIA = registerWithType("camellia", new CamelliaCropBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CORNFLOWER).noCollision().randomTicks().instabreak().sound(SoundType.CROP)));
     WKTallCropBlock CAMELLIA_BUTTERCREAM = registerWithType("camellia_buttercream", new CamelliaCropBlock(BlockBehaviour.Properties.ofFullCopy(CAMELLIA), CamelliaTypes.BUTTERCREAM));
     WKTallCropBlock CAMELLIA_BISQUE = registerWithType("camellia_bisque", new CamelliaCropBlock(BlockBehaviour.Properties.ofFullCopy(CAMELLIA), CamelliaTypes.BISQUE));
     WKTallCropBlock CAMELLIA_FLINT = registerWithType("camellia_flint", new CamelliaCropBlock(BlockBehaviour.Properties.ofFullCopy(CAMELLIA), CamelliaTypes.FLINT));
     WKTallCropBlock CAMELLIA_DEEP_LOVE = registerWithType("camellia_deep_love", new CamelliaCropBlock(BlockBehaviour.Properties.ofFullCopy(CAMELLIA), CamelliaTypes.DEEP_LOVE));
-    WKCropBlock CHAMOMILE = registerWithType("chamomile", new ChamomileCropBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CORNFLOWER).noCollission().randomTicks().instabreak().sound(SoundType.CROP)));
+    WKCropBlock CHAMOMILE = registerWithType("chamomile", new ChamomileCropBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CORNFLOWER).noCollision().randomTicks().instabreak().sound(SoundType.CROP)));
     WKCropBlock CHAMOMILE_VIRESCENT = registerWithType("chamomile_virescent", new ChamomileCropBlock(BlockBehaviour.Properties.ofFullCopy(CHAMOMILE), ChamomileTypes.VIRESCENT));
     WKCropBlock CHAMOMILE_STARLETT = registerWithType("chamomile_starlett", new ChamomileCropBlock(BlockBehaviour.Properties.ofFullCopy(CHAMOMILE), ChamomileTypes.STARLETT));
     WKCropBlock CHAMOMILE_DYEWORKS = registerWithType("chamomile_dyeworks", new ChamomileCropBlock(BlockBehaviour.Properties.ofFullCopy(CHAMOMILE), ChamomileTypes.DYEWORKS));
     Block CHAMOMILE_PLANT = register("chamomile_plant", new WildPlantCropBlock(getCropSettings(), CHAMOMILE), false);
-    WKTallCropBlock CONEFLOWER = registerWithType("coneflower", new ConeflowerCropBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CORNFLOWER).noCollission().randomTicks().instabreak().sound(SoundType.CROP)));
+    WKTallCropBlock CONEFLOWER = registerWithType("coneflower", new ConeflowerCropBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CORNFLOWER).noCollision().randomTicks().instabreak().sound(SoundType.CROP)));
     WKTallCropBlock CONEFLOWER_DANCING_LADIES = registerWithType("coneflower_dancing_ladies", new ConeflowerCropBlock(BlockBehaviour.Properties.ofFullCopy(CONEFLOWER), ConeflowerTypes.DANCING_LADIES));
     WKTallCropBlock CONEFLOWER_VIOLET = registerWithType("coneflower_violet", new ConeflowerCropBlock(BlockBehaviour.Properties.ofFullCopy(CONEFLOWER), ConeflowerTypes.VIOLET));
     WKTallCropBlock CONEFLOWER_QUEENS_DESIRE = registerWithType("coneflower_queens_desire", new ConeflowerCropBlock(BlockBehaviour.Properties.ofFullCopy(CONEFLOWER), ConeflowerTypes.QUEENS_DESIRE));
@@ -200,7 +200,7 @@ public interface WKBlocks {
     WKTallCropBlock CONEFLOWER_MASQUERADE = registerWithType("coneflower_masquerade", new ConeflowerCropBlock(BlockBehaviour.Properties.ofFullCopy(CONEFLOWER), ConeflowerTypes.MASQUERADE));
     WKTallCropBlock CONEFLOWER_PARTY_BLEND = registerWithType("coneflower_party_blend", new ConeflowerCropBlock(BlockBehaviour.Properties.ofFullCopy(CONEFLOWER), ConeflowerTypes.PARTY_BLEND));
     Block CONEFLOWER_PLANT = register("coneflower_plant", new WildTallPlantCropBlock(getCropSettings(), CONEFLOWER, 3), false);
-    WKTallCropBlock FOXGLOVE = registerWithType("foxglove", new FoxgloveCropBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CORNFLOWER).noCollission().randomTicks().instabreak().sound(SoundType.CROP)));
+    WKTallCropBlock FOXGLOVE = registerWithType("foxglove", new FoxgloveCropBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CORNFLOWER).noCollision().randomTicks().instabreak().sound(SoundType.CROP)));
     WKTallCropBlock FOXGLOVE_SMALT = registerWithType("foxglove_smalt", new FoxgloveCropBlock(BlockBehaviour.Properties.ofFullCopy(FOXGLOVE), FoxgloveTypes.SMALT));
     WKTallCropBlock FOXGLOVE_TRANQUIL_EVENING = registerWithType("foxglove_tranquil_evening", new FoxgloveCropBlock(BlockBehaviour.Properties.ofFullCopy(FOXGLOVE), FoxgloveTypes.TRANQUIL_EVENING));
     WKTallCropBlock FOXGLOVE_PURPUREA = registerWithType("foxglove_purpurea", new FoxgloveCropBlock(BlockBehaviour.Properties.ofFullCopy(FOXGLOVE), FoxgloveTypes.PURPUREA));
@@ -230,7 +230,7 @@ public interface WKBlocks {
     WKTallCropBlock FOXGLOVE_SIGHE_MIST = registerWithType("foxglove_sighe_mist", new FoxgloveCropBlock(BlockBehaviour.Properties.ofFullCopy(FOXGLOVE), FoxgloveTypes.SIGHE_MIST));
     WKTallCropBlock FOXGLOVE_PURITY = registerWithType("foxglove_purity", new FoxgloveCropBlock(BlockBehaviour.Properties.ofFullCopy(FOXGLOVE), FoxgloveTypes.PURITY));
     Block FOXGLOVE_PLANT = register("foxglove_plant", new WildTallPlantCropBlock(getCropSettings(), FOXGLOVE, 2), false);
-    WKCropBlock HELLEBORE = registerWithType("hellebore", new HelleboreCropBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CORNFLOWER).noCollission().randomTicks().instabreak().sound(SoundType.CROP)));
+    WKCropBlock HELLEBORE = registerWithType("hellebore", new HelleboreCropBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CORNFLOWER).noCollision().randomTicks().instabreak().sound(SoundType.CROP)));
     WKCropBlock HELLEBORE_MORNING_TEA = registerWithType("hellebore_morning_tea", new HelleboreCropBlock(BlockBehaviour.Properties.ofFullCopy(HELLEBORE), HelleboreTypes.MORNING_TEA));
     WKCropBlock HELLEBORE_MORNING_CASANOVA = registerWithType("hellebore_casanova", new HelleboreCropBlock(BlockBehaviour.Properties.ofFullCopy(HELLEBORE), HelleboreTypes.CASANOVA));
     WKCropBlock HELLEBORE_MORNING_BLUSHING = registerWithType("hellebore_blushing", new HelleboreCropBlock(BlockBehaviour.Properties.ofFullCopy(HELLEBORE), HelleboreTypes.BLUSHING));
@@ -241,24 +241,24 @@ public interface WKBlocks {
     WKCropBlock HELLEBORE_MORNING_GRIMM = registerWithType("hellebore_grimm", new HelleboreCropBlock(BlockBehaviour.Properties.ofFullCopy(HELLEBORE), HelleboreTypes.GRIMM));
     WKCropBlock HELLEBORE_MORNING_NOCTURNE = registerWithType("hellebore_nocturne", new HelleboreCropBlock(BlockBehaviour.Properties.ofFullCopy(HELLEBORE), HelleboreTypes.NOCTURNE));
     Block HELLEBORE_PLANT = register("hellebore_plant", new WildPlantCropBlock(getCropSettings(), HELLEBORE), false);
-    WKTallCropBlock IRIS = registerWithType("iris", new IrisCropBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CORNFLOWER).noCollission().randomTicks().instabreak().sound(SoundType.CROP)));
+    WKTallCropBlock IRIS = registerWithType("iris", new IrisCropBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CORNFLOWER).noCollision().randomTicks().instabreak().sound(SoundType.CROP)));
     WKTallCropBlock IRIS_OCEAN = registerWithType("iris_ocean", new IrisCropBlock(BlockBehaviour.Properties.ofFullCopy(IRIS), IrisTypes.OCEAN));
     WKTallCropBlock IRIS_DEEP_SEA = registerWithType("iris_deep_sea", new IrisCropBlock(BlockBehaviour.Properties.ofFullCopy(IRIS), IrisTypes.DEEP_SEA));
     WKTallCropBlock IRIS_BLEEDING_HEART = registerWithType("iris_bleeding_heart", new IrisCropBlock(BlockBehaviour.Properties.ofFullCopy(IRIS), IrisTypes.BLEEDING_HEART));
     Block IRIS_PLANT = register("iris_plant", new WildTallPlantCropBlock(getCropSettings(), IRIS, 2), false);
-    WKCropBlock SANGUINARY = registerWithType("sanguinary", new SanguinaryCropBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CORNFLOWER).noCollission().randomTicks().instabreak().sound(SoundType.CROP)));
+    WKCropBlock SANGUINARY = registerWithType("sanguinary", new SanguinaryCropBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CORNFLOWER).noCollision().randomTicks().instabreak().sound(SoundType.CROP)));
     WKCropBlock SANGUINARY_MEADOW = registerWithType("sanguinary_meadow", new SanguinaryCropBlock(BlockBehaviour.Properties.ofFullCopy(SANGUINARY), SanguinaryTypes.MEADOW));
     WKCropBlock SANGUINARY_BLUSHING = registerWithType("sanguinary_blushing", new SanguinaryCropBlock(BlockBehaviour.Properties.ofFullCopy(SANGUINARY), SanguinaryTypes.BLUSHING));
     WKCropBlock SANGUINARY_SUNSET = registerWithType("sanguinary_sunset", new SanguinaryCropBlock(BlockBehaviour.Properties.ofFullCopy(SANGUINARY), SanguinaryTypes.SUNSET));
     WKCropBlock SANGUINARY_MADDER = registerWithType("sanguinary_madder", new SanguinaryCropBlock(BlockBehaviour.Properties.ofFullCopy(SANGUINARY), SanguinaryTypes.MADDER));
     WKCropBlock SANGUINARY_AUREOLIN = registerWithType("sanguinary_aureolin", new SanguinaryCropBlock(BlockBehaviour.Properties.ofFullCopy(SANGUINARY), SanguinaryTypes.AUREOLIN));
     Block SANGUINARY_PLANT = register("sanguinary_plant", new WildPlantCropBlock(getCropSettings(), SANGUINARY), false);
-    Block MINT = register("mint", new MintCropBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CORNFLOWER).noCollission().randomTicks().instabreak().sound(SoundType.CROP)), false);
-    Block WORMWOOD = register("wormwood", new WormwoodCropBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CORNFLOWER).noCollission().randomTicks().instabreak().sound(SoundType.CROP)), false);
-    Block SALT_BLOCK = register("salt", new SaltBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.FLOWER_POT).noCollission().instabreak()), true);
+    Block MINT = register("mint", new MintCropBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CORNFLOWER).noCollision().randomTicks().instabreak().sound(SoundType.CROP)), false);
+    Block WORMWOOD = register("wormwood", new WormwoodCropBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CORNFLOWER).noCollision().randomTicks().instabreak().sound(SoundType.CROP)), false);
+    Block SALT_BLOCK = register("salt", new SaltBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.FLOWER_POT).noCollision().instabreak()), true);
 
     static BlockBehaviour.Properties getCropSettings() {
-        return BlockBehaviour.Properties.ofFullCopy(Blocks.CORNFLOWER).noCollission().instabreak().sound(SoundType.CROP);
+        return BlockBehaviour.Properties.ofFullCopy(Blocks.CORNFLOWER).noCollision().instabreak().sound(SoundType.CROP);
     }
 
     static DoorBlock createDoorBlock(BlockBehaviour.Properties settings) {
@@ -315,7 +315,7 @@ public interface WKBlocks {
     private static Block registerSapling(String path, ConfiguredFeature<TreeConfiguration, ?> feature) {
         final Block sapling = new WKSaplingBlock(new TreeGrower(path, Optional.empty(), Optional.of(WKConfiguredFeatures.CONFIGURED_FEATURE_KEYS.get(feature)), Optional.empty()),
             BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SAPLING)
-                .noCollission()
+                .noCollision()
                 .randomTicks()
                 .instabreak()
                 .sound(SoundType.GRASS));

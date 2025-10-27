@@ -257,7 +257,7 @@ public class SaltBlock extends Block {
 
     @Override
     public void onPlace(BlockState state, Level world, BlockPos pos, BlockState oldState, boolean notify) {
-        if (!oldState.is(state.getBlock()) && !world.isClientSide) {
+        if (!oldState.is(state.getBlock()) && !world.isClientSide()) {
             for (Direction direction : Direction.Plane.VERTICAL) {
                 world.updateNeighborsAt(pos.relative(direction), this, Orientation.random(world.getRandom()));
             }
@@ -269,7 +269,7 @@ public class SaltBlock extends Block {
     protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel world, BlockPos pos, boolean moved) {
         if (!moved) {
             super.affectNeighborsAfterRemoval(state, world, pos, false);
-            if (!world.isClientSide) {
+            if (!world.isClientSide()) {
                 Direction[] var6 = Direction.values();
 
                 for (Direction direction : var6) {
@@ -305,7 +305,7 @@ public class SaltBlock extends Block {
 
     @Override
     protected void neighborChanged(BlockState state, Level world, BlockPos pos, Block sourceBlock, @Nullable Orientation wireOrientation, boolean notify) {
-        if (!world.isClientSide) {
+        if (!world.isClientSide()) {
             if (!state.canSurvive(world, pos)) {
                 dropResources(state, world, pos);
                 world.removeBlock(pos, false);

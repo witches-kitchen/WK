@@ -12,13 +12,11 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.ContainerComponentManipulators;
+import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
-import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
-import net.minecraft.world.level.storage.loot.functions.CopyCustomDataFunction;
-import net.minecraft.world.level.storage.loot.functions.CopyNameFunction;
-import net.minecraft.world.level.storage.loot.functions.SetContainerContents;
+import net.minecraft.world.level.storage.loot.functions.*;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
@@ -168,12 +166,8 @@ public class WKLootTableProvider {
         public LootTable.Builder barrelDrops(Block drop) {
             return LootTable.lootTable().withPool(applyExplosionDecay(drop,
                     LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
-                        .add(LootItem.lootTableItem(drop).apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY))
-                            .apply(CopyCustomDataFunction.copyData(ContextNbtProvider.BLOCK_ENTITY)
-                                .copy("Lock", "BlockEntityTag.Lock")
-                                .copy("LootTable", "BlockEntityTag.LootTable")
-                                .copy("LootTableSeed", "BlockEntityTag.LootTableSeed")
-                            )
+                        .add(LootItem.lootTableItem(drop)
+                            .apply(CopyComponentsFunction.copyComponentsFromBlockEntity(LootContext.BlockEntityTarget.BLOCK_ENTITY.getParam()))
                             .apply(SetContainerContents.setContents(ContainerComponentManipulators.CONTAINER))
                         )
                 )
@@ -183,12 +177,7 @@ public class WKLootTableProvider {
         public LootTable.Builder ovenDrops(Block drop) {
             return LootTable.lootTable().withPool(applyExplosionDecay(drop,
                     LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
-                        .add(LootItem.lootTableItem(drop).apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY))
-                            .apply(CopyCustomDataFunction.copyData(ContextNbtProvider.BLOCK_ENTITY)
-                                .copy("Lock", "BlockEntityTag.Lock")
-                                .copy("LootTable", "BlockEntityTag.LootTable")
-                                .copy("LootTableSeed", "BlockEntityTag.LootTableSeed")
-                            )
+                        .add(LootItem.lootTableItem(drop).apply(CopyComponentsFunction.copyComponentsFromBlockEntity(LootContext.BlockEntityTarget.BLOCK_ENTITY.getParam()))
                             .apply(SetContainerContents.setContents(ContainerComponentManipulators.CONTAINER))
                         )
                 )
@@ -198,12 +187,7 @@ public class WKLootTableProvider {
         public LootTable.Builder teaDrops(Block drop) {
             return LootTable.lootTable().withPool(applyExplosionDecay(drop,
                     LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
-                        .add(LootItem.lootTableItem(drop).apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY))
-                            .apply(CopyCustomDataFunction.copyData(ContextNbtProvider.BLOCK_ENTITY)
-                                .copy("Lock", "BlockEntityTag.Lock")
-                                .copy("LootTable", "BlockEntityTag.LootTable")
-                                .copy("LootTableSeed", "BlockEntityTag.LootTableSeed")
-                            )
+                        .add(LootItem.lootTableItem(drop).apply(CopyComponentsFunction.copyComponentsFromBlockEntity(LootContext.BlockEntityTarget.BLOCK_ENTITY.getParam()))
                             .apply(SetContainerContents.setContents(ContainerComponentManipulators.CONTAINER))
                         )
                 )
@@ -213,12 +197,7 @@ public class WKLootTableProvider {
         public LootTable.Builder cauldronDrops(Block drop) {
             return LootTable.lootTable().withPool(applyExplosionDecay(drop,
                     LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
-                        .add(LootItem.lootTableItem(drop).apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY))
-                            .apply(CopyCustomDataFunction.copyData(ContextNbtProvider.BLOCK_ENTITY)
-                                .copy("Lock", "BlockEntityTag.Lock")
-                                .copy("LootTable", "BlockEntityTag.LootTable")
-                                .copy("LootTableSeed", "BlockEntityTag.LootTableSeed")
-                            )
+                        .add(LootItem.lootTableItem(drop).apply(CopyComponentsFunction.copyComponentsFromBlockEntity(LootContext.BlockEntityTarget.BLOCK_ENTITY.getParam()))
                             .apply(SetContainerContents.setContents(ContainerComponentManipulators.CONTAINER))
                         )
                 )

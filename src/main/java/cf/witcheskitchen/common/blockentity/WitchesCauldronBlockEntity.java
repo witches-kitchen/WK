@@ -103,7 +103,7 @@ public class WitchesCauldronBlockEntity extends WKBlockEntityWithInventory imple
                 }
                 sendPlashPacket(entity);
 
-                if (!world.isClientSide)
+                if (!world.isClientSide())
                     entity.kill((ServerLevel) world);
             }
         }
@@ -112,7 +112,7 @@ public class WitchesCauldronBlockEntity extends WKBlockEntityWithInventory imple
             this.manager.clearContent();
             PacketHelper.sendToAllTracking(entity, serverPlayer -> ParticlePacket.send(serverPlayer, this.getBlockPos(), BuiltInRegistries.PARTICLE_TYPE.getKey(ParticleTypes.LAVA), BuiltInRegistries.SOUND_EVENT.getKey(SoundEvents.LAVA_EXTINGUISH), (byte) 3));
 
-            if (!world.isClientSide)
+            if (!world.isClientSide())
                 entity.kill((ServerLevel) world);
         }
     }

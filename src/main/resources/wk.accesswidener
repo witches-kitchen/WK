@@ -5,3 +5,8 @@ accessible method net/minecraft/world/level/block/Blocks never (Lnet/minecraft/w
 accessible method net/minecraft/world/level/block/CropBlock isMaxAge (Lnet/minecraft/world/level/block/state/BlockState;)Z
 extendable method net/minecraft/world/level/block/CropBlock isMaxAge (Lnet/minecraft/world/level/block/state/BlockState;)Z
 accessible method net/minecraft/world/item/crafting/SingleItemRecipe result ()Lnet/minecraft/world/item/ItemStack;
+
+accessible class net/minecraft/world/level/storage/loot/providers/nbt/ContextNbtProvider$Source
+accessible method net/minecraft/world/level/storage/loot/providers/nbt/ContextNbtProvider <init> (Lnet/minecraft/world/level/storage/loot/providers/nbt/ContextNbtProvider$Source;)V
+accessible class net/minecraft/world/level/storage/loot/providers/nbt/ContextNbtProvider$BlockEntitySource
+accessible method net/minecraft/world/level/storage/loot/providers/nbt/ContextNbtProvider$Source <init> (Lnet/minecraft/util/context/ContextKey;)V

@@ -104,7 +104,7 @@ public class FerretEntity extends WKTameableEntity implements GeoEntity, SmartBr
         super.baseTick();
         LivingEntity target = getTargetFromData();
         if (target != null && !this.isPassenger() && !target.isVehicle() && this.distanceToSqr(target) < 6) {
-            this.startRiding(target, true);
+            this.startRiding(target, true, true);
         }
     }
 

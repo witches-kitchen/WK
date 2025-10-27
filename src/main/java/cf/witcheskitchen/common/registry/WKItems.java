@@ -5,12 +5,16 @@ import cf.witcheskitchen.api.registry.ObjectDefinition;
 import cf.witcheskitchen.common.item.*;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.Registry;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.food.Foods;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.item.component.Consumable;
+import net.minecraft.world.item.component.TypedEntityData;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -110,13 +114,17 @@ public interface WKItems {
     Item CHOCOLATE_RUM_BALLS = register("chocolate_rum_balls", new Item(food(WKFoodComponents.RUM_BALLS)));
     Item SUPER_BOOZE = register("super_booze", new Item(food(WKFoodComponents.SUPER_BOOZE)));
 
-    Item CU_SITH_SPAWN_EGG = register("cu_sith_spawn_egg", new SpawnEggItem(WKEntityTypes.CUSITH, settings()));
-    Item FERRET_SPAWN_EGG = register("ferret_spawn_egg", new SpawnEggItem(WKEntityTypes.FERRET, settings()));
-    Item CHURCH_GRIM_SPAWN_EGG = register("church_grim_spawn_egg", new SpawnEggItem(WKEntityTypes.CHURCH_GRIM, settings()));
-    Item HEDGEHOG_SPAWN_EGG = register("hedgehog_spawn_egg", new SpawnEggItem(WKEntityTypes.HEDGEHOG, settings()));
+    Item CU_SITH_SPAWN_EGG = register("cu_sith_spawn_egg", createSpawnEgg(WKEntityTypes.CUSITH, settings()));
+    Item FERRET_SPAWN_EGG = register("ferret_spawn_egg", createSpawnEgg(WKEntityTypes.FERRET, settings()));
+    Item CHURCH_GRIM_SPAWN_EGG = register("church_grim_spawn_egg", createSpawnEgg(WKEntityTypes.CHURCH_GRIM, settings()));
+    Item HEDGEHOG_SPAWN_EGG = register("hedgehog_spawn_egg", createSpawnEgg(WKEntityTypes.HEDGEHOG, settings()));
 
-    Item ROGGENWOLF_SPAWN_EGG = register("roggenwolf_spawn_egg", new SpawnEggItem(WKEntityTypes.ROGGENWOLF, settings()));
+    Item ROGGENWOLF_SPAWN_EGG = register("roggenwolf_spawn_egg", createSpawnEgg(WKEntityTypes.ROGGENWOLF, settings()));
 
+    static SpawnEggItem createSpawnEgg(EntityType<?> entityType, Item.Properties settings) {
+        return new SpawnEggItem(settings
+            .component(DataComponents.ENTITY_DATA, TypedEntityData.of(entityType, new CompoundTag())));
+    }
 
     static List<ObjectDefinition<Item>> getItems() {
         return Collections.unmodifiableList(ITEMS);
